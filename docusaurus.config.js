@@ -24,8 +24,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					sidebarCollapsible: true
 				},
 				blog: {
+					blogTitle: "部落格",
+					blogDescription: "YEE式機器龍各種用肝和 ❤️ 製作的部落格",
+					blogSidebarTitle: "推薦文章",
+					postsPerPage: 5,
 					showReadingTime: true,
-					// Please change this to your repo.
+					feedOptions: {
+						type: "all",
+						copyright: `YEE式機器龍 © 2019 ~ ${new Date().getFullYear()}`
+					}
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.css'),
