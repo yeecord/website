@@ -1,0 +1,78 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--ifm-background-color);
+}
+
+.hero__container {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  text-align: left;
+}
+
+.hero__title {
+  color: ghostwhite;
+  font-size: 2.5rem;
+}
+
+.hero__text {
+  font-size: 1.25rem;
+}
+
+.discord {
+  color: #889ce3;
+}
+
+.button {
+  background: rgb(59 130 246);
+  color: white;
+  padding: .5rem 1.5rem;
+  border-radius: 5px;
+}
+
+.button:hover {
+  color: white;
+}
+
+.hero__subtitle {
+  color: white;
+  font-size: 4.5rem;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1440px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .hero__subtitle {
+    font-size: 3.5rem;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .hero__title {
+    font-size: 1.75rem;
+  }
+
+  .hero__subtitle {
+    padding-top: 0;
+    font-size: 2.25rem;
+  }
+
+  .hero__text {
+    font-size: 1rem;
+  }
+}

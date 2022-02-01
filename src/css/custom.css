@@ -1,0 +1,99 @@
+@import "https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap";
+
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+body > iframe[style*="2147483647"]:not([id="webpack-dev-server-client-overlay"]) {
+    display: none;
+}
+
+.main-wrapper {
+    padding: 0 var(--global-padding);
+}
+
+/* You can override the default Infima variables here. */
+:root {
+    --ifm-color-primary: rgb(96, 148, 234);
+    --ifm-color-primary-dark: rgb(33, 175, 144);
+    --ifm-color-primary-darker: rgb(31, 165, 136);
+    --ifm-color-primary-darkest: rgb(26, 136, 112);
+    --ifm-color-primary-light: rgb(70, 203, 174);
+    --ifm-color-primary-lighter: rgb(102, 212, 189);
+    --ifm-color-primary-lightest: rgb(146, 224, 208);
+    --ifm-code-font-size: 95%;
+
+    --global-padding: 8rem;
+}
+
+.hero {
+    padding: 4rem 0;
+}
+
+p {
+    color: ghostwhite;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 2;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-top: 2rem;
+}
+
+h2 {
+    font-size: 1.65rem;
+    margin-top: 1.5rem;
+}
+
+h1, h2, h3, p, a {
+    font-family: -apple-system, BlinkMacSystemFont, "Readex Pro", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.navbar {
+    padding: 0 var(--global-padding);
+}
+
+.docusaurus-highlight-code-line {
+    background-color: rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme='dark'] .docusaurus-highlight-code-line {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (max-width: 996px) {
+    .hero {
+        padding: 0 !important;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    :root {
+        --global-padding: 4rem;
+    }
+}
+
+@media screen and (max-width: 996px) {
+    :root {
+        --global-padding: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --global-padding: 1rem;
+    }
+
+    .main-wrapper.docs-wrapper,
+    .main-wrapper.blog-wrapper {
+        padding: 0;
+    }
+}
