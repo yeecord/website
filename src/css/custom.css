@@ -54,6 +54,10 @@ h1, h2, h3, p, a {
     -webkit-font-smoothing: antialiased;
 }
 
+article img {
+    border-radius: 3px;
+}
+
 .navbar {
     padding: 0 var(--global-padding);
 }

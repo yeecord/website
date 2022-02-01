@@ -19,6 +19,8 @@ module.exports = {
 			items: [
 				'commands/howto'
 			]
-		}
+		},
+		'faq',
+		'credit'
 	]
 };

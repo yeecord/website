@@ -36,6 +36,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	
 	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 	themeConfig: ({
+		metadata: [
+			{ name: "og:image", content: "https://yeecord.co/img/yeecord-branding-min.png"},
+			{ name: "twitter:card", content: "summary_large_image"}
+		],
 		colorMode: {
 			defaultMode: "dark",
 			disableSwitch: true
@@ -53,7 +57,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					position: 'left',
 					label: '使用教學',
 				},
+				{to: '/docs/faq', label: '常見問題', position: 'left'},
 				{to: '/blog', label: '部落格', position: 'left'},
+				{
+					href: "https://invite.yeecord.co/",
+					label: "邀請機器人",
+					position: "right",
+				},
 				{
 					href: "https://discord.gg/yeecord",
 					label: "Discord",
@@ -105,7 +115,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						{
 							label: "Patreon",
 							href: "https://www.patreon.com/yeecord"
-						}
+						},
 					],
 				},
 			],
