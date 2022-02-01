@@ -12,6 +12,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	favicon: 'img/logo.png',
 	organizationName: 'Yeecord',
 	projectName: 'Yeecord',
+	trailingSlash: true,
 	
 	presets: [
 		[
