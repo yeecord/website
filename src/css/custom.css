@@ -101,8 +101,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
         --global-padding: 1rem;
     }
 
-    .main-wrapper.docs-wrapper,
-    .main-wrapper.blog-wrapper {
+    .main-wrapper.docs-wrapper {
         padding: 0;
     }
 
