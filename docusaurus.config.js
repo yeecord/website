@@ -18,6 +18,14 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			'@docusaurus/preset-classic',
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
+				sitemap: {
+					changefreq: 'daily',
+					priority: 0.7
+				},
+				googleAnalytics: {
+					trackingId: 'UA-118349579-3',
+					anonymizeIP: false
+				},
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
 					sidebarCollapsed: false,
