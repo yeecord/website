@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Head from "@docusaurus/Head";
 import styles from './Adsense.module.css';
 
 export default function Adsense() {
+	useEffect(() => {
+		(window.adsbygoogle = window.adsbygoogle || []).push({});
+	}, []);
+	
 	return (
 		<div>
 			<Head>
-				<script async
+				<script async defer
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
 					crossOrigin="anonymous"/>
 			</Head>
@@ -19,9 +23,6 @@ export default function Adsense() {
 					 data-ad-slot="7480799616"
 					 data-ad-format="auto"
 					 data-full-width-responsive="true"/>
-				<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-				</script>
 			</div>
 		</div>
 	)
