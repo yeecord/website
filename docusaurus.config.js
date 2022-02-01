@@ -5,12 +5,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 (module.exports = {
 	title: 'YEE式機器龍',
 	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文 Discord 伺服器。',
-	url: 'https://docs.yeecord.co',
+	url: 'https://yeecord.co',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'warn',
 	favicon: 'img/logo.png',
-	organizationName: 'Gary50613',
+	organizationName: 'Yeecord',
 	projectName: 'Yeecord',
 	
 	presets: [
