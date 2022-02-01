@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文 Discord 伺服器。',
 	url: 'https://yeecord.co',
 	baseUrl: '/',
-	onBrokenLinks: 'throw',
+	onBrokenLinks: 'warn',
 	onBrokenMarkdownLinks: 'warn',
 	favicon: 'img/logo.png',
 	organizationName: 'Yeecord',
