@@ -23,7 +23,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					priority: 0.7
 				},
 				googleAnalytics: {
-					trackingId: 'UA-118349579-3',
+					trackingID: 'UA-118349579-3',
 					anonymizeIP: false
 				},
 				docs: {
