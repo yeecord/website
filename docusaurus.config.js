@@ -14,6 +14,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	projectName: 'Yeecord',
 	trailingSlash: true,
 	
+	i18n: {
+		defaultLocale: 'zh-Hant',
+		locales: ['zh-Hant']
+	},
+	
 	presets: [
 		[
 			'@docusaurus/preset-classic',
