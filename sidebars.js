@@ -17,7 +17,8 @@ module.exports = {
 			type: 'category',
 			label: '指令',
 			items: [
-				'commands/howto'
+				'commands/howto',
+				'commands/list'
 			]
 		},
 		'faq',
