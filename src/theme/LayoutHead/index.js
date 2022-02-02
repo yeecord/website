@@ -82,9 +82,9 @@ export default function LayoutHead(props) {
 		i18n: {currentLocale, localeConfigs},
 	} = useDocusaurusContext();
 	const {metadata, image: defaultImage} = useThemeConfig();
-	const {title, description, image, keywords, searchMetadata} = props;
+	const {rawTitle, title, description, image, keywords, searchMetadata} = props;
 	const faviconUrl = useBaseUrl(favicon);
-	const pageTitle = useTitleFormatter(title);
+	const pageTitle = rawTitle || useTitleFormatter(title);
 	const {htmlLang, direction: htmlDir} = localeConfigs[currentLocale];
 	return (
 		<>

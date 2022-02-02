@@ -5,6 +5,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
+import Head from "@docusaurus/Head";
 
 function HomepageHeader() {
 	const {siteConfig} = useDocusaurusContext();
@@ -29,10 +30,9 @@ function HomepageHeader() {
 }
 
 export default function Home() {
-	const {siteConfig} = useDocusaurusContext();
 	return (
 		<Layout
-			title={`${siteConfig.title}`}
+			rawTitle="YEE式機器龍 - 中文 Discord 音樂機器人的最佳選擇"
 			description="YEE式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間">
 			<HomepageHeader/>
 			<main>
