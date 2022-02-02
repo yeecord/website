@@ -10,12 +10,12 @@ image: discord-music-bot-without-coding/discord-branding.jpg
 import Adsense from "../src/components/Adsense";
 
 <head>
-	<link rel="canonical" href="https://yeecord.co/blog/make-discord-music-bot-without-coding/"/>
+	<link rel="canonical" href="https://yeecord.co/blog//img/make-discord-music-bot-without-coding/"/>
 </head>
 
 我知道光是要學會寫程式就是件很困難的事情對了吧，那你還不點進來看一下這篇？本篇使用JMusicBot建造自己的音樂機器人
 
-![Discord](make-discord-music-bot-without-coding/discord-branding.jpg)
+![Discord](/img/make-discord-music-bot-without-coding/discord-branding.jpg)
 
 望眼一看已經2022年，使用Discord這個平台也已經3年了，很多來私訊我問說，
 > 可以教我做機器人嗎
@@ -49,17 +49,17 @@ import Adsense from "../src/components/Adsense";
 那首先我們就要先註冊一個你的機器人帳號對吧，去 [Discord開發人員面板](https://discord.com/developers/applications)，
 點擊右上角 `New Application`，會出現一個小框框，
 
-![新建應用程式](make-discord-music-bot-without-coding/new-application.png)
+![新建應用程式](/img/make-discord-music-bot-without-coding/new-application.png)
 
 `Name` 那裏就填你想要你的機器人叫什麼名字，之後按下 `Create`，
 然後你就會發現一大坨東西要設定，不過我們先跳過他，
 
-![應用程式設定](make-discord-music-bot-without-coding/app.jpeg)
+![應用程式設定](/img/make-discord-music-bot-without-coding/app.jpeg)
 
 點左邊導航欄的 `Bot`，右上角藍色 `Add Bot`，
 這時他問你確定要新增一個機器人嗎？當然！點 `Yes, do it!`，
 
-![機器人設定](make-discord-music-bot-without-coding/bot.png)
+![機器人設定](/img/make-discord-music-bot-without-coding/bot.png)
 
 對你就這樣創建好一個機器人應用程式了。
 **特別要注意，不能讓任何人知道你的機器人Token**，就像是你不會把你家的鑰匙給別人，
@@ -72,7 +72,7 @@ import Adsense from "../src/components/Adsense";
 [到這裡](https://www.oracle.com/java/technologies/downloads/) 下載JDK安裝檔，依照你的電腦選擇
 我們是Windows那就選擇 `Windows` 分頁的 `x64 Installer`
 
-![JDK下載頁](make-discord-music-bot-without-coding/jdk.png)
+![JDK下載頁](/img/make-discord-music-bot-without-coding/jdk.png)
 
 下載完之後一路按下一步就完成了
 
@@ -80,7 +80,7 @@ import Adsense from "../src/components/Adsense";
 點Discord左下角你的名字旁邊的齒輪， `進階` > `開發者模式` 開啟，
 開啟之後就可以方便我們複製各種東西的ID，對開發會有很大的幫助
 
-![開啟開發者模式](make-discord-music-bot-without-coding/enable-dev-mode.png)
+![開啟開發者模式](/img/make-discord-music-bot-without-coding/enable-dev-mode.png)
 
 <Adsense/>
 
@@ -89,20 +89,20 @@ import Adsense from "../src/components/Adsense";
 來到我們今天的重頭戲，終於要開始建置機器人了！
 [JMusicBot](https://github.com/jagrosh/MusicBot) 是一個使用Java編寫的開源Discord音樂機器人， 在Github上面是很熱門的專案，
 
-![JMusicBot Github](make-discord-music-bot-without-coding/jmusicbot-github.png)
+![JMusicBot Github](/img/make-discord-music-bot-without-coding/jmusicbot-github.png)
 
 到這個 [下載連結](https://github.com/jagrosh/MusicBot/releases/latest) 下載最新版的程式，
 他會長像是 `JMusicBot-X.Y.Z.jar` 這種格式，
 然後創建一個新的資料夾把他丟到裡面去
 
-![JMusicBot Release](make-discord-music-bot-without-coding/jmusicbot-download.png)
+![JMusicBot Release](/img/make-discord-music-bot-without-coding/jmusicbot-download.png)
 
 <Adsense/>
 
 ### 5. 設置JMusicBot
 首先先啟動一次那個jar檔案讓他生出 `config.txt` 讓我們設定，
 
-![第一次設定視窗](make-discord-music-bot-without-coding/first-prompt.png)
+![第一次設定視窗](/img/make-discord-music-bot-without-coding/first-prompt.png)
 
 如果沒有 `config.txt` 他會彈出一個小框框問我們機器人的Token是什麼，
 就是剛剛說可以登錄到機器人的鑰匙，
@@ -110,7 +110,7 @@ import Adsense from "../src/components/Adsense";
 那我們回到剛剛的開發者面板機器人設定的頁面，
 點 `TOKEN` 下方的 `Copy` 按鈕複製到剪貼簿，
 
-![取得Token](make-discord-music-bot-without-coding/get-token.png)
+![取得Token](/img/make-discord-music-bot-without-coding/get-token.png)
 
 右邊的 `Regenerate` 是假設你真的不小心手滑，把Token洩漏出去之後，
 能夠生成一組新的鑰匙，並讓舊的失效
@@ -122,11 +122,11 @@ import Adsense from "../src/components/Adsense";
 下一個小框框會問你這個機器人的擁有者該是誰，
 擁有者將會有特別的權限及指令可以使用，
 
-![擁有者視窗](make-discord-music-bot-without-coding/owner-prompt.png)
+![擁有者視窗](/img/make-discord-music-bot-without-coding/owner-prompt.png)
 
 去Discord找到自己的名字之後，按右鍵，`複製ID`，
 
-![複製ID](make-discord-music-bot-without-coding/get-your-id.png)
+![複製ID](/img/make-discord-music-bot-without-coding/get-your-id.png)
 
 回去貼在那個框框裡面按確定
 
@@ -136,13 +136,13 @@ import Adsense from "../src/components/Adsense";
 **請注意關掉這個小框框就代表機器人會下線，如果要機器人一直開個就不能關掉這個控制台！**
 但是等等！我們還沒能開始使用
 
-![JMusicBot 控制台](make-discord-music-bot-without-coding/console.png)
+![JMusicBot 控制台](/img/make-discord-music-bot-without-coding/console.png)
 
 回到控制台，你會看到一個連結像是紅線標註的地方，這會是你的機器人邀請連結，
 把它貼到瀏覽器上面，然後選擇目標的伺服器之後按確定，之後按授權，
 他就算是成功蹦到你的伺服器裡了！
 
-![機器人資訊](make-discord-music-bot-without-coding/bot-info.png)
+![機器人資訊](/img/make-discord-music-bot-without-coding/bot-info.png)
 
 預設的使用方法是
 
@@ -150,7 +150,7 @@ import Adsense from "../src/components/Adsense";
 @標記 指令 參數...
 ```
 
-![JMusicBot 使用範例](make-discord-music-bot-without-coding/example.png)
+![JMusicBot 使用範例](/img/make-discord-music-bot-without-coding/example.png)
 
 <Adsense/>
 
@@ -161,7 +161,7 @@ import Adsense from "../src/components/Adsense";
 
 要更改機器人的前綴(Prefix)，打開 `config.txt` 找到 `prefix = ` 開頭的地方
 
-![JMusicBot 設定檔](make-discord-music-bot-without-coding/config-prefix.png)
+![JMusicBot 設定檔](/img/make-discord-music-bot-without-coding/config-prefix.png)
 
 可以改成你喜歡的東西，像是 `!!`，要記得就是不要跟別的機器人撞到，
 不然每次使用者會很困擾，像是這樣子改設定:
