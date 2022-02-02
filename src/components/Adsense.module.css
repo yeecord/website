@@ -3,6 +3,7 @@
     display: grid;
     gap: 1rem;
     text-align: center;
+    overflow: hidden;
 }
 
 .text {

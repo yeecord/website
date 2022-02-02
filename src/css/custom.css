@@ -65,6 +65,7 @@ article img {
 
 .navbar {
     padding: 0 var(--global-padding);
+    z-index: 99999;
 }
 
 .main-wrapper.blog-wrapper .container {
