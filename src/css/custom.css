@@ -35,7 +35,7 @@ body > iframe[style*="2147483647"]:not([id="webpack-dev-server-client-overlay"])
 
 p {
     color: ghostwhite;
-    font-size: 1rem;
+    font-size: 18px;
     font-weight: 400;
     line-height: 2;
 }
@@ -46,7 +46,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.65rem;
+    font-size: 1.8rem;
     margin-top: 1.5rem;
 }
 
