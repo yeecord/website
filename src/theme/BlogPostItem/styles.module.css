@@ -7,6 +7,14 @@
 
 .blogPostTitle {
   font-size: 3rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .blogPostTitle {
+    font-size: 2.5rem;
+    margin-top: 0;
+  }
 }
 
 .blogPostData {
