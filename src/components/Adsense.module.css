@@ -1,12 +1,13 @@
 .container {
     margin: .5rem 0;
-    display: grid;
     gap: 1rem;
     text-align: center;
     overflow: hidden;
 }
 
 .text {
+    margin-bottom: 1rem;
+    display: block;
     font-size: .8rem;
     opacity: .75;
     color: whitesmoke;

@@ -8,13 +8,12 @@ export default function Adsense() {
 	}, []);
 	
 	return (
-		<div>
+		<div aria-label="ads" className={styles.container}>
 			<Head>
 				<script async defer
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
 					crossOrigin="anonymous"/>
 			</Head>
-			<div aria-label="ads" className={styles.container}>
 				<span className={styles.text}>如果你對下面贊助商的內容有興趣可以點一下</span>
 				<ins className="adsbygoogle"
 					 aria-label="promote"
@@ -23,7 +22,6 @@ export default function Adsense() {
 					 data-ad-slot="7480799616"
 					 data-ad-format="auto"
 					 data-full-width-responsive="true"/>
-			</div>
 		</div>
 	)
 }
