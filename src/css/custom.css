@@ -50,13 +50,17 @@ h2 {
     margin-top: 1.5rem;
 }
 
-h1, h2, h3, p, a {
+h1, h2, h3, p, a, div {
     font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Readex Pro", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
 h1, h2 {
     font-family: -apple-system, BlinkMacSystemFont, "Readex Pro", "Noto Sans TC", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+article {
+    text-align: left;
 }
 
 article img {
