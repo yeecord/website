@@ -59,8 +59,8 @@ h1, h2 {
     font-family: -apple-system, BlinkMacSystemFont, "Readex Pro", "Noto Sans TC", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-article {
-    text-align: left;
+article > * {
+    text-align: left !important;
 }
 
 article img {
