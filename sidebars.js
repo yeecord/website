@@ -21,6 +21,8 @@ module.exports = {
 				'commands/list'
 			]
 		},
+		'chat',
+		'dvc',
 		'faq',
 		'credit'
 	]
