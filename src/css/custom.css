@@ -33,7 +33,7 @@ body > iframe[style*="2147483647"]:not([id="webpack-dev-server-client-overlay"])
     padding: 4rem 0;
 }
 
-p {
+p, .contentContainer {
     color: ghostwhite;
     font-size: 18px;
     font-weight: 400;

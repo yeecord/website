@@ -111,6 +111,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 							label: '部落格',
 							to: '/blog',
 						},
+						{
+							label: '隱私權聲明',
+							to: '/privacy'
+						},
 					],
 				},
 				{
