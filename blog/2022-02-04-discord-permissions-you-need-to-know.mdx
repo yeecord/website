@@ -50,7 +50,7 @@ import ReactPlayer from 'react-player/youtube';
 
 ## 最小權限原則
 
-在我們講到確切設定身分組之前，我們先來談談什麼是「最小權限原則」，當我們在設計各種產品或是功能的時候，通常都會以最糟的情況來思考，當我遇到這種狀況的時候，有沒有辦法事先預防或是做最快速的復原
+在我們講到確切設定身分組之前，我們先來談談什麼是「最小權限原則」，當我們在設計各種產品或是功能的時候，通常都會以最糟的情況來思考，當我遇到這種狀況的時候，有沒有辦法事先預防或是做最快速的復原，
 
 > 賦予每一個合法動作最小的權限，保護數據以及功能避免受到錯誤或者惡意行為的破壞。
 
@@ -72,13 +72,13 @@ import ReactPlayer from 'react-player/youtube';
 
 <Adsense/>
 
-這表示說，我只要擁有了這個權限並且創建了一個 Webhook，就能透過他發送像是 `@everyone` 標記等等！同時也請確保不要洩漏出自己創建的 Webhook 密鑰讓他人有機會得逞
+這表示說，我只要擁有了這個權限並且創建了一個 Webhook，就能透過他發送像是 `@everyone` 標記等等！同時也請確保不要洩漏出自己創建的 Webhook 密鑰讓他人有機會得逞。
 
 ![Discord Webhook 範例](/img/discord-permissions-you-need-to-know/webhook-example.png)
 
 ### 提及@everyone、@here和所有身分組
 
-這個我蠻好奇為什麼 Discord 預設會是開啟的給各位，擁有這個權限能夠標記所有人並讓他們收到通知，請確認在 `@everyone` 身分組的設定下他是被關閉的
+這個我蠻好奇為什麼 Discord 預設會是開啟的給各位，擁有這個權限能夠標記所有人並讓他們收到通知，請確認在 `@everyone` 身分組的設定下他是被關閉的。
 
 ![Discord 提及 Everyone 權限](/img/discord-permissions-you-need-to-know/mention-everyone.png)
 
@@ -86,11 +86,13 @@ import ReactPlayer from 'react-player/youtube';
 
 <Adsense/>
 
-這個就牽涉到和管理員信任的問題了，管理員權限能夠無視所有的身分組設定，通常會出問題就在這個地方，擁有這個權限還可以邀請機器人，而機器人也是炸群者們常用的工具，請在設定的時候先三思好
+這個就牽涉到和管理員信任的問題了，管理員權限能夠無視所有的身分組設定，通常會出問題就在這個地方，擁有這個權限還可以邀請機器人，而機器人也是炸群者們常用的工具，請在設定的時候先三思好。
 
 ## 啟用2FA
 
-[多因素驗證](https://zh.wikipedia.org/wiki/%E5%A4%9A%E9%87%8D%E8%A6%81%E7%B4%A0%E9%A9%97%E8%AD%89) 是保護你的帳號最直接的辦法，設定多因素驗證能確保駭客就算知道了你的密碼也不能直接登錄，而每次你在登錄的時候也需要輸入手機 App 上生出的 6 位數代碼，來確保登錄的是你本人，個人推薦使用 [Authy](https://play.google.com/store/apps/details?id=com.authy.authy&hl=zh_TW&gl=US) 這款 App，就算換手機還是能找回之前的帳號，備份功能也非常的健全
+[多因素驗證](https://zh.wikipedia.org/wiki/%E5%A4%9A%E9%87%8D%E8%A6%81%E7%B4%A0%E9%A9%97%E8%AD%89) 是保護你的帳號最直接的辦法，設定多因素驗證能確保駭客就算知道了你的密碼也不能直接登錄，而每次你在登錄的時候也需要輸入手機 App 上生出的 6 位數代碼，來確保登錄的是你本人。
+
+個人推薦使用 [Authy](https://play.google.com/store/apps/details?id=com.authy.authy&hl=zh_TW&gl=US) 這款 App，就算換手機還是能找回之前的帳號，備份功能也非常的健全
 
 ![Discord 啟用 2FA](/img/discord-permissions-you-need-to-know/enable-2fa.png)
 
