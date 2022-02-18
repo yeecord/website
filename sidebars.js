@@ -23,7 +23,7 @@ module.exports = {
 		},
 		'chat',
 		'dvc',
-		'shop',
+		'rpg',
 		'faq',
 		'credit'
 	]
