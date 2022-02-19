@@ -1,0 +1,20 @@
+{
+  "short_name": "YEE式機器龍",
+  "name": "YEE式機器龍",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "128x128 64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/assets/img/logo.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    }
+  ],
+  "start_url": "./?utm_source=PWA&utm_medium=home_screen&utm_campaign=pwa",
+  "display": "standalone",
+  "theme_color": "#3b82f6",
+  "background_color": "#ffffff"
+}
