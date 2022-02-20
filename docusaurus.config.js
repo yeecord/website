@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 (module.exports = {
 	title: 'YEE式機器龍',
 	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文 Discord 伺服器。',
-	url: 'https://yeecord.co',
+	url: 'https://yeecord.com',
 	baseUrl: '/',
 	onBrokenLinks: 'warn',
 	onBrokenMarkdownLinks: 'warn',
@@ -64,7 +64,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			textColor: "#ffffff"
 		},
 		metadata: [
-			{ name: "og:image", content: "https://yeecord.co/img/yeecord-branding-min.png"},
+			{ name: "og:image", content: "https://yeecord.com/img/yeecord-branding-min.png"},
 			{ name: "twitter:card", content: "summary_large_image"}
 		],
 		colorMode: {
@@ -87,7 +87,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				{to: '/docs/faq', label: '常見問題', position: 'left'},
 				{to: '/blog', label: '部落格', position: 'left'},
 				{
-					href: "https://invite.yeecord.co/",
+					href: "https://invite.yeecord.com/",
 					label: "邀請機器人",
 					position: "right",
 				},
@@ -137,7 +137,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					items: [
 						{
 							label: '邀請機器人',
-							href: 'https://invite.yeecord.co/'
+							href: 'https://invite.yeecord.com/'
 						},
 						{
 							label: 'GitHub',
