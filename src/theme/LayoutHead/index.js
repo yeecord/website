@@ -94,7 +94,10 @@ export default function LayoutHead(props) {
 				<title>{pageTitle}</title>
 				<meta property="og:title" content={pageTitle}/>
 				<meta name="twitter:card" content="summary_large_image"/>
-				<link href="https://fonts.gstatic.com" rel="preconnect" crossOrigin="anonymous"/>
+				<link href="https://fonts.gstatic.com/" rel="preconnect" crossOrigin="anonymous"/>
+				
+				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC@wget:400;700&display=swap" crossOrigin="anonymous"/>
+				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" crossOrigin="anonymous"/>
 			</Head>
 			
 			{/* image can override the default image */}

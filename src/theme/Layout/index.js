@@ -18,30 +18,30 @@ import ErrorPageContent from '@theme/ErrorPageContent';
 import './styles.css';
 
 function Layout(props) {
-  const {children, noFooter, wrapperClassName, pageClassName} = props;
-  useKeyboardNavigation();
-  return (
-    <LayoutProviders>
-      <LayoutHead {...props} />
-
-      <SkipToContent />
-
-      <AnnouncementBar />
-
-      <Navbar />
-
-      <div
-        className={clsx(
-          ThemeClassNames.wrapper.main,
-          wrapperClassName,
-          pageClassName,
-        )}>
-        <ErrorBoundary fallback={ErrorPageContent}>{children}</ErrorBoundary>
-      </div>
-
-      {!noFooter && <Footer />}
-    </LayoutProviders>
-  );
+	const {children, noFooter, wrapperClassName, pageClassName} = props;
+	useKeyboardNavigation();
+	return (
+		<LayoutProviders>
+			<LayoutHead {...props} />
+			
+			<SkipToContent/>
+			
+			<AnnouncementBar/>
+			
+			<Navbar/>
+			
+			<div
+				className={clsx(
+					ThemeClassNames.wrapper.main,
+					wrapperClassName,
+					pageClassName,
+				)}>
+				<ErrorBoundary fallback={ErrorPageContent}>{children}</ErrorBoundary>
+			</div>
+			
+			{!noFooter && <Footer/>}
+		</LayoutProviders>
+	);
 }
 
 export default Layout;
