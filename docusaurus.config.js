@@ -57,12 +57,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	
 	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 	themeConfig: ({
-		announcementBar: {
-			id: "migrate_site",
-			content: "我們搬新家到 yeecord.com 了哦！有使用舊的網址的麻煩請更新一下連結，謝謝各位！",
-			backgroundColor: "#06a94d",
-			textColor: "#ffffff"
-		},
 		metadata: [
 			{ name: "og:image", content: "https://yeecord.com/img/yeecord-branding-min.png"},
 			{ name: "twitter:card", content: "summary_large_image"}
