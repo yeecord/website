@@ -41,9 +41,13 @@ h2 {
     margin-top: 1.5rem;
 }
 
-* {
+*, li {
     font-family: "source-han-sans-traditional", "poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-weight: 400;
+}
+
+b {
+    font-weight: 700;
 }
 
 h1, h2, h2 > a, h3, #post-content > h3 {

@@ -78,8 +78,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					position: 'left',
 					label: '使用教學',
 				},
-				{to: '/docs/faq', label: '常見問題', position: 'left'},
-				{to: '/blog', label: '部落格', position: 'left'},
+				{to: '/docs/faq/', label: '常見問題', position: 'left'},
+				{to: '/blog/', label: '部落格', position: 'left'},
 				{
 					href: "https://yeecord.com/invite/",
 					label: "邀請機器人",
@@ -105,15 +105,19 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					items: [
 						{
 							label: '入門',
-							to: '/docs/intro',
+							to: '/docs/intro/',
 						},
 						{
 							label: '部落格',
-							to: '/blog',
+							to: '/blog/',
 						},
 						{
 							label: '隱私權聲明',
-							to: '/privacy'
+							to: '/privacy/'
+						},
+						{
+							label: '使用條款',
+							to: '/terms/'
 						},
 					],
 				},
