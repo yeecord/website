@@ -9,7 +9,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	baseUrl: '/',
 	onBrokenLinks: 'warn',
 	onBrokenMarkdownLinks: 'warn',
-	favicon: 'img/logo.png',
+	favicon: 'img/old_logo.png',
 	organizationName: 'Yeecord',
 	projectName: 'Yeecord',
 	trailingSlash: true,
@@ -58,7 +58,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 	themeConfig: ({
 		metadata: [
-			{ name: "og:image", content: "https://yeecord.com/img/yeecord-branding-min.png"},
+			{ name: "og:image", content: "https://cdn.yeecord.com/img/yeecord-branding-min.png"},
 			{ name: "twitter:card", content: "summary_large_image"}
 		],
 		colorMode: {
@@ -69,7 +69,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			title: 'YEE式機器龍',
 			logo: {
 				alt: 'YEE式機器龍 Logo',
-				src: './img/logo.png',
+				src: 'https://cdn.yeecord.com/img/logo_128x128.png',
 			},
 			items: [
 				{

@@ -70,6 +70,10 @@ article img {
     z-index: 99999;
 }
 
+.navbar__logo > img {
+    border-radius: 50%;
+}
+
 .main-wrapper.blog-wrapper .container {
     max-width: 100%;
     padding: 0;
