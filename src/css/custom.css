@@ -41,8 +41,8 @@ h2 {
     margin-top: 1.5rem;
 }
 
-*, li {
-    font-family: "source-han-sans-traditional", "poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+*, li, div {
+    font-family: "source-han-sans-traditional", "poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
     font-weight: 400;
 }
 
@@ -52,7 +52,7 @@ b {
 
 h1, h2, h2 > a, h3, #post-content > h3 {
     font-weight: 700;
-    font-family: "poppins", "source-han-sans-traditional", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-family: "poppins", "source-han-sans-traditional", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
 }
