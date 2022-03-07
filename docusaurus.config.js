@@ -4,14 +4,14 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
 	title: 'YEE式機器龍',
-	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文 Discord 伺服器。',
+	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文Discord伺服器，我們是能夠超越Rythm更好的Discord音樂機器人，使用我讓Discord不再只是聊天平台！',
 	url: 'https://yeecord.com',
 	baseUrl: '/',
 	onBrokenLinks: 'warn',
 	onBrokenMarkdownLinks: 'warn',
-	favicon: 'img/old_logo.png',
+	favicon: 'https://cdn.yeecord.com/img/logo_128x128.png',
 	organizationName: 'Yeecord',
-	projectName: 'Yeecord',
+	projectName: 'YEE式機器龍',
 	trailingSlash: true,
 	
 	i18n: {
