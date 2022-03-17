@@ -145,6 +145,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 							label: "Patreon",
 							href: "https://www.patreon.com/yeecord"
 						},
+						{
+							label: "top.gg",
+							href: "https://yeecord.com/topgg/"
+						}
 					],
 				},
 			],

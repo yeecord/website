@@ -18,13 +18,22 @@ module.exports = {
 			label: '指令',
 			items: [
 				'commands/howto',
-				'commands/list'
+				'commands/list',
+				'commands/reference'
+			]
+		},
+		{
+			type: 'category',
+			label: "RPG系統全攻略",
+			items: [
+				'rpg/index',
+				'rpg/jobs',
+				'rpg/shop'
 			]
 		},
 		'chat',
 		'dvc',
 		'ticket',
-		'rpg',
 		'faq',
 		'credit'
 	]

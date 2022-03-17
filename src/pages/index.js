@@ -64,7 +64,7 @@ export default function Home() {
 			<HomepageHeader/>
 			<main>
 				<section className={styles.servers_wrapper}>
-					<h2>各大伺服器一致好評</h2>
+					<h2>各大中文伺服器一致好評</h2>
 					<div className={styles.servers}>
 						<Server partner name="APEX Legends Taiwan" src="/img/servers/apex-tw.png"/>
 						<Server name="VALORANT Taiwan" src="/img/servers/valorant-tw.png"/>
