@@ -19,7 +19,13 @@ module.exports = {
 			items: [
 				'commands/howto',
 				'commands/list',
-				'commands/reference'
+				{
+					type: 'category',
+					label: '指令參照',
+					items: [
+						'commands/reference/general'
+					]
+				}
 			]
 		},
 		{

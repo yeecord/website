@@ -1,0 +1,120 @@
+---
+slug: fix-music-lag
+title: Discord 音樂機器人一鍵解決聽音樂卡頓LAG問題
+authors: kane
+description: "你喜歡在 Discord 使用音樂機器人收聽你最喜歡的音樂，我猜可能是八軌錄音帶，但是你經常會遇到機器人卡頓，影響你的音樂體驗。在這篇講到的方法可以解決這個問題，並且可以順暢地聽音樂。"
+tags: ["Discord", "dc", "音樂", "機器人", "2022", "Rythm", "卡頓", "LAG"]
+image: /img/fix-music-lag/music.jpg
+---
+
+import Adsense from "../src/components/Adsense";
+import TOCInline from '@theme/TOCInline';
+
+<head>
+	<link rel="canonical" href="https://yeecord.com/blog/fix-music-lag/"/>
+</head>
+
+<TOCInline toc={toc}/>
+
+![聽音樂](/img/fix-music-lag/music.jpg)
+
+你喜歡在 Discord 使用音樂機器人收聽你最喜歡的音樂，~~我猜可能是八軌錄音帶~~，但是你經常會遇到機器人卡頓，影響你的音樂體驗。
+
+### 為什麼機器人會卡頓？
+
+常見 LAG 的狀況通常都是來自於延遲過高或是網路不穩的問題，透過切換 Discord 語音伺服器道不同區域來解決這類的問題。
+
+而在這篇文章，我們將會詳細的一步步分析以及解決音樂機器人卡頓的問題。
+
+<!--truncate-->
+
+<Adsense/>
+
+## 我要如何排解這些問題？
+
+### 1. 檢查網路連線
+
+嘗試關機並重開你家的路由器或是小烏龜，這招通常很有效，因為路由器的內存使用率變高的時候速度也會跟著變慢。
+
+使用 `Windows + I` 打開設定，在左邊導航欄點選 `點選網路和網際網路` 顯示出網路設定頁面，並檢查網路連線狀態是否正常。
+
+![Windows網際網路設定](/img/fix-music-lag/windows-network-settings.jpg)
+
+### 2. 確認 Discord 正常的運作
+
+Discord 依賴著相當大量的伺服器作業，而經過了去年疫情那波助長，Discord 使用人數大幅增加之後很明顯伺服器用量也增加，而當伺服器出現問題的時候，像是機器人等東西將沒辦法正常運作。
+
+當你感到奇怪的狀況的時候，可以去到 Discord 的狀態頁面 [discordstatus.com](https://discordstatus.com/) 去檢查 Discord 現在的伺服器狀態，
+
+![Discord Status](/img/fix-music-lag/discord-status.png)
+
+在這個頁面上會標示到目前是否有重大的服務離線，或是目前 API 有沒有被影響到，並且確認是否已經被修復。
+
+
+### 3. 使用 Discord 用戶端 App
+
+Discord 用戶端是經過優化的 App，使用該 App 能夠大幅改善流暢度，點擊這邊 [下載 Discord 用戶端](https://discord.com/download)
+
+### 4. 更改 Discord 語音區域
+
+當你加入一個頻道，就是你連結到了一個 Discord 架構上的語音伺服器，而可能機器人連結的語音伺服器在比較遙遠的地方，所以你也可以嘗試切換語音伺服器區域來改善延遲跟調包的機率
+
+1. 打開 Discord 到你要編輯的伺服器
+2. 點選語音頻道名稱旁邊的齒輪 `頻道設定`，
+
+![Discord 語音頻道](/img/fix-music-lag/edit-channel-settings.png)
+
+3. 在下方 `地區覆寫` 嘗試選擇不同的區域
+
+![Discord 語音地區編輯](/img/fix-music-lag/edit-voice-region.png)
+
+4. 點擊 `儲存變更` 儲存
+
+當你儲存完畢後，在頻道裡的所有人會立即切換到那個語音區域，如果音樂還是卡頓的話，可以嘗試切換到下一個區域
+
+### 5. 選擇正確的音樂機器人
+
+[YEE式機器龍](/docs/how-to-invite-bot/) 是繼 Rythm 停止營運之後最棒的中文音樂機器人選擇，對於剛開始使用 Discord 的新朋友們很友善，擁有全中文的介面，點這裡 [馬上開始使用](https://yeecord.com/invite/)
+
+## 進階排解技巧
+
+### 如果是我自己託管的機器人卡頓
+
+可以嘗試檢查一下自己的電腦 CPU 以及記憶體使用量，如果兩者的用量達到頂峰的時候也會造成音樂上的卡頓，
+
+在 NodeJS 上要查詢 CPU 使用量可以使用原生的 [`os-utils`](https://www.npmjs.com/package/os-utils) 模組來達成：
+
+```js
+const os = require("os-utils");
+
+os.cpuUsage((v) => console.log(`CPU Usage (%): ${v}`));
+```
+
+而查詢記憶體用量則是使用 [`process#memoryUsage`](https://nodejs.org/api/process.html#processmemoryusage) 來查詢：
+
+> 參照 Stackoverflow https://stackoverflow.com/a/64550489
+
+```js
+const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
+
+const memoryData = process.memoryUsage()
+
+const memoryUsage = {
+                rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
+                heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
+                heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
+                external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`,
+}
+
+console.log(memoryUsage)
+/*
+{
+    "rss": "177.54 MB -> Resident Set Size - total memory allocated for the process execution",
+    "heapTotal": "102.3 MB -> total size of the allocated heap",
+    "heapUsed": "94.3 MB -> actual memory used during the execution",
+    "external": "3.03 MB -> V8 external memory"
+}
+*/
+```
+
+<Adsense/>

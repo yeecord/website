@@ -95,10 +95,12 @@ export default function LayoutHead(props) {
 				<meta property="og:title" content={pageTitle}/>
 				<meta name="twitter:card" content="summary_large_image"/>
 				<link rel="preconnect" href="https://cdn.yeecord.com/" crossOrigin/>
-				
-				<script>
-					{`((d) => {var config = {kitId: 'lnl1ewv',scriptTimeout: 3000,async: true},h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\\bwf-loading\\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)})(document);`}
-				</script>
+
+				<link rel="preconnect" href="https://fonts.googleapis.com"/>
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+				<link
+					href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Noto+Sans+TC:wght@400;700&family=Readex+Pro:wght@500&display=swap"
+					rel="stylesheet"/>
 			</Head>
 			
 			{/* image can override the default image */}
