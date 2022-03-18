@@ -1,6 +1,6 @@
 ---
 slug: fix-music-lag
-title: Discord音樂機器人5步驟解決聽音樂卡頓LAG問題
+title: Discord音樂機器人「5步驟」解決聽音樂卡頓LAG問題
 authors: kane
 description: "你喜歡在 Discord 使用音樂機器人收聽你最喜歡的音樂，我猜可能是八軌錄音帶，但是你經常會遇到機器人卡頓，影響你的音樂體驗。在這篇講到的方法可以解決這個問題，並且可以順暢地聽音樂。"
 tags: ["Discord", "dc", "音樂", "機器人", "2022", "Rythm", "卡頓", "LAG"]
@@ -18,7 +18,7 @@ import TOCInline from '@theme/TOCInline';
 
 ![聽音樂](/img/fix-music-lag/music.jpg)
 
-你喜歡在 Discord 使用音樂機器人收聽你最喜歡的音樂，~~我猜可能是八軌錄音帶~~，但是你經常會遇到機器人卡頓，影響你的音樂體驗。
+你喜歡在 Discord 使用音樂機器人收聽你最喜歡的音樂，~~我猜可能是八軌錄音帶~~，但是你經常會遇到機器人卡頓，影響你的音樂體驗，那會是一件很糟糕的事。
 
 ### 為什麼機器人會卡頓？
 
@@ -48,14 +48,16 @@ Discord 依賴著相當大量的伺服器作業，而經過了去年疫情那波
 
 ![Discord Status](/img/fix-music-lag/discord-status.png)
 
+<Adsense/>
+
 在這個頁面上會標示到目前是否有重大的服務離線，或是目前 API 有沒有被影響到，並且確認是否已經被修復。
 
 
-### 3. 使用 Discord 用戶端 App
+### 3. 使用用戶端 App
 
 Discord 用戶端是經過優化的 App，使用該 App 能夠大幅改善流暢度，點擊這邊 [下載 Discord 用戶端](https://discord.com/download)
 
-### 4. 更改 Discord 語音區域
+### 4. 更改頻道語音區域
 
 當你加入一個頻道，就是你連結到了一個 Discord 架構上的語音伺服器，而可能機器人連結的語音伺服器在比較遙遠的地方，所以你也可以嘗試切換語音伺服器區域來改善延遲跟調包的機率
 
@@ -65,6 +67,8 @@ Discord 用戶端是經過優化的 App，使用該 App 能夠大幅改善流暢
 ![Discord 語音頻道](/img/fix-music-lag/edit-channel-settings.png)
 
 3. 在下方 `地區覆寫` 嘗試選擇不同的區域
+
+<Adsense/>
 
 ![Discord 語音地區編輯](/img/fix-music-lag/edit-voice-region.png)
 
@@ -78,11 +82,13 @@ Discord 用戶端是經過優化的 App，使用該 App 能夠大幅改善流暢
 
 ## 進階排解技巧
 
-### 如果是我自己託管的機器人卡頓
+### 如果是自己託管的機器人卡頓
 
 可以嘗試檢查一下自己的電腦 CPU 以及記憶體使用量，如果兩者的用量達到頂峰的時候也會造成音樂上的卡頓，
 
 在 NodeJS 上要查詢 CPU 使用量可以使用原生的 [`os-utils`](https://www.npmjs.com/package/os-utils) 模組來達成：
+
+<Adsense/>
 
 ```js
 const os = require("os-utils");
@@ -100,10 +106,10 @@ const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 10
 const memoryData = process.memoryUsage()
 
 const memoryUsage = {
-                rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
-                heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
-                heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
-                external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`,
+	rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
+	heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
+	heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
+	external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`
 }
 
 console.log(memoryUsage)
