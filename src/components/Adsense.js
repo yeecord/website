@@ -4,7 +4,9 @@ import styles from './Adsense.module.css';
 
 export default function Adsense() {
 	useEffect(() => {
-		(window.adsbygoogle = window.adsbygoogle || []).push({});
+		try {
+			(window.adsbygoogle = window.adsbygoogle || []).push({});
+		} catch (e) {}
 	}, []);
 	
 	return (
