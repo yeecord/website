@@ -1,10 +1,10 @@
 /docs /docs/intro 301
 /docs/ /docs/intro 301
-/i https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=17179830200&scope=applications.commands%20bot 301
-/invite https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=17179830200&scope=applications.commands%20bot 301
-/invite/ https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=17179830200&scope=applications.commands%20bot 301
-/link https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=17179830200&scope=applications.commands%20bot 301
-/link/ https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=17179830200&scope=applications.commands%20bot 301
+/i https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 301
+/invite https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 301
+/invite/ https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 301
+/link https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 301
+/link/ https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 301
 /patreon https://www.patreon.com/yeecord 301
 /donate https://www.patreon.com/yeecord 301
 /donate/ https://www.patreon.com/yeecord 301
