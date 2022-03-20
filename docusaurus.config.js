@@ -81,7 +81,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				{to: '/docs/faq/', label: '常見問題', position: 'left'},
 				{to: '/blog/', label: '部落格', position: 'left'},
 				{
-					href: "https://yeecord.com/invite",
+					href: "https://yeecord.com/link",
 					label: "邀請機器人",
 					position: "right",
 				},
@@ -135,7 +135,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					items: [
 						{
 							label: '邀請機器人',
-							href: 'https://yeecord.com/invite'
+							href: 'https://yeecord.com/link'
 						},
 						{
 							label: 'GitHub',
