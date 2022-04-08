@@ -63,6 +63,7 @@ export default function Home() {
 			description="YEE式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間">
 			<HomepageHeader/>
 			<main>
+				<HomepageFeatures/>
 				<section className={styles.servers_wrapper}>
 					<h2>各大中文伺服器一致好評</h2>
 					<div className={styles.servers}>
@@ -76,7 +77,19 @@ export default function Home() {
 						<Server name="Avery Community" src="/img/servers/avery.png"/>
 					</div>
 				</section>
-				<HomepageFeatures/>
+				<section className={styles.ctaContainer}>
+					<h2>
+						心動了嗎？馬上開始使用<br/>
+						加入我們兩萬人大家庭
+					</h2>
+					<div className={styles.buttons}>
+						<Link
+							className={styles.button}
+							to="/docs/intro">
+							開始使用
+						</Link>
+					</div>
+				</section>
 			</main>
 		</Layout>
 	);

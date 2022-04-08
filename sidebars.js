@@ -41,6 +41,7 @@ module.exports = {
 		'dvc',
 		'ticket',
 		'faq',
-		'credit'
+		'credit',
+		'copyright'
 	]
 };
