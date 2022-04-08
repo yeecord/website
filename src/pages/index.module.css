@@ -52,7 +52,7 @@
   padding: 8rem 2rem;
   margin: 0 calc(var(--global-padding) * -1);
   background-color: #2d3436;
-  background-image: linear-gradient(315deg, #232a2d 0%, #29333f 74%);
+  background-image: linear-gradient(315deg, #28294a 0%, #1b2836 74%);
 }
 
 .ctaContainer h2 {
