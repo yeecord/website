@@ -1,0 +1,34 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.blogPostData {
+  font-size: 0.9rem;
+}
+
+.blogPostDetailsFull {
+  flex-direction: column;
+}
+
+.blogPostTitle {
+  font-size: 3rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .blogPostTitle {
+    font-size: 2.5rem;
+    margin-top: 0;
+  }
+}
+
+.blogPostData {
+  font-size: 0.9rem;
+}
+
+.blogPostDetailsFull {
+  flex-direction: column;
+}
