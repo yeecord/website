@@ -32,9 +32,10 @@
 }
 
 .button {
-  background: rgb(59, 84, 246);
+  background: rgb(72, 107, 190);
+  background-image: linear-gradient(135deg, rgb(63, 113, 225), rgb(95, 91, 199));
   color: white;
-  padding: .75rem 3rem;
+  padding: .75rem 3.5rem;
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, .2);
   border-radius: 3px;
 }
