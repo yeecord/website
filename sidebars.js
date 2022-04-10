@@ -11,17 +11,19 @@
 
 module.exports = {
 	yeecordSidebar: [
-		'intro',
+		'index',
 		'migrate-to-v4',
 		{
 			type: 'category',
 			label: '指令',
+			link: { type: 'doc', id: 'commands/index' },
 			items: [
-				'commands/howto',
+				'commands/index',
 				'commands/list',
 				{
 					type: 'category',
 					label: '指令參照',
+					link: { type: 'generated-index' },
 					items: [
 						'commands/reference/general'
 					]
@@ -31,6 +33,7 @@ module.exports = {
 		{
 			type: 'category',
 			label: "RPG系統全攻略",
+			link: { type: 'doc', id: 'rpg/index' },
 			items: [
 				'rpg/index',
 				'rpg/jobs',
