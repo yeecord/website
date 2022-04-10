@@ -66,6 +66,7 @@ article > * {
 }
 
 article img {
+    height: auto !important;
     border-radius: 3px;
 }
 
@@ -78,7 +79,7 @@ article img {
     border-radius: 50%;
 }
 
-.main-wrapper.blog-wrapper .container {
+.main-wrapper .container.blog {
     max-width: 100%;
     padding: 0;
 }
