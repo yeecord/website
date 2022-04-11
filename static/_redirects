@@ -18,5 +18,6 @@
 /topgg https://top.gg/bot/584213384409382953 301
 /docs/intro /docs/ 301
 /docs/intro/ /docs/ 301
-/commands/howto /commands/ 301
-/commands/howto/ /commands/ 301
+/docs/commands/howto /docs/commands/ 301
+/docs/commands/howto/ /docs/commands/ 301
+/commands/ /docs/commands/ 301
