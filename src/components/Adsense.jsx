@@ -21,7 +21,7 @@ export default function Adsense(props) {
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
 					crossOrigin="anonymous"/>
 			</Head>
-				<span className={styles.text}>如果你對下面贊助商的內容有興趣可以點一下</span>
+				<span className={styles.text}>如果你對下面贊助商的內容有興趣可以點一下 也可以讓我們的機器龍活得更久</span>
 				<div style={{ minHeight: '280px' }}>
 					<ins className="adsbygoogle"
 						 aria-label="promote"
