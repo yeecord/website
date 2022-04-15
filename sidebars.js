@@ -37,7 +37,8 @@ module.exports = {
 			items: [
 				'rpg/index',
 				'rpg/jobs',
-				'rpg/shop'
+				'rpg/shop',
+				'rpg/make'
 			]
 		},
 		'chat',
