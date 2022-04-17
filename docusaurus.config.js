@@ -57,8 +57,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	
 	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 	themeConfig: ({
+		image: "https://cdn.yeecord.com/img/branding.png",
 		metadata: [
-			{ name: "og:image", content: "https://cdn.yeecord.com/img/branding.png"},
 			{ name: "twitter:card", content: "summary_large_image"}
 		],
 		colorMode: {
