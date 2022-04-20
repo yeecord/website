@@ -37,12 +37,6 @@ export default function Layout(props) {
 			
 			<Head>
 				<link rel="preconnect" href="https://cdn.yeecord.com/" crossOrigin/>
-				
-				<link rel="preconnect" href="https://fonts.googleapis.com"/>
-				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
-				<link
-					href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Readex+Pro:wght@500&display=swap"
-					rel="stylesheet"/>
 			</Head>
 			
 			<AnnouncementBar/>
