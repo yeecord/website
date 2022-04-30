@@ -73,7 +73,7 @@ b {
     font-weight: 700;
 }
 
-h1, h2, h2 > a, h3, #post-content > h3, strong, .breadcrumbs__link {
+h1, h2, h2 > a, h3, h3 > a, #post-content > h3, strong, .breadcrumbs__link {
     font-weight: 700;
     font-family: "Readex Pro", "Noto Sans TC", "LiHei Pro", "黑體-繁", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
 }
