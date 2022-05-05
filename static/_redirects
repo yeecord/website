@@ -1,8 +1,8 @@
-/i https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 302
-/invite https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 302
-/invite/ https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 302
-/link https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 302
-/link/ https://discord.com/oauth2/authorize?client_id=584213384409382953&permissions=8&scope=applications.commands%20bot 302
+/i https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
+/invite https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
+/invite/ https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
+/link https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
+/link/ https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
 /patreon https://www.patreon.com/yeecord 302
 /donate https://www.patreon.com/yeecord 302
 /donate/ https://www.patreon.com/yeecord 302
