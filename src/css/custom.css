@@ -53,6 +53,11 @@ h1 {
     margin-top: 2rem;
 }
 
+article header h1 {
+    margin-top: 1rem;
+    font-size: 3rem;
+}
+
 h2 {
     font-size: 1.8rem;
     margin-top: 1.5rem;
@@ -71,6 +76,10 @@ pre, code, code * {
 
 b {
     font-weight: 700;
+}
+
+h1, h2, h3 {
+    color: white;
 }
 
 h1, h2, h2 > a, h3, h3 > a, #post-content > h3, strong, .breadcrumbs__link {
@@ -116,6 +125,10 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
     .hero {
         padding: 0 !important;
     }
+
+    .navbar-sidebar__brand {
+        padding: 0 1.5rem;
+    }
 }
 
 @media screen and (max-width: 1520px) {
@@ -124,23 +137,25 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
     }
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1024px) {
     :root {
         --global-padding: 2rem;
+        --ifm-global-spacing: 0;
+    }
+
+    .main-wrapper .container {
+        padding: 0;
+    }
+
+    article header h1 {
+        font-size: 2.5rem;
+        margin-top: 0;
     }
 }
 
 @media screen and (max-width: 480px) {
     :root {
         --global-padding: 1rem;
-    }
-
-    .main-wrapper.docs-wrapper {
-        padding: 0;
-    }
-
-    .main-wrapper .container {
-        padding: 0 1rem;
     }
 
     h2 {
