@@ -41,10 +41,12 @@ module.exports = {
 				'rpg/make'
 			]
 		},
-		'chat',
+		// 'poll',
 		'dvc',
+		// 'join-message',
 		'ticket',
 		'faq',
+		'chat',
 		'credit',
 		'copyright'
 	]
