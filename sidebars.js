@@ -43,7 +43,7 @@ module.exports = {
 		},
 		// 'poll',
 		'dvc',
-		// 'join-message',
+		'join-message',
 		'ticket',
 		'faq',
 		'chat',
