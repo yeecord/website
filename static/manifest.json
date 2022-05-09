@@ -4,13 +4,18 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "128x128 64x64 32x32 24x24 16x16",
+      "sizes": "16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "/assets/img/logo.png",
+      "src": "/img/logo.png",
       "type": "image/png",
-      "sizes": "64x64"
+      "sizes": "128x128"
+    },
+    {
+      "src": "/img/logo_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": "./?utm_source=PWA&utm_medium=home_screen&utm_campaign=pwa",
