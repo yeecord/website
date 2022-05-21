@@ -65,13 +65,13 @@ h2 {
 
 *, li, div {
     font-family: "Noto Sans TC", "Readex Pro", "LiHei Pro", "黑體-繁", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
-    font-weight: 400;
+    font-weight: 500;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
 }
 
 pre, code, code * {
-    font-family: "JetBrains Mono", "Readex Pro", "Noto Sans TC", sans-serif !important;
+    font-family: "JetBrains Mono", "Noto Sans TC", "Readex Pro", sans-serif !important;
 }
 
 b {
