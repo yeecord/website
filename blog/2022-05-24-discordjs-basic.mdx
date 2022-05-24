@@ -1,0 +1,77 @@
+---
+slug: discordjs-basic
+title: 使用 Discord.js 快速建立一個 Discord 機器人
+authors: wolf
+description: "在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 機器人，並新增基本的斜線指令等"
+tags:
+  [
+    "Discord",
+    "dc",
+    "機器人",
+    "指令",
+    "discordjs",
+    "discord.js",
+    "建立機器人",
+    "建立",
+  ]
+image: /img/how-to-invite-bot/cover.jpeg
+date: 2022-05-24T9:30:00
+---
+
+import Adsense from "../src/components/Adsense";
+import TOCInline from "@theme/TOCInline";
+
+<TOCInline toc={toc} />
+
+在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 機器人，並新增基本的斜線指令等
+
+![Discord YEE式機器龍](/img/how-to-invite-bot/cover.jpeg)
+
+:::info 建議你先閱讀
+[什麼是 Discord 機器人？](/blog/how-to-invite-bot/#什麼是discord機器人)
+:::
+
+:::info 讀這篇教學前
+建議你有基本的 JavaScript 知識，並且有一個 Discord 帳號，並且有一個 Discord 機器人
+機器人創建步驟請看[註冊應用程式](/blog/make-discord-music-bot-without-coding/#1-註冊應用程式)
+:::
+
+<!--truncate-->
+
+<Adsense />
+
+## 這次會使用的程式
+
+這次的教學會使用 Node.js 和 Discord.js 來建立一個 Discord 機器人。
+
+### Node.js 是什麼？
+
+Node.js 是使用 Chrome v8 引擎建立的 JavaScript 執行環境，並且是一個服務器專用的 JavaScript 執行環境。
+
+JavaScript 也是一個學程式很好的切入點，因為 JavaScript 的語言型態跟其他程式語言很像，而且學起來也很容易。
+
+### Discord.js 是什麼？
+
+Discord.js 是一個 Node.js 的模組，提供了跟 Discord API 溝通的介面，Discord.js 算是使用 Node.js 建立機器人時中最多人用的模組。
+
+## 安裝 Node.js
+
+建立 Discord 機器人前，我們必須要先設定好 Node.js 環境
+
+首先，我們要先前往 [Node.js 官網](https://nodejs.org)
+
+![Node.js 官網](/img/discordjs-basic/nodejs-web.png)
+
+你會看到兩個大大的綠色按鈕，左邊的是 LTS 版本，也就是 Node.js 長期支援版，這個版本會比 Current 版穩定許多，**我們建議你選擇這個版本**
+
+右邊的是 Current 版本，包含比較新的功能，但是相對上的來說沒有那麼穩定，你也可以下載這個版本。
+
+打開下載後的安裝檔後，直接一直點 Next 到底就可以了
+
+![Node.js 安裝檔](/img/discordjs-basic/nodejs-installer.png)
+
+安裝完之後，重新啟動你的電腦(注意，是重新啟動，不是關機再開機)
+
+重新啟動後，
+
+<Adsense />
