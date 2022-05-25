@@ -146,7 +146,7 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 Vi
 
 <SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
   {`const client = new Client({
-  intents: [Intents.FLAGS.GUILDS]
+    intents: [Intents.FLAGS.GUILDS]
 });`}
 </SyntaxHighlighter>
 
@@ -161,5 +161,29 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 Vi
 </SyntaxHighlighter>
 
 > Token 是很重要的東西，不要把這個東西公開發布!
+
+到目前為止，我們已經可以成功登入 Discord 機器人了，但是我們只能從 Discord 上知道它上線，而且有時候直接看 Discord 上的狀態會不準，讓我們讓機器人登入成功且載入好之後，寫一條訊息讓我們知道
+
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+  {`client.on("ready", () => {
+    console.log("機器人已經成功上線且載入成功!");
+});`}
+</SyntaxHighlighter>
+
+> 程式碼彙整
+
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+  {`const { Client, Intents } = require("discord.js");
+ 
+const client = new Client({
+    intents: [Intents.FLAGS.GUILDS]
+});
+ 
+client.on("ready", () => {
+    console.log("機器人已經成功上線且載入成功!");
+});`}
+</SyntaxHighlighter>
+
+到這裡，機器人的基本程式碼寫完了，但是我們還沒有將機器人邀進伺服器，
 
 <Adsense />
