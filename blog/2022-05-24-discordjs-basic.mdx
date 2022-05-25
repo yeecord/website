@@ -2,7 +2,7 @@
 slug: discordjs-basic
 title: 使用 Discord.js 快速建立一個 Discord 骰子機器人
 authors: wolf
-description: "在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 骰子機器人，並新增基本的斜線指令等"
+description: "在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 骰子機器人，並新增基本的指令等"
 tags:
   [
     "Discord",
@@ -28,7 +28,7 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 <TOCInline toc={toc} />
 
-在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 機器人，並新增基本的斜線指令等
+在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 機器人，並新增基本的指令等
 
 ![Discord YEE式機器龍](/img/how-to-invite-bot/cover.jpeg)
 
@@ -54,7 +54,7 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 ## 這次要寫的程式
 
 - Discord.js 基本機器人登入
-- 斜線指令
+- 指令
   - ping 指令
   - 骰子指令
 
@@ -118,9 +118,9 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 Vi
 
 <Adsense />
 
-## 開始製作機器人
+## 準備基本程式碼
 
-在剛剛的黑框中輸入 `npm install discord.js`
+在剛剛的黑框中輸入 `npm install discord.js@13.7.0`
 
 這個指令會安裝 Discord.js 套件到你現在的資料夾中，所以資料夾裡面會出一個資料夾叫做 `node_modules`，這個資料夾包含所有 Discord.js 要的套件
 
@@ -145,7 +145,9 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 Vi
 建立一個新的 Client
 
 <SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {`const client = new Client({
+  {`const { Client, Intents } = require("discord.js");
+ 
+const client = new Client({
     intents: [Intents.FLAGS.GUILDS]
 });`}
 </SyntaxHighlighter>
@@ -157,7 +159,13 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 Vi
 這個 Token 是讓我們可以登入機器人帳號的密碼，在這裡我們也需要它
 
 <SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {`client.login("TOKEN放這裡");`}
+  {`const { Client, Intents } = require("discord.js");
+ 
+const client = new Client({
+    intents: [Intents.FLAGS.GUILDS]
+});
+ 
+client.login("TOKEN放這裡");`}
 </SyntaxHighlighter>
 
 > Token 是很重要的東西，不要把這個東西公開發布!
@@ -165,19 +173,13 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 Vi
 到目前為止，我們已經可以成功登入 Discord 機器人了，但是我們只能從 Discord 上知道它上線，而且有時候直接看 Discord 上的狀態會不準，讓我們讓機器人登入成功且載入好之後，寫一條訊息讓我們知道
 
 <SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {`client.on("ready", () => {
-    console.log("機器人已經成功上線且載入成功!");
-});`}
-</SyntaxHighlighter>
-
-> 程式碼彙整
-
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
   {`const { Client, Intents } = require("discord.js");
  
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS]
 });
+ 
+client.login("TOKEN放這裡");
  
 client.on("ready", () => {
     console.log("機器人已經成功上線且載入成功!");
@@ -200,10 +202,193 @@ client.on("ready", () => {
 
   我們剛剛有開一個小黑框對吧，在那個小黑框中輸入:
 
-  <SyntaxHighlighter language="shell" showLineNumbers={true} style={dracula}>
+  <SyntaxHighlighter showLineNumbers={true} style={dracula}>
     {`node index.js`}
   </SyntaxHighlighter>
 
   如果你輸入的所有東西都沒錯，這樣做機器人應該就到線上了
+
+  ![讀取成功](/img/discordjs-basic/cmd-run.png)
+
+  ![機器人上線](/img/discordjs-basic/bot-online.png)
+
+## 骰子指令
+
+指令是我們可以跟 Discord 機器人溝通的方法，有常在使用機器人應該都對指令不陌生，現在就讓我們來編寫一個骰子指令吧
+
+### 訊息處理
+
+首先要讓機器人知道有新的訊息
+
+<SyntaxHighlighter
+  startingLineNumber={12}
+  language="javascript"
+  showLineNumbers={true}
+  style={dracula}
+>
+  {`// 接續前一部份的程式碼
+client.on("messageCreate", (message) => {
+  
+});`}
+</SyntaxHighlighter>
+
+接下來我們要決定一個機器人指令前綴，這個可以設定成任何一個文字或是符號
+
+<SyntaxHighlighter
+  startingLineNumber={13}
+  language="javascript"
+  showLineNumbers={true}
+  style={dracula}
+>
+  {`client.on("messageCreate", (message) => {
+    let prefix = "/"; // 如果要改成自己的前綴，改"裡面的字串
+});`}
+</SyntaxHighlighter>
+
+如果訊息不是以前綴開頭，就忽略訊息 (不然機器人就會一直回覆訊息)
+
+<SyntaxHighlighter
+  startingLineNumber={13}
+  language="javascript"
+  showLineNumbers={true}
+  style={dracula}
+>
+  {`client.on("messageCreate", (message) => {
+    let prefix = "/";
+    if (!message.content.startsWith(prefix)) return;
+});`}
+</SyntaxHighlighter>
+
+我們這次要建立的機器人是骰子機器人，接下來就是指令本體了
+
+首先，先讓機器人認出這是骰子指令
+
+<SyntaxHighlighter
+  startingLineNumber={13}
+  language="javascript"
+  showLineNumbers={true}
+  style={dracula}
+>
+  {`client.on("messageCreate", (message) => {
+    let prefix = "/";
+    if (!message.content.startsWith(prefix)) return;
+ 
+    let args = message.content.replace(prefix, "").split(" ");
+    switch (args[0]) {
+        case "dice":
+          message.reply("你剛剛是不是觸發了骰子指令?");
+   }
+});`}
+</SyntaxHighlighter>
+
+如果你輸入的所有東西都沒錯，開啟機器人後，在文字頻道中輸入 `/dice` 後機器人應該就會回覆你的訊息了! (如果你不是以 `/` 作為你的指令前綴，請將 `/` 變更為你自己訂的前綴)
+
+![機器人回覆訊息](/img/discordjs-basic/bot-reply-first.png)
+
+### 加入骰子功能
+
+但是現在他只有回覆訊息而已，還沒有真正的"骰子"功能，讓我們現在來加入這個功能吧
+
+<SyntaxHighlighter
+  startingLineNumber={13}
+  language="javascript"
+  showLineNumbers={true}
+  style={dracula}
+>
+  {`client.on("messageCreate", (message) => {
+    let prefix = "/";
+    if (!message.content.startsWith(prefix)) return;
+ 
+    let args = message.content.replace(prefix, "").split(" ");
+    switch (args[0]) {
+        case "dice":
+          let final = Math.floor(Math.random() * (6 - 1)) + 1; // 從 6 ~ 1 中挑選一個號碼
+          message.reply(\`你得到了 \${final}!\`);
+   }
+});`}
+</SyntaxHighlighter>
+
+這個時候，再啟動一次機器人，輸入指令後，機器人應該就會回覆你得到的號碼了!
+
+![機器人得到號碼](/img/discordjs-basic/bot-reply-second.png)
+
+### 嵌入式訊息
+
+但是現在回覆的訊息很一般，我們可以把訊息變成 `Embed` ，也就是嵌入式訊息，在設計方面看起來就會比較好看
+
+先讓我們回到第一行，導入 Discord.js 的程式區塊，我們要新增一個模組，叫做 `MessageEmbed`
+
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+  {'const { Client, Intents, MessageEmbed } = require("discord.js");'}
+</SyntaxHighlighter>
+
+之後再修改指令的部分，讓它傳送嵌入式訊息
+
+<SyntaxHighlighter
+  startingLineNumber={13}
+  language="javascript"
+  showLineNumbers={true}
+  style={dracula}
+>
+  {`client.on("messageCreate", (message) => {
+    let prefix = "/";
+    if (!message.content.startsWith(prefix)) return;
+ 
+    let args = message.content.replace(prefix, "").split(" ");
+    switch (args[0]) {
+        case "dice":
+          let final = Math.floor(Math.random() * (6 - 1)) + 1;
+          let diceEmbed = new MessageEmbed()
+              .setTitle(\`🎲 你得到了 \${final}\`) //設定標題
+              .setColor("#5865F2"); //設定顏色
+          message.reply({
+              embeds: [diceEmbed]
+          });
+   }
+});`}
+</SyntaxHighlighter>
+
+現在機器人終於會回覆一個比較漂亮的訊息了!
+
+![機器人Embed](/img/discordjs-basic/bot-reply-third.png)
+
+## 總結
+
+### 程式碼總整理
+
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+  {`const { Client, Intents } = require("discord.js");
+ 
+const client = new Client({
+    intents: [Intents.FLAGS.GUILDS]
+});
+ 
+client.login("TOKEN放這裡");
+ 
+client.on("ready", () => {
+    console.log("機器人已經成功上線且載入成功!");
+});
+ 
+client.on("messageCreate", (message) => {
+    let prefix = "/"; // 如果要改成自己的前綴，改"裡面的字串
+    if (!message.content.startsWith(prefix)) return;
+ 
+    let args = message.content.replace(prefix, "").split(" ");
+    switch (args[0]) {
+        case "dice":
+          let final = Math.floor(Math.random() * (6 - 1)) + 1;
+          let diceEmbed = new MessageEmbed()
+              .setTitle(\`🎲 你得到了 \${final}\`)
+              .setColor("#5865F2");
+          message.reply({
+              embeds: [diceEmbed]
+          });
+ 
+}
+});`}
+
+</SyntaxHighlighter>
+
+這個就是這次的"簡易版" Discord 骰子機器人，如果在建立/架設時有發現問題，歡迎直接私訊 `Wolf yuan#6173`
 
 <Adsense />
