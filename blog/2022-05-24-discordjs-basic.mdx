@@ -1,8 +1,8 @@
 ---
 slug: discordjs-basic
-title: 使用 Discord.js 快速建立一個 Discord 機器人
+title: 使用 Discord.js 快速建立一個 Discord 骰子機器人
 authors: wolf
-description: "在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 機器人，並新增基本的斜線指令等"
+description: "在這個教學中，我們會使用 Discord.js v13 快速建立一個 Discord 骰子機器人，並新增基本的斜線指令等"
 tags:
   [
     "Discord",
@@ -13,6 +13,8 @@ tags:
     "discord.js",
     "建立機器人",
     "建立",
+    "骰子",
+    "骰子機器人",
   ]
 image: /img/how-to-invite-bot/cover.jpeg
 date: 2022-05-24T9:30:00
@@ -20,6 +22,9 @@ date: 2022-05-24T9:30:00
 
 import Adsense from "../src/components/Adsense";
 import TOCInline from "@theme/TOCInline";
+
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 <TOCInline toc={toc} />
 
@@ -38,23 +43,30 @@ import TOCInline from "@theme/TOCInline";
 
 ## 機器人是什麼
 
-機器人在 Discord，這個讓大家透過文字和語音交流的平台上，扮演著很重要的角色，透過使用簡單的「指令」來跟機器人互動，幫助你自動化的管理 Discord 伺服器，或是完成許多瑣碎的事情。
+機器人在 Discord，這個讓大家透過文字和語音交流的平台上，扮演著很重要的角色，透過使用簡單的「指令」來跟機器人互動，幫助你自動化的管理 Discord 伺服器，或是完成許多瑣碎的事情
 
 延伸閱讀: [你不需要會寫程式，也能製作 Discord 音樂機器人](/blog/make-discord-music-bot-without-coding/)
 
 ## 這次會使用的程式
 
-這次的教學會使用 Node.js 和 Discord.js 來建立一個 Discord 機器人。
+這次的教學會使用 Node.js 和 Discord.js 來建立一個 Discord 機器人
+
+## 這次要寫的程式
+
+- Discord.js 基本機器人登入
+- 斜線指令
+  - ping 指令
+  - 骰子指令
 
 ### Node.js 是什麼？
 
-Node.js 是使用 Chrome v8 引擎建立的 JavaScript 執行環境，並且是一個服務器專用的 JavaScript 執行環境。
+Node.js 是使用 Chrome v8 引擎建立的 JavaScript 執行環境，並且是一個服務器專用的 JavaScript 執行環境
 
-JavaScript 也是一個學程式很好的切入點，因為 JavaScript 的語言型態跟其他程式語言很像，而且學起來也很容易。
+JavaScript 也是一個學程式很好的切入點，因為 JavaScript 的語言型態跟其他程式語言很像，而且學起來也很容易
 
 ### Discord.js 是什麼？
 
-Discord.js 是一個 Node.js 的模組，提供了跟 Discord API 溝通的介面，Discord.js 算是使用 Node.js 建立機器人時中最多人用的模組。
+Discord.js 是一個 Node.js 的模組，提供了跟 Discord API 溝通的介面，Discord.js 算是使用 Node.js 建立機器人時中最多人用的模組
 
 ## 設定環境
 
@@ -89,5 +101,65 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 Vi
 安裝程式也一樣，Next 到底即可
 
 ### 設定好工作區域
+
+在一個你喜歡的地方，建立一個新的資料夾，我這裡是以 `discordjs-basic` 當作資料夾名稱
+
+建立好資料夾後，選取那個資料夾，壓下 `Ctrl + Shift + C` 來複製路徑，之後再壓下 `Windows鍵 + R` 並輸入 `cmd` 來打開命令提示字元
+
+![開始](/img/discordjs-basic/winr-cmd.png)
+
+![命令提示字元](/img/discordjs-basic/cmd-init.png)
+
+之後再輸入 `cd 空格` 並按 `Ctrl + V` 來貼上剛剛複製的路徑
+
+> (空格就是空白鍵，不是真的打空格進去)
+
+這樣命令提示字元就設定完成了，不過 **先不要關掉這個黑框!!**
+
+<Adsense />
+
+## 開始製作機器人
+
+在剛剛的黑框中輸入 `npm install discord.js`
+
+這個指令會安裝 Discord.js 套件到你現在的資料夾中，所以資料夾裡面會出一個資料夾叫做 `node_modules`，這個資料夾包含所有 Discord.js 要的套件
+
+接下來打開 Notepad ++，點左上角的按鈕來新增一個文件
+
+![新增一個文件](/img/discordjs-basic/notepad-init.png)
+
+新增完之後，我們先做第一次的存檔，點左上角的 `檔案` 選單，選擇另存新檔，找到你剛剛建立的資料夾，**把檔名改成 index.js，底下的檔案類型成 JavaScript file** (這很重要!)
+
+![新增一個文件](/img/discordjs-basic/notepad-firstsave.png)
+
+確認兩個欄位都沒有問題後，將檔案存好
+
+存好檔案之後，我們就要開始編寫程式了!
+
+首先，我們要先載入 Discord.js 中的 Client
+
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+  {'const { Client, Intents } = require("discord.js");'}
+</SyntaxHighlighter>
+
+建立一個新的 Client
+
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+  {`const client = new Client({
+  intents: [Intents.FLAGS.GUILDS]
+});`}
+</SyntaxHighlighter>
+
+> Intents 是 Discord 機器人登入時要使用的參數，會讓 Discord 知道你要存取什麼資料
+
+接下來再登入 Discord 機器人，還記得在 [你不需要會寫程式，也能製作 Discord 音樂機器人](/blog/make-discord-music-bot-without-coding/) 時有一個機器人 Token 嗎?
+
+這個 Token 是讓我們可以登入機器人帳號的密碼，在這裡我們也需要它
+
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+  {`client.login("TOKEN放這裡");`}
+</SyntaxHighlighter>
+
+> Token 是很重要的東西，不要把這個東西公開發布!
 
 <Adsense />
