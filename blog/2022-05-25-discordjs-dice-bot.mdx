@@ -244,15 +244,16 @@ client.on("messageCreate", (message) => {
   style={dracula}
 >
 {`client.on("messageCreate", (message) => {
-	const prefix = "/"
-	if (!message.content.startsWith(prefix))
-		return
-	
-	const args = message.content.slice(prefix.length).split(" ")
-	switch (args[0]) {
-		case "dice":
-		  message.reply("你剛剛是不是觸發了骰子指令?")
-	}
+    const prefix = "/"
+    if (!message.content.startsWith(prefix))
+        return
+    
+    const args = message.content.slice(prefix.length).split(" ")
+    
+    switch (args[0]) {
+    case "dice":
+        message.reply("你剛剛是不是觸發了骰子指令?")
+    }
 })`}
 </SyntaxHighlighter>
 
@@ -271,12 +272,12 @@ client.on("messageCreate", (message) => {
   style={dracula}
 >
 {`client.on("messageCreate", (message) => {
-	// 延續上面的程式
-	switch (args[0]) {
-		case "dice":
-			const final = Math.floor(Math.random() * (6 - 1)) + 1 // 從 6 ~ 1 中挑選一個號碼
-			return message.reply(\`你得到了 \${final}!\`)
-	}
+    // 延續上面的程式
+    switch (args[0]) {
+	    case "dice":
+            const final = Math.floor(Math.random() * (6 - 1)) + 1 // 從 6 ~ 1 中挑選一個號碼
+            return message.reply(\`你得到了 \${final}!\`)
+    }
 })`}
 </SyntaxHighlighter>
 
@@ -305,17 +306,17 @@ client.on("messageCreate", (message) => {
   style={dracula}
 >
 {`client.on("messageCreate", (message) => {
-	// 延續上面的程式
-	switch (args[0]) {
-		case "dice":
-			const final = Math.floor(Math.random() * (6 - 1)) + 1
-			const diceEmbed = new MessageEmbed()
-				.setTitle(\`🎲 你得到了 \${final}\`) //設定標題
-				.setColor("#5865F2") //設定顏色
-			return message.reply({
-				embeds: [diceEmbed]
-  			})
-	}
+    // 延續上面的程式
+    switch (args[0]) {
+    case "dice":
+        const final = Math.floor(Math.random() * (6 - 1)) + 1
+        const diceEmbed = new MessageEmbed()
+            .setTitle(\`🎲 你得到了 \${final}\`) //設定標題
+            .setColor("#5865F2") //設定顏色
+        return message.reply({
+            embeds: [diceEmbed]
+        })
+    }
 })`}
 </SyntaxHighlighter>
 
@@ -339,19 +340,19 @@ client.on("ready", () => {
 client.on("messageCreate", (message) => {
     const prefix = "/" // 如果要改成自己的前綴，改"裡面的字串
     if (!message.content.startsWith(prefix))
-    	return
- 
+        return
+    
     const args = message.content.slice(prefix.length).split(" ")
     switch (args[0]) {
         case "dice":
-			const final = Math.floor(Math.random() * (6 - 1)) + 1
-			const diceEmbed = new MessageEmbed()
-				.setTitle(\`🎲 你得到了 \${final}\`)
-				.setColor("#5865F2")
-			return message.reply({
-				embeds: [diceEmbed]
-			})
-	}
+            const final = Math.floor(Math.random() * (6 - 1)) + 1
+            const diceEmbed = new MessageEmbed()
+                .setTitle(\`🎲 你得到了 \${final}\`)
+                .setColor("#5865F2")
+            return message.reply({
+                embeds: [diceEmbed]
+            })
+    }
 })`}
 </SyntaxHighlighter>
 
