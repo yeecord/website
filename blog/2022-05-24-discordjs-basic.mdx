@@ -184,6 +184,26 @@ client.on("ready", () => {
 });`}
 </SyntaxHighlighter>
 
-到這裡，機器人的基本程式碼寫完了，但是我們還沒有將機器人邀進伺服器，
+到這裡，機器人的基本程式碼寫完了，但是我們還沒有將機器人邀進伺服器，也還沒有跑過程式
+
+- 邀請機器人
+
+  打開 Disord 開發者頁面，選擇你的應用程式，之後再選擇 `Oauth2 -> URL Generator`
+
+  選擇 Scope: `bot, applications.commands`
+
+  選擇機器人權限: `Administrator` (Administrator 是管理員的意思，你也可以選擇其他的權限，但是小心不要讓機器人爆炸就是了)
+
+  ![邀請機器人](/img/discordjs-basic/invite-bot.png)
+
+- 啟動機器人
+
+  我們剛剛有開一個小黑框對吧，在那個小黑框中輸入:
+
+  <SyntaxHighlighter language="shell" showLineNumbers={true} style={dracula}>
+    {`node index.js`}
+  </SyntaxHighlighter>
+
+  如果你輸入的所有東西都沒錯，這樣做機器人應該就到線上了
 
 <Adsense />
