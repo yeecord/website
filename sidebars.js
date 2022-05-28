@@ -41,6 +41,7 @@ module.exports = {
 				'rpg/make'
 			]
 		},
+		'role',
 		'poll',
 		'dvc',
 		'join-message',
