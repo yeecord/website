@@ -49,7 +49,7 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 <!--truncate-->
 
-<Adsense />
+<Adsense/>
 
 ## 進入程式的大門
 
@@ -71,7 +71,7 @@ JavaScript 也是一個學程式很好的切入點，因為 JavaScript 的語言
 
 ![Node.js 官網](/img/discordjs-dice-bot/nodejs-web.png)
 
-<Adsense />
+<Adsense/>
 
 安裝完之後，必須要先重新啟動你的電腦 (注意，是重新啟動，不是關機再開機)，重新啟動完之後，NodeJS 就成功安裝到你的電腦了！
 
@@ -98,7 +98,7 @@ Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 [V
 
 ![命令提示字元](/img/discordjs-dice-bot/cmd-init.png)
 
-<Adsense />
+<Adsense/>
 
 ### 邀請機器人
 
@@ -218,7 +218,7 @@ client.on("messageCreate", (message) => {
 
 接下來我們要決定一個機器人指令前綴，這個可以設定成任何一個文字或是符號，如果訊息不是以前綴開頭，就忽略訊息 (不然機器人就會一直回覆訊息)。
 
-<Adsense />
+<Adsense/>
 
 <SyntaxHighlighter
   startingLineNumber={13}
@@ -291,7 +291,7 @@ client.on("messageCreate", (message) => {
 
 先讓我們回到第一行，引入 discord.js 套件的程式區塊，我們要多引入一個模組，叫做 `MessageEmbed`，把最上面那行改成這樣：
 
-<Adsense />
+<Adsense/>
 
 <SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
 {'const { Client, Intents, MessageEmbed } = require("discord.js")'}
@@ -362,4 +362,4 @@ client.login("你的TOKEN")`}
 
 以上就是這次的「簡易版」 Discord 骰子機器人，如果在建立或是架設時有發現問題，可以到我們的 [支援群組](https://discord.gg/yeecord) 詢問，或是直接私訊 `Wolf yuan#6173`。
 
-<Adsense />
+<Adsense/>
