@@ -1,6 +1,6 @@
 kane:
   name: 凱恩Kane
-  title: YEE式機器龍作者
+  title: Yee式機器龍作者
   url: https://github.com/Gary50613
   image_url: /img/Gary50613.jpg
 wolf:
@@ -8,3 +8,8 @@ wolf:
   title: 黑貓音樂機器人作者
   url: https://github.com/wolf-yuan-6115
   image_url: /img/WolfYuan.jpg
+moon:
+  name: 奇蹟 • 月兔
+  title: Yee式機器龍主機維護者
+  url: https://github.com/ItzMiracleOwO
+  image_url: /img/logo.png # Logo missing
