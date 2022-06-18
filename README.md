@@ -16,19 +16,18 @@
 
 ### 專案結構
 
-```
-.
-├── README.md
-├── babel.config.js
-├── blog # 部落格文章
-├── docs # 文檔
-├── docusaurus.config.js # docusaurus 設定檔案
-├── node_modules # NodeJS 的無底洞
-├── package-lock.json # npm 的設定檔
-├── package.json # npm 的設定檔
-├── sidebars.js # docs 的側邊欄
-├── src # 專案主要程式
-└── static # 靜態圖片等檔案
+```yaml
+- README.md: Readme
+- babel.config.js: Babel 配置檔
+- blog: 部落格文章
+- docs: 文檔
+- docusaurus.config.js: docusaurus 設定檔案
+- node_modules: NodeJS 的無底洞
+- package-lock.json: npm 的設定檔
+- package.json: npm 的設定檔
+- sidebars.js: docs 的側邊欄
+- src: 專案主要程式
+- static: 靜態圖片等檔案
 ```
 
 ### 你需要先準備好
