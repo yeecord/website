@@ -35,7 +35,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
 					sidebarCollapsed: false,
-					sidebarCollapsible: true
+					sidebarCollapsible: true,
+					editUrl: 'https://github.com/Gary50613/yeecord-docs#readme'
 				},
 				blog: {
 					blogTitle: "部落格",
