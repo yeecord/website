@@ -38,5 +38,25 @@ import Adsense from "../src/components/Adsense";
 如果仍然有問題，請到 [支援伺服器](https://yeecord.com/support) 告訴我們！
 
 ![跨群聊天室 資訊](/img/docs/chat/chat-info.png)
+## 如何使某人變成跨群管理員？
+
+使用 `&chat op 那個人的ID`
+
+**注意！** 此操作只有跨群擁有者可以使用
+
+## 如果有人不遵守你所訂的跨群規則？
+
+首先使用 `&chat minfo 訊息ID` 來查詢使用者ID
+
+![跨群聊天室 訊息ID](https://media.discordapp.net/attachments/856382888089747520/988043525578977290/IMG_2393.png)
+
+複製在成員下方的一長串數字
+
+之後永久禁言那個用戶打 `&chat ban 用戶ID 原因` 用戶的ID就是我們剛剛複製的ID
+
+![跨群聊天室 禁言](https://media.discordapp.net/attachments/856382888089747520/988046033684676688/IMG_2394.png)
+
+**注意！** 執行此指令的時候必須是跨群管理員或是擁有者，不然會顯示`❌|你沒有權限這麼做`，還有一旦永久禁言了就無法解除請再三確認你是否打對ID
+<br>另外在伺服器內身份組也必須要有`管理頻道`還有`管理訊息`的權限，否則真的會很尷尬喔！
 
 <Adsense/>
