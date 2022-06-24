@@ -25,7 +25,7 @@
 - node_modules: NodeJS 的无底洞
 - package-lock.json: npm 的设置
 - package.json: npm 的设置
-- sidebars.js: docs 的侧边栏
+- sidebars.js: docs 的侧栏
 - src: 网页主要程序
 - static: 静态图片等文件
 ```
