@@ -8,7 +8,7 @@
 
 ## 📝 部落格
 
-在 `blog` 文件夹內是关于 [部落格](https://yeecord.com/blog/) 的文件
+在 `blog` 文件夹內是关于 [论坛](https://yeecord.com/blog/) 的文件
 
 ## ❤️ 我想要贡献
 
@@ -19,7 +19,7 @@
 ```yaml
 - README.md: Readme
 - babel.config.js: Babel 配置
-- blog: 部落格文章
+- blog: 论坛文章
 - docs: 文档
 - docusaurus.config.js: docusaurus 设定文件
 - node_modules: NodeJS 的无底洞
