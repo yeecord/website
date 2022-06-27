@@ -26,7 +26,8 @@
     "react-player": "^2.9.0",
     "react-syntax-highlighter": "^15.5.0",
     "react-twitter-embed": "^4.0.4",
-    "url-loader": "4.1.1"
+    "url-loader": "4.1.1",
+    "tailwindcss": "^3.1.4"
   },
   "browserslist": {
     "production": [
@@ -39,8 +40,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.1.4"
   }
 }
