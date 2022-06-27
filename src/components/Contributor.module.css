@@ -1,0 +1,12 @@
+.wrapper {
+  background: #2e333a;
+  @apply flex flex-row flex-wrap p-5 rounded-lg gap-5 w-3/4;
+}
+
+.item {
+  @apply flex flex-row gap-5 flex-wrap;
+}
+
+.avatar {
+  @apply object-scale-down w-40 rounded-full;
+}

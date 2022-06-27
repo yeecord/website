@@ -1,0 +1,11 @@
+.commit {
+  @apply bg-white rounded-lg relative mt-10 py-10 px-6;
+}
+
+.icon {
+  @apply absolute top-0 left-0 w-20 bg-white rounded-full transform -translate-y-1/3;
+}
+
+.commit > * {
+  @apply text-black;
+}
