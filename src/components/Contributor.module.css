@@ -3,10 +3,21 @@
   @apply flex flex-row flex-wrap p-5 rounded-lg gap-5 w-3/4;
 }
 
+.wrapper > * {
+  flex: 1 1 0;
+  @apply min-w-fit;
+}
+
 .item {
-  @apply flex flex-row gap-5 flex-wrap;
+  @apply flex flex-row gap-5;
 }
 
 .avatar {
   @apply object-scale-down w-40 rounded-full;
+}
+
+@media (max-width: 996px) {
+  .item {
+    @apply flex flex-col gap-5;
+  }
 }

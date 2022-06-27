@@ -8,10 +8,18 @@ const contributors = [
     description: "項目創始人",
   },
   {
+    name: "Wolf yuan#6173",
+    img: "img/avatars/Wolf_Yuan.png",
+    description: "貢獻了一堆文檔的大佬",
+  },
+  /*
+  We removed it for safely, please never add it back :P
+  {
     name: "月月𝕋𝕤𝕦𝕜𝕚🍭#0820",
     img: "img/avatars/Tsuki.png",
     description: "她絕對不是機器人, 而且唱歌超好聽",
   },
+  */
   {
     name: "xiao xigua#5978",
     img: "img/avatars/idk.png",
@@ -28,7 +36,7 @@ function Item({ name, img, description }) {
   return (
     <div className={styles.item}>
       <img src={img} className={styles.avatar} alt={name} />
-      <div>
+      <div className="flex-1">
         <h1>{name}</h1>
         <p>{description}</p>
       </div>

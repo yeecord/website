@@ -62,7 +62,7 @@ function Server(props) {
     <div className="server">
       {props.partner && <Partner />}
       <img src={props.src} alt={props.name} className="icon" />
-      <p>{props.name}</p>
+      <p className="w-fit">{props.name}</p>
     </div>
   );
 }
@@ -153,6 +153,7 @@ function Community() {
           <br />
           馬上加入我們兩萬人大家庭
         </h2>
+        <p>有月月等小幫手熱情迎接你</p>
         <LinkButton to="https://discord.gg/RKmxpBcTMs">加入服務器</LinkButton>
       </section>
     </>

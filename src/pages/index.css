@@ -135,7 +135,8 @@
 }
 
 .server {
-  @apply relative m-2 flex flex-row gap-2 items-center flex-shrink-0 max-w-full;
+  flex: 1 1 0;
+  @apply relative m-2 flex flex-row gap-2 items-center max-w-full min-w-fit;
 }
 
 .partner__wrapper {
@@ -166,6 +167,10 @@
   .servers_wrapper {
     margin-top: 4rem;
     padding: 1rem 1rem;
+  }
+
+  .servers {
+    @apply flex flex-col gap-3 w-full;
   }
 
   .icon__wrapper {
