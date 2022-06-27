@@ -1,0 +1,321 @@
+---
+slug: discordjs-command-handler1
+title: 如何用discord.js建立一個指令系統
+authors: [kay]
+description: "此文章會由Wolf Yuan先前建立的「使用 discord.js 快速建立一個 Discord 骰子機器人」延伸，會教大家簡單件裡起一個指令系統，讓管理指令更方便"
+tags:
+  [
+    "Discord",
+    "dc",
+    "機器人",
+    "指令",
+    "指令系統",
+    "command",
+    "commandHanlder",
+    "discordjs",
+    "discord.js",
+  ]
+date: 2022-06-27T17:08:17
+---
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
+
+# 如何用discord.js建立一個指令系統
+
+此文章會從Wolf Yuan先前建立的「使用 discord.js 快速建立一個 Discord 骰子機器人」文章程式碼延伸，教大家簡單建立一個指令系統，讓管理指令更方便
+:::warning
+1. 此教學會從[使用 discord.js 快速建立一個 Discord 骰子機器人](https://yeecord.com/blog/discordjs-dice-bot/)文章的程式碼進行延伸，如果您是一個discord.js新手，並且對此文章要修改（不含撰寫）的程式碼感到陌生者，請先閱讀該文章！
+2. 此文章會提及一些JS名詞，會盡量簡單介紹，如果您想要更深入地去瞭解那些東西，以下提供相關連結，我也會在文中的解析提供MSDN等其他平台連結讓您參考學習。
+* discord.js docs: https://discord.js.org/#/  
+* MSDN JavaScript Docs: https://developer.mozilla.org/zh-TW/docs/Web/JavaScript  
+:::
+<!--truncate-->
+
+## 前言
+相信有些人在剛入坑discord.js的時候，應該有被discord.js沒有內附指令系統這件事給嚇到吧？尤其以前有碰過NextCord等有附指令系統模組的玩家，到了discord.js後，發現沒有指令系統，可能就會被搞到不想入坑了，或者就乾脆只建立一個messageCreate監聽器，然後指令處理與指令程式碼全部塞在裡面......  
+
+不想入坑的話我是沒什麼意見，畢竟每個人都有自己的選擇。但是只建立一個messageCreate監聽器，並且把指令程式碼全部塞在裡頭，我覺得真的會很亂，並且指令一多以後，要改指令時，尋找指令就會變成你維護你機器人時揮之不去的噩夢......  
+
+所以想寫此篇文章，讓大家知道一個簡易指令系統要怎麼做，讓機器人的文字指令變得容易維護。 
+
+## 先講一下指令構造
+嗯，先來講一下一個指令的構造吧（在此以ban指令舉例）！指令構造的名詞在等一下出現喔！  
+![](https://i.imgur.com/OG1sRhC.png)
+1. **前綴：**幾乎每個bot都有的，有點像一個識別，通常能讓人知道自己輸入哪一個機器人的指令  
+2. **指令名稱/別名：**你希望機器人做什麼事
+3. **指令參數：**執行指令所需的一些資訊，有些指令會有，也有些會沒有
+
+## 指令系統的構造
+一個最基本指令系統會有以下幾個構造：  
+* **指令載入器：**去指令程式碼資料夾讀取指令的程式碼檔案，並將檔案掛載。  
+* **指令暫存區：**將掛載進來的指令進行儲存，以利在後續執行指令時，能直接從該儲存空間尋找並執行相對應指令的程式碼。  
+* **指令處理器：**接收到訊息後，負責判斷訊息是否為指令，符不符合指令執行條件等，並對訊息進行分析後，去指令儲存區找到對應指令並執行。  
+
+## 指令系統的執行流程  
+機器人上線前初始化時：  
+1. 指令載入器載入指令  
+
+上線後，接收到創建訊息事件（``on("messageCreate",(message) => {})``）：  
+1. 判斷、分析指令（分析指令名稱、參數等）  
+2. 去指令暫存區尋找是否有相對應的指令  
+3. 執行指令（如果指令有找到）  
+
+## 建立指令程式碼資料夾與指令暫存區
+### 建立指令程式碼檔案存放處
+
+首先，請先在專案資料夾下新增一個資料夾（存放指令程式碼檔案用）：  
+![](https://i.imgur.com/7xezTI6.png)  
+
+### 創建指令暫存區
+再來，我們來創建指令暫存區吧！  
+請將載入discord.js模組的那一行：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`const { Client, Intents } = require("discord.js");`}
+</SyntaxHighlighter>
+
+的大括號內最後面，多加上一個``, Collection``以載入Collection：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`const { Client, Intents, Collection } = require("discord.js");`}
+</SyntaxHighlighter>
+
+並請在 ``client.on("ready",() => {})`` 上一行加上：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`client.commands = new Collections()`}
+</SyntaxHighlighter>
+
+:::info NOTE
+當然在此您也可以使用Map，只是功能部分，Map與discord.js官方撰寫的Collection相比，Collection功能會比較多，使用起來會比較方便  
+
+Map簡單來說就是一個儲存很多鍵值對(key-value)的物件，跟字典相似，如果想深入了解可參考[MSDN文件的Map介紹]("https://developer.mozilla.org/zh-TW/docs/orphaned/Web/JavaScript/Reference/Global_Objects/Map")
+<details>
+<summary>Map和Collection的function小比較（會列一些個人覺得比較常用的）</summary>
+
+| function | Map | Collection |
+| -------- | --- | ---------- |
+| set      | 有  | 有         |
+| get      | 有  | 有         |
+| delete   | 有  | 有         |
+| equals   | 無   | 有         |
+| map      | 無   | 有         |
+| find      | 無   | 有         |
+| findKey      | 無   | 有         |
+| filter      | 無   | 有         |
+| first      | 無   | 有         |
+</details>
+:::
+
+## 指令載入器
+再來我們寫指令載入器吧！不然撰寫了多少指令，如果沒有載入也是沒辦法使用。  
+
+請先在``index.js``同層資料夾下新增``commandLoader.js``  
+首先，我們載入讀取檔案與資料夾的模組模組：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`const { readdirSync } = require("fs");`}
+</SyntaxHighlighter>
+
+再建立一個function用來載入指令，並且匯出：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`function loadCommands(client, directory) {
+    
+}
+  
+module.exports = loadCommands;`}
+</SyntaxHighlighter>
+
+:::info NOTE
+您也可以這樣寫（我也比較習慣這樣寫，但新手推薦上面那種）：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`module.exports = function loadCommands(client, directory) {
+    
+};`}
+</SyntaxHighlighter>
+:::
+
+接下來就開始實作載入指令吧！  
+首先先讀取指令程式碼檔案資料夾：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`function loadCommands(client, directory) {
+    const files = readdirSync(directory, {
+        withFileTypes: true,
+    });
+};`}
+</SyntaxHighlighter>
+讀取完後，接著開始對讀取到的檔案或資料夾逐個進行處理：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`function loadCommands(client, directory) {
+    //延續上方程式碼
+    for (const file of files) {
+        if (file.isDirectory()) {                             //如果讀取到資料夾
+            loadCommands(client, \`\${directory}/\${file.name}\`);//進入該資料夾繼續讀取
+        } else if (file.name.endsWith(".js")) {               //如果是JavaScript檔案
+            const cmd = require(\`\${directory}/\${file.name}\`); //掛載指令程式碼檔案
+            client.commands.set(cmd.name, cmd);               //將指令存入前面建立的指令暫存區
+        }
+    }
+};`}
+</SyntaxHighlighter>
+
+最後，回到``index.js``，在``client.login()``前一行加上：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`require("./commandLoader.js")(client, "./Command") //載入剛剛寫的loadCommands function並執行`}
+</SyntaxHighlighter>
+
+## 指令處理器
+到此，終於可以撰寫指令處理器，讓指令處理器在接收到訊息後，做進一步的處理了！  
+### 先做個小優化：參數切割與判斷小修改
+在[使用 discord.js 快速建立一個 Discord 骰子機器人](https://yeecord.com/blog/discordjs-dice-bot/)文章中，相信您們已經學到了如何進行指令初步處理，但避免在後續做指令時會有一些問題，還有提高理解性，在這我建議做一些小優化：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`client.on("messageCreate", (message) => {
+    const prefix = "/"; // 如果要改成自己的前綴，改"裡面的字串
+    if (!message.content.startsWith(prefix) || message.author.bot) return; //修改此行，當發訊息者為機器人時也不執行指令
+  
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);//修改此行，修正參數切割
+    //...
+});`}
+</SyntaxHighlighter>
+
+:::info 程式碼解析
+1. ``message.author.bot``：避免機器人互call，所以加上這個，避免有機器人在發此機器人的指令訊息時，觸發此機器人
+2. ``split(/ +/g)``、``trim()``：首先，為了避免有人在輸入指令時手殘，參數與參數間空格輸入成兩個以上，造成指令處理時切出空參數，進而造成後續執行問題，所以才改成``split(/ +/g)``，簡單來講意思是以一個或多個連續空格進行切割。``/ +/g``是正則表達式（Regular Expression，或稱正規表達式、正規表示式），如果想深入了解正則表達式，請參考[MSDN正則表達式文件]("https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions") ；``trim()``則是去掉整個字串的頭尾空格。
+:::
+
+### 正式開始實作吧！
+#### 1.處理參數
+先進行指令名稱與參數分離動作。請將剛剛切割參數那行進行修改：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`const [command, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);`}
+</SyntaxHighlighter>
+
+:::info 程式碼解析
+``split(/ +/g)``會傳回一個陣列，並將陣列第一項指派給command，剩下的元素會在被全部收集後，指派給args陣列。``...``為匯集/展開運算子 (Spread Operator)，在這裡是匯集用，也就是把剩下的陣列元素匯集成陣列。若想深入了解請參考[此文章]("https://pjchender.blogspot.com/2017/01/es6-spread-operatorrest-operator.html")
+:::
+
+#### 2.指令暫存區尋找指令並執行
+請先將指令（例如先前建立的Dice指令）程式碼先給複製後，貼到其他檔案備用：
+![](https://i.imgur.com/P2mWy6o.png)
+
+再來，請先刪除整個switch判斷式，刪除完後會長這樣：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`client.on("messageCreate", (message) => {
+    const prefix = "/"; 
+    if (!message.content.startsWith(prefix) || message.author.bot) return;  
+      
+    const [command,...args] = message.content.slice(prefix.length).split(/ +/g);  
+});`}
+</SyntaxHighlighter>
+然後再撰寫尋找指令並執行的程式碼：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`client.on("messageCreate", (message) => {
+    //延續上方程式碼
+    const cmdObject = client.commands.get(command)    //尋找有沒有這個指令
+    cmdObject?.run(message, args, client)             //如果有的話就執行指令程式碼
+});`}
+</SyntaxHighlighter>
+
+:::info 程式碼解析
+``cmdObject?.run()``的``?``是非強制串接運算子（Optional Chaining，或稱可選串聯運算子），在這裡的作用是：當執行run function前，會先確認指令物件有沒有被找到，如果有找到就會執行run function，否則不執行。也就是說，此行程式碼與下方這段作用相同：  
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`if(cmdObject){                            //確認指令物件有沒有找到
+    cmdObject.run(message, args, client)  //有的話就執行
+}`}
+</SyntaxHighlighter>
+
+若想深入了解非強制串接運算子，請參考[MSDN非強制串接運算子文件](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Optional_chaining)
+:::
+
+## 撰寫指令檔案
+恭喜您！您已經成功完成指令系統，並且可以開始撰寫指令了！
+
+請先在``Command``資料夾下，建立一個JavaScript檔案（在此以Dice指令當範例，故取名``Dice.js``）：  
+![](https://i.imgur.com/YFqPSYP.png)
+
+再來，建立指令：
+:::warning
+**有用到Node.js沒內建的東西請記得匯入！（例如：``MessageEmbed``）**
+:::
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`const { MessageEmbed } = require("discord.js")
+  
+module.exports = {
+    name: "dice",
+    run: async (message, args, bot) => {
+        const final = Math.floor(Math.random() * (6 - 1)) + 1;
+        const diceEmbed = new MessageEmbed()
+            .setTitle(\`🎲 你得到了 \${final}\`)
+            .setColor("#5865F2");
+        return message.reply({
+            embeds: [diceEmbed],
+        });
+    },
+};`}
+</SyntaxHighlighter>
+
+最後，啟動機器人並輸入指令！  
+![](https://i.imgur.com/qsLHoTz.png)
+
+## 總結
+至此，恭喜您完成了一個簡易的指令系統！若您有問題，可以前往Yeecord支援群組尋求協助！  
+順帶一提，下面有一些延伸，如果您覺得您在開發上有需要，可以繼續閱讀！  
+
+## 延伸一：怎麼叫，都是叫我！－指令別名
+咦？怎麼有人看似輸入不同的指令名稱，但實際上卻呼叫到同一個指令？  
+這就是指令別名，也就是一個指令可以用多種指令名稱，讓使用者可以以多個指令名稱呼叫此指令！  
+
+如果要實作，首先我們得修改一下``index.js``。請在``client.commands``那行的上一行或下一行加上：
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`client.aliases = new Collection() //別名與指令名稱對應暫存區`}
+</SyntaxHighlighter>
+
+再來，請開啟``commandLoader.js``並做以下修改：
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`module.exports = function loadCommands(client, directory) {
+    //以上略
+    for (const file of files) {
+        if (file.isDirectory()) {
+            loadCommands(client, \`\${directory}/\${file.name}\`);
+        } else if (file.name.endsWith(".js")) {
+            const cmd = require(\`\${directory}/\${file.name}\`);
+            client.commands.set(cmd.name, cmd);
+            
+            //-----修改從這裡開始-----
+            if(cmd.aliases){                            //如果指令有儲存別名的陣列
+                for(const aliase of cmd.aliases){       //則將別名陣列裡面的每一個別名字串逐個處理
+                    client.aliases.set(aliase,cmd.name) //將別名與指令原始名稱對應寫入
+                }
+            }
+            //------------------
+        }
+    }
+};`}
+</SyntaxHighlighter>
+
+最後再回到``index.js``並修改``const cmdObject``那一行：
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`const cmdObject = client.commands.get(command) ?? client.commands.get(client.aliases.get(command))`}
+</SyntaxHighlighter>
+
+:::info 程式碼解析
+此步意思是先去指令暫存區找有沒有對應指令，如果沒有，再去別名與指令名稱對應儲存區尋找此別名有沒有被定義，如果有被定義則會前往指令暫存區尋找該別名對應到的指令。反之若沒找到，也會回去指令暫存區搜尋沒錯，但通常會找不到（除非真的有一個指令名稱叫undefined）。  
+``??``為空值合併運算子（Nullish Coalescing Operator），當此運算子前面的值為null或undefined時，會回傳此運算子後方的值。如果想深入了解可參考MSDN：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator
+:::
+
+最後就可以為指令新增別名了（此以Dice指令為例）：
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`module.exports = {
+    name: "dice",
+    aliases: ["doce", "dace"],            //<---像這樣新增指令別名（當然這裡別名是亂取的）
+    run: async (message, args, bot) => {
+        const final = Math.floor(Math.random() * (6 - 1)) + 1;
+        const diceEmbed = new MessageEmbed()
+            .setTitle(\`🎲 你得到了 \${final}\`)
+            .setColor("#5865F2");
+        return message.reply({
+            embeds: [diceEmbed],
+        });
+    },
+};`}
+</SyntaxHighlighter>
+
+啟動後輸入指令！  
+![](https://i.imgur.com/pikoWRT.png)
+
