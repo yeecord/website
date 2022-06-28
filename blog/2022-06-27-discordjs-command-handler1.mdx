@@ -28,6 +28,7 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 2. 此文章會提及一些JS名詞，會盡量簡單介紹，如果您想要更深入地去瞭解那些東西，以下提供相關連結，我也會在文中的解析提供MSDN等其他平台連結讓您參考學習。
 * discord.js docs: https://discord.js.org/#/  
 * MSDN JavaScript Docs: https://developer.mozilla.org/zh-TW/docs/Web/JavaScript  
+* Fooish JavaScript教學：https://www.fooish.com/javascript/
 :::
 <!--truncate-->
 
@@ -87,7 +88,7 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 :::info NOTE
 當然在此您也可以使用Map，只是功能部分，Map與discord.js官方撰寫的Collection相比，Collection功能會比較多，使用起來會比較方便  
 
-Map簡單來說就是一個儲存很多鍵值對(key-value)的物件，跟字典相似，如果想深入了解可參考[MSDN文件的Map介紹]("https://developer.mozilla.org/zh-TW/docs/orphaned/Web/JavaScript/Reference/Global_Objects/Map")
+Map簡單來說就是一個儲存很多鍵值對(key-value)的物件，跟字典相似，如果想深入了解可參考[MSDN文件的Map介紹](https://developer.mozilla.org/zh-TW/docs/orphaned/Web/JavaScript/Reference/Global_Objects/Map)
 <details>
 <summary>Map和Collection的function小比較（會列一些個人覺得比較常用的）</summary>
 
@@ -177,7 +178,7 @@ module.exports = loadCommands;`}
 
 :::info 程式碼解析
 1. ``message.author.bot``：避免機器人互call，所以加上這個，避免有機器人在發此機器人的指令訊息時，觸發此機器人
-2. ``split(/ +/g)``、``trim()``：首先，為了避免有人在輸入指令時手殘，參數與參數間空格輸入成兩個以上，造成指令處理時切出空參數，進而造成後續執行問題，所以才改成``split(/ +/g)``，簡單來講意思是以一個或多個連續空格進行切割。``/ +/g``是正則表達式（Regular Expression，或稱正規表達式、正規表示式），如果想深入了解正則表達式，請參考[MSDN正則表達式文件]("https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions") ；``trim()``則是去掉整個字串的頭尾空格。
+2. ``split(/ +/g)``、``trim()``：首先，為了避免有人在輸入指令時手殘，參數與參數間空格輸入成兩個以上，造成指令處理時切出空參數，進而造成後續執行問題，所以才改成``split(/ +/g)``，簡單來講意思是以一個或多個連續空格進行切割。``/ +/g``是正則表達式（Regular Expression，或稱正規表達式、正規表示式），如果想深入了解正則表達式，請參考[MSDN正則表達式文件](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions) ；``trim()``則是去掉整個字串的頭尾空格。
 :::
 
 ### 正式開始實作吧！
@@ -188,7 +189,7 @@ module.exports = loadCommands;`}
 </SyntaxHighlighter>
 
 :::info 程式碼解析
-``split(/ +/g)``會傳回一個陣列，並將陣列第一項指派給command，剩下的元素會在被全部收集後，指派給args陣列。``...``為匯集/展開運算子 (Spread Operator)，在這裡是匯集用，也就是把剩下的陣列元素匯集成陣列。若想深入了解請參考[此文章]("https://pjchender.blogspot.com/2017/01/es6-spread-operatorrest-operator.html")
+``split(/ +/g)``會傳回一個陣列，並將陣列第一項指派給command，剩下的元素會在被全部收集後，指派給args陣列。``...``為匯集/展開運算子 (Spread Operator)，在這裡是匯集用，也就是把剩下的陣列元素匯集成陣列。若想深入了解請參考[此文章](https://pjchender.blogspot.com/2017/01/es6-spread-operatorrest-operator.html)
 :::
 
 #### 2.指令暫存區尋找指令並執行
@@ -297,7 +298,7 @@ module.exports = {
 
 :::info 程式碼解析
 此步意思是先去指令暫存區找有沒有對應指令，如果沒有，再去別名與指令名稱對應儲存區尋找此別名有沒有被定義，如果有被定義則會前往指令暫存區尋找該別名對應到的指令。反之若沒找到，也會回去指令暫存區搜尋沒錯，但通常會找不到（除非真的有一個指令名稱叫undefined）。  
-``??``為空值合併運算子（Nullish Coalescing Operator），當此運算子前面的值為null或undefined時，會回傳此運算子後方的值。如果想深入了解可參考MSDN：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator
+``??``為空值合併運算子（Nullish Coalescing Operator），當此運算子前面的值為null或undefined時，會回傳此運算子後方的值。如果想深入了解可參考[此文章](https://www.tpisoftware.com/tpu/articleDetails/2533)或[MSDN空值合併運算子文件（簡體中文）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator)
 :::
 
 最後就可以為指令新增別名了（此以Dice指令為例）：
@@ -317,6 +318,40 @@ module.exports = {
 };`}
 </SyntaxHighlighter>
 
-啟動後輸入指令！  
+啟動機器人後輸入指令！  
 ![](https://i.imgur.com/pikoWRT.png)
 
+## 延伸二：好想偷懶......－檔案名稱直接當指令名稱
+有人可能會覺得：每一次建立指令時，指令名稱在指令程式碼檔案名稱和指令物件裡都要輸入，好煩喔～～有沒有辦法減少輸入次數呀？  
+  
+當然有，在這裡就教大家一個偷懶方法......檔案名稱直接當指令名稱，也就是指令名稱會跟隨著指令程式碼檔案名稱直接變動，如果您覺得指令名稱在指令程式碼檔案名稱和指令物件裡都要輸入很煩，或者你真的很想偷懶的話，可以學起來喔！  
+
+我們打開``commandLoader.js``，修改這行就完成了：
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+{`module.exports = function loadCommands(client, directory) {
+    //以上略
+  
+    for (const file of files) {
+        if (file.isDirectory()) {
+            loadCommands(client, \`\${directory}/\${file.name}\`);
+        } else if (file.name.endsWith(".js")) {
+            const cmd = require(\`\${directory}/\${file.name}\`);
+            client.commands.set(cmd.name ?? file.name.slice(0, -3), cmd);  //<---修改此行
+            if (cmd.aliases) {
+                for (const aliase of cmd.aliases) {
+                    client.aliases.set(aliase, cmd.name);
+                }
+            }
+        }
+    }
+};`}
+</SyntaxHighlighter>
+
+:::info 程式碼解析
+1. ``??``：空值合併運算子，文章前面已經講過了。  
+2. ``slice(0, -3)``：從原字串中取出位置0到位置為倒數3之間的字串（不含位置為倒數3的字元），並產生新字串。index參數可為負值，代表從字串最後開始，若想了解更多請參見[Fooish JavaScript教學的String#slice介紹（中文）](https://www.fooish.com/javascript/string/slice.html)或[MSDN的String#slice官方文件（簡體中文）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/slice)
+:::
+
+然後您就可以刪掉指令物件中的指令名稱（``name``屬性），並且把指令程式碼檔案名稱修改成指令名稱了！  
+啟動機器人後輸入指令！  
+![](https://i.imgur.com/qsLHoTz.png)
