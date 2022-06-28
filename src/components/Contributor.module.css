@@ -1,11 +1,7 @@
 .wrapper {
   background: #2e333a;
-  @apply flex flex-row flex-wrap p-5 rounded-lg gap-5 w-3/4;
-}
-
-.wrapper > * {
-  flex: 1 1 0;
-  @apply min-w-fit;
+  grid-template-columns: repeat(auto-fill, minmax(0, 30rem));
+  @apply grid p-5 rounded-lg gap-5 w-3/4;
 }
 
 .item {
@@ -16,8 +12,8 @@
   @apply object-scale-down w-40 rounded-full;
 }
 
-@media (max-width: 996px) {
+@media (max-width: 1024px) {
   .item {
-    @apply flex flex-col gap-5;
+    @apply flex flex-col gap-5 items-center text-center;
   }
 }

@@ -117,7 +117,8 @@
 }
 
 .servers {
-  @apply flex flex-row flex-wrap w-full;
+  grid-template-columns: repeat(auto-fill, minmax(0, 20rem));
+  @apply grid w-full;
 }
 
 .servers_wrapper {
@@ -169,16 +170,18 @@
     padding: 1rem 1rem;
   }
 
-  .servers {
-    @apply flex flex-col gap-3 w-full;
-  }
-
   .icon__wrapper {
     margin: 0.5rem 0.6rem;
   }
 
   .button {
     padding: 0.5rem 2.75rem;
+  }
+}
+
+@media (max-width: 996px) {
+  .title {
+    @apply text-4xl;
   }
 }
 
@@ -193,8 +196,8 @@
   }
 }
 
-@media (max-width: 996px) {
-  .title {
-    @apply text-4xl;
+@media (max-width: 400px) {
+  .server {
+    @apply flex flex-col;
   }
 }

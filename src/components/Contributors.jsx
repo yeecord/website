@@ -36,7 +36,7 @@ function Item({ name, img, description }) {
   return (
     <div className={styles.item}>
       <img src={img} className={styles.avatar} alt={name} />
-      <div className="flex-1">
+      <div>
         <h1>{name}</h1>
         <p>{description}</p>
       </div>
