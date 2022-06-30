@@ -1,8 +1,8 @@
 ---
-slug: discordjs-command-handler1
-title: 如何用discord.js建立一個指令系統
+slug: discordjs-command-handler-1
+title: 如何用 discord.js 建立一個指令系統
 authors: [kay]
-description: "此文章會由Wolf Yuan先前建立的「使用 discord.js 快速建立一個 Discord 骰子機器人」延伸，會教大家簡單件裡起一個指令系統，讓管理指令更方便"
+description: "教大家簡單建立起一個 discord.js 指令系統，讓管理指令更系統性以及方便"
 tags:
   [
     "Discord",
@@ -17,20 +17,16 @@ tags:
   ]
 date: 2022-06-27T17:08:17
 ---
+import Adsense from "../src/components/Adsense";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-# 如何用discord.js建立一個指令系統
+這篇文章會從 Wolf Yuan 先的「使用 discord.js 快速建立一個 Discord 骰子機器人」文章程式碼延伸，教大家簡單建立一個指令系統，讓管理指令更系統性以及方便。如果您是一個 discord.js 新手，並且對此文章要修改（不含撰寫）的程式碼感到陌生者，請先閱讀該文章！
 
-此文章會從Wolf Yuan先前建立的「使用 discord.js 快速建立一個 Discord 骰子機器人」文章程式碼延伸，教大家簡單建立一個指令系統，讓管理指令更方便
-:::warning
-1. 此教學會從[使用 discord.js 快速建立一個 Discord 骰子機器人](https://yeecord.com/blog/discordjs-dice-bot/)文章的程式碼進行延伸，如果您是一個discord.js新手，並且對此文章要修改（不含撰寫）的程式碼感到陌生者，請先閱讀該文章！
-2. 此文章會提及一些JS名詞，會盡量簡單介紹，如果您想要更深入地去瞭解那些東西，以下提供相關連結，我也會在文中的解析提供MSDN等其他平台連結讓您參考學習。
+此文章會提及一些JS名詞，會盡量簡單介紹，如果您想要更深入地去瞭解那些東西，以下提供相關連結，我也會在文中的解析提供MSDN等其他平台連結讓您參考學習。
 * discord.js docs: https://discord.js.org/#/  
 * MSDN JavaScript Docs: https://developer.mozilla.org/zh-TW/docs/Web/JavaScript  
 * Fooish JavaScript教學：https://www.fooish.com/javascript/
-:::
-<!--truncate-->
 
 ## 前言
 相信有些人在剛入坑discord.js的時候，應該有被discord.js沒有內附指令系統這件事給嚇到吧？尤其以前有碰過NextCord等有附指令系統模組的玩家，到了discord.js後，發現沒有指令系統，可能就會被搞到不想入坑了，或者就乾脆只建立一個messageCreate監聽器，然後指令處理與指令程式碼全部塞在裡面......  
@@ -40,6 +36,11 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 所以想寫此篇文章，讓大家知道一個簡易指令系統要怎麼做，讓機器人的文字指令變得容易維護。 
 
 最後有什麼文章寫不好的地方，歡迎提出建議！
+
+<!--truncate-->
+
+<Adsense/>
+
 ## 先講一下指令構造
 嗯，先來講一下一個指令的構造吧（在此以ban指令舉例）！指令構造的名詞在等一下出現喔！  
 ![](https://i.imgur.com/OG1sRhC.png)
