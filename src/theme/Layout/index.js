@@ -30,11 +30,13 @@ export default function Layout(props) {
 			<PageMetadata title={rawTitle} description={description}/>
 			
             <Head>
+				<link rel="preconnect" href="https://arc.io"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
                 <link
                     href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=fallback"
                     rel="stylesheet"/>
+				<script async src="https://arc.io/widget.min.js#7WWJvqv3"></script>
             </Head>
             
 			<SkipToContent/>
