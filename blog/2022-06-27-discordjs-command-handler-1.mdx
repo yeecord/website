@@ -187,7 +187,7 @@ module.exports = loadCommands;`}
 
 最後，回到 `index.js`，在 `client.login()` 前一行加上：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={false} style={dracula}>
 {`require("./commandLoader.js")(client, "./Command") // 載入剛剛寫的 loadCommands 並執行`}
 </SyntaxHighlighter>
 
@@ -197,7 +197,7 @@ module.exports = loadCommands;`}
 
 ### 先做個小優化：參數切割與判斷小修改
 在 [使用 discord.js 快速建立一個 Discord 骰子機器人](https://yeecord.com/blog/discordjs-dice-bot/) 文章中，相信您們已經學到了如何進行指令初步處理，但避免在後續做指令時會有一些問題，還有提高理解性，在這我建議做一些小優化：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
 {`client.on("messageCreate", (message) => {
     const prefix = "/"; // 如果要改成自己的前綴，改"裡面的字串
     if (!message.content.startsWith(prefix) || message.author.bot) return; // 修改此行，當發訊息者為機器人時也不執行指令
@@ -216,7 +216,7 @@ module.exports = loadCommands;`}
 
 先進行指令名稱與參數分離動作。請將剛剛切割參數那行進行修改：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={false} style={dracula}>
 {`const [command, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);`}
 </SyntaxHighlighter>
 
