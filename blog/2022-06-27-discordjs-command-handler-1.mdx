@@ -104,7 +104,7 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 </SyntaxHighlighter>
 
 並請在我們 Ready 事件內加上一行加上初始化我們的指令 Collection：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
 {`client.on("ready", () => {
     client.commands = new Collection()
 })`}
@@ -141,7 +141,7 @@ Map 簡單來說就是一個儲存很多鍵值對 (key-value) 的物件，跟字
 </SyntaxHighlighter>
 
 建立一個函數 `loadCommands` 用來載入指令，並且匯出這個函數，讓其他檔案也可以使用到：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
 {`function loadCommands(client, directory) {
     
 }
@@ -151,7 +151,7 @@ module.exports = loadCommands;`}
 
 :::info 筆記一下
 您也可以這樣寫（我也比較習慣這樣寫，但新手推薦上面那種）：  
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
 {`module.exports = function loadCommands(client, directory) {
     
 };`}
@@ -161,7 +161,7 @@ module.exports = loadCommands;`}
 <Adsense/>
 
 接下來就開始實作載入指令的部分，首先先讀取指令程式碼檔案資料夾：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
 {`function loadCommands(client, directory) {
     const files = readdirSync(directory, {
         withFileTypes: true,
@@ -171,7 +171,7 @@ module.exports = loadCommands;`}
 
 讀取完後，接著開始對讀取到的檔案或資料夾逐個進行處理：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
+<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
 {`function loadCommands(client, directory) {
     // 延續上方程式碼
     for (const file of files) {
