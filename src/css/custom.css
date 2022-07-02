@@ -7,14 +7,6 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('/static/fonts/JetBrainsMono-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
 body > iframe[style*="2147483647"]:not([id="webpack-dev-server-client-overlay"]) {
     display: none;
 }
@@ -64,14 +56,14 @@ h2 {
 }
 
 *, li, div {
-    font-family: "Noto Sans TC", "Readex Pro", "LiHei Pro", "黑體-繁", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
-    font-weight: 500;
+    font-family: "Microsoft YaHei", "Readex Pro", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+    font-weight: 700;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
 }
 
 pre, code, code * {
-    font-family: "JetBrains Mono", "Noto Sans TC", "Readex Pro", sans-serif !important;
+    font-family: "Consolas", "Microsoft YaHei", "Readex Pro", sans-serif !important;
 }
 
 b {
@@ -82,9 +74,9 @@ h1, h2, h3 {
     color: white;
 }
 
-h1, h2, h2 > a, h3, h3 > a, #post-content > h3, strong, .breadcrumbs__link {
+h1, h2, h2 > a, h3, b, a.navbar__item, h3 > a, #post-content > h3, strong, .breadcrumbs__link {
     font-weight: 700;
-    font-family: "Readex Pro", "Noto Sans TC", "LiHei Pro", "黑體-繁", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+    font-family: "Readex Pro", "Noto Sans TC", "Microsoft YaHei", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
 }
 
 article > * {
