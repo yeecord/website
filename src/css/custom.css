@@ -63,11 +63,7 @@ h2 {
 }
 
 pre, code, code * {
-    font-family: "Consolas", "Microsoft YaHei", "Readex Pro", sans-serif !important;
-}
-
-b {
-    font-weight: 700;
+    font-family: "Consolas", monospace, "Microsoft YaHei", "Readex Pro", sans-serif !important;
 }
 
 h1, h2, h3 {
