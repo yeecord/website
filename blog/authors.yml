@@ -3,6 +3,7 @@ kane:
   title: YEE式機器龍作者
   url: https://github.com/Gary50613
   image_url: /img/Gary50613.jpg
+
 wolf:
   name: Wolf yuan 狼苑
   title: 黑貓音樂機器人作者
@@ -14,3 +15,10 @@ kay:
   title: Yeecord 以前的小幫手
   url: https://github.com/Kayxue
   image_url: /img/kay.png
+
+nathan:
+  name: Nathan
+  title: Yeecord 現任管理員 兼 ZeitFrei 合作機器人作者
+  url: https://github.com/NathanTW0219
+  image_url: img/nathan.png
+
