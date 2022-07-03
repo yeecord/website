@@ -34,6 +34,7 @@
 
 ### 你需要先準備好
 
+- 基本中英文閱讀能力
 - [markdown 基本知識](https://www.casper.tw/development/2019/11/23/ten-mins-learn-markdown/)
 - [NodeJS 16](https://nodejs.org/download) 或以上版本
 - 一個可以使用的 markdown 編輯器 (VSCode)
