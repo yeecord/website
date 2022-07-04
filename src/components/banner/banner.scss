@@ -1,0 +1,82 @@
+@import "../../css/utils";
+
+$bg-width: 5rem;
+$bg-height: 5rem;
+
+.banner {
+  $this: &;
+
+  &,
+  > *:not(.banner__before) {
+    @apply relative z-10;
+  }
+
+  &__yee {
+    &:before {
+      content: "YEE";
+      @apply from-pink-400 to-blue-500 gradient mask;
+    }
+
+    @apply relative bg-black md:text-9xl;
+  }
+
+  &__title {
+    @apply md:text-7xl text-4xl font-extrabold;
+  }
+
+  h3 {
+    @apply md:text-4xl text-xl;
+  }
+
+  &__before {
+    animation: bg-scrolling-reverse 0.92s infinite;
+    animation-timing-function: linear;
+    background: url("/img/logo-transparent.png") repeat 0 0;
+    background-size: $bg-width $bg-height;
+
+    @apply mask fade opacity-70;
+  }
+
+  @apply row-wrap-container w-3/4 py-10 rounded-2xl overflow-hidden;
+}
+
+.fade:after {
+  content: "";
+  @apply bg-gradient-to-b from-transparent to-primary-bg mask;
+}
+
+.animated-logo {
+  animation: rotate 3s linear infinite;
+
+  @apply logo rounded-3xl;
+}
+
+.logo {
+  @apply min-w-[10rem] object-scale-down max-w-3xl;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(0);
+    @apply bg-blue-500;
+  }
+  50% {
+    @apply bg-pink-400;
+  }
+  to {
+    transform: rotateY(360deg);
+    @apply bg-blue-500;
+  }
+}
+
+@keyframes bg-scrolling-reverse {
+  100% {
+    background-position: $bg-width $bg-height;
+  }
+}
+
+@keyframes bg-scrolling {
+  0% {
+    background-position: $bg-width $bg-height;
+  }
+}

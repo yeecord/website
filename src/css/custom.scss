@@ -1,0 +1,22 @@
+@import "./core";
+@import "./variables";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Readex Pro";
+  src: url("/static/fonts/readexpro-medium-webfont.woff2") format("woff2"),
+    url("/static/fonts/readexpro-medium-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/static/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

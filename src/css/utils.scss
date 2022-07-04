@@ -1,0 +1,19 @@
+.mask {
+  @apply absolute w-full h-full left-0 top-0;
+}
+
+.row-wrap-container {
+  @apply row-container items-end flex-wrap-reverse;
+}
+
+.container {
+  @apply flex flex-col gap-10;
+}
+
+.row-container {
+  @apply flex flex-row gap-3;
+}
+
+.gradient {
+  @apply font-extrabold text-transparent bg-clip-text bg-gradient-to-r;
+}

@@ -1,0 +1,25 @@
+@import "../../css/utils.scss";
+
+.contributors {
+  background-image: url("/img/bg/blue-bg.svg");
+
+  &__wrapper {
+    background: #2e333a;
+    grid-template-columns: repeat(auto-fill, minmax(0, 30rem));
+    @apply grid p-5 rounded-lg gap-5 w-3/4;
+  }
+  &__item {
+    @apply flex flex-row gap-5;
+  }
+
+  @media (max-width: 1024px) {
+    &__item {
+      @apply flex flex-row gap-5;
+    }
+  }
+
+  &__avatar {
+    @apply object-scale-down w-40 rounded-full;
+  }
+  @apply container items-center justify-center max-w-none pb-10;
+}

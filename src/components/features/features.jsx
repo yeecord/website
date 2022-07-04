@@ -1,8 +1,8 @@
 import React from "react";
-import clsx from "clsx";
-import styles from "./HomepageFeatures.module.css";
-import LinkButton from "./LinkButton";
+import "./features.scss";
+import LinkButton from "../LinkButton";
 
+const component = "features";
 const FeatureList = [
   {
     title: "全中文化界面",
@@ -49,7 +49,7 @@ const FeatureList = [
 function Feature({ Svg, title, description }) {
   return (
     <div className="row-container flex-wrap items-start">
-      <img src={Svg} className={clsx(styles.featureSvg, "logo")} alt={title} />
+      <img src={Svg} className={`${component}__featureSvg logo`} alt={title} />
 
       <div className="flex flex-col gap-3 items-start">
         <h1>{title}</h1>
@@ -61,7 +61,7 @@ function Feature({ Svg, title, description }) {
 
 export default function HomepageFeatures() {
   return (
-    <section className={styles.features}>
+    <section className={component}>
       <div className="container items-stretch w-3/4">
         {FeatureList.map((props, idx) => (
           <Feature key={idx} {...props} />

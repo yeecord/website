@@ -1,5 +1,7 @@
 import React from "react";
-import styles from "./Contributor.module.css";
+import "./contributors.scss";
+
+const component = "contributors";
 
 const contributors = [
   {
@@ -34,8 +36,8 @@ const contributors = [
 
 function Item({ name, img, description }) {
   return (
-    <div className={styles.item}>
-      <img src={img} className={styles.avatar} alt={name} />
+    <div className={`${component}__item`}>
+      <img src={img} className={`${component}__avatar`} alt={name} />
       <div>
         <h1>{name}</h1>
         <p>{description}</p>
@@ -46,9 +48,9 @@ function Item({ name, img, description }) {
 
 export default function Contributors() {
   return (
-    <div className="container items-center">
+    <div className={component}>
       <h1 className="gradient title">貢獻者</h1>
-      <div className={styles.wrapper}>
+      <div className={`${component}__wrapper`}>
         {contributors.map((item) => Item(item))}
         <h2>以及其餘數百位支持此項目的小幫手及亁爹</h2>
       </div>

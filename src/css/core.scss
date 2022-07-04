@@ -1,45 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@font-face {
-  font-family: "Readex Pro";
-  src: url("/static/fonts/readexpro-medium-webfont.woff2") format("woff2"),
-    url("/static/fonts/readexpro-medium-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url("/static/fonts/JetBrainsMono-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 body
   > iframe[style*="2147483647"]:not([id="webpack-dev-server-client-overlay"]) {
   display: none;
 }
 
 .main-wrapper {
+  background-color: var(--bg-primary);
   padding: 0 var(--global-padding);
 }
 
-/* You can override the default Infima variables here. */
-:root {
-  --ifm-color-primary: rgb(96, 148, 234);
-  --ifm-color-primary-dark: rgb(33, 175, 144);
-  --ifm-color-primary-darker: rgb(31, 165, 136);
-  --ifm-color-primary-darkest: rgb(26, 136, 112);
-  --ifm-color-primary-light: rgb(70, 203, 174);
-  --ifm-color-primary-lighter: rgb(102, 212, 189);
-  --ifm-color-primary-lightest: rgb(146, 224, 208);
-  --ifm-code-font-size: 95%;
-
-  --global-padding: 8rem;
+.title {
+  @apply md:text-7xl text-4xl font-extrabold;
 }
 
 .hero {
@@ -141,7 +111,7 @@ article img {
 }
 
 html[data-theme="dark"] .docusaurus-highlight-code-line {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--bg-primary);
 }
 
 @media screen and (max-width: 996px) {

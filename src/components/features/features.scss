@@ -3,10 +3,10 @@
   align-items: center;
   padding: 2rem 0;
   width: 100%;
-}
 
-.featureSvg {
-  margin-bottom: 1rem;
-  height: 200px;
-  width: 200px;
+  &__featureSvg {
+    margin-bottom: 1rem;
+    height: 200px;
+    width: 200px;
+  }
 }
