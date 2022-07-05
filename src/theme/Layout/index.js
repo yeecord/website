@@ -28,14 +28,6 @@ export default function Layout(props) {
 	return (
 		<LayoutProviders>
 			<PageMetadata title={rawTitle} description={description}/>
-			
-            <Head>
-                <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=fallback"
-                    rel="stylesheet"/>
-            </Head>
             
 			<SkipToContent/>
 			
