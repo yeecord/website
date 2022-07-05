@@ -12,7 +12,7 @@
 
 ## ❤️ 我想要贡献
 
-详情可以參照 [docusaurus](https://docusaurus.io/) 的教学
+可以參照 [docusaurus](https://docusaurus.io/) 的教学
 
 ### 项目结构
 
@@ -27,12 +27,12 @@
 - package.json: npm 的设置
 - sidebars.js: docs 的侧栏
 - src: 网页主要程序
-- static: 静态图片等文件
+- static: 静态图片等资源
 ```
 
 ### 你需要先准备好
 
-- [markdown 基本知识](https://www.casper.tw/development/2019/11/23/ten-mins-learn-markdown/)
+- [markdown 基本知识](https://markdown.com.cn/intro.html)
 - [NodeJS 16](https://nodejs.org/download) 或以上版本
 - 一个可以使用的 markdown 编辑器 (VSCode)
 
