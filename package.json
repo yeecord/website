@@ -21,7 +21,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-player": "^2.9.0",
-    "react-twitter-embed": "^4.0.4"
+    "react-twitter-embed": "^4.0.4",
+    "got": "^12.1.0",
+    "trim": "^1.0.1"
   },
   "browserslist": {
     "production": [
