@@ -6,20 +6,16 @@
   &__wrapper {
     background: #2e333a;
     grid-template-columns: repeat(auto-fill, minmax(0, 30rem));
-    @apply grid p-5 rounded-lg gap-5 w-3/4;
-  }
-  &__item {
-    @apply flex flex-row gap-5;
+    @apply grid p-5 rounded-lg gap-5 md:w-3/4 w-full;
   }
 
-  @media (max-width: 1024px) {
-    &__item {
-      @apply flex flex-row gap-5;
-    }
+  &__item {
+    @apply flex flex-col gap-5 md:flex-row;
   }
 
   &__avatar {
     @apply object-scale-down w-40 rounded-full;
   }
+
   @apply container items-center justify-center max-w-none pb-10;
 }
