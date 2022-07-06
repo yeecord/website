@@ -1,8 +1,8 @@
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
-(module.exports = {
+;(module.exports = {
 	title: 'YEE式機器龍',
 	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文Discord伺服器，我們是能夠超越Rythm更好的Discord音樂機器人，使用我讓Discord不再只是聊天平台！',
 	url: 'https://yeecord.com',
