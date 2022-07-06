@@ -22,8 +22,6 @@ image: /img/discordjs-command-handler-1/discordjs-command-handler-1.jpeg
 
 import TOCInline from "@theme/TOCInline";
 import Adsense from "../src/components/Adsense";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 ![discord.js 指令 框架系統](/img/discordjs-command-handler-1/discordjs-command-handler-1.jpeg)
 
@@ -78,7 +76,7 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 1. 指令載入器載入指令
 	上線後，接收到創建訊息事件
-	```
+	```js
 	on("messageCreate", (message) => {
 		// 在這裡繼續執行
 	})
@@ -99,16 +97,16 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 再來，我們來創建指令暫存區吧！  
 請將載入 discord.js 模組的的大括號內最後面，多加上一個 `, Collection` 以載入 Collection：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`const { Client, Intents, Collection } = require("discord.js");`}
-</SyntaxHighlighter>
+```js
+const { Client, Intents, Collection } = require("discord.js");
+```
 
 並請在我們 Ready 事件內加上一行加上初始化我們的指令 Collection：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
-{`client.on("ready", () => {
+```js showLineNumbers
+client.on("ready", () => {
     client.commands = new Collection()
-})`}
-</SyntaxHighlighter>
+})
+```
 
 :::info 我想要你做個筆記
 當然在此您也可以使用 Map，只是功能部分，Map 與 discord.js 官方撰寫的 Collection 相比，Collection 功能會比較多，使用起來會比較方便。
@@ -136,60 +134,64 @@ Map 簡單來說就是一個儲存很多鍵值對 (key-value) 的物件，跟字
 再來我們寫指令載入器吧！不然撰寫了多少指令，如果沒有載入也是沒辦法使用。  
 
 請先在 `index.js` 同層資料夾下新增 `commandLoader.js`，在裡面寫入我們載入讀取檔案與資料夾的模組模組：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`const { readdirSync } = require("fs");`}
-</SyntaxHighlighter>
+
+```js showLineNumbers
+const { readdirSync } = require("fs");
+```
 
 建立一個函數 `loadCommands` 用來載入指令，並且匯出這個函數，讓其他檔案也可以使用到：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
-{`function loadCommands(client, directory) {
+
+```js showLineNumbers
+function loadCommands(client, directory) {
     
 }
   
-module.exports = loadCommands;`}
-</SyntaxHighlighter>
+module.exports = loadCommands;
+```
 
 :::info 筆記一下
 您也可以這樣寫（我也比較習慣這樣寫，但新手推薦上面那種）：  
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
-{`module.exports = function loadCommands(client, directory) {
+
+```js showLineNumbers
+module.exports = function loadCommands(client, directory) {
     
-};`}
-</SyntaxHighlighter>
+};
+```
 :::
 
 <Adsense/>
 
 接下來就開始實作載入指令的部分，首先先讀取指令程式碼檔案資料夾：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
-{`function loadCommands(client, directory) {
+
+```js showLineNumbers
+function loadCommands(client, directory) {
     const files = readdirSync(directory, {
         withFileTypes: true,
     });
-};`}
-</SyntaxHighlighter>
+};
+```
 
 讀取完後，接著開始對讀取到的檔案或資料夾逐個進行處理：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
-{`function loadCommands(client, directory) {
+```js showLineNumbers
+function loadCommands(client, directory) {
     // 延續上方程式碼
     for (const file of files) {
         if (file.isDirectory()) {                             // 如果讀取到資料夾
-            loadCommands(client, \`\${directory}/\${file.name}\`);// 進入該資料夾繼續讀取
+            loadCommands(client, `${directory}/${file.name}`);// 進入該資料夾繼續讀取
         } else if (file.name.endsWith(".js")) {               // 如果是JavaScript檔案
-            const cmd = require(\`\${directory}/\${file.name}\`); // 掛載指令程式碼檔案
+            const cmd = require(`${directory}/${file.name}`); // 掛載指令程式碼檔案
             client.commands.set(cmd.name, cmd);               // 將指令存入前面建立的指令暫存區
         }
     }
-};`}
-</SyntaxHighlighter>
+};
+```
 
 最後，回到 `index.js`，在 `client.login()` 前一行加上：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={false} style={dracula}>
+```js
 {`require("./commandLoader.js")(client, "./Command") // 載入剛剛寫的 loadCommands 並執行`}
-</SyntaxHighlighter>
+```
 
 ## 指令處理器
 
@@ -197,15 +199,16 @@ module.exports = loadCommands;`}
 
 ### 先做個小優化：參數切割與判斷小修改
 在 [使用 discord.js 快速建立一個 Discord 骰子機器人](https://yeecord.com/blog/discordjs-dice-bot/) 文章中，相信您們已經學到了如何進行指令初步處理，但避免在後續做指令時會有一些問題，還有提高理解性，在這我建議做一些小優化：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula} startingLineNumber={3}>
-{`client.on("messageCreate", (message) => {
+
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     const prefix = "/"; // 如果要改成自己的前綴，改"裡面的字串
     if (!message.content.startsWith(prefix) || message.author.bot) return; // 修改此行，當發訊息者為機器人時也不執行指令
   
     const args = message.content.slice(prefix.length).trim().split(/ +/g);// 修改此行，修正參數切割
     //...
-});`}
-</SyntaxHighlighter>
+});
+```
 
 - `message.author.bot`：避免機器人互call，所以加上這個，避免有機器人在發此機器人的指令訊息時，觸發此機器人
 - `split(/ +/g)`、`trim()`：首先，為了避輸入指令的格式不符，參數與參數間空格輸入成兩個以上，造成指令處理時切出空參數，進而影響後續執行問題，改成使用 `split(/ +/g)`，簡單來講意思是以一個或多個連續空格進行切割。`/ +/g` 是 [正則表達式（Regular Expression）](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions)，`trim()` 則是去掉整個字串的頭尾空格。
@@ -216,9 +219,9 @@ module.exports = loadCommands;`}
 
 先進行指令名稱與參數分離動作。請將剛剛切割參數那行進行修改：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={false} style={dracula}>
-{`const [command, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);`}
-</SyntaxHighlighter>
+```js
+const [command, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);
+```
 
 `split(/ +/g)` 會傳回一個陣列，並將陣列第一項指派給 command，剩下的元素會在被全部收集後，指派給args陣列。
 
@@ -231,36 +234,37 @@ module.exports = loadCommands;`}
 ![備份指令到記事本](/img/discordjs-command-handler-1/backup-command.png)
 
 再來，請先刪除整個 switch 判斷式，刪除完後會長這樣：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`client.on("messageCreate", (message) => {
+
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     const prefix = "/"; 
     if (!message.content.startsWith(prefix) || message.author.bot) return;  
       
     const [command, ...args] = message.content.slice(prefix.length).split(/ +/g);
-});`}
-</SyntaxHighlighter>
+});
+```
 
 然後再撰寫尋找指令並執行的程式碼：  
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`client.on("messageCreate", (message) => {
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     // 延續上方程式碼
     const cmdObject = client.commands.get(command);
     
 	cmdObject?.run(message, args, client);
 	// 如果有的話就執行指令程式碼，否則 ? 後面將不會被執行
-});`}
-</SyntaxHighlighter>
+});
+```
 
 <Adsense/>
 
 `cmdObject?.run()` 的 `?` [是非強制串接運算子（Optional Chaining）](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Optional_chaining)，當執行 run function 前，會先確認指令物件有沒有被找到，如果有找到就會執行run function，否則不執行。也就是說，此行程式碼與下方這段作用相同：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`if (cmdObject) {                          // 確認指令物件有沒有找到
+```js showLineNumbers
+if (cmdObject) {                          // 確認指令物件有沒有找到
     cmdObject.run(message, args, client)  // 有的話就執行
-}`}
-</SyntaxHighlighter>
+}
+```
 
 ## 撰寫指令檔案
 恭喜您！您已經成功完成指令系統，並且可以開始撰寫指令了！
@@ -274,23 +278,23 @@ module.exports = loadCommands;`}
 有用到 discord.js 的東西請記得匯入！（例如：`MessageEmbed`）
 :::
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`const { MessageEmbed } = require("discord.js")
+```js showLineNumbers
+const { MessageEmbed } = require("discord.js")
   
 module.exports = {
     name: "dice",
     run: async (message, args, bot) => {
         const final = Math.floor(Math.random() * (6 - 1)) + 1;
         const diceEmbed = new MessageEmbed()
-            .setTitle(\`🎲 你得到了 \${final}\`)
+            .setTitle(`🎲 你得到了 ${final}`)
             .setColor("#5865F2");
             
         return message.reply({
             embeds: [diceEmbed],
         });
     },
-};`}
-</SyntaxHighlighter>
+};
+```
 
 最後，啟動機器人並輸入指令！  
 ![Discord 機器人 指令執行](/img/discordjs-command-handler-1/command-execute.png)
@@ -306,33 +310,33 @@ module.exports = {
 
 首先在 `messageCreate` 內做一下修改；
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`client.on("messageCreate", (message) => {
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     // 延續上方程式碼
     const cmdObject = client.commands.get(command)
         || client.commands.find(x => x.aliases?.includes(command));
     
 	cmdObject?.run(message, args, client);
-});`}
-</SyntaxHighlighter>
+});
+```
 
 最後就可以為指令新增別名了（此以 Dice 指令為例）：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`module.exports = {
+```js showLineNumbers
+module.exports = {
     name: "dice",
     aliases: ["doce", "dace"],            // <--- 像這樣新增指令別名（當然這裡別名是亂取的）
     run: async (message, args, bot) => {
         const final = Math.floor(Math.random() * (6 - 1)) + 1;
         const diceEmbed = new MessageEmbed()
-            .setTitle(\`🎲 你得到了 \${final}\`)
+            .setTitle(`🎲 你得到了 ${final}`)
             .setColor("#5865F2");
             
         return message.reply({
             embeds: [diceEmbed],
         });
     },
-};`}
-</SyntaxHighlighter>
+};
+```
 
 ## 延伸二：好想偷懶......－檔案名稱直接當指令名稱
 
@@ -343,16 +347,17 @@ module.exports = {
 當然有，在這裡就教大家一個偷懶方法......檔案名稱直接當指令名稱，也就是指令名稱會跟隨著指令程式碼檔案名稱直接變動，如果您覺得指令名稱在指令程式碼檔案名稱和指令物件裡都要輸入很煩，或者你真的很想偷懶的話，可以學起來喔！  
 
 我們打開``commandLoader.js``，修改這行就完成了：
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-{`module.exports = function loadCommands(client, directory) {
+
+```js showLineNumbers
+module.exports = function loadCommands(client, directory) {
     //以上略
   
     for (const file of files) {
         if (file.isDirectory()) {
-            loadCommands(client, \`\${directory}/\${file.name}\`);
+            loadCommands(client, `${directory}/${file.name}`);
         } else if (file.name.endsWith(".js")) {
-            const cmd = require(\`\${directory}/\${file.name}\`);
-            client.commands.set(cmd.name ?? file.name.slice(0, -3), cmd);  //<---修改此行
+            const cmd = require(`${directory}/${file.name}`);
+            client.commands.set(cmd.name ?? file.name.slice(0, -3), cmd);  // <---修改此行
             if (cmd.aliases) {
                 for (const aliase of cmd.aliases) {
                     client.aliases.set(aliase, cmd.name);
@@ -360,8 +365,8 @@ module.exports = {
             }
         }
     }
-};`}
-</SyntaxHighlighter>
+};
+```
 
 - `??` [空值合併運算子](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator)： 如果左側為空值或是未被定義，那將使用右側的值
 - `slice(0, -3)`：從原字串中取出位置 0 到位置為倒數 3 之間的字串（不含位置為倒數 3 的字元），並產生新字串。index參數可為負值，代表從字串最後開始，若想了解更多請參見 [Fooish JavaScript 的介紹（中文）](https://www.fooish.com/javascript/string/slice.html) 或 [MSDN 官方文件（簡體中文）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/slice)

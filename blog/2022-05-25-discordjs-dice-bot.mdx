@@ -23,9 +23,6 @@ date: 2022-05-25T16:41:00
 import Adsense from "../src/components/Adsense";
 import TOCInline from "@theme/TOCInline";
 
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
-
 ![Discord NodeJS 骰子 機器人](/img/discordjs-dice-bot/discordjs-dice-bot.jpeg)
 
 我是因為 Discord 機器人而接觸到程式的，當時我要建立自己的機器人時，除了網路上的資源不多之外， discord.js 的程式文檔也不是那麼的友善，
@@ -153,13 +150,13 @@ npm i discord.js@13.7.0
 
 首先，我們要先載入 discord.js 中的 Client 用戶端，這就像是整個機器人的核心那麼重要，
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {`const { Client, Intents } = require("discord.js")
+```js showLineNumbers
+const { Client, Intents } = require("discord.js")
  
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS]
-})`}
-</SyntaxHighlighter>
+})
+```
 
 > `Intents` 是 Discord 機器人在登入時要使用的參數，可以讓 Discord 知道你的機器人希望接收到什麼事件，減少我們機器人負擔。
 
@@ -167,8 +164,8 @@ const client = new Client({
 
 這個 Token 是讓我們可以登入機器人帳號的密碼，在這裡我們需要將他填入到這個程式裡，
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {`const { Client, Intents } = require("discord.js")
+```js showLineNumbers
+const { Client, Intents } = require("discord.js")
  
 const client = new Client({
     intents: [
@@ -177,8 +174,8 @@ const client = new Client({
     ]
 })
  
-client.login("TOKEN放這裡")`}
-</SyntaxHighlighter>
+client.login("TOKEN放這裡")
+```
 
 > Token 是很重要的東西，不要把這個東西公開發布！
 
@@ -186,17 +183,17 @@ client.login("TOKEN放這裡")`}
 
 到目前為止，我們已經可以成功登入 Discord 機器人了，但是我們只能從 Discord 上知道它上線，而且有時候直接看 Discord 上的狀態會不準，讓我們讓機器人登入成功且載入好之後，寫一條訊息讓我們知道他的狀態：
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {`client.on("ready", () => {
-    console.log("機器人已經成功上線且載入成功!")
-})`}
-</SyntaxHighlighter>
+```js showLineNumbers
+client.on("ready", () => {
+	console.log("機器人已經成功上線且載入成功!")
+})
+````
 
 ### 啟動機器人
 
 我們剛剛有開一個小黑框對吧，在那個小黑框中輸入 `node 檔案名稱` 來執行剛剛寫好的程式檔案：
 
-```
+```shell
 node index.js
 ```
 
@@ -214,46 +211,31 @@ node index.js
 
 首先要先寫一個接收事件的函數，這樣當 Discord 有收到新訊息的時候會發送給機器人讓我可以去做回應。
 
-<SyntaxHighlighter
-  startingLineNumber={12}
-  language="javascript"
-  showLineNumbers={true}
-  style={dracula}
->
-  {`// 接續前一部份的程式碼
+```js showLineNumbers
+// 接續前一部份的程式碼
 client.on("messageCreate", (message) => {
   
-})`}
-</SyntaxHighlighter>
+})
+```
 
 接下來我們要決定一個機器人指令前綴，這個可以設定成任何一個文字或是符號，如果訊息不是以前綴開頭，就忽略訊息 (不然機器人就會一直回覆訊息)。
 
 <Adsense />
 
-<SyntaxHighlighter
-  startingLineNumber={13}
-  language="javascript"
-  showLineNumbers={true}
-  style={dracula}
->
-  {`client.on("messageCreate", (message) => {
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     const prefix = "/" // 這個是機器人的前綴 (aka 開頭 aka 觸發符號)
     if (!message.content.startsWith(prefix))
         return
-})`}
-</SyntaxHighlighter>
+})
+```
 
 我們這次要建立的機器人是骰子機器人，接下來就是指令本體了
 
 首先，先讓機器人認出這是骰子指令
 
-<SyntaxHighlighter
-  startingLineNumber={13}
-  language="javascript"
-  showLineNumbers={true}
-  style={dracula}
->
-  {`client.on("messageCreate", (message) => {
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     const prefix = "/"
     if (!message.content.startsWith(prefix))
         return
@@ -264,8 +246,8 @@ client.on("messageCreate", (message) => {
     case "dice":
         message.reply("你剛剛是不是觸發了骰子指令?")
     }
-})`}
-</SyntaxHighlighter>
+})
+```
 
 如果你輸入的所有東西都沒錯，開啟機器人後，在文字頻道中輸入 `/dice` 後機器人應該就會回覆你的訊息了！(如果你不是以 `/` 作為你的指令前綴，請將 `/` 變更為你自己訂的前綴)。
 
@@ -275,21 +257,16 @@ client.on("messageCreate", (message) => {
 
 但是現在他只有回覆訊息而已，還沒有真正「擲骰子」功能，讓我們現在來加入這個功能吧！
 
-<SyntaxHighlighter
-  startingLineNumber={13}
-  language="javascript"
-  showLineNumbers={true}
-  style={dracula}
->
-  {`client.on("messageCreate", (message) => {
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     // 延續上面的程式
     switch (args[0]) {
 	    case "dice":
             const final = Math.floor(Math.random() * (6 - 1)) + 1 // 從 6 ~ 1 中挑選一個號碼
-            return message.reply(\`你得到了 \${final}!\`)
+            return message.reply(`你得到了 ${final}!`)
     }
-})`}
-</SyntaxHighlighter>
+})
+```
 
 存檔完之後再啟動一次機器人，嘗試重新輸入指令，機器人應該就會回覆你得到的號碼了！
 
@@ -303,32 +280,27 @@ client.on("messageCreate", (message) => {
 
 <Adsense />
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {'const { Client, Intents, MessageEmbed } = require("discord.js")'}
-</SyntaxHighlighter>
+```js showLineNumbers
+const { Client, Intents, MessageEmbed } = require("discord.js")
+```
 
 之後再修改指令的部分，讓它傳送嵌入式訊息，
 
-<SyntaxHighlighter
-  startingLineNumber={13}
-  language="javascript"
-  showLineNumbers={true}
-  style={dracula}
->
-  {`client.on("messageCreate", (message) => {
+```js showLineNumbers
+client.on("messageCreate", (message) => {
     // 延續上面的程式
     switch (args[0]) {
     case "dice":
         const final = Math.floor(Math.random() * (6 - 1)) + 1
         const diceEmbed = new MessageEmbed()
-            .setTitle(\`🎲 你得到了 \${final}\`) //設定標題
+            .setTitle(`🎲 你得到了 ${final}`) //設定標題
             .setColor("#5865F2") //設定顏色
         return message.reply({
             embeds: [diceEmbed]
         })
     }
-})`}
-</SyntaxHighlighter>
+})
+```
 
 現在機器人終於會回覆一個比較漂亮的訊息了！
 
@@ -336,8 +308,8 @@ client.on("messageCreate", (message) => {
 
 ### 完整的程式碼
 
-<SyntaxHighlighter language="javascript" showLineNumbers={true} style={dracula}>
-  {`const { Client, Intents, MessageEmbed } = require("discord.js")
+```js showLineNumbers
+const { Client, Intents, MessageEmbed } = require("discord.js")
  
 const client = new Client({
     intents: [
@@ -360,7 +332,7 @@ client.on("messageCreate", (message) => {
         case "dice":
             const final = Math.floor(Math.random() * (6 - 1)) + 1
             const diceEmbed = new MessageEmbed()
-                .setTitle(\`🎲 你得到了 \${final}\`)
+                .setTitle(`🎲 你得到了 ${final}`)
                 .setColor("#5865F2")
             return message.reply({
                 embeds: [diceEmbed]
@@ -368,8 +340,8 @@ client.on("messageCreate", (message) => {
     }
 })
     
-client.login("你的TOKEN")`}
-</SyntaxHighlighter>
+client.login("你的TOKEN")
+```
 
 ## 總結
 
