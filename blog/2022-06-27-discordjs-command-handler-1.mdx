@@ -190,7 +190,7 @@ function loadCommands(client, directory) {
 最後，回到 `index.js`，在 `client.login()` 前一行加上：
 
 ```js
-{`require("./commandLoader.js")(client, "./Command") // 載入剛剛寫的 loadCommands 並執行`}
+require("./commandLoader.js")(client, "./Command") // 載入剛剛寫的 loadCommands 並執行
 ```
 
 ## 指令處理器
