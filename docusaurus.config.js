@@ -156,6 +156,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 			copyright: `YEE式機器龍 © 2019 ~ ${new Date().getFullYear()}`,
 		},
 		prism: {
+			additionalLanguages: ["csharp"],
 			defaultLanguage: "zh-tw",
 			theme: darkCodeTheme,
 			darkTheme: darkCodeTheme,
