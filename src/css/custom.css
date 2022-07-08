@@ -99,6 +99,8 @@ article img {
 .navbar {
     padding: 0 var(--global-padding);
     z-index: 99999;
+    background-color: rgba(36, 37, 38, 0.65);
+    backdrop-filter: blur(5px);
 }
 
 .navbar__logo > img {
