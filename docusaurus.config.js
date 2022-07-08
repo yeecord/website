@@ -1,8 +1,8 @@
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
-(module.exports = {
+;(module.exports = {
 	title: 'YEE式機器龍',
 	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文Discord伺服器，我們是能夠超越Rythm更好的Discord音樂機器人，使用我讓Discord不再只是聊天平台！',
 	url: 'https://yeecord.com',
@@ -35,7 +35,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
 					sidebarCollapsed: false,
-					sidebarCollapsible: true
+					sidebarCollapsible: true,
+					editUrl: 'https://github.com/Gary50613/yeecord-docs#readme'
 				},
 				blog: {
 					blogTitle: "部落格",
@@ -91,7 +92,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					position: "right"
 				},
 				{
-					href: 'https://github.com/Gary50613/yeecord-project',
+					href: 'https://github.com/Gary50613/yeecord-docs',
 					label: 'GitHub',
 					position: 'right',
 				},
@@ -139,7 +140,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						},
 						{
 							label: 'GitHub',
-							href: 'https://github.com/Gary50613/yeecord-project',
+							href: 'https://github.com/Gary50613/yeecord-docs',
 						},
 						{
 							label: "Patreon",

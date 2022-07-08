@@ -5,6 +5,16 @@ kane:
   image_url: /img/Gary50613.jpg
 wolf:
   name: Wolf yuan 狼苑
-  title: 開源黑貓機器人作者
+  title: 黑貓音樂機器人作者 兼 機器人伺服器管理
   url: https://github.com/wolf-yuan-6115
-  image_url: /img/WolfYuan.jpg
+  image_url: /img/WolfYuan.png
+kay:
+  name: 美味的小圓 Kay Xue
+  title: Yeecord 以前的小幫手
+  url: https://github.com/Kayxue
+  image_url: /img/kay.png
+nathan:
+  name: Nathan
+  title: Yeecord 現任管理員 兼 ZeitFrei 合作機器人作者
+  url: https://github.com/NathanTW0219
+  image_url: /img/nathan.jpg
