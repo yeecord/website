@@ -12,7 +12,7 @@
 
 ## ❤️ 我想要贡献
 
-可以參照 [docusaurus](https://docusaurus.io/) 的教学
+可以参考 [docusaurus](https://docusaurus.io/) 的教学
 
 ### 项目结构
 
