@@ -66,7 +66,7 @@ h4 {
     -webkit-font-smoothing: antialiased;
 }
 
-pre, code, code * {
+pre, code, code *, td {
     font-family: "Consolas", monospace, "Microsoft YaHei", "Readex Pro", sans-serif !important;
     font-weight: 500;
 }
@@ -75,7 +75,7 @@ h1, h2, h3, h4 {
     color: white;
 }
 
-h1, h2, h2 > a, h3, h4, b, a.navbar__item, h3 > a, article > h3, strong, .breadcrumbs__link {
+h1, h2, h2 > a, b, a.navbar__item, h3 > a, article > h3, strong, .breadcrumbs__link {
     font-weight: 700;
     font-family: "Readex Pro", "Noto Sans TC", "Microsoft YaHei", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
 }
