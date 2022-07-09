@@ -25,8 +25,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				sitemap: {
-					changefreq: 'daily',
-					priority: 0.7
+					changefreq: 'hourly',
+					priority: 0.7,
+					ignorePatterns: ["/tags/**"]
 				},
 				googleAnalytics: {
 					trackingID: 'UA-118349579-3',
