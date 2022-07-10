@@ -4,4 +4,4 @@
 
 ## 起飛前確認事項
 
-- [ ] 我已詳細確認編輯之文件有符合 [CONTRIBUTING.md](https://github.com/Gary50613/yeecord-docs/blob/master/CONTRIBUTING.md) 文件規範
+- [ ] 我已詳細確認編輯之文件有符合 [CONTRIBUTING.md](https://github.com/yeecord/docs/blob/master/CONTRIBUTING.md) 文件規範

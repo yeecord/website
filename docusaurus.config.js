@@ -37,7 +37,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 					sidebarPath: require.resolve('./sidebars.js'),
 					sidebarCollapsed: false,
 					sidebarCollapsible: true,
-					editUrl: 'https://github.com/Gary50613/yeecord-docs#readme'
+					editUrl: 'https://github.com/yeecord/docs#readme'
 				},
 				blog: {
 					blogTitle: "部落格",
@@ -93,7 +93,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 					position: "right"
 				},
 				{
-					href: 'https://github.com/Gary50613/yeecord-docs',
+					href: 'https://github.com/yeecord',
 					label: 'GitHub',
 					position: 'right',
 				},
@@ -141,7 +141,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 						},
 						{
 							label: 'GitHub',
-							href: 'https://github.com/Gary50613/yeecord-docs',
+							href: 'https://github.com/yeecord',
 						},
 						{
 							label: "Patreon",

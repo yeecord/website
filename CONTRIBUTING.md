@@ -31,7 +31,7 @@
 1. 使用 `git` 將專案下載下來
 
     ```shell
-    git clone https://github.com/Gary50613/yeecord-docs
+    git clone https://github.com/yeecord/docs
     ```
 
 2. 安裝好專案需要的依賴
