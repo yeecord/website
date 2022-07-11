@@ -108,15 +108,38 @@ GitLab 請點選 ``Create Merge Request``
 ![](/img/contribution-guide/PRMerged.png)  
 
 ## 繼續貢獻......
-當然您可以選擇繼續貢獻，但在繼續貢獻之前，請檢察是否原專案的主分支有被變更過，如果有，請先輸入以下指令以拉取原專案有被做過的變更：
+當然您可以選擇繼續貢獻，但在繼續貢獻之前，請檢查是否原專案的主分支有被變更過，如果有，請先輸入以下指令以拉取原專案有被做過的變更：
 ```shell
 git pull upstream master
 ```
-
 :::caution
 若您是 GitLab，主分支會是 ``main`` 而不是 ``master``！
 :::
-然後您就可以繼續編輯等作業了
+接下來將變更推送至專案副本的 master分支：
+```shell
+git push origin master
+```
+然後您就可以繼續編輯等作業了  
+:::info 最保守的作法
+當然，有時它不會成功抓取到主專案的變更，請透過以下最保守的作法進行處理：  
+首先，請先切換回主分支：
+```shell
+git checkout master
+```
+再來，請輸入以下指令拉取原專案的變更：
+```shell
+git pull upstream master
+```
+然後再將變更推送至副本專案的 master 和自己建的分支：
+```shell
+git push origin master
+git push origin <自己建的分支名稱>
+```
+最後切回去自己建立的分支：
+```shell
+git checkout <自己建的分支名稱>
+```
+:::
 ## 常見問題
 ### 我輸入 ``git commit`` 後他印出奇怪的東西？
 #### 狀況1：``Please Tell me who you are``
