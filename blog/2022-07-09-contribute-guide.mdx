@@ -14,7 +14,8 @@ tags:
 date: 2022-07-09T13:01:00
 ---
 
-# 如何貢獻 Git 平台上的 Repository  
+# 如何貢獻 Git 平台上的 Repository
+
 想必有在寫程式、使用 Git 平台的程式開發者，有時會想幫一些開發者修改專案的程式碼，讓整個程式運行更流暢或者減少開發者的負擔吧？在這裡就教大家如何貢獻一個 Git 平台上的專案，讓您也可以為程式的生態盡一份心力！  
 
 :::info 我想先告知你
@@ -26,85 +27,85 @@ date: 2022-07-09T13:01:00
 ## 步驟一：Fork 專案  
 因為那個專案不是您的，所以您對該專案只能複製，並不能做其他修改。所以我們必須先 Fork，讓 Git 平台複製一份該專案的副本給我們，我們才能開始修改程式碼，並將修改推送至專案副本。  
 首先到您想要貢獻的專案，點選 ``Fork`` 按鈕：
-![](/img/Contribution-guide/GitHub/WhereForkButton.png)  
+![](/img/contribution-guide/github/WhereForkButton.png)  
 再來，請填入副本的相關資訊，然後點選 ``Create Fork``：  
-![](/img/Contribution-guide/GitHub/WriteForkInformation.png)  
+![](/img/contribution-guide/github/WriteForkInformation.png)  
 GitLab 的 Fork 部分其實跟 GitHub 大同小異，只是能多決定專案是否此副本能被別人看到。  
-![](/img/Contribution-guide/GitLab/WriteForkInformation.png)  
+![](/img/contribution-guide/gitlab/WriteForkInformation.png)  
 :::tip 小提示
 ``Project Url`` 欄位後面設定的是這個副本的擁有者是誰。
 :::
 
 複製完成後，他會幫你跳轉至您的副本專案網頁，至此您就完成了 Fork 專案，並且您會在專案標題下方看到 ``Fork from xxx/yyy``。 
-![](/img/Contribution-guide/GitHub/ForkFinished.png)  
-![](/img/Contribution-guide/GitLab/ForkFinished.png)  
+![](/img/contribution-guide/github/ForkFinished.png)  
+![](/img/contribution-guide/gitlab/ForkFinished.png)  
 
 ## 步驟二：Clone 專案副本、環境設定與開始編輯
 接下來我們開啟終端機，透過以下指令將專案副本複製到電腦上您想要的位置，
 ```shell
 git clone <Fork 專案的 git 連結>
 ```
-![](/img/Contribution-guide/CloneProject.png)  
+![](/img/contribution-guide/CloneProject.png)  
 :::info 小筆記
 Fork 專案的 git 連結可以在網頁上點選 ``Code`` 查看  
-![](/img/Contribution-guide/GitHub/WhereCodeButton.png)  
+![](/img/contribution-guide/github/WhereCodeButton.png)  
 GitLab 也是同理，但請複製第二個：  
-![](/img/Contribution-guide/GitLab/WhereCodeButton.png)  
+![](/img/contribution-guide/gitlab/WhereCodeButton.png)  
 :::
 然後專案就會被複製到電腦上您指定的位置了，但是請先別急，請先透過以下指令添加一個原本專案的 git 數據庫（在此我命名該數據庫為 upstream）：
 ```shell
 git remote add <數據庫名稱> <原本專案的 git 連結>
 ```
-![](/img/Contribution-guide/AddUpstream.png)  
+![](/img/contribution-guide/AddUpstream.png)  
 接下來，輸入以下指令建立新分支並切換過去：
 ```shell
 git checkout -b <分支名稱>
 ```
-![](/img/Contribution-guide/ChangeToNewBranch.png) 
+![](/img/contribution-guide/ChangeToNewBranch.png) 
 :::info 小筆記
 沒錯，此步驟是GitHub Flow、GitLab Flow都有寫的，為了能夠安全實驗程式碼與執行變更，請您必須執行此步驟。   
 順便附上一張 GitHub Flow 圖片，您也會發現第一步就是新建分支：  
 ![](https://ithelp.ithome.com.tw/upload/images/20191014/20072606oXfJwq4esS.jpg) 
 :::
 然後就可以開始編輯了！  
-![](/img/Contribution-guide/StartContribution.png)  
+![](/img/contribution-guide/StartContribution.png)  
 當您每編輯到了一個階段後，您可以在該資料夾下開啟終端機，並**適當**使用下方指令進行將新增檔案至索引、儲存變更、提交推送變更至Git平台上的副本專案等動作：
 ```shell
 git add . #將所有檔案新增至索引，如果沒有新檔案可以不用輸入這行
 git commit -am "Commit Description" #提交變更
 git push origin <剛剛建立的新分支名稱> #推送變更至Git平台的副本專案
 ```
-![](/img/Contribution-guide/AddAndCommit.png) 
+![](/img/contribution-guide/AddAndCommit.png) 
 :::tip 小提醒
 ``git push`` 執行時有出現問題嗎？請參考下方常見問題嘗試解決，或者自行 Google 吧！
 :::
 
 ## 步驟三：向原專案發出推送要求  
 請先前往Git平台上專案副本網頁，點選 ``Contribute`` -> ``Open Pull Request``
-![](/img/Contribution-guide/GitHub/WhereOpenPRButton.png)  
+![](/img/contribution-guide/github/WhereOpenPRButton.png)  
 
 :::info 小筆記
 * GitHub 的話，如果有出現 ``XXX had recent pushes...`` 也可以按下該黃色橫幅右側的 ``Compare & pull request``：
-![](/img/Contribution-guide/CompareAndPRMessage.png)  
+![](/img/contribution-guide/CompareAndPRMessage.png)  
 * GitLab 的話，在GitLab專案副本網頁上方會出現一則寫著 ``You pushed to...`` 的訊息，請點選下方的 ``Create Merge Request`` 按鈕：  
-![](/img/Contribution-guide/GitLab/WhereOpenPRButton.png)  
+![](/img/contribution-guide/gitlab/WhereOpenPRButton.png)  
 :::
 
 接下來就會出現填寫 Pull Request資訊的介面，填好相關資訊以後請按下 ``Create Pull Request`` 按鈕正式向原專案發出推送要求
-![](/img/Contribution-guide/WritePRInformation.png)
+![](/img/contribution-guide/WritePRInformation.png)
 :::info 小筆記
 GitLab 請點選 ``Create Merge Request``
 :::  
 最後就是正式等待原專案開發者批准了。  
-![](/img/Contribution-guide/WaitForMerge.png)  
+![](/img/contribution-guide/WaitForMerge.png)  
 ## 等待結果！
 當有人對您發出的PR發表評論時，您會收到相關通知：
-![](/img/Contribution-guide/PRNotification.png)  
+![](/img/contribution-guide/PRNotification.png)  
 :::caution
 如果是 GitLab 則不會通知！請自己定時前往確認您發出的推送請求之目前處理進度！
 :::
 點進去即可查看目前該PR的相關消息，如果您有看到PR標題下方有 ``Merged`` 字眼，恭喜您，您的推送請求已經被開發者批准了！您可以按下下方的 ``Delete branch`` 刪除分支！
-![](/img/Contribution-guide/PRMerged.png)  
+![](/img/contribution-guide/PRMerged.png)  
 
 ## 繼續貢獻......
 當然您可以選擇繼續貢獻，但在繼續貢獻之前，請檢察是否原專案的主分支有被變更過，如果有，請先輸入以下指令以拉取原專案有被做過的變更：
@@ -115,32 +116,19 @@ git pull upstream master
 :::caution
 若您是 GitLab，主分支會是 ``main`` 而不是 ``master``！
 :::
-
-接下來
 然後您就可以繼續編輯等作業了
 ## 常見問題
 ### 我輸入 ``git commit`` 後他印出奇怪的東西？
 #### 狀況1：``Please Tell me who you are``
 **解析：**這通常會發生在您第一次使用 Git Cli 進行 Git 專案管理的時候，因為他沒有您的資訊，所以 ``git commit`` 指令無法執行，請跟著他的指令提示填入您的相關資訊後，再輸入一次 ``git commit`` 即可正常提交  
-![](/img/Contribution-guide/NoGlobalAccountError.png)  
+![](/img/contribution-guide/NoGlobalAccountError.png)  
 #### 狀況2：``Nothing to commit, working tree clean``
 **解析：**這代表您沒有提交變更。這有時會發生在你忘記 commit 的時候，或者你忘記將檔案加入 Git 索引的時候，所以 commit 前請先檢查檔案後再 commit 喔！  
-![](/img/Contribution-guide/CommitWorkingTreeClean.png)  
+![](/img/contribution-guide/CommitWorkingTreeClean.png)  
 ### 我輸入 ``git push`` 後他印出奇怪的東西？
 #### 狀況1：``Everything up-to-date``
 **解析：**這跟剛剛 ``Nothing to commit, working tree clean`` 差不多，您沒有提交需要被推送上 Git 平台。  
-![](/img/Contribution-guide/PushUpToDate.png)  
+![](/img/contribution-guide/PushUpToDate.png)  
 #### 狀況2：``Support for password autoentication was removed...``  
 **解析：**通常此問題會發生在 Linux 或者一些要在終端機中輸入使用者帳號、密碼以登入的終端機上。因為[密碼驗證 GitHub 已經在 2021 年 8 月 13 日時禁止了](https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/)，所以登入時，``Username`` 請輸入 Username，``Password`` 請輸入您帳戶的 ``Access Token``。如果不知道如何生成自己帳戶的 ``Access Token``，請參考 [GitHub Docs](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)。  
-![](/img/Contribution-guide/PasswordAuthError.png)  
-
-
-
-
-
-
-
-
-
-
-
+![](/img/contribution-guide/PasswordAuthError.png)
