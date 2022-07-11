@@ -39,7 +39,7 @@
 1. 用 `git` 將文件下载下來
 
 ```shell
-git clone https://github.com/Gary50613/yeecord-docs
+git clone https://github.com/yeecord/docs
 ```
 
 2. 安裝好代码需要的依赖
