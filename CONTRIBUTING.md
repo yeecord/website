@@ -1,5 +1,7 @@
 # 協作指南大全
 
+[简体中文](CONTRIBUTING-zh_cn.md)
+
 ## 文檔等基本需求
 
 請參照 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) 中的中英文空格需求，[為什麼你們就是不能加個空格呢？](https://github.com/vinta/pangu.js)
