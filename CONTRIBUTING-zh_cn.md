@@ -26,7 +26,7 @@
 - [NodeJS 16](https://nodejs.org/download) 或以上版本
 - 一个可以使用的 markdown 编辑器 (VSCode)
 
-1. 用 `git` 將文件下载下來
+1. 用 `git` 将文件下载下來
 
 ```shell
 git clone https://github.com/yeecord/docs
