@@ -1,5 +1,3 @@
-[简体中文](LICENSE-zh_cn.md)
-
 ## 文章
 
 在 `blog` 之內的文件接受到
@@ -12,7 +10,7 @@
 
 ## 图片
 
-在页面中使用之图片授权，可在 [版權所有](https://yeecord.com/docs/copyright/) 页面查询
+在页面中使用之图片授权，可在 [版权所有](https://yeecord.com/docs/copyright/) 页面查询
 
 ## 其他文件
 
