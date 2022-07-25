@@ -1,5 +1,7 @@
 ## 文章
 
+[简体中文](LICENSE-zh_cn.md)
+
 在 `blog` 之內的文件接受到
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 之保護。只有在以下情況使用才符合要求。
 
