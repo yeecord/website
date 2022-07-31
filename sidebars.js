@@ -25,7 +25,8 @@ module.exports = {
 					label: '指令參照',
 					link: { type: 'generated-index' },
 					items: [
-						'commands/reference/general'
+						'commands/reference/general',
+						'commands/reference/extra'
 					]
 				}
 			]
