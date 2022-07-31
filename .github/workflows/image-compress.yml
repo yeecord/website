@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: calibreapp/image-actions
+    name: Compress it!
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -20,9 +20,9 @@ jobs:
           compressOnly: true
       - name: Create New Pull Request If Needed
         if: steps.calibre.outputs.markdown != ''
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
-          title: "Image: ompress images"
+          title: "Image: compress images"
           branch-suffix: timestamp
-          commit-message: Compressed Images
+          commit-message: Compress Images
           body: ${{ steps.calibre.outputs.markdown }}
