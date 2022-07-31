@@ -1,8 +1,10 @@
 name: Compress Images
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+   branches:
+     - master
+
 jobs:
   build:
     name: calibreapp/image-actions
