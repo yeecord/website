@@ -1,20 +1,15 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 import React from 'react';
-import NavbarItem from '@theme/NavbarItem';
-import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
-import SearchBar from '@theme/SearchBar';
+import {useThemeConfig} from '@docusaurus/theme-common';
 import {
 	splitNavbarItems,
 	useNavbarMobileSidebar,
-	useThemeConfig,
-} from '@docusaurus/theme-common';
+} from '@docusaurus/theme-common/internal';
+import NavbarItem from '@theme/NavbarItem';
+import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
+import SearchBar from '@theme/SearchBar';
 import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
+import NavbarSearch from '@theme/Navbar/Search';
 import styles from './styles.module.css';
 
 function useNavbarItems() {
@@ -45,7 +40,7 @@ export default function NavbarContent() {
 	const mobileSidebar = useNavbarMobileSidebar();
 	const items = useNavbarItems();
 	const [leftItems, rightItems] = splitNavbarItems(items);
-	const autoAddSearchBar = !items.some((item) => item.type === 'search');
+	const searchBarItem = items.find((item) => item.type === 'search');
 	return (
 		<NavbarContentLayout
 			left={
@@ -60,8 +55,13 @@ export default function NavbarContent() {
 				// Ask the user to add the respective navbar items => more flexible
 				<>
 					<NavbarItems items={rightItems}/>
-					{autoAddSearchBar && <SearchBar/>}
-					{!mobileSidebar.disabled && <NavbarMobileSidebarToggle/>}
+					<NavbarColorModeToggle className={styles.colorModeToggle}/>
+					{!searchBarItem && (
+						<NavbarSearch>
+							<SearchBar/>
+						</NavbarSearch>
+					)}
+					<NavbarMobileSidebarToggle/>
 				</>
 			}
 		/>

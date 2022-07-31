@@ -1,8 +1,8 @@
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
-(module.exports = {
+;(module.exports = {
 	title: 'YEE式機器龍',
 	tagline: '沒有了Rythm，你還是可以快速的建立優質的中文Discord伺服器，我們是能夠超越Rythm更好的Discord音樂機器人，使用我讓Discord不再只是聊天平台！',
 	url: 'https://yeecord.com',
@@ -25,8 +25,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				sitemap: {
-					changefreq: 'daily',
-					priority: 0.7
+					changefreq: 'hourly',
+					priority: 0.7,
+					ignorePatterns: ["/tags/**"]
 				},
 				googleAnalytics: {
 					trackingID: 'UA-118349579-3',
@@ -36,7 +37,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					sidebarPath: require.resolve('./sidebars.js'),
 					sidebarCollapsed: false,
 					sidebarCollapsible: true,
-					editUrl: 'https://github.com/Gary50613/yeecord-docs#readme'
+					editUrl: 'https://github.com/yeecord/docs#readme'
 				},
 				blog: {
 					blogTitle: "部落格",
@@ -92,7 +93,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					position: "right"
 				},
 				{
-					href: 'https://github.com/Gary50613/yeecord-docs',
+					href: 'https://github.com/yeecord',
 					label: 'GitHub',
 					position: 'right',
 				},
@@ -140,7 +141,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						},
 						{
 							label: 'GitHub',
-							href: 'https://github.com/Gary50613/yeecord-docs',
+							href: 'https://github.com/yeecord',
 						},
 						{
 							label: "Patreon",
@@ -156,6 +157,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			copyright: `YEE式機器龍 © 2019 ~ ${new Date().getFullYear()}`,
 		},
 		prism: {
+			additionalLanguages: ["csharp"],
 			defaultLanguage: "zh-tw",
 			theme: darkCodeTheme,
 			darkTheme: darkCodeTheme,
