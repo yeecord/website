@@ -1,0 +1,170 @@
+---
+slug: discord-copy-id
+title: 90%的人都不知道 Discord 這一「隱藏功能」，學會一秒變大佬！
+authors: [nathan]
+description: "相信大家在使用YEE式機器龍或其他機器人的時候都會遇到Tag別人被幹爆的經驗吧？學會如何在Discord中複製ID，讓這種情況不再發生！"
+tags:
+  [
+    "Discord",
+    "dc",
+    "機器人",
+    "bot",
+    "指令",
+    "command",
+    "id",
+    "snowflake",
+    "16位數字",
+    "數字",
+    "number"
+  ]
+date: 2022-07-02T19:00:00
+---
+
+import Adsense from "../src/components/Adsense";
+import TOCInline from '@theme/TOCInline';
+
+相信大家在使用YEE式機器龍或其他機器人的時候都會遇到Tag別人被幹爆的經驗吧？
+學會如何在Discord中複製ID，讓這種情況不再發生！
+
+:::info
+窩不知道其他機器人支不支援使用ID代替Tag，但至少YEE式機器龍可以
+~~你各位快去用機器龍阿~~
+:::
+
+<TOCInline toc={toc} />
+
+## Discord ID 是什麼？
+
+Discord ID 又稱 Snowflake（雪花），是Twitter開發的一串由16個數字組成的唯一識別碼，
+只要是同一個元件，無論名稱內容怎麼變，他的ID都是一樣的。
+在 Discord 上，幾乎所有元件都有一個自己的 ID，像是上方提到的 `使用者`、`頻道`、`伺服器` 以及 `訊息`、`討論串`、`身份組`等等。
+
+看完上方的介紹，你應該就體會到了 ID 的通用性！
+
+:::info
+維基百科: [雪花算法](https://zh.wikipedia.org/wiki/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95)
+:::
+
+<!--truncate-->
+
+<Adsense />
+
+## 如何打開隱藏的「複製ID」選項？
+
+:::info
+當然，在做這些動作前你得先 [登入](discord://-/login)
+:::
+
+### 桌面/網頁版
+
+#### 1. 在 Discord 中找到左下角的「使用者設定」
+
+你也可以 [點我](discord://-/settings/account) 來前往使用者設定
+
+![桌面以及網頁版的使用者設定](/img/discord-copy-id/user-settings-on-desktop.png)
+
+#### 2. 來到使用者設定後，點擊測邊欄的「進階」
+你也可以 [點我](discord://-/settings/advanced) 來前往進階設定
+
+![桌面以及網頁版的進階設定](/img/discord-copy-id/advanced-settings-on-desktop.png)
+
+#### 3. 點開「開發者模式」
+
+![桌面以及網頁版的開發者模式開關](/img/discord-copy-id/developer-mode-on-desktop.png)
+
+### 移動版
+
+#### 1. 在 Discord 找到右下角的「使用者設定」
+
+![移動版的使用者設定](/img/discord-copy-id/user-settings-on-mobile.png)
+
+#### 2. 往下捲，找到「行為」
+
+![img.png](/img/discord-copy-id/advanced-settings-on-mobile.png)
+
+#### 3. 打開「開發者模式」
+
+![img.png](/img/discord-copy-id/developer-mode-on-mobile.png)
+
+<Adsense />
+
+## 如何複製 ID
+
+### 桌面/網頁版
+
+對著你想要複製 ID 的對象點擊滑鼠右鍵，並點擊「複製 ID」
+
+#### 使用者
+
+![在桌面以及網頁版複製使用者ID](/img/discord-copy-id/copy-user-id-on-desktop.png)
+
+#### 伺服器
+
+![在桌面以及網頁版複製伺服器ID](/img/discord-copy-id/copy-guild-id-on-desktop.png)
+
+#### 頻道
+
+![在桌面以及網頁版複製頻道ID](/img/discord-copy-id/copy-channel-id-on-desktop.png)
+
+#### 訊息
+
+![在桌面以及網頁版複製訊息ID](/img/discord-copy-id/copy-message-id-on-desktop.png)
+
+#### 身份組
+
+![在桌面以及網頁版複製身份組ID](/img/discord-copy-id/copy-role-id-on-desktop.png)
+
+:::tip 有用的小提示
+你也可以按住Shift，並點擊訊息右方出現的 `ID` 圖標
+:::
+
+### 移動版
+
+#### 使用者
+
+![在移動版上複製使用者ID](/img/discord-copy-id/copy-user-id-on-mobile.png)
+
+#### 伺服器
+
+![在移動版上複製伺服器ID](/img/discord-copy-id/copy-guild-id-on-mobile.png)
+
+#### 頻道
+
+![在移動版上複製頻道ID](/img/discord-copy-id/copy-channel-id-on-mobile.png)
+
+#### 訊息
+
+![在移動版上複製訊息ID](/img/discord-copy-id/copy-message-id-on-mobile.png)
+
+#### 身份組
+
+![在移動版上複製身份組ID](/img/discord-copy-id/copy-role-id-on-mobile.png)
+
+## 拿到 ID 之後，我可以幹嘛？
+
+**你可以**~~造一艘火箭、跟木乃伊決鬥...~~
+
+### 使用機器人指令
+
+![使用ID代替Tag來使用指令](/img/discord-copy-id/use-bot-commands.png)
+
+### 直接 @mention 別人
+
+![透過ID來@mention別人](/img/discord-copy-id/mention-people-with-id.gif)
+
+![透過ID來@mention頻道](/img/discord-copy-id/mention-channel-with-id.gif)
+
+![透過ID來@mention身份組](/img/discord-copy-id/mention-role-with-id.gif)
+
+### 查一些神奇的東西
+
+![查一些神奇的東西](/img/discord-copy-id/lookup-something.gif)
+:::info
+上圖來自第三方工具 [Discord Lookup](https://discord.id)
+:::
+
+<AdSense />
+
+## 總結
+Discord ID 的用途遠遠不只有這些，你將在使用 Discord 的過程中逐漸體會到 ID 的方便！
+若對 Snowflake 有更深入的興趣，你可以前往 [Discord Developer Documentation](https://discord.com/developers/docs) 查看更多資訊。
