@@ -27,7 +27,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 				sitemap: {
 					changefreq: 'hourly',
 					priority: 0.7,
-					ignorePatterns: ["/tags/**"]
+					ignorePatterns: ["**/tags/**"]
 				},
 				googleAnalytics: {
 					trackingID: 'UA-118349579-3',
