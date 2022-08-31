@@ -101,13 +101,13 @@ import Adsense from "../src/components/Adsense";
 
 無論是在投票途中，還是結束投票後，你都可以將當前的投票結果 `匯出為 Excel 格式` 或 `匯出為 csv 格式`，這種格式的文件可以使你更容易統計或分析投票結果。
 
-`匯出為 Excel 格式` 與 `匯出為 csv 格式` 不同的地方在於，由於 Excel 本身的限制，如果直接以 csv 格式匯入 Excel 裡面，使用者 ID 會被無情吃掉末 3 位，這部分的解決方式可以參考。
+`匯出為 Excel 格式` 是為了解決 csv 格式無法正常將 `投票者 ID` 末 3 位匯入 Excel 而設計。
 
 目前匯出的內容包含：`投票者 ID(user_id)`、`投票者 Tag(tag)`、`選項(answer)`、`投票時間(vote_at)`
 
-![匯出成 Excel 格式 呈現](/img/docs/poll/poll-excel_output.png)
+![匯出為 Excel 格式 呈現](/img/docs/poll/poll-excel_output.png)
 
-![匯出成 csv 格式 呈現](/img/docs/poll/poll-csv_output.png)
+![匯出為 csv 格式 呈現](/img/docs/poll/poll-csv_output.png)
 
 :::info 我想先通知你
 1. 這個文件呈現的資料都是最後投票的狀態，只要他們有更改選項，就會把資料都更新一次，所以不能排除在投票完成後更改了使用者名稱，這點要多加注意喔！
