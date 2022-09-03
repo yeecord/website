@@ -4,10 +4,6 @@ on:
   push:
    branches:
      - master
-   paths:
-     - *.png
-     - *.jpg
-     - *.jpeg
 
 jobs:
   build:
@@ -16,14 +12,25 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+
+      - name: Check Is Needed to Execute
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            images:
+              - 'static/img/**'
+
       - name: Compress Images
+        if: steps.filter.outputs.images == 'true'
         id: calibre
         uses: calibreapp/image-actions@main
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
+
       - name: Create New Pull Request If Needed
-        if: steps.calibre.outputs.markdown != ''
+        if: steps.calibre.outputs.markdown != '' && steps.filter.outputs.images == 'true'
         uses: peter-evans/create-pull-request@v4
         with:
           title: "Image: compress images"
