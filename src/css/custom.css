@@ -61,7 +61,7 @@ h4 {
 
 *, li, div {
     font-family: "Microsoft YaHei", "Readex Pro", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
-    font-weight: 700;
+    font-weight: 500;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
 }
