@@ -66,7 +66,7 @@ h4 {
     -webkit-font-smoothing: antialiased;
 }
 
-.menu__link--active {
+.menu__link--active, [aria-current="page"], [itemprop="name"] {
     font-weight: 600;
 }
 
