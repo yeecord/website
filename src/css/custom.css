@@ -66,6 +66,10 @@ h4 {
     -webkit-font-smoothing: antialiased;
 }
 
+.menu__link--active {
+    font-weight: 600;
+}
+
 pre, code, code *, td {
     font-family: "Consolas", monospace, "Microsoft YaHei", "Readex Pro", sans-serif !important;
     font-weight: 500;
