@@ -12,4 +12,4 @@
 
 ## ❤️ 我想要贡献
 
-请查看 [创作指南大全](CONTRIBUTING.md) 的说明
+请查看 [创作指南大全](CONTRIBUTING-zh_cn.md) 的说明
