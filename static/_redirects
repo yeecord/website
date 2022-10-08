@@ -31,3 +31,4 @@
 /github https://github.com/yeecord/docs 302
 /beta https://discord.com/oauth2/authorize?client_id=840770984821784601&permissions=277850745905&scope=bot%20applications.commands 302
 /beta/ https://discord.com/oauth2/authorize?client_id=840770984821784601&permissions=277850745905&scope=bot%20applications.commands 302
+/list?id=:id https://music.yeecord.com/?list=:id
