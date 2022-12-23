@@ -1,8 +1,8 @@
-/i https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
-/invite https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
-/invite/ https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
-/link https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
-/link/ https://discord.com/api/oauth2/authorize?client_id=584213384409382953&permissions=277850745905&scope=bot%20applications.commands 302
+/i https://app.yeecord.com/invite 302
+/invite https://app.yeecord.com/invite 302
+/invite/ https://app.yeecord.com/invite 302
+/link https://app.yeecord.com/invite 302
+/link/ https://app.yeecord.com/invite 302
 /patreon https://www.patreon.com/yeecord 302
 /donate https://www.patreon.com/yeecord 302
 /donate/ https://www.patreon.com/yeecord 302
