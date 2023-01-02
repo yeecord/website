@@ -4,6 +4,7 @@ import HeroGradient from "@static/hero.svg";
 import Image from "next/image";
 import { LinkButton } from "@components/LinkButton";
 import clsx from "clsx";
+import styles from "./hero.module.css";
 
 function Buttons() {
   return (
@@ -43,7 +44,12 @@ export function Hero() {
       >
         最強大的
         <br className="md:hidden" />
-        <span className="text-gradient bg-gradient-to-r from-blue-400 to-green-300">
+        <span
+          className={clsx(
+            "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
+            styles["animated-gradient"]
+          )}
+        >
           Discord
         </span>
         <br className="md:hidden" />

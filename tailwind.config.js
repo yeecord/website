@@ -9,7 +9,9 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      apple: ["Inter", "-apple-system", "sans-serif"],
+      apple: [
+        `-apple-system, ui-sans-serif, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
+      ],
     },
     extend: {
       colors: {
