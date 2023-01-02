@@ -1,0 +1,201 @@
+---
+title: "遷移到文檔 2.0"
+description: "向我們的新文檔問好"
+---
+
+import {
+  Accordion,
+  Admonition,
+  Error,
+  Tip,
+  Warning,
+  Info,
+  Card,
+  Cards,
+} from "@components/mdx";
+import { motion } from "framer-motion";
+
+# 遷移到文檔 2.0
+
+## 我的頁面在哪裡??
+
+所有 mdx 文件都已移至`/pages`
+
+| 文檔          | 博客          |
+| ------------- | ------------- |
+| `/pages/docs` | `/pages/blog` |
+
+## 圖像導入方法已更改
+
+以前的版本允許您從`/static`文件夾導入圖像, 例如: `![alt](/my-photo.png)`
+
+現在你必須將你的圖像放入 `/public` 文件夾並使用 `![alt](@static/my-photo.png)` 導入它 <br />
+同時你也可以把圖像放到你的 mdx 文件的同一個文件夾中, 並使用`![alt](./my-photo.png)`
+
+```mdx
+# 以前
+
+![alt](/docs/my-photo.png)
+
+# 現在
+
+![alt](@static/docs/my-photo.png)
+```
+
+## 添加頁面的新方法
+
+你仍然可以使用默認方式
+
+**文檔**
+
+```mdx
+---
+title: 你的標題
+description: 這是關於什麼的?
+---
+```
+
+**部落格**
+
+```mdx
+---
+title: 你的標題
+description: 這是關於什麼的?
+authors: ["Money Shark"]
+date: 2023/1/1
+image: "/blog/banner.jpg"
+---
+```
+
+### 排序頁面
+
+您必須編輯 `_meta.json` 以更改每個頁面的順序
+
+```json
+{
+  "my-new-page": "我的新頁面",
+  "index": "快速入門",
+  "migrate-to-v4": "新版YEE式機器龍攻略",
+  "commands": "指令"
+}
+```
+
+### 我們刪除了那些舊語法
+
+請改用自定義組件
+
+```
+::: warning 警告
+這不再受支持
+:::
+```
+
+## 更多自定義組件
+
+使用 `import { ... } from "@components/mdx"` 輕鬆導入自定義組件
+
+### Accordion
+
+想告訴用戶額外的詳細信息? 使用`Accordion`組件!
+
+```jsx
+import { Accordion } from "@components/mdx";
+
+**這裡有一條鯊魚**
+<Accordion title="Money是一隻鯊魚">Yeahhhhh</Accordion>;
+```
+
+**這裡有一條鯊魚**
+
+<Accordion title="Money是一隻鯊魚">Yeahhhhh</Accordion>
+
+### Admonition
+
+想給用戶提示或警告? 你可以使用`Admonition`組件 <br/>
+它還支持多種類型: `Tip`, `Warning`, `Info`, `Error`
+
+```jsx
+import { Admonition, Error, Tip, Warning, Info } from "@components/mdx";
+
+<Admonition title="Default" />
+<Tip title="Tip" />
+<Warning title='warning'/>
+<Info title='info'/>
+```
+
+<Admonition title="Default" />
+<Tip title="Tip" />
+<Warning title="warning" />
+<Info title="info" />
+
+### Card
+
+您可以使用它來將用戶重定向到不同的頁面 <br />
+永遠記得傳遞 `href` 道具
+
+```jsx
+import { Card } from "@components/mdx";
+
+<Card title="重定向到部落格" href="/blog/welcome-to-v2" />;
+```
+
+<Card title="重定向到部落格" href="/blog/welcome-to-v2" />
+
+## 創建自己的組件
+
+Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 文件中使用 jsx 語法 <br />
+同時我們將 Tailwind css 用於內部的 css 樣式, 他們支持黑暗模式 <br />
+所以意味著你可以輕鬆地創建組件
+
+我們也正在使用這些庫: [framer-motion](https://www.framer.com/motion/), `nextra`, `nextra-docs-theme`, `react-youtube` <br />
+你可以在你的文檔中使用它們
+
+### 自定義組件 (Tailwind css)
+
+```jsx
+<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+```
+
+<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+
+### Framer Motion
+
+它可以讓您輕鬆創建炫酷的動畫
+
+<Cards>
+  <Card
+    href="https://www.framer.com/docs/"
+    target="_blank"
+    title="他們的文檔"
+  />
+</Cards>
+
+```jsx
+<motion.div
+  animate={{
+    scale: [1, 2, 2, 1, 1],
+    rotate: [0, 0, 270, 270, 0],
+    borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+  }}
+/>
+```
+
+<div className="flex flex-col items-center bg-purple-500 p-5 rounded-2xl mt-4">
+  <motion.div
+    animate={{
+      scale: [1, 2, 2, 1, 1],
+      rotate: [0, 0, 270, 270, 0],
+      borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+    }}
+    transition={{
+      duration: 2,
+      ease: "easeInOut",
+      times: [0, 0.2, 0.5, 0.8, 1],
+      repeat: Infinity,
+      repeatDelay: 0.2,
+    }}
+    className="w-10 h-10 md:w-32 md:h-32 bg-white m-[5rem]"
+  />
+</div>
+
+我們建議您了解它們，為用戶創建更好的用戶體驗

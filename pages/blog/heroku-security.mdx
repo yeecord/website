@@ -1,0 +1,150 @@
+---
+slug: heroku-security
+title: 託管商 Heroku 「被駭」！大量代碼遭駭客下載 身為開發者該如何自保？
+authors: kane
+description: "Heroku 母公司 Salesforce 在 4/16 中午無預警發布 Email 給所有客戶，信件中表示 Heroku Github 上的私有代碼庫在 4/9 遭到駭客竊取並被下載，為了保護客戶代碼的安全，他們已經緊急移除了所有有連結到 Heroku 並進行 Github OAuth 授權之客戶的金鑰，並立案編號 2413 持續調查，也請客戶繼續監控 Github 上是否有異常的存取紀錄。"
+tags:
+  [
+    "Heroku",
+    "Travis-CI",
+    "Heroku部屬",
+    "Heroku indecent",
+    "Heroku down",
+    "heroku-cli",
+    "Github",
+    "資安",
+    "OAuth",
+  ]
+image: /blog/heroku-security/cover.jpeg
+date: 2022-04-17T07:35:50
+---
+
+import { TwitterTweetEmbed } from "react-twitter-embed";
+import { Adsense } from "@components/mdx";
+
+![Heroku Yeecord](@static/blog/heroku-security/cover.jpeg)
+
+[Heroku](https://www.heroku.com/) 母公司 Salesforce 在 4/16 中午無預警發布 Email 給所有客戶，信件中表示 Heroku Github 上的私有代碼庫在 4/9 遭到駭客竊取並被下載，為了保護客戶代碼的安全，他們已經緊急移除了所有有連結到 Heroku 並進行 Github OAuth 授權之客戶的金鑰，並立案編號 2413 持續調查，也請客戶繼續監控 Github 上是否有異常的存取紀錄。
+
+## Heroku 連結 Token 突遭外洩
+
+昨天中午本來還在優閒的肝 Code，突然收到來自 Salesforce 也就是 [Heroku](https://www.heroku.com) 母公司的 Email。在信件中 Salesforce 說明到他們正在調查對於連結到 Heroku 的私有代碼庫含有未授權的訪問，同時也請各位 Heroku 的使用者注意是否有未經授權的請求訪問到客戶在 Github 上的私有代碼庫。
+
+![Salesforce Heroku Email](@static/blog/heroku-security/salesforce-email.png)
+
+<Adsense />
+
+![Heroku 狀態頁 2413](@static/blog/heroku-security/heroku-2413.png)
+
+> [Heroku 狀態頁面](https://status.heroku.com/incidents/2413) 可以看到這次被立案為編號 2413 的案件還是沒有結果，也沒有任何預估的時間，目前先無除所有客戶的授權，並請客戶持續監控。
+
+他們在 Twitter 上的文章下方留言區也很多人詢問到這場災難什麼時候會結束，不過目前看來是還沒有任何下文的，不過他們正在積極調查。
+
+<div style={{ minHeight: "250px" }}>
+  <TwitterTweetEmbed
+    tweetId="1515111797136658432"
+    options={{ theme: "dark", lang: "zh-tw" }}
+  />
+</div>
+
+## Github 正在協力調查此事
+
+同時另一邊的 Github 也注意到了這件事的嚴重性，在 [Github Blog](https://github.blog/2022-04-15-security-alert-stolen-oauth-user-tokens/) 上發表了安全性警告，第三方的 OAuth 金鑰被盜取，同時受害者除了 Heroku，還有知名 Travis-CI 服務也遭入侵！
+
+Github 目前正努力通知有受到影響的使用者，也同時呼籲使用者應參照這篇 [Github 教學](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-security-log) 存取安全日誌，並確認自己的帳號沒有被他人使用。
+
+## Heroku 無法部屬的替代方案
+
+許多開發者在部屬時有遇到 `Items could not be retrieved, Internal server error` 的問題，因為現在 Heroku 移除了 Github 授權之後將暫時無法透過自動化部屬程式，可以使用相似的替代方案像是使用 [heroku-cli](https://devcenter.heroku.com/articles/heroku-cli) 部屬：
+
+1. 使用 `npm` 先安裝 heroku-cli
+
+   ```shell
+   npm install -g heroku
+   ```
+
+2. 登錄 heroku CLI 授權你的帳號
+
+   ```shell
+   heroku login
+   ```
+
+3. 切換到專案的目錄下之後連結到 heroku remote git
+
+   ```shell
+   cd /your/project
+   heroku git:remote -a my-cool-app
+   ```
+
+<Adsense />
+
+4. 推上 heroku git!
+   ```shell
+   git push heroku main
+   ```
+
+## 開發者應學會的自保方法
+
+恩...說了這麼多，最終還是要歸根到開發者本身有沒有做好防護措施，也才能避免像是原始碼洩漏等意外的時候，造成了巨大的損失。
+
+### 1. 啟用 MFA
+
+我們在其他篇文章也有提及到 [多因素驗證的重要性](/blog/discord-permissions-you-need-to-know/#啟用2FA)，這是個可以確保帳戶安全非常簡單的方式。
+
+而且現今也有了許多的驗證選擇方式，在 Github 上可以設置 App、Security Key、簡訊來確任身分。
+
+![Github MFA](@static/blog/heroku-security/github-mfa.png)
+
+### 2. 使用 Personal Access Token (PAT)
+
+<Adsense />
+
+在 2021/8/14 Github 棄用了使用密碼進行 git 操作，呼籲使用者轉為使用 PAT 來進行操作，以確保密碼的安全性，
+
+如果在 CI 、程式的環境中需要操作到 git，像是自動更新，也應使用 PAT 來執行，
+
+詳細的設定細節可以參考 [Github PAT 教學](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)。
+
+### 3. 使用環境變數避免寫死在代碼
+
+這是最可怕的一件事情了，拿個簡單的機器人範例來看看：
+
+```js
+// 初始化機器人
+
+bot.login("my_super_top_secret_token_to_my_cool_bot");
+```
+
+當你 push 上去公有的 Github 程式庫事情就大條了！而替代的方式則是轉為使用環境變數，可以使用 `dotenv` 這個套件在本地開發環境實現：
+
+1. 使用 `npm` 安裝 `dotenv` 套件
+
+   ```shell
+   npm i dotenv
+   ```
+
+2. 創建一個 `.env` 的檔案在專案的根目錄，並且長這樣
+
+   ```
+   BOT_TOKEN=my_cool_secret_token_is_safe_now
+   ```
+
+3. 修改程式可以讀取環境變數
+
+   ```js
+   require("dotenv").config();
+
+   // 初始化機器人
+
+   bot.login(process.env.BOT_TOKEN);
+   ```
+
+而在 Heroku 雲上可以直接到 App 的設定頁面設定 `Config Vars`：
+
+![Heroku 環境變數設定](@static/blog/heroku-security/heroku-env.png)
+
+## 結論
+
+資安回到起點還是在於開發人員自身的資安意識是否足夠，並且能有耐心在注意操作上的安全，最簡單別亂點連結、洩漏帳號、關心資安議題，確保安全。
+
+<Adsense />
