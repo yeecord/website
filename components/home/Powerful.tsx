@@ -19,9 +19,10 @@ export function Powerful() {
           "lg:max-h-[1100px] lg:-top-[30%]"
         )}
       />
-      <h1 className="heading-xl flex flex-col sm:flex-row">
+      <h1 className="heading-xl">
         您需要的
-        <span className="text-gradient from-orange-400 to-red-500 text-7xl sm:text-5xl">
+        <br className="sm:hidden" />
+        <span className="text-gradient from-orange-400 to-red-500">
           所有功能
         </span>
         都在這裡
@@ -32,7 +33,7 @@ export function Powerful() {
       <div className="h-stack">
         <LinkButton
           href="/docs"
-          className="primary-button bg-blue-500 rounded-xl"
+          className="primary-button bg-gradient-to-br from-orange-500 to-red-600 rounded-xl"
         >
           學到更多
         </LinkButton>

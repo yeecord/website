@@ -8,6 +8,11 @@ module.exports = {
     "./theme.config.tsx",
   ],
   theme: {
+    fontFamily: {
+      apple: [
+        `-apple-system, ui-sans-serif, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
+      ],
+    },
     extend: {
       colors: {
         secondary: {

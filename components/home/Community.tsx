@@ -17,8 +17,15 @@ export function Community({ joined }: { joined: number }) {
         src={CyanPinkGradient}
         className="absolute -z-[1] top-0 left-0 w-full overflow-visible object-cover h-full opacity-50"
       />
-      <h1 className="heading-xl">
-        <span className="text-gradient from-cyan-400 to-pink-300">Discord</span>
+      <h1 className="heading-xl lg:text-7xl xl:text-8xl">
+        <span
+          className={clsx(
+            "text-gradient from-blue-400 to-pink-500",
+            "dark:from-blue-300 dark:to-pink-500"
+          )}
+        >
+          Discord
+        </span>
         服務器
       </h1>
       <h3 className="heading-md text-secondary">

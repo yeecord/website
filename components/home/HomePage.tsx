@@ -9,9 +9,10 @@ export type HomeProps = {
   serverMembers: number;
   usedBy: number;
 };
+
 export function HomePage(props: HomeProps) {
   return (
-    <div className="bg-white dark:bg-black">
+    <div className="bg-white dark:bg-black font-apple">
       <div className="flex flex-col relative px-3 md:px-6 max-w-[1400px] mx-auto">
         <Hero />
         <Music />
