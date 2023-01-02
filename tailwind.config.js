@@ -8,6 +8,9 @@ module.exports = {
     "./theme.config.tsx",
   ],
   theme: {
+    fontFamily: {
+      apple: ["Inter", "-apple-system", "sans-serif"],
+    },
     extend: {
       colors: {
         secondary: {
