@@ -8,6 +8,7 @@ import GreenGradient from "@static/home/green-gradient.svg";
 import { motion } from "framer-motion";
 import { Gradient } from "@components/Gradient";
 import clsx from "clsx";
+import { LinkButton } from "@components/LinkButton";
 
 export function Music() {
   return (
@@ -68,9 +69,12 @@ function Content() {
         上的音樂，並且可以自訂播放清單，讓你的播放更自由
       </h3>
       <div className="h-stack mt-2">
-        <button className="primary-button text-white bg-gradient-to-r from-cyan-500 to-green-500">
+        <LinkButton
+          className="primary-button bg-gradient-to-r from-cyan-500 to-green-500"
+          href="/docs"
+        >
           學到更多
-        </button>
+        </LinkButton>
       </div>
     </div>
   );

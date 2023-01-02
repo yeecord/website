@@ -32,7 +32,7 @@ export function Powerful() {
       <div className="h-stack">
         <LinkButton
           href="/docs"
-          className="primary-button bg-blue-500 rounded-xl"
+          className="primary-button bg-gradient-to-br from-orange-500 to-red-600 rounded-xl"
         >
           學到更多
         </LinkButton>
