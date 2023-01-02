@@ -100,7 +100,8 @@ image: "/blog/banner.jpg"
 ```
 
 </div>
-### 我們刪除了那些舊語法
+
+## 我們刪除了那些舊語法
 
 請改用自定義組件
 
@@ -109,6 +110,8 @@ image: "/blog/banner.jpg"
 這不再受支持
 :::
 ```
+
+<div className="h-20" />
 
 ## 更多自定義組件
 
@@ -160,6 +163,73 @@ import { Card } from "@components/mdx";
 ```
 
 <Card title="重定向到部落格" href="/blog/welcome-to-v2" />
+
+### 步驟
+
+當您編寫教程時，此組件對於顯示每個步驟之間的關係非常有用 <br />
+您可以輕鬆地使用`className`來做到這一點
+
+使用 `###` (h3) 標題添加一個步驟, 注意換行!
+
+```mdx
+<div className='steps-container'>
+
+### 去睡覺
+
+你覺得累
+
+### 去工作
+
+你需要賺錢
+
+</div>
+```
+
+<div className='steps-container'>
+
+### 去睡覺
+
+你覺得累
+
+### 去工作
+
+你需要賺錢
+
+</div>
+
+### 選項卡
+
+它們來自外部依賴項`nextra-theme-docs`，但您可以在文檔中使用它
+
+```mdx
+import {(Tab, Tabs)} from "nextra-theme-docs";
+
+<Tabs items={['凱恩', 'Money']}>
+  <Tab>
+
+Veru dalao
+
+  </Tab>
+  <Tab>
+
+I don't know programming
+
+  </Tab>
+</Tabs>
+```
+
+<Tabs items={['凱恩', 'Money']}>
+  <Tab>
+
+Veru dalao
+
+  </Tab>
+  <Tab>
+
+I don't know programming
+
+  </Tab>
+</Tabs>
 
 ## 創建自己的組件
 
