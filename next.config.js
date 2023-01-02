@@ -17,6 +17,8 @@ const nextraConfig = {
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.tsx",
   staticImage: true,
+  defaultShowCopyCode: true,
+  readingTime: true,
   i18n: {
     locales: ["zh"],
     defaultLocale: "zh",

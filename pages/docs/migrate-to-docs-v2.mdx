@@ -3,6 +3,7 @@ title: "遷移到文檔 2.0"
 description: "向我們的新文檔問好"
 ---
 
+import { Tabs, Tab } from "nextra-theme-docs";
 import {
   Accordion,
   Admonition,
@@ -17,7 +18,8 @@ import { motion } from "framer-motion";
 
 # 遷移到文檔 2.0
 
-## 我的頁面在哪裡??
+<div className="steps-container">
+### 我的頁面在哪裡??
 
 所有 mdx 文件都已移至`/pages`
 
@@ -25,7 +27,7 @@ import { motion } from "framer-motion";
 | ------------- | ------------- |
 | `/pages/docs` | `/pages/blog` |
 
-## 圖像導入方法已更改
+### 圖像導入方法已更改
 
 以前的版本允許您從`/static`文件夾導入圖像, 例如: `![alt](/my-photo.png)`
 
@@ -42,11 +44,20 @@ import { motion } from "framer-motion";
 ![alt](@static/docs/my-photo.png)
 ```
 
-## 添加頁面的新方法
+</div>
+## 添加頁面的方法
 
 你仍然可以使用默認方式
 
-**文檔**
+<div className="steps-container">
+  
+### 創建 .mdx 文件
+
+<Tabs items={["文檔", "部落格"]}>
+
+<Tab>
+
+在 `/pages/docs` 文件夾中創建文件
 
 ```mdx
 ---
@@ -55,7 +66,11 @@ description: 這是關於什麼的?
 ---
 ```
 
-**部落格**
+</Tab>
+
+<Tab>
+  
+在 `/pages/blog` 文件夾中創建文件
 
 ```mdx
 ---
@@ -66,6 +81,10 @@ date: 2023/1/1
 image: "/blog/banner.jpg"
 ---
 ```
+
+</Tab>
+
+</Tabs>
 
 ### 排序頁面
 
@@ -80,7 +99,9 @@ image: "/blog/banner.jpg"
 }
 ```
 
-### 我們刪除了那些舊語法
+</div>
+
+## 我們刪除了那些舊語法
 
 請改用自定義組件
 
@@ -89,6 +110,8 @@ image: "/blog/banner.jpg"
 這不再受支持
 :::
 ```
+
+<div className="h-20" />
 
 ## 更多自定義組件
 
@@ -140,6 +163,73 @@ import { Card } from "@components/mdx";
 ```
 
 <Card title="重定向到部落格" href="/blog/welcome-to-v2" />
+
+### 步驟
+
+當您編寫教程時，此組件對於顯示每個步驟之間的關係非常有用 <br />
+您可以輕鬆地使用`className`來做到這一點
+
+使用 `###` (h3) 標題添加一個步驟, 注意換行!
+
+```mdx
+<div className='steps-container'>
+
+### 去睡覺
+
+你覺得累
+
+### 去工作
+
+你需要賺錢
+
+</div>
+```
+
+<div className='steps-container'>
+
+### 去睡覺
+
+你覺得累
+
+### 去工作
+
+你需要賺錢
+
+</div>
+
+### 選項卡
+
+它們來自外部依賴項`nextra-theme-docs`，但您可以在文檔中使用它
+
+```mdx
+import {(Tab, Tabs)} from "nextra-theme-docs";
+
+<Tabs items={['凱恩', 'Money']}>
+  <Tab>
+
+Very dalao
+
+  </Tab>
+  <Tab>
+
+I don't know programming
+
+  </Tab>
+</Tabs>
+```
+
+<Tabs items={['凱恩', 'Money']}>
+  <Tab>
+
+Very dalao
+
+  </Tab>
+  <Tab>
+
+I don't know programming
+
+  </Tab>
+</Tabs>
 
 ## 創建自己的組件
 
