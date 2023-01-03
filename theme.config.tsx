@@ -73,6 +73,7 @@ const config: DocsThemeConfig = {
       },
     };
   },
+  docsRepositoryBase: "https://github.com/SonMooSans/docs/blob/master/",
   navbar: {
     extraContent: <ThemeToggle />,
   },
