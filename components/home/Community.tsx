@@ -20,8 +20,8 @@ export function Community({ joined }: { joined: number }) {
       <h1 className="heading-xl lg:text-7xl xl:text-8xl">
         <span
           className={clsx(
-            "text-gradient from-blue-400 to-pink-500",
-            "dark:from-blue-300 dark:to-pink-500"
+            "text-gradient from-cyan-400 to-pink-400",
+            "dark:from-pink-400 dark:to-cyan-500"
           )}
         >
           Discord
