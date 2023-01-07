@@ -16,10 +16,9 @@
     "title": "部落格",
     "type": "page"
   },
-  "faq": {
-    "title": "常見問題",
-    "type": "page",
-    "href": "/docs/faq",
+  "dashboard": {
+    "title": "Yeecord儀表板",
+    "href": "https://app.yeecord.com",
     "newWindow": false
   }
 }
