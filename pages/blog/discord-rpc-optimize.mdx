@@ -1,0 +1,429 @@
+---
+slug: discord-rpc-customize
+title: 2022 年如何自定義 Discord 遊戲狀態（Rich Presence）
+authors: [kay]
+description: "Discord 遊戲狀態是一個可以顯示你目前狀態更多資訊的東西，可以看到朋友都能顯示他在玩什麼遊戲、正在用什麼程式語言和 IDE 寫程式。此文章會教大家使用 Python、JavaScript、TypeScript、C# 來設定 Discord 豐富狀態的多種方法！"
+tags:
+  [
+	"Discord",
+	"dc",
+	"Discord RPC",
+	"Discord Rich Presence",
+	"Rich Presence"
+  ]
+date: 2022-07-08T13:01:00
+image: /blog/discord-rpc-customize/discord-rpc-customize.jpeg
+---
+
+import { Adsense, Info, Warning } from "@components/mdx";
+
+![Discord 自定義 遊戲狀態](@static/blog/discord-rpc-customize/discord-rpc-customize.jpeg)
+
+Discord Rich Presence 是一個可以顯示你目前狀態更多資訊的東西，可以看到朋友都能顯示他在玩什麼遊戲、正在用什麼程式語言和 IDE 寫程式。此文章會教大家使用 Python、JavaScript、TypeScript、C# 來設定 Discord 豐富狀態（Rich Presence）的多種方法，讓你的朋友或伺服器成員更知道您現在在做什麼！
+
+## 方法一：開啟軟體
+
+一般的軟體在開啟之後就會看到他出現在你的狀態列！...作者你認真的嗎？我軟體都開了怎麼還是沒有咧？？？
+當然認真的！有些軟體作者其實有把設定 Discord Rich Presence 程式碼寫進去他的軟體，你一開啟軟體就有了！或者沒有的話你進行一些設定就會出現。
+
+<Adsense />
+
+拿 Minecraft 來當作範例：
+
+![Minecraft Discord Rich Presence](@static/blog/discord-rpc-customize/minecraft-presence.jpg)
+
+但如果那個軟體作者沒有把設定 Discord Rich Presence 的程式碼寫在軟體裡面呢？沒關係，先繼續看下去囉～～
+
+## 方法二：使用插件
+
+當然也有些軟體是沒有寫入 Discord Rich Presence 程式碼的，但是有人有提供插件讓您可以安裝，讓您方便進行設定！以下會舉一些軟體的插件講解
+
+### Visual Studio Code
+
+Visual Studio Code 是一款微軟開發的一款非常好用的一款編輯器，除了 Git、Debug 功能外，還有非常大的主題與延伸模組庫，連 Discord Rich Presence 都有非常多的延伸模組！以下就為各位介紹如何安裝與設定：
+
+首先，請先前往延伸模組商店，並在搜尋中輸入「Discord Rich Presence」，它會列出相關延伸模組，找到自己喜歡的模組後，請按下安裝按鈕進行安裝 （在此我安裝這張圖中的第二個）
+
+![Vscode Discord Rich Presence Extension](@static/blog/discord-rpc-customize/vscode-presence-extension.jpg)
+
+安裝完後，在 Discord 就能看到遊戲狀態了，
+
+<Adsense />
+
+![Vscode Discord Rich Presence](@static/blog/discord-rpc-customize/vscode-presence.png)
+
+狀態部分，Idling 的話代表沒有在編輯檔案，有開啟檔案的話會顯示正在編輯的檔案，並且滑鼠移到大圖示上會顯示正在編輯什麼類型的檔案，移到大圖示右下角的小圖示也會顯示目前使用的軟體。
+
+![Vscode Discord Rich Presence Idling](@static/blog/discord-rpc-customize/vscode-presence-hover.png)
+
+### IntelliJ IDEA 等其他 JetBrains 家族軟體
+
+IntelliJ IDEA 的話是由 JetBrains 公司開發的一款整合式開發環境，Community 版和 Visual Studio Code 一樣有 Git、Debug 等功能，但只支援 Java、Kotlin 等少數程式語言。
+
+如果付費購買授權則能解鎖完整的語言支持，以及內建資料庫查詢介面 Database Reader 加速生產效率，並且 JetBrains 也有提供教育版受全給學生使用。
+
+回到插件，不只 IntelliJ IDEA，JetBrains 家族其他軟體也都有插件功能，並且也早就有人寫好 Discord Rich Presence 插件了，下方就教大家如何安裝～～
+
+#### 安裝插件
+
+首先請按下鍵盤上的 `Ctrl` + `Shift` + `S` 開啟設定視窗，Mac 版本則是 `Shift` + `Command` + `,` 快捷鍵，並點選左側 `Plugins` 前往插件管理頁面，
+
+![JetBrains Settings](@static/blog/discord-rpc-customize/jetbrains-settings.png)
+
+如果在沒有開啟專案的導覽頁面，請在左側選單直接點選 `Plugins` 開啟插件管理頁面。
+
+![JetBrains Plugins Settings](@static/blog/discord-rpc-customize/jetbrains-plugins.png)
+
+再來，請在上方搜尋 `Discord Integration`，找到這個插件並按下插件名稱旁的 `Install` 按鈕進行安裝
+安裝成功後需要重新啟動 IDE ，點選 `Restart IDE` 將 IDE 重新啟動。
+
+![JetBrains Install Plugin](@static/blog/discord-rpc-customize/jetbrains-install-plugin.png)
+
+<Adsense />
+
+#### 使用設定
+
+狀態顯示部分，請按下鍵盤上的 `Ctrl` + `Shift` + `S` 開啟設定視窗，並在左邊選單選擇 `Discord`，即可看到 Rich Presence 顯示設定，通常保留預設值即可。
+
+![JetBrains Discord Rich Presence Settings](@static/blog/discord-rpc-customize/jetbrains-presence-settings.png)
+
+上述提及的設定頁總共有三個狀態可以設定：
+
+- Application：開啟 IDE 時會套用此設定
+- Project：在有開啟專案但沒開啟檔案時，會套用此設定
+- File：在有開啟檔案時，會套用此設定
+
+專案設定部分的話，您可以在此設定專案的狀態顯示方式。
+
+![JetBrains Presence More Settings](@static/blog/discord-rpc-customize/jetbrains-presence-more-settings.png)
+
+## 方法三：使用別人寫好的軟體
+
+如果該軟體開發者沒有將 Rich Presence 程式碼寫進去軟體，而且它也沒有提供插件，您可以使用這個方法，並且不用寫任何的程式碼。
+
+網路上的確有蠻多的 Discord Rich Presence 軟體，我們使用 CustomRP 這款軟體作為示範，如果您想使用其他軟體（例如：`EasyRP`），請自行參考該軟體作者寫的使用說明。
+
+### 事前準備與上傳圖片
+
+首先，請先創建一個應用程式，
+
+<Adsense />
+
+<Info title="我想先通知你">
+  如果您還不知道怎麼創建一個 Discord 應用程式，請閱讀
+  [《你不需要會寫程式，也能製作 Discord
+  音樂機器人》](/blog/make-discord-music-bot-without-coding/#1-%E8%A8%BB%E5%86%8A%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F)
+  這篇的註冊教學。
+</Info>
+
+![Create Discord Application](@static/blog/discord-rpc-customize/create-application.png)
+
+再來，請進入您剛剛創建的應用程式，並在左側選擇 `Rich Presence` > `Art Assets`，此時您會看到右側 `Rich Presence Assets` 區塊是讓您上傳 Rich Presence 上要顯示的圖片之區域，按下 `Add image(s)` 來添加圖片，
+
+<Warning title="我想先警告你">
+  Rich Presence Assets 上傳的圖片限制為：格式為 `.png`、`.jpg` 或
+  `.jpeg`，建議圖片尺寸為 `1024 x 1024`，最小圖片尺寸為 `512 x 512`
+</Warning>
+
+![Discord Application Art Assets](@static/blog/discord-rpc-customize/application-art-assets.png)
+
+### 下載軟體
+
+請先前往 [CustomRP 軟體官網](https://www.customrp.xyz/) 點選 `Installer` 下載安裝版或 `Portable` 下載免安裝版（在此下載免安裝版）：
+
+![CustomRP Homepage](@static/blog/discord-rpc-customize/custom-rp-download.png)
+
+下載後，請將下載到的壓縮檔解壓縮。
+解壓縮完成後請進入剛剛解壓出來的資料夾，點選 `CustomRP.exe` 開啟軟體，
+
+![Open CustomRP](@static/blog/discord-rpc-customize/open-custom-rp.png)
+
+若您剛剛下載安裝檔，請雙擊剛剛下載下來的安裝檔，依照安裝步驟進行安裝，然後在安裝完後開啟軟體。
+
+![Install CustomRP](@static/blog/discord-rpc-customize/install-custom-rp.png)
+
+第一次啟動時，會詢問您是否將使用情況分析提供給開發人員，這個將有助於軟體改善，可以自行決定要不要分享，
+
+![CustomRP User Analytics](@static/blog/discord-rpc-customize/user-analysis.png)
+
+之後就會看到軟體主介面了！
+
+<Adsense />
+
+![CustomRP](@static/blog/discord-rpc-customize/custom-rp.png)
+
+### 填入資訊
+
+請先前往剛才的應用程式設定，將 Application ID 複製，並貼入 CustomRP 的 ID 欄位：
+
+![Copy Discord Application ID](@static/blog/discord-rpc-customize/copy-application-id.png)
+![CustomRP Application ID](@static/blog/discord-rpc-customize/paste-id-to-custom-rp.png)
+
+填完後，我們先按一下 ID 欄位旁的連線進行連線先確認 ID 是否正確，
+如果 ID 欄位的底色變成綠色，恭喜您，它已經成功連線並將您的狀態設置成功了！
+
+![CustomRP Application ID Success](@static/blog/discord-rpc-customize/paste-id-success.png)
+
+接下來就是其他資訊了，首先請回到剛剛的應用程式設定，然後點選左方的 `Rich Presence` > `Visualizer`
+在這你就可以看到 Rich Presence 模擬畫面，您可以在此填好各項資訊並確認顯示出來沒問題後，再到 CustomRP 進行貼上的動作
+
+![Discord Rich Presence Visualizer](@static/blog/discord-rpc-customize/presence-visualizer.png)
+
+以下為每個欄位的說明：
+
+- `State`：目前狀態
+- `Details`：目前正在做什麼
+- `Start TimeStamp` / `End TimeStamp`：什麼時候開始 / 結束的，填入值為從 1970 年 1 月 1 號到現在的毫秒數，此兩欄位皆可以不用理會，直接在 CustomRP 上設定即可
+- `Large Image Key` / `Small Image Key`：大 / 小圖示名稱，此值會決定大 / 小圖示是哪一張，如果不知道哪個 Image Key 對應哪張圖，可前往 `Art Assets` 查看。（小圖示會顯示在大圖示的右下角）
+- `Large Image Text` / `Small Image Text`：當滑鼠移到大 / 小圖示上時，要顯示什麼字串
+
+填好之後，再次按下連線或者更新狀態按鈕（如果剛剛沒有按取消連線），就可以看到狀態成功顯示了！
+
+![CustomRP Example](@static/blog/discord-rpc-customize/custom-rp-example.png)
+
+<Info title="我想先告知你">
+  CustomRP
+  視窗下方的按鈕設定是什麼可以讓你的自訂義狀態能顯示按鈕，並且能設定按了以後能連至什麼網站。`Text`
+  是按鈕會顯示的文字，`URL` 則是按下按鈕後會連至什麼網站。
+
+![Discord Rich Presence Button](@static/blog/discord-rpc-customize/custom-button.png)
+
+（注意：在電腦或網頁板 Discord 中，自己按按鈕是不會有事情發生的）
+
+</Info>
+
+<Adsense />
+
+## 方法四：撰寫程式碼
+
+當然，現在一定也有很多程式開發者寫出 Discord Rich Presence 打包了，想藉此體驗程式快感的也可以喔！
+
+<Warning title='我想先警告你'>
+
+- 此方法會牽涉到多種程式語言的程式碼撰寫！在此也順便提醒，在這裡可以挑自己喜歡的程式語言就可以了，不用每一個都嘗試！也請各位量力而為，理解到不舒服時請立即停止！
+- 如果您真的很想知道程式碼每個字是什麼意義，請自行上網 Google 了解程式語言的相關知識！或者不知道該程式語言開發環境怎麼安裝的，也請自行 Google！
+- 在此也會省略創建應用程式與欄位介紹，如果不知道哪個欄位是什麼意義、要怎麼填的，請先閱讀上方 [方法三](#方法三使用別人寫好的軟體)！
+
+</Warning>
+
+### Python
+
+簡單易學的程式語言為什麼不要提呢？  
+不只程式語言易理解，連模組很多也做得非常易用，在此就用 PyPresence 模組來教大家如何用 Python 來設定 Rich Presence。
+
+#### 安裝模組與建立檔案
+
+首先請先開一個終端機，輸入以下指令安裝模組：
+
+```shell
+pip install pypresence
+```
+
+安裝完成後，請在您覺得適合的地方建立一個 Python 檔案
+
+![Vscode create file](@static/blog/discord-rpc-customize/create-a-python-file.png)
+
+#### 開始撰寫程式碼
+
+首先我們要先匯入等一下需要用的模組，因為在這裡只有要用到 PyPresence 模組的 Presence 類別，所以使用此語法只匯入 Presence 類別，
+
+```python showLineNumbers
+from pypresence import Presence # Presence 客戶端
+import time                     # 等一下這也會用到
+```
+
+<Adsense />
+
+再來，創建 Presence 客戶端實體（用以連線並設定 Rich Presence）：
+
+```python showLineNumbers
+presenceClient = Presence(client_id = "應用程式 ID")
+```
+
+接下來，讓該實體進行連線：
+
+```python showLineNumbers
+client.connect()
+```
+
+然後，更新 Rich Presence，在這邊示範更新 `state` 欄位，更多請參考 [PyPresence Docs](https://qwertyquerty.github.io/pypresence/html/doc/presence.html?highlight=update#update)，
+
+```python showLineNumbers
+client.update(state = "睡覺") # 更新 Rich Presence
+print("更改狀態成功！")
+```
+
+最後寫一個迴圈來避免程式結束
+
+```python showLineNumbers
+while True:
+    time.sleep(15)
+```
+
+![PyPresence](@static/blog/discord-rpc-customize/pypresence.png)
+
+### JavaScript / TypeScript
+
+不知道會不會有人心裡有個懷疑......JavaScript 不是用在前端上嗎?
+
+其實到了這時代已經沒有了這回事，NodeJS 已經成功讓其擁有後端（伺服器端）執行能力，而且也有非常強大的套件庫，您想要的套件也應有盡有，所以也非常多程式設計師非常喜歡使用 JavaScript！
+
+#### TypeScript？
+
+那 TypeScript 和 JavaScript 的關係又是什麼呢？TypeScript 其實是一個 JavaScript 的超集合程式語言，不只涵蓋 JavaScript 所有語法，還有型別系統、更多一般物件導向的元素（例如：介面）等非常多東西！TypeScript 除了功能更強，也能避免我們犯一些小錯誤！
+
+以下就用 JavaScript / TypeScript + `discord-rpc` 模組來教一下各位怎麼寫吧！
+
+<Adsense />
+
+#### 建立專案與安裝模組
+
+請先建立專案並安裝 `discord-rpc` 模組
+
+```shell showLineNumbers
+npm i discord-rpc
+```
+
+![Npm install discord rpc](@static/blog/discord-rpc-customize/npm-install-discord-rpc.png)
+
+<Warning title="我想先警告你">
+  如果您不知道如何建立專案或安裝模組，請參考 [《使用 discord.js 快速建立一個
+  Discord
+  骰子機器人》](/blog/discordjs-dice-bot/)，在此因為篇幅關係，所以我就不講解了
+</Warning>
+
+#### 開始撰寫程式碼
+
+請先在專案資料夾中建立 `index.js`，如果您想要使用 TypeScript，請建立 `index.ts`，
+
+![Vscode Create File](@static/blog/discord-rpc-customize/create-index-js.png)
+
+首先我們得先匯入 Rich Presence 客戶端，並且產生一個實體
+
+```js showLineNumbers
+const { Client } = require("discord-rpc");
+
+const rpcClient = new Client({ transport: "ipc" });
+```
+
+<Info title='我想先告知你'>
+如果您是 TypeScript，第一行請寫
+
+```typescript showLineNumbers
+import { Client } from "discord-rpc";
+```
+
+</Info>
+
+再來，寫一個 `ready` 事件監聽器，當 RPC 客戶端成功上線後，將您的 Rich Presence 修改成您指定的資訊，
+
+```js showLineNumbers
+rpcClient.on("ready", () => {
+  rpcClient.setActivity({
+    state: "JS RPC Test",
+    details: "This is just a JS RPC test",
+    buttons: [
+      {
+        label: "test",
+        url: "https://www.google.com",
+      },
+    ],
+  });
+
+  console.log("Activity Changed!");
+});
+```
+
+最後，再讓 RPC 客戶端連線。
+
+```js showLineNumbers
+rpcClient.login({ clientId: "應用程式 ID" });
+```
+
+<Adsense />
+
+![Discord Rich Presence](@static/blog/discord-rpc-customize/discord-rpc-result.png)
+
+### C#
+
+C# 是一個由 C 和 C++ 衍生出來的物件導向程式語言，不僅消除了一些 C 和 C++ 一些複雜的特性，也繼承了 C 和 C++ 程式語言的強大功能。並且 C# 也擁有非常強大的套件庫 NuGet，裡面模組也是琳瑯滿目。
+
+有些人或許會覺得：C# 架構跟 Java 一樣，剛開始就會看到 Class，跟一些其他程式語言相比，不太平易近人，
+
+但其實到了.NET 6.0 後，你會發現它架構會跟 JavaScript / TypeScript 一樣，程式會跟 JavaScript 一樣直接從第一行開始執行，並且同樣支援頂層 `await`。
+
+#### 建立專案與安裝模組
+
+在此會先以 JetBrains Rider 來示範，請先點選右上角的 New Solution 創建專案
+
+![Rider New Solution](@static/blog/discord-rpc-customize/rider-new-solution.png)
+
+點選後會出現此視窗，左邊請選擇 `Console Application`，右邊請將 `Solution Name` 修改成您想要的專案名稱，確認下方 SDK 為 7.0、Language 為 C#、Framework 為 NET 7.0 以後，按下右下角 `Create` 按鈕創建專案，
+
+![Rider Name Solution](@static/blog/discord-rpc-customize/name-solution.png)
+
+建立完成以後，Rider 會自動幫你開啟 `Program.cs`，此時請先別急，請先在視窗底部找到 `NuGet` 並點一下，此時會開啟 NuGet 模組管理，並在左上搜尋欄位中輸入 `DiscordRichPresence`，
+
+![Nuget Install Discord RPC](@static/blog/discord-rpc-customize/install-discord-rich-presence.png)
+
+它會找到一個模組，點擊後右邊會顯示指令資訊，請點選 `nuget.org` 選單旁的 `+` 進行安裝
+
+![Nuget Install Discord RPC](@static/blog/discord-rpc-customize/install-discord-presence-package.png)
+
+#### 開始撰寫程式碼
+
+請先將裡面所有內容刪除，並匯入模組
+
+```csharp showLineNumbers
+using DiscordRPC;
+using DiscordRPC.Logging;
+```
+
+再來，創建 Discord Rich Presence 客戶端實體與記錄產生器
+
+```csharp showLineNumbers
+DiscordRpcClient client = new DiscordRpcClient("960779396292173844");
+client.Logger = new ConsoleLogger { Level = LogLevel.Warning };
+```
+
+接下來，再寫一個 `ready` 事件監聽器
+
+```csharp showLineNumbers
+client.OnReady += (sender, eventArgs) =>  // Ready監聽器
+{
+    Console.WriteLine("RichPresence Client is ready");
+};
+```
+
+然後初始化客戶端連線
+
+```csharp showLineNumbers
+client.Initialize();
+```
+
+更新 Rich Presence，
+
+```csharp showLineNumbers
+RichPresence presence = new RichPresence
+{
+    Details = "DiscordCSharpRichPresenceTest",
+    State = "TestState",
+    Assets = new Assets
+    {
+        LargeImageKey = "ts",
+        LargeImageText = "Editing TS File",
+        SmallImageKey = "pen",
+        SmallImageText = "Editing"
+    }
+};
+
+client.SetPresence(presence);
+```
+
+最後，加上此行使程式不會結束。
+
+```csharp showLineNumbers
+await Task.Delay(-1);
+```
+
+<Adsense />

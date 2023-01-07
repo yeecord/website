@@ -1,0 +1,34 @@
+---
+description: "YEE式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間"
+---
+
+import { HomePage } from "@components/home/HomePage";
+import React from "react";
+import { useSSG } from "nextra/ssg";
+
+export async function getStaticProps() {
+  const res = await fetch(
+    "https://discord.com/api/v10/invites/yeecord?with_counts=true"
+  );
+  const guild = await res.json();
+  return {
+    props: {
+      ssg: {
+        guild,
+      },
+    },
+    revalidate: 10,
+  };
+}
+
+export function Home() {
+  const props = useSSG();
+  return (
+    <HomePage
+      serverMembers={props?.guild?.approximate_member_count}
+      usedBy={1000}
+    />
+  );
+}
+
+<Home />

@@ -1,0 +1,25 @@
+{
+  "index": {
+    "title": "主頁",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "footer": false,
+      "layout": "raw"
+    }
+  },
+  "docs": {
+    "title": "使用教學",
+    "type": "page"
+  },
+  "blog": {
+    "title": "部落格",
+    "type": "page"
+  },
+  "faq": {
+    "title": "常見問題",
+    "type": "page",
+    "href": "/docs/faq",
+    "newWindow": false
+  }
+}

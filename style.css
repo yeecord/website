@@ -1,0 +1,104 @@
+@tailwind base;
+
+@tailwind components;
+
+@layer components {
+  .heading-xl {
+    @apply text-5xl font-bold;
+  }
+
+  .heading-md {
+    @apply text-lg sm:text-xl font-bold;
+  }
+
+  .text-secondary {
+    @apply text-secondary-light dark:text-secondary-dark;
+  }
+
+  .text-gradient {
+    @apply text-transparent bg-gradient-to-b bg-clip-text;
+  }
+
+  .card {
+    @apply bg-white/40 border-black/10 shadow-lg dark:bg-white/10 border-[1px] dark:border-white/10 p-4 rounded-xl backdrop-blur-lg;
+  }
+
+  .h-stack {
+    @apply flex flex-row gap-2.5 items-center;
+  }
+
+  .primary-button {
+    @apply px-6 py-3 rounded-full text-white bg-pink-500 text-lg font-bold transition-all;
+  }
+
+  .icon-button {
+    @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+  }
+
+  .secondary-button {
+    @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+  }
+
+  .normal-input:focus-visible {
+    box-shadow: none !important;
+  }
+
+  .steps-container {
+    margin-left: 1rem;
+    padding-left: 1.5rem;
+    counter-reset: step;
+    border-left: 1px solid;
+    border-color: rgb(229 231 235/1);
+    margin-bottom: 3rem;
+  }
+  .steps-container h3 {
+    counter-increment: step;
+  }
+  .steps-container h3:before {
+    content: counter(step);
+    display: inline-block;
+    position: absolute;
+    margin-top: 3px;
+    margin-left: -41px;
+    width: 33px;
+    height: 33px;
+    text-align: center;
+    text-indent: -1px;
+    color: rgb(62, 62, 62);
+    border-radius: 100%;
+    border: 4px solid #fff;
+    background: #f3f3f3;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .dark .steps-container {
+    border-color: #2e2e2e;
+  }
+  .dark .steps-container h3:before {
+    color: rgb(200, 200, 200);
+    border: 4px solid rgba(17, 17, 17, var(--tw-bg-opacity));
+    background: #2e2e2e;
+  }
+}
+
+@tailwind utilities;
+
+body {
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 300px
+    ),
+    fixed 0 0 / 20px 20px radial-gradient(#d1d1d1 1px, transparent 0),
+    fixed 10px 10px / 20px 20px radial-gradient(#d1d1d1 1px, transparent 0);
+}
+
+.dark body {
+  background: rgb(14, 14, 14);
+}
+
+button {
+  outline: 0 !important;
+}

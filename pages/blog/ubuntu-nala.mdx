@@ -1,0 +1,128 @@
+---
+slug: ubuntu-nala
+title: apt, dpkg 界面好醜？「這程式」 輕鬆解決!
+authors: [wolf]
+description: 使用 Ubuntu、Debian 時不知道怎麼用 apt 或是嫌界面很醜？這篇文章將會教你使用 nala 輕鬆解決這個問題！
+tags:
+  [
+	"linux",
+	"ubuntu",
+  	"nala",
+  	"apt",
+  	"debian"
+  ]
+date: 2022-08-14T21:24:00
+image: /blog/ubuntu-nala/ubuntu-nala.png
+---
+
+import { Adsense, Warning } from "@components/mdx";
+
+![apt, dpkg 界面好醜？"這程式"輕鬆解決!](@static/blog/ubuntu-nala/ubuntu-nala.png)
+
+如果你是剛接觸 Ubuntu, Debian 或是 Debian 爲基礎的 Linux 系統 (Zorin OS, Raspbian) 的初學者，你可能會嫌 apt 的界面很醜，這篇文章就是要跟你說另一個可以美化 apt 的程式，而且界面也比 apt 還要漂亮！
+
+## apt 是什麼
+
+[進階打包工具](https://zh.wikipedia.org/zh-tw/APT)（英語：Advanced Packaging Tools，縮寫為 APT）是 Debian 及其衍生的 Linux 軟體包管理器。APT 可以自動下載，組態，安裝二進位或者原始碼格式的軟體套件，因此簡化了 Unix 系統上管理軟體的過程。
+
+簡單來說，apt 是在 Debian 系的 Linux 系統中擔任 **程式安裝器** 的角色， Linux 上沒有類似 Windows 那麼完善的程式安裝界面和系統，必須透過 **apt** 或是其他工具來達成安裝程式的步驟。
+
+<Adsense />
+
+這次要介紹的程式 nala 是使用 Python 編寫而成的一個能在終端機 (Terminal) 內執行的程式，它使用 `python-apt` API 調用 `libapt-pkg` 來達成安裝、更新以及解除安裝的目的。
+
+## 安裝 nala
+
+Nala 可以在 Debian 系的 Linux 系統上安裝，常見的系統有：
+
+- Ubuntu
+- KDE Neon
+- Raspbian
+- Linux Mint
+- Zorin OS
+- Kail Linux
+
+根據 [Nala 官方文檔](https://gitlab.com/volian/nala/-/wikis/Installation) 在 Linux 上安裝 nala 的步驟：
+
+### 1. 開啟終端機
+
+在 Ubuntu 和部分其他系統，終端機可以按壓快捷鍵來開啟 (`Ctrl` + `Shift` + `T`)，
+
+如果按壓後沒有效果，請至應用程式清單內尋找，你也可以透過 ssh 連線至其他系統來安裝。
+
+![開啟終端機](@static/blog/ubuntu-nala/open-terminal.png)
+
+### 2. 更新 apt 程式庫
+
+<Adsense />
+
+開啟終端機後，我們得先更新程式庫一下，你也可以跳過這個步驟，不過我們通常都會先重新整理程式庫後，再安裝程式：
+
+```shell showLineNumbers
+sudo apt update
+```
+
+[![更新 APT 程式庫](https://asciinema.org/a/514665.svg)](https://asciinema.org/a/514665)
+
+### 3. 導入 nala 程式庫
+
+要安裝 nala，我們必須先導入程式製作者的程式庫：
+
+```shell showLineNumbers
+echo "deb https://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list
+wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > /dev/null
+sudo apt update
+```
+
+[![導入 nala 程式庫](https://asciinema.org/a/514667.svg)](https://asciinema.org/a/514667)
+
+### 4. 安裝 nala
+
+執行完上方所有的指令後，我們終於可以安裝 nala 到我們的系統上了！
+
+```shell showLineNumbers
+sudo apt install nala
+```
+
+如果正在使用 Ubuntu 21.10 或是 Debian Stable 之前的系統，請安裝 `nala-legacy`：
+
+<Adsense />
+
+```shell showLineNumbers
+sudo apt install nala-legacy
+```
+
+[![安裝 nala](https://asciinema.org/a/514668.svg)](https://asciinema.org/a/514668)
+
+<Warning>
+  請注意 nala 目前無法在 Ubuntu 18.04 或是 Debian Buster 之前的系統上執行
+</Warning>
+
+這樣 nala 就成功安裝在系統上了，我們馬上就可以來使用。
+
+## 使用 Nala
+
+nala 的使用方法其實跟 apt 沒差多少，只是它的界面比 apt 還要好看！
+
+例如說我們想要更新系統：
+
+```shell showLineNumbers
+sudo nala update
+sudo nala upgrade
+```
+
+[![nala 系統更新](https://asciinema.org/a/514669.svg)](https://asciinema.org/a/514669)
+
+或是安裝 `neofetch`：
+
+```shell showLineNumbers
+sudo nala install neofetch
+```
+
+[![安裝 Neofetch](https://asciinema.org/a/514670.svg)](https://asciinema.org/a/514670)
+
+## 結尾
+
+nala 的確可以取代 apt，但是如果發生一些其他狀況時，我們還是得使用 apt 或是 dpkg 來修復，所以要使用 Linux，還是得學怎麼用套件管理器，否則發生突發狀況時會不知道要怎麼解決。
+
+<Adsense />
