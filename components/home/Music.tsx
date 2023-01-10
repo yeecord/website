@@ -56,7 +56,7 @@ function Content() {
     <div className="flex flex-col gap-3 justify-center max-w-[750px] lg:max-w-none">
       <h1 className="heading-xl leading-[1.2]">
         <span className="text-gradient text-4xl from-green-400 to-cyan-400">
-          一個命令
+          只要一個指令
         </span>
         <br /> 輕鬆在
         <span className="text-gradient from-green-300 to-cyan-400">
@@ -65,15 +65,14 @@ function Content() {
         播放音樂
       </h1>
       <h3 className="heading-md text-secondary">
-        讓你可以和朋友一起收聽 YouTube 和 Spotify
-        上的音樂，並且可以自訂播放清單，讓你的播放更自由
+        讓你可以和朋友一起收聽 YouTube 和 Spotify 上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
       </h3>
       <div className="h-stack mt-2">
         <LinkButton
           className="primary-button bg-gradient-to-r from-cyan-500 to-green-500"
           href="/docs"
         >
-          學到更多
+          了解更多
         </LinkButton>
       </div>
     </div>
