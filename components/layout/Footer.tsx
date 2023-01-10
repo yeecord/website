@@ -25,21 +25,19 @@ export function Footer({ categories }: { categories: FooterCategory[] }) {
                     <Category key={i} category={category} />
                 ))}
             </div>
-            <p className="text-secondary mt-10">
-                YEE式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}
-            </p>
+            <div className="flex flex-row flex-wrap gap-3 justify-between mt-10">
+                <ThemeSwitch />
+                <p className="text-secondary">
+                    YEE式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}
+                </p>
+            </div>
         </div>
     );
 }
 
 function Info() {
     return (
-        <div
-            className={clsx(
-                "flex flex-col gap-2 mx-auto order-last mt-5",
-                "sm:mx-0 sm:order-first sm:mt-0"
-            )}
-        >
+        <div className={clsx("hidden flex-col gap-2", "sm:flex")}>
             <div className="flex flex-row gap-2 items-center">
                 <Image
                     alt="logo"
@@ -49,9 +47,6 @@ function Info() {
                     className="rounded-full"
                 />
                 <h1 className="font-bold text-xl">Yeecord</h1>
-            </div>
-            <div className="mx-auto sm:hidden">
-                <ThemeSwitch />
             </div>
         </div>
     );
