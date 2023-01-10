@@ -1,4 +1,6 @@
+import UserAvatar from "@components/UserAvatar";
 import Image from "next/image";
+import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
 import { useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
@@ -17,6 +19,7 @@ function ThemeToggle() {
   return (
     <button
       aria-label="toggle dark mode"
+      className="text-xl"
       onClick={() => setTheme(current === "dark" ? "light" : "dark")}
     >
       {current === "dark" ? <BsMoonFill /> : <BsFillSunFill />}
@@ -75,7 +78,14 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: "https://github.com/SonMooSans/docs/blob/master/",
   navbar: {
-    extraContent: <ThemeToggle />,
+    extraContent: (
+      <div className="flex flex-row gap-3">
+        <ThemeToggle />
+        <Link href="https://app.yeecord.com/" className="hidden md:block">
+          <UserAvatar />
+        </Link>
+      </div>
+    ),
   },
   footer: {
     text: "Yeecord",

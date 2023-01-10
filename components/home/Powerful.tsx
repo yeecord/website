@@ -7,7 +7,12 @@ import clsx from "clsx";
 import { LinkButton } from "@components/LinkButton";
 import { ReactNode } from "react";
 import { AiFillDashboard } from "react-icons/ai";
-import { BsStarFill, BsTerminalFill, BsTranslate } from "react-icons/bs";
+import {
+  BsChatFill,
+  BsStarFill,
+  BsTerminalFill,
+  BsTranslate,
+} from "react-icons/bs";
 
 export function Powerful() {
   return (
@@ -108,12 +113,12 @@ function Chat() {
         <div
           className={clsx(
             "h-24 bg-gradient-to-br from-blue-600 to-blue-900 rounded-xl",
-            "flex flex-col text-6xl text-white items-center justify-center"
+            "flex flex-col text-6xl text-white items-center justify-center mb-2"
           )}
         >
           <BsTerminalFill />
         </div>
-        <Channel name="General" />
+        <Channel name="General" active />
         <Channel name="Commands" />
       </div>
 
@@ -196,12 +201,13 @@ function Channel({ name, active }: { name: string; active?: boolean }) {
   return (
     <div
       className={clsx(
-        "p-3 rounded-xl",
-        active ? "bg-pink-600" : "bg-white dark:bg-gray-800",
+        "p-3 rounded-xl flex flex-row gap-2 items-center font-semibold",
+        active ? "bg-blue-600" : "bg-white dark:bg-gray-800",
         active ? "text-white" : "text-secondary"
       )}
     >
-      <h3 className="heading-md"># {name}</h3>
+      <BsChatFill className="text-lg" />
+      <h3 className="text-lg">{name}</h3>
     </div>
   );
 }
