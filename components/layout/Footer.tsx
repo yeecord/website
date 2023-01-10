@@ -35,6 +35,9 @@ export function Footer({ categories }: { categories: FooterCategory[] }) {
                                 key={j}
                                 href={item.href}
                                 className="text-secondary"
+                                target={
+                                    item.newWindow === true ? "_blank" : "_self"
+                                }
                             >
                                 {item.label}{" "}
                                 {item.newWindow && (

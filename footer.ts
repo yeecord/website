@@ -5,10 +5,6 @@ export const footer: FooterCategory[] = [
         title: "連結",
         items: [
             {
-                label: "入門",
-                href: "/docs/",
-            },
-            {
                 label: "部落格",
                 href: "/blog/",
             },
@@ -25,11 +21,6 @@ export const footer: FooterCategory[] = [
     {
         title: "支持我們",
         items: [
-            {
-                label: "邀請機器人",
-                href: "https://app.yeecord.com/invite",
-                newWindow: true,
-            },
             {
                 label: "GitHub",
                 href: "https://github.com/yeecord",
@@ -48,11 +39,21 @@ export const footer: FooterCategory[] = [
         ],
     },
     {
-        title: "社群",
+        title: "其他",
         items: [
+            {
+                label: "邀請機器人",
+                href: "https://app.yeecord.com/invite",
+                newWindow: true,
+            },
             {
                 label: "Discord",
                 href: "https://discord.gg/yeecord",
+                newWindow: true,
+            },
+            {
+                label: "Yeecord儀表板",
+                href: "https://app.yeecord.com",
                 newWindow: true,
             },
         ],
