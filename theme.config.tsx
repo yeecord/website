@@ -71,8 +71,8 @@ const config: DocsThemeConfig = {
                 type: "website",
                 images: [
                     {
-                        url: "/blog/branding.png",
-                        alt: "YEEEEE",
+                        url: "/img/branding.png",
+                        alt: "YEE式機器龍",
                     },
                 ],
             },
