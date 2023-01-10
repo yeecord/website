@@ -23,17 +23,7 @@ export const footer: FooterCategory[] = [
         ],
     },
     {
-        title: "社群",
-        items: [
-            {
-                label: "Discord",
-                href: "https://discord.gg/yeecord",
-                newWindow: true,
-            },
-        ],
-    },
-    {
-        title: "更多",
+        title: "支持我們",
         items: [
             {
                 label: "邀請機器人",
@@ -53,6 +43,16 @@ export const footer: FooterCategory[] = [
             {
                 label: "top.gg",
                 href: "https://top.gg/bot/584213384409382953",
+                newWindow: true,
+            },
+        ],
+    },
+    {
+        title: "社群",
+        items: [
+            {
+                label: "Discord",
+                href: "https://discord.gg/yeecord",
                 newWindow: true,
             },
         ],
