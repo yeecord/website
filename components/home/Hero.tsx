@@ -10,16 +10,16 @@ import { noto } from "@components/home/HomePage";
 function Buttons() {
   return (
     <div className="grid grid-cols-1 w-full max-w-[400px] sm:w-fit sm:grid-cols-2 gap-3">
-      <LinkButton href="/docs" className="primary-button rounded-md w-full">
-        開始使用
+      <LinkButton href="/docs" className="primary-button rounded-md w-full font-medium">
+        使用教學
       </LinkButton>
       <LinkButton
         href="/invite"
         target="_blank"
-        className="icon-button rounded-md w-full justify-center"
+        className="icon-button rounded-md w-full justify-center font-medium"
       >
         <IoMdOpen />
-        <p>邀請機器人</p>
+        邀請機器人
       </LinkButton>
     </div>
   );

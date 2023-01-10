@@ -2,7 +2,7 @@ import PinkWave from "@static/home/pink-wave.svg";
 import Image from "next/image";
 import { LinkButton } from "@components/LinkButton";
 import clsx from "clsx";
-import { formatter } from "../../config";
+import { formatter } from "../../src/config";
 
 export function Customers({ usedBy }: { usedBy: number }) {
   return (
@@ -12,7 +12,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
         <span className="block text-7xl md:text-5xl md:inline text-gradient from-pink-600 to-orange-400 mx-2">
           {formatter.format(usedBy)}
         </span>
-          個服務器使用
+          個伺服器使用
       </h1>
       <h3 className="heading-md text-secondary">你也可以加入我們</h3>
       <div className="h-stack">
@@ -20,7 +20,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
           href="/invite"
           className="secondary-button shadow-lg backdrop-blur-lg"
         >
-          開始使用
+          邀請機器人
         </LinkButton>
       </div>
       <Image

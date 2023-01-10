@@ -2,13 +2,8 @@ import clsx from "clsx";
 import Image from "next/image";
 import { RiUserFill } from "react-icons/ri";
 import useSWR from "swr";
-import { API_ENDPOINT } from "../config";
-
-type User = {
-  id: string;
-  username: string;
-  avatar?: string;
-};
+import { API_ENDPOINT, resolveUserAvatar } from "../src/config";
+import { User } from "../src/types";
 
 async function fetchUser() {
   const res = await fetch(`${API_ENDPOINT}/users/@me`, {
@@ -29,7 +24,7 @@ export default function UserAvatar() {
           "text-white bg-black dark:text-black dark:bg-white"
         )}
       >
-        登錄
+        控制面板
       </button>
     );
   }
@@ -50,7 +45,7 @@ export default function UserAvatar() {
   return (
     <Image
       alt="avatar"
-      src={`https://cdn.discordapp.com/avatars/${user?.id}/${user?.avatar}`}
+      src={resolveUserAvatar(user)}
       width="26"
       height="26"
       className="rounded-full"

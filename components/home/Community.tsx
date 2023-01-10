@@ -7,7 +7,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Tooltip, TooltipProvider, TooltipWrapper } from "react-tooltip";
 import { LinkButton } from "@components/LinkButton";
-import { formatter } from "../../config";
+import { formatter } from "../../src/config";
 
 const MotionImage = motion(Image);
 
@@ -20,16 +20,13 @@ export function Community({ joined }: { joined: number }) {
       />
       <h1 className="heading-xl lg:text-7xl xl:text-8xl">
         <span
-          className={clsx(
-            "text-gradient from-cyan-400 to-pink-400",
-            "dark:from-pink-400 dark:to-cyan-500"
-          )}
+          className="text-gradient from-cyan-400 to-pink-400 dark:from-pink-400 dark:to-cyan-500 mr-2"
         >
           Discord
         </span>
-        服務器
+        社群
       </h1>
-      <h3 className="heading-md text-secondary">
+      <h3 className="heading-md text-secondary text-medium">
         參與我們的社群。我們歡迎大家！
       </h3>
       <div className="flex flex-col gap-3 mt-3 items-center justify-center">

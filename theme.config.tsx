@@ -5,7 +5,7 @@ import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
 import { useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
-import { footer } from "./footer";
+import { footer } from "./src/footer";
 
 function ThemeToggle() {
     const [current, setCurrent] = useState<"light" | "dark" | undefined>(
@@ -78,7 +78,7 @@ const config: DocsThemeConfig = {
             },
         };
     },
-    docsRepositoryBase: "https://github.com/SonMooSans/docs/blob/master/",
+    docsRepositoryBase: "https://github.com/yeecord/docs",
     navbar: {
         extraContent: (
             <div className="flex flex-row gap-3">
@@ -98,7 +98,10 @@ const config: DocsThemeConfig = {
     project: {
         link: "https://github.com/yeecord",
     },
-    i18n: [{ locale: "zh", text: "繁體中文" }],
+    i18n: [{
+        locale: "zh",
+        text: "繁體中文"
+    }],
     feedback: {
         content: "有疑問？給我們反饋 →",
     },
@@ -111,7 +114,7 @@ const config: DocsThemeConfig = {
     },
     banner: {
         key: "new-year",
-        text: <a>🎉 2023 新年快樂</a>,
+        text: <span>🎉 2023 新年快樂</span>,
     },
     gitTimestamp: ({ timestamp }) => {
         return (

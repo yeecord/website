@@ -42,6 +42,11 @@ export const footer: FooterCategory[] = [
         title: "其他",
         items: [
             {
+                label: "控制面板",
+                href: "https://app.yeecord.com",
+                newWindow: true,
+            },
+            {
                 label: "邀請機器人",
                 href: "https://app.yeecord.com/invite",
                 newWindow: true,
@@ -49,11 +54,6 @@ export const footer: FooterCategory[] = [
             {
                 label: "Discord",
                 href: "https://discord.gg/yeecord",
-                newWindow: true,
-            },
-            {
-                label: "Yeecord儀表板",
-                href: "https://app.yeecord.com",
                 newWindow: true,
             },
         ],

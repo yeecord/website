@@ -32,15 +32,15 @@ export function Powerful() {
         </span>
         都在這裡
       </h1>
-      <h2 className="heading-md text-secondary">
-        從服務器管理、歡迎消息到音樂播放器和角色扮演系統。我們為您的服務器提供強大的功能
+      <h2 className="heading-md text-secondary text-medium">
+        從伺服器管理、歡迎消息到音樂播放器和角色扮演系統，我們為您的伺服器提供強大的功能
       </h2>
       <div className="h-stack">
         <LinkButton
           href="/docs"
-          className="primary-button bg-gradient-to-br from-orange-500 to-red-600 rounded-xl"
+          className="primary-button bg-gradient-to-br from-orange-500 to-red-600 rounded-xl font-medium"
         >
-          學到更多
+          了解更多
         </LinkButton>
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_0.5fr] gap-3">
@@ -62,12 +62,12 @@ export function Features() {
       <Feature
         icon={<BsStarFill />}
         title="不只是聊天平台"
-        description="透過機器人各種有趣的系統，讓你的Discord更加有趣，同時朋友也可以和你一起玩"
+        description="透過機器人各種有趣的系統，讓你的 Discord 更加有趣，同時朋友也可以和你一起玩"
       />
       <Feature
         icon={<AiFillDashboard />}
-        title="用戶友好的儀表板"
-        description="通過美觀、用戶友好的儀表板管理你的機器人"
+        title="簡易的控制面板"
+        description="通過美觀、簡易的方式來自定義你的機器人"
       />
     </div>
   );
@@ -118,23 +118,21 @@ function Chat() {
         >
           <BsTerminalFill />
         </div>
-        <Channel name="General" active />
-        <Channel name="Commands" />
+        <Channel name="一般" active />
+        <Channel name="指令" />
       </div>
 
       <div className="flex flex-col gap-3">
         <Message user="Money">
-          <p className="text-secondary dark:text-secondary-dark">
-            /announcement
+          <p className="text-secondary dark:text-secondary-dark font-medium">
+            /發送公告
           </p>
         </Message>
-        <Message user="Yeecord" avatar="/img/logo_128x128.png">
+        <Message user="YEE式機器龍" avatar="/img/logo_128x128.png">
           <div className="card p-2 shadow-none">
-            <b className="text-black dark:text-white">
-              Yeecord 是非常好的Discord機器人
-            </b>
-            <br />
-            為您的服務器使用 Yeecord！
+            <span className="text-black dark:text-white font-medium">
+              你也可以叫我阿龍，<br/>但是記得不要把我煮來吃
+            </span>
           </div>
         </Message>
         <ChatInput />
@@ -148,11 +146,11 @@ function ChatInput() {
     <div className="h-stack px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-xl shadow-xl">
       <input
         className="w-full bg-transparent normal-input"
-        placeholder="Type here"
+        placeholder="傳送訊息到 #一般"
       />
       <button
         className="rounded-full p-3 bg-blue-500 text-white"
-        aria-label="send message"
+        aria-label="傳送訊息"
       >
         <IoMdSend />
       </button>
@@ -175,22 +173,19 @@ function Message({
         <Image
           alt="avatar"
           src={avatar}
-          width="56"
-          height="56"
-          className="w-14 h-14 rounded-full"
+          width="36"
+          height="36"
+          className="w-12 h-12 rounded-full mt-1"
         />
       ) : (
         <div
-          className={clsx(
-            "rounded-full w-14 h-14 flex flex-col items-center justify-center",
-            "text-lg text-white bg-gradient-to-br from-blue-500 to-blue-900"
-          )}
+          className="rounded-full w-12 h-12 flex flex-col items-center justify-center mt-1 text-lg text-white bg-gradient-to-br from-blue-500 to-blue-900"
         >
           {user.charAt(0)}
         </div>
       )}
       <div className="flex flex-col gap-3">
-        <h3 className="heading-md">{user}</h3>
+        <h3 className="heading">{user}</h3>
         {children}
       </div>
     </div>
@@ -201,7 +196,7 @@ function Channel({ name, active }: { name: string; active?: boolean }) {
   return (
     <div
       className={clsx(
-        "p-3 rounded-xl flex flex-row gap-2 items-center font-semibold",
+        "p-3 rounded-xl flex flex-row gap-2 items-center font-medium",
         active ? "bg-blue-600" : "bg-white dark:bg-gray-800",
         active ? "text-white" : "text-secondary"
       )}

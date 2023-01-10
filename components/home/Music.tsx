@@ -59,17 +59,17 @@ function Content() {
           只要一個指令
         </span>
         <br /> 輕鬆在
-        <span className="text-gradient from-green-300 to-cyan-400">
+        <span className="text-gradient from-green-300 to-cyan-400 mx-2">
           Discord
         </span>
         播放音樂
       </h1>
       <h3 className="heading-md text-secondary">
-        讓你可以和朋友一起收聽 YouTube 和 Spotify 上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
+        讓你可以和朋友一起收聽 Spotify 和 SoundCloud 上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
       </h3>
       <div className="h-stack mt-2">
         <LinkButton
-          className="primary-button bg-gradient-to-r from-cyan-500 to-green-500"
+          className="primary-button bg-gradient-to-r from-cyan-500 to-green-500 font-medium"
           href="/docs"
         >
           了解更多

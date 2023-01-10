@@ -5,7 +5,7 @@ description: "YEE式機器龍的指令及使用教學，透過簡單的一鍵式
 import {HomePage} from "@components/home/HomePage";
 import React from "react";
 import {useSSG} from "nextra/ssg";
-import {API_ENDPOINT} from "../config";
+import {API_ENDPOINT} from "../src/config";
 
 export async function getStaticProps() {
 	const guild = await fetch(
