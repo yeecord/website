@@ -1,24 +1,23 @@
 {
-  "index": {
-    "title": "主頁",
-    "type": "page",
-    "display": "hidden",
-    "theme": {
-      "footer": false,
-      "layout": "raw"
+    "index": {
+        "title": "主頁",
+        "type": "page",
+        "display": "hidden",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "docs": {
+        "title": "使用教學",
+        "type": "page"
+    },
+    "blog": {
+        "title": "部落格",
+        "type": "page"
+    },
+    "dashboard": {
+        "title": "Yeecord儀表板",
+        "href": "https://app.yeecord.com",
+        "newWindow": false
     }
-  },
-  "docs": {
-    "title": "使用教學",
-    "type": "page"
-  },
-  "blog": {
-    "title": "部落格",
-    "type": "page"
-  },
-  "dashboard": {
-    "title": "Yeecord儀表板",
-    "href": "https://app.yeecord.com",
-    "newWindow": false
-  }
 }
