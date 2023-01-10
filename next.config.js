@@ -2,6 +2,7 @@
 const nextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
+  poweredByHeader: false,
   images: {
     domains: ["cdn.discordapp.com"],
   },
