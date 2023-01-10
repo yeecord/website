@@ -2,7 +2,6 @@
   background-size: 200%;
   animation: infinite background-loop 3s;
   animation-timing-function: linear;
-  animation-delay: 0;
 }
 
 @keyframes background-loop {
