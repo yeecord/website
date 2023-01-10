@@ -103,6 +103,7 @@ const config: DocsThemeConfig = {
         content: "有疑問？給我們反饋 →",
     },
     toc: {
+        extraContent: <></>,
         title: "目錄",
     },
     editLink: {
