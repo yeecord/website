@@ -2,7 +2,7 @@ import Script from "next/script";
 import React from "react";
 
 /**
- * Google Ads :P
+ * Google Ads :)
  */
 export function Adsense() {
   return (

@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { RiUserFill } from "react-icons/ri";
 import useSWR from "swr";
+import { API_ENDPOINT } from "../config";
 
 type User = {
   id: string;
@@ -10,7 +11,9 @@ type User = {
 };
 
 async function fetchUser() {
-  const res = await fetch("https://api.yeecord.com/users/@me");
+  const res = await fetch(`${API_ENDPOINT}/users/@me`, {
+    credentials: "include"
+  });
 
   return (await res.json()) as User;
 }

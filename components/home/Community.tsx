@@ -7,6 +7,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Tooltip, TooltipProvider, TooltipWrapper } from "react-tooltip";
 import { LinkButton } from "@components/LinkButton";
+import { formatter } from "../../config";
 
 const MotionImage = motion(Image);
 
@@ -45,13 +46,13 @@ export function Community({ joined }: { joined: number }) {
               textShadow: "#22d3ee 2px 5px",
             }}
           >
-            {joined}
+            {formatter.format(joined)}
           </h2>
           <h3
             className="text-2xl font-bold text-pink-400 dark:text-pink-300"
             style={{ textShadow: "#67e8f9 1px 1px" }}
           >
-            名成員已加入
+            位成員已加入
           </h3>
         </div>
       </div>

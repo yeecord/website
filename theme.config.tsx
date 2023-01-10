@@ -40,21 +40,21 @@ const config: DocsThemeConfig = {
             style={{
                 display: "flex",
                 flexDirection: "row",
-                gap: "5px",
+                gap: "0.75rem",
                 alignItems: "center",
                 justifyContent: "center",
             }}
         >
             <Image
-                alt="logo"
+                alt="YEE式機器龍"
                 src="/logo_128x128.png"
-                width={30}
-                height={30}
+                width={32}
+                height={32}
                 style={{
-                    borderRadius: "100%",
+                    borderRadius: "50%",
                 }}
             />
-            <strong>Yeecord</strong>
+            <strong className="text-lg">Yeecord</strong>
         </div>
     ),
     search: {

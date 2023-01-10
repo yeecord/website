@@ -5,6 +5,7 @@ import Image from "next/image";
 import { LinkButton } from "@components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
+import { noto } from "@components/home/HomePage";
 
 function Buttons() {
   return (
@@ -28,7 +29,7 @@ export function Hero() {
   return (
     <div
       className={clsx(
-        "w-full flex flex-col gap-12 relative z-[2] mt-[8rem] md:mt-[12rem] xl:mt-[15rem] px-[1rem]",
+        "w-full flex flex-col gap-12 relative z-[2] mt-[6rem] md:mt-[10rem] xl:mt-[14rem] px-[1rem]",
         "items-center text-center"
       )}
     >
@@ -38,15 +39,16 @@ export function Hero() {
       />
       <h1
         className={clsx(
-          "font-[700] leading-[1.1]",
-          "text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl"
+          "font-bold leading-[1.1]",
+          "text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl font-sans",
+            noto.variable
         )}
       >
-        最強大的
+        萬中選一的
         <br className="md:hidden" />
         <span
           className={clsx(
-            "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
+            "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 mx-4",
             styles["animated-gradient"]
           )}
         >
@@ -55,8 +57,8 @@ export function Hero() {
         <br className="md:hidden" />
         機器人
       </h1>
-      <h2 className="heading-md md:text-3xl text-secondary-light dark:text-secondary-dark max-w-[450px] md:max-w-[700px]">
-        Yeecord是一個具有眾多功能且強大的中文Discord機器人，讓你創造出優秀的中文服務器
+      <h2 className="heading-md md:text-3xl text-secondary-light font-medium dark:text-secondary-dark max-w-[450px] md:max-w-[700px]">
+        YEE式機器龍具有眾多功能且強大，讓你創造出優秀的中文 Discord 社群
       </h2>
       <Buttons />
       <Servers />
@@ -103,7 +105,7 @@ function Server({
   transparent?: boolean;
 }) {
   return (
-    <div className="h-stack gap-2 text-gray-700 dark:text-gray-300 flex-shrink-0">
+    <div className="h-stack gap-3 mx-1 text-gray-700 dark:text-gray-300 flex-shrink-0">
       <Image
         alt={name}
         src={img}
@@ -114,7 +116,7 @@ function Server({
           transparent && "brightness-[10%] dark:brightness-75"
         )}
       />
-      <h3 className="heading-md hidden sm:block">{name}</h3>
+      <h3 className="heading-md font-medium hidden sm:block">{name}</h3>
     </div>
   );
 }

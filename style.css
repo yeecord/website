@@ -28,7 +28,7 @@
   }
 
   .primary-button {
-    @apply px-6 py-3 rounded-full text-white bg-pink-500 text-lg font-bold transition-all;
+    @apply px-6 py-3 rounded-full text-white bg-teal-600 text-lg font-bold transition-all;
   }
 
   .icon-button {
