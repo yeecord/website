@@ -43,7 +43,7 @@ function Info() {
             <div className="flex flex-row gap-2 items-center">
                 <Image
                     alt="logo"
-                    src="/logo_128x128.png"
+                    src="/img/logo_128x128.png"
                     width={40}
                     height={40}
                     className="rounded-full"

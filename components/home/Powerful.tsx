@@ -128,7 +128,7 @@ function Chat() {
             /announcement
           </p>
         </Message>
-        <Message user="Yeecord" avatar="/logo_128x128.png">
+        <Message user="Yeecord" avatar="/img/logo_128x128.png">
           <div className="card p-2 shadow-none">
             <b className="text-black dark:text-white">
               Yeecord 是非常好的Discord機器人

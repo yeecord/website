@@ -32,7 +32,7 @@ function ThemeToggle() {
 const config: DocsThemeConfig = {
     head: (
         <>
-            <link rel="shortcut icon" href="/logo_128x128.png" />
+            <link rel="shortcut icon" href="/img/logo_128x128.png" />
         </>
     ),
     logo: (
@@ -47,7 +47,7 @@ const config: DocsThemeConfig = {
         >
             <Image
                 alt="YEE式機器龍"
-                src="/logo_128x128.png"
+                src="/img/logo_128x128.png"
                 width={32}
                 height={32}
                 style={{
