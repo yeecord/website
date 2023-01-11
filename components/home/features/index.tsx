@@ -7,7 +7,7 @@ export function Features() {
         <>
             <div className="flex flex-col gap-5 mt-[15rem] sm:text-center">
                 <h1 className="heading-xl lg:text-6xl xl:text-7xl">
-                    <span className="heading-lg block sm:inline sm:heading-xl">
+                    <span className="heading-lg block sm:heading-xl">
                         您需要的
                     </span>
                     <span className="text-gradient from-orange-400 to-red-500">
