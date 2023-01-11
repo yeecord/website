@@ -12,7 +12,7 @@ export function RpgSystem() {
     return (
         <div
             className={clsx(
-                "w-full min-h-[50rem] pr-8 pt-[10rem] pb-10",
+                "w-full min-h-[120vh] pr-8 pt-[10rem] pb-10",
                 styles["steps-container"]
             )}
         >
