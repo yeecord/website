@@ -112,5 +112,5 @@ button {
 }
 
 div:has(#home-page) {
-    overflow-x: clip !important;
+    overflow: clip !important;
 }

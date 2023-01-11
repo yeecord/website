@@ -31,13 +31,12 @@ export function HomePage(props: HomeProps) {
             <style jsx global>
                 {`
                     .nx-overflow-x-hidden {
-                        overflow-x: clip !important;
+                        overflow: clip !important;
                     }
                 `}
             </style>
             <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
                 <Hero />
-                <Music />
                 <Features />
                 <RpgSystem />
                 <Customers usedBy={props.usedBy} />

@@ -1,5 +1,6 @@
 import { ChineseUI } from "./ChineseUI";
 import { Dashboard } from "./Dashboard";
+import { Music } from "./Music";
 import { RpgSystem } from "./RpgSystem";
 
 export function Features() {
@@ -23,6 +24,7 @@ export function Features() {
             </div>
             <ChineseUI />
             <RpgSystem />
+            <Music />
             <Dashboard />
         </>
     );
