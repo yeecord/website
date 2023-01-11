@@ -114,9 +114,8 @@ function Job({
     return (
         <div
             className={clsx(
-                "card flex-col gap-3 dark:bg-[rgba(10,10,10,0.7)]",
+                "card flex-col gap-3 dark:bg-[rgba(10,10,10,0.7)] backdrop-blur-none md:flex",
                 optional ? "hidden" : "flex",
-                "md:flex"
             )}
         >
             <h3 className="heading-md">{name}</h3>

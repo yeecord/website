@@ -111,16 +111,11 @@ function Song({
     children: string;
 }) {
     return (
-        <div
-            className={clsx(
-                "rounded-xl shadow-md p-4 backdrop-blur-lg",
-                "bg-white dark:bg-zinc-800"
-            )}
-        >
+        <div className="rounded-xl shadow-md p-4 bg-white dark:bg-zinc-800">
             <div className="flex flex-row gap-2">
                 <Image
                     className="bg-blue-400 rounded-lg w-16 h-16 object-cover"
-                    alt="Song"
+                    alt={children}
                     src={img}
                 />
                 <div className="flex flex-col gap-3">
