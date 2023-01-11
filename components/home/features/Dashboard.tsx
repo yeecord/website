@@ -13,7 +13,7 @@ import { Progress } from "../Progress";
 
 export function Dashboard() {
     return (
-        <div className="mt-[3rem] z-[2]">
+        <div className="mt-[5rem] z-[2]">
             <div className="flex flex-col gap-5 text-center items-center">
                 <div
                     className={clsx(
