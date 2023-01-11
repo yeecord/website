@@ -29,8 +29,8 @@ export function RpgSystem() {
                         children: <RiGameFill className="inline" />,
                     }}
                     className={clsx(
-                        "rounded-2xl dark:bg-slate-900 gap-5",
-                        "flex flex-col-reverse md:flex-row md:p-8 md:bg-slate-100"
+                        "flex flex-col-reverse rounded-2xl gap-5",
+                        "md:flex-row md:p-8 md:bg-slate-100 md:dark:bg-slate-900"
                     )}
                 >
                     <div>

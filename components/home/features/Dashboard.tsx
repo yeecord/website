@@ -65,12 +65,15 @@ function Settings() {
                     <p className="text-secondary">下拉選單身分組</p>
                 </div>
             </div>
-            <div className="overflow-hidden flex-1">
-                <div className="grid grid-cols-3 h-full gap-4">
-                    <RoleItem />
-                    <RoleItem />
-                    <RoleItem />
-                </div>
+            <div
+                className={clsx(
+                    "grid-cols-3 h-full gap-4 flex-1",
+                    "hidden sm:grid"
+                )}
+            >
+                <RoleItem />
+                <RoleItem />
+                <RoleItem />
             </div>
             <button className="mt-auto rounded-xl from-purple-400 to-purple-600 primary-button">
                 + 添加身分組
