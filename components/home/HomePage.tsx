@@ -1,7 +1,6 @@
 import { Community } from "./Community";
 import { Customers } from "./Customers";
 import { Hero } from "./Hero";
-import { Music } from "./Music";
 import { RpgSystem } from "./RpgSystem";
 import { Noto_Sans_TC } from "@next/font/google";
 import clsx from "clsx";
