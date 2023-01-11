@@ -30,7 +30,7 @@ export function RpgSystem() {
                     }}
                     className={clsx(
                         "flex flex-col-reverse rounded-2xl gap-5",
-                        "md:flex-row md:p-8 md:bg-slate-100 md:dark:bg-slate-900"
+                        "md:flex-row md:justify-between md:p-8 md:bg-slate-100 md:dark:bg-slate-900"
                     )}
                 >
                     <div>
@@ -52,7 +52,10 @@ export function RpgSystem() {
                     <Image
                         src={DinoSvg}
                         alt="dino"
-                        className="bg-purple-400 p-5 rounded-2xl"
+                        className={clsx(
+                            "rounded-2xl aspect-square -mt-10",
+                            "md:bg-pink-500 md:px-7 md:py-5 md:w-auto md:mt-0"
+                        )}
                     />
                 </Step>
             </motion.div>
