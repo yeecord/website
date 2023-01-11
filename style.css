@@ -24,7 +24,7 @@
     }
 
     .card {
-        @apply bg-white/40 border-black/10 shadow-lg dark:bg-white/10 border-[1px] dark:border-white/10 p-4 rounded-xl backdrop-blur-lg;
+        @apply bg-white/40 border-black/10 shadow-lg dark:bg-white/10 border-[1px] dark:border-white/10 p-4 rounded-xl;
     }
 
     .h-stack {
