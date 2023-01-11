@@ -15,6 +15,10 @@ const nextConfig = {
       },
     ];
   },
+  i18n: {
+    locales: ["zh-Hant-TW"],
+    defaultLocale: "zh-Hant-TW",
+  },
 };
 
 /** @type {import('nextra').NextraConfig} */
@@ -24,10 +28,6 @@ const nextraConfig = {
   staticImage: true,
   defaultShowCopyCode: true,
   readingTime: true,
-  i18n: {
-    locales: ["zh"],
-    defaultLocale: "zh",
-  },
 };
 
 const withNextra = require("nextra")(nextraConfig);
