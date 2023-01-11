@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import { Step } from "./Step";
 import global from "./features.module.css";
 import styles from "./rpg.module.css";
-import { RiGameFill } from "react-icons/ri";
+import { RiGameFill, RiSwordFill } from "react-icons/ri";
 import { LinkButton } from "@components/LinkButton";
+import { ReactNode } from "react";
+import { BsBarChartFill, BsPencilFill } from "react-icons/bs";
 
 export function RpgSystem() {
     return (
@@ -15,9 +17,9 @@ export function RpgSystem() {
             )}
         >
             <motion.div
-                className="sticky flex flex-col xl:flex-row gap-5 top-[20vh]"
-                initial={{ y: -20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
+                className="sticky gap-5 top-[20vh]"
+                initial={{ x: -20, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.5, ease: "linear" }}
             >
                 <Step
@@ -28,7 +30,7 @@ export function RpgSystem() {
                     }}
                     className={clsx(
                         "flex flex-col-reverse rounded-2xl gap-5",
-                        "md:flex-row md:justify-between md:p-8 md:bg-slate-100 md:dark:bg-slate-900"
+                        "w-full lg:flex-row lg:justify-between"
                     )}
                 >
                     <div>
@@ -45,12 +47,17 @@ export function RpgSystem() {
                         >
                             了解更多
                         </LinkButton>
+                        <div className="grid grid-cols-2 min-[500px]:grid-cols-3 gap-5 mt-8">
+                            <Item icon={<BsBarChartFill />}>投票系統</Item>
+                            <Item icon={<BsPencilFill />}>1A2B遊戲</Item>
+                            <Item icon={<RiSwordFill />}>冒險系統</Item>
+                        </div>
                     </div>
 
                     <div
                         className={clsx(
-                            "rounded-2xl -mt-10 fill-black dark:fill-white",
-                            "md:bg-pink-500 md:px-7 md:py-5 md:mt-0 md:fill-white"
+                            "rounded-2xl fill-black dark:fill-white w-[150px] aspect-square",
+                            "lg:w-full max-w-[20rem]"
                         )}
                     >
                         <DinoSvg />
@@ -61,12 +68,21 @@ export function RpgSystem() {
     );
 }
 
+function Item({ icon, children }: { icon: ReactNode; children: string }) {
+    return (
+        <div className={`${styles["item-card"]} break-keep`}>
+            <div className="flex flex-col items-center justify-center text-3xl sm:text-7xl">
+                {icon}
+            </div>
+            <p className="heading-md">{children}</p>
+        </div>
+    );
+}
+
 function DinoSvg() {
     return (
         <svg
-            width="144"
-            height="144"
-            viewBox="0 0 144 144"
+            viewBox="0 40 124 104"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
         >
