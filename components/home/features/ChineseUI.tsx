@@ -8,16 +8,18 @@ import { Step } from "./Step";
 
 export function ChineseUI() {
     return (
-        <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, ease: "linear" }}
+        <div
             className={clsx(
-                "w-full mt-20 min-h-[40rem] pr-8",
+                "w-full mt-20 min-h-[50rem] pr-8",
                 cn_styles["steps-container"]
             )}
         >
-            <div className="sticky flex flex-col xl:flex-row gap-5 top-[20vh]">
+            <motion.div
+                className="sticky flex flex-col xl:flex-row gap-5 top-[20vh]"
+                initial={{ y: -20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: "linear" }}
+            >
                 <Step
                     icon={{
                         className:
@@ -35,8 +37,8 @@ export function ChineseUI() {
                     </div>
                 </Step>
                 <Skeleton />
-            </div>
-        </motion.div>
+            </motion.div>
+        </div>
     );
 }
 
@@ -58,7 +60,7 @@ function Skeleton() {
             className={clsx(
                 "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900 min-w-[20rem]",
                 "grid grid-cols-[0.5fr_1fr] gap-6",
-                "shadow-2xl"
+                "shadow-xl"
             )}
         >
             <div className="bg-white dark:bg-slate-800 rounded-md flex-1 p-4 flex flex-col gap-4">

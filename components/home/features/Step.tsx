@@ -10,7 +10,7 @@ export function Step({
             <div
                 {...icon}
                 className={twMerge(
-                    "absolute left-0 text-white rounded-full -ml-[4.5rem] w-16 h-16",
+                    "absolute left-0 top-0 text-white rounded-full -ml-[4.5rem] w-16 h-16",
                     "inline-flex flex-col items-center justify-center",
                     "shadow-2xl text-3xl font-bold",
                     icon?.className
