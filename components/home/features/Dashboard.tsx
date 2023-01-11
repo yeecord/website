@@ -84,8 +84,8 @@ function Settings() {
 
 function RoleItem() {
     return (
-        <div className="rounded-xl bg-purple-200 text-white flex items-center justify-center">
-            <BsEmojiAngryFill className="text-5xl" />
+        <div className="rounded-xl bg-purple-200 text-white flex items-center justify-center p-3">
+            <BsEmojiAngryFill className="text-3xl" />
         </div>
     );
 }

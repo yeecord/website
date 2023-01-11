@@ -10,7 +10,7 @@ export function ChineseUI() {
     return (
         <div
             className={clsx(
-                "w-full mt-20 min-h-[50rem] pr-8",
+                "w-full mt-20 min-h-[50rem] pr-8 relative z-[2]",
                 cn_styles["steps-container"]
             )}
         >
@@ -58,7 +58,7 @@ function Skeleton() {
     return (
         <div
             className={clsx(
-                "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900 min-w-[20rem]",
+                "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900 min-w-[20rem] max-w-[45rem]",
                 "grid grid-cols-[0.5fr_1fr] gap-6",
                 "shadow-xl"
             )}
