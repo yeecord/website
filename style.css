@@ -111,6 +111,6 @@ button {
     outline: 0 !important;
 }
 
-*:has(> #home-page) {
-    overflow: clip !important;
+div:has(#home-page) {
+    overflow-x: clip !important;
 }

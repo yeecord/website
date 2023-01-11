@@ -28,6 +28,13 @@ export function HomePage(props: HomeProps) {
                 noto.variable
             )}
         >
+            <style jsx global>
+                {`
+                    .nx-overflow-x-hidden {
+                        overflow-x: clip !important;
+                    }
+                `}
+            </style>
             <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
                 <Hero />
                 <Music />
