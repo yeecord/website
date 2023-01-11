@@ -98,10 +98,12 @@ const config: DocsThemeConfig = {
     project: {
         link: "https://github.com/yeecord",
     },
-    i18n: [{
-        locale: "zh",
-        text: "繁體中文"
-    }],
+    i18n: [
+        {
+            locale: "zh",
+            text: "繁體中文",
+        },
+    ],
     feedback: {
         content: "有疑問？給我們反饋 →",
     },
