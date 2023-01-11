@@ -65,7 +65,7 @@ export function Music() {
 
 function Content() {
     return (
-        <div className="flex flex-col gap-3 justify-center max-w-[750px] lg:max-w-none">
+        <div className="flex flex-col gap-3 max-w-[750px] lg:max-w-none">
             <h1 className={`${styles.heading} leading-[1.2]`}>
                 <span className="text-gradient text-4xl from-green-400 to-cyan-400">
                     一個指令
@@ -76,7 +76,7 @@ function Content() {
                 讓你可以和朋友一起收聽 Spotify 和 SoundCloud
                 上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
             </h3>
-            <div className="h-stack mt-2">
+            <div className="h-stack mt-3">
                 <LinkButton
                     className="primary-button bg-gradient-to-r from-cyan-500 to-green-500 font-medium"
                     href="/docs"
