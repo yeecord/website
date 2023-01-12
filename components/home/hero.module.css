@@ -22,7 +22,7 @@
 
 @media (max-width: theme("screens.md")) {
     .servers {
-        animation: servers-loop infinite 10s linear;
+        animation: servers-loop infinite 30s linear;
     }
 }
 
