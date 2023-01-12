@@ -12,7 +12,7 @@ export function Games() {
     return (
         <div
             className={clsx(
-                "w-full min-h-[260vh] sm:min-h-[180vh] md:min-h-[160vh] pr-8 pt-[10rem] pb-10 z-[2]",
+                "w-full min-h-[180vh] sm:min-h-[160vh] md:min-h-[155vh] pr-8 pt-[10rem] pb-10 z-[2]",
                 styles["steps-container"]
             )}
         >
