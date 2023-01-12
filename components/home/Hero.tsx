@@ -5,7 +5,7 @@ import Image from "next/image";
 import { LinkButton } from "@components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
-import { noto } from "@components/home/HomePage";
+import { motion } from "framer-motion";
 
 export function Hero() {
     return (
@@ -22,15 +22,14 @@ export function Hero() {
             <h1
                 className={clsx(
                     "font-bold leading-[1.1]",
-                    "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl",
-                    noto.variable
+                    "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl"
                 )}
             >
                 萬中選一的
                 <br className="md:hidden" />
                 <span
                     className={clsx(
-                        "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 mx-4",
+                        "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
                         styles["animated-gradient"]
                     )}
                 >
@@ -43,7 +42,27 @@ export function Hero() {
                 YEE式機器龍具有眾多功能且強大，讓你創造出優秀的中文 Discord 社群
             </h2>
             <Buttons />
-            <Servers />
+            <div className="w-full flex flex-col gap-5 mt-[3rem]">
+                <p className="text-lg font-semibold text-secondary mb-3">
+                    各大伺服器一致好評
+                </p>
+                <div
+                    className={clsx(
+                        "overflow-hidden",
+                        "max-md:mask-image-[linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
+                    )}
+                >
+                    <div
+                        className={clsx(
+                            styles.servers,
+                            "inline-block max-md:w-max"
+                        )}
+                    >
+                        <Servers />
+                        <Servers secondary />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
@@ -53,7 +72,7 @@ function Buttons() {
         "text-lg font-bold sm:text-xl rounded-md w-full px-6 py-3 sm:px-8";
 
     return (
-        <div className="grid grid-cols-1 w-full max-w-[400px] sm:w-fit sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 w-full max-w-[500px] sm:w-fit sm:grid-cols-2 gap-3">
             <LinkButton
                 href="/docs"
                 className={`${bn} ${styles["rainbow-border"]}`}
@@ -72,41 +91,28 @@ function Buttons() {
     );
 }
 
-function Servers() {
+function Servers({ secondary }: { secondary?: boolean }) {
     return (
-        <div className="flex flex-col gap-5 mt-[3rem]">
-            <p className="text-lg font-semibold text-secondary mb-3">
-                各大伺服器一致好評
-            </p>
-            <div
-                className={clsx(
-                    "flex flex-row justify-center gap-x-6 gap-y-3",
-                    "overflow-hidden md:flex-wrap",
-                    "mask-image-[linear-gradient(to_right,_transparent,_white,_transparent)] md:mask-image-[none]"
-                )}
-            >
-                <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
-                <Server
-                    img="/home/customers/avery.png"
-                    name="Avery"
-                    transparent
-                />
-                <Server img="/home/customers/chengfeng.png" name="承風飛躍" />
-                <div className="hidden sm:block basis-full" />
-                <Server
-                    img="/home/customers/daidai.png"
-                    name="老查呆呆の迷因調查局總部"
-                />
-                <Server
-                    img="/home/customers/empressival.png"
-                    name="Empressival"
-                />
-                <Server img="/home/customers/myit.png" name="MyIT" />
-                <Server
-                    img="/home/customers/valorant-tw.png"
-                    name="VALORANT Taiwan"
-                />
-            </div>
+        <div
+            className={clsx(
+                "inline-flex flex-row justify-center",
+                "md:flex-wrap md:max-w-[60rem]",
+                secondary && "md:hidden"
+            )}
+        >
+            <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
+            <Server img="/home/customers/avery.png" name="Avery" transparent />
+            <Server img="/home/customers/chengfeng.png" name="承風飛躍" />
+            <Server
+                img="/home/customers/daidai.png"
+                name="老查呆呆の迷因調查局總部"
+            />
+            <Server img="/home/customers/empressival.png" name="Empressival" />
+            <Server img="/home/customers/myit.png" name="MyIT" />
+            <Server
+                img="/home/customers/valorant-tw.png"
+                name="VALORANT Taiwan"
+            />
         </div>
     );
 }
@@ -121,18 +127,18 @@ function Server({
     transparent?: boolean;
 }) {
     return (
-        <div className="h-stack gap-3 mx-1 text-gray-700 dark:text-gray-300 flex-shrink-0">
+        <div className="h-stack gap-3 mx-3 my-1 text-black dark:text-white flex-shrink-0">
             <Image
                 alt={name}
                 src={img}
-                width="50"
-                height="50"
+                width="45"
+                height="45"
                 className={clsx(
                     "rounded-full grayscale",
-                    transparent && "brightness-[10%] dark:brightness-75"
+                    transparent && "brightness-[0%] dark:brightness-100"
                 )}
             />
-            <h3 className="heading-md font-medium hidden sm:block">{name}</h3>
+            <h3 className="heading-md">{name}</h3>
         </div>
     );
 }

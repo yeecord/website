@@ -1,6 +1,6 @@
 .animated-gradient {
     background-size: 200%;
-    animation: infinite background-loop 3s;
+    animation: infinite background-loop 6s;
     animation-timing-function: linear;
 }
 
@@ -20,6 +20,20 @@
     );
 }
 
+@media (max-width: theme("screens.md")) {
+    .servers {
+        animation: servers-loop infinite 10s linear;
+    }
+}
+
+@keyframes servers-loop {
+    from {
+        transform: translateZ(0);
+    }
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
 @keyframes background-loop {
     from {
         background-position-x: 0;
