@@ -12,7 +12,7 @@ export function ChineseUI() {
     return (
         <div
             className={clsx(
-                "w-full mt-20 min-h-[165vh] sm:min-h-[170vh] md:min-h-[140vh] pr-8",
+                "w-full mt-20 min-h-[165vh] sm:min-h-[170vh] md:min-h-[130vh] pr-8",
                 cn_styles["steps-container"]
             )}
         >
