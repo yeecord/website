@@ -32,7 +32,7 @@
     }
 
     .primary-button {
-        @apply px-6 py-3 rounded-full text-white bg-gradient-to-br from-green-400 to-blue-600 text-lg font-bold transition-all;
+        @apply px-6 py-3 rounded-full text-white bg-gradient-to-br text-lg font-bold transition-all;
     }
 
     .icon-button {
