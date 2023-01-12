@@ -1,9 +1,7 @@
 .steps-container {
-    margin-left: 2rem;
-    counter-reset: step;
+    margin-left: 1.3rem;
+    padding-left: 2rem;
     border-left: 1px solid;
-    padding-left: 2.5rem;
-    border-color: white;
     border-image: linear-gradient(
             to bottom,
             theme("colors.orange.400"),
@@ -12,18 +10,27 @@
         1 100%;
 }
 
-.item-card {
-    @apply flex flex-col gap-4 rounded-3xl p-3 sm:p-5 text-center text-gray-700 bg-slate-100 transition-all duration-500 cursor-pointer;
+@screen sm {
+    .steps-container {
+        margin-left: 2rem;
+        padding-left: 2.5rem;
+    }
 }
 
-:global(.dark) .item-card {
-    @apply text-zinc-300 bg-zinc-900/50;
-}
+@layer {
+    .item-card {
+        @apply flex flex-col gap-4 rounded-3xl p-3 sm:p-5 text-center text-gray-700 bg-slate-100 transition-all duration-500 cursor-pointer;
+    }
 
-.item-card:hover {
-    @apply shadow-xl text-pink-700 bg-gradient-to-br from-orange-200 to-pink-400;
-}
+    :global(.dark) .item-card {
+        @apply text-zinc-300 bg-zinc-900/50;
+    }
 
-:global(.dark) .item-card:hover {
-    @apply text-pink-100 from-orange-300 to-pink-800;
+    .item-card:hover {
+        @apply shadow-xl text-pink-700 bg-gradient-to-br from-orange-200 to-pink-400;
+    }
+
+    :global(.dark) .item-card:hover {
+        @apply text-pink-100 from-orange-300 to-pink-800;
+    }
 }

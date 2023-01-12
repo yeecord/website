@@ -12,15 +12,15 @@ export function RpgSystem() {
     return (
         <div
             className={clsx(
-                "w-full min-h-[120vh] pr-8 pt-[10rem] pb-10",
+                "w-full min-h-[min(65rem,130vh)] pr-8 pt-[10rem] pb-10 z-[2]",
                 styles["steps-container"]
             )}
         >
             <motion.div
                 className="sticky gap-5 top-[20vh]"
-                initial={{ x: -20, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, ease: "linear" }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
             >
                 <Step
                     icon={{
@@ -42,7 +42,7 @@ export function RpgSystem() {
                             更加有趣，同時朋友也可以和你一起玩
                         </h3>
                         <LinkButton
-                            className="primary-button mt-4 from-orange-400 to-pink-500"
+                            className="primary-button mt-6 from-orange-400 to-pink-500"
                             href="/docs/rpg/"
                         >
                             了解更多
@@ -50,14 +50,16 @@ export function RpgSystem() {
                         <div className="grid grid-cols-2 min-[500px]:grid-cols-3 gap-5 mt-8">
                             <Item icon={<BsBarChartFill />}>投票系統</Item>
                             <Item icon={<BsPencilFill />}>1A2B遊戲</Item>
-                            <Item icon={<RiSwordFill />}>冒險系統</Item>
+                            <Item icon={<RiSwordFill />} active>
+                                冒險系統
+                            </Item>
                         </div>
                     </div>
 
                     <div
                         className={clsx(
-                            "rounded-2xl fill-black dark:fill-white w-[150px] aspect-square",
-                            "lg:w-full max-w-[20rem]"
+                            "rounded-md fill-black dark:fill-white w-[150px] aspect-square",
+                            "lg:w-full max-w-[20rem] border-black mt-auto dark:border-white border-b-4"
                         )}
                     >
                         <DinoSvg />
@@ -68,9 +70,23 @@ export function RpgSystem() {
     );
 }
 
-function Item({ icon, children }: { icon: ReactNode; children: string }) {
+function Item({
+    icon,
+    children,
+    active,
+}: {
+    icon: ReactNode;
+    children: string;
+    active?: boolean;
+}) {
     return (
-        <div className={`${styles["item-card"]} break-keep`}>
+        <div
+            className={clsx(
+                `${styles["item-card"]} break-keep`,
+                active &&
+                    "bg-gradient-to-br from-blue-600 to-purple-500 shadow-xl shadow-blue-400/40 text-white max-[500px]:col-span-2"
+            )}
+        >
             <div className="flex flex-col items-center justify-center text-3xl sm:text-7xl">
                 {icon}
             </div>
