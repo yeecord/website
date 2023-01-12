@@ -6,7 +6,7 @@ import { Games } from "./Games";
 export function Features() {
     return (
         <>
-            <div className="flex flex-col gap-5 mt-[15rem] sm:text-center">
+            <div className="flex flex-col gap-5 mt-[10rem] sm:mt-[15rem] sm:text-center">
                 <h1 className="heading-xl lg:text-6xl xl:text-7xl">
                     <span className="heading-lg block sm:heading-xl">
                         您需要的
