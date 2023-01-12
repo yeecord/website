@@ -1,6 +1,6 @@
 @tailwind base;
-
 @tailwind components;
+@tailwind utilities;
 
 @layer components {
     .heading-xl {
@@ -90,8 +90,6 @@
         background: #2e2e2e;
     }
 }
-
-@tailwind utilities;
 
 body {
     background: linear-gradient(
