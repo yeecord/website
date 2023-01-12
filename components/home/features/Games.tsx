@@ -58,7 +58,7 @@ export function Games() {
 
                     <div
                         className={clsx(
-                            "rounded-md fill-black dark:fill-white w-[150px] aspect-square",
+                            "max-[430px]:hidden rounded-md fill-black dark:fill-white w-[150px] aspect-square",
                             "lg:w-full max-w-[20rem] border-black mt-auto dark:border-white border-b-4"
                         )}
                     >
@@ -85,11 +85,11 @@ function Item({
                 `${styles["item-card"]} break-keep`,
                 active && [
                     "bg-gradient-to-br from-blue-600 to-purple-500",
-                    "shadow-xl shadow-blue-400/40 text-white max-[430px]:col-span-2",
+                    "shadow-xl shadow-blue-400/40 text-white max-[430px]:col-span-2 max-[430px]:row-start-1",
                 ]
             )}
         >
-            <div className="flex flex-col items-center justify-center text-3xl sm:text-7xl">
+            <div className="flex flex-col items-center justify-center text-3xl sm:text-6xl lg:text-7xl">
                 {icon}
             </div>
             <p className="heading-md">{children}</p>

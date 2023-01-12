@@ -95,10 +95,13 @@ function Content() {
             </h3>
             <div className="h-stack mt-3">
                 <LinkButton
-                    className="primary-button bg-gradient-to-r from-cyan-500 to-green-500 flex flex-row items-center gap-2"
+                    className={clsx(
+                        "primary-button bg-gradient-to-r from-cyan-500 to-green-500",
+                        "flex flex-row items-center gap-2 h-fit"
+                    )}
                     href="/docs"
                 >
-                    了解更多 <BsArrowRightCircleFill className="inline h-fit" />
+                    了解更多 <BsArrowRightCircleFill className="inline" />
                 </LinkButton>
             </div>
         </div>
