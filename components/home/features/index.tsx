@@ -1,7 +1,7 @@
 import { ChineseUI } from "./ChineseUI";
 import { Dashboard } from "./Dashboard";
 import { Music } from "./Music";
-import { RpgSystem } from "./RpgSystem";
+import { Games } from "./Games";
 
 export function Features() {
     return (
@@ -23,7 +23,7 @@ export function Features() {
                 </h2>
             </div>
             <ChineseUI />
-            <RpgSystem />
+            <Games />
             <Music />
             <Dashboard />
         </>

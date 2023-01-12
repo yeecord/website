@@ -2,13 +2,13 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Step } from "./Step";
 import global from "./features.module.css";
-import styles from "./rpg.module.css";
+import styles from "./games.module.css";
 import { RiGameFill, RiSwordFill } from "react-icons/ri";
 import { LinkButton } from "@components/LinkButton";
 import { ReactNode } from "react";
 import { BsBarChartFill, BsPencilFill } from "react-icons/bs";
 
-export function RpgSystem() {
+export function Games() {
     return (
         <div
             className={clsx(
@@ -47,7 +47,7 @@ export function RpgSystem() {
                         >
                             了解更多
                         </LinkButton>
-                        <div className="grid grid-cols-2 min-[500px]:grid-cols-3 gap-5 mt-8">
+                        <div className="grid grid-cols-2 min-[430px]:grid-cols-3 gap-5 mt-8">
                             <Item icon={<BsBarChartFill />}>投票系統</Item>
                             <Item icon={<BsPencilFill />}>1A2B遊戲</Item>
                             <Item icon={<RiSwordFill />} active>
@@ -84,7 +84,7 @@ function Item({
             className={clsx(
                 `${styles["item-card"]} break-keep`,
                 active &&
-                    "bg-gradient-to-br from-blue-600 to-purple-500 shadow-xl shadow-blue-400/40 text-white max-[500px]:col-span-2"
+                    "bg-gradient-to-br from-blue-600 to-purple-500 shadow-xl shadow-blue-400/40 text-white max-[430px]:col-span-2"
             )}
         >
             <div className="flex flex-col items-center justify-center text-3xl sm:text-7xl">
