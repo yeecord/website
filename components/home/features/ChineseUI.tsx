@@ -5,7 +5,6 @@ import styles from "./features.module.css";
 import cn_styles from "./chinese.module.css";
 
 import { Step } from "./Step";
-import Image from "next/image";
 import Gardient from "@static/home/purple-gradient.svg";
 import { Gradient } from "@components/Gradient";
 
@@ -13,7 +12,7 @@ export function ChineseUI() {
     return (
         <div
             className={clsx(
-                "w-full mt-20 min-h-[50rem] pr-8",
+                "w-full mt-20 min-h-[190vh] sm:min-h-[175vh] md:min-h-[150vh] pr-8",
                 cn_styles["steps-container"]
             )}
         >

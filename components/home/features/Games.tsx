@@ -12,7 +12,7 @@ export function Games() {
     return (
         <div
             className={clsx(
-                "w-full min-h-[min(65rem,130vh)] pr-8 pt-[10rem] pb-10 z-[2]",
+                "w-full min-h-[260vh] sm:min-h-[180vh] md:min-h-[160vh] pr-8 pt-[10rem] pb-10 z-[2]",
                 styles["steps-container"]
             )}
         >
@@ -83,8 +83,10 @@ function Item({
         <div
             className={clsx(
                 `${styles["item-card"]} break-keep`,
-                active &&
-                    "bg-gradient-to-br from-blue-600 to-purple-500 shadow-xl shadow-blue-400/40 text-white max-[430px]:col-span-2"
+                active && [
+                    "bg-gradient-to-br from-blue-600 to-purple-500",
+                    "shadow-xl shadow-blue-400/40 text-white max-[430px]:col-span-2",
+                ]
             )}
         >
             <div className="flex flex-col items-center justify-center text-3xl sm:text-7xl">
