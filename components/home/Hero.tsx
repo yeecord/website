@@ -7,27 +7,6 @@ import clsx from "clsx";
 import styles from "./hero.module.css";
 import { noto } from "@components/home/HomePage";
 
-function Buttons() {
-    return (
-        <div className="grid grid-cols-1 w-full max-w-[400px] sm:w-fit sm:grid-cols-2 gap-3">
-            <LinkButton
-                href="/docs"
-                className="primary-button rounded-md w-full font-medium"
-            >
-                使用教學
-            </LinkButton>
-            <LinkButton
-                href="/invite"
-                target="_blank"
-                className="icon-button rounded-md w-full justify-center font-medium"
-            >
-                <IoMdOpen />
-                邀請機器人
-            </LinkButton>
-        </div>
-    );
-}
-
 export function Hero() {
     return (
         <div
@@ -43,7 +22,7 @@ export function Hero() {
             <h1
                 className={clsx(
                     "font-bold leading-[1.1]",
-                    "text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl font-sans",
+                    "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl",
                     noto.variable
                 )}
             >
@@ -65,6 +44,30 @@ export function Hero() {
             </h2>
             <Buttons />
             <Servers />
+        </div>
+    );
+}
+
+function Buttons() {
+    const bn =
+        "text-lg font-bold sm:text-xl rounded-md w-full px-6 py-3 sm:px-8";
+
+    return (
+        <div className="grid grid-cols-1 w-full max-w-[400px] sm:w-fit sm:grid-cols-2 gap-3">
+            <LinkButton
+                href="/docs"
+                className={`${bn} ${styles["rainbow-border"]}`}
+            >
+                使用教學
+            </LinkButton>
+            <LinkButton
+                href="/invite"
+                target="_blank"
+                className={`icon-button justify-center ${bn}`}
+            >
+                <IoMdOpen />
+                邀請機器人
+            </LinkButton>
         </div>
     );
 }
