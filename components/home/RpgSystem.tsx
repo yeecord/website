@@ -25,7 +25,7 @@ export function RpgSystem() {
             </h3>
             <LinkButton
                 href="/docs/rpg"
-                className="primary-button mt-4 bg-gradient-to-b to-green-600"
+                className="primary-button mt-4 bg-gradient-to-b from-green-400 to-green-600"
             >
                 開始使用
             </LinkButton>
@@ -115,7 +115,7 @@ function Job({
         <div
             className={clsx(
                 "card flex-col gap-3 dark:bg-[rgba(10,10,10,0.7)] md:flex",
-                optional ? "hidden" : "flex",
+                optional ? "hidden" : "flex"
             )}
         >
             <h3 className="heading-md">{name}</h3>
