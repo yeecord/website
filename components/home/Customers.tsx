@@ -1,6 +1,6 @@
 import PinkWave from "@static/home/pink-wave.svg";
 import Image from "next/image";
-import { LinkButton } from "@components/LinkButton";
+import LinkButton from "./internal/LinkButton";
 import clsx from "clsx";
 import { formatter } from "../../src/config";
 

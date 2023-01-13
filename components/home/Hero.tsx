@@ -1,11 +1,10 @@
 import { IoMdOpen } from "react-icons/io";
-import { Gradient } from "@components/Gradient";
+import Gradient from "./internal/Gradient";
 import HeroGradient from "@static/hero.svg";
 import Image from "next/image";
-import { LinkButton } from "@components/LinkButton";
+import LinkButton from "./internal/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
-import { motion } from "framer-motion";
 
 export function Hero() {
     return (

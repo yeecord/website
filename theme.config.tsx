@@ -1,5 +1,5 @@
 import { Footer } from "@components/layout/Footer";
-import UserAvatar from "@components/UserAvatar";
+import DashboardLogin from "@components/layout/DashboardLogin";
 import Image from "next/image";
 import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
@@ -87,7 +87,7 @@ const config: DocsThemeConfig = {
                     href="https://app.yeecord.com/"
                     className="hidden md:block"
                 >
-                    <UserAvatar />
+                    <DashboardLogin />
                 </Link>
             </div>
         ),

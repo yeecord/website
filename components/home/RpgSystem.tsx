@@ -1,5 +1,5 @@
-import { Gradient } from "@components/Gradient";
-import { LinkButton } from "@components/LinkButton";
+import Gradient from "./internal/Gradient";
+import LinkButton from "./internal/LinkButton";
 import GreenGradient from "@static/home/green-gradient.svg";
 import Star from "@static/home/star.svg";
 import clsx from "clsx";

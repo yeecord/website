@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import { Step } from "./Step";
+import Step from "../internal/Step";
 import global from "./features.module.css";
 import styles from "./games.module.css";
 import { RiGameFill, RiSwordFill } from "react-icons/ri";
-import { LinkButton } from "@components/LinkButton";
+import LinkButton from "../internal/LinkButton";
 import { ReactNode } from "react";
 import { BsBarChartFill, BsPencilFill } from "react-icons/bs";
 

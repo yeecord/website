@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-export function Step({
+export default function Step({
     icon,
     ...props
 }: { icon?: ComponentProps<"div"> } & ComponentProps<"div">) {

@@ -1,12 +1,12 @@
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import { BsCheckCircleFill, BsTranslate } from "react-icons/bs";
 import styles from "./features.module.css";
 import cn_styles from "./chinese.module.css";
+import Step from "../internal/Step";
+import Gradient from "../internal/Gradient";
 
-import { Step } from "./Step";
-import Gardient from "@static/home/purple-gradient.svg";
-import { Gradient } from "@components/Gradient";
+import { BsCheckCircleFill, BsTranslate } from "react-icons/bs";
+import GardientSvg from "@static/home/purple-gradient.svg";
 
 export function ChineseUI() {
     return (
@@ -41,7 +41,7 @@ export function ChineseUI() {
                 </Step>
                 <Skeleton />
                 <Gradient
-                    src={Gardient}
+                    src={GardientSvg}
                     className={clsx(
                         "absolute left-0 -bottom-[14rem] w-[50rem] max-w-none -z-[1]",
                         "xl:right-0 xl:-top-[12rem] xl:left-[initial] xl:bottom-[initial]"

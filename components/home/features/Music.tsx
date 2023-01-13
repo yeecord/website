@@ -11,10 +11,10 @@ import KickBack from "@static/home/songs/kick-back.jpg";
 import FightSong from "@static/home/songs/eve-fight-song.jpg";
 import GreenGradient from "@static/home/green-gradient.svg";
 import { motion } from "framer-motion";
-import { Gradient } from "@components/Gradient";
+import Gradient from "../internal/Gradient";
 import clsx from "clsx";
 import styles from "./features.module.css";
-import { LinkButton } from "@components/LinkButton";
+import LinkButton from "../internal/LinkButton";
 
 export function Music() {
     return (
