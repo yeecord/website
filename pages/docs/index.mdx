@@ -2,20 +2,33 @@
 description: YEE式機器龍是一隻全中文化的Discord機器人，我們不只提供音樂的服務，還有像是動態語音頻道、跨群聊天、等你不會想錯過的好東西
 ---
 
-import { Admonition, Adsense } from "@components/mdx";
+import { Admonition, Adsense, LinkButton, Card, Cards } from "@components/mdx";
 
 # 入門
 
-我想你會點進來這個頁面，一定是為了最棒的 Discord 機器人吧！
-
 ![YEE式機器龍 Logo](@static/img/logo_128x128.png)
 
-YEE 式機器龍是一隻全中文化的**Discord 音樂機器人**，我們不只提供音樂的服務，還有像是 [動態語音頻道](/docs/dvc/)、[跨群聊天](@static/docs/chat/)、[RPG 系統](@static/docs/rpg/)、等你不會想錯過的好東西
+YEE 式機器龍是一隻全中文化的**Discord 機器人**，我們不僅僅提供音樂的服務，還有像是**動態語音頻道**、**跨群聊天**、**RPG 系統**，等你不會想錯過的好東西
 
-如果你還沒邀請的話，**這邊是 [我的邀請連結](https://yeecord.com/link)**
+<LinkButton
+    href="https://yeecord.com/link"
+    link={{ className: "w-fit mt-3" }}
+    variant="primary"
+>
+    邀請機器龍
+</LinkButton>
+
+<Cards className='mt-10' num={3}>
+
+<Card title="動態語音頻道" href="/docs/commands/dvc/" arrow />
+<Card title="跨群聊天" href="/docs/commands/chat/" arrow />
+<Card title="RPG 系統" href="/docs/rpg/" arrow />
+
+</Cards>
 
 <Admonition type="info" title="我想先通知你">
-  如果在邀請或是使用時遇到問題可以查看這篇文章 [《「5 方法」排解機器人問題》](/blog/discord-bot-troubleshooting/)。
+    如果在邀請或是使用時遇到問題可以查看這篇文章 [《「5
+    方法」排解機器人問題》](/blog/discord-bot-troubleshooting/)。
 </Admonition>
 
 ## 什麼是 Discord 機器人?

@@ -49,7 +49,7 @@ export function Card({
                 <span
                     className={cn(
                         styles.title,
-                        "gap-2 p-4 text-gray-700 dark:text-gray-300",
+                        "gap-2 p-4 text-gray-700 dark:text-gray-300 mt-auto",
                         "hover:text-gray-900 dark:hover:text-gray-100"
                     )}
                 >
@@ -90,11 +90,15 @@ export function Card({
     );
 }
 
-export function Cards({ children, num, ...props }: any) {
+export function Cards({
+    children,
+    num,
+    ...props
+}: { num?: number } & ComponentProps<"div">) {
     return (
         <div
-            className={cn(styles.cards, "mt-4 gap-4")}
             {...props}
+            className={twMerge(styles.cards, "mt-4 gap-4", props?.className)}
             style={
                 {
                     "--rows": num || 3,
