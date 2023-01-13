@@ -5,15 +5,17 @@ description: "向我們的新文檔問好"
 
 import { Tabs, Tab } from "nextra-theme-docs";
 import {
-  Accordion,
-  Admonition,
-  Error,
-  Tip,
-  Warning,
-  Info,
-  Card,
-  Cards,
+    Accordion,
+    Admonition,
+    Error,
+    Tip,
+    Warning,
+    Info,
+    Card,
+    Cards,
+    LinkButton,
 } from "@components/mdx";
+import { BsDownload } from "react-icons/bs";
 import { motion } from "framer-motion";
 
 # 遷移到文檔 2.0
@@ -92,10 +94,10 @@ image: "/blog/banner.jpg"
 
 ```json
 {
-  "my-new-page": "我的新頁面",
-  "index": "快速入門",
-  "migrate-to-v4": "新版YEE式機器龍攻略",
-  "commands": "指令"
+    "my-new-page": "我的新頁面",
+    "index": "快速入門",
+    "migrate-to-v4": "新版YEE式機器龍攻略",
+    "commands": "指令"
 }
 ```
 
@@ -121,10 +123,11 @@ image: "/blog/banner.jpg"
 
 想告訴用戶額外的詳細信息? 使用`Accordion`組件!
 
-```jsx
+```mdx
 import { Accordion } from "@components/mdx";
 
 **這裡有一條鯊魚**
+
 <Accordion title="Money是一隻鯊魚">Yeahhhhh</Accordion>;
 ```
 
@@ -137,13 +140,13 @@ import { Accordion } from "@components/mdx";
 想給用戶提示或警告? 你可以使用`Admonition`組件 <br/>
 它還支持多種類型: `Tip`, `Warning`, `Info`, `Error`
 
-```jsx
+```mdx
 import { Admonition, Error, Tip, Warning, Info } from "@components/mdx";
 
 <Admonition title="Default" />
 <Tip title="Tip" />
-<Warning title='warning'/>
-<Info title='info'/>
+<Warning title="warning" />
+<Info title="info" />
 ```
 
 <Admonition title="Default" />
@@ -154,16 +157,75 @@ import { Admonition, Error, Tip, Warning, Info } from "@components/mdx";
 ### Card
 
 您可以使用它來將用戶重定向到不同的頁面 <br />
-永遠記得傳遞 `href` 道具
+記得傳遞 `href` 道具
 
-```jsx
+```mdx
 import { Card } from "@components/mdx";
 
-<Card title="重定向到部落格" href="/blog/welcome-to-v2" />;
+<Card title="重定向到部落格" href="/blog/welcome-to-v2" />
+<Card title="重定向到部落格" href="/blog/welcome-to-v2" arrow />
 ```
 
 <Card title="重定向到部落格" href="/blog/welcome-to-v2" />
+<Card
+    title="重定向到部落格"
+    href="/blog/welcome-to-v2"
+    arrow
+    className="mt-2"
+/>
 
+### 鏈接按鈕
+
+插入網址太難看？您可以使用按鈕代替它!
+
+<Info>_你可能需要 `w-fit` 否則按鈕會太寬_</Info>
+
+```mdx
+import { LinkButton } from "@components/mdx";
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    children="免費體驗"
+    variant="secondary"
+/>
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    icon={<BsDownload />}
+    children="免費體驗"
+    variant="primary"
+    link={{ className: "w-fit" }}
+/>
+```
+
+<div className='flex flex-col min-[400px]:flex-row gap-3 flex-wrap my-5'>
+  
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    icon={<BsDownload />}
+    children="免費體驗"
+    variant='primary'
+/>
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    children="開始試用"
+    variant="primary"
+/>
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    icon={<BsDownload />}
+    children="免費體驗"
+/>
+
+<LinkButton href="/blog/welcome-to-v2" target="_blank" children="開始試用" />
+
+</div>
 ### 步驟
 
 當您編寫教程時，此組件對於顯示每個步驟之間的關係非常有用 <br />
@@ -253,39 +315,39 @@ Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 文件中使�
 它可以讓您輕鬆創建炫酷的動畫
 
 <Cards>
-  <Card
-    href="https://www.framer.com/docs/"
-    target="_blank"
-    title="他們的文檔"
-  />
+    <Card
+        href="https://www.framer.com/docs/"
+        target="_blank"
+        title="他們的文檔"
+    />
 </Cards>
 
 ```jsx
 <motion.div
-  animate={{
-    scale: [1, 2, 2, 1, 1],
-    rotate: [0, 0, 270, 270, 0],
-    borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-  }}
+    animate={{
+        scale: [1, 2, 2, 1, 1],
+        rotate: [0, 0, 270, 270, 0],
+        borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+    }}
 />
 ```
 
 <div className="flex flex-col items-center bg-purple-500 p-5 rounded-2xl mt-4">
-  <motion.div
-    animate={{
-      scale: [1, 2, 2, 1, 1],
-      rotate: [0, 0, 270, 270, 0],
-      borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-    }}
-    transition={{
-      duration: 2,
-      ease: "easeInOut",
-      times: [0, 0.2, 0.5, 0.8, 1],
-      repeat: Infinity,
-      repeatDelay: 0.2,
-    }}
-    className="w-10 h-10 md:w-32 md:h-32 bg-white m-[5rem]"
-  />
+    <motion.div
+        animate={{
+            scale: [1, 2, 2, 1, 1],
+            rotate: [0, 0, 270, 270, 0],
+            borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+        }}
+        transition={{
+            duration: 2,
+            ease: "easeInOut",
+            times: [0, 0.2, 0.5, 0.8, 1],
+            repeat: Infinity,
+            repeatDelay: 0.2,
+        }}
+        className="w-10 h-10 md:w-32 md:h-32 bg-white m-[5rem]"
+    />
 </div>
 
 我們建議您了解它們，為用戶創建更好的用戶體驗

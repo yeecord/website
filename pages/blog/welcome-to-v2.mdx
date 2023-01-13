@@ -9,8 +9,8 @@ tags:
 date: 2023/1/1
 ---
 
-import { LinkButton } from "@components/LinkButton";
 import { Accordion } from "@components/mdx";
+import Link from "next/link";
 
 # 歡迎 Yeecord 網站 2.0
 
@@ -26,8 +26,8 @@ import { Accordion } from "@components/mdx";
 
 如果有興趣的話，我們也非常建議你理解 `React.js`, 這可以讓你創造出更有互動性的用戶體驗
 
-<LinkButton href="/docs/migrate-to-docs-v2" className="secondary-button mt-2">
-  發掘新的功能
-</LinkButton>
+<Link href="/docs/migrate-to-docs-v2" className="!no-underline">
+    <button className="secondary-button mt-2">發掘新的功能</button>
+</Link>
 
 </Accordion>
