@@ -3,6 +3,7 @@ import LinkButton from "./internal/LinkButton";
 import GreenGradient from "@static/home/green-gradient.svg";
 import Star from "@static/home/star.svg";
 import clsx from "clsx";
+import { motion } from "framer-motion";
 
 export function RpgSystem() {
     return (
@@ -59,9 +60,22 @@ function Background() {
     );
 }
 
+const grid = {
+    show: { transition: { staggerChildren: 0.1 } },
+    hidden: {},
+};
+const item = {
+    show: { y: 0 },
+    hidden: { y: 50 },
+};
 function Jobs() {
     return (
-        <div className="grid text-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 gap-3">
+        <motion.div
+            className="grid text-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 gap-3"
+            variants={grid}
+            initial="hidden"
+            whileInView="show"
+        >
             <Job
                 name="農夫"
                 description="和漁夫是差不多辛勤的職業，不過在這個世界，農夫的收益比漁夫還要高"
@@ -98,7 +112,7 @@ function Jobs() {
                 description="在森林中砍伐木頭，是木頭的來源"
                 optional
             />
-        </div>
+        </motion.div>
     );
 }
 
@@ -112,7 +126,9 @@ function Job({
     optional?: boolean;
 }) {
     return (
-        <div
+        <motion.div
+            variants={item}
+            transition={{ duration: 1 }}
             className={clsx(
                 "card flex-col gap-3 backdrop-blur-3xl dark:bg-[rgba(10,10,10,0.7)] md:flex",
                 optional ? "hidden" : "flex"
@@ -120,6 +136,6 @@ function Job({
         >
             <h3 className="heading-md">{name}</h3>
             <p className="text-secondary">{description}</p>
-        </div>
+        </motion.div>
     );
 }

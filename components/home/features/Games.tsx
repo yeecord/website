@@ -8,11 +8,29 @@ import LinkButton from "../internal/LinkButton";
 import { ReactNode } from "react";
 import { BsBarChartFill, BsPencilFill } from "react-icons/bs";
 
+const grid = {
+    hidden: {
+        opacity: 0,
+    },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            staggerDirection: -1,
+        },
+    },
+};
+
+const item = {
+    hidden: { y: 50, opacity: 0 },
+    show: { y: 0, opacity: 1 },
+};
+
 export function Games() {
     return (
         <div
             className={clsx(
-                "w-full min-h-[190vh] sm:min-h-[120vh] md:min-h-[140vh] pr-8 pt-[10rem] pb-10 z-[2]",
+                "w-full min-h-[190vh] sm:min-h-[120vh] md:min-h-[140vh] lg:min-h-[136vh] pr-8 pt-[10rem] pb-10 z-[2]",
                 styles["steps-container"]
             )}
         >
@@ -47,13 +65,18 @@ export function Games() {
                         >
                             了解更多
                         </LinkButton>
-                        <div className="grid grid-cols-2 min-[430px]:grid-cols-3 gap-5 mt-8">
+                        <motion.div
+                            className="grid grid-cols-2 min-[430px]:grid-cols-3 gap-5 mt-8"
+                            variants={grid}
+                            whileInView="show"
+                            initial="hidden"
+                        >
                             <Item icon={<BsBarChartFill />}>投票系統</Item>
                             <Item icon={<BsPencilFill />}>1A2B遊戲</Item>
                             <Item icon={<RiSwordFill />} active>
                                 冒險系統
                             </Item>
-                        </div>
+                        </motion.div>
                     </div>
 
                     <div
@@ -80,7 +103,8 @@ function Item({
     active?: boolean;
 }) {
     return (
-        <div
+        <motion.div
+            variants={item}
             className={clsx(
                 `${styles["item-card"]} break-keep`,
                 active && [
@@ -93,7 +117,7 @@ function Item({
                 {icon}
             </div>
             <p className="heading-md">{children}</p>
-        </div>
+        </motion.div>
     );
 }
 

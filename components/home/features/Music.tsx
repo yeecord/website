@@ -14,13 +14,17 @@ import { motion } from "framer-motion";
 import Gradient from "../internal/Gradient";
 import clsx from "clsx";
 import styles from "./features.module.css";
+import lstyles from "./music.module.css";
 import LinkButton from "../internal/LinkButton";
 
 export function Music() {
     return (
-        <div
+        <motion.div
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.4 }}
             className={clsx(
-                "grid grid-cols-1 gap-4 relative z-[2] p-7 sm:max-lg:pr-10 pb-0",
+                "grid grid-cols-1 gap-4 relative z-[2] p-7 sm:max-lg:pr-10 pb-0 lg:mt-[5rem]",
                 "lg:grid-cols-[1fr_0.8fr]",
                 "bg-slate-100 dark:bg-slate-900 rounded-3xl overflow-hidden"
             )}
@@ -45,38 +49,23 @@ export function Music() {
                     <BsMusicNoteBeamed />
                 </div>
             </div>
-            <div
+            <motion.div
+                whileInView={{ y: 0 }}
+                initial={{ y: 100 }}
+                transition={{ duration: 0.5 }}
                 className={clsx(
                     "flex flex-col mt-2 w-[650px] -mr-[20rem] max-md:ml-5 max-lg:ml-8",
                     "max-h-[10rem] lg:max-h-full lg:mt-[5rem]"
                 )}
             >
-                <motion.div
-                    animate={{
-                        y: [0, 10, 0],
-                    }}
-                    transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                    }}
-                    className="mr-20"
-                >
+                <div className={`${lstyles["music-player"]} mr-20`}>
                     <MusicPlayer />
-                </motion.div>
-                <motion.div
-                    animate={{
-                        y: [0, 15, 0],
-                    }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                    }}
-                    className="z-[2]"
-                >
+                </div>
+                <div className={`z-[2] ${lstyles["play-list"]}`}>
                     <Playlist />
-                </motion.div>
-            </div>
-        </div>
+                </div>
+            </motion.div>
+        </motion.div>
     );
 }
 

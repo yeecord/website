@@ -10,6 +10,7 @@ import {
 import { RiSettings2Fill } from "react-icons/ri";
 import lstyles from "./dashboard.module.css";
 import { Progress } from "../Progress";
+import { motion } from "framer-motion";
 
 export function Dashboard() {
     return (
@@ -28,7 +29,7 @@ export function Dashboard() {
                     你的機器人
                 </h3>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-[2rem]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 mt-[2rem] gap-5">
                 <Chart />
                 <Settings />
 
@@ -55,7 +56,11 @@ export function Dashboard() {
 
 function Settings() {
     return (
-        <div className={`${lstyles.card} gap-3`}>
+        <motion.div
+            className={`${lstyles.card} gap-3`}
+            whileInView={{ y: 0 }}
+            initial={{ y: "10rem" }}
+        >
             <div className="h-stack">
                 <div className="p-3 rounded-xl text-white bg-purple-500 text-3xl">
                     <RiSettings2Fill />
@@ -68,7 +73,7 @@ function Settings() {
             <div
                 className={clsx(
                     "grid-cols-3 h-full gap-4 flex-1",
-                    "hidden sm:grid"
+                    "hidden lg:grid"
                 )}
             >
                 <RoleItem />
@@ -78,7 +83,7 @@ function Settings() {
             <button className="mt-auto rounded-xl from-purple-400 to-purple-600 primary-button">
                 + 添加身分組
             </button>
-        </div>
+        </motion.div>
     );
 }
 
@@ -92,7 +97,12 @@ function RoleItem() {
 
 function Chart() {
     return (
-        <div className={clsx("row-span-2", lstyles.card)}>
+        <motion.div
+            className={clsx("row-span-2", lstyles.card)}
+            whileInView={{ x: 0, opacity: 1 }}
+            initial={{ x: "8rem", opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
             <div className="h-stack">
                 <div className="p-5 rounded-xl text-white bg-blue-600 text-3xl">
                     <BsBarChartFill />
@@ -103,6 +113,6 @@ function Chart() {
                 </div>
             </div>
             <Image src={ChartSvg} alt="chart" className="rounded-3xl mt-auto" />
-        </div>
+        </motion.div>
     );
 }

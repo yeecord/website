@@ -12,7 +12,7 @@ export function ChineseUI() {
     return (
         <div
             className={clsx(
-                "w-full mt-20 min-h-[140vh] sm:min-h-[150vh] md:min-h-[100vh] pr-8",
+                "w-full mt-20 min-h-[140vh] sm:min-h-[150vh] xl:min-h-[110vh] pr-8",
                 cn_styles["steps-container"]
             )}
         >
@@ -64,26 +64,62 @@ function Feature({ children }: { children: string }) {
 function Skeleton() {
     const foreground = "bg-slate-300 dark:bg-slate-700 rounded-full";
     const skeleton = "rounded-full bg-slate-200 dark:bg-slate-700 h-7";
+    const list = {
+        show: { transition: { staggerChildren: 0.1 } },
+        hidden: {},
+    };
+    const item = {
+        show: {
+            scaleX: 1,
+            opacity: 1,
+        },
+        hidden: {
+            scaleX: 0,
+            opacity: 0,
+        },
+    };
 
     return (
         <div
             className={clsx(
-                "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900 min-w-[20rem] max-w-[45rem]",
+                "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900 min-w-[26rem] min-h-[15rem] max-w-[45rem]",
                 "grid grid-cols-[0.5fr_1fr] gap-6",
                 "shadow-xl relative"
             )}
         >
-            <div className="bg-white dark:bg-slate-800 rounded-md flex-1 p-4 flex flex-col gap-4">
-                <div className={skeleton} />
-                <div className={skeleton} />
-                <div className={skeleton} />
-            </div>
-            <div className="text-xl font-bold flex flex-col gap-4">
+            <motion.div
+                className="bg-white dark:bg-slate-800 rounded-md flex-1 p-4 flex flex-col gap-4"
+                variants={list}
+                initial="hidden"
+                whileInView="show"
+            >
+                <motion.div
+                    className={skeleton}
+                    variants={item}
+                    transition={{ duration: 0.5 }}
+                />
+                <motion.div
+                    className={skeleton}
+                    variants={item}
+                    transition={{ duration: 0.5 }}
+                />
+                <motion.div
+                    className={skeleton}
+                    variants={item}
+                    transition={{ duration: 0.5 }}
+                />
+            </motion.div>
+            <motion.div
+                className="text-xl font-bold flex flex-col gap-4"
+                whileInView={{ paddingRight: "0px", opacity: 1 }}
+                initial={{ paddingRight: "100px", opacity: 0 }}
+                transition={{ duration: 1 }}
+            >
                 <h2 className="heading-md">中文</h2>
                 <div className={`${foreground} h-7`} />
                 <div className={`${foreground} h-6 w-[70%]`} />
                 <div className="rounded-lg bg-slate-200 dark:bg-slate-800 h-10 mt-auto" />
-            </div>
+            </motion.div>
         </div>
     );
 }

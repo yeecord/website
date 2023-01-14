@@ -3,14 +3,31 @@ import Image from "next/image";
 import LinkButton from "./internal/LinkButton";
 import clsx from "clsx";
 import { formatter } from "../../src/config";
+import { animate, motion, useInView } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 export function Customers({ usedBy }: { usedBy: number }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const isInView = useInView(ref);
+    const count = useAnimatedCounter(
+        usedBy,
+        Math.max(usedBy - 10000, 0),
+        1,
+        isInView
+    );
+
     return (
-        <div className="relative flex flex-col gap-5 z-[2] mt-[10rem] items-center text-center">
+        <motion.div
+            className="relative flex flex-col gap-5 z-[2] mt-[10rem] items-center text-center"
+            ref={ref}
+            whileInView={{ y: 0, opacity: 1 }}
+            initial={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+        >
             <h1 className="heading-xl">
                 受超過
                 <span className="block max-md:text-7xl md:inline text-gradient from-pink-600 to-orange-400 mx-2">
-                    {formatter.format(usedBy)}
+                    {formatter.format(Math.floor(count))}
                 </span>
                 個伺服器使用
             </h1>
@@ -31,6 +48,32 @@ export function Customers({ usedBy }: { usedBy: number }) {
                 alt="wave"
                 src={PinkWave}
             />
-        </div>
+        </motion.div>
     );
 }
+
+export const useAnimatedCounter = (
+    maxValue: number,
+    initialValue = 0,
+    duration = 1,
+    enabled: boolean
+) => {
+    const [counter, setCounter] = useState<number>(initialValue);
+
+    useEffect(() => {
+        if (!enabled) {
+            setCounter(initialValue);
+            return;
+        }
+
+        const controls = animate(initialValue, maxValue, {
+            duration,
+            onUpdate(value) {
+                setCounter(value);
+            },
+        });
+        return () => controls.stop();
+    }, [initialValue, maxValue, duration, enabled]);
+
+    return counter;
+};
