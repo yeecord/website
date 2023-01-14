@@ -15,7 +15,7 @@ const grid = {
     show: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.1,
+            staggerChildren: 0.06,
             staggerDirection: -1,
         },
     },
@@ -30,7 +30,7 @@ export function Games() {
     return (
         <div
             className={clsx(
-                "w-full min-h-[190vh] sm:min-h-[120vh] md:min-h-[140vh] lg:min-h-[136vh] pr-8 pt-[10rem] pb-10 z-[2]",
+                "w-full min-h-[190vh] sm:min-h-[140vh] md:min-h-[140vh] lg:min-h-[136vh] pr-8 pt-[10rem] pb-10 z-[2]",
                 styles["steps-container"]
             )}
         >
