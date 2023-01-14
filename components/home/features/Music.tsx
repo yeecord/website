@@ -24,7 +24,7 @@ export function Music() {
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.4 }}
             className={clsx(
-                "grid grid-cols-1 gap-4 relative z-[2] p-7 sm:max-lg:pr-10 pb-0 mt-[5rem] lg:mt-[10rem]",
+                "grid grid-cols-1 gap-4 relative z-[2] p-7 sm:max-lg:pr-10 pb-0 mt-[15rem] lg:mt-[10rem]",
                 "lg:grid-cols-[1fr_0.8fr]",
                 "bg-slate-100 dark:bg-slate-900 rounded-3xl overflow-hidden"
             )}
