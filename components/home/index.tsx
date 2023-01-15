@@ -15,7 +15,7 @@ export const noto = Noto_Sans_TC({
     weight: ["500", "700"],
     variable: "--font-noto",
     display: "swap",
-    subsets: ["chinese-traditional"],
+    subsets: ["latin"],
 });
 
 export function HomePage(props: HomeProps) {
