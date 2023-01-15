@@ -5,6 +5,7 @@ import { RpgSystem } from "./RpgSystem";
 import { Noto_Sans_TC } from "@next/font/google";
 import clsx from "clsx";
 import { Features } from "./features";
+import Sponsor from "./Sponsor";
 
 export type HomeProps = {
     serverMembers: number;
@@ -40,6 +41,7 @@ export function HomePage(props: HomeProps) {
                 <RpgSystem />
                 <Customers usedBy={props.usedBy} />
             </div>
+            <Sponsor />
             <Community joined={props.serverMembers} />
         </div>
     );
