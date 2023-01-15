@@ -39,26 +39,10 @@ export function RpgSystem() {
 
 function Background() {
     return (
-        <>
-            <Gradient
-                src={GreenGradient}
-                className="absolute -bottom-[100px] lg:-bottom-[40%] opacity-80 w-full min-w-[800px] -z-[1]"
-            />
-            <div
-                className={clsx(
-                    "absolute top-0 left-0 -z-[1] opacity-80 dark:opacity-80 h-full",
-                    "mask-image-[linear-gradient(to_bottom,_white_90%,_transparent)]"
-                )}
-            >
-                <Gradient
-                    src={Star}
-                    className={clsx(
-                        "min-w-[900px] w-full object-cover",
-                        "mask-image-[linear-gradient(to_top,_rgba(0,0,0,0.6),_transparent_85%)]"
-                    )}
-                />
-            </div>
-        </>
+        <Gradient
+            src={GreenGradient}
+            className="absolute -bottom-[100px] lg:-bottom-[40%] opacity-80 w-full min-w-[800px] -z-[1]"
+        />
     );
 }
 
@@ -117,8 +101,8 @@ function Job({
     return (
         <div
             className={clsx(
-                "card flex-col gap-3 backdrop-blur-3xl dark:bg-[rgba(10,10,10,0.7)] md:flex",
-                optional ? "hidden" : "flex"
+                "card flex flex-col gap-3 backdrop-blur-3xl bg-white/70 dark:bg-[rgba(10,10,10,0.7)]",
+                optional && "max-md:hidden"
             )}
         >
             <h3 className="heading-md">{name}</h3>
