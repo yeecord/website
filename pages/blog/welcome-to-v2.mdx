@@ -10,7 +10,7 @@ date: 2023/1/1
 enableLayout: true
 ---
 
-import { Accordion } from "@components/mdx";
+import { Accordion, LinkButton } from "@components/mdx";
 import Link from "next/link";
 
 這次更新帶來了更現代化的 UI 和優秀的效能 <br />
@@ -19,14 +19,15 @@ import Link from "next/link";
 不過大部分東西都是重寫的，舊的文檔可能有問題。<br/>
 雖然我已經盡量把全部文檔都看一遍，但如果發現有問題請向我們報告
 
-<Accordion title="貢獻者需要注意什麼？">
+## 貢獻者需要注意什麼？
 
-更新之後我們希望 markdown 能夠更加靈活，我們提供了一些組件來讓你創造出更美麗的文檔
-
+更新之後我們希望 markdown 能夠更加靈活，我們提供了一些組件來讓你創造出更美麗的文檔 <br />
 如果有興趣的話，我們也非常建議你理解 `React.js`, 這可以讓你創造出更有互動性的用戶體驗
 
-<Link href="/docs/migrate-to-docs-v2" className="!no-underline">
-    <button className="secondary-button mt-2">發掘新的功能</button>
-</Link>
-
-</Accordion>
+<LinkButton
+    href="/docs/migrate-to-docs-v2"
+    variant="primary"
+    link={{ className: "w-fit mt-5" }}
+>
+    發掘新功能
+</LinkButton>
