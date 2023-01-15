@@ -3,10 +3,11 @@ import DashboardLogin from "@components/layout/DashboardLogin";
 import Image from "next/image";
 import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
 import { footer } from "./src/footer";
 import { useRouter } from "next/router";
+import BlogLayout from "@components/blog/BlogLayout";
 
 function ThemeToggle() {
     const [current, setCurrent] = useState<"light" | "dark" | undefined>(
@@ -28,6 +29,14 @@ function ThemeToggle() {
             {current === "dark" ? <BsMoonFill /> : <BsFillSunFill />}
         </button>
     );
+}
+
+function Main({ children }: { children: ReactNode }) {
+    const path = useRouter().asPath;
+
+    if (path.startsWith("/blog")) return <BlogLayout>{children}</BlogLayout>;
+
+    return <>{children}</>;
 }
 
 const config: DocsThemeConfig = {
@@ -110,6 +119,7 @@ const config: DocsThemeConfig = {
     project: {
         link: "https://github.com/yeecord",
     },
+    main: Main,
     i18n: [
         {
             locale: "zh",
