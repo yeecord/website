@@ -32,11 +32,11 @@ export function ChineseUI() {
                 >
                     <h1 className={`${styles.heading} mb-2`}>全中文化界面</h1>
                     <h3 className="heading-md text-secondary">
-                        我們提供了全中文化的界面，讓不懂英文的各位也有好用的機器人
+                        我們提供了全中文化的界面，讓英文不再成為優質機器人的隔閡
                     </h3>
                     <div className="flex flex-col gap-3 mt-8">
-                        <Feature>通俗易懂的文字</Feature>
-                        <Feature>無需專業知識</Feature>
+                        <Feature>通俗易懂的文檔</Feature>
+                        <Feature>無需繁雜的操作</Feature>
                     </div>
                 </Step>
                 <Skeleton />
@@ -115,7 +115,7 @@ function Skeleton() {
                 initial={{ paddingRight: "100px", opacity: 0 }}
                 transition={{ duration: 1 }}
             >
-                <h2 className="heading-md">中文</h2>
+                <h2 className="heading-md">指令區</h2>
                 <div className={`${foreground} h-7`} />
                 <div className={`${foreground} h-6 w-[70%]`} />
                 <div className="rounded-lg bg-slate-200 dark:bg-slate-800 h-10 mt-auto" />

@@ -62,12 +62,12 @@ const config: DocsThemeConfig = {
     },
     useNextSeoProps: () => {
         return {
-            titleTemplate: "%s – Yeecord",
+            titleTemplate: "%s – 萬中選一的 Discord 中文機器人",
             twitter: {
                 cardType: "summary_large_image",
             },
             openGraph: {
-                siteName: "YEE式機器龍",
+                siteName: "YEE式機器龍 – 萬中選一的 Discord 中文機器人",
                 type: "website",
                 images: [
                     {

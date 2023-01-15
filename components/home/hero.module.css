@@ -5,8 +5,8 @@
 }
 
 .rainbow-border {
-    box-shadow: inset 2px 2px 0px theme("colors.green.400"),
-        inset -2px -2px 0px theme("colors.cyan.500"),
+    box-shadow: inset 2px 2px 0 theme("colors.green.400"),
+        inset -2px -2px 0 theme("colors.cyan.500"),
         5px 5px 25px theme("colors.green.400 / 50%"),
         -5px -5px 25px theme("colors.cyan.500 / 50%");
 }

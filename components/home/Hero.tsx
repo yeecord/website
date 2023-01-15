@@ -28,7 +28,7 @@ export function Hero() {
                 <br className="md:hidden" />
                 <span
                     className={clsx(
-                        "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
+                        "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 mx-2",
                         styles["animated-gradient"]
                     )}
                 >
@@ -38,7 +38,7 @@ export function Hero() {
                 機器人
             </h1>
             <h2 className="heading-md md:text-3xl text-secondary font-medium max-w-[450px] md:max-w-[700px]">
-                YEE式機器龍具有眾多功能且強大，讓你創造出優秀的中文 Discord 社群
+                YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
             </h2>
             <Buttons />
             <div className="w-full flex flex-col gap-5 mt-[3rem]">
@@ -74,14 +74,20 @@ function Buttons() {
         <div className="grid grid-cols-1 w-full max-w-[500px] sm:w-fit sm:grid-cols-2 gap-3">
             <LinkButton
                 href="/docs"
-                className={`${bn} ${styles["rainbow-border"]}`}
+                className={clsx(
+                    bn,
+                    styles["rainbow-border"],
+                )}
             >
                 使用教學
             </LinkButton>
             <LinkButton
                 href="/invite"
                 target="_blank"
-                className={`icon-button justify-center ${bn}`}
+                className={clsx(
+                    "icon-button justify-center",
+                    bn
+                )}
             >
                 <IoMdOpen />
                 邀請機器人
@@ -101,7 +107,7 @@ function Servers({ secondary }: { secondary?: boolean }) {
         >
             <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
             <Server img="/home/customers/avery.png" name="Avery" transparent />
-            <Server img="/home/customers/chengfeng.png" name="承風飛躍" />
+            <Server img="/home/customers/daptor.png" name="有感比電 軍團 - Daptor Army" />
             <Server
                 img="/home/customers/daidai.png"
                 name="老查呆呆の迷因調查局總部"
@@ -126,7 +132,7 @@ function Server({
     transparent?: boolean;
 }) {
     return (
-        <div className="h-stack gap-3 mx-3 my-1 text-black dark:text-white flex-shrink-0">
+        <div className="h-stack gap-3 mx-4 my-1 text-black dark:text-white flex-shrink-0">
             <Image
                 alt={name}
                 src={img}
