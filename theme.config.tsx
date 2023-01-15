@@ -30,6 +30,14 @@ function ThemeToggle() {
 }
 
 const config: DocsThemeConfig = {
+    components: {
+        h1: (props) => (
+            <h1
+                className="text-[2.5rem] font-bold tracking-tight mt-3"
+                {...props}
+            />
+        ),
+    },
     head: (
         <>
             <link rel="shortcut icon" href="/img/logo_128x128.png" />
@@ -62,7 +70,7 @@ const config: DocsThemeConfig = {
     },
     useNextSeoProps: () => {
         return {
-            titleTemplate: "%s – 萬中選一的 Discord 中文機器人",
+            titleTemplate: "%s – YEE式機器龍",
             twitter: {
                 cardType: "summary_large_image",
             },
@@ -115,8 +123,8 @@ const config: DocsThemeConfig = {
         text: "在 github 上編輯此頁面 →",
     },
     banner: {
-        key: "new-year",
-        text: <span>🎉 2023 新年快樂</span>,
+        key: "first-release",
+        text: <span>🎉 歡迎我們的新網站</span>,
     },
     gitTimestamp: ({ timestamp }) => {
         return (
