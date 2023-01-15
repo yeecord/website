@@ -1,10 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { ReactNode } from "react";
-import {
-    RiFeedbackFill,
-    RiGithubFill,
-} from "react-icons/ri";
+import { RiFeedbackFill, RiGithubFill } from "react-icons/ri";
 
 export default function Sponsor() {
     return (
@@ -58,7 +55,7 @@ function Card({
     href: string;
 }) {
     return (
-        <div className="card text-start last:sm:max-md:col-span-2">
+        <div className="card text-start">
             <div className="h-stack">
                 <div className="p-3 bg-purple-400 dark:bg-purple-500 text-2xl rounded-md text-white">
                     {icon}
