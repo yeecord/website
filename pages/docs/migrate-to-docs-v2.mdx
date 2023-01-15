@@ -1,13 +1,12 @@
 ---
-title: "遷移到文檔 2.0"
-description: "向我們的新文檔問好"
+title: "新版 v2 文檔協作大全"
+description: "新的文檔代表著我們將以新的方式和大家見面！"
 ---
 
 import { Tabs, Tab } from "nextra-theme-docs";
 import {
     Accordion,
     Admonition,
-    Error,
     Tip,
     Warning,
     Info,
@@ -18,23 +17,25 @@ import {
 import { BsDownload } from "react-icons/bs";
 import { motion } from "framer-motion";
 
-# 遷移到文檔 2.0
+# 新版 v2 文檔協作大全
+
+新的文檔代表著我們將以新的方式和大家見面！如果您有興趣協助我們將文檔變得更完善，那你來對地方了，請往下閱讀如何編輯，想繼續探索機器人功能可以先看看 [快速入門](/docs) 頁面。
 
 <div className="steps-container">
 ### 我的頁面在哪裡??
 
-所有 mdx 文件都已移至`/pages`
+所有 mdx 檔案都已移至 `/pages`
 
-| 文檔          | 博客          |
+| 文檔          | 部落格          |
 | ------------- | ------------- |
 | `/pages/docs` | `/pages/blog` |
 
-### 圖像導入方法已更改
+### 圖片引入方法更新
 
-以前的版本允許您從`/static`文件夾導入圖像, 例如: `![alt](/my-photo.png)`
+以前的版本允許您從 `/static` 資料夾引入圖片, 例如: `![說明文字](/my-photo.png)`
 
-現在你必須將你的圖像放入 `/public` 文件夾並使用 `![alt](@static/my-photo.png)` 導入它 <br />
-同時你也可以把圖像放到你的 mdx 文件的同一個文件夾中, 並使用`![alt](./my-photo.png)`
+現在你必須將你的圖片放入 `/public` 資料夾並使用 `![alt](@static/my-photo.png)` 導入它。
+同時你也可以把圖片放到你的 mdx 檔案的同一個資料夾中, 並使用 `![alt](./my-photo.png)`
 
 ```mdx
 # 以前
@@ -47,32 +48,35 @@ import { motion } from "framer-motion";
 ```
 
 </div>
-## 添加頁面的方法
 
-你仍然可以使用默認方式
+## 新增頁面的方法
 
 <div className="steps-container">
   
-### 創建 .mdx 文件
+### 建立 .mdx 檔案
 
 <Tabs items={["文檔", "部落格"]}>
 
 <Tab>
 
-在 `/pages/docs` 文件夾中創建文件
+在 `/pages/docs` 資料夾中建立檔案
 
 ```mdx
 ---
 title: 你的標題
 description: 這是關於什麼的?
 ---
+
+# 標題
+
+內文...
 ```
 
 </Tab>
 
 <Tab>
   
-在 `/pages/blog` 文件夾中創建文件
+在 `/pages/blog` 資料夾中建立檔案
 
 ```mdx
 ---
@@ -94,9 +98,8 @@ image: "/blog/banner.jpg"
 
 ```json
 {
-    "my-new-page": "我的新頁面",
+    "my-new-page": "新頁面標題",
     "index": "快速入門",
-    "migrate-to-v4": "新版YEE式機器龍攻略",
     "commands": "指令"
 }
 ```
@@ -121,7 +124,7 @@ image: "/blog/banner.jpg"
 
 ### Accordion
 
-想告訴用戶額外的詳細信息? 使用`Accordion`組件!
+想告訴使用者額外的詳細資訊? 使用 `Accordion` 組件!
 
 ```mdx
 import { Accordion } from "@components/mdx";
@@ -137,8 +140,7 @@ import { Accordion } from "@components/mdx";
 
 ### Admonition
 
-想給用戶提示或警告? 你可以使用`Admonition`組件 <br/>
-它還支持多種類型: `Tip`, `Warning`, `Info`, `Error`
+想給使用者提示或警告? 你可以使用 `Admonition` 組件，它還支持多種類型：`Tip`、`Warning`、`Info`、`Error`：
 
 ```mdx
 import { Admonition, Error, Tip, Warning, Info } from "@components/mdx";
@@ -156,7 +158,7 @@ import { Admonition, Error, Tip, Warning, Info } from "@components/mdx";
 
 ### Card
 
-您可以使用它來將用戶重定向到不同的頁面 <br />
+您可以使用它來將使用者重定向到不同的頁面 <br />
 記得傳遞 `href` 道具
 
 ```mdx
@@ -229,7 +231,7 @@ import { LinkButton } from "@components/mdx";
 ### 步驟
 
 當您編寫教程時，此組件對於顯示每個步驟之間的關係非常有用 <br />
-您可以輕鬆地使用`className`來做到這一點
+您可以輕鬆地使用 `className` 來做到這一點
 
 使用 `###` (h3) 標題添加一個步驟, 注意換行!
 
@@ -261,7 +263,7 @@ import { LinkButton } from "@components/mdx";
 
 ### 選項卡
 
-它們來自外部依賴項`nextra-theme-docs`，但您可以在文檔中使用它
+它們來自外部依賴項 `nextra-theme-docs`，但您可以在文檔中使用它
 
 ```mdx
 import {(Tab, Tabs)} from "nextra-theme-docs";
@@ -269,7 +271,7 @@ import {(Tab, Tabs)} from "nextra-theme-docs";
 <Tabs items={['凱恩', 'Money']}>
   <Tab>
 
-Very dalao
+在人類的歷史中，我們總是盡了一切努力想搞懂 Rust，對 Rust 進行深入研究，如果此時我們選擇忽略 Rust，那後果可想而知。儘管 Rust 看似不顯眼，卻佔據了我的腦海。
 
   </Tab>
   <Tab>
@@ -282,8 +284,8 @@ I don't know programming
 
 <Tabs items={['凱恩', 'Money']}>
   <Tab>
-
-Very dalao
+	
+	  在人類的歷史中，我們總是盡了一切努力想搞懂 Rust，對 Rust 進行深入研究，如果此時我們選擇忽略 Rust，那後果可想而知。儘管 Rust 看似不顯眼，卻佔據了我的腦海。
 
   </Tab>
   <Tab>
@@ -293,16 +295,16 @@ I don't know programming
   </Tab>
 </Tabs>
 
-## 創建自己的組件
+## 建立自己的組件
 
-Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 文件中使用 jsx 語法 <br />
-同時我們將 Tailwind css 用於內部的 css 樣式, 他們支持黑暗模式 <br />
-所以意味著你可以輕鬆地創建組件
+Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 檔案中使用 jsx 語法 <br />
+同時我們將 Tailwind CSS 用於內部的 css 樣式, 他們支持黑暗模式 <br />
+所以意味著你可以輕鬆地建立組件
 
-我們也正在使用這些庫: [framer-motion](https://www.framer.com/motion/), `nextra`, `nextra-docs-theme`, `react-youtube` <br />
+我們也正在使用這些庫： [framer-motion](https://www.framer.com/motion/), `nextra`, `nextra-docs-theme`, `react-youtube` <br />
 你可以在你的文檔中使用它們
 
-### 自定義組件 (Tailwind css)
+### 自定義組件 (Tailwind CSS)
 
 ```jsx
 <div className="p-3 border-black dark:border-white border-2">Hello World</div>
@@ -312,7 +314,7 @@ Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 文件中使�
 
 ### Framer Motion
 
-它可以讓您輕鬆創建炫酷的動畫
+它可以讓您輕鬆建立炫酷的動畫
 
 <Cards>
     <Card
@@ -350,4 +352,4 @@ Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 文件中使�
     />
 </div>
 
-我們建議您了解它們，為用戶創建更好的用戶體驗
+我們建議您了解它們，為使用者建立更好的使用者體驗

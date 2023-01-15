@@ -13,6 +13,11 @@ const nextConfig = {
                 destination: "https://app.yeecord.com/invite",
                 permanent: false,
             },
+            {
+                source: "/docs/migrate-to-v4/",
+                destination: "/docs/",
+                permanent: true
+            }
         ];
     },
     i18n: {
