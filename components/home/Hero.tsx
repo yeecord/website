@@ -41,8 +41,8 @@ export function Hero() {
                 YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
             </h2>
             <Buttons />
-            <div className="w-full flex flex-col gap-5 mt-[3rem]">
-                <p className="text-lg font-semibold text-secondary mb-3">
+            <div className="w-full flex flex-col gap-5 mt=[3rem] md:mt-[4rem]">
+                <p className="text-lg font-semibold text-secondary mb-3 md:mb-4">
                     各大伺服器一致好評
                 </p>
                 <div
@@ -101,22 +101,22 @@ function Servers({ secondary }: { secondary?: boolean }) {
         <div
             className={clsx(
                 "inline-flex flex-row justify-center",
-                "md:flex-wrap md:max-w-[60rem]",
+                "md:flex-wrap md:max-w-[64rem]",
                 secondary && "md:hidden"
             )}
         >
             <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
-            <Server img="/home/customers/avery.png" name="Avery" transparent />
-            <Server img="/home/customers/daptor.png" name="有感比電 軍團 - Daptor Army" />
-            <Server
-                img="/home/customers/daidai.png"
-                name="老查呆呆の迷因調查局總部"
-            />
-            <Server img="/home/customers/empressival.png" name="Empressival" />
-            <Server img="/home/customers/myit.png" name="MyIT" />
             <Server
                 img="/home/customers/valorant-tw.png"
                 name="VALORANT Taiwan"
+            />
+            <Server img="/home/customers/avery.png" name="Avery" transparent />
+            <Server img="/home/customers/zeitfrei.png" name="ZeitFrei" transparent />
+            <Server img="/home/customers/daptor.png" name="有感比電 軍團 - Daptor Army" />
+            <Server img="/home/customers/empressival.png" name="Empressival" />
+            <Server
+                img="/home/customers/daidai.png"
+                name="老查呆呆の迷因調查局總部"
             />
         </div>
     );
