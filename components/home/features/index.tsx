@@ -7,7 +7,7 @@ export function Features() {
     return (
         <>
             <div className="flex flex-col gap-5 mt-[10rem] sm:mt-[15rem] sm:text-center">
-                <h1 className="heading-xl lg:text-6xl xl:text-7xl">
+                <h1 className="heading-xl max-[420px]:text-4xl lg:text-6xl xl:text-7xl">
                     <span className="heading-lg block sm:heading-xl">
                         您需要的
                     </span>

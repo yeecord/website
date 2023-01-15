@@ -7,11 +7,13 @@ import { motion } from "framer-motion";
 
 export function RpgSystem() {
     return (
-        <div
+        <motion.div
             className={clsx(
                 "flex flex-col relative gap-5 items-start md:items-center",
-                "mt-[10rem] z-[2]"
+                "mt-[15rem] z-[2]"
             )}
+            whileInView={{ y: 0, opacity: 1 }}
+            initial={{ y: "5rem", opacity: 0 }}
         >
             <Background />
 
@@ -31,7 +33,7 @@ export function RpgSystem() {
                 開始使用
             </LinkButton>
             <Jobs />
-        </div>
+        </motion.div>
     );
 }
 
@@ -60,22 +62,9 @@ function Background() {
     );
 }
 
-const grid = {
-    show: { transition: { staggerChildren: 0.1 } },
-    hidden: {},
-};
-const item = {
-    show: { y: 0 },
-    hidden: { y: 50 },
-};
 function Jobs() {
     return (
-        <motion.div
-            className="grid text-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 gap-3"
-            variants={grid}
-            initial="hidden"
-            whileInView="show"
-        >
+        <div className="grid text-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 gap-3">
             <Job
                 name="農夫"
                 description="和漁夫是差不多辛勤的職業，不過在這個世界，農夫的收益比漁夫還要高"
@@ -112,7 +101,7 @@ function Jobs() {
                 description="在森林中砍伐木頭，是木頭的來源"
                 optional
             />
-        </motion.div>
+        </div>
     );
 }
 
@@ -126,9 +115,7 @@ function Job({
     optional?: boolean;
 }) {
     return (
-        <motion.div
-            variants={item}
-            transition={{ duration: 1 }}
+        <div
             className={clsx(
                 "card flex-col gap-3 backdrop-blur-3xl dark:bg-[rgba(10,10,10,0.7)] md:flex",
                 optional ? "hidden" : "flex"
@@ -136,6 +123,6 @@ function Job({
         >
             <h3 className="heading-md">{name}</h3>
             <p className="text-secondary">{description}</p>
-        </motion.div>
+        </div>
     );
 }

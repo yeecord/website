@@ -9,21 +9,18 @@ import { ReactNode } from "react";
 import { BsBarChartFill, BsPencilFill } from "react-icons/bs";
 
 const grid = {
-    hidden: {
-        opacity: 0,
-    },
+    hidden: {},
     show: {
-        opacity: 1,
         transition: {
-            staggerChildren: 0.06,
+            staggerChildren: 0.05,
             staggerDirection: -1,
         },
     },
 };
 
 const item = {
-    hidden: { y: 50, opacity: 0 },
-    show: { y: 0, opacity: 1 },
+    hidden: { y: 100, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { duration: 0.2 } },
 };
 
 export function Games() {
