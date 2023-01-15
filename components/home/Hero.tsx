@@ -112,7 +112,7 @@ function Servers({ secondary }: { secondary?: boolean }) {
             />
             <Server
                 img="/home/customers/daptor.png"
-                name="有感比電 軍團 - Daptor Army"
+                name="有感筆電軍團 - Daptor Army"
             />
             <Server img="/home/customers/empressival.png" name="Empressival" />
             <Server
