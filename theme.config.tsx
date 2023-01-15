@@ -6,6 +6,7 @@ import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
 import { useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
 import { footer } from "./src/footer";
+import { useRouter } from "next/router";
 
 function ThemeToggle() {
     const [current, setCurrent] = useState<"light" | "dark" | undefined>(
@@ -60,8 +61,11 @@ const config: DocsThemeConfig = {
     search: {
         placeholder: "搜尋文檔",
     },
-    useNextSeoProps: () => {
+    useNextSeoProps() {
+        const { asPath } = useRouter()
+
         return {
+            canonical: `https://yeecord.com${asPath}`,
             titleTemplate: "%s – 萬中選一的 Discord 中文機器人",
             twitter: {
                 cardType: "summary_large_image",
