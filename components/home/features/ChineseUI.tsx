@@ -93,7 +93,7 @@ function Comment() {
                     className="rounded-full aspect-square"
                 />
                 <div>
-                    <p className="text-secondary">服務器管理員</p>
+                    <p className="text-secondary">伺服器管理員</p>
                     <h3 className="heading-md">Money</h3>
                 </div>
             </div>
