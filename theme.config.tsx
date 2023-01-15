@@ -71,7 +71,7 @@ const config: DocsThemeConfig = {
                 cardType: "summary_large_image",
             },
             openGraph: {
-                siteName: "YEE式機器龍 – 萬中選一的 Discord 中文機器人",
+                // siteName: "YEE式機器龍 – 萬中選一的 Discord 中文機器人",
                 type: "website",
                 images: [
                     {
