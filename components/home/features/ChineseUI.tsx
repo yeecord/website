@@ -25,7 +25,7 @@ export function ChineseUI() {
                 whileInView="show"
                 transition={{
                     duration: 0.5,
-                    delayChildren: 0.3,
+                    delayChildren: 0.2,
                 }}
                 variants={{
                     show: { y: 0, opacity: 1 },

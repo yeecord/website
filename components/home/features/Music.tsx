@@ -24,7 +24,7 @@ export function Music() {
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.4 }}
             className={clsx(
-                "grid grid-cols-1 gap-4 relative z-[2] p-7 sm:max-lg:pr-10 pb-0 mt-[15rem] lg:mt-[15rem]",
+                "grid grid-cols-1 gap-4 relative z-[2] p-7 sm:max-lg:pr-10 pb-0 mt-[12rem] lg:mt-[15rem]",
                 "lg:grid-cols-[1fr_0.8fr]",
                 "bg-slate-100 dark:bg-slate-900 rounded-3xl overflow-hidden"
             )}
@@ -120,7 +120,7 @@ function Song({
     children: string;
 }) {
     return (
-        <div className="rounded-xl shadow-md p-4 bg-white dark:bg-zinc-800">
+        <div className="rounded-xl shadow-md p-4 bg-white dark:bg-black/70 backdrop-blur-md">
             <div className="flex flex-row gap-2">
                 <Image
                     className="bg-blue-400 rounded-lg w-16 h-16 object-cover"
@@ -129,9 +129,7 @@ function Song({
                 />
                 <div className="flex flex-col gap-3">
                     <h3 className="heading-md">{children}</h3>
-                    <p className="text-lg text-secondary-light dark:text-secondary-dark">
-                        {duration}
-                    </p>
+                    <p className="text-lg text-secondary">{duration}</p>
                 </div>
             </div>
         </div>
