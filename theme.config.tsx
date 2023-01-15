@@ -66,7 +66,7 @@ const config: DocsThemeConfig = {
 
         return {
             canonical: `https://yeecord.com${asPath}`,
-            titleTemplate: "%s – 萬中選一的 Discord 中文機器人",
+            titleTemplate: "%s – YEE式機器龍",
             twitter: {
                 cardType: "summary_large_image",
             },
