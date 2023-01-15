@@ -24,16 +24,8 @@ export default function Sponsor() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-4">
                     <Card
-                        title="抖內零用錢"
-                        text="加入我們的Patreon"
-                        icon={<RiMoneyDollarBoxFill />}
-                        href="https://www.patreon.com/yeecord"
-                    >
-                        抖內
-                    </Card>
-                    <Card
                         title="照顧機器龍"
-                        text="在Github上貢獻"
+                        text="在 Github 上貢獻"
                         icon={<RiGithubFill />}
                         href="https://github.com/yeecord/docs"
                     >
@@ -41,11 +33,11 @@ export default function Sponsor() {
                     </Card>
                     <Card
                         title="給予反饋"
-                        text="通過Discord給我們反饋"
+                        text="在 Discord 回饋資訊給我們"
                         icon={<RiFeedbackFill />}
                         href="https://discord.gg/yeecord"
                     >
-                        加入社區
+                        加入群組
                     </Card>
                 </div>
             </div>
