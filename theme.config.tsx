@@ -116,7 +116,7 @@ const config: DocsThemeConfig = {
         title: "目錄",
     },
     editLink: {
-        text: "在 github 上編輯此頁面 →",
+        text: "在 Github 上編輯此頁面 →",
     },
     banner: {
         key: "new-year",
