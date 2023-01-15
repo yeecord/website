@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Link from "next/link";
 import { ReactNode } from "react";
 import {
     RiFeedbackFill,
@@ -26,6 +27,7 @@ export default function Sponsor() {
                         title="抖內零用錢"
                         text="加入我們的Patreon"
                         icon={<RiMoneyDollarBoxFill />}
+                        href="https://www.patreon.com/yeecord"
                     >
                         抖內
                     </Card>
@@ -33,6 +35,7 @@ export default function Sponsor() {
                         title="照顧機器龍"
                         text="在Github上貢獻"
                         icon={<RiGithubFill />}
+                        href="https://github.com/yeecord/docs"
                     >
                         貢獻
                     </Card>
@@ -40,6 +43,7 @@ export default function Sponsor() {
                         title="給予反饋"
                         text="通過Discord給我們反饋"
                         icon={<RiFeedbackFill />}
+                        href="https://discord.gg/yeecord"
                     >
                         加入社區
                     </Card>
@@ -54,11 +58,13 @@ function Card({
     text,
     icon,
     children,
+    href,
 }: {
     title: string;
     text: string;
     icon: ReactNode;
     children: string;
+    href: string;
 }) {
     return (
         <div className="card text-start last:sm:max-md:col-span-2">
@@ -71,15 +77,17 @@ function Card({
                     <p className="text-secondary">{text}</p>
                 </div>
             </div>
-            <button
-                className={clsx(
-                    "text-white py-1 text-md rounded-xl mt-6 shadow-lg w-[8rem]",
-                    "bg-purple-400 shadow-purple-300",
-                    "dark:bg-purple-500 dark:shadow-purple-700"
-                )}
-            >
-                {children}
-            </button>
+            <Link href={href} target="_blank">
+                <button
+                    className={clsx(
+                        "text-white py-1 text-md rounded-xl mt-6 shadow-lg w-[8rem]",
+                        "bg-purple-400 shadow-purple-300",
+                        "dark:bg-purple-500 dark:shadow-purple-700"
+                    )}
+                >
+                    {children}
+                </button>
+            </Link>
         </div>
     );
 }
