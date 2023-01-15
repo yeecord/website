@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 import {
     RiFeedbackFill,
     RiGithubFill,
-    RiMoneyDollarBoxFill,
 } from "react-icons/ri";
 
 export default function Sponsor() {
