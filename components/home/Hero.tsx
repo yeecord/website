@@ -21,14 +21,14 @@ export function Hero() {
             <h1
                 className={clsx(
                     "font-bold leading-[1.1]",
-                    "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl"
+                    "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-5xl lg:text-7xl xl:text-8xl"
                 )}
             >
                 萬中選一的
                 <br className="md:hidden" />
                 <span
                     className={clsx(
-                        "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 mx-2",
+                        "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 mx-1",
                         styles["animated-gradient"]
                     )}
                 >
@@ -37,7 +37,7 @@ export function Hero() {
                 <br className="md:hidden" />
                 機器人
             </h1>
-            <h2 className="heading-md md:text-3xl text-secondary font-medium max-w-[450px] md:max-w-[700px]">
+            <h2 className="heading-md lg:text-3xl text-secondary font-medium max-w-[450px] md:max-w-[700px]">
                 YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
             </h2>
             <Buttons />
@@ -74,20 +74,14 @@ function Buttons() {
         <div className="grid grid-cols-1 w-full max-w-[500px] sm:w-fit sm:grid-cols-2 gap-3">
             <LinkButton
                 href="/docs"
-                className={clsx(
-                    bn,
-                    styles["rainbow-border"],
-                )}
+                className={clsx(bn, styles["rainbow-border"])}
             >
                 使用教學
             </LinkButton>
             <LinkButton
                 href="/invite"
                 target="_blank"
-                className={clsx(
-                    "icon-button justify-center",
-                    bn
-                )}
+                className={clsx("icon-button justify-center", bn)}
             >
                 <IoMdOpen />
                 邀請機器人
@@ -107,7 +101,10 @@ function Servers({ secondary }: { secondary?: boolean }) {
         >
             <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
             <Server img="/home/customers/avery.png" name="Avery" transparent />
-            <Server img="/home/customers/daptor.png" name="有感比電 軍團 - Daptor Army" />
+            <Server
+                img="/home/customers/daptor.png"
+                name="有感比電 軍團 - Daptor Army"
+            />
             <Server
                 img="/home/customers/daidai.png"
                 name="老查呆呆の迷因調查局總部"
