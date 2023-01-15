@@ -21,7 +21,7 @@ export default function Sponsor() {
                     以實際行動支持我們吧
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 mt-5 gap-4">
                     <Card
                         title="照顧機器龍"
                         text="在 Github 上貢獻"
