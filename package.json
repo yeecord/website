@@ -5,15 +5,18 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap --config next-sitemap.config.js",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/env": "^13.1.2",
     "@next/font": "^13.1.1",
     "autoprefixer": "^10.4.13",
     "clsx": "^1.2.1",
     "framer-motion": "^8.3.4",
     "next": "13.1.1",
+    "next-sitemap": "^3.1.45",
     "nextra": "^2.1.0",
     "nextra-theme-docs": "^2.1.0",
     "postcss": "^8.4.21",
@@ -23,6 +26,7 @@
     "react-tooltip": "^5.3.2",
     "react-twitter-embed": "^4.0.4",
     "react-youtube": "^10.1.0",
+    "sharp": "^0.31.3",
     "swr": "^2.0.0",
     "tailwind-merge": "^1.8.1",
     "tailwindcss": "^3.2.4"
