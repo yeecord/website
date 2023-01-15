@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     trailingSlash: true,
-    reactStrictMode: true,
+    reactStrictMode: false,
     poweredByHeader: false,
+    analyticsId: process.env.VERCEL_ANALYTICS_ID,
     images: {
         domains: ["cdn.discordapp.com"],
     },
