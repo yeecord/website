@@ -64,13 +64,13 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
 
     return (
         <div>
-            <h1 className="font-extrabold !text-[1.75rem] mt-2 md:!text-[2.4rem]">
+            <h1 className="font-extrabold !text-[2em] mt-2 md:!text-[2.4rem]">
                 {title}
             </h1>
             <div className="my-2">
                 <Authors frontMatter={frontMatter ?? null} />
             </div>
-            {children}
+            <div className={styles["blog-layout-old"]}>{children}</div>
         </div>
     );
 }
