@@ -62,7 +62,7 @@ export default function BlogLayout({
 
     return (
         <div>
-            <h1 className="font-extrabold !text-[2em] mt-2 md:!text-[2.4rem]">
+            <h1 className="font-extrabold !text-[2em] mt-2 md:!text-[2.4rem] tracking-tighter">
                 {title}
             </h1>
             <div className="my-2">
