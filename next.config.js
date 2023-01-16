@@ -21,10 +21,6 @@ const nextConfig = {
             },
         ];
     },
-    i18n: {
-        locales: ["zh-Hant-TW"],
-        defaultLocale: "zh-Hant-TW",
-    },
 };
 
 /** @type {import('nextra').NextraConfig} */
