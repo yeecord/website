@@ -1,6 +1,6 @@
 import { Page } from "nextra";
 import { ArticleJsonLd } from "next-seo";
-import { BlogPage, getAuthor, getTitle } from "./mdx";
+import { AuthorData, BlogPage, getAuthor, getTitle } from "./mdx";
 
 export function JsonLd({ page }: { page: Page }) {
     return (
@@ -16,24 +16,37 @@ export function JsonLd({ page }: { page: Page }) {
 }
 
 export function BlogJsonLd({ page }: { page: BlogPage }) {
-    const image = page.frontMatter?.image;
-    const authors = page.frontMatter?.authors;
-    const name = Array.isArray(authors)
-        ? (page.frontMatter?.authors as string[])
-              ?.flatMap((author) => getAuthor(author)?.name ?? "")
-              .join(", ")
-        : authors;
+    if (page.frontMatter == null) return <></>;
+
+    const { image, authors, date, description } = page.frontMatter;
+
+    const mapAuthor = (author: AuthorData) => {
+        return {
+            name: author.name,
+            url: author.url,
+        };
+    };
+
+    const getAuthors = () => {
+        const list = Array.isArray(authors) ? authors : [authors];
+
+        return list.flatMap((author) => {
+            const data = getAuthor(author);
+            if (data == null) return [];
+
+            return [mapAuthor(data)];
+        });
+    };
 
     return (
         <ArticleJsonLd
+            type="BlogPosting"
             title={getTitle(page)}
-            authorName={name}
+            authorName={getAuthors()}
             url={page.route}
             images={image == null ? [] : [image]}
-            datePublished={
-                page.frontMatter?.date ?? new Date(Date.now()).toDateString()
-            }
-            description={page.frontMatter?.description ?? ""}
+            datePublished={new Date(date).toJSON()}
+            description={description ?? ""}
         />
     );
 }
