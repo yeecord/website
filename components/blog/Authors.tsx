@@ -33,6 +33,7 @@ export function Authors({
                                 href={data?.url ?? ""}
                                 target="_blank"
                                 className="heading-md"
+                                rel="nofollow noreferrer"
                             >
                                 {name}
                             </Link>
