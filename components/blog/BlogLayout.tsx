@@ -19,7 +19,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
     const { frontMatter } = page;
     const title = page.meta?.title || frontMatter?.title || page.name;
 
-    if (frontMatter?.enableLayout === true) {
+    if (frontMatter?.enableLayout) {
         return (
             <div>
                 {frontMatter?.image != null && (
@@ -29,6 +29,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
                             src={frontMatter.image}
                             className="rounded-lg object-cover"
                             fill
+                            sizes="1280x720"
                         />
                     </div>
                 )}

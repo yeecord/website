@@ -64,6 +64,7 @@ function BlogItem({ page }: { page: Page & MdxFile }) {
                         src={frontMatter.image}
                         className="rounded-lg object-cover"
                         fill
+                        sizes="1280x720"
                     />
                 </Link>
             )}
