@@ -10,7 +10,7 @@ export function Authors({
     frontMatter: BlogFrontMatter | null;
 }) {
     return (
-        <div className="h-stack flex-wrap">
+        <div className="grid md:grid-cols-2 gap-3">
             {frontMatter?.authors?.map?.((author) => {
                 const data = AuthorsMeta[author as keyof typeof AuthorsMeta] as
                     | AuthorData
