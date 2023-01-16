@@ -1,23 +1,21 @@
+import { BlogPage, getAuthor, getTitle } from "@utils/mdx";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { getPagesUnderRoute } from "nextra/context";
 import React from "react";
 import { ReactNode } from "react";
-import { BlogPage } from ".";
-import { Authors, getAuthor } from "./Authors";
+import { Authors } from "./Authors";
 import styles from "./blog.module.css";
 
-export default function BlogLayout({ children }: { children: ReactNode }) {
-    const route = useRouter();
-    const page = getPagesUnderRoute("/blog").find((page) => {
-        return page.kind === "MdxPage" && page.route === route.route;
-    }) as BlogPage | null;
-
-    if (page == null || page.frontMatter?.theme === "raw")
-        return <>{children}</>;
+export default function BlogLayout({
+    page,
+    children,
+}: {
+    page: BlogPage;
+    children: ReactNode;
+}) {
+    if (page.frontMatter?.theme === "raw") return <>{children}</>;
 
     const { frontMatter } = page;
-    const title = page.meta?.title || frontMatter?.title || page.name;
+    const title = getTitle(page);
 
     if (frontMatter?.enableLayout === true) {
         return (

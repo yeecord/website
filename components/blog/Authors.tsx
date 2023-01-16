@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import AuthorsMeta from "../../pages/blog/authors.json";
-import { BlogFrontMatter, AuthorData } from "./index";
+import { BlogFrontMatter, getAuthor } from "@utils/mdx";
 
 export function Authors({
     frontMatter,
@@ -10,19 +9,17 @@ export function Authors({
     frontMatter: BlogFrontMatter | null;
 }) {
     return (
-        <div className="grid md:grid-cols-2 gap-3">
-            {frontMatter?.authors?.map?.((author) => {
-                const data = AuthorsMeta[author as keyof typeof AuthorsMeta] as
-                    | AuthorData
-                    | undefined;
-                const name = data == null ? author : data.name;
+        <div className="flex flex-row justify-between flex-wrap gap-4">
+            {frontMatter?.authors?.map?.((key) => {
+                const author = getAuthor(key);
+                const name = author == null ? key : author.name;
 
                 return (
-                    <div key={author} className="h-stack gap-2">
-                        {data?.image_url != null && (
+                    <div key={key} className="h-stack gap-2">
+                        {author?.image_url != null && (
                             <Image
                                 alt="avatar"
-                                src={data.image_url}
+                                src={author.image_url}
                                 width="50"
                                 height="50"
                                 className="rounded-full"
@@ -30,26 +27,18 @@ export function Authors({
                         )}
                         <div className="flex flex-col">
                             <Link
-                                href={data?.url ?? ""}
+                                href={author?.url ?? ""}
                                 target="_blank"
                                 className="heading-md"
                                 rel="nofollow noreferrer"
                             >
                                 {name}
                             </Link>
-                            <p className="text-secondary">{data?.title}</p>
+                            <p className="text-secondary">{author?.title}</p>
                         </div>
                     </div>
                 );
             })}
         </div>
     );
-}
-
-export function getAuthor(key: string) {
-    const data = AuthorsMeta[key as keyof typeof AuthorsMeta] as
-        | AuthorData
-        | undefined;
-
-    return data;
 }

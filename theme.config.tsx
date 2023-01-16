@@ -8,6 +8,9 @@ import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
 import BlogLayout from "@components/blog/BlogLayout";
+import { BlogPage } from "@utils/mdx";
+import { getPagesUnderRoute } from "nextra/context";
+import { BlogJsonLd } from "@utils/seo";
 
 function ThemeToggle() {
     const [current, setCurrent] = useState<"light" | "dark" | undefined>(
@@ -34,7 +37,19 @@ function ThemeToggle() {
 function Main({ children }: { children: ReactNode }) {
     const path = useRouter().route;
 
-    if (path.startsWith("/blog/")) return <BlogLayout>{children}</BlogLayout>;
+    if (path.startsWith("/blog/")) {
+        const page = getPagesUnderRoute("/blog").find((page) => {
+            return page.kind === "MdxPage" && page.route === path;
+        }) as BlogPage | null;
+        if (page == null) return <>{children}</>;
+
+        return (
+            <>
+                <BlogJsonLd page={page} />
+                <BlogLayout page={page}>{children}</BlogLayout>
+            </>
+        );
+    }
 
     return <>{children}</>;
 }

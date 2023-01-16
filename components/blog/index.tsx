@@ -1,32 +1,10 @@
 import { getPagesUnderRoute } from "nextra/context";
 import Link from "next/link";
-import { FrontMatter, MdxFile, Page } from "nextra";
+import { MdxFile, Page } from "nextra";
 import Image from "next/image";
-import React, { ReactNode } from "react";
+import React from "react";
 import { Authors } from "./Authors";
-
-export type AuthorData = {
-    name: string;
-    url?: string;
-    title?: string;
-    image_url?: string;
-};
-
-export type BlogPage = Omit<Page & MdxFile, "frontMatter"> & {
-    frontMatter?: BlogFrontMatter;
-};
-
-export type BlogFrontMatter = FrontMatter & {
-    date: string;
-    image?: string;
-    tags?: string[];
-    //if theme is raw, we don't inject any components into the page
-    theme?: "raw" | "default";
-    /* Use the new layout */
-    enableLayout?: boolean;
-    //The key of blog authors
-    authors?: string[];
-};
+import { BlogFrontMatter, BlogPage, getTitle } from "@utils/mdx";
 
 export default function BlogIndex() {
     return (
@@ -36,17 +14,17 @@ export default function BlogIndex() {
                     return <React.Fragment key={page.route} />;
                 }
 
-                return <BlogItem key={page.route} page={page} />;
+                return <BlogItem key={page.route} page={page as BlogPage} />;
             })}
         </div>
     );
 }
 
-function BlogItem({ page }: { page: Page & MdxFile }) {
-    const frontMatter = page.frontMatter as BlogFrontMatter | null;
+function BlogItem({ page }: { page: BlogPage }) {
+    const frontMatter = page.frontMatter ?? null;
 
     const date = frontMatter?.date == null ? null : new Date(frontMatter.date);
-    const title = page.meta?.title || frontMatter?.title || page.name;
+    const title = getTitle(page);
 
     return (
         <div
@@ -65,6 +43,7 @@ function BlogItem({ page }: { page: Page & MdxFile }) {
                         className="rounded-lg object-cover"
                         fill
                         sizes="(max-width: 900px) 90vw, 800px"
+                        priority
                     />
                 </Link>
             )}
