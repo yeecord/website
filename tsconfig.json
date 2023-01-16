@@ -18,7 +18,8 @@
             "@utils/*": ["./utils/*"],
             "@theme/*": ["./theme/*"],
             "@components/*": ["./components/*"],
-            "@static/*": ["./public/*"]
+            "@static/*": ["./public/*"],
+            "@layout/*": ["./layout/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/index.mdx"],

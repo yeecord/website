@@ -1,4 +1,4 @@
-import { FrontMatter, MdxFile, Page } from "nextra";
+import { FrontMatter, MdxFile, Page, PageOpts } from "nextra";
 import { getPagesUnderRoute } from "nextra/context";
 import { useMemo } from "react";
 import AuthorsMeta from "../pages/blog/authors.json";
@@ -10,15 +10,21 @@ export type AuthorData = {
     image_url?: string;
 };
 
-export type DocsPage = Omit<Page & MdxFile, "frontMatter"> & {
-    frontMatter?: FrontMatter & {
-        title: string;
-        description?: string;
-    };
+export type DocsPageOpts = Omit<PageOpts, "frontMatter"> & {
+    frontMatter: DocsFrontMatter;
+};
+
+export type BlogPageOpts = Omit<PageOpts, "frontMatter"> & {
+    frontMatter: BlogFrontMatter;
 };
 
 export type BlogPage = Omit<Page & MdxFile, "frontMatter"> & {
     frontMatter?: BlogFrontMatter;
+};
+
+export type DocsFrontMatter = FrontMatter & {
+    title: string;
+    description?: string;
 };
 
 export type BlogFrontMatter = FrontMatter & {

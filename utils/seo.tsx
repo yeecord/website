@@ -1,26 +1,22 @@
 import { ArticleJsonLd } from "next-seo";
-import { AuthorData, BlogPage, DocsPage, getAuthor, getTitle } from "./mdx";
+import { AuthorData, BlogPageOpts, DocsPageOpts, getAuthor } from "./mdx";
 
-export function DocsJsonLd({ page }: { page: DocsPage }) {
-    if (page.frontMatter == null) return <></>;
-    const title = getTitle(page);
-
+export function DocsJsonLd({ page }: { page: DocsPageOpts }) {
     return (
         <ArticleJsonLd
             type="Article"
-            title={title}
+            title={page.title}
             authorName={[]}
             url={page.route}
             images={[]}
             datePublished={""}
             description={page.frontMatter.description ?? ""}
+            isAccessibleForFree
         />
     );
 }
 
-export function BlogJsonLd({ page }: { page: BlogPage }) {
-    if (page.frontMatter == null) return <></>;
-
+export function BlogJsonLd({ page }: { page: BlogPageOpts }) {
     const { image, authors, date, description } = page.frontMatter;
 
     const mapAuthor = (author: AuthorData) => {
@@ -44,7 +40,7 @@ export function BlogJsonLd({ page }: { page: BlogPage }) {
     return (
         <ArticleJsonLd
             type="BlogPosting"
-            title={getTitle(page)}
+            title={page.title}
             isAccessibleForFree
             publisherLogo="/img/logo.png"
             publisherName="YEE式機器龍"

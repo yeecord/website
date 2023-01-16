@@ -17,8 +17,8 @@ const nextConfig = {
             {
                 source: "/docs/migrate-to-v4/",
                 destination: "/docs/",
-                permanent: true
-            }
+                permanent: true,
+            },
         ];
     },
     i18n: {
@@ -29,8 +29,8 @@ const nextConfig = {
 
 /** @type {import('nextra').NextraConfig} */
 const nextraConfig = {
-    theme: "nextra-theme-docs",
-    themeConfig: "./theme.config.tsx",
+    theme: "@layout/index",
+    themeConfig: "./layout/config.tsx",
     staticImage: true,
     defaultShowCopyCode: true,
     readingTime: true,

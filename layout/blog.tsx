@@ -1,33 +1,44 @@
-import { BlogPage, getAuthor, getTitle } from "@utils/mdx";
+import { BlogFrontMatter, BlogPageOpts, getAuthor } from "@utils/mdx";
 import Image from "next/image";
 import React from "react";
 import { ReactNode } from "react";
-import { Authors } from "./Authors";
+import { Authors } from "@components/blog/Authors";
 import styles from "./blog.module.css";
 
 export default function BlogLayout({
     page,
     children,
 }: {
-    page: BlogPage;
+    page: BlogPageOpts;
     children: ReactNode;
 }) {
-    if (page.frontMatter?.theme === "raw") return <>{children}</>;
+    if (page.frontMatter.theme === "raw") return <>{children}</>;
 
-    if (page.frontMatter?.enableLayout === true) {
+    if (page.frontMatter.enableLayout === true) {
         return <NewBlogLayout page={page}>{children}</NewBlogLayout>;
     }
-
-    const title = getTitle(page);
 
     return (
         <div>
             <h1 className="font-extrabold !text-[2em] mt-2 md:!text-[2.4rem] tracking-tighter">
-                {title}
+                {page.title}
             </h1>
             <div className="my-2">
+                <p className="text-secondary my-2">
+                    {page.readingTime != null &&
+                        `閱讀時間約${page.readingTime.minutes}分鐘`}
+                    {" • "}
+                    {new Date(page.frontMatter.date).toLocaleDateString(
+                        undefined,
+                        {
+                            dateStyle: "long",
+                        }
+                    )}
+                </p>
                 {page.frontMatter != null && (
-                    <Authors frontMatter={page.frontMatter} />
+                    <Authors
+                        frontMatter={page.frontMatter as BlogFrontMatter}
+                    />
                 )}
             </div>
             <div className={styles["blog-layout-old"]}>{children}</div>
@@ -39,12 +50,11 @@ function NewBlogLayout({
     page,
     children,
 }: {
-    page: BlogPage;
+    page: BlogPageOpts;
     children: ReactNode;
 }) {
     const { frontMatter } = page;
-    const title = getTitle(page);
-    if (frontMatter == null) return <>{children}</>;
+    const title = page.title;
 
     const authors: string[] = Array.isArray(frontMatter.authors)
         ? frontMatter.authors
@@ -66,7 +76,7 @@ function NewBlogLayout({
                 {title}
             </h1>
             <div className="h-stack mb-6">
-                {authors.map((author, i) => {
+                {authors.map((author) => {
                     const data = getAuthor(author);
                     if (data == null) return <></>;
 
@@ -83,7 +93,6 @@ function NewBlogLayout({
                     })}
                 </p>
             </div>
-
             <div className={styles["blog-layout"]}>{children}</div>
         </div>
     );

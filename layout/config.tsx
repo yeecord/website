@@ -3,13 +3,10 @@ import DashboardLogin from "@components/layout/DashboardLogin";
 import Image from "next/image";
 import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
-import { footer } from "./config";
+import { footer } from "../config";
 import { useRouter } from "next/router";
-import BlogLayout from "@components/blog/BlogLayout";
-import { BlogPage, DocsPage, usePage } from "@utils/mdx";
-import { BlogJsonLd, DocsJsonLd } from "@utils/seo";
 
 function ThemeToggle() {
     const [current, setCurrent] = useState<"light" | "dark" | undefined>(
@@ -31,37 +28,6 @@ function ThemeToggle() {
             {current === "dark" ? <BsMoonFill /> : <BsFillSunFill />}
         </button>
     );
-}
-
-function Main({ children }: { children: ReactNode }) {
-    const route = useRouter().route;
-    const inBlog = route.startsWith("/blog/"); //not including index
-    const inDocs = route.startsWith("/docs");
-    const page = usePage(route, inBlog || inDocs);
-
-    if (page != null && inBlog) {
-        const blog = page as BlogPage;
-
-        return (
-            <>
-                <BlogJsonLd page={blog} />
-                <BlogLayout page={blog}>{children}</BlogLayout>
-            </>
-        );
-    }
-
-    if (page != null && inDocs) {
-        const docs = page as DocsPage;
-
-        return (
-            <>
-                <DocsJsonLd page={docs} />
-                {children}
-            </>
-        );
-    }
-
-    return <>{children}</>;
 }
 
 const config: DocsThemeConfig = {
@@ -151,7 +117,6 @@ const config: DocsThemeConfig = {
     project: {
         link: "https://github.com/yeecord",
     },
-    main: ({ children }) => <Main>{children}</Main>,
     i18n: [
         {
             locale: "zh",
