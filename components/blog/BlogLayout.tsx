@@ -66,9 +66,10 @@ function NewBlogLayout({
                 {title}
             </h1>
             <div className="h-stack mb-6">
-                {authors.map((author) => {
+                {authors.map((author, i) => {
                     const data = getAuthor(author);
                     if (data == null) return <></>;
+
                     return (
                         <div key={author} className="h-stack font-bold text-lg">
                             {data.name}

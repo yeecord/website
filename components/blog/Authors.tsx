@@ -6,7 +6,7 @@ import { BlogFrontMatter, getAuthor } from "@utils/mdx";
 export function Authors({ frontMatter }: { frontMatter: BlogFrontMatter }) {
     if (Array.isArray(frontMatter.authors)) {
         return (
-            <div className="flex flex-row justify-between flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {frontMatter?.authors?.map?.((key) => (
                     <Author key={key} authorId={key} />
                 ))}
