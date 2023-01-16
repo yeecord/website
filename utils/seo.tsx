@@ -17,13 +17,17 @@ export function JsonLd({ page }: { page: Page }) {
 
 export function BlogJsonLd({ page }: { page: BlogPage }) {
     const image = page.frontMatter?.image;
+    const authors = page.frontMatter?.authors;
+    const name = Array.isArray(authors)
+        ? (page.frontMatter?.authors as string[])
+              ?.flatMap((author) => getAuthor(author)?.name ?? "")
+              .join(", ")
+        : authors;
 
     return (
         <ArticleJsonLd
             title={getTitle(page)}
-            authorName={page.frontMatter?.authors
-                ?.flatMap((author) => getAuthor(author)?.name ?? "")
-                .join(", ")}
+            authorName={name}
             url={page.route}
             images={image == null ? [] : [image]}
             datePublished={

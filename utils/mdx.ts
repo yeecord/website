@@ -24,7 +24,7 @@ export type BlogFrontMatter = FrontMatter & {
     /* Use the new layout */
     enableLayout?: boolean;
     //The key of blog authors
-    authors?: string[];
+    authors?: string[] | string;
 };
 
 export function getTitle(page: Page & MdxFile) {
