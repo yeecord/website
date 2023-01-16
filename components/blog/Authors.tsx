@@ -1,14 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { AuthorData, BlogFrontMatter, getAuthor } from "@utils/mdx";
+import { BlogFrontMatter, getAuthor } from "@utils/mdx";
 
-export function Authors({
-    frontMatter,
-}: {
-    frontMatter: BlogFrontMatter | null;
-}) {
-    if (Array.isArray(frontMatter?.authors)) {
+export function Authors({ frontMatter }: { frontMatter: BlogFrontMatter }) {
+    if (Array.isArray(frontMatter.authors)) {
         return (
             <div className="flex flex-row justify-between flex-wrap gap-4">
                 {frontMatter?.authors?.map?.((key) => (
@@ -20,7 +16,7 @@ export function Authors({
 
     return (
         <div>
-            <Author authorId={frontMatter?.authors as string} />
+            <Author authorId={frontMatter?.authors} />
         </div>
     );
 }

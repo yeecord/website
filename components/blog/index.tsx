@@ -1,10 +1,9 @@
 import { getPagesUnderRoute } from "nextra/context";
 import Link from "next/link";
-import { MdxFile, Page } from "nextra";
 import Image from "next/image";
 import React from "react";
 import { Authors } from "./Authors";
-import { BlogFrontMatter, BlogPage, getTitle } from "@utils/mdx";
+import { BlogPage, getTitle } from "@utils/mdx";
 
 export default function BlogIndex() {
     return (
@@ -31,7 +30,7 @@ function BlogItem({ page }: { page: BlogPage }) {
             key={page.route}
             className="flex flex-col p-5 gap-3 bg-zinc-100 dark:bg-zinc-900 rounded-lg"
         >
-            <Authors frontMatter={frontMatter} />
+            {frontMatter != null && <Authors frontMatter={frontMatter} />}
             {frontMatter?.image != null && (
                 <Link
                     href={page.route}

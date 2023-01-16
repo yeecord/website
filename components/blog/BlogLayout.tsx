@@ -14,51 +14,11 @@ export default function BlogLayout({
 }) {
     if (page.frontMatter?.theme === "raw") return <>{children}</>;
 
-    const { frontMatter } = page;
-    const title = getTitle(page);
-
-    if (frontMatter?.enableLayout === true) {
-        return (
-            <div>
-                {frontMatter?.image != null && (
-                    <div className="relative aspect-video w-full h-auto">
-                        <Image
-                            alt="banner"
-                            src={frontMatter.image}
-                            className="rounded-lg object-cover"
-                            fill
-                        />
-                    </div>
-                )}
-                <h1 className="font-extrabold !text-[2.4rem] mt-10 mb-2">
-                    {title}
-                </h1>
-                <div className="h-stack mb-6">
-                    {frontMatter?.authors?.map((author) => {
-                        const data = getAuthor(author);
-                        if (data == null) return <></>;
-                        return (
-                            <div
-                                key={author}
-                                className="h-stack font-bold text-lg"
-                            >
-                                {data.name}
-                            </div>
-                        );
-                    })}
-                    <p className="text-secondary">
-                        •{" "}
-                        {new Date(frontMatter.date).toLocaleDateString(
-                            undefined,
-                            { dateStyle: "long" }
-                        )}
-                    </p>
-                </div>
-
-                <div className={styles["blog-layout"]}>{children}</div>
-            </div>
-        );
+    if (page.frontMatter?.enableLayout === true) {
+        return <NewBlogLayout page={page}>{children}</NewBlogLayout>;
     }
+
+    const title = getTitle(page);
 
     return (
         <div>
@@ -66,9 +26,64 @@ export default function BlogLayout({
                 {title}
             </h1>
             <div className="my-2">
-                <Authors frontMatter={frontMatter ?? null} />
+                {page.frontMatter != null && (
+                    <Authors frontMatter={page.frontMatter} />
+                )}
             </div>
             <div className={styles["blog-layout-old"]}>{children}</div>
+        </div>
+    );
+}
+
+function NewBlogLayout({
+    page,
+    children,
+}: {
+    page: BlogPage;
+    children: ReactNode;
+}) {
+    const { frontMatter } = page;
+    const title = getTitle(page);
+    if (frontMatter == null) return <>{children}</>;
+
+    const authors: string[] = Array.isArray(frontMatter.authors)
+        ? frontMatter.authors
+        : [frontMatter.authors];
+
+    return (
+        <div>
+            {frontMatter?.image != null && (
+                <div className="relative aspect-video w-full h-auto">
+                    <Image
+                        alt="banner"
+                        src={frontMatter.image}
+                        className="rounded-lg object-cover"
+                        fill
+                    />
+                </div>
+            )}
+            <h1 className="font-extrabold !text-[2.4rem] mt-10 mb-2">
+                {title}
+            </h1>
+            <div className="h-stack mb-6">
+                {authors.map((author) => {
+                    const data = getAuthor(author);
+                    if (data == null) return <></>;
+                    return (
+                        <div key={author} className="h-stack font-bold text-lg">
+                            {data.name}
+                        </div>
+                    );
+                })}
+                <p className="text-secondary">
+                    •{" "}
+                    {new Date(frontMatter.date).toLocaleDateString(undefined, {
+                        dateStyle: "long",
+                    })}
+                </p>
+            </div>
+
+            <div className={styles["blog-layout"]}>{children}</div>
         </div>
     );
 }
