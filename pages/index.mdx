@@ -5,7 +5,7 @@ description: "YEE式機器龍的指令及使用教學，透過簡單的一鍵式
 import { HomePage } from "@components/home";
 import React from "react";
 import { useSSG } from "nextra/ssg";
-import { API_ENDPOINT } from "../src/config";
+import { API_ENDPOINT } from "../config";
 
 export async function getStaticProps() {
     const { approximate_member_count } = await fetch(
@@ -23,16 +23,12 @@ export async function getStaticProps() {
         },
         revalidate: 10,
     };
+
 }
 
 export function Home() {
     const props = useSSG();
-    return (
-        <HomePage
-            serverMembers={props?.count}
-            usedBy={props.info.guilds}
-        />
-    );
+    return <HomePage serverMembers={props?.count} usedBy={props.info.guilds} />;
 }
 
 <Home />
