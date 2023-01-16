@@ -1,18 +1,8 @@
+import { fetchUser, resolveUserAvatar } from "@utils/api";
 import clsx from "clsx";
 import Image from "next/image";
 import { RiUserFill } from "react-icons/ri";
 import useSWR from "swr";
-import { API_ENDPOINT, resolveUserAvatar } from "../../src/config";
-import { User } from "../../src/types";
-
-async function fetchUser() {
-    const res = await fetch(`${API_ENDPOINT}/users/@me`, {
-        credentials: "include",
-    });
-
-    //optional: use zod
-    return (await res.json()) as User;
-}
 
 export default function DashboardLogin() {
     const {

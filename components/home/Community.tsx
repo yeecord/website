@@ -7,7 +7,7 @@ import GradientRing from "@static/home/gradient-ring.svg";
 import Image from "next/image";
 import clsx from "clsx";
 import { Tooltip, TooltipProvider, TooltipWrapper } from "react-tooltip";
-import { formatter } from "../../src/config";
+import formatter from "@utils/formatter";
 
 const MotionImage = motion(Image);
 

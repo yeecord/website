@@ -5,7 +5,7 @@ import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
 import { ReactNode, useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
-import { footer } from "./src/footer";
+import { footer } from "./config";
 import { useRouter } from "next/router";
 import BlogLayout from "@components/blog/BlogLayout";
 
@@ -32,9 +32,9 @@ function ThemeToggle() {
 }
 
 function Main({ children }: { children: ReactNode }) {
-    const path = useRouter().asPath;
+    const path = useRouter().route;
 
-    if (path.startsWith("/blog")) return <BlogLayout>{children}</BlogLayout>;
+    if (path.startsWith("/blog/")) return <BlogLayout>{children}</BlogLayout>;
 
     return <>{children}</>;
 }
