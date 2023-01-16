@@ -8,7 +8,7 @@ import { useSSG } from "nextra/ssg";
 import { API_ENDPOINT } from "../src/config";
 
 export async function getStaticProps() {
-    const guild = await fetch(
+    const { approximate_member_count } = await fetch(
         "https://discord.com/api/v10/invites/yeecord?with_counts=true"
     ).then((r) => r.json());
 
@@ -17,7 +17,7 @@ export async function getStaticProps() {
     return {
         props: {
             ssg: {
-                guild,
+                count: approximate_member_count,
                 info,
             },
         },
@@ -29,7 +29,7 @@ export function Home() {
     const props = useSSG();
     return (
         <HomePage
-            serverMembers={props?.guild?.approximate_member_count}
+            serverMembers={props?.count}
             usedBy={props.info.guilds}
         />
     );

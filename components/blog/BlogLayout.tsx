@@ -19,7 +19,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
     const { frontMatter } = page;
     const title = page.meta?.title || frontMatter?.title || page.name;
 
-    if (frontMatter?.enableLayout === true) {
+    if (frontMatter?.enableLayout) {
         return (
             <div>
                 {frontMatter?.image != null && (
@@ -29,6 +29,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
                             src={frontMatter.image}
                             className="rounded-lg object-cover"
                             fill
+                            sizes="1280x720"
                         />
                     </div>
                 )}
@@ -64,8 +65,10 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
 
     return (
         <div>
-            <h1 className="font-extrabold !text-[2.4rem]">{title}</h1>
-            <Authors frontMatter={frontMatter ?? null} />
+            <h1 className="font-extrabold text-[1.75rem] mt-2 md:!text-[2.4rem]">{title}</h1>
+            <div className="my-2">
+                <Authors frontMatter={frontMatter ?? null} />
+            </div>
             {children}
         </div>
     );

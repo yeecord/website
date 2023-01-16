@@ -109,6 +109,10 @@ button {
     outline: 0 !important;
 }
 
+article img {
+    border-radius: 5px;
+}
+
 div:has(#home-page) {
     overflow: clip !important;
 }
