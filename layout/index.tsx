@@ -1,9 +1,10 @@
 import { BlogPageOpts, DocsPageOpts } from "@utils/mdx";
 import { BlogJsonLd, DocsJsonLd } from "@utils/seo";
 import { NextraThemeLayoutProps, PageOpts } from "nextra";
-import DocsLayout from "nextra-theme-docs";
+import BaseLayout from "nextra-theme-docs";
 import { createContext, ReactNode, useContext } from "react";
 import BlogLayout from "./blog";
+import DocsLayout from "./docs";
 
 const PageContext = createContext<PageOpts | null>(null);
 export default function Layout({
@@ -12,9 +13,9 @@ export default function Layout({
 }: NextraThemeLayoutProps) {
     return (
         <PageContext.Provider value={context.pageOpts}>
-            <DocsLayout {...context}>
+            <BaseLayout {...context}>
                 <Main>{children}</Main>
-            </DocsLayout>
+            </BaseLayout>
         </PageContext.Provider>
     );
 }
@@ -47,7 +48,7 @@ function Main({ children }: { children: ReactNode }) {
         return (
             <>
                 <DocsJsonLd page={docs} />
-                {children}
+                <DocsLayout page={docs}>{children}</DocsLayout>
             </>
         );
     }

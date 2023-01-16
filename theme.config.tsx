@@ -5,7 +5,7 @@ import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
 import { useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
-import { footer } from "../config";
+import { footer } from "./config";
 import { useRouter } from "next/router";
 
 function ThemeToggle() {
@@ -127,8 +127,8 @@ const config: DocsThemeConfig = {
         content: "有疑問？給我們反饋 →",
     },
     toc: {
-        extraContent: <></>,
         title: "目錄",
+        extraContent: <></>,
     },
     editLink: {
         text: "在 Github 上編輯此頁面 →",

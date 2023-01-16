@@ -26,7 +26,7 @@ export default function BlogLayout({
             <div className="my-2">
                 <p className="text-secondary my-2">
                     {page.readingTime != null &&
-                        `閱讀時間約${page.readingTime.minutes}分鐘`}
+                        `閱讀時間約${Math.round(page.readingTime.minutes)}分鐘`}
                     {" • "}
                     {new Date(page.frontMatter.date).toLocaleDateString(
                         undefined,

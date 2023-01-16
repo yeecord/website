@@ -30,7 +30,7 @@ const nextConfig = {
 /** @type {import('nextra').NextraConfig} */
 const nextraConfig = {
     theme: "@layout/index",
-    themeConfig: "./layout/config.tsx",
+    themeConfig: "./theme.config.tsx",
     staticImage: true,
     defaultShowCopyCode: true,
     readingTime: true,
