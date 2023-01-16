@@ -15,7 +15,7 @@ export function Authors({
                 const name = author == null ? key : author.name;
 
                 return (
-                    <div key={key} className="h-stack gap-2">
+                    <div key={key} className="h-stack gap-4">
                         {author?.image_url != null && (
                             <Image
                                 alt="avatar"
