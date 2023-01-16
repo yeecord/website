@@ -8,7 +8,7 @@ import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
 import BlogLayout from "@components/blog/BlogLayout";
-import { BlogPage, DocsPage, usePagesUnderRoute } from "@utils/mdx";
+import { BlogPage, DocsPage, usePage } from "@utils/mdx";
 import { BlogJsonLd, DocsJsonLd } from "@utils/seo";
 
 function ThemeToggle() {
@@ -35,31 +35,30 @@ function ThemeToggle() {
 
 function Main({ children }: { children: ReactNode }) {
     const route = useRouter().route;
-    const blogPages = usePagesUnderRoute<BlogPage>("/blog");
-    const docsPages = usePagesUnderRoute<DocsPage>("/docs");
+    const inBlog = route.startsWith("/blog/"); //not including index
+    const inDocs = route.startsWith("/docs");
+    const page = usePage(route, inBlog || inDocs);
 
-    if (route.startsWith("/blog/")) {
-        const blog = blogPages.get(route);
+    if (page != null && inBlog) {
+        const blog = page as BlogPage;
 
-        if (blog != null)
-            return (
-                <>
-                    <BlogJsonLd page={blog} />
-                    <BlogLayout page={blog}>{children}</BlogLayout>
-                </>
-            );
+        return (
+            <>
+                <BlogJsonLd page={blog} />
+                <BlogLayout page={blog}>{children}</BlogLayout>
+            </>
+        );
     }
 
-    if (route.startsWith("/docs")) {
-        const docs = docsPages.get(route);
+    if (page != null && inDocs) {
+        const docs = page as DocsPage;
 
-        if (docs != null)
-            return (
-                <>
-                    <DocsJsonLd page={docs} />
-                    {children}
-                </>
-            );
+        return (
+            <>
+                <DocsJsonLd page={docs} />
+                {children}
+            </>
+        );
     }
 
     return <>{children}</>;
@@ -152,7 +151,7 @@ const config: DocsThemeConfig = {
     project: {
         link: "https://github.com/yeecord",
     },
-    main: Main,
+    main: ({ children }) => <Main>{children}</Main>,
     i18n: [
         {
             locale: "zh",

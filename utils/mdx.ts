@@ -50,13 +50,24 @@ export function getAuthor(key: string) {
     return data;
 }
 
-export function usePagesUnderRoute<T extends Page>(under: string) {
+export function usePage<T extends Page>(
+    route: string,
+    /**
+     * Return null if not enabled
+     */
+    enabled: boolean = true
+): T | null {
     return useMemo(() => {
-        const map = new Map<string, T>();
+        if (!enabled) return null;
 
-        for (const page of getPagesUnderRoute(under)) {
-            map.set(page.route, page as T);
-        }
-        return map;
-    }, [under]);
+        const last = route.lastIndexOf("/");
+        if (last === -1) return null;
+
+        //search in parent folder if it's a .mdx file
+        const search = last === 0 ? route : route.slice(0, last);
+
+        return getPagesUnderRoute(search).find(
+            (page) => page.kind === "MdxPage" && page.route === route
+        ) as T | null;
+    }, [route, enabled]);
 }
