@@ -1,4 +1,6 @@
 import { FrontMatter, MdxFile, Page } from "nextra";
+import { getPagesUnderRoute } from "nextra/context";
+import { useMemo } from "react";
 import AuthorsMeta from "../pages/blog/authors.json";
 
 export type AuthorData = {
@@ -6,6 +8,13 @@ export type AuthorData = {
     url?: string;
     title?: string;
     image_url?: string;
+};
+
+export type DocsPage = Omit<Page & MdxFile, "frontMatter"> & {
+    frontMatter?: FrontMatter & {
+        title: string;
+        description?: string;
+    };
 };
 
 export type BlogPage = Omit<Page & MdxFile, "frontMatter"> & {
@@ -39,4 +48,15 @@ export function getAuthor(key: string) {
         | undefined;
 
     return data;
+}
+
+export function usePagesUnderRoute<T extends Page>(under: string) {
+    return useMemo(() => {
+        const map = new Map<string, T>();
+
+        for (const page of getPagesUnderRoute(under)) {
+            map.set(page.route, page as T);
+        }
+        return map;
+    }, [under]);
 }

@@ -8,9 +8,8 @@ import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
 import BlogLayout from "@components/blog/BlogLayout";
-import { BlogPage } from "@utils/mdx";
-import { getPagesUnderRoute } from "nextra/context";
-import { BlogJsonLd } from "@utils/seo";
+import { BlogPage, DocsPage, usePagesUnderRoute } from "@utils/mdx";
+import { BlogJsonLd, DocsJsonLd } from "@utils/seo";
 
 function ThemeToggle() {
     const [current, setCurrent] = useState<"light" | "dark" | undefined>(
@@ -35,20 +34,32 @@ function ThemeToggle() {
 }
 
 function Main({ children }: { children: ReactNode }) {
-    const path = useRouter().route;
+    const route = useRouter().route;
+    const blogPages = usePagesUnderRoute<BlogPage>("/blog");
+    const docsPages = usePagesUnderRoute<DocsPage>("/docs");
 
-    if (path.startsWith("/blog/")) {
-        const page = getPagesUnderRoute("/blog").find((page) => {
-            return page.kind === "MdxPage" && page.route === path;
-        }) as BlogPage | null;
-        if (page == null) return <>{children}</>;
+    if (route.startsWith("/blog/")) {
+        const blog = blogPages.get(route);
 
-        return (
-            <>
-                <BlogJsonLd page={page} />
-                <BlogLayout page={page}>{children}</BlogLayout>
-            </>
-        );
+        if (blog != null)
+            return (
+                <>
+                    <BlogJsonLd page={blog} />
+                    <BlogLayout page={blog}>{children}</BlogLayout>
+                </>
+            );
+    }
+
+    if (route.startsWith("/docs")) {
+        const docs = docsPages.get(route);
+
+        if (docs != null)
+            return (
+                <>
+                    <DocsJsonLd page={docs} />
+                    {children}
+                </>
+            );
     }
 
     return <>{children}</>;

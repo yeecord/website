@@ -1,16 +1,19 @@
-import { Page } from "nextra";
 import { ArticleJsonLd } from "next-seo";
-import { AuthorData, BlogPage, getAuthor, getTitle } from "./mdx";
+import { AuthorData, BlogPage, DocsPage, getAuthor, getTitle } from "./mdx";
 
-export function JsonLd({ page }: { page: Page }) {
+export function DocsJsonLd({ page }: { page: DocsPage }) {
+    if (page.frontMatter == null) return <></>;
+    const title = getTitle(page);
+
     return (
         <ArticleJsonLd
-            title=""
-            authorName=""
-            url={""}
+            type="Article"
+            title={title}
+            authorName={[]}
+            url={page.route}
             images={[]}
             datePublished={""}
-            description={""}
+            description={page.frontMatter.description ?? ""}
         />
     );
 }
@@ -42,6 +45,9 @@ export function BlogJsonLd({ page }: { page: BlogPage }) {
         <ArticleJsonLd
             type="BlogPosting"
             title={getTitle(page)}
+            isAccessibleForFree
+            publisherLogo="/img/logo.png"
+            publisherName="YEE式機器龍"
             authorName={getAuthors()}
             url={page.route}
             images={image == null ? [] : [image]}
