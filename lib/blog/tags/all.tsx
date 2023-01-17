@@ -1,17 +1,32 @@
 import { LinkButton } from "@components/mdx";
 import clsx from "clsx";
+import { GetStaticProps } from "next";
 import Link from "next/link";
-import { useMemo } from "react";
 import { BsEyeFill } from "react-icons/bs";
-import { getBlogPageMap, getStaticTagsMap, getTagHref } from "../utils/tags";
+import {
+    getBlogPageMap,
+    getStaticTagsMap,
+    getTagHref,
+    TagInfo,
+} from "../utils/tags";
 
-export default function AllTags() {
-    const tags = useMemo(() => {
-        const data = getStaticTagsMap(getBlogPageMap());
+type Props = {
+    //sorted tags
+    tags: [string, TagInfo][];
+};
 
-        return [...data.entries()].sort((a, b) => b[1].count - a[1].count);
-    }, []);
+export const getStaticProps: GetStaticProps<Props> = async () => {
+    const data = getStaticTagsMap(getBlogPageMap());
+    const tags = [...data.entries()].sort((a, b) => b[1].count - a[1].count);
 
+    return {
+        props: {
+            tags,
+        },
+    };
+};
+
+export default function AllTags({ tags }: Props) {
     return (
         <div className="flex flex-col gap-3 mt-16">
             <div className="flex flex-col gap-3 mb-3">
