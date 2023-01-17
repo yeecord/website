@@ -1,9 +1,3 @@
-.blog-layout {
-}
-
-.blog-layout-old {
-}
-
 .blog-layout-old h1 {
     @apply font-extrabold !text-[2em] mt-2 md:!text-[2.4rem];
 }

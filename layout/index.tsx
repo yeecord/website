@@ -2,35 +2,22 @@ import { BlogPageOpts, DocsPageOpts } from "@utils/mdx";
 import { BlogJsonLd, DocsJsonLd } from "@utils/seo";
 import { NextraThemeLayoutProps, PageOpts } from "nextra";
 import BaseLayout from "nextra-theme-docs";
-import { createContext, ReactNode, useContext } from "react";
+import { ReactNode } from "react";
 import BlogLayout from "./blog";
 import DocsLayout from "./docs";
 
-const PageContext = createContext<PageOpts | null>(null);
 export default function Layout({
     children,
     ...context
 }: NextraThemeLayoutProps) {
     return (
-        <PageContext.Provider value={context.pageOpts}>
-            <BaseLayout {...context}>
-                <Main>{children}</Main>
-            </BaseLayout>
-        </PageContext.Provider>
+        <BaseLayout {...context}>
+            <Main page={context.pageOpts}>{children}</Main>
+        </BaseLayout>
     );
 }
 
-export function usePageContext() {
-    const context = useContext(PageContext);
-
-    if (context == null)
-        throw new Error("Can't get page context outside of the provider");
-    return context;
-}
-
-function Main({ children }: { children: ReactNode }) {
-    const page = usePageContext();
-
+function Main({ page, children }: { page: PageOpts; children: ReactNode }) {
     if (page.route.startsWith("/blog/")) {
         const blog = page as BlogPageOpts;
 

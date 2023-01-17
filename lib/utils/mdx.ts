@@ -1,7 +1,5 @@
 import { FrontMatter, MdxFile, Page, PageOpts } from "nextra";
-import { getPagesUnderRoute } from "nextra/context";
-import { useMemo } from "react";
-import AuthorsMeta from "../../pages/blog/authors.json";
+import { blogAuthors } from "../../config";
 
 export const NEXTRA_INTERNAL = Symbol.for("__nextra_internal__");
 
@@ -51,31 +49,5 @@ export function getTitle(page: Page & MdxFile) {
 }
 
 export function getAuthor(key: string) {
-    const data = AuthorsMeta[key as keyof typeof AuthorsMeta] as
-        | AuthorData
-        | undefined;
-
-    return data;
-}
-
-export function usePage<T extends Page>(
-    route: string,
-    /**
-     * Return null if not enabled
-     */
-    enabled: boolean = true
-): T | null {
-    return useMemo(() => {
-        if (!enabled) return null;
-
-        const last = route.lastIndexOf("/");
-        if (last === -1) return null;
-
-        //search in parent folder if it's a .mdx file
-        const search = last === 0 ? route : route.slice(0, last);
-
-        return getPagesUnderRoute(search).find(
-            (page) => page.kind === "MdxPage" && page.route === route
-        ) as T | null;
-    }, [route, enabled]);
+    return blogAuthors[key];
 }

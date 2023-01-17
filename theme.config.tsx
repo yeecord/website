@@ -1,5 +1,5 @@
-import { Footer } from "@components/Footer";
-import DashboardLogin from "@components/DashboardLogin";
+import Footer from "@components/Footer";
+import LoginButton from "@components/LoginButton";
 import Image from "next/image";
 import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
@@ -106,7 +106,7 @@ const config: Partial<DocsThemeConfig> = {
                     href="https://app.yeecord.com/"
                     className="hidden md:block"
                 >
-                    <DashboardLogin />
+                    <LoginButton />
                 </Link>
             </div>
         ),

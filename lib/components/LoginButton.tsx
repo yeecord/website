@@ -4,7 +4,7 @@ import Image from "next/image";
 import { RiUserFill } from "react-icons/ri";
 import useSWR from "swr";
 
-export default function DashboardLogin() {
+export default function LoginButton() {
     const {
         data: user,
         isLoading,

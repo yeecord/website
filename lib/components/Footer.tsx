@@ -17,7 +17,11 @@ export type FooterItem = {
     newWindow?: boolean;
 };
 
-export function Footer({ categories }: { categories: FooterCategory[] }) {
+export default function Footer({
+    categories,
+}: {
+    categories: FooterCategory[];
+}) {
     return (
         <div className="max-w-[90rem] mx-auto p-6 mt-6">
             <div className="flex flex-col sm:flex-row justify-between gap-4">
