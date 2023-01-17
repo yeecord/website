@@ -45,12 +45,12 @@ const nextConfig = {
                 permanent: false
             },
             {
-                source: "topgg",
+                source: "/topgg",
                 destination: "https://top.gg/bot/584213384409382953",
                 permanent: false
             },
             {
-                source: "dst",
+                source: "/dst",
                 destination: "https://discordservers.tw/bots/584213384409382953",
                 permanent: false
             },
