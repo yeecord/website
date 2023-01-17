@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 export default function AllTags({ tags }: Props) {
     return (
-        <div className="flex flex-col gap-3 mt-16">
+        <div className="flex flex-col gap-3 my-16 max-w-[1500px] mx-auto p-6">
             <div className="flex flex-col gap-3 mb-3">
                 <h1 className="text-5xl md:text-6xl font-bold text-center">
                     所有標籤
@@ -43,18 +43,18 @@ export default function AllTags({ tags }: Props) {
                 </LinkButton>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                 {tags.map(([tag, info]) => (
-                    <Link key={tag} href={getTagHref(tag)}>
-                        <div
-                            className={clsx(
-                                "rounded-lg p-3 h-stack justify-between",
-                                "bg-zinc-100 dark:bg-zinc-800"
-                            )}
-                        >
-                            <span className="text-lg font-bold">{tag}</span>
-                            <span className="text-secondary">{info.count}</span>
-                        </div>
+                    <Link
+                        key={tag}
+                        href={getTagHref(tag)}
+                        className={clsx(
+                            "rounded-lg p-3 h-stack justify-between",
+                            "bg-zinc-100 dark:bg-zinc-800"
+                        )}
+                    >
+                        <span className="text-lg font-bold">{tag}</span>
+                        <span className="text-secondary">{info.count}</span>
                     </Link>
                 ))}
             </div>

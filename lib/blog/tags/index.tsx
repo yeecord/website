@@ -14,7 +14,7 @@ type Props = {
 };
 export default function TagPage({ pages, tag }: Props) {
     return (
-        <div className="flex flex-col gap-5 mx-auto mt-16">
+        <div className="flex flex-col gap-5 mx-auto my-16 max-w-[1300px]">
             <div className="flex flex-col gap-5 mb-5">
                 <h1 className="font-bold text-3xl md:text-4xl text-center">{`帶有「${tag}」標籤的文章`}</h1>
 
@@ -22,9 +22,11 @@ export default function TagPage({ pages, tag }: Props) {
                     所有標籤
                 </LinkButton>
             </div>
-            {pages.map((page) => (
-                <BlogItem key={page.route} page={page as BlogPage} />
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {pages.map((page) => (
+                    <BlogItem key={page.route} page={page as BlogPage} />
+                ))}
+            </div>
         </div>
     );
 }
