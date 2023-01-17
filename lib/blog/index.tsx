@@ -66,12 +66,12 @@ export default function BlogIndex(props: Props) {
 
             <div
                 className={clsx(
-                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.7fr]",
-                    "mb-16 gap-10"
+                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.8fr]",
+                    "mb-16 gap-5 lg:gap-10"
                 )}
             >
                 <LargeBlogItem page={recommendations[0]} />
-                <div>
+                <div className="max-md:-ml-3">
                     <h2 className="font-bold text-3xl ml-3 mb-3 inline-flex gap-2">
                         精選文章{" "}
                         <BsCheckCircleFill className="text-green-400" />
