@@ -8,25 +8,11 @@ import { LinkButton } from "@components/mdx";
 
 //Important: upper case urls are invalid
 //We will convert the tag name into lower case to avoid the issue
-
-export default function TagPage() {
-    const { tag } = useSSG();
-    const pages: (Page & MdxFile)[] = [];
-
-    const map = (page: PageMapItem) => {
-        if (page.kind === "Folder") {
-            return page.children.forEach(map);
-        }
-
-        if (page.kind === "Meta") return;
-
-        if (page.frontMatter == null || !Array.isArray(page.frontMatter.tags))
-            return;
-
-        if (getTags(page).includes(tag)) return pages.push(page);
-    };
-
-    getBlogPageMap().forEach(map);
+type Props = {
+    pages: (MdxFile & Page)[];
+    tag: string;
+};
+export default function TagPage({ pages, tag }: Props) {
     return (
         <div className="flex flex-col gap-5 mx-auto mt-16">
             <div className="flex flex-col gap-5 mb-5">
@@ -52,12 +38,31 @@ export const getStaticPaths: GetStaticPaths = () => {
     };
 };
 
-export const getStaticProps: GetStaticProps = ({ params }) => {
+export const getStaticProps: GetStaticProps<Props> = ({ params }) => {
+    const tag = params?.tag as string;
+    if (tag == null) return { notFound: true };
+
+    const pages: (Page & MdxFile)[] = [];
+
+    const filterPages = (page: PageMapItem) => {
+        if (page.kind === "Meta") return;
+
+        if (page.kind === "Folder") {
+            return page.children.forEach(filterPages);
+        }
+
+        if (page.frontMatter == null || !Array.isArray(page.frontMatter.tags))
+            return;
+
+        if (getTags(page).includes(tag)) return pages.push(page);
+    };
+
+    getBlogPageMap().flatMap(filterPages);
+
     return {
         props: {
-            ssg: {
-                tag: params?.tag,
-            },
+            tag,
+            pages,
         },
     };
 };

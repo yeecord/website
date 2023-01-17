@@ -23,7 +23,10 @@ export const noto = Noto_Sans_TC({
 });
 
 export const getStaticProps: GetStaticProps<{ ssg: HomeProps }> = async () => {
-    const { guildCount, serverMembers } = await fetchGuild();
+    const { guildCount, serverMembers } = await fetchGuild().catch(() => ({
+        guildCount: 0,
+        serverMembers: 0,
+    }));
 
     return {
         props: {
