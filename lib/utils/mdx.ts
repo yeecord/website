@@ -42,7 +42,7 @@ export type BlogFrontMatter = FrontMatter & {
     authors: string[] | string;
 };
 
-export function getTitle(page: Page & MdxFile) {
+export function getTitle(page: Page & MdxFile): string {
     const frontMatter = page.frontMatter;
 
     return page.meta?.title || frontMatter?.title || page.name;
