@@ -1,7 +1,9 @@
-import { FrontMatter, MdxFile, Page, PageOpts } from "nextra";
+import { FrontMatter, MdxFile, Page, PageMapItem, PageOpts } from "nextra";
 import { getPagesUnderRoute } from "nextra/context";
 import { useMemo } from "react";
-import AuthorsMeta from "../pages/blog/authors.json";
+import AuthorsMeta from "../../pages/blog/authors.json";
+
+const NEXTRA_INTERNAL = Symbol.for("__nextra_internal__");
 
 export type AuthorData = {
     name: string;
@@ -76,4 +78,8 @@ export function usePage<T extends Page>(
             (page) => page.kind === "MdxPage" && page.route === route
         ) as T | null;
     }, [route, enabled]);
+}
+
+export function getPageMap(): PageMapItem[] {
+    return (globalThis as any)[NEXTRA_INTERNAL].pageMap;
 }

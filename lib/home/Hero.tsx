@@ -1,8 +1,8 @@
 import { IoMdOpen } from "react-icons/io";
-import Gradient from "./internal/Gradient";
+import Gradient from "./components/Gradient";
 import HeroGradient from "@static/hero.svg";
 import Image from "next/image";
-import LinkButton from "./internal/LinkButton";
+import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
 

@@ -1,10 +1,10 @@
 import PinkWave from "@static/home/pink-wave.svg";
 import Image from "next/image";
-import LinkButton from "./internal/LinkButton";
+import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import { animate, motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import formatter from "@utils/formatter";
+import formatter from "../../lib/utils/formatter";
 
 export function Customers({ usedBy }: { usedBy: number }) {
     const ref = useRef<HTMLDivElement>(null);

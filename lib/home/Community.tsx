@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import { RiDiscordFill } from "react-icons/ri";
-import Gradient from "./internal/Gradient";
-import LinkButton from "./internal/LinkButton";
+import Gradient from "./components/Gradient";
+import LinkButton from "./components/LinkButton";
 import CyanPinkGradient from "@static/home/cyan-pink-gradient.svg";
 import GradientRing from "@static/home/gradient-ring.svg";
 import Image from "next/image";
 import clsx from "clsx";
 import { Tooltip, TooltipProvider, TooltipWrapper } from "react-tooltip";
-import formatter from "@utils/formatter";
+import formatter from "../../lib/utils/formatter";
 
 const MotionImage = motion(Image);
 

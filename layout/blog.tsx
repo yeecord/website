@@ -2,8 +2,8 @@ import { BlogFrontMatter, BlogPageOpts, getAuthor } from "@utils/mdx";
 import Image from "next/image";
 import React from "react";
 import { ReactNode } from "react";
-import { Authors } from "@components/blog/Authors";
 import styles from "./blog.module.css";
+import Authors from "@blog/components/Authors";
 
 export default function BlogLayout({
     page,

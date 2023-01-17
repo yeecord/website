@@ -1,5 +1,5 @@
-import { Footer } from "@components/layout/Footer";
-import DashboardLogin from "@components/layout/DashboardLogin";
+import { Footer } from "@components/Footer";
+import DashboardLogin from "@components/DashboardLogin";
 import Image from "next/image";
 import Link from "next/link";
 import { DocsThemeConfig, useTheme } from "nextra-theme-docs";

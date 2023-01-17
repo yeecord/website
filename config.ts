@@ -1,9 +1,7 @@
 import { FooterCategory } from "@components/layout/Footer";
 
 export const isProduction = process.env.NODE_ENV === "production";
-export const API_ENDPOINT = isProduction
-    ? "https://api.yeecord.com"
-    : "http://127.0.0.1:3001";
+export const API_ENDPOINT = "https://api.yeecord.com";
 export const CDN_ENDPOINT = "https://cdn.discordapp.com";
 
 export const footer: FooterCategory[] = [

@@ -1,25 +1,10 @@
-import { getPagesUnderRoute } from "nextra/context";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { Authors } from "./Authors";
-import { BlogPage, getTitle } from "@utils/mdx";
+import Authors from "./Authors";
+import { BlogPage, getTitle } from "../../utils/mdx";
 
-export default function BlogIndex() {
-    return (
-        <div className="flex flex-col gap-3 mt-5">
-            {getPagesUnderRoute("/blog").map((page) => {
-                if (page.kind !== "MdxPage") {
-                    return <React.Fragment key={page.route} />;
-                }
-
-                return <BlogItem key={page.route} page={page as BlogPage} />;
-            })}
-        </div>
-    );
-}
-
-function BlogItem({ page }: { page: BlogPage }) {
+export function BlogItem({ page }: { page: BlogPage }) {
     const frontMatter = page.frontMatter ?? null;
 
     const date = frontMatter?.date == null ? null : new Date(frontMatter.date);

@@ -6,10 +6,13 @@ import { Noto_Sans_TC } from "@next/font/google";
 import clsx from "clsx";
 import { Features } from "./features";
 import Sponsor from "./Sponsor";
+import { fetchGuild } from "@utils/api";
+import { GetStaticProps } from "next";
+import { useSSG } from "nextra/data";
 
 export type HomeProps = {
     serverMembers: number;
-    usedBy: number;
+    guildCount: number;
 };
 
 export const noto = Noto_Sans_TC({
@@ -19,7 +22,23 @@ export const noto = Noto_Sans_TC({
     subsets: ["latin"],
 });
 
-export function HomePage(props: HomeProps) {
+export const getStaticProps: GetStaticProps<{ ssg: HomeProps }> = async () => {
+    const { guildCount, serverMembers } = await fetchGuild();
+
+    return {
+        props: {
+            ssg: {
+                serverMembers,
+                guildCount,
+            },
+        },
+        revalidate: 10,
+    };
+};
+
+export default function HomePage() {
+    const { guildCount, serverMembers } = useSSG() as HomeProps;
+
     return (
         <div
             id="home-page"
@@ -39,10 +58,10 @@ export function HomePage(props: HomeProps) {
                 <Hero />
                 <Features />
                 <RpgSystem />
-                <Customers usedBy={props.usedBy} />
+                <Customers usedBy={guildCount} />
             </div>
             <Sponsor />
-            <Community joined={props.serverMembers} />
+            <Community joined={serverMembers} />
         </div>
     );
 }

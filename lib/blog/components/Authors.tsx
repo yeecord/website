@@ -1,9 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { BlogFrontMatter, getAuthor } from "@utils/mdx";
+import { BlogFrontMatter, getAuthor } from "../../utils/mdx";
 
-export function Authors({ frontMatter }: { frontMatter: BlogFrontMatter }) {
+export default function Authors({
+    frontMatter,
+}: {
+    frontMatter: BlogFrontMatter;
+}) {
     if (Array.isArray(frontMatter.authors)) {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

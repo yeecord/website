@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { BsCaretUpFill } from "react-icons/bs";
 import { IoMdOpen } from "react-icons/io";
-import { ThemeSwitch, Bleed } from "nextra-theme-docs";
+import { ThemeSwitch } from "nextra-theme-docs";
+
 export type FooterCategory = {
     title: string;
     items: FooterItem[];

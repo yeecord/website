@@ -15,9 +15,10 @@
         "jsx": "preserve",
         "incremental": true,
         "paths": {
-            "@utils/*": ["./utils/*"],
-            "@theme/*": ["./theme/*"],
-            "@components/*": ["./components/*"],
+            "@utils/*": ["./lib/utils/*"],
+            "@blog/*": ["./lib/blog/*"],
+            "@home/*": ["./lib/home/*"],
+            "@components/*": ["./lib/components/*"],
             "@static/*": ["./public/*"],
             "@layout/*": ["./layout/*"]
         }

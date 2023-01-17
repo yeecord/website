@@ -8,6 +8,7 @@ module.exports = {
         "./components/**/*.{js,ts,jsx,tsx}",
         "./layout/**/*.{js,ts,jsx,tsx}",
         "./theme.config.tsx",
+        "./lib/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
         fontFamily: {

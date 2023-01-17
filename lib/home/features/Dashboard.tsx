@@ -9,7 +9,7 @@ import {
 } from "react-icons/bs";
 import { RiSettings2Fill } from "react-icons/ri";
 import lstyles from "./dashboard.module.css";
-import { Progress } from "../Progress";
+import { Progress } from "../components/Progress";
 import { motion } from "framer-motion";
 
 export function Dashboard() {

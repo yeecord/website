@@ -2,8 +2,8 @@ import clsx from "clsx";
 import { motion, Variants } from "framer-motion";
 import styles from "./features.module.css";
 import cn_styles from "./chinese.module.css";
-import Step from "../internal/Step";
-import Gradient from "../internal/Gradient";
+import Step from "../components/Step";
+import Gradient from "../components/Gradient";
 
 import { BsTextCenter, BsTranslate } from "react-icons/bs";
 import GardientSvg from "@static/home/purple-gradient.svg";

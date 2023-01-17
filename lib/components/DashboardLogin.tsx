@@ -11,6 +11,7 @@ export default function DashboardLogin() {
         error,
     } = useSWR("user", fetchUser, {
         refreshInterval: () => 10000,
+        errorRetryCount: 0,
     });
 
     if (isLoading || error != null) {
