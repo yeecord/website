@@ -30,7 +30,7 @@ export default function TagPage() {
     return (
         <div className="flex flex-col gap-5 mx-auto mt-16">
             <div className="flex flex-col gap-5 mb-5">
-                <h1 className="font-bold text-3xl md:text-4xl text-center">{`帶有"${tag}"標籤的文章`}</h1>
+                <h1 className="font-bold text-3xl md:text-4xl text-center">{`帶有「${tag}」標籤的文章`}</h1>
 
                 <LinkButton href="/blog/tags" link={{ className: "mx-auto" }}>
                     所有標籤
