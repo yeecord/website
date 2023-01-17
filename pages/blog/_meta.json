@@ -7,5 +7,14 @@
             "pagination": false,
             "sidebar": false
         }
+    },
+    "tags": {
+        "title": "所有標籤",
+        "theme": {
+            "footer": false,
+            "toc": false,
+            "pagination": false,
+            "sidebar": false
+        }
     }
 }

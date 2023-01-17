@@ -19,7 +19,7 @@ export function LinkButton({
     className?: string;
     icon?: ReactNode;
     variant?: "secondary" | "primary";
-    link?: ComponentProps<typeof Link>;
+    link?: Partial<ComponentProps<typeof Link>>;
 }) {
     return (
         <Link

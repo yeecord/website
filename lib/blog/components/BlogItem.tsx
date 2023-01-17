@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import Authors from "./Authors";
-import { BlogPage, getTitle } from "../../utils/mdx";
+import { BlogPage, getTitle } from "@utils/mdx";
+import { getTagHref } from "@blog/utils/tags";
 
 export function BlogItem({ page }: { page: BlogPage }) {
     const frontMatter = page.frontMatter ?? null;
@@ -13,7 +14,7 @@ export function BlogItem({ page }: { page: BlogPage }) {
     return (
         <div
             key={page.route}
-            className="flex flex-col p-5 gap-3 bg-zinc-100 dark:bg-zinc-900 rounded-lg"
+            className="flex flex-col p-5 gap-3 bg-zinc-50 dark:bg-zinc-900 rounded-lg"
         >
             {frontMatter != null && <Authors frontMatter={frontMatter} />}
             {frontMatter?.image != null && (
@@ -38,12 +39,11 @@ export function BlogItem({ page }: { page: BlogPage }) {
             <p className="opacity-80">{frontMatter?.description}</p>
             <div className="flex flex-row gap-3 items-end flex-wrap">
                 {frontMatter?.tags?.map((tag, i) => (
-                    <p
-                        key={i}
-                        className="p-2 bg-zinc-200 text-zinc-800 dark:bg-zinc-700/50 dark:text-white font-extrabold rounded-md"
-                    >
-                        {tag}
-                    </p>
+                    <Link key={i} href={getTagHref(tag)}>
+                        <p className="p-2 bg-zinc-200 text-zinc-800 dark:bg-zinc-700/50 dark:text-white font-extrabold rounded-md">
+                            {tag}
+                        </p>
+                    </Link>
                 ))}
             </div>
 
