@@ -58,7 +58,7 @@ export function ChineseUI() {
                              features={(
                                  <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
                              )}/>
-                    <Comment icon="/blog/money.jpg" author="Money" title="伺服器管理員"
+                    <Comment icon="/blog/money.jpg" author="Money" title="活躍協作者"
                              content="即使我不懂英語，無需繁雜的理解及操作，我仍然可以輕鬆使用 YEE式機器龍"
                              features={(
                                  <>
