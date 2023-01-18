@@ -1,9 +1,16 @@
-import { BlogFrontMatter, BlogPageOpts, getAuthor } from "@utils/mdx";
+import {
+    AuthorData,
+    BlogFrontMatter,
+    BlogPageOpts,
+    getAuthor,
+} from "@utils/mdx";
 import Image from "next/image";
 import React from "react";
 import { ReactNode } from "react";
 import styles from "./blog.module.css";
 import Authors from "@blog/components/Authors";
+import Link from "next/link";
+import clsx from "clsx";
 
 export default function BlogLayout({
     page,
@@ -44,6 +51,7 @@ export default function BlogLayout({
                 )}
             </div>
             <div className={styles["blog-layout-old"]}>{children}</div>
+            <Footer />
         </div>
     );
 }
@@ -58,9 +66,11 @@ function NewBlogLayout({
     const { frontMatter } = page;
     const title = page.title;
 
-    const authors: string[] = Array.isArray(frontMatter.authors)
-        ? frontMatter.authors
-        : [frontMatter.authors];
+    const authors: AuthorData[] = (
+        Array.isArray(frontMatter.authors)
+            ? frontMatter.authors
+            : [frontMatter.authors]
+    ).flatMap((author) => getAuthor(author) ?? []);
 
     return (
         <div>
@@ -78,14 +88,25 @@ function NewBlogLayout({
                 {title}
             </h1>
             <div className="h-stack mb-6">
-                {authors.map((author) => {
-                    const data = getAuthor(author);
-                    if (data == null) return <></>;
-
+                {authors.map((author, i) => {
                     return (
-                        <div key={author} className="h-stack font-bold text-lg">
-                            {data.name}
-                        </div>
+                        <Link
+                            key={i}
+                            className="h-stack gap-1 font-bold text-lg"
+                            href={author.url ?? ""}
+                            rel="nofollow noreferrer"
+                        >
+                            {author.image_url != null && (
+                                <Image
+                                    alt="avatar"
+                                    src={author.image_url}
+                                    width={25}
+                                    height={25}
+                                    className="rounded-full"
+                                />
+                            )}
+                            {author.name}
+                        </Link>
                     );
                 })}
                 <p className="text-secondary">
@@ -96,6 +117,59 @@ function NewBlogLayout({
                 </p>
             </div>
             <div className={styles["blog-layout"]}>{children}</div>
+            <Footer authors={authors} />
+        </div>
+    );
+}
+
+function Footer({ authors }: { authors?: AuthorData[] }) {
+    return (
+        <div className="flex flex-col gap-6 mt-[5rem]">
+            {authors?.map((author, i) => (
+                <Link
+                    key={i}
+                    className="flex flex-col items-center text-center p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl"
+                    href={author.url ?? ""}
+                    rel="nofollow noreferrer"
+                >
+                    {author.image_url != null && (
+                        <Image
+                            alt="avatar"
+                            src={author.image_url}
+                            width={60}
+                            height={60}
+                            className="rounded-full"
+                        />
+                    )}
+                    <h2 className="font-bold text-2xl">{author.name}</h2>
+                    <p className="text-secondary text-lg">{author.title}</p>
+                </Link>
+            ))}
+            <div
+                className={clsx(
+                    "flex flex-col gap-3 rounded-xl p-4",
+                    "bg-gradient-to-br from-pink-50/50 via-pink-100 to-cyan-200/50",
+                    "dark:from-cyan-800/50 dark:to-purple-400/50"
+                )}
+            >
+                <h2 className="font-extrabold text-3xl">
+                    也想成為
+                    <br className="min-[400px]:hidden" />
+                    內容創作者?
+                </h2>
+                <p className="font-semibold sm:text-lg">
+                    通過 github 為我們貢獻!
+                </p>
+                <Link
+                    href="https://github.com/yeecord/docs"
+                    target="_blank"
+                    className="w-fit"
+                >
+                    <button className="px-4 py-2 bg-blue-400 font-bold rounded-lg text-white">
+                        加入我們
+                    </button>
+                </Link>
+            </div>
         </div>
     );
 }
