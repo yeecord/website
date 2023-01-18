@@ -49,7 +49,10 @@ export function ChineseUI() {
                     </h3>
                     <Skeleton />
                 </Step>
-                <div className="v-stack">
+                <div className={clsx(
+                    "z-[2] v-stack max-xl:-mt-[10rem] max-xl:ml-auto max-xl:mr-3",
+                    "max-sm:-ml-[1rem] max-sm:-mt-[7rem] max-lg:-mr-[1.5rem]"
+                )}>
                     <Comment icon="/blog/sjay.png" author="SJay" title="伺服器管理員 & 社群領袖"
                              content="複雜的大型伺服器架設，有了機器龍讓繁雜的操作變得簡單，大大減輕了管理難度，任何附加功能使用起來無往不利"
                              features={(
@@ -88,9 +91,7 @@ function Comment({ icon, author, title, content, features }: {
         <motion.div
             className={clsx(
                 "flex flex-col gap-3 mt-8 p-4 bg-white dark:bg-slate-900 rounded-xl h-fit",
-                "z-[2] shadow-xl max-w-[500px]",
-                "max-xl:-mt-[10rem] max-xl:ml-auto max-xl:mr-3",
-                "max-sm:-ml-[1rem] max-sm:-mt-[7rem] max-lg:-mr-[1.5rem]"
+                "shadow-xl max-w-[500px]",
             )}
             variants={{
                 show: {
