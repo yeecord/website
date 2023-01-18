@@ -1,15 +1,15 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useSSG } from "nextra/ssg";
-import getTags, { getBlogPageMap, getStaticTags } from "../utils/tags";
-import { MdxFile, Page, PageMapItem } from "nextra";
-import { BlogPage } from "@utils/mdx";
+import { getStaticTags, getTags } from "../utils/tags";
+import { getBlogPageMap } from "../utils/get-page-map";
+import { PageMapItem } from "nextra";
 import { BlogItem } from "../components/BlogItem";
 import { LinkButton } from "@components/mdx";
+import { BlogPage, BlogPageSchema } from "@schema/blog";
 
 //Important: upper case urls are invalid
 //We will convert the tag name into lower case to avoid the issue
 type Props = {
-    pages: (MdxFile & Page)[];
+    pages: BlogPage[];
     tag: string;
 };
 export default function TagPage({ pages, tag }: Props) {
@@ -24,7 +24,7 @@ export default function TagPage({ pages, tag }: Props) {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {pages.map((page) => (
-                    <BlogItem key={page.route} page={page as BlogPage} />
+                    <BlogItem key={page.route} page={page} />
                 ))}
             </div>
         </div>
@@ -44,27 +44,23 @@ export const getStaticProps: GetStaticProps<Props> = ({ params }) => {
     const tag = params?.tag as string;
     if (tag == null) return { notFound: true };
 
-    const pages: (Page & MdxFile)[] = [];
-
-    const filterPages = (page: PageMapItem) => {
-        if (page.kind === "Meta") return;
+    const flattenPages = (page: PageMapItem): BlogPage[] => {
+        if (page.kind === "Meta") return [];
 
         if (page.kind === "Folder") {
-            return page.children.forEach(filterPages);
+            return page.children.flatMap(flattenPages);
         }
+        const result = BlogPageSchema.safeParse(page);
 
-        if (page.frontMatter == null || !Array.isArray(page.frontMatter.tags))
-            return;
+        if (result.success && getTags(page).includes(tag)) return [result.data];
 
-        if (getTags(page).includes(tag)) return pages.push(page);
+        return [];
     };
-
-    getBlogPageMap().flatMap(filterPages);
 
     return {
         props: {
             tag,
-            pages,
+            pages: getBlogPageMap().flatMap(flattenPages),
         },
     };
 };

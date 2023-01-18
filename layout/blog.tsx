@@ -1,9 +1,4 @@
-import {
-    AuthorData,
-    BlogFrontMatter,
-    BlogPageOpts,
-    getAuthor,
-} from "@utils/mdx";
+import { AuthorData, BlogPageOpts } from "@utils/mdx";
 import Image from "next/image";
 import React from "react";
 import { ReactNode } from "react";
@@ -19,9 +14,11 @@ export default function BlogLayout({
     page: BlogPageOpts;
     children: ReactNode;
 }) {
-    if (page.frontMatter.theme === "raw") return <>{children}</>;
+    const frontMatter = page.frontMatter;
 
-    if (page.frontMatter.enableLayout === true) {
+    if (frontMatter.theme === "raw") return <>{children}</>;
+
+    if (frontMatter.enableLayout === true) {
         return <NewBlogLayout page={page}>{children}</NewBlogLayout>;
     }
 
@@ -37,18 +34,11 @@ export default function BlogLayout({
                             page.readingTime.minutes
                         )} 分鐘`}
                     {" • "}
-                    {new Date(page.frontMatter.date).toLocaleDateString(
-                        undefined,
-                        {
-                            dateStyle: "long",
-                        }
-                    )}
+                    {new Date(frontMatter.date).toLocaleDateString(undefined, {
+                        dateStyle: "long",
+                    })}
                 </p>
-                {page.frontMatter != null && (
-                    <Authors
-                        frontMatter={page.frontMatter as BlogFrontMatter}
-                    />
-                )}
+                <Authors frontMatter={page.frontMatter} />
             </div>
             <div className={styles["blog-layout-old"]}>{children}</div>
             <Footer />
@@ -66,15 +56,9 @@ function NewBlogLayout({
     const { frontMatter } = page;
     const title = page.title;
 
-    const authors: AuthorData[] = (
-        Array.isArray(frontMatter.authors)
-            ? frontMatter.authors
-            : [frontMatter.authors]
-    ).flatMap((author) => getAuthor(author) ?? []);
-
     return (
         <div>
-            {frontMatter?.image != null && (
+            {frontMatter.image != null && (
                 <div className="relative aspect-video w-full h-auto">
                     <Image
                         alt="banner"
@@ -88,7 +72,7 @@ function NewBlogLayout({
                 {title}
             </h1>
             <div className="h-stack mb-6">
-                {authors.map((author, i) => {
+                {frontMatter.authors.map((author, i) => {
                     return (
                         <Link
                             key={i}
@@ -117,7 +101,7 @@ function NewBlogLayout({
                 </p>
             </div>
             <div className={styles["blog-layout"]}>{children}</div>
-            <Footer authors={authors} />
+            <Footer authors={frontMatter.authors} />
         </div>
     );
 }

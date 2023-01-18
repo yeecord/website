@@ -1,14 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { BlogPage, getTitle } from "@utils/mdx";
+import { getTitle } from "@utils/mdx";
 import { getTagHref } from "@blog/utils/tags";
 import clsx from "clsx";
+import { BlogPage } from "@schema/blog";
 
 export function BlogItem({ page }: { page: BlogPage }) {
-    const frontMatter = page.frontMatter ?? null;
-
-    const date = frontMatter?.date == null ? null : new Date(frontMatter.date);
+    const frontMatter = page.frontMatter;
     const title = getTitle(page);
 
     return (
@@ -24,7 +23,7 @@ export function BlogItem({ page }: { page: BlogPage }) {
                 href={page.route}
                 className="relative aspect-video w-full h-auto"
             >
-                {frontMatter?.image != null ? (
+                {frontMatter.image != null ? (
                     <Image
                         alt="image"
                         src={frontMatter.image}
@@ -46,7 +45,7 @@ export function BlogItem({ page }: { page: BlogPage }) {
             </Link>
             <div>
                 <div className="flex flex-row gap-3 overflow-hidden">
-                    {frontMatter?.tags?.map((tag, i) => (
+                    {frontMatter.tags.map((tag, i) => (
                         <Link
                             key={i}
                             href={getTagHref(tag)}
@@ -67,18 +66,16 @@ export function BlogItem({ page }: { page: BlogPage }) {
                 <Link href={page.route} className="text-blue-500 font-bold">
                     閱讀更多 →
                 </Link>
-                {frontMatter?.date ? (
-                    <p className="opacity-80 text-md font-bold">
-                        {date?.toLocaleDateString()}
-                    </p>
-                ) : null}
+                <p className="opacity-80 text-md font-bold">
+                    {new Date(frontMatter.date).toLocaleDateString()}
+                </p>
             </div>
         </div>
     );
 }
 
 export function LargeBlogItem({ page }: { page: BlogPage }) {
-    const frontMatter = page.frontMatter ?? null;
+    const frontMatter = page.frontMatter;
     const title = getTitle(page);
 
     return (
@@ -91,7 +88,7 @@ export function LargeBlogItem({ page }: { page: BlogPage }) {
             )}
         >
             <Link href={page.route} className="relative aspect-video w-full">
-                {frontMatter?.image != null ? (
+                {frontMatter.image != null ? (
                     <Image
                         alt="image"
                         src={frontMatter.image}
@@ -114,7 +111,7 @@ export function LargeBlogItem({ page }: { page: BlogPage }) {
             </Link>
             <div className="flex flex-col p-5">
                 <div className="flex flex-row gap-3 overflow-hidden text-blue-400 font-extrabold">
-                    {frontMatter?.tags?.map((tag, i) => (
+                    {frontMatter.tags.map((tag, i) => (
                         <Link
                             key={i}
                             href={getTagHref(tag)}

@@ -1,7 +1,8 @@
 import React from "react";
-import { BlogPage, getTitle } from "@utils/mdx";
+import { getTitle } from "@utils/mdx";
 import clsx from "clsx";
 import Link from "next/link";
+import { BlogPage } from "@schema/blog";
 
 export function BlogRecommend({ page }: { page: BlogPage }) {
     return (

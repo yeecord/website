@@ -15,6 +15,7 @@
         "jsx": "preserve",
         "incremental": true,
         "paths": {
+            "@schema/*": ["./schema/*"],
             "@utils/*": ["./lib/utils/*"],
             "@blog/*": ["./lib/blog/*"],
             "@home/*": ["./lib/home/*"],

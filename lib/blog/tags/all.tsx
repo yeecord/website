@@ -3,12 +3,8 @@ import clsx from "clsx";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { BsEyeFill } from "react-icons/bs";
-import {
-    getBlogPageMap,
-    getStaticTagsMap,
-    getTagHref,
-    TagInfo,
-} from "../utils/tags";
+import { getStaticTagsMap, getTagHref, TagInfo } from "../utils/tags";
+import { getBlogPageMap } from "../utils/get-page-map";
 
 type Props = {
     //sorted tags
