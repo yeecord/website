@@ -36,21 +36,19 @@ export function Card({
             {...props}
             className={twMerge(
                 styles.card,
-                "group flex flex-col justify-start overflow-hidden rounded-lg border border-gray-200 bg-transparent text-current no-underline shadow-sm shadow-gray-100 transition-all duration-200",
+                "flex flex-col justify-start overflow-hidden p-4",
+                "bg-transparent rounded-lg",
+                "border border-gray-200",
                 "dark:border-neutral-800 dark:shadow-none",
+                "shadow-sm shadow-gray-100",
+                "no-underline transition-colors duration-200",
                 "hover:bg-slate-50 hover:shadow-md hover:shadow-gray-100 hover:border-blue-500",
-                "dark:hover:border-blue-500 dark:hover:bg-neutral-900/50 dark:hover:shadow-none",
-                "active:shadow-sm active:shadow-gray-200",
-                "p-4",
+                "hover:dark:border-blue-500 hover:dark:bg-neutral-900/50 hover:dark:shadow-none hover:dark:text-white",
                 props?.className
             )}
         >
             <span
-                className={cn(
-                    styles.title,
-                    "gap-2 text-gray-700 dark:text-neutral-200",
-                    "hover:text-gray-900 dark:hover:text-neutral-50"
-                )}
+                className={cn(styles.title, "gap-3 text-black dark:text-white")}
             >
                 {icon != null && (
                     <div className="text-xl text-blue-500 mt-1">{icon}</div>

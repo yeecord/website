@@ -44,7 +44,7 @@ function Author({ authorId }: { authorId: string }) {
                 <Link
                     href={author?.url ?? ""}
                     target="_blank"
-                    className="heading-md"
+                    className="heading-md text-black dark:text-white"
                     rel="nofollow noreferrer"
                 >
                     {name}
