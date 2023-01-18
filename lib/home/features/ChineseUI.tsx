@@ -53,9 +53,7 @@ export function ChineseUI() {
                     <Comment icon="/blog/sjay.png" author="SJay" title="伺服器管理員 & 社群領袖"
                              content="複雜的大型伺服器架設，有了機器龍讓繁雜的操作變得簡單，大大減輕了管理難度，任何附加功能使用起來無往不利"
                              features={(
-                                 <>
-                                     <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
-                                 </>
+                                 <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
                              )}/>
                     <Comment icon="/blog/money.jpg" author="Money" title="伺服器管理員"
                              content="即使我不懂英語，無需繁雜的理解及操作，我仍然可以輕鬆使用 YEE式機器龍"
