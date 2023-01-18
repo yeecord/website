@@ -128,7 +128,7 @@ function Footer({ authors }: { authors?: AuthorData[] }) {
             {authors?.map((author, i) => (
                 <Link
                     key={i}
-                    className="flex flex-col items-center text-center p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl"
+                    className="h-stack p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl"
                     href={author.url ?? ""}
                     rel="nofollow noreferrer"
                 >
@@ -141,15 +141,17 @@ function Footer({ authors }: { authors?: AuthorData[] }) {
                             className="rounded-full"
                         />
                     )}
-                    <h2 className="font-bold text-2xl">{author.name}</h2>
-                    <p className="text-secondary text-lg">{author.title}</p>
+                    <div>
+                        <h2 className="font-bold text-2xl">{author.name}</h2>
+                        <p className="text-secondary text-lg">{author.title}</p>
+                    </div>
                 </Link>
             ))}
             <div
                 className={clsx(
                     "flex flex-col gap-3 rounded-xl p-4",
                     "bg-gradient-to-br from-pink-50/50 via-pink-100 to-cyan-200/50",
-                    "dark:from-cyan-800/50 dark:to-purple-400/50"
+                    "dark:from-cyan-800/20 dark:to-purple-400/50"
                 )}
             >
                 <h2 className="font-extrabold text-3xl">
