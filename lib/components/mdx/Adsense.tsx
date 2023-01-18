@@ -1,19 +1,23 @@
-import Script from "next/script";
 import React from "react";
+import { useAdsenseState } from "../../context/adsense";
+import Admonition from "@components/mdx/Admonition";
 
 /**
  * Google Ads :)
  */
 export function Adsense() {
+	const {state} = useAdsenseState()
+
+	if(state === "failed")
+		return (
+			<Admonition title="太無情了擋廣告" type="warning">
+				關閉 AdBlocker 讓機器龍多活一天
+			</Admonition>
+		)
+
 	return (
-		<div aria-label="ads" className="text-center">
-			<Script
-				async
-				defer
-				src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
-				crossOrigin="anonymous"
-			/>
-			<p className="my-2 text-gray-300">機器龍的精神食糧</p>
+		<div aria-label="ads">
+			<p className="my-2 text-sm text-gray-400 text-center">機器龍的精神食糧</p>
 			<hr className="border-gray-500"/>
 			<div style={ { minHeight: "280px" } }>
 				<ins

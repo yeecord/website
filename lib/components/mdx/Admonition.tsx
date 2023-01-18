@@ -8,13 +8,13 @@ export function Admonition({
     type,
 }: {
     title?: string;
-    children: ReactNode;
+    children?: ReactNode;
     type?: "info" | "warning" | "error" | "default";
 }) {
     return (
         <Callout type={type}>
             <b>{title}</b>
-            <span className="text-base">{children}</span>
+            <span className="text-base block">{children}</span>
         </Callout>
     );
 }
