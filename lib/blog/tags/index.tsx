@@ -52,7 +52,12 @@ export const getStaticProps: GetStaticProps<Props> = ({ params }) => {
         }
         const result = BlogPageSchema.safeParse(page);
 
-        if (result.success && getTags(page).includes(tag)) return [result.data];
+        if (!result.success) {
+            console.error(page.route, result.error.issues);
+            return [];
+        }
+
+        if (getTags(page).includes(tag)) return [result.data];
 
         return [];
     };

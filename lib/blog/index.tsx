@@ -7,7 +7,7 @@ import { LinkButton } from "@components/mdx";
 import { BsCheckCircleFill, BsEyeFill } from "react-icons/bs";
 import { blogRecommendations } from "../../config";
 import { RiGithubFill } from "react-icons/ri";
-import { BlogRecommend } from "./BlogRecommend";
+import { BlogRecommend } from "./components/BlogRecommend";
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { GetStaticProps } from "next";
@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
         const result = BlogPageSchema.safeParse(page);
         if (!result.success) {
-            console.error(result.error.issues);
+            console.error(page.route, result.error.issues);
             return [];
         }
 
