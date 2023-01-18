@@ -48,7 +48,7 @@
     }
 
     .steps-container {
-        margin-left: 0.5rem;
+        margin-left: 1rem;
         padding-left: 1.7rem;
         counter-reset: step;
         border-left: 1px solid;

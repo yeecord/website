@@ -31,12 +31,6 @@ function ThemeToggle() {
 
 const config: Partial<DocsThemeConfig> = {
     components: {
-        h1: (props) => (
-            <h1
-                className="text-[2.5rem] font-bold tracking-tight mt-3"
-                {...props}
-            />
-        ),
         a: (props) => (
             <a
                 className="nx-text-primary-600 nx-underline nx-decoration-from-font [text-underline-position:from-font]"

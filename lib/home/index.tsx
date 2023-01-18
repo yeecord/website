@@ -2,7 +2,6 @@ import { Community } from "./Community";
 import { Customers } from "./Customers";
 import { Hero } from "./Hero";
 import { RpgSystem } from "./RpgSystem";
-import { Noto_Sans_TC } from "@next/font/google";
 import clsx from "clsx";
 import { Features } from "./features";
 import Sponsor from "./Sponsor";
@@ -14,13 +13,6 @@ export type HomeProps = {
     serverMembers: number;
     guildCount: number;
 };
-
-export const noto = Noto_Sans_TC({
-    weight: ["500", "700"],
-    variable: "--font-noto",
-    display: "swap",
-    subsets: ["latin"],
-});
 
 export const getStaticProps: GetStaticProps<{ ssg: HomeProps }> = async () => {
     const { guildCount, serverMembers } = await fetchGuild().catch(() => ({
@@ -45,10 +37,7 @@ export default function HomePage() {
     return (
         <div
             id="home-page"
-            className={clsx(
-                "bg-white dark:bg-black font-sans overflow-x-clip",
-                noto.variable
-            )}
+            className={clsx("bg-white dark:bg-black font-sans overflow-x-clip")}
         >
             <style jsx global>
                 {`

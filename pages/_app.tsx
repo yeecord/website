@@ -3,7 +3,24 @@ import { ReactElement } from "react";
 import "nextra-theme-docs/style.css";
 import "react-tooltip/dist/react-tooltip.css";
 import "../styles/global.css";
+import { Noto_Sans_TC } from "@next/font/google";
+
+export const noto = Noto_Sans_TC({
+    weight: ["500", "700"],
+    variable: "--font-noto",
+    display: "swap",
+    subsets: ["latin"],
+});
 
 export default function App({ Component, pageProps }: AppProps): ReactElement {
-    return <Component {...pageProps} />;
+    return (
+        <>
+            <style jsx global>{`
+                html {
+                    --font-noto: ${noto.style.fontFamily};
+                }
+            `}</style>
+            <Component {...pageProps} />;
+        </>
+    );
 }
