@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { RiDiscordFill } from "react-icons/ri";
 import Gradient from "./components/Gradient";
 import LinkButton from "./components/LinkButton";
 import CyanPinkGradient from "@static/home/cyan-pink-gradient.svg";
@@ -8,6 +7,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Tooltip, TooltipProvider, TooltipWrapper } from "react-tooltip";
 import formatter from "../../lib/utils/formatter";
+import { FaDiscord } from "react-icons/fa";
 
 const MotionImage = motion(Image);
 
@@ -80,7 +80,7 @@ function JoinButton() {
                 <Tooltip />
                 <TooltipWrapper content="加入我們!" place="top" offset={40}>
                     <LinkButton
-                        href="https://discord.com/invite/yeecord"
+                        href="https://discord.gg/yeecord"
                         target="_blank"
                         className={clsx(
                             "icon-button p-3 w-fit h-fit rounded-full bg-gradient-to-br from-pink-500 to-purple-400",
@@ -88,7 +88,7 @@ function JoinButton() {
                         )}
                         aria-label="Join"
                     >
-                        <RiDiscordFill />
+                        <FaDiscord />
                     </LinkButton>
                 </TooltipWrapper>
             </TooltipProvider>
