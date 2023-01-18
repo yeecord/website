@@ -1,7 +1,8 @@
+import { BlogFrontMatterSchema } from "@schema/blog";
 import { BlogPageOpts, DocsPageOpts } from "@utils/mdx";
 import { BlogJsonLd, DocsJsonLd } from "@utils/seo";
 import { NextraThemeLayoutProps, PageOpts } from "nextra";
-import BaseLayout from "nextra-theme-docs";
+import BaseLayout, { NotFoundPage } from "nextra-theme-docs";
 import { ReactNode } from "react";
 import BlogLayout from "./blog";
 import DocsLayout from "./docs";
@@ -18,8 +19,13 @@ export default function Layout({
 }
 
 function Main({ page, children }: { page: PageOpts; children: ReactNode }) {
+    if (page.route.startsWith("/blog/tags")) return <>{children}</>;
+
     if (page.route.startsWith("/blog/")) {
-        const blog = page as BlogPageOpts;
+        const blog: BlogPageOpts = {
+            ...page,
+            frontMatter: BlogFrontMatterSchema.parse(page.frontMatter),
+        };
 
         return (
             <>

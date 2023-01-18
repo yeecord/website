@@ -1,34 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { BlogFrontMatter, getAuthor } from "../../utils/mdx";
+import { AuthorData } from "@utils/mdx";
+import { BlogFrontMatter } from "@schema/blog";
 
 export default function Authors({
     frontMatter,
 }: {
     frontMatter: BlogFrontMatter;
 }) {
-    if (Array.isArray(frontMatter.authors)) {
-        return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {frontMatter?.authors?.map?.((key) => (
-                    <Author key={key} authorId={key} />
-                ))}
-            </div>
-        );
-    }
-
     return (
-        <div>
-            <Author authorId={frontMatter?.authors} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {frontMatter.authors.map((author, i) => (
+                <Author key={i} author={author} />
+            ))}
         </div>
     );
 }
 
-function Author({ authorId }: { authorId: string }) {
-    const author = getAuthor(authorId);
-    const name = author == null ? authorId : author.name;
-
+function Author({ author }: { author: AuthorData }) {
     return (
         <div className="h-stack gap-3">
             {author?.image_url != null && (
@@ -47,7 +37,7 @@ function Author({ authorId }: { authorId: string }) {
                     className="heading-md text-black dark:text-white"
                     rel="nofollow noreferrer"
                 >
-                    {name}
+                    {author.name}
                 </Link>
                 <p className="text-secondary">{author?.title}</p>
             </div>

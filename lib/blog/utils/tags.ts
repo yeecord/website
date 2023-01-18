@@ -1,7 +1,7 @@
-import { BlogPage, NEXTRA_INTERNAL } from "@utils/mdx";
-import { Folder, MdxFile, PageMapItem, PageOpts } from "nextra";
+import { RawBlogPage } from "@utils/mdx";
+import { MdxFile, PageMapItem } from "nextra";
 
-interface Page extends BlogPage {
+interface Page extends RawBlogPage {
     children?: Page[];
 }
 
@@ -25,6 +25,7 @@ export const getStaticTags = (pageMap: PageMapItem[]) => {
 export type TagInfo = {
     count: number;
 };
+
 export const getStaticTagsMap = (pageMap: PageMapItem[]) => {
     const result: Page[] = [];
     flattenPageMaps(pageMap as Page[], result);
@@ -47,7 +48,7 @@ export const getStaticTagsMap = (pageMap: PageMapItem[]) => {
     return map;
 };
 
-export default function getTags(page: MdxFile) {
+export function getTags(page: MdxFile) {
     if (!page.frontMatter) {
         return [];
     }
@@ -57,29 +58,4 @@ export default function getTags(page: MdxFile) {
 
 export function getTagHref(tag: string) {
     return `/blog/tags/${tag.toLowerCase()}`;
-}
-// copied from NextraInternalGlobal
-type NextraInternal = {
-    pageMap: PageMapItem[];
-    route: string;
-    context: Record<
-        string,
-        {
-            Content: React.FC;
-            pageOpts: PageOpts;
-            themeConfig: any | null;
-        }
-    >;
-    refreshListeners: Record<string, (() => void)[]>;
-    Layout: React.FC<any>;
-};
-
-export function getBlogPageMap(): PageMapItem[] {
-    const internal = (globalThis as any)[NEXTRA_INTERNAL] as NextraInternal;
-
-    const blog = internal.pageMap.find(
-        (item) => item.kind === "Folder" && item.route === "/blog"
-    );
-
-    return (blog as Folder)?.children || [];
 }

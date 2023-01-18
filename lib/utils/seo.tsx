@@ -1,5 +1,5 @@
 import { ArticleJsonLd } from "next-seo";
-import { AuthorData, BlogPageOpts, DocsPageOpts, getAuthor } from "./mdx";
+import { AuthorData, BlogPageOpts, DocsPageOpts } from "./mdx";
 
 export function DocsJsonLd({ page }: { page: DocsPageOpts }) {
     return (
@@ -26,17 +26,6 @@ export function BlogJsonLd({ page }: { page: BlogPageOpts }) {
         };
     };
 
-    const getAuthors = () => {
-        const list = Array.isArray(authors) ? authors : [authors];
-
-        return list.flatMap((author) => {
-            const data = getAuthor(author);
-            if (data == null) return [];
-
-            return [mapAuthor(data)];
-        });
-    };
-
     return (
         <ArticleJsonLd
             type="BlogPosting"
@@ -44,7 +33,7 @@ export function BlogJsonLd({ page }: { page: BlogPageOpts }) {
             isAccessibleForFree
             publisherLogo="/img/logo.png"
             publisherName="YEE式機器龍"
-            authorName={getAuthors()}
+            authorName={authors.map(mapAuthor)}
             url={page.route}
             images={image == null ? [] : [image]}
             datePublished={new Date(date).toJSON()}

@@ -1,16 +1,17 @@
 import { getPagesUnderRoute } from "nextra/context";
 import React from "react";
-import { BlogPage, getTitle } from "@utils/mdx";
+import { getTitle } from "@utils/mdx";
 import { BlogItem, LargeBlogItem } from "./components/BlogItem";
 import clsx from "clsx";
 import { LinkButton } from "@components/mdx";
 import { BsCheckCircleFill, BsEyeFill } from "react-icons/bs";
 import { blogRecommendations } from "../../config";
 import { RiGithubFill } from "react-icons/ri";
-import { BlogRecommend } from "./BlogRecommend";
+import { BlogRecommend } from "./components/BlogRecommend";
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { GetStaticProps } from "next";
+import { BlogPage, BlogPageSchema } from "@schema/blog";
 
 type Props = {
     pages: BlogPage[];
@@ -21,11 +22,14 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     const pages = getPagesUnderRoute("/blog").flatMap((page) => {
         if (page.kind !== "MdxPage") return [];
 
-        return {
-            ...page,
-            meta: page.meta ?? null,
-        };
-    }) as BlogPage[];
+        const result = BlogPageSchema.safeParse(page);
+        if (!result.success) {
+            console.error(page.route, result.error.issues);
+            return [];
+        }
+
+        return [result.data];
+    });
 
     const recommendations = blogRecommendations.flatMap((name) => {
         return pages.find((page) => page.name === name) ?? [];
@@ -36,8 +40,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     };
 };
 //
-export default function BlogIndex(props: Props) {
-    const { pages, recommendations } = props;
+export default function BlogIndex({ pages, recommendations }: Props) {
     const [search, setSearch] = useState("");
 
     return (
@@ -69,29 +72,7 @@ export default function BlogIndex(props: Props) {
                 </div>
             </div>
 
-            <div
-                className={clsx(
-                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.8fr]",
-                    "mb-16 gap-5 lg:gap-10"
-                )}
-            >
-                <LargeBlogItem page={recommendations[0]} />
-                <div className="max-md:-ml-3">
-                    <h2 className="font-bold text-3xl ml-3 mb-3 inline-flex gap-2">
-                        精選文章{" "}
-                        <BsCheckCircleFill className="text-green-400" />
-                    </h2>
-                    <div className="flex flex-col gap-3">
-                        {recommendations.map((page, i) => {
-                            if (i === 0) return;
-
-                            return (
-                                <BlogRecommend key={page.route} page={page} />
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
+            <Recommendations items={recommendations} />
             <div className="flex flex-col sm:flex-row justify-between gap-3">
                 <h2 className="font-bold text-4xl max-sm:text-center sm:ml-5">
                     新文章
@@ -110,7 +91,6 @@ export default function BlogIndex(props: Props) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {pages.map((page) => {
                     if (
-                        page.kind !== "MdxPage" ||
                         !getTitle(page)
                             .toLowerCase()
                             .includes(search.toLowerCase())
@@ -120,6 +100,31 @@ export default function BlogIndex(props: Props) {
 
                     return <BlogItem key={page.route} page={page} />;
                 })}
+            </div>
+        </div>
+    );
+}
+
+function Recommendations({ items }: { items: BlogPage[] }) {
+    return (
+        <div
+            className={clsx(
+                "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.8fr]",
+                "mb-16 gap-5 lg:gap-10"
+            )}
+        >
+            {items[0] != null && <LargeBlogItem page={items[0]} />}
+            <div className="max-md:-ml-3">
+                <h2 className="font-bold text-3xl ml-3 mb-3 inline-flex gap-2">
+                    精選文章 <BsCheckCircleFill className="text-green-400" />
+                </h2>
+                <div className="flex flex-col gap-3">
+                    {items.map((page, i) => {
+                        if (i === 0) return;
+
+                        return <BlogRecommend key={page.route} page={page} />;
+                    })}
+                </div>
             </div>
         </div>
     );
