@@ -18,7 +18,7 @@ export default function LoginButton() {
         return (
             <button
                 className={clsx(
-                    "rounded-md px-5 py-1 font-bold break-keep",
+                    "rounded-md px-5 py-1 font-medium break-keep",
                     "text-white bg-black dark:text-black dark:bg-white"
                 )}
             >
