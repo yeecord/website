@@ -5,7 +5,7 @@ import cn_styles from "./chinese.module.css";
 import Step from "../components/Step";
 import Gradient from "../components/Gradient";
 
-import { BsTextCenter, BsTranslate } from "react-icons/bs";
+import { BsShieldFillCheck, BsTextCenter, BsTranslate } from "react-icons/bs";
 import GardientSvg from "@static/home/purple-gradient.svg";
 import { ReactNode } from "react";
 import { RiMouseFill } from "react-icons/ri";
@@ -49,7 +49,23 @@ export function ChineseUI() {
                     </h3>
                     <Skeleton />
                 </Step>
-                <Comment />
+                <div className="v-stack">
+                    <Comment icon="/blog/sjay.png" author="SJay" title="伺服器管理員 & 社群領袖"
+                             content="複雜的大型伺服器架設，有了機器龍讓繁雜的操作變得簡單，大大減輕了管理難度，任何附加功能使用起來無往不利"
+                             features={(
+                                 <>
+                                     <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
+                                 </>
+                             )}/>
+                    <Comment icon="/blog/money.jpg" author="Money" title="伺服器管理員"
+                             content="即使我不懂英語，無需繁雜的理解及操作，我仍然可以輕鬆使用 YEE式機器龍"
+                             features={(
+                                 <>
+                                     <Feature icon={<BsTextCenter />}>通俗易懂的文檔</Feature>
+                                     <Feature icon={<RiMouseFill />}>無需繁雜的操作</Feature>
+                                 </>
+                             )}/>
+                </div>
                 <Gradient
                     src={GardientSvg}
                     className={clsx(
@@ -63,7 +79,13 @@ export function ChineseUI() {
     );
 }
 
-function Comment() {
+function Comment({ icon, author, title, content, features }: {
+    icon: string,
+    author: string,
+    title: string,
+    content: string,
+    features: ReactNode
+}) {
     return (
         <motion.div
             className={clsx(
@@ -86,26 +108,21 @@ function Comment() {
         >
             <div className="h-stack">
                 <Image
-                    alt="money"
-                    src="/blog/money.jpg"
+                    alt={author}
+                    src={icon}
                     width="50"
                     height="50"
                     className="rounded-full aspect-square"
                 />
                 <div>
-                    <p className="text-secondary">伺服器管理員</p>
-                    <h3 className="heading-md">Money</h3>
+                    <p className="text-secondary">{title}</p>
+                    <h3 className="heading-md">{author}</h3>
                 </div>
             </div>
 
-            <p className="text-lg flex-1 text-secondary">
-                即使我不懂英語，無需繁雜的操作，我仍然可以輕鬆使用 YEE式機器龍
-            </p>
+            <p className="text-lg flex-1 text-secondary">{content}</p>
 
-            <div className="h-stack max-sm:hidden gap-5 mt-3">
-                <Feature icon={<BsTextCenter />}>通俗易懂的文檔</Feature>
-                <Feature icon={<RiMouseFill />}>無需繁雜的操作</Feature>
-            </div>
+            <div className="h-stack max-sm:hidden gap-5 mt-3">{features}</div>
         </motion.div>
     );
 }
