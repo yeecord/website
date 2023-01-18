@@ -89,12 +89,12 @@
     background: theme("colors.background") !important;
 }
 
-html[class~="dark"] .dark\:nx-text-neutral-500 {
-    color: theme("colors.slate.300") !important;
-}
-
 .nextra-toc > .nextra-scrollbar > div {
     @apply dark:bg-background shadow-none !important;
+}
+
+.nx-text-sm {
+    font-size: 1rem;
 }
 
 article {
