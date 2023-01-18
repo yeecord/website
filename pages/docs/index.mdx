@@ -3,31 +3,57 @@ description: YEE式機器龍是一隻全中文化的Discord機器人，我們不
 ---
 
 import { Admonition, Adsense, LinkButton, Card, Cards } from "@components/mdx";
-
-# 入門
+import { FaMusic, FaGamepad } from "react-icons/fa";
+import { BsFillChatDotsFill } from "react-icons/bs";
 
 ![YEE式機器龍 Logo](@static/img/logo_128x128.png)
 
-YEE 式機器龍是一隻全中文化的 Discord 機器人，我們提供了許多簡單且快速的整合性服務，讓您不需要再四處尋找中文的機器人，相信您已經迫不及待了，趕緊點選下方按鈕開始使用
+<br />
+
+# 入門
+
+YEE 式機器龍是一隻全中文化的 Discord 機器人，我們提供了許多簡單且快速的整合性服務，讓您不需要再四處尋找中文的機器人
 
 <LinkButton
     href="https://yeecord.com/link"
     link={{ className: "w-fit mt-3" }}
     variant="primary"
->
-    邀請機器龍
-</LinkButton>
+    children="邀請機器龍"
+/>
 
-若您對我們的服務有興趣，或不知道從何開始探索，可以點選有興趣的選項開始你的旅程：
+<h3 className="text-3xl leading-snug font-bold mt-14 mb-3">
+    <p className="text-base text-blue-500 dark:text-cyan-300">了解更多</p>
+    <p>使用指南</p>
+</h3>
+<p>點選有興趣的選項開始你的旅程!</p>
 
-<Cards className='mt-10' num={3}>
-	<Card title="動態語音頻道" href="/docs/commands/dvc/" arrow />
-	<Card title="跨群聊天" href="/docs/commands/chat/" arrow />
-	<Card title="RPG 系統" href="/docs/rpg/" arrow />
+<Cards className="mt-5" num={2}>
+    <Card
+        title="動態語音頻道"
+        href="/docs/commands/dvc/"
+        arrow
+        icon={<FaMusic />}
+        children="一個頻道就可以滿足各個人的需求"
+    />
+    <Card
+        title="跨群聊天"
+        href="/docs/commands/chat/"
+        arrow
+        icon={<BsFillChatDotsFill />}
+        children="不用加入別的伺服器就能和別的伺服器的人聊天"
+    />
+    <Card
+        title="RPG 系統"
+        href="/docs/rpg/"
+        arrow
+        icon={<FaGamepad />}
+        children="將 Discord 變身成一個有趣的遊樂場"
+    />
 </Cards>
 
 <Admonition type="info" title="我想先通知你">
-    如果在邀請或是使用時遇到問題可以查看這篇文章 [《「5 方法」排解機器人問題》](/blog/discord-bot-troubleshooting/)。
+    如果在邀請或是使用時遇到問題可以查看這篇文章 [《「5
+    方法」排解機器人問題》](/blog/discord-bot-troubleshooting/)。
 </Admonition>
 
 ## 什麼是 Discord 機器人?

@@ -27,7 +27,7 @@ export default function BlogLayout({
 
     return (
         <div>
-            <h1 className="font-extrabold !text-[2em] mt-2 md:!text-[2.4rem] tracking-tighter">
+            <h1 className="font-extrabold !text-[2em] mt-2 md:!text-[2.4rem] leading-tight">
                 {page.title}
             </h1>
             <div className="my-2">
@@ -159,8 +159,8 @@ function Footer({ authors }: { authors?: AuthorData[] }) {
                     <br className="min-[400px]:hidden" />
                     內容創作者?
                 </h2>
-                <p className="font-semibold sm:text-lg">
-                    通過 github 為我們貢獻!
+                <p className="text-lg font-semibold text-slate-700 dark:text-slate-300">
+                    通過 Github 為我們貢獻
                 </p>
                 <Link
                     href="https://github.com/yeecord/docs"

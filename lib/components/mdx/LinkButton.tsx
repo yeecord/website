@@ -33,10 +33,10 @@ export function LinkButton({
                     clsx(
                         "w-full h-full py-2 text-lg rounded-lg font-bold",
                         variant === "primary" && [
-                            "text-white bg-gradient-to-br from-purple-300 to-purple-600",
-                            "shadow-lg shadow-purple-400 dark:shadow-purple-600",
-                            "hover:from-purple-500 hover:to-purple-600",
-                            "dark:hover:from-purple-100 dark:hover:to-purple-600",
+                            "text-white bg-gradient-to-br from-cyan-300 to-blue-600",
+                            "shadow-lg shadow-blue-400 dark:shadow-blue-600",
+                            "hover:from-blue-500 hover:to-blue-600",
+                            "dark:hover:from-cyan-100 dark:hover:to-blue-600",
                         ],
                         variant === "secondary" && [
                             "bg-zinc-100 dark:bg-zinc-800",

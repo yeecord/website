@@ -18,9 +18,14 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-    const pages = getPagesUnderRoute("/blog").filter(
-        (page) => page.kind === "MdxPage"
-    ) as BlogPage[];
+    const pages = getPagesUnderRoute("/blog").flatMap((page) => {
+        if (page.kind !== "MdxPage") return [];
+
+        return {
+            ...page,
+            meta: page.meta ?? null,
+        };
+    }) as BlogPage[];
 
     const recommendations = blogRecommendations.flatMap((name) => {
         return pages.find((page) => page.name === name) ?? [];

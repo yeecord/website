@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
-
 function ThemeToggle() {
     const [current, setCurrent] = useState<"light" | "dark" | undefined>(
         undefined
