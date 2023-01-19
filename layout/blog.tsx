@@ -117,10 +117,12 @@ function Footer({ page }: { page: BlogPageOpts }) {
                     "dark:from-cyan-800/20 dark:to-purple-400/50"
                 )}
             >
-                <h2 className="font-extrabold text-2xl md:text-3xl">
-                    也想成為
-                    <br className="min-[400px]:hidden" />
-                    內容創作者?
+                <h2 className="font-extrabold">
+                    <span className="max-sm:text-blue-400 text-2xl sm:text-3xl">
+                        也想成為
+                    </span>
+                    <br className="sm:hidden" />
+                    <span className="text-3xl">內容創作者?</span>
                 </h2>
                 <p className="text-lg font-semibold text-slate-700 dark:text-slate-300">
                     通過 Github 為我們貢獻
