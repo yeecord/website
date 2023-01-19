@@ -24,7 +24,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
                 initial="hidden"
                 transition={{
                     duration: 0.5,
-                    delayChildren: 0.1,
+                    delayChildren: 0.01,
                     when: "beforeChildren",
                 }}
                 viewport={{ once: true, amount: 0.8 }}
