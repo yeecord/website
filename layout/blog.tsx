@@ -3,10 +3,10 @@ import Image from "next/image";
 import React from "react";
 import { ReactNode } from "react";
 import styles from "./blog.module.css";
-import Authors from "@blog/components/Authors";
 import Link from "next/link";
 import clsx from "clsx";
 import { Fragment } from "react";
+import { getTagHref } from "@blog/utils/tags";
 
 export default function BlogLayout({
     page,
@@ -16,64 +16,19 @@ export default function BlogLayout({
     children: ReactNode;
 }) {
     const frontMatter = page.frontMatter;
-
     if (frontMatter.theme === "raw") return <>{children}</>;
 
-    if (frontMatter.enableLayout === true) {
-        return <NewBlogLayout page={page}>{children}</NewBlogLayout>;
-    }
-
     return (
-        <div>
-            <h1 className="font-extrabold !text-[2em] mt-2 md:!text-[2.4rem] leading-tight">
+        <div className="mt-10">
+            <p className="text-base text-blue-500 dark:text-blue-400">
+                {page.readingTime != null &&
+                    `閱讀時間約 ${Math.round(page.readingTime.minutes)} 分鐘`}
+            </p>
+            <h1 className="font-extrabold text-3xl md:!text-[2.4rem] mb-2 leading-normal">
                 {page.title}
             </h1>
-            <div className="my-2">
-                <p className="text-secondary my-2">
-                    {page.readingTime != null &&
-                        `閱讀時間約 ${Math.round(
-                            page.readingTime.minutes
-                        )} 分鐘`}
-                    {" • "}
-                    {new Date(frontMatter.date).toLocaleDateString(undefined, {
-                        dateStyle: "long",
-                    })}
-                </p>
-                <Authors frontMatter={page.frontMatter} />
-            </div>
-            <div className={styles["blog-layout-old"]}>{children}</div>
-            <Footer />
-        </div>
-    );
-}
-
-function NewBlogLayout({
-    page,
-    children,
-}: {
-    page: BlogPageOpts;
-    children: ReactNode;
-}) {
-    const { frontMatter } = page;
-    const title = page.title;
-
-    return (
-        <div>
-            {frontMatter.image != null && (
-                <div className="relative aspect-video w-full h-auto">
-                    <Image
-                        alt="banner"
-                        src={frontMatter.image}
-                        className="rounded-lg object-cover"
-                        fill
-                    />
-                </div>
-            )}
-            <h1 className="font-extrabold !text-[2.4rem] mt-10 mb-2">
-                {title}
-            </h1>
-            <p className="flex flex-col sm:flex-row mb-6 gap-1 text-secondary mt-3">
-                <div className="h-stack gap-1">
+            <div className="flex flex-row gap-1 text-lg flex-wrap mb-6 text-secondary mt-3">
+                <div className="h-stack flex-wrap gap-1">
                     {frontMatter.authors.map((author, i) => (
                         <Fragment key={i}>
                             {i !== 0 && <span className="mx-1">+</span>}
@@ -82,15 +37,15 @@ function NewBlogLayout({
                     ))}
                 </div>
 
-                <span className="max-sm:hidden">•</span>
-                <span>
+                <p>
+                    <span className="mr-1">•</span>
                     {new Date(frontMatter.date).toLocaleDateString(undefined, {
                         dateStyle: "long",
                     })}
-                </span>
-            </p>
+                </p>
+            </div>
             <div className={styles["blog-layout"]}>{children}</div>
-            <Footer authors={frontMatter.authors} />
+            <Footer page={page} />
         </div>
     );
 }
@@ -116,10 +71,24 @@ function SmallAuthor({ author }: { author: AuthorData }) {
     );
 }
 
-function Footer({ authors }: { authors?: AuthorData[] }) {
+function Footer({ page }: { page: BlogPageOpts }) {
+    const { authors, tags } = page.frontMatter;
+
     return (
         <div className="flex flex-col gap-6 mt-[5rem]">
-            {authors?.map((author, i) => (
+            <div className="h-stack gap-2 flex-wrap text-base">
+                <p className="text-lg text-black dark:text-white">標籤</p>
+                {tags.map((tag) => (
+                    <Link
+                        key={tag}
+                        href={getTagHref(tag)}
+                        className="px-2 py-1 bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                    >
+                        # {tag}
+                    </Link>
+                ))}
+            </div>
+            {authors.map((author, i) => (
                 <Link
                     key={i}
                     className="h-stack p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl"
@@ -148,7 +117,7 @@ function Footer({ authors }: { authors?: AuthorData[] }) {
                     "dark:from-cyan-800/20 dark:to-purple-400/50"
                 )}
             >
-                <h2 className="font-extrabold text-3xl">
+                <h2 className="font-extrabold text-2xl md:text-3xl">
                     也想成為
                     <br className="min-[400px]:hidden" />
                     內容創作者?

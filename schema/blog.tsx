@@ -33,9 +33,6 @@ export const BlogFrontMatterSchema = z.object({
             description: "Use raw theme to disable layout injection",
         })
         .optional(),
-    enableLayout: z
-        .boolean({ description: "Enable the new layout (beta)" })
-        .optional(),
 });
 
 export type BlogFrontMatter = z.infer<typeof BlogFrontMatterSchema>;

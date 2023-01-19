@@ -8,7 +8,9 @@ import formatter from "@utils/formatter";
 
 export function Customers({ usedBy }: { usedBy: number }) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref);
+    const isInView = useInView(ref, {
+        once: true,
+    });
     const count = useAnimatedCounter(
         usedBy,
         Math.max(usedBy - 10000, 0),
