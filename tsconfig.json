@@ -21,7 +21,8 @@
             "@home/*": ["./lib/home/*"],
             "@components/*": ["./lib/components/*"],
             "@static/*": ["./public/*"],
-            "@layout/*": ["./layout/*"]
+            "@layout/*": ["./layout/*"],
+            "@ads/*": ["./lib/ads/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/index.mdx"],

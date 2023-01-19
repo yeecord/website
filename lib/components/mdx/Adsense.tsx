@@ -1,14 +1,14 @@
 import React from "react";
-import { useAdsenseState } from "../../context/adsense";
+import { useAdsenseState } from "../../ads/adsense";
 import Admonition from "@components/mdx/Admonition";
 
 /**
  * Google Ads :)
  */
 export function Adsense() {
-    const { state } = useAdsenseState();
+    const { status: state } = useAdsenseState();
 
-    if (state === "failed")
+    if (state === "error")
         return (
             <Admonition title="太無情了擋廣告" type="warning">
                 關閉 AdBlocker 讓機器龍多活一天
