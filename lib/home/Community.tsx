@@ -64,7 +64,7 @@ function JoinButton({ joined }: { joined: number }) {
                 <Tooltip />
                 <TooltipWrapper content="加入我們!" place="top" offset={40}>
                     <LinkButton
-                        href="https://discord.com/invite/yeecord"
+                        href="https://discord.gg/yeecord"
                         target="_blank"
                         className={clsx(
                             "icon-button p-3 w-fit h-fit rounded-full bg-gradient-to-br from-pink-400 to-cyan-400",

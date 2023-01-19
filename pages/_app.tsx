@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                     --font-noto: ${noto.style.fontFamily};
                 }
             `}</style>
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
         </AdsenseContextProvider>
     );
 }
