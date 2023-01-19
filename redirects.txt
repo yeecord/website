@@ -1,0 +1,12 @@
+/invite https://app.yeecord.com/invite false
+/docs/migrate-to-v4/ /docs/ true
+/i https://app.yeecord.com/invite false
+/link https://app.yeecord.com/invite false
+/discord https://discord.gg/yeecord false
+/support https://discord.gg/yeecord false
+/tos /terms false
+/topgg https://top.gg/bot/584213384409382953 false
+/dst https://discordservers.tw/bots/584213384409382953 false
+/docs/intro /docs/ true
+/rules https://hackmd.io/@yeecord/HJtapIa55 false
+/github https://github.com/yeecord/docs false
