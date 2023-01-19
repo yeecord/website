@@ -38,7 +38,7 @@ export function Hero() {
                 機器人
             </h1>
             <h2 className="heading-md lg:text-3xl text-secondary font-medium max-w-[450px] md:max-w-[650px]">
-                YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文Discord社群
+                YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
             </h2>
             <Buttons />
             <div className="w-full flex flex-col gap-5 mt=[3rem] md:mt-[4rem]">

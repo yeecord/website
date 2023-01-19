@@ -94,7 +94,7 @@ image: "/blog/banner.jpg"
 
 ### 排序頁面
 
-您必須編輯 `_meta.json` 以更改每個頁面的順序
+您必須編輯 `_meta.json` 以更改每個頁面的順序：
 
 ```json
 {
@@ -124,7 +124,7 @@ image: "/blog/banner.jpg"
 
 ### Accordion
 
-想告訴使用者額外的詳細資訊? 使用 `Accordion` 組件!
+想告訴使用者額外的詳細資訊？使用 `Accordion` 組件！
 
 ```mdx
 import { Accordion } from "@components/mdx";
@@ -158,8 +158,7 @@ import { Admonition, Error, Tip, Warning, Info } from "@components/mdx";
 
 ### Card
 
-您可以使用它來將使用者重定向到不同的頁面 <br />
-記得傳遞 `href` 道具
+您可以使用它來將使用者重定向到不同的頁面，記得傳遞 `href` 道具
 
 ```mdx
 import { Card } from "@components/mdx";
@@ -228,12 +227,11 @@ import { LinkButton } from "@components/mdx";
 <LinkButton href="/blog/welcome-to-v2" target="_blank" children="開始試用" />
 
 </div>
+
 ### 步驟
 
-當您編寫教程時，此組件對於顯示每個步驟之間的關係非常有用 <br />
-您可以輕鬆地使用 `className` 來做到這一點
-
-使用 `###` (h3) 標題添加一個步驟, 注意換行!
+當您編寫教學文件時，此組件對於顯示每個步驟之間的關係非常有用，
+您可以輕鬆地使用 `className` 來達到這個效果，使用 `###` (h3) 標題添加一個步驟：
 
 ```mdx
 <div className='steps-container'>
@@ -263,7 +261,7 @@ import { LinkButton } from "@components/mdx";
 
 ### 選項卡
 
-它們來自外部依賴項 `nextra-theme-docs`，但您可以在文檔中使用它
+它們來自外部的套件 `nextra-theme-docs`，但您可以在文檔中使用它：
 
 ```mdx
 import {(Tab, Tabs)} from "nextra-theme-docs";
@@ -297,11 +295,11 @@ I don't know programming
 
 ## 建立自己的組件
 
-Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 檔案中使用 jsx 語法 <br />
-同時我們將 Tailwind CSS 用於內部的 css 樣式, 他們支持黑暗模式 <br />
-所以意味著你可以輕鬆地建立組件
+Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 檔案中使用 jsx 語法，
+同時我們將 Tailwind CSS 用於內部的 css 樣式，他們支持黑暗模式，
+所以意味著你可以輕鬆地建立組件。
 
-我們也正在使用這些庫： [framer-motion](https://www.framer.com/motion/), `nextra`, `nextra-docs-theme`, `react-youtube` <br />
+我們也正在使用這些函式庫： [framer-motion](https://www.framer.com/motion/)、`nextra`、`nextra-docs-theme`、`react-youtube`，
 你可以在你的文檔中使用它們
 
 ### 自定義組件 (Tailwind CSS)
@@ -352,4 +350,4 @@ Mdx 能夠與 React 和 Next.js 一起使用, 您可以在 `.mdx` 檔案中使�
     />
 </div>
 
-我們建議您了解它們，為使用者建立更好的使用者體驗
+我們建議您了解它們，可以為使用者建立更好的使用者體驗
