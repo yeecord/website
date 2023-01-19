@@ -11,7 +11,12 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: ["var(--font-noto)", "-apple-system", "Microsoft YaHei", "sans-serif"],
+            sans: [
+                "var(--font-noto)",
+                "-apple-system",
+                "Microsoft YaHei",
+                "sans-serif",
+            ],
         },
         extend: {
             colors: {

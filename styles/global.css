@@ -90,7 +90,7 @@
 }
 
 .nextra-toc > .nextra-scrollbar > div {
-    @apply dark:bg-background shadow-none !important;
+    @apply !bg-transparent shadow-none !important;
 }
 
 .nx-text-sm {
@@ -114,8 +114,8 @@ article h6 {
     @apply text-black dark:text-white;
 }
 
-button {
-    outline: 0 !important;
+.dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
+    @apply md:!text-slate-400;
 }
 
 article img {
