@@ -1,7 +1,7 @@
 import { DocsPageOpts } from "@utils/mdx";
 import clsx from "clsx";
 import { ReactNode } from "react";
-import GradientSvg from "@static/docs/gradient.png";
+import GradientPng from "@static/docs/gradient.png";
 import Image from "next/image";
 
 export default function DocsLayout({
@@ -23,7 +23,7 @@ export default function DocsLayout({
 function Gradient() {
     return (
         <Image
-            src={GradientSvg}
+            src={GradientPng}
             alt=""
             className={clsx(
                 "w-[70rem] h-[60rem] opacity-[35%] dark:opacity-50 object-cover",
