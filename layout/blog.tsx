@@ -72,7 +72,7 @@ function NewBlogLayout({
             <h1 className="font-extrabold !text-[2.4rem] mt-10 mb-2">
                 {title}
             </h1>
-            <p className="flex flex-col sm:flex-row mb-6 gap-1 text-secondary mt-3">
+            <span className="flex flex-col sm:flex-row mb-6 gap-1 text-secondary mt-3">
                 <div className="h-stack gap-1">
                     {frontMatter.authors.map((author, i) => (
                         <Fragment key={i}>
@@ -88,7 +88,7 @@ function NewBlogLayout({
                         dateStyle: "long",
                     })}
                 </span>
-            </p>
+            </span>
             <div className={styles["blog-layout"]}>{children}</div>
             <Footer authors={frontMatter.authors} />
         </div>
