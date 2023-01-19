@@ -26,7 +26,8 @@ function Gradient() {
             src={GradientPng}
             alt=""
             className={clsx(
-                "w-[70rem] h-[60rem] opacity-[35%] dark:opacity-50 object-cover",
+                "hidden dark:block",
+                "w-[70rem] h-[60rem] opacity-50 object-cover",
                 "-mt-[15rem] dark:-mt-[10rem] -ml-[5rem] sm:ml-0 max-w-none"
             )}
         />
