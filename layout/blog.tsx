@@ -6,6 +6,7 @@ import styles from "./blog.module.css";
 import Authors from "@blog/components/Authors";
 import Link from "next/link";
 import clsx from "clsx";
+import { Fragment } from "react";
 
 export default function BlogLayout({
     page,
@@ -71,38 +72,47 @@ function NewBlogLayout({
             <h1 className="font-extrabold !text-[2.4rem] mt-10 mb-2">
                 {title}
             </h1>
-            <div className="h-stack mb-6">
-                {frontMatter.authors.map((author, i) => {
-                    return (
-                        <Link
-                            key={i}
-                            className="h-stack gap-1 font-bold text-lg"
-                            href={author.url ?? ""}
-                            rel="nofollow noreferrer"
-                        >
-                            {author.image_url != null && (
-                                <Image
-                                    alt="avatar"
-                                    src={author.image_url}
-                                    width={25}
-                                    height={25}
-                                    className="rounded-full"
-                                />
-                            )}
-                            {author.name}
-                        </Link>
-                    );
-                })}
-                <p className="text-secondary">
-                    •{" "}
+            <p className="flex flex-col sm:flex-row mb-6 gap-1 text-secondary mt-3">
+                <div className="h-stack gap-1">
+                    {frontMatter.authors.map((author, i) => (
+                        <Fragment key={i}>
+                            {i !== 0 && <span className="mx-1">+</span>}
+                            <SmallAuthor author={author} />
+                        </Fragment>
+                    ))}
+                </div>
+
+                <span className="max-sm:hidden">•</span>
+                <span>
                     {new Date(frontMatter.date).toLocaleDateString(undefined, {
                         dateStyle: "long",
                     })}
-                </p>
-            </div>
+                </span>
+            </p>
             <div className={styles["blog-layout"]}>{children}</div>
             <Footer authors={frontMatter.authors} />
         </div>
+    );
+}
+
+function SmallAuthor({ author }: { author: AuthorData }) {
+    return (
+        <Link
+            className="h-stack gap-1 font-bold text-black dark:text-white"
+            href={author.url ?? ""}
+            rel="nofollow noreferrer"
+        >
+            {author.image_url != null && (
+                <Image
+                    alt="avatar"
+                    src={author.image_url}
+                    width={25}
+                    height={25}
+                    className="rounded-full"
+                />
+            )}
+            {author.name}
+        </Link>
     );
 }
 
