@@ -37,7 +37,7 @@ export function Card({
             className={twMerge(
                 styles.card,
                 "flex flex-col justify-start overflow-hidden p-4",
-                "bg-transparent rounded-lg",
+                "bg-transparent dark:bg-background/50 rounded-lg",
                 "border border-gray-200",
                 "dark:border-neutral-800 dark:shadow-none",
                 "shadow-sm shadow-gray-100",

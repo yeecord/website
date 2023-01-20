@@ -30,6 +30,7 @@ function Gradient() {
                 "w-[70rem] h-[60rem] opacity-50 object-cover",
                 "-mt-[15rem] dark:-mt-[10rem] -ml-[5rem] sm:ml-0 max-w-none"
             )}
+            priority
         />
     );
 }
