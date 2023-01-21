@@ -63,7 +63,7 @@ export default function BlogIndex({ pages, recommendations }: Props) {
                         查看所有標籤
                     </LinkButton>
                     <LinkButton
-                        href="https://github.com/yeecord/docs"
+                        href="https://github.com/yeecord/website"
                         icon={<RiGithubFill className="text-xl" />}
                         target="_blank"
                     >

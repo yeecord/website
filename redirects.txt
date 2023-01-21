@@ -8,7 +8,7 @@
 /dst https://discordservers.tw/bots/584213384409382953 false
 /docs/intro /docs/ true
 /rules https://hackmd.io/@yeecord/HJtapIa55 false
-/github https://github.com/yeecord/docs false
+/github https://github.com/yeecord/website false
 /docs/migrate-to-v4 /docs/ true
 /docs/role /docs/commands/role/ true
 /docs/join-message /docs/commands/join-message/ true
