@@ -91,7 +91,7 @@ const config: Partial<DocsThemeConfig> = {
             },
         };
     },
-    docsRepositoryBase: "https://github.com/yeecord/website",
+    docsRepositoryBase: "https://github.com/yeecord/website/blob/master",
     navbar: {
         extraContent: (
             <div className="flex flex-row gap-3">
