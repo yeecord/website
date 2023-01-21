@@ -1,5 +1,4 @@
 /invite https://app.yeecord.com/invite false
-/docs/migrate-to-v4/ /docs/ true
 /i https://app.yeecord.com/invite false
 /link https://app.yeecord.com/invite false
 /discord https://discord.gg/yeecord false
@@ -10,3 +9,10 @@
 /docs/intro /docs/ true
 /rules https://hackmd.io/@yeecord/HJtapIa55 false
 /github https://github.com/yeecord/docs false
+/docs/migrate-to-v4 /docs/ true
+/docs/role /docs/commands/role/ true
+/docs/join-message /docs/commands/join-message/ true
+/docs/dvc /docs/commands/dvc/ true
+/docs/poll /docs/commands/poll/ true
+/docs/chat /docs/commands/chat/ true
+/docs/ticket /docs/commands/ticket/ true

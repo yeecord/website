@@ -12,7 +12,7 @@ const nextConfig = {
         domains: ["cdn.discordapp.com"],
     },
     redirects() {
-        return redirectsFile.map(args => {
+        const redirects = redirectsFile.map(args => {
             const [source, destination, permanent] = args.split(" ")
             
             return {
@@ -21,6 +21,16 @@ const nextConfig = {
                 permanent: Boolean(permanent)
             }
         })
+        
+        for(const redirect of redirects) {
+            if(!redirect.source.endsWith("/") && redirect.source.startsWith("/"))
+                redirects.push({
+                    ...redirect,
+                    source: `${redirect.source}/`
+                })
+        }
+        
+        return redirects
     },
 };
 
