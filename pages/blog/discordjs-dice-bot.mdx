@@ -1,0 +1,335 @@
+---
+slug: discordjs-dice-bot
+title: 使用 discord.js 快速建立一個 Discord 骰子機器人
+authors: [wolf, kane]
+description: "許多人都想透過學習 Discord 機器人來學習程式，discord.js 將是很棒的入門選擇。我們會使用 discord.js v13 快速建立一個 Discord 骰子機器人，並新增基本的指令等"
+tags:
+  [
+    "Discord",
+    "dc",
+    "機器人",
+    "指令",
+    "discordjs",
+    "discord.js",
+    "建立機器人",
+    "建立",
+    "骰子",
+    "骰子機器人",
+  ]
+image: /blog/discordjs-dice-bot/discordjs-dice-bot.jpeg
+date: 2022-05-25T16:41:00
+---
+
+import { Adsense, Info } from "@components/mdx";
+
+![Discord NodeJS 骰子 機器人](@static/blog/discordjs-dice-bot/discordjs-dice-bot.jpeg)
+
+我是因為 Discord 機器人而接觸到程式的，當時我要建立自己的機器人時，除了網路上的資源不多之外， discord.js 的程式文檔也不是那麼的友善，
+
+於是當時的我希望未來可以寫一個文章，教不會 discord.js 的人做屬於自己的機器人，
+
+骰子機器人算是一個非常簡單的機器人，編寫起來非常容易，對於初學者來說是一個很好的目標。
+
+## 前言
+
+在這個教學中，我們會使用 discord.js v13 快速建立一個 Discord 機器人，並新增基本的指令等，
+
+如果你希望可以 0 程式做出一個機器人的話，可以參考我們這篇 [《你不需要會寫程式，也能製作 Discord 音樂機器人》](/blog/make-discord-music-bot-without-coding/)。
+
+<Info title="讀這篇教學前">
+  建議你可以先去 Google 爬文了解基本的 JavaScript
+  知識，現在中文文章都很多了我相信你找的到資料。 機器人創建步驟請看這篇如何
+  [註冊應用程式](/blog/make-discord-music-bot-without-coding/#1-註冊應用程式)
+</Info>
+
+<Adsense />
+
+## 進入程式的大門
+
+### NodeJS 是什麼？
+
+NodeJs 是使用 Chrome v8 引擎建立的 JavaScript 執行環境，並且是一個伺服器專用的 JavaScript 執行環境，
+
+JavaScript 也是一個學程式很好的切入點，因為 JavaScript 的語言型態跟其他程式語言很像，而且學起來也很容易。
+
+同時這語言也有許多由社群維護的套件，像是我們今天會教到的 discord.js，也是由社群的各位大佬所維護的。
+
+### 安裝 NodeJS
+
+建立 Discord 機器人前，我們必須要先設定好 Node.js 環境，
+
+首先，我們要先前往 [Node.js 官網](https://nodejs.org)，
+
+你會看到兩個大大的綠色按鈕，點選左邊 LTS 下載長期維護版，下載之後打開安裝檔，一直點 Next 到底就可以了。
+
+![Node.js 官網](@static/blog/discordjs-dice-bot/nodejs-web.png)
+
+<Adsense />
+
+安裝完之後，必須要先重新啟動你的電腦 (注意，是重新啟動，不是關機再開機)，重新啟動完之後，NodeJS 就成功安裝到你的電腦了！
+
+![Node.js 安裝檔](@static/blog/discordjs-dice-bot/nodejs-installer.png)
+
+### 安裝 Notepad++
+
+Notepad++ 是一個簡單使用的程式/文字編輯器，你也可以使用 [Visual Studio Code](https://aka.ms/vscode) 或是其他程式編輯器，不過為了方便教學我們會使用 Notepad ++ 來做示範。
+
+首先，前往 [Notepad++官網下載頁面](https://notepad-plus-plus.org/downloads/)，並選擇最新版的程式下載，安裝程式也一樣，Next 到底即可。
+
+![Notepad++ 下載](@static/blog/discordjs-dice-bot/notepadpp-download.png)
+
+### 設定好工作區域
+
+在一個你喜歡的地方，建立一個新的資料夾，我這裡是以 `discordjs-dice-bot` 當作資料夾名稱，之後在資料夾上方路徑的地方打上 `cmd` 開啟命令提示字元，
+
+也就是我們可以透過使用指令來進行操作，這同時比起使用圖形化介面相對快很多，我們在後面會以小黑框稱呼他。
+
+![創建 資料夾](@static/blog/discordjs-dice-bot/create-folder.png)
+
+這樣就在這個資料夾路徑開啟了一個小黑框，我們將會在之後使用到這個黑框，先別急著關掉他哦！
+
+![命令提示字元](@static/blog/discordjs-dice-bot/cmd-init.png)
+
+<Adsense />
+
+### 開啟 Message Intent
+
+打開 Discord 開發者頁面，選擇你創建的應用程式，之後選擇 `Bot` 滑到底下，找到 Message Intents，把旁邊的開關打開
+
+![Message Intent](@static/blog/discordjs-dice-bot/discord-intens.png)
+
+Message Intent 是 Discord 為了要保護使用者隱私問題所設立的限制，由於我們這次是採用訊息指令，所以我們要開啟這個 Intent
+
+### 邀請機器人
+
+回到剛剛的頁面，在旁邊的選單選擇 `Oauth2 -> URL Generator` 生成一個授權網址，
+
+選擇 Scope 也就是我們要授予的範圍： `bot, applications.commands`，
+
+選擇機器人權限： `Administrator` (Administrator 是管理員的意思，你也可以選擇其他的權限，但是小心不要讓機器人爆炸就是了)。
+
+![邀請機器人](@static/blog/discordjs-dice-bot/invite-bot.png)
+
+## 安裝套件
+
+首先我們要先初始化一個專案，讓 NodeJS 知道我們這個資料夾會是一個專案的路徑，使用以下指令初始化專案，`-y` 參數可以跳過一堆繁瑣的設定，
+
+```
+npm init -y
+```
+
+執行完之後剛剛的資料夾應該會出現一個 `package.json` 的檔案，這裡面將會記錄我們專案使用到的各種資訊。
+
+在剛剛的黑框中輸入以下的指令來安裝今天的主角 discord.js，
+
+```
+npm i discord.js@13.7.0
+```
+
+這個指令會將 discord.js 套件安裝到你現在的資料夾中，所以資料夾裡面會出一個資料夾叫做 `node_modules`，這個資料夾將會有我們程式執行時需要使用到額外的套件，請不要把他刪掉！
+
+> ~~說點題外話~~，下面這張圖可以講解到 NodeJS 令人頭痛的現況，這個神奇的 `node_modules` 資料夾會隨著專案使用到更多的套件越變越大，被當成迷因說是宇宙上最重的東西
+>
+> ![NodeJS node_modules 迷因](@static/blog/discordjs-dice-bot/node-modules-meme.png)
+
+## 開始寫程式
+
+接下來打開 Notepad ++，點左上角檔案下方的加號來新增一個文件，
+
+![Notepad++ 新增文件](@static/blog/discordjs-dice-bot/notepad-init.png)
+
+新增完之後，我們先做第一次的存檔，點左上角的 `檔案` 選單，選擇另存新檔，找到你剛剛建立的資料夾，把檔名改成 index.js，底下的檔案類型成 JavaScript file
+
+![Notepad++ 文件](@static/blog/discordjs-dice-bot/notepad-firstsave.png)
+
+確認兩個欄位都沒有問題後，我們就要開始編寫程式了！
+
+首先，我們要先載入 discord.js 中的 Client 用戶端，這就像是整個機器人的核心那麼重要，
+
+```js showLineNumbers
+const { Client, Intents } = require("discord.js");
+
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS],
+});
+```
+
+> `Intents` 是 Discord 機器人在登入時要使用的參數，可以讓 Discord 知道你的機器人希望接收到什麼事件，減少我們機器人負擔。
+
+接下來再登入 Discord 機器人，還記得在 [《你不需要會寫程式，也能製作 Discord 音樂機器人》](/blog/make-discord-music-bot-without-coding/) 時有一個機器人 Token 嗎?
+
+這個 Token 是讓我們可以登入機器人帳號的密碼，在這裡我們需要將他填入到這個程式裡，
+
+```js showLineNumbers
+const { Client, Intents } = require("discord.js");
+
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
+
+client.login("TOKEN放這裡");
+```
+
+> Token 是很重要的東西，不要把這個東西公開發布！
+
+<Adsense />
+
+到目前為止，我們已經可以成功登入 Discord 機器人了，但是我們只能從 Discord 上知道它上線，而且有時候直接看 Discord 上的狀態會不準，讓我們讓機器人登入成功且載入好之後，寫一條訊息讓我們知道他的狀態：
+
+```js showLineNumbers
+client.on("ready", () => {
+  console.log("機器人已經成功上線且載入成功!");
+});
+```
+
+### 啟動機器人
+
+我們剛剛有開一個小黑框對吧，在那個小黑框中輸入 `node 檔案名稱` 來執行剛剛寫好的程式檔案：
+
+```shell
+node index.js
+```
+
+如果你輸入的所有東西都沒錯，可以回到 Discord 確認你的機器人狀態變成綠燈，這樣做機器人就是成功上線了。
+
+![讀取成功](@static/blog/discordjs-dice-bot/cmd-run.png)
+
+![機器人上線](@static/blog/discordjs-dice-bot/bot-online.png)
+
+## 和機器人互動
+
+指令是我們可以跟 Discord 機器人溝通的方法，有常在使用機器人應該都對指令不陌生，現在就讓我們來編寫一個骰子指令吧！
+
+### 訊息處理
+
+首先要先寫一個接收事件的函數，這樣當 Discord 有收到新訊息的時候會發送給機器人讓我可以去做回應。
+
+```js showLineNumbers
+// 接續前一部份的程式碼
+client.on("messageCreate", (message) => {});
+```
+
+接下來我們要決定一個機器人指令前綴，這個可以設定成任何一個文字或是符號，如果訊息不是以前綴開頭，就忽略訊息 (不然機器人就會一直回覆訊息)。
+
+<Adsense />
+
+```js showLineNumbers
+client.on("messageCreate", (message) => {
+  const prefix = "/"; // 這個是機器人的前綴 (aka 開頭 aka 觸發符號)
+  if (!message.content.startsWith(prefix)) return;
+});
+```
+
+我們這次要建立的機器人是骰子機器人，接下來就是指令本體了
+
+首先，先讓機器人認出這是骰子指令
+
+```js showLineNumbers
+client.on("messageCreate", (message) => {
+  const prefix = "/";
+  if (!message.content.startsWith(prefix)) return;
+
+  const args = message.content.slice(prefix.length).split(" ");
+
+  switch (args[0]) {
+    case "dice":
+      message.reply("你剛剛是不是觸發了骰子指令?");
+  }
+});
+```
+
+如果你輸入的所有東西都沒錯，開啟機器人後，在文字頻道中輸入 `/dice` 後機器人應該就會回覆你的訊息了！(如果你不是以 `/` 作為你的指令前綴，請將 `/` 變更為你自己訂的前綴)。
+
+![機器人回覆訊息](@static/blog/discordjs-dice-bot/bot-reply-first.png)
+
+### 加入骰子功能
+
+但是現在他只有回覆訊息而已，還沒有真正「擲骰子」功能，讓我們現在來加入這個功能吧！
+
+```js showLineNumbers
+client.on("messageCreate", (message) => {
+  // 延續上面的程式
+  switch (args[0]) {
+    case "dice":
+      const final = Math.floor(Math.random() * (6 - 1)) + 1; // 從 6 ~ 1 中挑選一個號碼
+      return message.reply(`你得到了 ${final}!`);
+  }
+});
+```
+
+存檔完之後再啟動一次機器人，嘗試重新輸入指令，機器人應該就會回覆你得到的號碼了！
+
+![機器人得到號碼](@static/blog/discordjs-dice-bot/bot-reply-second.png)
+
+### 嵌入式訊息
+
+但是現在回覆的訊息看起來很一般，我們可以把訊息加上 `Embed`，也就是嵌入式訊息，在設計方面看起來會比較好看，而且可以顯示更多的資訊，
+
+先讓我們回到第一行，引入 discord.js 套件的程式區塊，我們要多引入一個模組，叫做 `MessageEmbed`，把最上面那行改成這樣：
+
+<Adsense />
+
+```js showLineNumbers
+const { Client, Intents, MessageEmbed } = require("discord.js");
+```
+
+之後再修改指令的部分，讓它傳送嵌入式訊息，
+
+```js showLineNumbers
+client.on("messageCreate", (message) => {
+  // 延續上面的程式
+  switch (args[0]) {
+    case "dice":
+      const final = Math.floor(Math.random() * (6 - 1)) + 1;
+      const diceEmbed = new MessageEmbed()
+        .setTitle(`🎲 你得到了 ${final}`) //設定標題
+        .setColor("#5865F2"); //設定顏色
+      return message.reply({
+        embeds: [diceEmbed],
+      });
+  }
+});
+```
+
+現在機器人終於會回覆一個比較漂亮的訊息了！
+
+![機器人Embed](@static/blog/discordjs-dice-bot/bot-reply-third.png)
+
+### 完整的程式碼
+
+```js showLineNumbers
+const { Client, Intents, MessageEmbed } = require("discord.js");
+
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
+
+client.on("ready", () => {
+  console.log("機器人已經成功上線且載入成功!");
+});
+
+client.on("messageCreate", (message) => {
+  const prefix = "/"; // 如果要改成自己的前綴，改"裡面的字串
+  if (!message.content.startsWith(prefix)) return;
+
+  const args = message.content.slice(prefix.length).split(" ");
+  switch (args[0]) {
+    case "dice":
+      const final = Math.floor(Math.random() * (6 - 1)) + 1;
+      const diceEmbed = new MessageEmbed()
+        .setTitle(`🎲 你得到了 ${final}`)
+        .setColor("#5865F2");
+      return message.reply({
+        embeds: [diceEmbed],
+      });
+  }
+});
+
+client.login("你的TOKEN");
+```
+
+## 總結
+
+以上就是這次的「簡易版」 Discord 骰子機器人，如果在建立或是架設時有發現問題，可以到我們的 [支援群組](https://discord.gg/yeecord) 詢問，或是直接私訊 `Wolf yuan#6173`。
+
+<Adsense />

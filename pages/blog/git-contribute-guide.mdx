@@ -1,0 +1,184 @@
+---
+slug: git-contribution-guide
+title: 如何貢獻 Git 平台上的專案 ── Git 平台入門協作教學
+authors: [kay]
+description: "想必有在寫程式、使用 Git 平台的程式開發者，有時會想幫一些開發者修改專案的程式碼，讓整個程式運行更流暢或者減少開發者的負擔吧？在這裡就教大家如何貢獻一個 Git 平台上的專案，讓您也可以為程式的生態盡一份心力！"
+tags:
+  [
+	"git",
+	"github",
+  ]
+date: 2022-07-25T21:24:00
+image: /blog/git-contribution-guide/git-contribution-guide.jpeg
+---
+
+import { Adsense, Tip, Info, Warning } from "@components/mdx";
+
+![如何貢獻 Git 平台上的專案](@static/blog/git-contribution-guide/git-contribution-guide.jpeg)
+
+想必有在寫程式、使用 Git 平台的程式開發者，有時會想幫一些開發者修改專案的程式碼，讓整個程式運行更流暢或者減少開發者的負擔吧？在這裡就教大家如何貢獻一個 Git 平台上的專案，讓您也可以為程式的生態盡一份心力！
+
+此文章主要聚焦於如何貢獻，現今在網路上很多 Git 平台，在此會多以 GitHub 及 GitLab 介面講解。
+
+## 步驟一：Fork 專案
+
+因為那個專案不是你的，所以您對該專案只能複製，並不能做其他修改。所以我們必須先 Fork，讓 Git 平台複製一份該專案的副本給我們，我們才能開始修改程式碼，並將修改推送至專案副本。  
+首先到您想要貢獻的專案，點選 `Fork` 按鈕：
+
+![Fork 按鈕](@static/blog/git-contribution-guide/github-where-fork-button.png)
+
+`Repository name` 預設會是該專案的名字，然後點選 `Create Fork` 創建：
+
+![寫入 Fork 資訊](@static/blog/git-contribution-guide/github-write-fork-information.png)
+
+<Adsense />
+
+GitLab 的 Fork 部分其實跟 GitHub 大同小異，多了能決定專案是否此副本能被別人看到的 `Visibility Level` 選項。
+
+<Tip title="小提示">`Project Url` 欄位後面設定的是這個副本的擁有者是誰</Tip>
+
+![寫入 Fork 資訊](@static/blog/git-contribution-guide/gitlab-write-fork-information.png)
+
+複製完成後，他會幫你跳轉至您的副本專案網頁，至此您就完成了 Fork 專案，並且您會在專案標題下方看到 `Fork from foo/bar`。
+
+![成功 Fork](@static/blog/git-contribution-guide/github-fork-finished.png)
+
+![成功 Fork](@static/blog/git-contribution-guide/gitlab-fork-finished.png)
+
+## 步驟二：Clone 專案副本、環境設定與開始編輯
+
+首先我們到 GitHub 複製專案連結，點選 `Code` 按鈕 `HTTPS` 來複製連結，
+
+![Code 按鈕](@static/blog/git-contribution-guide/github-where-code-button.png)c
+
+接下來我們開啟終端機，透過以下指令將專案副本複製到電腦上您想要的位置，
+
+```shell showLineNumbers
+git clone https://github.com/擁有者/專案名字
+```
+
+<Adsense />
+
+![Clone 專案](@static/blog/git-contribution-guide/clone-project.png)
+
+然後專案就會被複製到電腦上您指定的位置了，但是請先別急，請先透過以下指令添加一個原本專案的 git 數據庫（在此我命名該數據庫為 upstream）：
+
+```shell showLineNumbers
+git remote add upstream 原本專案的連結
+```
+
+![新增 Upstream](@static/blog/git-contribution-guide/add-upstream.png)
+
+[GitHub Flow](https://medium.com/@trylovetom/%E8%AE%93%E6%88%91%E5%80%91%E4%BE%86%E4%BA%86%E8%A7%A3-github-flow-%E5%90%A7-4144caf1f1bf)、GitLab Flow 建議我們在多人實作時建立分支，目的在能夠安全實驗程式碼與執行變更，接下來，輸入以下指令建立新分支並切換過去：
+
+```shell showLineNumbers
+git checkout -b 分支名稱
+```
+
+![切換至新分支](@static/blog/git-contribution-guide/change-to-new-branch.png)
+
+然後就可以開始編輯了！
+
+![開始編輯](@static/blog/git-contribution-guide/start-contribution.png)
+
+當您每編輯到了一個階段後，您可以在該資料夾下開啟終端機，並 **適當** 使用下方指令進行將新增檔案至索引、儲存變更、提交推送變更至 Git 平台上的副本專案等動作：
+
+```shell showLineNumbers
+git add . # 將所有檔案新增至索引，如果沒有新檔案可以不用輸入這行
+git commit -am "更新內容" # 提交變更
+git push -u origin 剛剛建立的新分支名稱 # 推送變更至Git平台的副本專案
+```
+
+<Adsense />
+
+![追蹤並提交](@static/blog/git-contribution-guide/add-and-commit.png)
+
+## 步驟三：向原專案發出推送要求
+
+請先前往 Git 平台上專案副本網頁，點選 `Contribute` -> `Open Pull Request`
+
+![開啟 Pull Request](@static/blog/git-contribution-guide/github-where-open-pr-button.png)
+
+<Info title='小筆記'>
+
+- GitHub 到專案頁面，如果有出現 `XXX had recent pushes...` 也可以按下該黃色橫幅右側的 `Compare & pull request`：
+
+![Compare & pull request](@static/blog/git-contribution-guide/compare-and-pr-message.png)
+
+- GitLab 到專案頁面，在專案副本網頁上方會出現一則寫著 `You pushed to...` 的訊息，請點選下方的 `Create Merge Request` 按鈕：
+
+![Create Merge Request](@static/blog/git-contribution-guide/gitlab-where-open-pr-button.png)
+
+</Info>
+
+接下來就會出現填寫 Pull Request 資訊的介面，填好相關資訊以後請按下 `Create Pull Request` 按鈕正式向原專案發出推送要求。
+
+![寫入 Pull Request 資訊](@static/blog/git-contribution-guide/write-pr-information.png)
+
+創建完成之後將會透過 Email 通知該 Pull Request 的各種更新動態，
+![等待合併](@static/blog/git-contribution-guide/wait-for-merge.png)
+
+## 等待結果！
+
+當有人對您發出的 Pull Request 做出回應時，您會收到相關通知：
+
+<Adsense />
+
+![Pull Request 通知](@static/blog/git-contribution-guide/pr-notification.png)
+
+<Warning>
+  如果是 GitLab 則不會通知！請自己定時前往確認您發出的推送請求之目前處理進度！
+</Warning>
+
+點進去即可查看目前該 Pull Request 的相關消息，如果您有看到 Pull Request 標題下方有 `Merged` 字眼，恭喜您，您的推送請求已經被開發者批准了！您可以按下下方的 `Delete branch` 刪除分支！
+
+![成功合併](@static/blog/git-contribution-guide/pr-merged.png)
+
+## 繼續貢獻
+
+當然您可以選擇繼續貢獻，但在繼續貢獻之前，請檢查是否原專案的主分支有被變更過，如果有，請先輸入以下指令以拉取原專案有被做過的變更：
+
+```shell showLineNumbers
+git pull upstream master
+```
+
+<Warning title="我想先告知你">
+  若您是 GitLab，主分支通常會是 `main` 而不是
+  `master`！不過可能依照每個專案會有不同的設定。
+</Warning>
+
+然後您就可以繼續編輯等作業了
+
+## 常見問題
+
+### 無法使用 `git commit` ？
+
+#### `Please tell me who you are`
+
+這通常會發生在您第一次使用 Git CLI 進行專案管理的時候，因為他沒有您的資訊，所以 `git commit` 指令無法執行，請跟著他的指令提示填入您的相關資訊後，再輸入一次 `git commit` 即可正常提交。
+
+<Adsense />
+
+![Please tell me who you are](@static/blog/git-contribution-guide/no-global-account-error.png)
+
+#### `Nothing to commit, working tree clean`
+
+這代表您沒有對檔案做出變更，或是沒有使用 `git add` 指令先將檔案加入到 Git 索引內。
+
+![Nothing to commit, working tree clean](@static/blog/git-contribution-guide/commit-working-tree-clean.png)
+
+### 無法使用 `git push` ？
+
+#### `Everything up-to-date`
+
+這跟剛剛 `Nothing to commit, working tree clean` 差不多，您沒有檔案的修改需要被推送上 Git 平台。
+
+![Everything up-to-date](@static/blog/git-contribution-guide/push-up-to-date.png)
+
+#### `Support for password authentication was removed...`
+
+通常此問題會發生在 Linux 或者一些要在終端機中輸入使用者帳號、密碼以登入的終端機上。因為 [密碼驗證 GitHub 已經在 2021 年 8 月 13 日時被禁止了](https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/)，所以登入時，`Username` 欄位一樣輸入使用者名字，`Password` 請輸入您帳戶的 `Personal Access Token (PAT)`。如果不知道如何生成自己帳戶的 `Personal Access Token`，請參考 [Creating a personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)。
+
+![Support for password authentication was removed...](@static/blog/git-contribution-guide/password-auth-error.png)
+
+<Adsense />

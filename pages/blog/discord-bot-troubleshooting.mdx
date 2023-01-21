@@ -1,0 +1,84 @@
+---
+slug: discord-bot-troubleshooting
+title: Discord 音樂機器人沒聲音、錯誤、無法邀請？「5方法」排解機器人問題！
+authors: kane
+description: "你有沒有遇過想要使用 Discord 音樂機器人播放 YouTube 上的音樂時，發現機器人出現錯誤、沒有反應、進去了語音頻道卻沒聲音、按了按鈕之後出現一行紅字？這篇文章將教你五個方法快速的排解這類問題，並且如何跟開發者來回報。"
+tags: ["Discord", "dc", "音樂", "機器人", "錯誤", "沒聲音", "沒反應", "2022"]
+image: /blog/discord-bot-troubleshooting/discord-bot-troubleshooting.jpeg
+date: 2022-05-07T13:21:30
+---
+
+import { Adsense, Info } from "@components/mdx";
+
+![discord bot troubleshooting](@static/blog/discord-bot-troubleshooting/discord-bot-troubleshooting.jpeg)
+
+你有沒有遇過想要使用 Discord 音樂機器人播放 YouTube 上的音樂時，發現機器人出現錯誤、沒有反應、進去了語音頻道卻沒聲音、按了按鈕之後出現一行紅字？
+
+這篇文章將教你五個方法快速的排解這類問題，並且如何跟開發者來回報。
+
+<Info title="告知你一下">
+  如果想了解排解音樂機器人 LAG 的問題可以閱讀這篇：[《Discord 音樂機器人「5
+  步驟」解決聽音樂卡頓 LAG 問題》](/blog/fix-music-lag/)
+</Info>
+
+## Discord 機器人是怎麼運作的？
+
+Discord 上各種五花八門的機器人都是背後有一群開發者們，用愛發電所完成的成品，並且將完成的機器人程式放上一台「託管」的主機，讓他全天運行。
+
+那當然在運行機器人也有可能因為自然災害像是電力、網路中斷，或是開發者寫的代碼有臭蟲而無法執行，那也是要開發者三不五時地去關注自己的機器人是否有正常的在運作。
+
+<Adsense />
+
+## 無法邀請機器人
+
+### 需要驗證 Email
+
+如果在授權給機器人介面時出現 `You need to verify your e-mail address in order to add this bot to a server.` 錯誤，
+
+![You need to verify your e-mail address in order to add this bot to a server. Error](@static/blog/discord-bot-troubleshooting/oauth-error.jpg)
+
+請先回到 Discord 客戶端，點選左下角使用者設定，確認有設置一個 Email，如果沒有的話可以填入你的 Gmail 帳號，
+
+![Discord 使用者設定](@static/blog/discord-bot-troubleshooting/user-settings.jpg)
+
+之後到你的信箱去收一封 Discord 的帳號驗證信，來確認你是 Email 使用者本人，驗證完成後再重新邀請。
+
+<Adsense />
+
+### 沒有邀請權限
+
+如果你不是伺服器的擁有者，請先向有管理身分組權限的人取得 `管理伺服器` 權限來邀請機器人，或是也可以請有權限的人來執行。
+
+![管理伺服器 權限](@static/blog/discord-bot-troubleshooting/manage-server-permission.png)
+
+## 機器人沒反應
+
+### 權限不足
+
+請確認在邀請的時候有勾選到正確的權限需求，如果沒有勾選到的話，可以到伺服器設定，選擇機器人名字的身分組，並確認至少有勾選 `檢視頻道`、`發送訊息`、`讀取訊息歷史` 之類的基本權限。
+
+<Adsense />
+
+![機器人 身分組](@static/blog/discord-bot-troubleshooting/bot-role.png)
+
+### 按鈕出現紅字
+
+舊版的 Discord 手機版用戶端還沒有支援到像是按鈕、斜線指令等操作，會出現 `Invalid Form Body` 的錯誤，請到 [Google Play](https://play.google.com/store/apps/details?id=com.discord) 或是 [ios](https://apps.apple.com/hk/app/discord-%E8%81%8A%E5%A4%A9-%E9%80%9A%E8%A9%B1%E8%88%87%E8%81%9A%E6%9C%83/id985746746) 上更新應用程式。
+
+![Google Play 更新 Discord](@static/blog/discord-bot-troubleshooting/update-discord.jpg)
+
+<Adsense />
+
+### 正在維護或是重啟
+
+可能你正在使用的機器人正在進行重啟，可以到機器人的 [支援群組](https://discord.gg/yeecord) 去關注最新進度。
+
+![機器人公告](@static/blog/discord-bot-troubleshooting/bot-announcement.png)
+
+## 你有更好的選擇
+
+[YEE 式機器龍](/) 能夠有效率的幫助您管理伺服器的運作，並且也配有順暢的音樂系統，目前有三萬個伺服器正在使用他，
+
+想了解更多可以繼續閱讀 [《2022 年 Discord 還可以播 YouTube 的高品質免費音樂機器人》](/blog/how-to-invite-bot)。
+
+<Adsense />

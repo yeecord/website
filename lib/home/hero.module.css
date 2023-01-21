@@ -1,0 +1,44 @@
+.animated-gradient {
+    background-size: 200%;
+    animation: infinite background-loop 6s;
+    animation-timing-function: linear;
+}
+
+.rainbow-border {
+    box-shadow: inset 2px 2px 0 theme("colors.green.400"),
+        inset -2px -2px 0 theme("colors.cyan.500"),
+        5px 5px 25px theme("colors.green.400 / 50%"),
+        -5px -5px 25px theme("colors.cyan.500 / 50%");
+}
+
+.rainbow-border:hover {
+    color: white;
+    background: linear-gradient(
+        to bottom right,
+        theme("colors.green.400"),
+        theme("colors.cyan.500")
+    );
+}
+
+@media (max-width: theme("screens.md")) {
+    .servers {
+        animation: servers-loop infinite 30s linear;
+    }
+}
+
+@keyframes servers-loop {
+    from {
+        transform: translateZ(0);
+    }
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+@keyframes background-loop {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: 200%;
+    }
+}

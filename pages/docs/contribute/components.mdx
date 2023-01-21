@@ -1,0 +1,266 @@
+---
+title: 自定義組件
+description: 利用自定義組件改進你的文章!
+---
+
+import { Tabs, Tab } from "nextra-theme-docs";
+import {
+    Accordion,
+    Admonition,
+    Tip,
+    Warning,
+    Info,
+    Card,
+    Cards,
+    LinkButton,
+} from "@components/mdx";
+import { BsDownload } from "react-icons/bs";
+import { motion } from "framer-motion";
+
+# 自定義組件
+
+你可以利用自定義組件改進你的文章
+
+使用 `import { ... } from "@components/mdx"` 輕鬆導入自定義組件!
+
+## Accordion
+
+想告訴使用者額外的詳細資訊？使用 `Accordion` 組件！
+
+```mdx
+import { Accordion } from "@components/mdx";
+
+**這裡有一條鯊魚**
+
+<Accordion title="Money是一隻鯊魚">Yeahhhhh</Accordion>;
+```
+
+**這裡有一條鯊魚**
+
+<Accordion title="Money是一隻鯊魚">Yeahhhhh</Accordion>
+
+## Admonition
+
+想給使用者提示或警告? 你可以使用 `Admonition` 組件
+
+它支持多種類型：`Tip`、`Warning`、`Info`、`Error`：
+
+```mdx
+import { Admonition, Error, Tip, Warning, Info } from "@components/mdx";
+
+<Admonition title="Default" />
+<Tip title="Tip" />
+<Warning title="warning" />
+<Info title="info" />
+```
+
+<Admonition title="Default" />
+<Tip title="Tip" />
+<Warning title="warning" />
+<Info title="info" />
+
+## Card
+
+您可以使用它來將使用者重定向到不同的頁面，記得傳遞 `href` 道具
+
+```mdx
+import { Card } from "@components/mdx";
+
+<Card title="重定向到部落格" href="/blog/welcome-to-v2" />
+<Card title="重定向到部落格" href="/blog/welcome-to-v2" arrow />
+```
+
+<Card title="重定向到部落格" href="/blog/welcome-to-v2" />
+<Card
+    title="重定向到部落格"
+    href="/blog/welcome-to-v2"
+    arrow
+    className="mt-2"
+/>
+
+## 鏈接按鈕
+
+插入網址太難看？您可以使用按鈕代替它!
+
+<Info>_你可能需要 `w-fit` 否則按鈕會太寬_</Info>
+
+```mdx
+import { LinkButton } from "@components/mdx";
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    children="免費體驗"
+    variant="secondary"
+/>
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    icon={<BsDownload />}
+    children="免費體驗"
+    variant="primary"
+    link={{ className: "w-fit" }}
+/>
+```
+
+<div className='flex flex-col min-[400px]:flex-row gap-3 flex-wrap my-5'>
+  
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    icon={<BsDownload />}
+    children="免費體驗"
+    variant='primary'
+/>
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    children="開始試用"
+    variant="primary"
+/>
+
+<LinkButton
+    href="/blog/welcome-to-v2"
+    target="_blank"
+    icon={<BsDownload />}
+    children="免費體驗"
+/>
+
+<LinkButton href="/blog/welcome-to-v2" target="_blank" children="開始試用" />
+
+</div>
+
+## 步驟
+
+當您編寫教學文件時，此組件對於顯示每個步驟之間的關係非常有用
+
+您可以輕鬆地使用 `className` 來達到這個效果，使用 `###` (h3) 標題添加一個步驟：
+
+```mdx
+<div className='steps-container'>
+
+### 去睡覺
+
+你覺得累
+
+### 去工作
+
+你需要賺錢
+
+</div>
+```
+
+<div className='steps-container'>
+
+### 去睡覺
+
+你覺得累
+
+### 去工作
+
+你需要賺錢
+
+</div>
+
+## 選項卡
+
+它們來自外部的套件 `nextra-theme-docs`，但您可以在文檔中使用它：
+
+```mdx
+import {(Tab, Tabs)} from "nextra-theme-docs";
+
+<Tabs items={['凱恩', 'Money']}>
+  <Tab>
+
+在人類的歷史中，我們總是盡了一切努力想搞懂 Rust，對 Rust 進行深入研究，如果此時我們選擇忽略 Rust，那後果可想而知。儘管 Rust 看似不顯眼，卻佔據了我的腦海。
+
+  </Tab>
+  <Tab>
+
+I don't know programming
+
+  </Tab>
+</Tabs>
+```
+
+<Tabs items={['凱恩', 'Money']}>
+  <Tab>
+	
+	  在人類的歷史中，我們總是盡了一切努力想搞懂 Rust，對 Rust 進行深入研究，如果此時我們選擇忽略 Rust，那後果可想而知。儘管 Rust 看似不顯眼，卻佔據了我的腦海。
+
+  </Tab>
+  <Tab>
+
+I don't know programming
+
+  </Tab>
+</Tabs>
+
+<br />
+
+## 建立自己的組件
+
+Mdx 能夠與 React 和 Next.js 一起使用，您可以在 `.mdx` 檔案中使用 jsx 語法。
+
+同時我們將 Tailwind CSS 用於內部的 css 樣式，這意味著你可以輕鬆地建立組件。
+
+<Tip title="重要提示">請確保它們同時支持淺色和深色模式</Tip>
+### 我們正在使用這些函式庫
+
+你可以在你的文檔中使用它們!
+
+-   [framer-motion](https://www.framer.com/motion/)
+-   `nextra`
+-   `nextra-docs-theme`
+-   `react-youtube`
+
+### 自定義組件 (Tailwind CSS)
+
+```jsx
+<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+```
+
+<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+
+### Framer Motion
+
+它可以讓您輕鬆建立炫酷的動畫
+
+<Cards>
+    <Card
+        href="https://www.framer.com/docs/"
+        target="_blank"
+        title="他們的文檔"
+    />
+</Cards>
+
+```jsx
+<motion.div
+    animate={{
+        scale: [1, 2, 2, 1, 1],
+        rotate: [0, 0, 270, 270, 0],
+        borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+    }}
+/>
+```
+
+<div className="flex flex-col items-center bg-purple-500 p-5 rounded-2xl mt-4">
+    <motion.div
+        animate={{
+            scale: [1, 2, 2, 1, 1],
+            rotate: [0, 0, 270, 270, 0],
+            borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+        }}
+        transition={{
+            duration: 2,
+            ease: "easeInOut",
+            times: [0, 0.2, 0.5, 0.8, 1],
+            repeat: Infinity,
+            repeatDelay: 0.2,
+        }}
+        className="w-10 h-10 md:w-32 md:h-32 bg-white m-[5rem]"
+    />
+</div>
+
+我們建議您了解它們，可以為使用者建立更好的使用者體驗

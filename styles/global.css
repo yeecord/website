@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .heading-xl {
+        @apply text-5xl font-bold;
+    }
+
+    .heading-lg {
+        @apply text-3xl font-bold;
+    }
+
+    .heading-md {
+        @apply text-lg sm:text-xl font-bold;
+    }
+
+    .text-secondary {
+        @apply text-secondary-light dark:text-secondary-dark;
+    }
+
+    .text-gradient {
+        @apply text-transparent bg-gradient-to-b bg-clip-text;
+    }
+
+    .card {
+        @apply bg-white/40 border-black/10 shadow-lg dark:bg-white/10 border-[1px] dark:border-white/10 p-4 rounded-xl;
+    }
+
+    .h-stack {
+        @apply flex flex-row gap-2.5 items-center;
+    }
+
+    .primary-button {
+        @apply px-6 py-3 rounded-full text-white bg-gradient-to-br text-lg font-bold transition-all;
+    }
+
+    .icon-button {
+        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+    }
+
+    .secondary-button {
+        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+    }
+
+    .normal-input:focus-visible {
+        box-shadow: none !important;
+    }
+
+    .steps-container {
+        margin-left: 1rem;
+        padding-left: 1.7rem;
+        counter-reset: step;
+        border-left: 1px solid;
+        border-color: rgb(229 231 235/1);
+        margin-bottom: 3rem;
+    }
+    .steps-container h3,
+    .steps-container .step {
+        counter-increment: step;
+    }
+
+    .steps-container h3:before,
+    .steps-container .step:before {
+        content: counter(step);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        margin-left: calc(-1.7rem - 17px);
+        width: 34px;
+        height: 34px;
+        line-height: 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+
+        @apply bg-gradient-to-br from-blue-500 to-cyan-400
+        shadow-lg shadow-blue-400/50 dark:shadow-blue-800
+        text-base text-white 
+        rounded-full;
+    }
+
+    .dark .steps-container {
+        border-color: #353535;
+    }
+}
+
+.dark body {
+    background: theme("colors.background") !important;
+}
+
+.nextra-toc > .nextra-scrollbar > div {
+    @apply !bg-transparent shadow-none !important;
+}
+
+.nx-text-sm {
+    font-size: 1rem;
+}
+
+article {
+    @apply text-slate-600 sm:text-lg !important;
+}
+
+.dark article {
+    @apply text-slate-300 !important;
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+    @apply text-black dark:text-white;
+}
+
+.dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
+    @apply md:!text-slate-400;
+}
+
+article img {
+    border-radius: 5px;
+}
+
+div:has(#home-page) {
+    overflow: clip !important;
+}

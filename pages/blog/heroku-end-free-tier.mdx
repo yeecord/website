@@ -1,0 +1,120 @@
+---
+title: 老牌託管 Heroku 將停止提供免費方案！網友私藏 3 替代平台無痛轉移
+authors: [kane]
+description: Heroku 在近期宣布於 11 月停止支援免費方案，並強迫原本的使用者轉往選擇付費方案，許多開發者都在尋找另外的替代平台。本文將介紹還有再提供免費託管服務的平台 Railway、Render、fly.io
+tags: ["Heroku", "免費"]
+date: 2022-09-04T12:34:00
+image: /blog/heroku-end-free-tier/heroku-end-free-tier.jpeg
+---
+
+import { Adsense } from "@components/mdx";
+
+![託管平台 Heroku 將停止提供免費方案！網友私藏 3 替代平台無痛轉移](@static/blog/heroku-end-free-tier/heroku-end-free-tier.jpeg)
+
+Heroku 在近期宣布在 11 月 28 日停止支援免費方案，並強迫原本的使用者轉往選擇付費方案，許多開發者也在尋找另外的替代平台。
+
+本文將介紹還有再提供免費託管服務的平台 Railway、Render、fly.io，以及這些平台的優劣跟方案的比較。
+
+## Heroku 是什麼？
+
+Heroku 作為老牌免費的 PaaS (Platform-as-a-Service) 平台，因快速容器化部屬的特性以及良好的 CI/CD 整合受到大眾喜愛，
+
+在第三方擴充也有非常多的選擇，像是 Redis、PostgresSQL 等附加服務點按一下就能架設完成，不需要再經過複雜的安裝手續，
+
+並且作為全代管服務，用戶也不需要自己管理後端主機設定等細項，可以加速專注在開發上。
+
+## Heroku 發生了什麼事？
+
+<Adsense />
+
+根據 [Heroku Blog](https://blog.heroku.com/next-chapter) 上的文章表示：
+
+> 我們的產品、工程和安全團隊正在花費大量精力來管理對 Heroku 免費產品計劃的欺詐和濫用，
+> 為了將我們的資源集中用於為客戶提供關鍵任務功能，我們將逐步淘汰 Heroku 的免費計劃。
+
+這感覺也可以聯想到上次發生的 [Heroku OAuth 金鑰外洩](/blog/heroku-security) 事件，因為免費用戶量過於龐大導致維護更加的困難。
+
+Heroku 之所以能夠提供這麼長久的免費服務並且屹立不搖，很大原因是背後有強大的金錢支助，也就是 Heroku 背後母公司 Salesforce，
+
+在免費方案的壓力下，設施的費用比起收益幾乎是入不敷出的狀態，可以看到像是 [EC2 隨需執行個體](https://aws.amazon.com/tw/ec2/pricing/on-demand/) 光是在資料傳輸價格上，就可以消耗掉大量的成本，而且 Heroku 並沒有限制每個 Dyno 的網路流量，導致嚴重的被濫用來架設各種機器人等服務，經常會被 Cloudflare 封鎖 IP，這也可能是他們停止的原因。
+
+![aws EC2 資料傳輸 費用](@static/blog/heroku-end-free-tier/aws-bandwidth-pricing.png)
+
+## 為什麼不推薦 Heroku 付費方案？
+
+其實 Heroku 在付費方案上還做的蠻完善的，像是內建的監控面板、自動 SSL 設定、[Preboot](https://devcenter.heroku.com/articles/preboot) 等，不過個人覺得，該定價模式比較固定，不能在需求的資源如 CPU、記憶體上做調整，
+
+像是使用 aws、GCP 等雲端平台皆是採用 Pay-as-you-go 的計價模式，能夠針對資源和成本做更多的節省。
+
+![Heroku 費用](@static/blog/heroku-end-free-tier/heroku-pricing.png)
+
+## 三大 Heroku 替代平台
+
+以下將會介紹三個 Heroku 的替代方案，可以作為 Heroku 的替代品：
+
+### [1. Railway](https://railway.app?referralCode=J6j7km)
+
+![Railway.app](@static/blog/heroku-end-free-tier/railway.png)
+
+[Railway](https://railway.app?referralCode=J6j7km) 比起其他平台來說相較冷門，不過提供的服務品質是我覺得最值得使用的，可以非常快速的搭建好架構，以及一鍵創建 MySQL、PostgresSQL、MongoDB、Redis 等功能，
+
+<Adsense />
+
+定價模式採用的是 Pay-as-you-go，依照應用程式使用的 CPU、記憶體、網路流量來計價，對於微服務 microservice 可說是非常的吃香，
+
+附加的 Redis、資料庫等也是同樣的計價方式，沒有像是 Heroku 的記憶體等限制，
+
+預設新帳號可以獲得每個月 5$ 抵用金，或是最多 500 小時執行限制，只需綁信用卡即可啟用 Developer Plan 並解除 500 小時限制，擁有 Github Student 資格的使用者也可以直接升級到 Developer Plan。
+
+#### 方案比較
+
+| 方案      | CPU          | 記憶體     | 運行限制 | 硬碟空間    |
+| --------- | ------------ | ---------- | -------- | ----------- |
+| Trial     | 共享         | 512 MB     | 500 小時 | 1 GB        |
+| Developer | 共享         | 最高 8 GB  | -        | 最高 100 GB |
+| Team      | 最高 32 vCPU | 最高 32G B | -        | 最高 2TB    |
+
+### [2. Render](https://render.com/)
+
+![Render](@static/blog/heroku-end-free-tier/render.png)
+
+[Render](https://render.com/) 在選擇方面更是比 Heroku 多上了許多，可以指定創建靜態網站、網頁服務、排成工作、和 Heroku 相似的背景運行容器，
+
+Render 在所有服務皆有支援 HTTP/2 協議，並且有 Cloudflare 進階的抗 DDOS 攻擊保護，全球 CDN 等更好的服務。
+
+免費方案的表現非常的穩定，不過在 Docker build 的時間比 Heroku 久上很多，每個月有 750 個小時的限制，如果只使用一個專案是已經足夠的了，不用擔心月底會下線的問題。
+
+#### 方案比較
+
+<Adsense />
+
+| 方案    | 價格 | CPU      | 記憶體 |
+| ------- | ---- | -------- | ------ |
+| Free    | 0$   | 共享     | 512 MB |
+| Starter | 7$   | 0.5 vCPU | 512 MB |
+
+更多可以查看 [Render 價目表](https://render.com/pricing)
+
+### [3. fly.io](https://fly.io)
+
+![fly.io](@static/blog/heroku-end-free-tier/flyio.png)
+
+[fly.io](https://fly.io/) 沒有提供直接的 CI/CD Deploy，而是使用自家的 [flyctl](https://fly.io/docs/hands-on/install-flyctl/) 來部屬應用程式，
+
+計價方式是依據創建的 Docker 容器大小以小時計價，免費方案可以獲得 3 個 1 vCPU / 256 MB 的小容器，並且可以選擇要部屬的地區，有在亞洲的區域像是香港、日本可以選擇。
+
+## Heroku 替代方案比較
+
+| 平台    | 簡介                                     | 特點                           | 價格           |
+| ------- | ---------------------------------------- | ------------------------------ | -------------- |
+| Railway | Pay-as-you-go 計價方式對微服務很划算     | 一鍵部屬應用、可創建多運行環境 | 每月 5$ 抵用金 |
+| Render  | 和 Heroku 概念相似並有許多細節優化的平台 | HTTP/2、CDN、排成工作          | 免費 ~ 7$      |
+| fly.io  | Docker 應用部屬適用                      | 有亞洲區節點、可擴展           | 依照容器使用量 |
+
+## 對於免費平台的看法
+
+因為免費方案吸引使用者來使用平台，同時也造成了許多困擾，例如假帳號充斥、濫用服務等狀況導致平台最終無法繼續支撐下去，
+
+希望存活下來的平台能夠修正對於濫用資源的使用條款，讓平台能夠繼續存活更久。
+
+<Adsense />

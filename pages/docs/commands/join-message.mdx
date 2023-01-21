@@ -1,0 +1,80 @@
+---
+description: "當新成員加入你精心布置的 Discord 伺服器之後，你希望可以好好的歡迎你的新成員，那你可以設置這個通知來讓大家一起歡迎新成員！"
+---
+
+# 成員加入訊息
+
+import { Adsense, Warning } from "@components/mdx";
+
+![加入訊息](@static/docs/join-message/join-message-index.jpg)
+
+當新成員加入你精心布置的 Discord 伺服器之後，你希望可以好好的歡迎你的新成員，那你可以設置這個通知來讓大家一起歡迎新成員！
+
+## 怎麼設置加入訊息？
+
+<Adsense />
+
+YEE 式機器龍將繁雜的設定程序變得簡單快速！首先使用 `&jm` 指令彈出加入訊息設定選單：
+
+![加入訊息 設定面板](@static/docs/join-message/join-message-panel.png)
+
+### 1. 訊息內容
+
+<Warning title="我想先警告你">
+  手機版本 Discord 似乎並沒有完整的支援表單，如果在送出表單時出現紅框顯示
+  `出現錯誤`，請改用電腦版 Discord 來設定。
+</Warning>
+
+首先點選 `設定加入訊息` 之後會跳出一個表單，並有四個可以輸入的欄位，
+
+![加入訊息 設定表單](@static/docs/join-message/join-message-form.png)
+
+可以設置訊息的 `大標題`，以及 `訊息的內文`，這兩個欄位可以設置特別的預留參數。
+
+- `%guild%` 會顯示伺服器名字
+- `%user%` 會顯示使用者 Tag
+- `%member_count%` 會顯示伺服器的成員數量
+
+另外要標記一個頻道可以使用格式 `<#頻道ID>`，詳細取得 ID 的方法可以查看 [下方的說明](#如何獲得頻道-id)，格式會像是 `<#600366554840039438>` 這樣子。
+
+圖片可以直接上傳到 Discord 聊天室之後對著圖片點右鍵，之後點選單中 `複製連結` 複製到剪貼簿，再點選一次 `設定加入訊息`，將圖片網址貼進去。
+
+<Adsense />
+
+![複製 圖片連結](@static/docs/join-message/copy-image-url.png)
+
+### 2. 發送頻道
+
+點選 `設定加入訊息頻道` 之後會跳出一個下拉選單，在選單中可以選擇一個會發送訊息的頻道，請確認機器龍有權限在該頻道發送訊息。
+
+### 3. 給予身分組
+
+![選擇身分組](@static/docs/join-message/select-role.png)
+
+點選面板第二行 `設定加入身分組`、`設定機器人身分組` 之後會跳出一個下拉選單，在選單中可以選擇一個新成員加入的時候給予的身分組，分為成員的身分組跟機器人的身分組。
+
+請確認身分組的順序在機器人擁有的最高身分組的下方，並且這個身分組是可以被給予的。
+
+### 4. 啟用加入訊息
+
+最後點選 `啟用加入訊息` 按鈕來進行啟用，如果要關閉這個功能也可以同樣點選 `禁用加入訊息`。
+
+## 如何獲得頻道 ID
+
+1. 進入 Discord 用戶端，找到左下角的使用者設定
+
+   ![使用者設定](@static/docs/join-message/user-settings.png)
+
+2. 在左邊欄位找到 `進階`
+
+   ![設定選單](@static/docs/join-message/advanced-settings.png)
+
+3. 開啟 `開發者模式` 的勾勾
+
+   ![進階設定](@static/docs/join-message/enable-developer-mode.png)
+
+4. 回到 Discord，找到你想要的頻道，對他點擊右鍵並點擊 `複製ID`
+
+   ![複製頻道ID](@static/docs/join-message/copy-channel-id.png)
+
+<Adsense />
