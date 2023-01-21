@@ -2,41 +2,35 @@ import PinkWave from "@static/home/pink-wave.svg";
 import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
-import { animate, motion, useInView } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { motion, MotionValue, useTransform } from "framer-motion";
 import formatter from "@utils/formatter";
+import { useAnimatedCounter } from "./utils/use-animated-counter";
 
 export function Customers({ usedBy }: { usedBy: number }) {
-    const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, {
-        once: true,
-    });
-    const count = useAnimatedCounter(
+    const { count, start } = useAnimatedCounter(
         usedBy,
         Math.max(usedBy - 10000, 0),
-        1,
-        isInView
+        1
     );
 
     return (
         <div className="relative mt-[10rem] z-[2]">
             <motion.div
-                ref={ref}
                 whileInView="show"
+                onViewportEnter={() => start()}
                 initial="hidden"
                 transition={{
                     duration: 0.5,
                     delayChildren: 0.01,
-                    when: "beforeChildren",
                 }}
-                viewport={{ once: true, amount: 0.8 }}
+                viewport={{ once: true }}
                 variants={{
                     show: {
                         y: 0,
                         opacity: 1,
                     },
                     hidden: {
-                        y: 100,
+                        y: 20,
                         opacity: 0,
                     },
                 }}
@@ -45,7 +39,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
                 <h1 className="heading-xl">
                     受超過
                     <span className="block max-md:text-7xl md:inline text-gradient from-pink-600 to-orange-400 mx-2">
-                        {formatter.format(Math.floor(count))}
+                        <ServerCount count={count} />
                     </span>
                     個伺服器使用
                 </h1>
@@ -103,31 +97,13 @@ export function Customers({ usedBy }: { usedBy: number }) {
     );
 }
 
-export const useAnimatedCounter = (
-    maxValue: number,
-    initialValue = 0,
-    duration = 1,
-    enabled: boolean
-) => {
-    const [counter, setCounter] = useState<number>(initialValue);
+function ServerCount({ count }: { count: MotionValue<number> }) {
+    const rounded = useTransform(count, (v: number) =>
+        formatter.format(Math.floor(v))
+    );
 
-    useEffect(() => {
-        if (!enabled) {
-            setCounter(initialValue);
-            return;
-        }
-
-        const controls = animate(initialValue, maxValue, {
-            duration,
-            onUpdate(value) {
-                setCounter(value);
-            },
-        });
-        return () => controls.stop();
-    }, [initialValue, maxValue, duration, enabled]);
-
-    return counter;
-};
+    return <motion.span>{rounded}</motion.span>;
+}
 
 function Comment({
     icon,
