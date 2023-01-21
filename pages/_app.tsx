@@ -3,6 +3,7 @@ import { ReactElement, useState } from "react";
 import { Noto_Sans_TC } from "@next/font/google";
 import { AdsenseContext } from "@ads/adsense";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 import "nextra-theme-docs/style.css";
 import "react-tooltip/dist/react-tooltip.css";
@@ -28,6 +29,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                 crossOrigin="anonymous"
                 onError={() => setAdsStatus("error")}
             />
+            <Analytics/>
             <style jsx global>{`
                 html {
                     --font-noto: ${noto.style.fontFamily};
