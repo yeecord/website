@@ -31,7 +31,7 @@ export function getBlogPageMap(): PageMapItem[] {
     );
 
     const files = (blog as Folder)?.children || []
-    const pageMap = files.filter(item => !item.route.startsWith("/blog/tags"))
+    const pageMap = files.filter(item => item.kind === "MdxPage" && !item.route.startsWith("/blog/tags"))
 
     return (globalThis.blogPagesMap = pageMap);
 }
