@@ -105,7 +105,7 @@ export const blogAuthors: Record<string, AuthorData> = {
     },
     money: {
         name: "Money",
-        title: "Yeecord網站的前端工程師",
+        title: "Yeecord 網站的前端工程師",
         url: "https://money-portfolio.vercel.app",
         image_url: "/blog/money.jpg",
     },
