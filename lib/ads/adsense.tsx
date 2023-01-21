@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, useContext } from "react";
 
 export type AdsenseContextType = {
     status: "ok" | "error";

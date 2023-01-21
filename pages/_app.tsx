@@ -17,8 +17,8 @@ export const noto = Noto_Sans_TC({
 });
 
 export default function App({ Component, pageProps }: AppProps): ReactElement {
-    //this will cause the whole page being rerendered
-    //TODO: replace with global states using libraries
+    // this will cause the whole page being rerendered
+    // TODO: replace with global states using libraries
     const [status, setAdsStatus] = useState<"ok" | "error">("ok");
 
     return (
@@ -27,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                 async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
                 crossOrigin="anonymous"
+                strategy="afterInteractive"
                 onError={() => setAdsStatus("error")}
             />
             <Analytics/>

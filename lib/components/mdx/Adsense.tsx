@@ -1,5 +1,5 @@
 import React from "react";
-import { useAdsenseState } from "../../ads/adsense";
+import { useAdsenseState } from "@ads/adsense";
 import Admonition from "@components/mdx/Admonition";
 
 /**
