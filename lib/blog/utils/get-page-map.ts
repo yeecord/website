@@ -1,5 +1,6 @@
 import { NEXTRA_INTERNAL } from "@utils/mdx";
 import { Folder, PageMapItem, PageOpts } from "nextra";
+import { BlogPage } from "@schema/blog";
 
 // copied from NextraInternalGlobal
 export type NextraInternal = {
@@ -30,8 +31,11 @@ export function getBlogPageMap(): PageMapItem[] {
         (item) => item.kind === "Folder" && item.route === "/blog"
     );
 
-    const files = (blog as Folder)?.children || []
-    const pageMap = files.filter(item => item.kind === "MdxPage" && !item.route.startsWith("/blog/tags"))
+    const files = (blog as Folder)?.children || [];
+
+    const pageMap = files.filter(
+        (item) => item.kind === "MdxPage" && !item.route?.startsWith("/blog/tags")
+    );
 
     return (globalThis.blogPagesMap = pageMap);
 }
