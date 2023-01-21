@@ -1,4 +1,5 @@
 import { API_ENDPOINT, CDN_ENDPOINT } from "../../config";
+import * as process from "process";
 
 export async function fetchUser() {
     const res = await fetch(`${API_ENDPOINT}/users/@me`, {
@@ -33,10 +34,10 @@ export async function fetchGuild(): Promise<{
         "https://discord.com/api/v10/invites/yeecord?with_counts=true"
     ).then((r) => r.json());
 
-    const info = await fetch(`${API_ENDPOINT}/info`).then((r) => r.json());
+    const info = process.env.NODE_ENV === "production" && await fetch(`${API_ENDPOINT}/info`).then((r) => r.json());
 
     return {
         serverMembers: approximate_member_count as number,
-        guildCount: info.guilds,
+        guildCount: info?.guilds || 100_000,
     };
 }
