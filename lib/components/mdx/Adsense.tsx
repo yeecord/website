@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAdsenseState } from "@ads/adsense";
 import Admonition from "@components/mdx/Admonition";
 
@@ -7,6 +7,10 @@ import Admonition from "@components/mdx/Admonition";
  */
 export function Adsense() {
     const { status: state } = useAdsenseState();
+
+    useEffect(() => {
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+    }, []);
 
     if (state === "error")
         return (
