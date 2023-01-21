@@ -16,7 +16,7 @@
 
 ### 文章
 
-在 pages 資料夾下的文件接受到 CC BY 4.0 之保護。只有在以下情況使用才符合要求。
+在 `pages` 資料夾下的文件接受到 CC BY 4.0 之保護。只有在以下情況使用才符合要求。
 
 1. 在文章 <head> 標籤內標明原始文章來源： `<link rel="canonical" href="https://yeecord.com/blog/how-to-invite-bot/" />`
 2. 並在文章開頭和結尾標註： `文章來源： <a href="https://yeecord.com/">YEE式機器龍</a>`
