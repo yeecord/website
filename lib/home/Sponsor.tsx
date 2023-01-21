@@ -23,7 +23,7 @@ export default function Sponsor() {
                         title="照顧機器龍"
                         text="在 Github 上貢獻"
                         icon={<RiGithubFill />}
-                        href="https://github.com/yeecord/docs"
+                        href="https://github.com/yeecord/website"
                     >
                         貢獻
                     </Card>

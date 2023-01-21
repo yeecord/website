@@ -128,7 +128,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
                     通過 Github 為我們貢獻
                 </p>
                 <Link
-                    href="https://github.com/yeecord/docs"
+                    href="https://github.com/yeecord/website"
                     target="_blank"
                     className="w-fit"
                 >
