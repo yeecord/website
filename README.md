@@ -10,7 +10,13 @@
 
 ##  ⚠️ 請注意
 
-若要在本地進行測試，請確保使用 `pnpm` 套件管理器（[安裝方式](https://pnpm.io/zh-TW/installation)）而非 `npm` 而無法安裝套件️！！
+### pnpm
+
+若要在本地進行測試，請確保使用 `pnpm` 套件管理器（[安裝方式](https://pnpm.io/zh-TW/installation)）而非 `npm` 會無法安裝套件️！！
+
+### 執行
+
+使用 `npm run dev` 開始執行，並會在 `http://localhost:3000` 可以進行預覽
 
 ## 📝 授權
 
