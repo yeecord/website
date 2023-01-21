@@ -122,8 +122,8 @@ const config: Partial<DocsThemeConfig> = {
         text: "在 Github 上編輯此頁面 →",
     },
     banner: {
-        key: "first-release",
-        text: <span>🎉 歡迎我們的新網站</span>,
+        key: "new-year",
+        text: <span>🎊 新年快樂！</span>,
     },
     gitTimestamp: ({ timestamp }) => {
         return (
