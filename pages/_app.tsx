@@ -3,6 +3,7 @@ import { ReactElement, useState } from "react";
 import { Noto_Sans_TC } from "@next/font/google";
 import { AdsenseContext } from "@ads/adsense";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 import "nextra-theme-docs/style.css";
 import "react-tooltip/dist/react-tooltip.css";
@@ -16,8 +17,8 @@ export const noto = Noto_Sans_TC({
 });
 
 export default function App({ Component, pageProps }: AppProps): ReactElement {
-    //this will cause the whole page being rerendered
-    //TODO: replace with global states using libraries
+    // this will cause the whole page being rerendered
+    // TODO: replace with global states using libraries
     const [status, setAdsStatus] = useState<"ok" | "error">("ok");
 
     return (
@@ -26,8 +27,10 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                 async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
                 crossOrigin="anonymous"
+                strategy="afterInteractive"
                 onError={() => setAdsStatus("error")}
             />
+            <Analytics/>
             <style jsx global>{`
                 html {
                     --font-noto: ${noto.style.fontFamily};
