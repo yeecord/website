@@ -114,6 +114,10 @@ article h6 {
     @apply text-black dark:text-white;
 }
 
+article h2 {
+    padding-bottom: .75rem;
+}
+
 h1, article h2 {
     @apply font-sansHeading;
 }
