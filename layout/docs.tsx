@@ -30,11 +30,16 @@ function Gradient() {
         <div
             className={clsx(
                 "absolute w-[50rem] h-[80rem] -top-[25rem] left-[5rem]",
-                "[mask-image:radial-gradient(farthest-corner,rgba(0,0,0,0.25)_0%,transparent_70%)]",
-                "-rotate-[20deg]"
+                "[mask-image:radial-gradient(farthest-corner,white_0%,transparent_70%)]",
+                "hidden dark:block -rotate-[20deg]"
             )}
         >
-            <div className="bg-gradient-to-b from-cyan-400/50 via-blue-400/70 dark:via-blue-400 to-purple-800 w-full h-full" />
+            <div
+                className={clsx(
+                    "bg-gradient-to-b w-full h-full opacity-30",
+                    "from-cyan-400/50 via-blue-400 to-purple-800"
+                )}
+            />
         </div>
     );
 }
