@@ -6,7 +6,6 @@ import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
 import { ThemeToggle } from "@components/ThemeToggle";
-import { PageFrontMatter } from "@schema/page";
 
 const config: Partial<DocsThemeConfig> = {
     components: {
@@ -51,7 +50,6 @@ const config: Partial<DocsThemeConfig> = {
     useNextSeoProps() {
         const { asPath } = useRouter();
         const { frontMatter, title } = useConfig();
-        frontMatter as PageFrontMatter;
 
         const image = frontMatter.image != null && {
             alt: title,
