@@ -41,7 +41,7 @@ const config: Partial<DocsThemeConfig> = {
                     borderRadius: "50%",
                 }}
             />
-            <strong className="text-lg">Yeecord</strong>
+            <p className="text-lg">Yeecord</p>
         </div>
     ),
     search: {

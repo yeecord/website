@@ -97,6 +97,10 @@
     font-size: 1rem;
 }
 
+.nx-font-medium {
+    font-weight: 600;
+}
+
 article {
     @apply text-slate-600 sm:text-lg !important;
 }
