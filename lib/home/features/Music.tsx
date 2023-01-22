@@ -13,8 +13,7 @@ import GreenGradient from "@static/home/green-gradient.svg";
 import { motion } from "framer-motion";
 import Gradient from "../components/Gradient";
 import clsx from "clsx";
-import styles from "./features.module.css";
-import lstyles from "./music.module.css";
+import styles from "./music.module.css";
 import LinkButton from "../components/LinkButton";
 
 export function Music() {
@@ -58,10 +57,10 @@ export function Music() {
                     "max-h-[10rem] lg:max-h-full lg:mt-[5rem]"
                 )}
             >
-                <div className={`${lstyles["music-player"]} mr-20`}>
+                <div className={`${styles["music-player"]} mr-20`}>
                     <MusicPlayer />
                 </div>
-                <div className={`z-[2] ${lstyles["play-list"]}`}>
+                <div className={`z-[2] ${styles["play-list"]}`}>
                     <Playlist />
                 </div>
             </motion.div>
@@ -77,7 +76,7 @@ function Content() {
                 "sm:p-5 md:p-5"
             )}
         >
-            <h1 className={styles.heading}>輕鬆播放音樂</h1>
+            <h1 className="features-heading">輕鬆播放音樂</h1>
             <h3 className="heading-md text-secondary">
                 讓你可以和朋友一起收聽 Spotify 和 SoundCloud
                 上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單

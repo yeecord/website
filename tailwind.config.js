@@ -1,4 +1,5 @@
 const plugin = require("tailwindcss/plugin");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,12 +12,7 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: [
-                "var(--font-noto)",
-                "-apple-system",
-                "Microsoft YaHei",
-                "sans-serif",
-            ],
+            sans: ["var(--font-noto)", ...defaultTheme.fontFamily.sans],
         },
         extend: {
             colors: {

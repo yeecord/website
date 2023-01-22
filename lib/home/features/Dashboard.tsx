@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import styles from "./features.module.css";
 import ChartSvg from "@static/home/chart.svg";
 import Image from "next/image";
 import {
@@ -8,9 +7,13 @@ import {
     BsMusicNoteBeamed,
 } from "react-icons/bs";
 import { RiSettings2Fill } from "react-icons/ri";
-import lstyles from "./dashboard.module.css";
 import { Progress } from "../components/Progress";
 import { motion } from "framer-motion";
+
+const card = clsx(
+    "bg-slate-100 rounded-3xl p-5 shadow-xl flex flex-col",
+    "dark:bg-slate-900"
+);
 
 export function Dashboard() {
     return (
@@ -22,7 +25,7 @@ export function Dashboard() {
                         "from-transparent via-purple-400 to-purple-600 dark:to-purple-100"
                     )}
                 />
-                <h1 className={styles.heading}>簡易的控制面板</h1>
+                <h1 className="features-heading">簡易的控制面板</h1>
                 <h3 className="heading-md text-secondary">
                     通過美觀、簡易的方式來自定義
                     <br className="sm:hidden" />
@@ -33,7 +36,7 @@ export function Dashboard() {
                 <Chart />
                 <Settings />
 
-                <div className={lstyles.card}>
+                <div className={card}>
                     <div className="h-stack">
                         <div className="p-3 rounded-xl text-white bg-green-500 text-3xl">
                             <BsMusicNoteBeamed />
@@ -57,7 +60,7 @@ export function Dashboard() {
 function Settings() {
     return (
         <motion.div
-            className={`${lstyles.card} gap-3`}
+            className={`${card} gap-3`}
             whileInView={{ y: 0 }}
             initial={{ y: "10rem" }}
         >
@@ -98,7 +101,7 @@ function RoleItem() {
 function Chart() {
     return (
         <motion.div
-            className={clsx("row-span-2", lstyles.card)}
+            className={clsx("row-span-2", card)}
             whileInView={{ x: 0, opacity: 1 }}
             initial={{ x: "8rem", opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}

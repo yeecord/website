@@ -1,7 +1,0 @@
-.card {
-    @apply bg-slate-100 rounded-3xl p-5 shadow-xl flex flex-col;
-}
-
-:global(.dark) .card {
-    @apply bg-slate-900;
-}

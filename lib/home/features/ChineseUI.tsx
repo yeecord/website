@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { motion, Variants } from "framer-motion";
-import styles from "./features.module.css";
 import cn_styles from "./chinese.module.css";
 import Step from "../components/Step";
 import Gradient from "../components/Gradient";
@@ -42,7 +41,7 @@ export function ChineseUI() {
                     }}
                     className="relative z-[2]"
                 >
-                    <h1 className={`${styles.heading} mb-2`}>全中文化界面</h1>
+                    <h1 className="features-heading mb-2">全中文化界面</h1>
                     <h3 className="heading-md text-secondary">
                         我們提供了全中文化的界面，讓英文不再成為優質機器人的隔閡
                     </h3>
@@ -164,7 +163,6 @@ function Skeleton() {
                 <h2 className="heading-md">指令區</h2>
                 <div className={`${foreground} h-7`} />
                 <div className={`${foreground} h-6 w-[70%]`} />
-                <div className="rounded-lg bg-slate-200 dark:bg-slate-900 h-10 mt-auto" />
             </motion.div>
         </div>
     );

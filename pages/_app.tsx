@@ -12,6 +12,7 @@ export const noto = Noto_Sans_TC({
     weight: ["500", "700"],
     variable: "--font-noto",
     display: "swap",
+    preload: true,
     subsets: ["latin"],
 });
 
@@ -26,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                 async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
                 crossOrigin="anonymous"
-                strategy="afterInteractive"
+                strategy="lazyOnload"
                 onError={() => setAdsStatus("error")}
             />
             <Analytics />
