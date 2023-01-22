@@ -62,7 +62,7 @@ function PageContainer({
 
                 <p>
                     <span className="mr-1">•</span>
-                    {new Date(frontMatter.date).toLocaleDateString(undefined, {
+                    {new Date(frontMatter.date).toLocaleDateString("zh", {
                         dateStyle: "long",
                     })}
                 </p>
