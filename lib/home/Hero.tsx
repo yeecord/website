@@ -20,7 +20,7 @@ export function Hero() {
             />
             <h1
                 className={clsx(
-                    "font-ms font-bold leading-[1.1]",
+                    "font-bold leading-[1.1]",
                     "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-5xl lg:text-7xl xl:text-8xl"
                 )}
             >

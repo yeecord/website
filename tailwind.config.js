@@ -13,7 +13,7 @@ module.exports = {
     theme: {
         fontFamily: {
             sans: ["var(--font-noto)", ...defaultTheme.fontFamily.sans],
-            ms: ["Microsoft YaHei", ...defaultTheme.fontFamily.sans],
+            ms: ["var(--font-noto)", "Microsoft YaHei", ...defaultTheme.fontFamily.sans],
         },
         extend: {
             colors: {
