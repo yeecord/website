@@ -6,7 +6,6 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 
 import "nextra-theme-docs/style.css";
-import "react-tooltip/dist/react-tooltip.css";
 import "../styles/global.css";
 
 export const noto = Noto_Sans_TC({
@@ -30,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                 strategy="afterInteractive"
                 onError={() => setAdsStatus("error")}
             />
-            <Analytics/>
+            <Analytics />
             <style jsx global>{`
                 html {
                     --font-noto: ${noto.style.fontFamily};

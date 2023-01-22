@@ -1,11 +1,10 @@
-import { BlogFrontMatterSchema } from "@schema/blog";
-import { BlogPageOpts, DocsPageOpts } from "@utils/mdx";
-import { BlogJsonLd, DocsJsonLd } from "@utils/seo";
 import { NextraThemeLayoutProps, PageOpts } from "nextra";
-import BaseLayout, { NotFoundPage } from "nextra-theme-docs";
+import BaseLayout from "nextra-theme-docs";
 import { ReactNode } from "react";
-import BlogLayout from "./blog";
-import DocsLayout from "./docs";
+import dynamic from "next/dynamic";
+
+const BlogLayout = dynamic(() => import("./blog").then((mod) => mod.default));
+const DocsLayout = dynamic(() => import("./docs").then((mod) => mod.default));
 
 export default function Layout({
     children,
@@ -22,28 +21,11 @@ function Main({ page, children }: { page: PageOpts; children: ReactNode }) {
     if (page.route.startsWith("/blog/tags")) return <>{children}</>;
 
     if (page.route.startsWith("/blog/")) {
-        const blog: BlogPageOpts = {
-            ...page,
-            frontMatter: BlogFrontMatterSchema.parse(page.frontMatter),
-        };
-
-        return (
-            <>
-                <BlogJsonLd page={blog} />
-                <BlogLayout page={blog}>{children}</BlogLayout>
-            </>
-        );
+        return <BlogLayout page={page}>{children}</BlogLayout>;
     }
 
     if (page.route.startsWith("/docs")) {
-        const docs = page as DocsPageOpts;
-
-        return (
-            <>
-                <DocsJsonLd page={docs} />
-                <DocsLayout page={docs}>{children}</DocsLayout>
-            </>
-        );
+        return <DocsLayout page={page}>{children}</DocsLayout>;
     }
 
     return <>{children}</>;

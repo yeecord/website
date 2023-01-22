@@ -1,17 +1,23 @@
-import { DocsPageOpts } from "@utils/mdx";
 import clsx from "clsx";
 import { ReactNode } from "react";
 import GradientPng from "@static/docs/gradient.png";
 import Image from "next/image";
+import { PageOpts } from "nextra";
+import { DocsJsonLd } from "@utils/seo";
+import { DocsPageOpts } from "@utils/mdx";
 
 export default function DocsLayout({
+    page,
     children,
 }: {
-    page: DocsPageOpts;
+    page: PageOpts;
     children: ReactNode;
 }) {
+    const docs = page as DocsPageOpts;
+
     return (
         <>
+            <DocsJsonLd page={docs} />
             <div className="absolute w-full top-0 left-0 -z-[1] overflow-hidden">
                 <Gradient />
             </div>

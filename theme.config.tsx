@@ -2,33 +2,10 @@ import Footer from "@components/Footer";
 import LoginButton from "@components/LoginButton";
 import Image from "next/image";
 import Link from "next/link";
-import { DocsThemeConfig, useConfig, useTheme } from "nextra-theme-docs";
-import { useEffect, useState } from "react";
-import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
+import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
-
-function ThemeToggle() {
-    const [current, setCurrent] = useState<"light" | "dark" | undefined>(
-        undefined
-    );
-    const { setTheme, resolvedTheme } = useTheme();
-
-    useEffect(() => {
-        if (resolvedTheme != undefined)
-            setCurrent(resolvedTheme as "light" | "dark");
-    }, [resolvedTheme]);
-
-    return (
-        <button
-            aria-label="toggle dark mode"
-            className="text-xl"
-            onClick={() => setTheme(current === "dark" ? "light" : "dark")}
-        >
-            {current === "dark" ? <BsMoonFill /> : <BsFillSunFill />}
-        </button>
-    );
-}
+import { ThemeToggle } from "@components/ThemeToggle";
 
 const config: Partial<DocsThemeConfig> = {
     components: {
@@ -72,12 +49,16 @@ const config: Partial<DocsThemeConfig> = {
     },
     useNextSeoProps() {
         const { asPath } = useRouter();
-        const { frontMatter } = useConfig()
+        const { frontMatter, title } = useConfig();
 
-        const image = frontMatter.image && {
-            alt: frontMatter.title,
-            url: frontMatter.image
-        }
+        const image = frontMatter.image != null && {
+            alt: title,
+            url: frontMatter.image,
+        };
+
+        const description =
+            frontMatter.description ??
+            "YEE式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間";
 
         return {
             canonical: `https://yeecord.com${asPath}`,
@@ -85,10 +66,9 @@ const config: Partial<DocsThemeConfig> = {
             twitter: {
                 cardType: "summary_large_image",
             },
-            description: frontMatter.description,
+            description: description,
             openGraph: {
-                description: frontMatter.description,
-                // siteName: "YEE式機器龍 – 萬中選一的 Discord 中文機器人",
+                description: description,
                 type: "website",
                 images: [
                     image || {

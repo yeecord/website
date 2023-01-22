@@ -1,15 +1,12 @@
-import { motion } from "framer-motion";
 import Gradient from "./components/Gradient";
 import LinkButton from "./components/LinkButton";
 import CyanPinkGradient from "@static/home/cyan-pink-gradient.svg";
 import GradientRing from "@static/home/gradient-ring.svg";
 import Image from "next/image";
 import clsx from "clsx";
-import { Tooltip, TooltipProvider, TooltipWrapper } from "react-tooltip";
-import formatter from "../../lib/utils/formatter";
+import formatter from "@utils/formatter";
 import { FaDiscord } from "react-icons/fa";
-
-const MotionImage = motion(Image);
+import styles from "./community.module.css";
 
 export function Community({ joined }: { joined: number }) {
     return (
@@ -36,47 +33,26 @@ export function Community({ joined }: { joined: number }) {
 function JoinButton({ joined }: { joined: number }) {
     return (
         <div className="p-[6rem] z-[2] relative">
-            <MotionImage
+            <Image
                 alt=""
                 src={GradientRing}
-                animate={{
-                    rotateZ: [0, 360],
-                }}
-                transition={{
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    duration: 4,
-                    ease: "linear",
-                }}
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    objectFit: "contain",
-                    userSelect: "none",
-                    pointerEvents: "none",
-                    width: "100%",
-                    height: "100%",
-                    zIndex: -1,
-                }}
+                className={clsx(
+                    "absolute top-0 left-0 object-contain select-none pointer-events-none w-full h-full -z-[1]",
+                    styles["rotate-z"]
+                )}
             />
-            <TooltipProvider>
-                <Tooltip />
-                <TooltipWrapper content="加入我們!" place="top" offset={40}>
-                    <LinkButton
-                        href="https://discord.gg/yeecord"
-                        target="_blank"
-                        className={clsx(
-                            "icon-button p-3 w-fit h-fit rounded-full bg-gradient-to-br from-pink-400 to-cyan-400",
-                            "text-3xl text-white shadow-xl shadow-cyan-400/50"
-                        )}
-                        aria-label="Join"
-                    >
-                        <FaDiscord className="text-5xl" />
-                        {formatter.format(joined)}
-                    </LinkButton>
-                </TooltipWrapper>
-            </TooltipProvider>
+            <LinkButton
+                href="https://discord.gg/yeecord"
+                target="_blank"
+                className={clsx(
+                    "icon-button p-3 w-fit h-fit rounded-full bg-gradient-to-br from-pink-400 to-cyan-400",
+                    "text-3xl text-white shadow-xl shadow-cyan-400/50"
+                )}
+                aria-label="Join"
+            >
+                <FaDiscord className="text-5xl" />
+                {formatter.format(joined)}
+            </LinkButton>
         </div>
     );
 }
