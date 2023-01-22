@@ -1,0 +1,69 @@
+---
+title: 為什麼不該更新 discord.js v14？踩坑經驗「這五點」聽完再決定！
+authors: [kane]
+description: discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為他簡單且強大的函式庫，讓入門開發者能快速的製作出穩定的機器人，而同時也因為這些方便而損失了很多性能上的優勢
+tags:
+  [
+	"Discord",
+	"dc",
+	"機器人",
+	"建立機器人",
+	"discordjs",
+	"discord.js",
+	"discordeno",
+	"deno"
+  ]
+date: 2023/1/22
+image: /blog/why-not-discordjs/why-not-discordjs.jpeg
+---
+
+![為什麼不該更新 discord.js v14？踩坑經驗「這五點」聽完再決定！](@static/blog/why-not-discordjs/why-not-discordjs.jpeg)
+
+discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為他簡單且強大的函式庫，讓入門開發者能快速的製作出穩定的機器人，而同時也因為這些方便而損失了很多性能上的優勢，我們將會來逐一探討。
+
+## 前言
+
+還記得剛開始摸索的時候是在 2019 年的樣子，那時候 Google 上壓根沒什麼中文的 Discord 機器人教學，亂翻看到了一篇在講 discord.js 的文章，就此掉入了這個大坑裡面，
+
+後來機器龍在疫情線上上課那時候大爆炸才開始意識到這些嚴重性，還好在那時候也有救星的出現，我們最下面的章節將會談到除了 discord.js 還有 [其他的選擇](#那我有其他的選擇嗎？)。
+
+## 所以是為什麼？
+
+以下是我踩坑了挺多次總結出來的問題點，看完了再來決定要不要使用 discord.js，或是也可以直接跳去看 [我該繼續用 discord.js 嗎？](#我該繼續用-discordjs-嗎)：
+
+### 大更新像是抄家一樣
+
+人都是有惰性存在的，而使用 discord.js 絕對可以讓你改掉這個壞習慣，我們知道這個套件有許多貼心幫你包好的如 `avatarURL`、`awaitMessageComponent` 函式，好用歸好用，不過遇到 discord.js 大更新時你就得開始忙起來了，
+
+到文章撰寫的時候 discord.js 已經更新到了 v14，我們可以翻閱一下從 [v13 更新到 v14](https://discordjs.guide/additional-info/changes-in-v14.html)、[v12 更新到 v13](https://discordjs.guide/additional-info/changes-in-v13.html) 的文件，看到側邊欄的目錄超過整個頁面的長度，我覺得我還是去躺好好了...
+
+![discordjs 更新攻略](@static/blog/why-not-discordjs/discordjs-update-guide.png)
+
+雖然開發團隊在 Discord 伺服器中提及到 v13 版將會繼續支援，並且還沒有訂定該版本的結束週期 EOL (End-of-life)，但可以確定的是，這個版本終將會被棄用，還是必須要進行痛苦的轉移過程。
+
+![v13 將會繼續維護](@static/blog/why-not-discordjs/v13-maintain.png)
+
+如果你很喜歡 discord.js 並且想要避免每次大更新都要重寫一次，可以將大量使用的函式包一個自己的版本，我們拿 `User#avatarURL` 來舉個例子：
+
+```js
+/**
+* @param {import("discord.js").User} user
+*/
+function avatarUrl(user) {
+	return user.avatarURL()
+}
+```
+
+這樣每當大更新時只需要更改自己包的版本就好了，剩下的時間拿來多打點 APEX 也不過分。
+
+### 效能是個大問題
+
+### 快取無法更動
+
+### 機器人規模成長後難維護
+
+### 包好好無法修改內建函式
+
+## 那我有其他的選擇嗎？
+
+## 我該繼續用 discord.js 嗎？
