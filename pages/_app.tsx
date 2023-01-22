@@ -40,6 +40,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
             <Analytics />
             <style jsx global>{`
                 html {
+                    overflow-x: hidden;
                     --font-noto: ${noto.style.fontFamily};
                     --font-noto-heading: ${notoHeading.style.fontFamily};
                 }
