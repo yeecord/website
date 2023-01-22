@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Admonition from "@components/mdx/Admonition";
 import { useAdsenseStore } from "@ads/adsense";
-import { useRouter } from "next/router";
 
 /**
  * Google Ads :)
