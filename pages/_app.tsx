@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import { ReactElement, useState } from "react";
-import { Noto_Sans_TC } from "@next/font/google";
+import { Inter, Noto_Sans_TC } from "@next/font/google";
 import { AdsenseContext } from "@ads/adsense";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
@@ -8,10 +8,8 @@ import { Analytics } from "@vercel/analytics/react";
 import "nextra-theme-docs/style.css";
 import "../styles/global.css";
 
-export const noto = Noto_Sans_TC({
-    weight: ["500", "700"],
+export const noto = Inter({
     variable: "--font-noto",
-    display: "swap",
     preload: true,
     subsets: ["latin"],
 });

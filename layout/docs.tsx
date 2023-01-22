@@ -34,7 +34,7 @@ function Gradient() {
                 "-rotate-[20deg]"
             )}
         >
-            <div className="bg-gradient-to-b from-cyan-400/50 via-blue-400 to-purple-800 w-full h-full" />
+            <div className="bg-gradient-to-b from-cyan-400/50 via-blue-400/70 dark:via-blue-400 to-purple-800 w-full h-full" />
         </div>
     );
 }
