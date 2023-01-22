@@ -29,7 +29,6 @@ export function Adsense() {
             <p className="my-2 text-sm text-gray-400 text-center">
                 機器龍的精神食糧
             </p>
-            <hr className="border-gray-500" />
             <div style={{ minHeight: "280px" }}>
                 <ins
                     className="adsbygoogle"
