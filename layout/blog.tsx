@@ -7,8 +7,31 @@ import Link from "next/link";
 import clsx from "clsx";
 import { Fragment } from "react";
 import { getTagHref } from "@blog/utils/tags";
+import { BlogJsonLd } from "@utils/seo";
+import { PageOpts } from "nextra";
+import { BlogFrontMatterSchema } from "@schema/blog";
 
 export default function BlogLayout({
+    page,
+    children,
+}: {
+    page: PageOpts;
+    children: ReactNode;
+}) {
+    const blog: BlogPageOpts = {
+        ...page,
+        frontMatter: BlogFrontMatterSchema.parse(page.frontMatter),
+    };
+
+    return (
+        <>
+            <BlogJsonLd page={blog} />
+            <PageContainer page={blog}>{children}</PageContainer>
+        </>
+    );
+}
+
+function PageContainer({
     page,
     children,
 }: {

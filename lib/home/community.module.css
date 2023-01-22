@@ -1,0 +1,12 @@
+.rotate-z {
+    animation: rotateZ 6s infinite linear;
+}
+
+@keyframes rotateZ {
+    from {
+        transform: rotateZ(0deg);
+    }
+    to {
+        transform: rotateZ(360deg);
+    }
+}
