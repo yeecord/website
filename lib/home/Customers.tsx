@@ -44,7 +44,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
                     個伺服器使用
                 </h1>
                 <h3 className="heading-md text-secondary">
-                    受到無數大型社區的廣泛信任
+                    受到無數大型社群的廣泛信任
                 </h3>
                 <div className="h-stack">
                     <LinkButton

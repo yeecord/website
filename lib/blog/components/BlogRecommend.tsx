@@ -25,7 +25,7 @@ export function BlogRecommend({ page }: { page: BlogPage }) {
                     </p>
                 ))}
             </div>
-            <h2 className="font-bold text-lg">{getTitle(page)}</h2>
+            <h2 className="text-lg">{getTitle(page)}</h2>
         </Link>
     );
 }

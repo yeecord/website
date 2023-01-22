@@ -117,7 +117,7 @@ export function LargeBlogItem({ page }: { page: BlogPage }) {
                             href={getTagHref(tag)}
                             className="flex-shrink-0"
                         >
-                            {tag}
+                            #{tag}
                         </Link>
                     ))}
                 </div>

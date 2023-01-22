@@ -12,7 +12,7 @@
     }
 
     .heading-md {
-        @apply text-lg sm:text-xl font-bold;
+        @apply text-lg sm:text-xl;
     }
 
     .features-heading {
@@ -36,15 +36,15 @@
     }
 
     .primary-button {
-        @apply px-6 py-3 rounded-full text-white bg-gradient-to-br text-lg font-bold transition-all;
+        @apply px-6 py-3 rounded-full text-white bg-gradient-to-br text-lg transition-all;
     }
 
     .icon-button {
-        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg inline-flex gap-2 items-center transition-all dark:text-white;
     }
 
     .secondary-button {
-        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg inline-flex gap-2 items-center transition-all dark:text-white;
     }
 
     .steps-container {
@@ -121,6 +121,18 @@ article h4,
 article h5,
 article h6 {
     @apply text-black dark:text-white;
+}
+
+article h2 {
+    padding-bottom: .75rem;
+}
+
+h1, article h2 {
+    @apply font-sansHeading;
+}
+
+h2, button {
+    @apply font-sansMedium;
 }
 
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
