@@ -23,15 +23,7 @@ const config: Partial<DocsThemeConfig> = {
         </>
     ),
     logo: (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "0.75rem",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
+        <div className="flex flex-row gap-2 items-center justify-center">
             <Image
                 alt="YEE式機器龍"
                 src="/img/logo_128x128.png"
@@ -41,7 +33,7 @@ const config: Partial<DocsThemeConfig> = {
                     borderRadius: "50%",
                 }}
             />
-            <p className="text-lg">Yeecord</p>
+            <p className="text-xl font-light tracking-wider">Yeecord</p>
         </div>
     ),
     search: {

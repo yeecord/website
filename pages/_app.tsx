@@ -32,7 +32,6 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
             <style jsx global>{`
                 html {
                     --font-noto: ${noto.style.fontFamily};
-                    font-weight: 700;
                 }
             `}</style>
             <AdsenseContext.Provider

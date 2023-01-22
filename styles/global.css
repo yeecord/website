@@ -85,6 +85,10 @@
     }
 }
 
+body {
+    font-weight: 600;
+}
+
 .dark body {
     background: theme("colors.background") !important;
 }
@@ -99,6 +103,10 @@
 
 .nx-font-medium {
     font-weight: 600;
+}
+
+.nx-tracking-tight {
+    letter-spacing: normal;
 }
 
 article {
@@ -128,8 +136,4 @@ article h6 {
 
 article img {
     border-radius: 5px;
-}
-
-div:has(#home-page) {
-    overflow: clip !important;
 }
