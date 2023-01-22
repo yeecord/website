@@ -2,7 +2,7 @@ import Footer from "@components/Footer";
 import LoginButton from "@components/LoginButton";
 import Image from "next/image";
 import Link from "next/link";
-import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
+import { DocsThemeConfig, useConfig, useTheme } from "nextra-theme-docs";
 import { useEffect, useState } from "react";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs";
 import { footer } from "./config";
@@ -72,6 +72,12 @@ const config: Partial<DocsThemeConfig> = {
     },
     useNextSeoProps() {
         const { asPath } = useRouter();
+        const { frontMatter } = useConfig()
+
+        const image = frontMatter.image && {
+            alt: frontMatter.title,
+            url: frontMatter.image
+        }
 
         return {
             canonical: `https://yeecord.com${asPath}`,
@@ -79,11 +85,13 @@ const config: Partial<DocsThemeConfig> = {
             twitter: {
                 cardType: "summary_large_image",
             },
+            description: frontMatter.description,
             openGraph: {
+                description: frontMatter.description,
                 // siteName: "YEE式機器龍 – 萬中選一的 Discord 中文機器人",
                 type: "website",
                 images: [
-                    {
+                    image || {
                         url: "/img/branding.png",
                         alt: "YEE式機器龍",
                     },
