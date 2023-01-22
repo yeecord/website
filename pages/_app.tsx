@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import { ReactElement, useState } from "react";
-import { Inter, Noto_Sans_TC } from "@next/font/google";
+import { Inter } from "@next/font/google";
 import { AdsenseContext } from "@ads/adsense";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";

@@ -127,14 +127,6 @@ article h2 {
     padding-bottom: .75rem;
 }
 
-h1, article h2 {
-    @apply font-sansHeading;
-}
-
-h2, button {
-    @apply font-sansMedium;
-}
-
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
     @apply md:!text-slate-400;
 }

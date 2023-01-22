@@ -12,7 +12,7 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: ["var(--font-noto)", ...defaultTheme.fontFamily.sans],
+            sans: ["var(--font-noto)", "-apple-system", ...defaultTheme.fontFamily.sans],
         },
         extend: {
             colors: {
