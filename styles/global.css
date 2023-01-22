@@ -114,6 +114,14 @@ article h6 {
     @apply text-black dark:text-white;
 }
 
+h1 {
+    @apply font-sansHeading;
+}
+
+h2, button {
+    @apply font-sansMedium;
+}
+
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
     @apply md:!text-slate-400;
 }

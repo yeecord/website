@@ -37,7 +37,7 @@ export default function HomePage() {
     return (
         <div
             id="home-page"
-            className={clsx("bg-white dark:bg-black font-sans overflow-x-clip")}
+            className={clsx("bg-white dark:bg-black overflow-x-clip")}
         >
             <style jsx global>
                 {`

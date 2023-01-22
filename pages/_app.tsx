@@ -8,9 +8,17 @@ import { Analytics } from "@vercel/analytics/react";
 import "nextra-theme-docs/style.css";
 import "../styles/global.css";
 
+// TODO: reworking on font?
 export const noto = Noto_Sans_TC({
-    weight: ["500", "700"],
+    weight: ["500"],
     variable: "--font-noto",
+    display: "swap",
+    subsets: ["latin"],
+});
+
+export const notoHeading = Noto_Sans_TC({
+    weight: ["700"],
+    variable: "--font-noto-heading",
     display: "swap",
     subsets: ["latin"],
 });
@@ -33,6 +41,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
             <style jsx global>{`
                 html {
                     --font-noto: ${noto.style.fontFamily};
+                    --font-noto-heading: ${notoHeading.style.fontFamily};
                 }
             `}</style>
             <AdsenseContext.Provider

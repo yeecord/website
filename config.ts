@@ -73,9 +73,8 @@ export const footer: FooterCategory[] = [
 export const blogRecommendations = [
     "welcome-to-v2",
     "fix-music-lag",
-    "git-contribute-guide",
     "discord-bot-troubleshooting",
-    "fdsfds",
+    "how-to-invite-bot"
 ];
 
 export const blogAuthors: Record<string, AuthorData> = {

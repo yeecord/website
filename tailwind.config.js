@@ -12,11 +12,23 @@ module.exports = {
     theme: {
         fontFamily: {
             sans: [
-                "var(--font-noto)",
+                // "var(--font-noto)",
                 "-apple-system",
-                "Microsoft YaHei",
+                "Microsoft JhengHei UI",
                 "sans-serif",
             ],
+            sansHeading: [
+                "var(--font-noto-heading)",
+                "-apple-system",
+                "Microsoft JhengHei UI",
+                "sans-serif",
+            ],
+            sansMedium: [
+                "var(--font-noto)",
+                "-apple-system",
+                "Microsoft JhengHei UI",
+                "sans-serif",
+            ]
         },
         extend: {
             colors: {
