@@ -113,9 +113,9 @@ function Recommendations({ items }: { items: BlogPage[] }) {
                 "mb-16 gap-5 lg:gap-10"
             )}
         >
-            {items[0] && <LargeBlogItem page={items[0]} />}
+            {items[0] != null && <LargeBlogItem page={items[0]} />}
             <div className="max-md:-ml-3">
-                <h2 className="text-3xl ml-3 mb-3 inline-flex gap-2">
+                <h2 className="font-bold text-3xl ml-3 mb-3 inline-flex gap-2">
                     精選文章 <BsCheckCircleFill className="text-green-400" />
                 </h2>
                 <div className="flex flex-col gap-3">

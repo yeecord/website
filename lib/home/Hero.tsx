@@ -68,7 +68,7 @@ export function Hero() {
 
 function Buttons() {
     const bn =
-        "text-lg sm:text-xl rounded-md w-full px-6 py-3 sm:px-8";
+        "text-lg font-bold sm:text-xl rounded-md w-full px-6 py-3 sm:px-8";
 
     return (
         <div className="grid grid-cols-1 w-full max-w-[500px] sm:w-fit sm:grid-cols-2 gap-3">
@@ -144,7 +144,7 @@ function Server({
                     transparent && "brightness-[0%] dark:brightness-100"
                 )}
             />
-            <h3 className="heading-md font-bold">{name}</h3>
+            <h3 className="heading-md">{name}</h3>
         </div>
     );
 }
