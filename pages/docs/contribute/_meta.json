@@ -1,8 +1,3 @@
 {
-    "index": {
-        "title": "貢獻指南"
-    },
-    "components": {
-        "title": "自定義組件"
-    }
+    "components": "自定義組件"
 }
