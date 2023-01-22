@@ -16,10 +16,9 @@ export function Adsense() {
         );
 
     useEffect(() => {
-        if((window as any).adsbygoogle?.loaded)
-            return;
-
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+        try {
+            ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+        } catch(e) {}
     }, []);
 
     return (
