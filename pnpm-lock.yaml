@@ -32,6 +32,7 @@ specifiers:
   tailwindcss: ^3.2.4
   typescript: 4.9.4
   zod: ^3.20.2
+  zustand: ^4.3.2
 
 dependencies:
   '@next/env': 13.1.4
@@ -52,6 +53,7 @@ dependencies:
   swr: 2.0.1_react@18.2.0
   tailwind-merge: 1.8.1
   zod: 3.20.2
+  zustand: 4.3.2_react@18.2.0
 
 devDependencies:
   '@types/node': 18.11.18
@@ -4790,6 +4792,22 @@ packages:
 
   /zod/3.20.2:
     resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
+    dev: false
+
+  /zustand/4.3.2_react@18.2.0:
+    resolution: {integrity: sha512-rd4haDmlwMTVWVqwvgy00ny8rtti/klRoZjFbL/MAcDnmD5qSw/RZc+Vddstdv90M5Lv6RPgWvm1Hivyn0QgJw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
   /zwitch/2.0.4:

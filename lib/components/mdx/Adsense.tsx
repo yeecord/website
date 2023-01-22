@@ -1,23 +1,27 @@
 import React, { useEffect } from "react";
-import { useAdsenseState } from "@ads/adsense";
 import Admonition from "@components/mdx/Admonition";
+import { useAdsenseStore } from "@ads/adsense";
+import { useRouter } from "next/router";
 
 /**
  * Google Ads :)
  */
 export function Adsense() {
-    const { status: state } = useAdsenseState();
+    const enabled = useAdsenseStore((state) => state.enabled);
 
-    useEffect(() => {
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-    }, []);
-
-    if (state === "error")
+    if (!enabled)
         return (
             <Admonition title="太無情了擋廣告" type="warning">
                 關閉 AdBlocker 讓機器龍多活一天
             </Admonition>
         );
+
+    useEffect(() => {
+        if((window as any).adsbygoogle?.loaded)
+            return;
+
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+    }, []);
 
     return (
         <div aria-label="ads">
