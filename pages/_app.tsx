@@ -1,9 +1,9 @@
 import { AppProps } from "next/app";
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import { Inter } from "@next/font/google";
-import { AdsenseContext } from "@ads/adsense";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
+import { useAdsenseStore } from "@ads/adsense";
 
 import "nextra-theme-docs/style.css";
 import "../styles/global.css";
@@ -15,9 +15,7 @@ export const noto = Inter({
 });
 
 export default function App({ Component, pageProps }: AppProps): ReactElement {
-    // this will cause the whole page being rerendered
-    // TODO: replace with global states using libraries
-    const [status, setAdsStatus] = useState<"ok" | "error">("ok");
+    const setEnabled = useAdsenseStore((state) => state.setEnabled);
 
     return (
         <>
@@ -26,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
                 crossOrigin="anonymous"
                 strategy="lazyOnload"
-                onError={() => setAdsStatus("error")}
+                onError={() => setEnabled(false)}
             />
             <Analytics />
             <style jsx global>{`
@@ -34,13 +32,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
                     --font-noto: ${noto.style.fontFamily};
                 }
             `}</style>
-            <AdsenseContext.Provider
-                value={{
-                    status,
-                }}
-            >
-                <Component {...pageProps} />
-            </AdsenseContext.Provider>
+            <Component {...pageProps} />
         </>
     );
 }

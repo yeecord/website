@@ -1,12 +1,15 @@
-import { createContext, useContext } from "react";
+import { create } from "zustand";
 
-export type AdsenseContextType = {
-    status: "ok" | "error";
-};
-export const AdsenseContext = createContext<AdsenseContextType>({
-    status: "ok",
-});
-
-export function useAdsenseState() {
-    return useContext(AdsenseContext);
+interface AdsenseState {
+    enabled: boolean,
+    setEnabled: (status: boolean) => void
 }
+
+export const useAdsenseStore = create<AdsenseState>()((set) => ({
+    enabled: true,
+    setEnabled(enabled) {
+        set(() => ({
+            enabled
+        }))
+    }
+}));
