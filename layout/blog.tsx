@@ -50,7 +50,7 @@ function PageContainer({
             <h1 className="font-extrabold text-3xl md:!text-[2.4rem] mb-2 leading-normal">
                 {page.title}
             </h1>
-            <div className="flex flex-row gap-1 text-lg flex-wrap mb-6 text-secondary mt-3">
+            <div className="flex flex-row gap-1 text-lg flex-wrap mb-6 text-secondary mt-3 font-bold">
                 <div className="h-stack flex-wrap gap-1">
                     {frontMatter.authors.map((author, i) => (
                         <Fragment key={i}>

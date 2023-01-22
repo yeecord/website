@@ -85,10 +85,6 @@
     }
 }
 
-body {
-    font-weight: 600;
-}
-
 .dark body {
     background: theme("colors.background") !important;
 }
@@ -101,6 +97,7 @@ body {
     font-size: 1rem;
 }
 
+.nextra-sidebar-container,
 .nx-font-medium {
     font-weight: 600;
 }

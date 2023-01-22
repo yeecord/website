@@ -43,7 +43,7 @@ export function Dashboard() {
                         </div>
                         <div>
                             <h3 className="heading-md">音樂系統</h3>
-                            <p className="text-secondary">下一首歌</p>
+                            <p className="text-secondary font-bold">下一首歌</p>
                         </div>
                     </div>
                     <div className="h-stack mt-auto pt-2">
@@ -70,7 +70,7 @@ function Settings() {
                 </div>
                 <div>
                     <h3 className="heading-md">設置</h3>
-                    <p className="text-secondary">下拉選單身分組</p>
+                    <p className="text-secondary font-bold">下拉選單身分組</p>
                 </div>
             </div>
             <div
@@ -112,7 +112,7 @@ function Chart() {
                 </div>
                 <div>
                     <h3 className="heading-md">你的伺服器</h3>
-                    <p className="text-secondary">數據分析</p>
+                    <p className="text-secondary font-bold">數據分析</p>
                 </div>
             </div>
             <Image src={ChartSvg} alt="chart" className="rounded-3xl mt-auto" />

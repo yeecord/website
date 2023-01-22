@@ -95,7 +95,7 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
             <div className="text-xl sm:text-2xl bg-purple-400 dark:bg-purple-500 rounded-full p-2 text-white">
                 {icon}
             </div>
-            <p className="text-lg">{children}</p>
+            <p className="text-lg font-bold">{children}</p>
         </motion.div>
     );
 }
