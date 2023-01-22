@@ -13,7 +13,6 @@ export function ThemeToggle() {
             setCurrent(resolvedTheme as "light" | "dark");
     }, [resolvedTheme]);
 
-    if (current == null) return <></>;
     return (
         <button
             aria-label="toggle dark mode"

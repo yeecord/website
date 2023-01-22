@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import Step from "../components/Step";
-import global from "./features.module.css";
 import styles from "./games.module.css";
 import { RiGameFill, RiSwordFill } from "react-icons/ri";
 import LinkButton from "../components/LinkButton";
@@ -49,7 +48,7 @@ export function Games() {
                     )}
                 >
                     <div>
-                        <h1 className={`${global.heading} mb-2`}>
+                        <h1 className="features-heading mb-2">
                             不只是聊天平台
                         </h1>
                         <h3 className="heading-md text-secondary">

@@ -2,7 +2,6 @@ import { Community } from "./Community";
 import { Customers } from "./Customers";
 import { Hero } from "./Hero";
 import { RpgSystem } from "./RpgSystem";
-import clsx from "clsx";
 import { Features } from "./features";
 import Sponsor from "./Sponsor";
 import { fetchGuild } from "@utils/api";
@@ -35,17 +34,7 @@ export default function HomePage() {
     const { guildCount, serverMembers } = useSSG() as HomeProps;
 
     return (
-        <div
-            id="home-page"
-            className={clsx("bg-white dark:bg-black overflow-x-clip")}
-        >
-            <style jsx global>
-                {`
-                    .nx-overflow-x-hidden {
-                        overflow: clip !important;
-                    }
-                `}
-            </style>
+        <div id="home-page" className="bg-white dark:bg-black overflow-clip">
             <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
                 <Hero />
                 <Features />

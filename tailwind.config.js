@@ -1,4 +1,5 @@
 const plugin = require("tailwindcss/plugin");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,24 +12,7 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: [
-                // "var(--font-noto)",
-                "-apple-system",
-                "Microsoft JhengHei UI",
-                "sans-serif",
-            ],
-            sansHeading: [
-                "var(--font-noto-heading)",
-                "-apple-system",
-                "Microsoft JhengHei UI",
-                "sans-serif",
-            ],
-            sansMedium: [
-                "var(--font-noto)",
-                "-apple-system",
-                "Microsoft JhengHei UI",
-                "sans-serif",
-            ]
+            sans: ["var(--font-noto)", "-apple-system", ...defaultTheme.fontFamily.sans],
         },
         extend: {
             colors: {

@@ -105,7 +105,7 @@ function Job({
             )}
         >
             <h3 className="heading-md">{name}</h3>
-            <p className="text-secondary">{description}</p>
+            <p className="text-secondary font-bold">{description}</p>
         </div>
     );
 }

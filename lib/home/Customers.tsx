@@ -75,7 +75,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
                         icon="/blog/money.jpg"
                         author="Money"
                         title="活躍協作者"
-                        content="即使我不懂英語，無需繁雜的理解及操作，我仍然可以輕鬆使用 YEE式機器龍"
+                        content="即使我不懂英語，無需繁雜的理解及操作，我仍然可以輕鬆使用 YEE 式機器龍"
                     />
                     <Comment
                         icon="/blog/nathan.jpg"
@@ -122,8 +122,7 @@ function Comment({
                 "flex flex-col gap-3 p-4 bg-white dark:bg-slate-900/70 dark:backdrop-blur-3xl rounded-xl cursor-pointer",
                 "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
                 "transition-colors border-[2px] border-gray-300 dark:border-slate-800",
-                "hover:dark:bg-slate-900 hover:dark:border-pink-400",
-                "text-secondary dark:text-slate-300 hover:dark:text-slate-400"
+                "hover:dark:bg-slate-900 hover:dark:border-pink-400"
             )}
         >
             <div className="h-stack">
@@ -135,14 +134,18 @@ function Comment({
                     className="rounded-full aspect-square"
                 />
                 <div>
-                    <p className="text-pink-700 dark:text-pink-300">{title}</p>
+                    <p className="text-pink-700 dark:text-pink-300 font-semibold">
+                        {title}
+                    </p>
                     <h3 className="heading-md text-black dark:text-white">
                         {author}
                     </h3>
                 </div>
             </div>
 
-            <p className="md:text-lg flex-1">{content}</p>
+            <p className="md:text-lg text-secondary dark:text-slate-300">
+                {content}
+            </p>
         </div>
     );
 }

@@ -31,7 +31,7 @@ export function LinkButton({
             <button
                 className={twMerge(
                     clsx(
-                        "w-full h-full py-2 text-lg rounded-lg font-medium",
+                        "w-full h-full py-2 text-lg rounded-lg font-bold",
                         variant === "primary" && [
                             "text-white bg-gradient-to-br from-cyan-300 to-blue-600",
                             "shadow-lg shadow-blue-400 dark:shadow-blue-600",

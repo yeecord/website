@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import styles from "./features.module.css";
 import ChartSvg from "@static/home/chart.svg";
 import Image from "next/image";
 import {
@@ -8,9 +7,13 @@ import {
     BsMusicNoteBeamed,
 } from "react-icons/bs";
 import { RiSettings2Fill } from "react-icons/ri";
-import lstyles from "./dashboard.module.css";
 import { Progress } from "../components/Progress";
 import { motion } from "framer-motion";
+
+const card = clsx(
+    "bg-slate-100 rounded-3xl p-5 shadow-xl flex flex-col",
+    "dark:bg-slate-900"
+);
 
 export function Dashboard() {
     return (
@@ -22,7 +25,7 @@ export function Dashboard() {
                         "from-transparent via-purple-400 to-purple-600 dark:to-purple-100"
                     )}
                 />
-                <h1 className={styles.heading}>簡易的控制面板</h1>
+                <h1 className="features-heading">簡易的控制面板</h1>
                 <h3 className="heading-md text-secondary">
                     通過美觀、簡易的方式來自定義
                     <br className="sm:hidden" />
@@ -33,14 +36,14 @@ export function Dashboard() {
                 <Chart />
                 <Settings />
 
-                <div className={lstyles.card}>
+                <div className={card}>
                     <div className="h-stack">
                         <div className="p-3 rounded-xl text-white bg-green-500 text-3xl">
                             <BsMusicNoteBeamed />
                         </div>
                         <div>
                             <h3 className="heading-md">音樂系統</h3>
-                            <p className="text-secondary">下一首歌</p>
+                            <p className="text-secondary font-bold">下一首歌</p>
                         </div>
                     </div>
                     <div className="h-stack mt-auto pt-2">
@@ -57,7 +60,7 @@ export function Dashboard() {
 function Settings() {
     return (
         <motion.div
-            className={`${lstyles.card} gap-3`}
+            className={`${card} gap-3`}
             whileInView={{ y: 0 }}
             initial={{ y: "10rem" }}
         >
@@ -67,7 +70,7 @@ function Settings() {
                 </div>
                 <div>
                     <h3 className="heading-md">設置</h3>
-                    <p className="text-secondary">下拉選單身分組</p>
+                    <p className="text-secondary font-bold">下拉選單身分組</p>
                 </div>
             </div>
             <div
@@ -98,7 +101,7 @@ function RoleItem() {
 function Chart() {
     return (
         <motion.div
-            className={clsx("row-span-2", lstyles.card)}
+            className={clsx("row-span-2", card)}
             whileInView={{ x: 0, opacity: 1 }}
             initial={{ x: "8rem", opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -109,7 +112,7 @@ function Chart() {
                 </div>
                 <div>
                     <h3 className="heading-md">你的伺服器</h3>
-                    <p className="text-secondary">數據分析</p>
+                    <p className="text-secondary font-bold">數據分析</p>
                 </div>
             </div>
             <Image src={ChartSvg} alt="chart" className="rounded-3xl mt-auto" />

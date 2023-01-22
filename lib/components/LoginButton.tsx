@@ -14,11 +14,11 @@ export default function LoginButton() {
         errorRetryCount: 0,
     });
 
-    if (isLoading || error != null) {
+    if (error != null) {
         return (
             <button
                 className={clsx(
-                    "rounded-md px-5 py-1 font-medium break-keep",
+                    "rounded-md px-5 py-1 font-bold break-keep",
                     "text-white bg-black dark:text-black dark:bg-white"
                 )}
             >
@@ -27,11 +27,11 @@ export default function LoginButton() {
         );
     }
 
-    if (user?.avatar == null) {
+    if (user?.avatar == null || isLoading) {
         return (
             <div
                 className={clsx(
-                    "rounded-full w-7 h-7 flex flex-col justify-center items-center",
+                    "rounded-full w-[30px] h-[30px] flex flex-col justify-center items-center",
                     "bg-blue-400 text-white"
                 )}
             >
@@ -44,8 +44,8 @@ export default function LoginButton() {
         <Image
             alt="avatar"
             src={resolveUserAvatar(user)}
-            width="26"
-            height="26"
+            width="30"
+            height="30"
             className="rounded-full"
         />
     );
