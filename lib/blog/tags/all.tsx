@@ -48,6 +48,7 @@ export default function AllTags({ tags }: Props) {
                             "rounded-lg p-3 h-stack justify-between",
                             "bg-zinc-100 dark:bg-zinc-800"
                         )}
+                        prefetch={false}
                     >
                         <span className="text-lg font-bold">{tag}</span>
                         <span className="text-secondary">{info.count}</span>
