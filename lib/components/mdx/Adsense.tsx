@@ -8,18 +8,21 @@ import { useAdsenseStore } from "@ads/adsense";
 export function Adsense() {
     const enabled = useAdsenseStore((state) => state.enabled);
 
+    useEffect(() => {
+        if(!enabled)
+            return
+
+        try {
+            ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+        } catch(e) {}
+    }, [enabled]);
+
     if (!enabled)
         return (
             <Admonition title="太無情了擋廣告" type="warning">
                 關閉 AdBlocker 讓機器龍多活一天
             </Admonition>
         );
-
-    useEffect(() => {
-        try {
-            ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-        } catch(e) {}
-    }, []);
 
     return (
         <div aria-label="ads">
