@@ -139,6 +139,7 @@ h1 {
     @apply md:!text-slate-400;
 }
 
+html,
 body {
     overflow-x: hidden !important;
 }
