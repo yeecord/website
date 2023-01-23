@@ -13,8 +13,8 @@ const classes = {
         "transition-colors duration-200 group"
     ),
     title: clsx(
-        "flex font-bold align-start",
-        "gap-3 text-black dark:text-white"
+        "flex font-bold flex-row items-center",
+        "gap-2 text-black dark:text-white"
     ),
     cards: clsx(
         "[grid-template-columns:_repeat(auto-fill,minmax(max(250px,_calc((100%_-_1rem_*_2)_/_var(--rows))),_1fr))]"
@@ -56,13 +56,13 @@ export function Card({
 
     const content = (
         <>
-            <span className={cn(classes.title, "")}>
+            <div className={classes.title}>
                 {icon != null && (
-                    <div className="text-xl text-blue-500 mt-1">{icon}</div>
+                    <div className="text-2xl text-blue-500">{icon}</div>
                 )}
-                {title}
+                <span>{title}</span>
                 {animatedArrow}
-            </span>
+            </div>
             {children && <p className="text-base">{children}</p>}
         </>
     );
