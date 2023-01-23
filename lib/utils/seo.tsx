@@ -1,5 +1,6 @@
+import { AuthorData, BlogPageOpts } from "@schema/blog";
+import { DocsPageOpts } from "@schema/docs";
 import { ArticleJsonLd } from "next-seo";
-import { AuthorData, BlogPageOpts, DocsPageOpts } from "./mdx";
 
 export function DocsJsonLd({ page }: { page: DocsPageOpts }) {
     return (

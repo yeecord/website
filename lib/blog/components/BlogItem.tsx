@@ -49,11 +49,9 @@ export function BlogItem({ page }: { page: BlogPage }) {
                         <Link
                             key={i}
                             href={getTagHref(tag)}
-                            className="flex-shrink-0"
+                            className="flex-shrink-0 text-secondary font-extrabold"
                         >
-                            <p className="text-secondary font-extrabold">
-                                #{tag}
-                            </p>
+                            #{tag}
                         </Link>
                     ))}
                 </div>
@@ -110,7 +108,7 @@ export function LargeBlogItem({ page }: { page: BlogPage }) {
                 )}
             </Link>
             <div className="flex flex-col p-5">
-                <div className="flex flex-row gap-3 overflow-hidden text-blue-400 font-extrabold">
+                <div className="flex flex-row gap-3 overflow-hidden text-link font-extrabold">
                     {frontMatter.tags.map((tag, i) => (
                         <Link
                             key={i}

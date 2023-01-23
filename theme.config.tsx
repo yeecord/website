@@ -6,22 +6,18 @@ import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
 import { ThemeToggle } from "@components/ThemeToggle";
+import { SafeLink } from "@components/SafeLink";
 
 const config: Partial<DocsThemeConfig> = {
     components: {
         a: (props) => (
-            <a
-                className="nx-text-primary-600 nx-underline nx-decoration-from-font [text-underline-position:from-font]"
-                rel={ !(props as any).href?.startsWith("#") && !(props as any).href?.startsWith("/") ? "nofollow noreferrer" : "" }
+            <SafeLink
                 {...props}
+                className="text-link underline decoration-from-font [text-underline-position:from-font]"
             />
         ),
     },
-    head: (
-        <>
-            <link rel="shortcut icon" href="/img/logo_128x128.png" />
-        </>
-    ),
+    head: Head,
     logo: (
         <div className="flex flex-row gap-2 items-center justify-center">
             <Image
@@ -113,5 +109,13 @@ const config: Partial<DocsThemeConfig> = {
         );
     },
 };
+
+function Head() {
+    return (
+        <>
+            <link rel="shortcut icon" href="/img/logo_128x128.png" />
+        </>
+    );
+}
 
 export default config;

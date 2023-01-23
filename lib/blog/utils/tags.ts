@@ -1,24 +1,23 @@
-import { RawBlogPage } from "@utils/mdx";
 import { MdxFile, PageMapItem } from "nextra";
 
-interface Page extends RawBlogPage {
-    children?: Page[];
+interface RawPage extends MdxFile {
+    children?: RawPage[];
 }
 
-const flattenPageMap = (page: Page, result: PageMapItem[] = []) => {
+const flattenPageMap = (page: RawPage, result: PageMapItem[] = []) => {
     if (Array.isArray(page.children!)) {
         page.children.forEach((p) => flattenPageMap(p, result));
     }
     result.push(page);
 };
 
-const flattenPageMaps = (pages: Page[], result: PageMapItem[] = []) => {
+const flattenPageMaps = (pages: RawPage[], result: PageMapItem[] = []) => {
     pages.forEach((v) => flattenPageMap(v, result));
 };
 
 export const getStaticTags = (pageMap: PageMapItem[]) => {
-    const result: Page[] = [];
-    flattenPageMaps(pageMap as Page[], result);
+    const result: RawPage[] = [];
+    flattenPageMaps(pageMap as RawPage[], result);
     return Array.from(new Set(result.map(getTags).flat(1).filter(Boolean)));
 };
 
@@ -27,8 +26,8 @@ export type TagInfo = {
 };
 
 export const getStaticTagsMap = (pageMap: PageMapItem[]) => {
-    const result: Page[] = [];
-    flattenPageMaps(pageMap as Page[], result);
+    const result: RawPage[] = [];
+    flattenPageMaps(pageMap as RawPage[], result);
     const map = new Map<string, TagInfo>();
 
     for (const page of result) {

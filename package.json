@@ -27,8 +27,7 @@
         "sharp": "^0.31.3",
         "swr": "^2.0.1",
         "tailwind-merge": "^1.8.1",
-        "zod": "^3.20.2",
-        "zustand": "^4.3.2"
+        "zod": "^3.20.2"
     },
     "devDependencies": {
         "@types/node": "^18.11.18",

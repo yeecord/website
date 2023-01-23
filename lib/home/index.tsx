@@ -34,7 +34,23 @@ export default function HomePage() {
     const { guildCount, serverMembers } = useSSG() as HomeProps;
 
     return (
-        <div id="home-page" className="bg-white dark:bg-black overflow-clip">
+        <div className="bg-white dark:bg-black">
+            <style global jsx>
+                {`
+                    html,
+                    body {
+                        max-width: 100% !important;
+                        height: 100% !important;
+                        width: 100% !important;
+                        overflow-x: hidden !important;
+                        overflow-y: auto !important;
+                    }
+
+                    .nx-overflow-x-hidden {
+                        overflow-x: unset !important;
+                    }
+                `}
+            </style>
             <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
                 <Hero />
                 <Features />
