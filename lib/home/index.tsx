@@ -34,7 +34,7 @@ export default function HomePage() {
     const { guildCount, serverMembers } = useSSG() as HomeProps;
 
     return (
-        <div id="home-page" className="bg-white dark:bg-black">
+        <div className="bg-white dark:bg-black">
             <style global jsx>
                 {`
                     html,
