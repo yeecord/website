@@ -12,7 +12,7 @@ const config: Partial<DocsThemeConfig> = {
         a: (props) => (
             <a
                 className="nx-text-primary-600 nx-underline nx-decoration-from-font [text-underline-position:from-font]"
-                rel="nofollow noreferrer"
+                rel={ !(props as any).href?.startsWith("#") && !(props as any).href?.startsWith("/") ? "nofollow noreferrer" : "" }
                 {...props}
             />
         ),
