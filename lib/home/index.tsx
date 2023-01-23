@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps<{ ssg: HomeProps }> = async () => {
                 guildCount,
             },
         },
-        revalidate: 10,
+        revalidate: 60,
     };
 };
 
