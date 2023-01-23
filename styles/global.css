@@ -139,6 +139,14 @@ h1 {
     @apply md:!text-slate-400;
 }
 
+body {
+    overflow-x: hidden;
+}
+
+.nx-overflow-x-hidden {
+    overflow-x: clip !important;
+}
+
 article img {
     border-radius: 5px;
 }
