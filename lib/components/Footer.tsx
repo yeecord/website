@@ -62,7 +62,7 @@ function Category({ category }: { category: FooterCategory }) {
 
     return (
         <div className="flex flex-col">
-            <h3
+            <p
                 className="heading-md mb-2 cursor-pointer"
                 onClick={() => setExpend((prev) => !prev)}
             >
@@ -73,7 +73,7 @@ function Category({ category }: { category: FooterCategory }) {
                         extend ? "rotate-0" : "rotate-180"
                     )}
                 />
-            </h3>
+            </p>
             <div
                 className={clsx(
                     "flex-col gap-1",

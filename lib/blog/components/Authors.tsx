@@ -32,7 +32,7 @@ function Author({ author }: { author: AuthorData }) {
             )}
             <div className="flex flex-col">
                 <Link
-                    href={author?.url ?? ""}
+                    href={author?.url ?? "#"}
                     target="_blank"
                     className="heading-md text-black dark:text-white"
                     rel="nofollow noreferrer"

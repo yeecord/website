@@ -33,7 +33,7 @@ const config: Partial<DocsThemeConfig> = {
                     borderRadius: "50%",
                 }}
             />
-            <p className="text-xl font-light tracking-wider">Yeecord</p>
+            <p className="text-xl tracking-wider">Yeecord</p>
         </div>
     ),
     search: {

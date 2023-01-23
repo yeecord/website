@@ -77,8 +77,9 @@ function SmallAuthor({ author }: { author: AuthorData }) {
     return (
         <Link
             className="h-stack gap-1 font-bold text-black dark:text-white"
-            href={author.url ?? ""}
+            href={author.url ?? "#"}
             rel="nofollow noreferrer"
+            prefetch={false}
         >
             {author.image_url != null && (
                 <Image
@@ -106,6 +107,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
                         key={tag}
                         href={getTagHref(tag)}
                         className="px-2 py-1 bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                        prefetch={false}
                     >
                         # {tag}
                     </Link>
@@ -115,8 +117,9 @@ function Footer({ page }: { page: BlogPageOpts }) {
                 <Link
                     key={i}
                     className="h-stack p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl"
-                    href={author.url ?? ""}
+                    href={author.url ?? "#"}
                     rel="nofollow noreferrer"
+                    prefetch={false}
                 >
                     {author.image_url != null && (
                         <Image

@@ -12,7 +12,8 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: ["var(--font-noto)", "-apple-system", ...defaultTheme.fontFamily.sans],
+            sans: ["var(--font-noto)", ...defaultTheme.fontFamily.sans],
+            ms: ["var(--font-noto)", "Microsoft YaHei", ...defaultTheme.fontFamily.sans],
         },
         extend: {
             colors: {
