@@ -34,7 +34,7 @@ export default function HomePage() {
     const { guildCount, serverMembers } = useSSG() as HomeProps;
 
     return (
-        <div id="home-page" className="bg-white dark:bg-black overflow-clip">
+        <div id="home-page" className="bg-white dark:bg-black">
             <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
                 <Hero />
                 <Features />
