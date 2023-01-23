@@ -17,6 +17,8 @@ date: 2023/1/22
 image: /blog/why-not-discordjs/why-not-discordjs.jpeg
 ---
 
+import { Adsense } from "@components/mdx";
+
 ![為什麼不該更新 discord.js v14？踩坑經驗「這三點」聽完再決定！](@static/blog/why-not-discordjs/why-not-discordjs.jpeg)
 
 discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為他簡單且強大的函式庫，讓入門開發者能快速的製作出穩定的機器人，而同時也因為這些方便而損失了很多性能上的優勢，我們將會來逐一探討。
@@ -29,6 +31,8 @@ discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為
 
 ## 所以是為什麼？
 
+<Adsense />
+
 以下是我踩坑了挺多次總結出來的問題點，看完了再來決定要不要使用 discord.js，或是也可以直接跳去看 [我該繼續用 discord.js 嗎？](#我該繼續用-discordjs-嗎)：
 
 ### 大更新像是抄家一樣
@@ -40,6 +44,8 @@ discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為
 ![discordjs 更新攻略](@static/blog/why-not-discordjs/discordjs-update-guide.png)
 
 雖然開發團隊在 Discord 伺服器中提及到 v13 版將會繼續支援，並且還沒有訂定該版本的結束週期 EOL (End-of-life)，但可以確定的是，這個版本終將會被棄用，還是必須要進行痛苦的轉移過程。
+
+<Adsense />
 
 ![v13 將會繼續維護](@static/blog/why-not-discordjs/v13-maintain.png)
 
@@ -61,6 +67,8 @@ function avatarUrl(user) {
 discord.js 完善的快取系統在普通的小量使用上確實是挺方便的，不過在規模越來越成長下，越需要去注意到記憶體的控管，是不是可以努力減少一些不必要的快取，
 
 而 discord.js 的快取在預設都是無法更動的，雖然有提供了 [`Options#makeCache`](https://github.com/discordjs/discord.js/blob/8b70f497a1207e30edebdecd12b926c981c13d28/packages/discord.js/src/util/Options.js#L82) 的選項，不過在文檔中說明到 `GuildManager`、`ChannelManager` 等核心的功能還是不能被覆寫，像是頻道、身分組及表情符號是最占用記憶體的前幾名，這樣還是令人堪憂。
+
+<Adsense />
 
 ![discord.js make cache](@static/blog/why-not-discordjs/make-cache.png)
 
@@ -97,6 +105,8 @@ async function resolveChannel(channelId) {
 
 可以看到機器人在準備完成後，預先快取的頻道數量是 `0`，而當我們需要手動抓取頻道的時候，使用 `resolveChannel` 函式去手動執行快取的操作，雖然這不是個最佳解，不過 JavaScript 是個神奇的語言所以... 恩！
 
+<Adsense />
+
 ### 機器人規模成長後難維護
 
 當機器人成長到一定的大小後，如何架構將是一個重要的課題，架構層面我們先從如何做解偶開始，可以把它簡單的理解成兩個元件要如何做拆解，
@@ -114,6 +124,8 @@ Discord 機器人通常可以拆解為 Gateway 和 Discord 溝通或是接收 Di
 ## 那我有其他的選擇嗎？
 
 Create-React-App 是個很棒的 React 工具，用簡單的 `react-scripts` 指令就可以跑起 React，而不用擔心後面 babel、webpack 繁雜的設定等等，
+
+<Adsense />
 
 而在時代不斷的更迭到了現在 2023 年，我們有了更多如 vite、NextJS 等的新選擇，在速度與可擴展性上都有大幅的提升，從前端框架的現象我們也可以來觀察一下，JavaScript 是否還有其他解決方案來製作 Discord 機器人。
 
@@ -152,3 +164,5 @@ Discordeno 使用函式化 (Functional API) 的概念來設計，終結掉物件
 ## 我該繼續用 discord.js 嗎？
 
 discord.js 在活躍的社群及各位開發者的努力下，相信之後將會進續演進的更好，若期待之後的演變，可以繼續跟隨 discord.js 的腳步，若你已迫不及待的想要做出更多的優化或改變，或許這篇文章是你的契機可以開始尋找適合你的新套件。
+
+<Adsense />

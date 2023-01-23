@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Admonition from "@components/mdx/Admonition";
 import { useAdsenseStore } from "@ads/adsense";
+import clsx from "clsx";
 
 /**
  * Google Ads :)
@@ -29,7 +30,10 @@ export function Adsense() {
             <p className="my-2 text-sm text-gray-400 text-center">
                 機器龍的精神食糧
             </p>
-            <div style={{ minHeight: "280px" }}>
+            <div className={clsx(
+                "min-h-[280px] relative after:z-[-1] after:content-['太無情了阿怎麼沒有顯示廣告'] after:text-gray-500",
+                "after:absolute after:top-1/2 after:left-1/2 after:transform after:-translate-x-1/2 after:-translate-y-1/2 after:text-sm"
+            )}>
                 <ins
                     className="adsbygoogle"
                     aria-label="promote"
