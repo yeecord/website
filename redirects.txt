@@ -16,3 +16,4 @@
 /docs/poll /docs/commands/poll/ true
 /docs/chat /docs/commands/chat/ true
 /docs/ticket /docs/commands/ticket/ true
+/index / true
