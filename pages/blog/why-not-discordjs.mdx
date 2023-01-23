@@ -1,5 +1,5 @@
 ---
-title: 為什麼不該更新 discord.js v14？踩坑經驗「這五點」聽完再決定！
+title: 為什麼不該更新 discord.js v14？踩坑經驗「這三點」聽完再決定！
 authors: [kane]
 description: discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為他簡單且強大的函式庫，讓入門開發者能快速的製作出穩定的機器人，而同時也因為這些方便而損失了很多性能上的優勢
 tags:
@@ -17,7 +17,7 @@ date: 2023/1/22
 image: /blog/why-not-discordjs/why-not-discordjs.jpeg
 ---
 
-![為什麼不該更新 discord.js v14？踩坑經驗「這五點」聽完再決定！](@static/blog/why-not-discordjs/why-not-discordjs.jpeg)
+![為什麼不該更新 discord.js v14？踩坑經驗「這三點」聽完再決定！](@static/blog/why-not-discordjs/why-not-discordjs.jpeg)
 
 discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為他簡單且強大的函式庫，讓入門開發者能快速的製作出穩定的機器人，而同時也因為這些方便而損失了很多性能上的優勢，我們將會來逐一探討。
 
@@ -56,14 +56,59 @@ function avatarUrl(user) {
 
 這樣每當大更新時只需要更改自己包的版本就好了，剩下的時間拿來多打點 APEX 也不過分。
 
-### 效能是個大問題
-
 ### 快取無法更動
+
+discord.js 完善的快取系統在普通的小量使用上確實是挺方便的，不過在規模越來越成長下，越需要去注意到記憶體的控管，是不是可以努力減少一些不必要的快取，
+
+而 discord.js 的快取在預設都是無法更動的，雖然有提供了 [`Options#makeCache`](https://github.com/discordjs/discord.js/blob/8b70f497a1207e30edebdecd12b926c981c13d28/packages/discord.js/src/util/Options.js#L82) 的選項，不過在文檔中說明到 `GuildManager`、`ChannelManager` 等核心的功能還是不能被覆寫，像是頻道、身分組及表情符號是最占用記憶體的前幾名，這樣還是令人堪憂。
+
+![discord.js make cache](@static/blog/why-not-discordjs/make-cache.png)
+
+而也有人發現了這個問題並製作出 [discord.js-light](https://www.npmjs.com/package/discord.js-light) 套件，可以直接覆蓋掉幾乎所有的 Manager 設定，不過因為還是第三方軟體，並不是 discord.js 自帶功能，請在使用之前注意會不會讓程式崩壞。
+
+![discord.js-light npm page](@static/blog/why-not-discordjs/discordjs-light.png)
+
+我自己有發現了一個神奇但是挺好用的解法，可以直接使用 JavaScript 神奇的 [ProtoType](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) 特性，
+
+舉個例子：若你發現你真的不會使用到 `ChannelManager#cache` 裡的東西，先將 `bot.channels` 的 `set` 函式清空，需要用到時使用 `ChannelManager#cache` 的原型 `Map` 來執行 `set` 的工作，
+
+```js
+const bot = new Client({ ... })
+
+// make the set function does nothing
+bot.channels.cache.set = () => {}
+
+bot.on("ready", () => {
+	console.log(bot.channels.cache.size) // 0
+})
+
+// resolver example
+async function resolveChannel(channelId) {
+	if(bot.channels.has(channelId))
+		return bot.channels.get(channelId)
+	
+	const resolved = await bot.channels.fetch(channelId)
+
+	Map.prototype.set.call(bot.channels, channelId, resolved)
+
+	return resolved
+}
+```
+
+可以看到機器人在準備完成後，預先快取的頻道數量是 `0`，而當我們需要手動抓取頻道的時候，使用 `resolveChannel` 函式去手動執行快取的操作，雖然這不是個最佳解，不過 JavaScript 是個神奇的語言所以... 恩！
 
 ### 機器人規模成長後難維護
 
-### 包好好無法修改內建函式
-
 ## 那我有其他的選擇嗎？
 
+### 先看一下函式庫比較圖表
+
+### discordeno
+
+### Eris
+
 ## 我該繼續用 discord.js 嗎？
+
+### 我很懶
+
+### 之後如果架構大起來就頭痛了
