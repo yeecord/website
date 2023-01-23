@@ -9,7 +9,6 @@ const nextConfig = {
     poweredByHeader: false,
     analyticsId: process.env.VERCEL_ANALYTICS_ID,
     images: {
-        unoptimized: true,
         domains: ["cdn.discordapp.com"],
     },
     redirects() {
