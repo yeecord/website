@@ -33,7 +33,7 @@ discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為
 
 <Adsense />
 
-以下是我踩坑了挺多次總結出來的問題點，看完了再來決定要不要使用 discord.js，或是也可以直接跳去看 [我該繼續用 discord.js 嗎？](#我該繼續用-discordjs-嗎)：
+以下是我踩坑了挺多次總結出來的問題點，比較屬於我個人的意見，可能每個人的感受也不會相同，看完了再來決定要不要使用 discord.js，或是也可以直接跳去看 [我該繼續用 discord.js 嗎？](#我該繼續用-discordjs-嗎)：
 
 ### 大更新像是抄家一樣
 
@@ -49,7 +49,11 @@ discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為
 
 ![v13 將會繼續維護](@static/blog/why-not-discordjs/v13-maintain.png)
 
-如果你很喜歡 discord.js 並且想要避免每次大更新都要重寫一次，可以將大量使用的函式包一個自己的版本，我們拿 `User#avatarURL` 來舉個例子：
+不過他們的其中一位開發者 McSquiddleton 在一篇 Reddit 文章 [When should I upgrade to V14?](https://www.reddit.com/r/Discordjs/comments/w46kxp/when_should_i_upgrade_to_v14/) 中指到：
+
+> 「因為 Discord 將棄用舊版的 Gateway 格式，於是我們推送了 v13 更新，而 v13 升級到 v14 只是一些命名上的更改。」
+
+不過這部分可能每個人的看法不同，如果你很喜歡 discord.js 並且想要避免每次大更新都要重寫一次，可以將大量使用的函式包一個自己的版本，我們拿 `User#avatarURL` 來舉個例子：
 
 ```js
 /**
