@@ -121,9 +121,10 @@ function Skeleton() {
     return (
         <div
             className={clsx(
-                "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900/70 min-w-[26rem] min-h-[17rem] max-w-[45rem] mt-8",
+                "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900/70 max-w-[45rem] mt-8",
                 "grid grid-cols-[0.5fr_1fr] gap-6",
                 "shadow-xl relative"
+                //"min-w-[26rem] min-h-[17rem]"
             )}
         >
             <motion.div
