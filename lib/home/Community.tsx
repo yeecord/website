@@ -10,7 +10,7 @@ import styles from "./community.module.css";
 
 export function Community({ joined }: { joined: number }) {
     return (
-        <div className="flex flex-col w-full gap-5 items-center text-center mt-[2rem] py-[3rem] px-3 md:px-6 z-[2] relative">
+        <div className="flex flex-col w-full gap-5 items-center text-center mt-[2rem] py-[3rem] px-3 md:px-6 z-[2] relative overflow-hidden">
             <Gradient
                 src={CyanPinkGradient}
                 className="absolute -z-[1] top-0 left-0 w-full overflow-visible object-cover h-full opacity-20"
