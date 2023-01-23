@@ -6,14 +6,14 @@ import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
 import { ThemeToggle } from "@components/ThemeToggle";
+import { SafeLink } from "@components/SafeLink";
 
 const config: Partial<DocsThemeConfig> = {
     components: {
         a: (props) => (
-            <a
-                className="nx-text-primary-600 nx-underline nx-decoration-from-font [text-underline-position:from-font]"
-                rel={ !(props as any).href?.startsWith("#") && !(props as any).href?.startsWith("/") ? "nofollow noreferrer" : "" }
+            <SafeLink
                 {...props}
+                className="text-link underline decoration-from-font [text-underline-position:from-font]"
             />
         ),
     },
