@@ -1,15 +1,28 @@
-import { create } from "zustand";
+import Script from "next/script";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 
-interface AdsenseState {
-    enabled: boolean,
-    setEnabled: (status: boolean) => void
+const AdsContext = createContext({
+    failed: false,
+});
+
+export function useAdsContext() {
+    return useContext(AdsContext);
 }
 
-export const useAdsenseStore = create<AdsenseState>()((set) => ({
-    enabled: true,
-    setEnabled(enabled) {
-        set(() => ({
-            enabled
-        }))
-    }
-}));
+export function AdsProvider({ children }: { children: ReactNode }) {
+    const [failed, setFailed] = useState(false);
+    const value = useMemo(() => ({ failed }), [failed]);
+
+    return (
+        <>
+            <Script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
+                crossOrigin="anonymous"
+                strategy="lazyOnload"
+                onError={() => setFailed(true)}
+            />
+            <AdsContext.Provider value={value}>{children}</AdsContext.Provider>
+        </>
+    );
+}

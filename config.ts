@@ -1,5 +1,5 @@
 import { FooterCategory } from "@components/Footer";
-import type { AuthorData } from "@utils/mdx";
+import type { AuthorData } from "@schema/blog";
 
 export const isProduction = process.env.NODE_ENV === "production";
 export const API_ENDPOINT = isProduction
@@ -74,7 +74,7 @@ export const blogRecommendations = [
     "welcome-to-v2",
     "fix-music-lag",
     "discord-bot-troubleshooting",
-    "how-to-invite-bot"
+    "how-to-invite-bot",
 ];
 
 export const blogAuthors: Record<string, AuthorData> = {

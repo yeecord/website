@@ -19,6 +19,10 @@
         @apply text-3xl sm:text-5xl font-bold;
     }
 
+    .text-link {
+        @apply text-blue-600 dark:text-blue-400;
+    }
+
     .text-secondary {
         @apply text-secondary-light dark:text-secondary-dark;
     }
@@ -133,10 +137,6 @@ h1 {
 
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
     @apply md:!text-slate-400;
-}
-
-.nx-overflow-x-hidden {
-    overflow-x: clip !important;
 }
 
 article img {

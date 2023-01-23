@@ -1,8 +1,19 @@
-import { AuthorData } from "@utils/mdx";
+import { PageOpts } from "nextra";
 import { z } from "zod";
 import { blogAuthors } from "../config";
 
 const authors = Object.keys(blogAuthors) as [string, ...string[]];
+
+export type AuthorData = {
+    name: string;
+    url?: string;
+    title?: string;
+    image_url?: string;
+};
+
+export type BlogPageOpts = Omit<PageOpts, "frontMatter"> & {
+    frontMatter: BlogFrontMatter;
+};
 
 export const AuthorEnum = z.enum(authors);
 
