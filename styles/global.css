@@ -140,11 +140,11 @@ h1 {
 }
 
 body {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 }
 
 .nx-overflow-x-hidden {
-    overflow-x: clip !important;
+    overflow-x: initial !important;
 }
 
 article img {
