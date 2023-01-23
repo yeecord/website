@@ -123,6 +123,10 @@ article h6 {
     @apply text-black dark:text-white;
 }
 
+article p {
+    line-height: 2rem !important;
+}
+
 h1 {
     @apply font-ms;
 }
