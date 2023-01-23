@@ -139,18 +139,6 @@ h1 {
     @apply md:!text-slate-400;
 }
 
-html,
-body {
-    max-width: 100% !important;
-    height: 100% !important;
-    width: 100% !important;
-    overflow-x: hidden !important;
-}
-
-.nx-overflow-x-hidden {
-    overflow-x: unset !important;
-}
-
 article img {
     border-radius: 5px;
 }
