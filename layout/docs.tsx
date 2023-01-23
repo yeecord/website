@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { ReactNode } from "react";
 import { PageOpts } from "nextra";
 import { DocsJsonLd } from "@utils/seo";
-import { DocsPageOpts } from "@utils/mdx";
+import { DocsPageOpts } from "@schema/docs";
 
 export default function DocsLayout({
     page,

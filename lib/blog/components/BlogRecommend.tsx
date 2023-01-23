@@ -16,10 +16,10 @@ export function BlogRecommend({ page }: { page: BlogPage }) {
             <div
                 className={clsx(
                     "flex flex-wrap font-semibold gap-x-3 gap-y-1 text-sm",
-                    "text-blue-600 dark:text-blue-400"
+                    "text-link"
                 )}
             >
-                {page.frontMatter?.tags?.map((tag) => (
+                {page.frontMatter.tags.map((tag) => (
                     <p key={tag} className="flex-shrink-0">
                         #{tag}
                     </p>

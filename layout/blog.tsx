@@ -1,4 +1,4 @@
-import { AuthorData, BlogPageOpts } from "@utils/mdx";
+import { BlogPageOpts } from "@schema/blog";
 import Image from "next/image";
 import React from "react";
 import { ReactNode } from "react";
@@ -9,7 +9,7 @@ import { Fragment } from "react";
 import { getTagHref } from "@blog/utils/tags";
 import { BlogJsonLd } from "@utils/seo";
 import { PageOpts } from "nextra";
-import { BlogFrontMatterSchema } from "@schema/blog";
+import { AuthorData, BlogFrontMatterSchema } from "@schema/blog";
 
 export default function BlogLayout({
     page,
@@ -43,7 +43,7 @@ function PageContainer({
 
     return (
         <div className="mt-10">
-            <p className="text-base text-blue-500 dark:text-blue-400">
+            <p className="text-base lg:text-lg text-link font-semibold">
                 {page.readingTime != null &&
                     `閱讀時間約 ${Math.round(page.readingTime.minutes)} 分鐘`}
             </p>
@@ -75,11 +75,11 @@ function PageContainer({
 
 function SmallAuthor({ author }: { author: AuthorData }) {
     return (
-        <Link
+        <a
             className="h-stack gap-1 font-bold text-black dark:text-white"
             href={author.url ?? "#"}
             rel="nofollow noreferrer"
-            prefetch={false}
+            target="_blank"
         >
             {author.image_url != null && (
                 <Image
@@ -91,7 +91,7 @@ function SmallAuthor({ author }: { author: AuthorData }) {
                 />
             )}
             {author.name}
-        </Link>
+        </a>
     );
 }
 
@@ -114,12 +114,12 @@ function Footer({ page }: { page: BlogPageOpts }) {
                 ))}
             </div>
             {authors.map((author, i) => (
-                <Link
+                <a
                     key={i}
                     className="h-stack p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl"
                     href={author.url ?? "#"}
+                    target="_blank"
                     rel="nofollow noreferrer"
-                    prefetch={false}
                 >
                     {author.image_url != null && (
                         <Image
@@ -134,7 +134,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
                         <h2 className="font-bold text-2xl">{author.name}</h2>
                         <p className="text-secondary text-lg">{author.title}</p>
                     </div>
-                </Link>
+                </a>
             ))}
             <div
                 className={clsx(
@@ -153,15 +153,16 @@ function Footer({ page }: { page: BlogPageOpts }) {
                 <p className="text-lg font-semibold text-slate-700 dark:text-slate-300">
                     通過 Github 為我們貢獻
                 </p>
-                <Link
+                <a
                     href="https://github.com/yeecord/website"
                     target="_blank"
                     className="w-fit"
+                    rel="noreferrer"
                 >
                     <button className="px-4 py-2 bg-blue-400 font-bold rounded-lg text-white">
                         加入我們
                     </button>
-                </Link>
+                </a>
             </div>
         </div>
     );

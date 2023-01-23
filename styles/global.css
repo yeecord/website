@@ -19,6 +19,10 @@
         @apply text-3xl sm:text-5xl font-bold;
     }
 
+    .text-link {
+        @apply text-blue-600 dark:text-blue-400;
+    }
+
     .text-secondary {
         @apply text-secondary-light dark:text-secondary-dark;
     }

@@ -69,7 +69,7 @@ function Card({
                     <p className="text-secondary">{text}</p>
                 </div>
             </div>
-            <Link href={href} target="_blank">
+            <a href={href} target="_blank" rel="noreferrer">
                 <button
                     className={clsx(
                         "text-white py-1 text-md rounded-xl mt-6 shadow-lg w-[8rem] font-bold",
@@ -79,7 +79,7 @@ function Card({
                 >
                     {children}
                 </button>
-            </Link>
+            </a>
         </div>
     );
 }

@@ -17,11 +17,7 @@ const config: Partial<DocsThemeConfig> = {
             />
         ),
     },
-    head: (
-        <>
-            <link rel="shortcut icon" href="/img/logo_128x128.png" />
-        </>
-    ),
+    head: Head,
     logo: (
         <div className="flex flex-row gap-2 items-center justify-center">
             <Image
@@ -113,5 +109,13 @@ const config: Partial<DocsThemeConfig> = {
         );
     },
 };
+
+function Head() {
+    return (
+        <>
+            <link rel="shortcut icon" href="/img/logo_128x128.png" />
+        </>
+    );
+}
 
 export default config;

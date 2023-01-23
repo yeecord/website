@@ -1,24 +1,48 @@
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import Link from "next/link";
 import { ComponentProps, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-import styles from "./Card.module.css";
+const classes = {
+    card: clsx(
+        "flex flex-col justify-start overflow-hidden p-4 gap-2 no-underline rounded-lg",
+        "bg-transparent border border-gray-200 shadow-sm shadow-gray-100",
+        "dark:bg-background/50 dark:border-neutral-800 dark:shadow-none",
+        "hover:bg-slate-50 hover:shadow-md hover:shadow-gray-100 hover:border-blue-500",
+        "hover:dark:border-blue-500 hover:dark:bg-neutral-900/50 hover:dark:shadow-none hover:dark:text-white",
+        "transition-colors duration-200 group"
+    ),
+    title: clsx(
+        "flex font-bold align-start",
+        "gap-3 text-black dark:text-white"
+    ),
+    cards: clsx(
+        "[grid-template-columns:_repeat(auto-fill,minmax(max(250px,_calc((100%_-_1rem_*_2)_/_var(--rows))),_1fr))]"
+    ),
+};
 
+export type CardProps = {
+    href: string;
+    title: string;
+    icon?: ReactNode;
+    arrow?: boolean;
+    children: ReactNode;
+    className?: string;
+    target?: "_self" | "_blank";
+};
+
+/**
+ * For safe, Won't accept all props from Link
+ */
 export function Card({
     children,
     title,
     icon,
     arrow,
     href,
-    ...props
-}: {
-    href: string;
-    title: string;
-    icon?: ReactNode;
-    arrow?: boolean;
-    children: ReactNode;
-} & ComponentProps<typeof Link>) {
+    target,
+    className,
+}: CardProps) {
     const animatedArrow = arrow ? (
         <span
             className={cn(
@@ -30,33 +54,39 @@ export function Card({
         </span>
     ) : null;
 
-    return (
-        <Link
-            href={href}
-            {...props}
-            className={twMerge(
-                styles.card,
-                "flex flex-col justify-start overflow-hidden p-4",
-                "bg-transparent dark:bg-background/50 rounded-lg",
-                "border border-gray-200",
-                "dark:border-neutral-800 dark:shadow-none",
-                "shadow-sm shadow-gray-100",
-                "no-underline transition-colors duration-200",
-                "hover:bg-slate-50 hover:shadow-md hover:shadow-gray-100 hover:border-blue-500",
-                "hover:dark:border-blue-500 hover:dark:bg-neutral-900/50 hover:dark:shadow-none hover:dark:text-white",
-                props?.className
-            )}
-        >
-            <span
-                className={cn(styles.title, "gap-3 text-black dark:text-white")}
-            >
+    const content = (
+        <>
+            <span className={cn(classes.title, "")}>
                 {icon != null && (
                     <div className="text-xl text-blue-500 mt-1">{icon}</div>
                 )}
                 {title}
                 {animatedArrow}
             </span>
-            <p className="text-base">{children}</p>
+            {children && <p className="text-base">{children}</p>}
+        </>
+    );
+
+    if (target === "_blank") {
+        return (
+            <a
+                href={href}
+                target="_blank"
+                className={twMerge(classes.card, className)}
+                rel="noreferrer"
+            >
+                {content}
+            </a>
+        );
+    }
+
+    return (
+        <Link
+            href={href}
+            target="_self"
+            className={twMerge(classes.card, className)}
+        >
+            {content}
         </Link>
     );
 }
@@ -69,13 +99,13 @@ export function Cards({
     return (
         <div
             {...props}
-            className={twMerge(styles.cards, "mt-4 gap-4", props?.className)}
-            style={
-                {
-                    "--rows": num || 3,
-                    ...props.style,
-                } as any
-            }
+            className={twMerge("grid mt-4 gap-4", props?.className)}
+            style={{
+                gridTemplateColumns: `repeat(auto-fill, minmax(max(250px, calc((100% - 1rem * 2) / ${
+                    num || 3
+                })), 1fr))`,
+                ...props.style,
+            }}
         >
             {children}
         </div>
