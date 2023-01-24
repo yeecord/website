@@ -8,9 +8,6 @@ const nextConfig = {
     reactStrictMode: false,
     poweredByHeader: false,
     analyticsId: process.env.VERCEL_ANALYTICS_ID,
-    images: {
-        domains: ["cdn.discordapp.com"],
-    },
     redirects() {
         const redirects = redirectsFile.map(args => {
             const [source, destination, permanent] = args.split(" ")
