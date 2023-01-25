@@ -98,7 +98,12 @@ const config: Partial<DocsThemeConfig> = {
         text: "在 Github 上編輯此頁面 →",
     },
     sidebar: {
-        toggleButton: true,
+        titleComponent({ title, type }) {
+            if (type === "separator") {
+                return <span className="cursor-default text-xl">{title}</span>;
+            }
+            return <>{title}</>;
+        },
     },
     banner: {
         key: "new-year",
