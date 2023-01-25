@@ -131,17 +131,12 @@ article p {
     line-height: 2rem !important;
 }
 
-/* fix nextra sidebar a11y */
-aside li a {
-    @apply dark:text-gray-400 !important;
-}
-
 h1 {
     @apply font-ms;
 }
 
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
-    @apply md:!text-slate-400;
+    @apply text-slate-400;
 }
 
 article img {

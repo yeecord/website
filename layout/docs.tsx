@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 import { PageOpts } from "nextra";
-import { DocsJsonLd } from "@utils/seo";
 import { DocsPageOpts } from "@schema/docs";
+import { ArticleJsonLd } from "next-seo";
 
 export default function DocsLayout({
     page,
@@ -41,5 +41,20 @@ function Gradient() {
                 )}
             />
         </div>
+    );
+}
+
+function DocsJsonLd({ page }: { page: DocsPageOpts }) {
+    return (
+        <ArticleJsonLd
+            type="Article"
+            title={page.title}
+            authorName={[]}
+            url={page.route}
+            images={[]}
+            datePublished={""}
+            description={page.frontMatter.description ?? ""}
+            isAccessibleForFree
+        />
     );
 }
