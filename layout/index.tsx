@@ -5,11 +5,10 @@ import dynamic from "next/dynamic";
 
 const BlogLayout = dynamic(() => import("./blog").then((mod) => mod.default), {
     ssr: true,
-    loading(loadingProps) {
-        return <p>Loading</p>;
-    },
 });
-const DocsLayout = dynamic(() => import("./docs").then((mod) => mod.default));
+const DocsLayout = dynamic(() => import("./docs").then((mod) => mod.default), {
+    ssr: true,
+});
 
 export default function Layout({
     children,
