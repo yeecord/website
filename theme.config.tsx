@@ -97,6 +97,9 @@ const config: Partial<DocsThemeConfig> = {
     editLink: {
         text: "在 Github 上編輯此頁面 →",
     },
+    sidebar: {
+        toggleButton: true,
+    },
     banner: {
         key: "new-year",
         text: <span>🎊 新年快樂！</span>,

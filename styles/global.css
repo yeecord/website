@@ -89,12 +89,9 @@
     }
 }
 
-.dark body {
+.dark body,
+html[class~="dark"] .dark\:nx-bg-dark {
     background: theme("colors.background") !important;
-}
-
-.nextra-toc > .nextra-scrollbar > div {
-    @apply !bg-transparent shadow-none !important;
 }
 
 .nx-text-sm {
