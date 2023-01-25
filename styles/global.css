@@ -136,7 +136,7 @@ h1 {
 }
 
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
-    @apply !text-slate-400;
+    @apply text-slate-400;
 }
 
 article img {
