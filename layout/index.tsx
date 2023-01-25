@@ -3,7 +3,12 @@ import BaseLayout from "nextra-theme-docs";
 import { ReactNode } from "react";
 import dynamic from "next/dynamic";
 
-const BlogLayout = dynamic(() => import("./blog").then((mod) => mod.default));
+const BlogLayout = dynamic(() => import("./blog").then((mod) => mod.default), {
+    ssr: true,
+    loading(loadingProps) {
+        return <p>Loading</p>;
+    },
+});
 const DocsLayout = dynamic(() => import("./docs").then((mod) => mod.default));
 
 export default function Layout({

@@ -1,21 +1,5 @@
-import { AuthorData, BlogPageOpts } from "@schema/blog";
-import { DocsPageOpts } from "@schema/docs";
+import { BlogPageOpts, AuthorData } from "@schema/blog";
 import { ArticleJsonLd } from "next-seo";
-
-export function DocsJsonLd({ page }: { page: DocsPageOpts }) {
-    return (
-        <ArticleJsonLd
-            type="Article"
-            title={page.title}
-            authorName={[]}
-            url={page.route}
-            images={[]}
-            datePublished={""}
-            description={page.frontMatter.description ?? ""}
-            isAccessibleForFree
-        />
-    );
-}
 
 export function BlogJsonLd({ page }: { page: BlogPageOpts }) {
     const { image, authors, date, description } = page.frontMatter;

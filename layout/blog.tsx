@@ -7,9 +7,9 @@ import Link from "next/link";
 import clsx from "clsx";
 import { Fragment } from "react";
 import { getTagHref } from "@blog/utils/tags";
-import { BlogJsonLd } from "@utils/seo";
 import { PageOpts } from "nextra";
 import { AuthorData, BlogFrontMatterSchema } from "@schema/blog";
+import { BlogJsonLd } from "./blog-json-ld";
 
 export default function BlogLayout({
     page,
