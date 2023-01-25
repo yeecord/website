@@ -43,7 +43,8 @@ export default function LoginButton() {
     return (
         <Image
             alt="avatar"
-            src={resolveUserAvatar(user)}
+            src={`${resolveUserAvatar(user)}?size=32`}
+            unoptimized
             width="30"
             height="30"
             className="rounded-full"

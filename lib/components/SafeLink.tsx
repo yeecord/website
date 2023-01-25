@@ -11,5 +11,5 @@ export function SafeLink(props: Omit<ComponentProps<"a">, "ref">) {
         return <a {...props} target="_blank" rel="noreferrer nofollow" />;
     }
 
-    return <Link {...props} href={props.href ?? "#"} target="_self" />;
+    return <Link {...props} href={props.href ?? "#"} target="_self" prefetch={false} />;
 }
