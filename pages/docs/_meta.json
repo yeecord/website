@@ -1,8 +1,16 @@
 {
     "index": "快速入門",
+    "contribute": "文檔協作大全",
+    "-- 使用指南 --": {
+        "type": "separator",
+        "title": "使用指南"
+    },
     "commands": "指令",
     "rpg": "RPG 系統攻略",
-    "contribute": "文檔協作大全",
+    "-- 其他 --": {
+        "type": "separator",
+        "title": "其他"
+    },
     "faq": "常見問題 FAQ",
     "credit": "感謝",
     "copyright": "版權所有"

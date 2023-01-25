@@ -60,7 +60,12 @@ type InnerButtonProps = {
     variant?: "secondary" | "primary";
 };
 
-function InnerButton({ variant, icon, className, children }: InnerButtonProps) {
+function InnerButton({
+    variant = "secondary",
+    icon,
+    className,
+    children,
+}: InnerButtonProps) {
     return (
         <button
             className={twMerge(
