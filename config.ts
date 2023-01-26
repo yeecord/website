@@ -99,7 +99,7 @@ export const blogAuthors: Record<string, AuthorData> = {
     nathan: {
         name: "Nathan",
         title: "Yeecord 現任管理員 兼 ZeitFrei 合作機器人作者",
-        url: "https://github.com/NathanTW0219",
+        url: "https://github.com/Nat1anWasTaken",
         image_url: "/blog/nathan.jpg",
     },
     money: {
