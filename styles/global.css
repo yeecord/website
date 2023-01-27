@@ -89,6 +89,14 @@
     }
 }
 
+html[class~="dark"] .nextra-breadcrumb {
+    color: theme("colors.slate.300") !important;
+}
+
+html[class~="dark"] .nextra-breadcrumb .dark\:nx-text-gray-400 {
+    @apply text-slate-200 !important;
+}
+
 .dark body,
 html[class~="dark"] .dark\:nx-bg-dark {
     background: theme("colors.background") !important;

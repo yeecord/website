@@ -17,7 +17,11 @@ const config: Partial<DocsThemeConfig> = {
             />
         ),
     },
-    head: Head,
+    head: (
+        <>
+            <link rel="shortcut icon" href="/img/logo_128x128.png" />
+        </>
+    ),
     logo: (
         <div className="flex flex-row gap-2 items-center justify-center">
             <Image
@@ -36,7 +40,7 @@ const config: Partial<DocsThemeConfig> = {
         placeholder: "搜尋文檔",
     },
     useNextSeoProps() {
-        const { asPath } = useRouter();
+        const { asPath, route } = useRouter();
         const { frontMatter, title } = useConfig();
 
         const image = frontMatter.image != null && {
@@ -50,7 +54,7 @@ const config: Partial<DocsThemeConfig> = {
 
         return {
             canonical: `https://yeecord.com${asPath}`,
-            titleTemplate: "%s – YEE式機器龍",
+            titleTemplate: route === "/" ? "%s" : "%s – YEE式機器龍",
             twitter: {
                 cardType: "summary_large_image",
             },
@@ -104,6 +108,7 @@ const config: Partial<DocsThemeConfig> = {
             }
             return <>{title}</>;
         },
+        toggleButton: true,
     },
     banner: {
         key: "new-year",
@@ -117,13 +122,5 @@ const config: Partial<DocsThemeConfig> = {
         );
     },
 };
-
-function Head() {
-    return (
-        <>
-            <link rel="shortcut icon" href="/img/logo_128x128.png" />
-        </>
-    );
-}
 
 export default config;

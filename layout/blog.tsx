@@ -2,7 +2,6 @@ import { BlogPageOpts } from "@schema/blog";
 import Image from "next/image";
 import React from "react";
 import { ReactNode } from "react";
-import styles from "./blog.module.css";
 import Link from "next/link";
 import clsx from "clsx";
 import { Fragment } from "react";
@@ -67,7 +66,7 @@ function PageContainer({
                     })}
                 </p>
             </div>
-            <div className={styles["blog-layout"]}>{children}</div>
+            {children}
             <Footer page={page} />
         </div>
     );
