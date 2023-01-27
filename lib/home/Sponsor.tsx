@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import Link from "next/link";
 import { ReactNode } from "react";
 import { RiFeedbackFill, RiGithubFill } from "react-icons/ri";
 
