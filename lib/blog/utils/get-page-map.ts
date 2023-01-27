@@ -1,5 +1,5 @@
 import { NEXTRA_INTERNAL } from "@utils/mdx";
-import { Folder, PageMapItem, PageOpts } from "nextra";
+import { Folder, MdxFile, PageMapItem, PageOpts } from "nextra";
 
 // copied from NextraInternalGlobal
 export type NextraInternal = {
@@ -18,10 +18,10 @@ export type NextraInternal = {
 };
 
 declare global {
-  var blogPagesMap: PageMapItem[] | null;
+  var blogPagesMap: MdxFile[] | null;
 }
 
-export function getBlogPageMap(): PageMapItem[] {
+export function getBlogPageMap(): MdxFile[] {
   if (globalThis.blogPagesMap != null) return globalThis.blogPagesMap;
 
   const internal = (globalThis as any)[NEXTRA_INTERNAL] as NextraInternal;
@@ -33,8 +33,8 @@ export function getBlogPageMap(): PageMapItem[] {
   const files = (blog as Folder)?.children || [];
 
   const pageMap = files.filter(
-    (item) => item.kind === "MdxPage" && !item.route?.startsWith("/blog/tags")
-  );
+    (item) => item.kind === "MdxPage" && !item.route.startsWith("/blog/tags")
+  ) as MdxFile[];
 
   return (globalThis.blogPagesMap = pageMap);
 }
