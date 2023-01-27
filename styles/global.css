@@ -90,11 +90,12 @@
 }
 
 html[class~="dark"] .nextra-breadcrumb {
-    color: theme("colors.slate.300") !important;
+    color: theme("colors.slate.400") !important;
+    margin-bottom: theme("spacing.3");
 }
 
 html[class~="dark"] .nextra-breadcrumb .dark\:nx-text-gray-400 {
-    @apply text-slate-200 !important;
+    @apply text-slate-300 !important;
 }
 
 .dark body,
