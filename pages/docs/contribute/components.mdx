@@ -5,14 +5,14 @@ description: 利用自定義組件改進你的文章!
 
 import { Tabs, Tab } from "nextra-theme-docs";
 import {
-    Accordion,
-    Admonition,
-    Tip,
-    Warning,
-    Info,
-    Card,
-    Cards,
-    LinkButton,
+  Accordion,
+  Admonition,
+  Tip,
+  Warning,
+  Info,
+  Card,
+  Cards,
+  LinkButton,
 } from "@components/mdx";
 import { BsDownload } from "react-icons/bs";
 import { motion } from "framer-motion";
@@ -72,10 +72,10 @@ import { Card } from "@components/mdx";
 
 <Card title="重定向到部落格" href="/blog/welcome-to-v2" />
 <Card
-    title="重定向到部落格"
-    href="/blog/welcome-to-v2"
-    arrow
-    className="mt-2"
+  title="重定向到部落格"
+  href="/blog/welcome-to-v2"
+  arrow
+  className="mt-2"
 />
 
 ## 鏈接按鈕
@@ -88,18 +88,18 @@ import { Card } from "@components/mdx";
 import { LinkButton } from "@components/mdx";
 
 <LinkButton
-    href="/blog/welcome-to-v2"
-    children="免費體驗"
-    variant="secondary"
+  href="/blog/welcome-to-v2"
+  children="免費體驗"
+  variant="secondary"
 />
 
 <LinkButton
-    href="/blog/welcome-to-v2"
-    target="_blank"
-    icon={<BsDownload />}
-    children="免費體驗"
-    variant="primary"
-    link={{ className: "w-fit" }}
+  href="/blog/welcome-to-v2"
+  target="_blank"
+  icon={<BsDownload />}
+  children="免費體驗"
+  variant="primary"
+  link={{ className: "w-fit" }}
 />
 ```
 
@@ -114,17 +114,17 @@ import { LinkButton } from "@components/mdx";
 />
 
 <LinkButton
-    href="/blog/welcome-to-v2"
-    target="_blank"
-    children="開始試用"
-    variant="primary"
+  href="/blog/welcome-to-v2"
+  target="_blank"
+  children="開始試用"
+  variant="primary"
 />
 
 <LinkButton
-    href="/blog/welcome-to-v2"
-    target="_blank"
-    icon={<BsDownload />}
-    children="免費體驗"
+  href="/blog/welcome-to-v2"
+  target="_blank"
+  icon={<BsDownload />}
+  children="免費體驗"
 />
 
 <LinkButton href="/blog/welcome-to-v2" target="_blank" children="開始試用" />
@@ -213,54 +213,53 @@ Mdx 能夠與 React 和 Next.js 一起使用，您可以在 `.mdx` 檔案中使�
 - [framer-motion](https://www.framer.com/motion/)
 - `nextra`
 - `nextra-docs-theme`
-- `react-youtube`
 
 ### 自定義組件 (Tailwind CSS)
 
 ```jsx
-<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+<div className="border-2 border-black p-3 dark:border-white">Hello World</div>
 ```
 
-<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+<div className="border-2 border-black p-3 dark:border-white">Hello World</div>
 
 ### Framer Motion
 
 它可以讓您輕鬆建立炫酷的動畫
 
 <Cards>
-    <Card
-        href="https://www.framer.com/docs/"
-        target="_blank"
-        title="他們的文檔"
-    />
+  <Card
+    href="https://www.framer.com/docs/"
+    target="_blank"
+    title="他們的文檔"
+  />
 </Cards>
 
 ```jsx
 <motion.div
-    animate={{
-        scale: [1, 2, 2, 1, 1],
-        rotate: [0, 0, 270, 270, 0],
-        borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-    }}
+  animate={{
+    scale: [1, 2, 2, 1, 1],
+    rotate: [0, 0, 270, 270, 0],
+    borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+  }}
 />
 ```
 
-<div className="flex flex-col items-center bg-purple-500 p-5 rounded-2xl mt-4">
-    <motion.div
-        animate={{
-            scale: [1, 2, 2, 1, 1],
-            rotate: [0, 0, 270, 270, 0],
-            borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-        }}
-        transition={{
-            duration: 2,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.5, 0.8, 1],
-            repeat: Infinity,
-            repeatDelay: 0.2,
-        }}
-        className="w-10 h-10 md:w-32 md:h-32 bg-white m-[5rem]"
-    />
+<div className="mt-4 flex flex-col items-center rounded-2xl bg-purple-500 p-5">
+  <motion.div
+    animate={{
+      scale: [1, 2, 2, 1, 1],
+      rotate: [0, 0, 270, 270, 0],
+      borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+    }}
+    transition={{
+      duration: 2,
+      ease: "easeInOut",
+      times: [0, 0.2, 0.5, 0.8, 1],
+      repeat: Infinity,
+      repeatDelay: 0.2,
+    }}
+    className="m-[5rem] h-10 w-10 bg-white md:h-32 md:w-32"
+  />
 </div>
 
 我們建議您了解它們，可以為使用者建立更好的使用者體驗

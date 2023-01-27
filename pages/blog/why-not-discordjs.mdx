@@ -57,10 +57,10 @@ discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為
 
 ```js
 /**
-* @param {import("discord.js").User} user
-*/
+ * @param {import("discord.js").User} user
+ */
 function avatarUrl(user) {
-	return user.avatarURL()
+  return user.avatarURL();
 }
 ```
 
@@ -100,7 +100,7 @@ bot.on("ready", () => {
 async function resolveChannel(channelId) {
 	if(bot.channels.has(channelId))
 		return bot.channels.get(channelId)
-	
+
 	const resolved = await bot.channels.fetch(channelId)
 
 	Map.prototype.set.call(bot.channels, channelId, resolved)

@@ -1,36 +1,36 @@
 .steps-container {
-    margin-left: 1.3rem;
-    padding-left: 2rem;
-    border-left: 1px solid;
-    border-image: linear-gradient(
-            to bottom,
-            theme("colors.orange.400"),
-            transparent
-        )
-        1 100%;
+  margin-left: 1.3rem;
+  padding-left: 2rem;
+  border-left: 1px solid;
+  border-image: linear-gradient(
+      to bottom,
+      theme("colors.orange.400"),
+      transparent
+    )
+    1 100%;
 }
 
 @screen sm {
-    .steps-container {
-        margin-left: 2rem;
-        padding-left: 2.5rem;
-    }
+  .steps-container {
+    margin-left: 2rem;
+    padding-left: 2.5rem;
+  }
 }
 
 @layer {
-    .item-card {
-        @apply flex flex-col gap-4 rounded-3xl p-3 sm:p-5 text-center text-gray-700 bg-slate-100 transition-all duration-500 cursor-pointer;
-    }
+  .item-card {
+    @apply flex cursor-pointer flex-col gap-4 rounded-3xl bg-slate-100 p-3 text-center text-gray-700 transition-all duration-500 sm:p-5;
+  }
 
-    :global(.dark) .item-card {
-        @apply text-zinc-300 bg-zinc-900/50;
-    }
+  :global(.dark) .item-card {
+    @apply bg-zinc-900/50 text-zinc-300;
+  }
 
-    .item-card:hover {
-        @apply shadow-xl text-pink-700 bg-gradient-to-br from-orange-200 to-pink-400;
-    }
+  .item-card:hover {
+    @apply bg-gradient-to-br from-orange-200 to-pink-400 text-pink-700 shadow-xl;
+  }
 
-    :global(.dark) .item-card:hover {
-        @apply text-pink-100 from-orange-300 to-pink-800;
-    }
+  :global(.dark) .item-card:hover {
+    @apply from-orange-300 to-pink-800 text-pink-100;
+  }
 }

@@ -3,120 +3,129 @@
 @tailwind utilities;
 
 @layer components {
-    .heading-xl {
-        @apply text-5xl font-bold;
-    }
+  .heading-xl {
+    @apply text-5xl font-bold;
+  }
 
-    .heading-lg {
-        @apply text-3xl font-bold;
-    }
+  .heading-lg {
+    @apply text-3xl font-bold;
+  }
 
-    .heading-md {
-        @apply text-lg sm:text-xl font-bold;
-    }
+  .heading-md {
+    @apply text-lg font-bold sm:text-xl;
+  }
 
-    .features-heading {
-        @apply text-3xl sm:text-5xl font-bold;
-    }
+  .features-heading {
+    @apply text-3xl font-bold sm:text-5xl;
+  }
 
-    .text-link {
-        @apply text-blue-600 dark:text-blue-400;
-    }
+  .text-link {
+    @apply text-blue-600 dark:text-blue-400;
+  }
 
-    .text-secondary {
-        @apply text-secondary-light dark:text-secondary-dark;
-    }
+  .text-secondary {
+    @apply text-secondary-light dark:text-secondary-dark;
+  }
 
-    .text-gradient {
-        @apply text-transparent bg-gradient-to-b bg-clip-text;
-    }
+  .text-gradient {
+    @apply bg-gradient-to-b bg-clip-text text-transparent;
+  }
 
-    .card {
-        @apply bg-white/40 border-black/10 shadow-lg dark:bg-white/10 border-[1px] dark:border-white/10 p-4 rounded-xl;
-    }
+  .card {
+    @apply rounded-xl border-[1px] border-black/10 bg-white/40 p-4 shadow-lg dark:border-white/10 dark:bg-white/10;
+  }
 
-    .h-stack {
-        @apply flex flex-row gap-2.5 items-center;
-    }
+  .h-stack {
+    @apply flex flex-row items-center gap-2.5;
+  }
 
-    .primary-button {
-        @apply px-6 py-3 rounded-full text-white bg-gradient-to-br text-lg font-bold transition-all;
-    }
+  .primary-button {
+    @apply rounded-full bg-gradient-to-br px-6 py-3 text-lg font-bold text-white transition-all;
+  }
 
-    .icon-button {
-        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
-    }
+  .icon-button {
+    @apply inline-flex items-center gap-2 rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black transition-all hover:bg-blue-300/40 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
+  }
 
-    .secondary-button {
-        @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
-    }
+  .secondary-button {
+    @apply inline-flex items-center gap-2 rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black transition-all hover:bg-blue-300/40 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
+  }
 
-    .steps-container {
-        margin-left: 1rem;
-        padding-left: 1.7rem;
-        counter-reset: step;
-        border-left: 1px solid;
-        border-color: rgb(229 231 235/1);
-        margin-bottom: 3rem;
-    }
-    .steps-container h3,
-    .steps-container .step {
-        counter-increment: step;
-    }
+  .steps-container {
+    margin-left: 1rem;
+    padding-left: 1.7rem;
+    counter-reset: step;
+    border-left: 1px solid;
+    border-color: rgb(229 231 235/1);
+    margin-bottom: 3rem;
+  }
+  .steps-container h3,
+  .steps-container .step {
+    counter-increment: step;
+  }
 
-    .steps-container h3:before,
-    .steps-container .step:before {
-        content: counter(step);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        margin-left: calc(-1.7rem - 17px);
-        width: 34px;
-        height: 34px;
-        line-height: 1.5rem;
-        font-size: 1rem;
-        font-weight: 600;
+  .steps-container h3:before,
+  .steps-container .step:before {
+    content: counter(step);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-left: calc(-1.7rem - 17px);
+    width: 34px;
+    height: 34px;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
 
-        @apply bg-gradient-to-br from-blue-500 to-cyan-400
-        shadow-lg shadow-blue-400/50 dark:shadow-blue-800
-        text-base text-white 
-        rounded-full;
-    }
+    @apply rounded-full bg-gradient-to-br from-blue-500
+        to-cyan-400 text-base text-white
+        shadow-lg shadow-blue-400/50 
+        dark:shadow-blue-800;
+  }
 
-    .dark .steps-container {
-        border-color: #353535;
-    }
+  .dark .steps-container {
+    border-color: #353535;
+  }
+}
+
+html[class~="dark"] .nextra-breadcrumb {
+  color: theme("colors.slate.400") !important;
+  margin-bottom: theme("spacing.3");
+}
+
+html[class~="dark"] .nextra-breadcrumb .dark\:nx-text-gray-400 {
+  @apply text-slate-300 !important;
 }
 
 .dark body,
 html[class~="dark"] .dark\:nx-bg-dark {
-    background: theme("colors.background") !important;
+  background: theme("colors.background") !important;
 }
 
 html[class~="dark"] .nextra-nav-container .dark\:nx-bg-dark {
-    background: theme("colors.background / 0.5") !important;
+  background: theme("colors.background / 0.5") !important;
 }
 
 .nx-text-sm {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .nextra-sidebar-container,
 .nx-font-medium {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .nx-tracking-tight {
-    letter-spacing: normal;
+  letter-spacing: normal;
 }
 
 article {
-    @apply text-slate-600 sm:text-lg !important;
+  @apply text-slate-600 sm:text-lg !important;
 }
 
 .dark article {
-    @apply text-slate-300 !important;
+  @apply text-slate-300 !important;
 }
 
 article h1,
@@ -125,21 +134,21 @@ article h3,
 article h4,
 article h5,
 article h6 {
-    @apply text-black dark:text-white;
+  @apply text-black dark:text-white;
 }
 
 article p {
-    line-height: 2rem !important;
+  line-height: 2rem !important;
 }
 
 h1 {
-    @apply font-ms;
+  @apply font-ms;
 }
 
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
-    @apply text-slate-400;
+  @apply text-slate-400;
 }
 
 article img {
-    border-radius: 5px;
+  border-radius: 5px;
 }

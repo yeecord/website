@@ -86,18 +86,18 @@ tags: ["文章標籤"]
 
 打開 `config.ts` 文件, 滾動到 `blogAuthors` 並添加您的個人信息
 
--   避免文字太長
--   不要放可疑的網址
+- 避免文字太長
+- 不要放可疑的網址
 
 ```ts
 export const blogAuthors: Record<string, AuthorData> = {
-    //...
-    henry: {
-        name: "你的名字",
-        title: "簡短的自我介紹",
-        url: "https://my-website.com",
-        image_url: "/blog/henry.jpg", //將圖像放入 /public/blog/henry.jpg
-    },
+  //...
+  henry: {
+    name: "你的名字",
+    title: "簡短的自我介紹",
+    url: "https://my-website.com",
+    image_url: "/blog/henry.jpg", //將圖像放入 /public/blog/henry.jpg
+  },
 };
 ```
 
@@ -113,18 +113,18 @@ export const blogAuthors: Record<string, AuthorData> = {
 
 #### 你需要注意這些事情
 
--   適當的用詞
--   禁止自我宣傳
--   不應帶偏見或政治立場
+- 適當的用詞
+- 禁止自我宣傳
+- 不應帶偏見或政治立場
 
 #### 改進你的文章
 
--   **漂亮的排版:**
-    使用標題而不是大量雜亂無章的文字
--   **數字和英文之間的空格:**
-    一切都遵循 [中文案排版指南](https://github.com/sparanoid/chinese-copywriting-guidelines)
--   **使用自定義組件:**
-    您可以從 [這裡](./components) 了解更多信息
+- **漂亮的排版:**
+  使用標題而不是大量雜亂無章的文字
+- **數字和英文之間的空格:**
+  一切都遵循 [中文案排版指南](https://github.com/sparanoid/chinese-copywriting-guidelines)
+- **使用自定義組件:**
+  您可以從 [這裡](./components) 了解更多信息
 
 ### 排序頁面
 
@@ -132,9 +132,9 @@ export const blogAuthors: Record<string, AuthorData> = {
 
 ```json
 {
-    "my-new-page": "新頁面標題",
-    "index": "快速入門",
-    "commands": "指令"
+  "my-new-page": "新頁面標題",
+  "index": "快速入門",
+  "commands": "指令"
 }
 ```
 
@@ -143,9 +143,9 @@ export const blogAuthors: Record<string, AuthorData> = {
 有支援需求可以聯絡我們的支援群組
 
 <div className="h-stack mt-4">
-    <LinkButton href="https://discord.gg/yeecord" variant="primary">
-        加入服務器
-    </LinkButton>
+  <LinkButton href="https://discord.gg/yeecord" variant="primary">
+    加入服務器
+  </LinkButton>
 </div>
 
 </div>
