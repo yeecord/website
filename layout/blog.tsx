@@ -42,14 +42,14 @@ function PageContainer({
 
   return (
     <div className="mt-10">
-      <p className="text-base lg:text-lg text-link font-semibold">
+      <p className="text-link text-base font-semibold lg:text-lg">
         {page.readingTime != null &&
           `閱讀時間約 ${Math.round(page.readingTime.minutes)} 分鐘`}
       </p>
-      <h1 className="font-extrabold text-3xl md:!text-[2.4rem] mb-2 leading-normal">
+      <h1 className="mb-2 text-3xl font-extrabold leading-normal md:!text-[2.4rem]">
         {page.title}
       </h1>
-      <div className="flex flex-row gap-1 text-lg flex-wrap mb-6 text-secondary mt-3 font-bold">
+      <div className="text-secondary mb-6 mt-3 flex flex-row flex-wrap gap-1 text-lg font-bold">
         <div className="h-stack flex-wrap gap-1">
           {frontMatter.authors.map((author, i) => (
             <Fragment key={i}>
@@ -98,14 +98,14 @@ function Footer({ page }: { page: BlogPageOpts }) {
   const { authors, tags } = page.frontMatter;
 
   return (
-    <div className="flex flex-col gap-6 mt-[5rem]">
-      <div className="h-stack gap-2 flex-wrap text-base">
+    <div className="mt-[5rem] flex flex-col gap-6">
+      <div className="h-stack flex-wrap gap-2 text-base">
         <p className="text-lg text-black dark:text-white">標籤</p>
         {tags.map((tag) => (
           <Link
             key={tag}
             href={getTagHref(tag)}
-            className="px-2 py-1 bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+            className="bg-blue-100 px-2 py-1 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
             prefetch={false}
           >
             # {tag}
@@ -115,7 +115,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
       {authors.map((author, i) => (
         <a
           key={i}
-          className="h-stack p-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl"
+          className="h-stack rounded-xl bg-zinc-100 p-4 dark:bg-zinc-800"
           href={author.url ?? "#"}
           target="_blank"
           rel="nofollow noreferrer"
@@ -130,7 +130,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
             />
           )}
           <div>
-            <h2 className="font-bold text-2xl">{author.name}</h2>
+            <h2 className="text-2xl font-bold">{author.name}</h2>
             <p className="text-secondary text-lg">{author.title}</p>
           </div>
         </a>
@@ -143,7 +143,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
         )}
       >
         <h2 className="font-extrabold">
-          <span className="max-sm:text-blue-400 text-2xl sm:text-3xl">
+          <span className="text-2xl max-sm:text-blue-400 sm:text-3xl">
             也想成為
           </span>
           <br className="sm:hidden" />
@@ -158,7 +158,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
           className="w-fit"
           rel="noreferrer"
         >
-          <button className="px-4 py-2 bg-blue-400 font-bold rounded-lg text-white">
+          <button className="rounded-lg bg-blue-400 px-4 py-2 font-bold text-white">
             加入我們
           </button>
         </a>

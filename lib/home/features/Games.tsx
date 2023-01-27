@@ -26,12 +26,12 @@ export function Games() {
   return (
     <div
       className={clsx(
-        "w-full min-h-[190vh] sm:min-h-[140vh] md:min-h-[140vh] lg:min-h-[136vh] pr-8 pt-[10rem] pb-10 z-[2]",
+        "z-[2] min-h-[190vh] w-full pr-8 pt-[10rem] pb-10 sm:min-h-[140vh] md:min-h-[140vh] lg:min-h-[136vh]",
         styles["steps-container"]
       )}
     >
       <motion.div
-        className="sticky gap-5 top-[20vh]"
+        className="sticky top-[20vh] gap-5"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
@@ -43,7 +43,7 @@ export function Games() {
             children: <RiGameFill className="inline" />,
           }}
           className={clsx(
-            "flex flex-col-reverse rounded-2xl gap-5",
+            "flex flex-col-reverse gap-5 rounded-2xl",
             "w-full lg:flex-row lg:justify-between"
           )}
         >
@@ -60,7 +60,7 @@ export function Games() {
               了解更多
             </LinkButton>
             <motion.div
-              className="grid grid-cols-2 min-[430px]:grid-cols-3 gap-5 mt-8"
+              className="mt-8 grid grid-cols-2 gap-5 min-[430px]:grid-cols-3"
               variants={grid}
               whileInView="show"
               initial="hidden"
@@ -75,8 +75,8 @@ export function Games() {
 
           <div
             className={clsx(
-              "max-[430px]:hidden rounded-md fill-black dark:fill-white w-[150px] aspect-square",
-              "lg:w-full max-w-[20rem] border-black mt-auto dark:border-white border-b-4"
+              "aspect-square w-[150px] rounded-md fill-black dark:fill-white max-[430px]:hidden",
+              "mt-auto max-w-[20rem] border-b-4 border-black dark:border-white lg:w-full"
             )}
           >
             <DinoSvg />
@@ -103,7 +103,7 @@ function Item({
         `${styles["item-card"]} break-keep`,
         active && [
           "bg-gradient-to-br from-blue-600 to-purple-500",
-          "shadow-xl shadow-blue-400/40 text-white max-[430px]:col-span-2 max-[430px]:row-start-1",
+          "text-white shadow-xl shadow-blue-400/40 max-[430px]:col-span-2 max-[430px]:row-start-1",
         ]
       )}
     >

@@ -10,9 +10,9 @@ export function Accordion({ title, children }: AccordionProps) {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <motion.header className="rounded-xl mt-4 bg-blue-50 dark:bg-zinc-900">
+    <motion.header className="mt-4 rounded-xl bg-blue-50 dark:bg-zinc-900">
       <div
-        className="h-stack p-4 justify-between cursor-pointer text-black dark:text-white"
+        className="h-stack cursor-pointer justify-between p-4 text-black dark:text-white"
         onClick={() => setOpen((prev) => !prev)}
       >
         <p className="heading-md">{title}</p>

@@ -10,13 +10,13 @@ export function Hero() {
   return (
     <div
       className={clsx(
-        "w-full flex flex-col gap-12 relative z-[2] mt-[6rem] md:mt-[10rem] xl:mt-[14rem] px-[1rem]",
+        "relative z-[2] mt-[6rem] flex w-full flex-col gap-12 px-[1rem] md:mt-[10rem] xl:mt-[14rem]",
         "items-center text-center"
       )}
     >
       <Gradient
         src={HeroGradient}
-        className="absolute hidden -top-[200px] -right-0 lg:-right-[300px] min-w-[800px] w-full -z-[1]"
+        className="absolute -top-[200px] -right-0 -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
       />
       <h1
         className={clsx(
@@ -28,7 +28,7 @@ export function Hero() {
         <br className="md:hidden" />
         <span
           className={clsx(
-            "text-gradient bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 mx-1",
+            "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
             styles["animated-gradient"]
           )}
         >
@@ -37,12 +37,12 @@ export function Hero() {
         <br className="md:hidden" />
         機器人
       </h1>
-      <h2 className="heading-md lg:text-3xl text-secondary max-w-[450px] md:max-w-[650px]">
+      <h2 className="heading-md text-secondary max-w-[450px] md:max-w-[650px] lg:text-3xl">
         YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
       </h2>
       <Buttons />
-      <div className="w-full flex flex-col gap-5 mt=[3rem] md:mt-[4rem]">
-        <p className="text-lg font-semibold text-secondary mb-3 md:mb-4">
+      <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
+        <p className="text-secondary mb-3 text-lg font-semibold md:mb-4">
           各大伺服器一致好評
         </p>
         <div
@@ -65,7 +65,7 @@ function Buttons() {
   const bn = "text-lg font-bold sm:text-xl rounded-md w-full px-6 py-3 sm:px-8";
 
   return (
-    <div className="grid grid-cols-1 w-full max-w-[500px] sm:w-fit sm:grid-cols-2 gap-3">
+    <div className="grid w-full max-w-[500px] grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2">
       <LinkButton href="/docs" className={clsx(bn, styles["rainbow-border"])}>
         使用教學
       </LinkButton>
@@ -86,7 +86,7 @@ function Servers({ secondary }: { secondary?: boolean }) {
     <div
       className={clsx(
         "inline-flex flex-row justify-center",
-        "md:flex-wrap md:max-w-[64rem]",
+        "md:max-w-[64rem] md:flex-wrap",
         secondary && "md:hidden"
       )}
     >
@@ -117,7 +117,7 @@ function Server({
   transparent?: boolean;
 }) {
   return (
-    <div className="h-stack gap-3 mx-4 my-1 text-black dark:text-white flex-shrink-0">
+    <div className="h-stack mx-4 my-1 flex-shrink-0 gap-3 text-black dark:text-white">
       <Image
         alt={name}
         src={img}

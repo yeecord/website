@@ -23,7 +23,7 @@ const config: Partial<DocsThemeConfig> = {
     </>
   ),
   logo: (
-    <div className="flex flex-row gap-2 items-center justify-center">
+    <div className="flex flex-row items-center justify-center gap-2">
       <Image
         alt="YEE式機器龍"
         src="/img/logo_128x128.png"

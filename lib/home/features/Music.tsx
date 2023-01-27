@@ -23,24 +23,24 @@ export function Music() {
       initial={{ opacity: 0, y: 30 }}
       transition={{ duration: 0.4 }}
       className={clsx(
-        "grid grid-cols-1 gap-4 relative z-[2] p-7 sm:max-lg:pr-10 pb-0 mt-[12rem] lg:mt-[15rem]",
+        "relative z-[2] mt-[12rem] grid grid-cols-1 gap-4 p-7 pb-0 sm:max-lg:pr-10 lg:mt-[15rem]",
         "lg:grid-cols-[1fr_0.8fr]",
-        "bg-slate-100 dark:bg-slate-900 rounded-3xl overflow-hidden"
+        "overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-900"
       )}
     >
       <Gradient
         src={GreenGradient}
         className={clsx(
-          "absolute -bottom-[400px] -left-[30%] min-w-[800px] w-full opacity-60 -z-[1]",
-          "lg:-top-[50%] lg:opacity-80 lg:w-[1000px] lg:left-[40%]"
+          "absolute -bottom-[400px] -left-[30%] -z-[1] w-full min-w-[800px] opacity-60",
+          "lg:-top-[50%] lg:left-[40%] lg:w-[1000px] lg:opacity-80"
         )}
       />
       <Content />
-      <div className="max-sm:hidden absolute top-0 right-8 lg:right-16 z-[2]">
-        <div className="h-36 w-[2px] bg-gradient-to-b from-green-400 to-cyan-600 mx-auto" />
+      <div className="absolute top-0 right-8 z-[2] max-sm:hidden lg:right-16">
+        <div className="mx-auto h-36 w-[2px] bg-gradient-to-b from-green-400 to-cyan-600" />
         <div
           className={clsx(
-            "rounded-full p-4 bg-gradient-to-br from-green-400 to-cyan-600",
+            "rounded-full bg-gradient-to-br from-green-400 to-cyan-600 p-4",
             "text-2xl text-white shadow-lg shadow-green-300/50",
             "lg:text-3xl"
           )}
@@ -53,8 +53,8 @@ export function Music() {
         initial={{ y: 100 }}
         transition={{ duration: 0.5 }}
         className={clsx(
-          "flex flex-col mt-2 w-[650px] -mr-[20rem] max-md:ml-5 max-lg:ml-8",
-          "max-h-[10rem] lg:max-h-full lg:mt-[5rem]"
+          "mt-2 -mr-[20rem] flex w-[650px] flex-col max-lg:ml-8 max-md:ml-5",
+          "max-h-[10rem] lg:mt-[5rem] lg:max-h-full"
         )}
       >
         <div className={`${styles["music-player"]} mr-20`}>
@@ -72,7 +72,7 @@ function Content() {
   return (
     <div
       className={clsx(
-        "flex flex-col gap-3 max-w-[750px] lg:max-w-none",
+        "flex max-w-[750px] flex-col gap-3 lg:max-w-none",
         "sm:p-5 md:p-5"
       )}
     >
@@ -85,7 +85,7 @@ function Content() {
         <LinkButton
           className={clsx(
             "primary-button bg-gradient-to-r from-cyan-500 to-green-500",
-            "flex flex-row items-center gap-2 h-fit"
+            "flex h-fit flex-row items-center gap-2"
           )}
           href="/docs"
         >
@@ -98,7 +98,7 @@ function Content() {
 
 function Playlist() {
   return (
-    <div className="flex flex-col gap-5 ml-[150px] -mt-[60px]">
+    <div className="ml-[150px] -mt-[60px] flex flex-col gap-5">
       <Song img={FightSong} duration="4:18">
         Eve - Fight Song
       </Song>
@@ -119,16 +119,16 @@ function Song({
   children: string;
 }) {
   return (
-    <div className="rounded-xl shadow-md p-4 bg-white dark:bg-black/70 backdrop-blur-md">
+    <div className="rounded-xl bg-white p-4 shadow-md backdrop-blur-md dark:bg-black/70">
       <div className="flex flex-row gap-2">
         <Image
-          className="bg-blue-400 rounded-lg w-16 h-16 object-cover"
+          className="h-16 w-16 rounded-lg bg-blue-400 object-cover"
           alt={children}
           src={img}
         />
         <div className="flex flex-col gap-3">
           <h3 className="heading-md">{children}</h3>
-          <p className="text-lg text-secondary">{duration}</p>
+          <p className="text-secondary text-lg">{duration}</p>
         </div>
       </div>
     </div>
@@ -142,7 +142,7 @@ function MusicPlayer() {
   );
 
   return (
-    <div className="p-5 bg-white dark:bg-zinc-900 rounded-2xl max-w-[400px] w-full flex flex-col gap-3">
+    <div className="flex w-full max-w-[400px] flex-col gap-3 rounded-2xl bg-white p-5 dark:bg-zinc-900">
       <div className="h-stack mb-2">
         <BsMusicNoteBeamed />
         <p className="font-bold">ZUTOMAYO - Study Me</p>

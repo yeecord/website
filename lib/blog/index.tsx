@@ -46,15 +46,15 @@ export default function BlogIndex({ pages, recommendations }: Props) {
   return (
     <div
       className={clsx(
-        "flex flex-col gap-5 max-w-[1300px] p-5 text-slate-700 dark:text-gray-200",
+        "flex max-w-[1300px] flex-col gap-5 p-5 text-slate-700 dark:text-gray-200",
         "mx-auto mb-[5rem]"
       )}
     >
       <div className="mt-16 mb-5">
-        <h1 className="font-bold text-center text-4xl md:text-5xl mb-8">
+        <h1 className="mb-8 text-center text-4xl font-bold md:text-5xl">
           我們的部落格
         </h1>
-        <div className="h-stack justify-center max-sm:items-stretch max-sm:flex-col">
+        <div className="h-stack justify-center max-sm:flex-col max-sm:items-stretch">
           <LinkButton
             href="/blog/tags"
             icon={<BsEyeFill className="text-xl" />}
@@ -73,22 +73,22 @@ export default function BlogIndex({ pages, recommendations }: Props) {
       </div>
 
       <Recommendations items={recommendations} />
-      <div className="flex flex-col sm:flex-row justify-between gap-3">
-        <h2 className="font-bold text-4xl max-sm:text-center sm:ml-5">
+      <div className="flex flex-col justify-between gap-3 sm:flex-row">
+        <h2 className="text-4xl font-bold max-sm:text-center sm:ml-5">
           新文章
         </h2>
         <div className="h-stack">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 rounded-lg bg-slate-100 dark:bg-zinc-800 px-4 py-2"
+            className="flex-1 rounded-lg bg-slate-100 px-4 py-2 dark:bg-zinc-800"
             placeholder="搜索文章"
           />
           <FiFilter className="text-xl" />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => {
           if (!getTitle(page).toLowerCase().includes(search.toLowerCase())) {
             return <React.Fragment key={page.route} />;
@@ -111,7 +111,7 @@ function Recommendations({ items }: { items: BlogPage[] }) {
     >
       {items[0] != null && <LargeBlogItem page={items[0]} />}
       <div className="max-md:-ml-3">
-        <h2 className="font-bold text-3xl ml-3 mb-3 inline-flex gap-2">
+        <h2 className="ml-3 mb-3 inline-flex gap-2 text-3xl font-bold">
           精選文章 <BsCheckCircleFill className="text-green-400" />
         </h2>
         <div className="flex flex-col gap-3">

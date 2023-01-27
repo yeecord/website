@@ -14,7 +14,7 @@ export function Admonition({
   return (
     <Callout type={type}>
       <b>{title}</b>
-      <span className="text-base block">{children}</span>
+      <span className="block text-base">{children}</span>
     </Callout>
   );
 }

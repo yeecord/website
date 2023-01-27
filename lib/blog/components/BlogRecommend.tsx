@@ -9,13 +9,13 @@ export function BlogRecommend({ page }: { page: BlogPage }) {
     <Link
       href={page.route}
       className={clsx(
-        "p-3 rounded-xl dark:bg-transparent",
+        "rounded-xl p-3 dark:bg-transparent",
         "hover:bg-blue-50 dark:hover:bg-zinc-800"
       )}
     >
       <div
         className={clsx(
-          "flex flex-wrap font-semibold gap-x-3 gap-y-1 text-sm",
+          "flex flex-wrap gap-x-3 gap-y-1 text-sm font-semibold",
           "text-link"
         )}
       >
@@ -25,7 +25,7 @@ export function BlogRecommend({ page }: { page: BlogPage }) {
           </p>
         ))}
       </div>
-      <h2 className="font-bold text-lg">{getTitle(page)}</h2>
+      <h2 className="text-lg font-bold">{getTitle(page)}</h2>
     </Link>
   );
 }

@@ -14,7 +14,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
   );
 
   return (
-    <div className="relative mt-[10rem] z-[2]">
+    <div className="relative z-[2] mt-[10rem]">
       <motion.div
         whileInView="show"
         onViewportEnter={() => start()}
@@ -34,11 +34,11 @@ export function Customers({ usedBy }: { usedBy: number }) {
             opacity: 0,
           },
         }}
-        className="flex flex-col gap-5 items-center text-center"
+        className="flex flex-col items-center gap-5 text-center"
       >
         <h1 className="heading-xl">
           受超過
-          <span className="block max-md:text-7xl md:inline text-gradient from-pink-600 to-orange-400 mx-2">
+          <span className="text-gradient mx-2 block from-pink-600 to-orange-400 max-md:text-7xl md:inline">
             <ServerCount count={count} />
           </span>
           個伺服器使用
@@ -55,7 +55,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
           </LinkButton>
         </div>
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-start md:mt-[4rem]"
+          className="grid grid-cols-1 gap-4 text-start sm:grid-cols-2 md:mt-[4rem] lg:grid-cols-3"
           variants={{
             show: {
               opacity: 1,
@@ -87,7 +87,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
       </motion.div>
       <Image
         className={clsx(
-          "relative w-full -z-[1] -mt-[10rem] md:-mt-[1rem] h-[300px] object-cover custom",
+          "custom relative -z-[1] -mt-[10rem] h-[300px] w-full object-cover md:-mt-[1rem]",
           "[mask-image:linear-gradient(to_right,_transparent,white_10%,white_70%,_transparent)]"
         )}
         alt="wave"
@@ -119,10 +119,10 @@ function Comment({
   return (
     <div
       className={clsx(
-        "flex flex-col gap-3 p-4 bg-white dark:bg-slate-900/70 dark:backdrop-blur-3xl rounded-xl cursor-pointer",
+        "flex cursor-pointer flex-col gap-3 rounded-xl bg-white p-4 dark:bg-slate-900/70 dark:backdrop-blur-3xl",
         "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
-        "transition-colors border-[2px] border-gray-300 dark:border-slate-800",
-        "hover:dark:bg-slate-900 hover:dark:border-pink-400"
+        "border-[2px] border-gray-300 transition-colors dark:border-slate-800",
+        "hover:dark:border-pink-400 hover:dark:bg-slate-900"
       )}
     >
       <div className="h-stack">
@@ -131,17 +131,17 @@ function Comment({
           src={icon}
           width="50"
           height="50"
-          className="rounded-full aspect-square"
+          className="aspect-square rounded-full"
         />
         <div>
-          <p className="text-pink-700 dark:text-pink-300 font-semibold">
+          <p className="font-semibold text-pink-700 dark:text-pink-300">
             {title}
           </p>
           <h3 className="heading-md text-black dark:text-white">{author}</h3>
         </div>
       </div>
 
-      <p className="md:text-lg text-secondary dark:text-slate-300">{content}</p>
+      <p className="text-secondary dark:text-slate-300 md:text-lg">{content}</p>
     </div>
   );
 }

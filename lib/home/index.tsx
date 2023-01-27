@@ -51,7 +51,7 @@ export default function HomePage() {
           }
         `}
       </style>
-      <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
+      <div className="mx-auto flex max-w-[1400px] flex-col px-3 md:px-6">
         <Hero />
         <Features />
         <RpgSystem />

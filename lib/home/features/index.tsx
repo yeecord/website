@@ -6,9 +6,9 @@ import { Games } from "./Games";
 export function Features() {
   return (
     <>
-      <div className="flex flex-col gap-5 mt-[10rem] sm:mt-[15rem] sm:text-center">
+      <div className="mt-[10rem] flex flex-col gap-5 sm:mt-[15rem] sm:text-center">
         <h1 className="heading-xl max-[420px]:text-4xl lg:text-6xl xl:text-7xl">
-          <span className="heading-lg block sm:heading-xl">您需要的</span>
+          <span className="heading-lg sm:heading-xl block">您需要的</span>
           <span className="text-gradient from-orange-400 to-red-500">
             所有功能
           </span>

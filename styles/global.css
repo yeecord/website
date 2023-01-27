@@ -12,11 +12,11 @@
   }
 
   .heading-md {
-    @apply text-lg sm:text-xl font-bold;
+    @apply text-lg font-bold sm:text-xl;
   }
 
   .features-heading {
-    @apply text-3xl sm:text-5xl font-bold;
+    @apply text-3xl font-bold sm:text-5xl;
   }
 
   .text-link {
@@ -28,27 +28,27 @@
   }
 
   .text-gradient {
-    @apply text-transparent bg-gradient-to-b bg-clip-text;
+    @apply bg-gradient-to-b bg-clip-text text-transparent;
   }
 
   .card {
-    @apply bg-white/40 border-black/10 shadow-lg dark:bg-white/10 border-[1px] dark:border-white/10 p-4 rounded-xl;
+    @apply rounded-xl border-[1px] border-black/10 bg-white/40 p-4 shadow-lg dark:border-white/10 dark:bg-white/10;
   }
 
   .h-stack {
-    @apply flex flex-row gap-2.5 items-center;
+    @apply flex flex-row items-center gap-2.5;
   }
 
   .primary-button {
-    @apply px-6 py-3 rounded-full text-white bg-gradient-to-br text-lg font-bold transition-all;
+    @apply rounded-full bg-gradient-to-br px-6 py-3 text-lg font-bold text-white transition-all;
   }
 
   .icon-button {
-    @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+    @apply inline-flex items-center gap-2 rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black transition-all hover:bg-blue-300/40 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
   }
 
   .secondary-button {
-    @apply px-6 py-3 rounded-full text-black bg-blue-200/30 dark:bg-white/10 hover:bg-blue-300/40 dark:hover:bg-white/20 text-lg font-bold inline-flex gap-2 items-center transition-all dark:text-white;
+    @apply inline-flex items-center gap-2 rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black transition-all hover:bg-blue-300/40 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
   }
 
   .steps-container {
@@ -78,10 +78,10 @@
     font-size: 1rem;
     font-weight: 600;
 
-    @apply bg-gradient-to-br from-blue-500 to-cyan-400
-        shadow-lg shadow-blue-400/50 dark:shadow-blue-800
-        text-base text-white 
-        rounded-full;
+    @apply rounded-full bg-gradient-to-br from-blue-500
+        to-cyan-400 text-base text-white
+        shadow-lg shadow-blue-400/50 
+        dark:shadow-blue-800;
   }
 
   .dark .steps-container {

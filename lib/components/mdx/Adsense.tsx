@@ -28,11 +28,11 @@ export function Adsense() {
 
   return (
     <div aria-label="ads">
-      <p className="my-2 text-sm text-gray-400 text-center">機器龍的精神食糧</p>
+      <p className="my-2 text-center text-sm text-gray-400">機器龍的精神食糧</p>
       <div
         className={clsx(
-          "min-h-[280px] relative after:z-[-1] after:content-['太無情了阿怎麼沒有顯示廣告'] after:text-gray-500",
-          "after:absolute after:top-1/2 after:left-1/2 after:transform after:-translate-x-1/2 after:-translate-y-1/2 after:text-sm"
+          "relative min-h-[280px] after:z-[-1] after:text-gray-500 after:content-['太無情了阿怎麼沒有顯示廣告']",
+          "after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transform after:text-sm"
         )}
       >
         <ins

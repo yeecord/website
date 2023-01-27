@@ -97,7 +97,7 @@ export function Cards({
   return (
     <div
       {...props}
-      className={twMerge("grid mt-4 gap-4", props?.className)}
+      className={twMerge("mt-4 grid gap-4", props?.className)}
       style={{
         gridTemplateColumns: `repeat(auto-fill, minmax(max(250px, calc((100% - 1rem * 2) / ${
           num || 3

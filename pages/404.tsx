@@ -2,10 +2,10 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 export default function NotFound() {
   return (
-    <div className="w-full h-[100vh] bg-white dark:bg-black flex flex-col items-center justify-center text-center gap-4">
-      <h2 className="text-3xl sm:text-4xl font-bold">找不到頁面</h2>
+    <div className="flex h-[100vh] w-full flex-col items-center justify-center gap-4 bg-white text-center dark:bg-black">
+      <h2 className="text-3xl font-bold sm:text-4xl">找不到頁面</h2>
       <span className="text-secondary text-xl">
-        <IoMdHeartEmpty className="inline mr-2" />
+        <IoMdHeartEmpty className="mr-2 inline" />
         好像不在這裡...
       </span>
     </div>

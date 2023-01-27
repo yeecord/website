@@ -217,10 +217,10 @@ Mdx 能夠與 React 和 Next.js 一起使用，您可以在 `.mdx` 檔案中使�
 ### 自定義組件 (Tailwind CSS)
 
 ```jsx
-<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+<div className="border-2 border-black p-3 dark:border-white">Hello World</div>
 ```
 
-<div className="p-3 border-black dark:border-white border-2">Hello World</div>
+<div className="border-2 border-black p-3 dark:border-white">Hello World</div>
 
 ### Framer Motion
 
@@ -244,7 +244,7 @@ Mdx 能夠與 React 和 Next.js 一起使用，您可以在 `.mdx` 檔案中使�
 />
 ```
 
-<div className="flex flex-col items-center bg-purple-500 p-5 rounded-2xl mt-4">
+<div className="mt-4 flex flex-col items-center rounded-2xl bg-purple-500 p-5">
   <motion.div
     animate={{
       scale: [1, 2, 2, 1, 1],
@@ -258,7 +258,7 @@ Mdx 能夠與 React 和 Next.js 一起使用，您可以在 `.mdx` 檔案中使�
       repeat: Infinity,
       repeatDelay: 0.2,
     }}
-    className="w-10 h-10 md:w-32 md:h-32 bg-white m-[5rem]"
+    className="m-[5rem] h-10 w-10 bg-white md:h-32 md:w-32"
   />
 </div>
 

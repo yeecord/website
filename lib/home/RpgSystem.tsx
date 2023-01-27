@@ -8,8 +8,8 @@ export function RpgSystem() {
   return (
     <motion.div
       className={clsx(
-        "flex flex-col relative gap-5 items-start md:items-center",
-        "mt-[15rem] z-[2]"
+        "relative flex flex-col items-start gap-5 md:items-center",
+        "z-[2] mt-[15rem]"
       )}
       whileInView={{ y: 0, opacity: 1 }}
       initial={{ y: "5rem", opacity: 0 }}
@@ -40,14 +40,14 @@ function Background() {
   return (
     <Gradient
       src={GreenGradient}
-      className="absolute -bottom-[100px] lg:-bottom-[40%] opacity-80 w-full min-w-[800px] -z-[1]"
+      className="absolute -bottom-[100px] -z-[1] w-full min-w-[800px] opacity-80 lg:-bottom-[40%]"
     />
   );
 }
 
 function Jobs() {
   return (
-    <div className="grid text-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 gap-3">
+    <div className="mt-10 grid grid-cols-1 gap-3 text-start md:grid-cols-2 lg:grid-cols-3">
       <Job
         name="農夫"
         description="和漁夫是差不多辛勤的職業，不過在這個世界，農夫的收益比漁夫還要高"
@@ -100,7 +100,7 @@ function Job({
   return (
     <div
       className={clsx(
-        "card flex flex-col gap-3 backdrop-blur-3xl bg-white/70 dark:bg-[rgba(10,10,10,0.7)]",
+        "card flex flex-col gap-3 bg-white/70 backdrop-blur-3xl dark:bg-[rgba(10,10,10,0.7)]",
         optional && "max-md:hidden"
       )}
     >

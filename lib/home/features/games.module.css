@@ -19,18 +19,18 @@
 
 @layer {
   .item-card {
-    @apply flex flex-col gap-4 rounded-3xl p-3 sm:p-5 text-center text-gray-700 bg-slate-100 transition-all duration-500 cursor-pointer;
+    @apply flex cursor-pointer flex-col gap-4 rounded-3xl bg-slate-100 p-3 text-center text-gray-700 transition-all duration-500 sm:p-5;
   }
 
   :global(.dark) .item-card {
-    @apply text-zinc-300 bg-zinc-900/50;
+    @apply bg-zinc-900/50 text-zinc-300;
   }
 
   .item-card:hover {
-    @apply shadow-xl text-pink-700 bg-gradient-to-br from-orange-200 to-pink-400;
+    @apply bg-gradient-to-br from-orange-200 to-pink-400 text-pink-700 shadow-xl;
   }
 
   :global(.dark) .item-card:hover {
-    @apply text-pink-100 from-orange-300 to-pink-800;
+    @apply from-orange-300 to-pink-800 text-pink-100;
   }
 }

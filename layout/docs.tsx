@@ -16,7 +16,7 @@ export default function DocsLayout({
   return (
     <>
       <DocsJsonLd page={docs} />
-      <div className="absolute inset-0 overflow-hidden -z-[1]">
+      <div className="absolute inset-0 -z-[1] overflow-hidden">
         <Gradient />
       </div>
 
@@ -29,14 +29,14 @@ function Gradient() {
   return (
     <div
       className={clsx(
-        "absolute w-[50rem] h-[80rem] -top-[25rem] left-[5rem]",
+        "absolute -top-[25rem] left-[5rem] h-[80rem] w-[50rem]",
         "[mask-image:radial-gradient(farthest-corner,white_0%,transparent_70%)]",
-        "hidden dark:block -rotate-[20deg]"
+        "hidden -rotate-[20deg] dark:block"
       )}
     >
       <div
         className={clsx(
-          "bg-gradient-to-b w-full h-full opacity-30",
+          "h-full w-full bg-gradient-to-b opacity-30",
           "from-cyan-400/50 via-blue-400 to-purple-800"
         )}
       />

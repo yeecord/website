@@ -13,12 +13,12 @@ export function ChineseUI() {
   return (
     <div
       className={clsx(
-        "w-full mt-20 min-h-[150vh] sm:min-h-[160vh] xl:min-h-[150vh] pr-8",
+        "mt-20 min-h-[150vh] w-full pr-8 sm:min-h-[160vh] xl:min-h-[150vh]",
         cn_styles["steps-container"]
       )}
     >
       <motion.div
-        className="sticky flex flex-col gap-5 top-[20vh]"
+        className="sticky top-[20vh] flex flex-col gap-5"
         initial="hidden"
         whileInView="show"
         transition={{
@@ -48,7 +48,7 @@ export function ChineseUI() {
           <Skeleton />
           <div
             className={clsx(
-              "-ml-[1rem] -mt-[14rem] sm:-mt-[15rem] xl:-mt-[25rem] xl:mr-[14%] xl:ml-auto w-fit"
+              "-ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:mr-[14%] xl:ml-auto"
             )}
           >
             <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
@@ -59,8 +59,8 @@ export function ChineseUI() {
         <Gradient
           src={GardientSvg}
           className={clsx(
-            "absolute w-[50rem] max-w-none -z-[1]",
-            "max-xl:left-0 -max-xl:bottom-[14rem]",
+            "absolute -z-[1] w-[50rem] max-w-none",
+            "-max-xl:bottom-[14rem] max-xl:left-0",
             "xl:-right-[5rem] xl:-top-[14rem]"
           )}
         />
@@ -73,7 +73,7 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
   return (
     <motion.div
       className={clsx(
-        "h-stack mt-4 p-4 bg-white dark:bg-slate-900 rounded-xl h-fit xl:pr-[4rem]",
+        "h-stack mt-4 h-fit rounded-xl bg-white p-4 dark:bg-slate-900 xl:pr-[4rem]",
         "shadow-2xl shadow-blue-800/30 dark:shadow-black/60"
       )}
       variants={{
@@ -88,7 +88,7 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
       }}
       transition={{ duration: 0.5 }}
     >
-      <div className="text-xl sm:text-2xl bg-purple-400 dark:bg-purple-500 rounded-full p-2 text-white">
+      <div className="rounded-full bg-purple-400 p-2 text-xl text-white dark:bg-purple-500 sm:text-2xl">
         {icon}
       </div>
       <p className="text-lg font-bold">{children}</p>
@@ -117,14 +117,14 @@ function Skeleton() {
   return (
     <div
       className={clsx(
-        "flex-1 aspect-[6/3] p-5 rounded-lg bg-slate-100 dark:bg-slate-900/70 max-w-[45rem] mt-8",
+        "mt-8 aspect-[6/3] max-w-[45rem] flex-1 rounded-lg bg-slate-100 p-5 dark:bg-slate-900/70",
         "grid grid-cols-[0.5fr_1fr] gap-6",
-        "shadow-xl relative",
-        "min-w-[26rem] min-h-[17rem]"
+        "relative shadow-xl",
+        "min-h-[17rem] min-w-[26rem]"
       )}
     >
       <motion.div
-        className="bg-white dark:bg-slate-900/50 rounded-md flex-1 p-4 flex flex-col gap-4"
+        className="flex flex-1 flex-col gap-4 rounded-md bg-white p-4 dark:bg-slate-900/50"
         variants={list}
       >
         <motion.div
@@ -144,7 +144,7 @@ function Skeleton() {
         />
       </motion.div>
       <motion.div
-        className="text-xl font-bold flex flex-col gap-4"
+        className="flex flex-col gap-4 text-xl font-bold"
         variants={{
           show: {
             paddingRight: "0px",

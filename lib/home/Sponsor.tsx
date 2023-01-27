@@ -6,12 +6,12 @@ export default function Sponsor() {
   return (
     <div
       className={clsx(
-        "bg-white dark:bg-zinc-900/50 p-4 py-[6rem] mt-[5rem]",
-        "flex flex-col gap-3 items-center text-center w-full",
+        "mt-[5rem] bg-white p-4 py-[6rem] dark:bg-zinc-900/50",
+        "flex w-full flex-col items-center gap-3 text-center",
         "font-semibold"
       )}
     >
-      <p className="text-purple-400 text-lg tracking-widest">
+      <p className="text-lg tracking-widest text-purple-400">
         喜歡YEE式機器龍?
       </p>
       <h1 className="heading-xl">支持我們</h1>
@@ -22,7 +22,7 @@ export default function Sponsor() {
         以實際行動支持我們吧
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 mt-5 gap-4 w-full max-w-[60rem]">
+      <div className="mt-5 grid w-full max-w-[60rem] grid-cols-1 gap-4 sm:grid-cols-2">
         <Card
           title="照顧機器龍"
           text="在 Github 上貢獻"
@@ -60,7 +60,7 @@ function Card({
   return (
     <div className="card text-start">
       <div className="h-stack">
-        <div className="p-3 bg-purple-400 dark:bg-purple-500 text-2xl rounded-md text-white">
+        <div className="rounded-md bg-purple-400 p-3 text-2xl text-white dark:bg-purple-500">
           {icon}
         </div>
         <div>
@@ -71,7 +71,7 @@ function Card({
       <a href={href} target="_blank" rel="noreferrer">
         <button
           className={clsx(
-            "text-white py-1 text-md rounded-xl mt-6 shadow-lg w-[8rem] font-bold",
+            "text-md mt-6 w-[8rem] rounded-xl py-1 font-bold text-white shadow-lg",
             "bg-purple-400 shadow-purple-300",
             "dark:bg-purple-500 dark:shadow-purple-700"
           )}

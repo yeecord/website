@@ -17,11 +17,11 @@ const card = clsx(
 
 export function Dashboard() {
   return (
-    <div className="mt-[5rem] z-[2]">
-      <div className="flex flex-col gap-5 text-center items-center">
+    <div className="z-[2] mt-[5rem]">
+      <div className="flex flex-col items-center gap-5 text-center">
         <div
           className={clsx(
-            "w-1 h-[9rem] bg-gradient-to-b",
+            "h-[9rem] w-1 bg-gradient-to-b",
             "from-transparent via-purple-400 to-purple-600 dark:to-purple-100"
           )}
         />
@@ -32,13 +32,13 @@ export function Dashboard() {
           你的機器人
         </h3>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 mt-[2rem] gap-5">
+      <div className="mt-[2rem] grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Chart />
         <Settings />
 
         <div className={card}>
           <div className="h-stack">
-            <div className="p-3 rounded-xl text-white bg-green-500 text-3xl">
+            <div className="rounded-xl bg-green-500 p-3 text-3xl text-white">
               <BsMusicNoteBeamed />
             </div>
             <div>
@@ -65,7 +65,7 @@ function Settings() {
       initial={{ y: "10rem" }}
     >
       <div className="h-stack">
-        <div className="p-3 rounded-xl text-white bg-purple-500 text-3xl">
+        <div className="rounded-xl bg-purple-500 p-3 text-3xl text-white">
           <RiSettings2Fill />
         </div>
         <div>
@@ -74,13 +74,13 @@ function Settings() {
         </div>
       </div>
       <div
-        className={clsx("grid-cols-3 h-full gap-4 flex-1", "hidden lg:grid")}
+        className={clsx("h-full flex-1 grid-cols-3 gap-4", "hidden lg:grid")}
       >
         <RoleItem />
         <RoleItem />
         <RoleItem />
       </div>
-      <button className="mt-auto rounded-xl from-purple-400 to-purple-600 primary-button">
+      <button className="primary-button mt-auto rounded-xl from-purple-400 to-purple-600">
         + 添加身分組
       </button>
     </motion.div>
@@ -89,7 +89,7 @@ function Settings() {
 
 function RoleItem() {
   return (
-    <div className="rounded-xl bg-purple-200 text-white flex items-center justify-center p-3">
+    <div className="flex items-center justify-center rounded-xl bg-purple-200 p-3 text-white">
       <BsEmojiAngryFill className="text-3xl" />
     </div>
   );
@@ -104,7 +104,7 @@ function Chart() {
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="h-stack">
-        <div className="p-5 rounded-xl text-white bg-blue-600 text-3xl">
+        <div className="rounded-xl bg-blue-600 p-5 text-3xl text-white">
           <BsBarChartFill />
         </div>
         <div>
@@ -112,7 +112,7 @@ function Chart() {
           <p className="text-secondary font-bold">數據分析</p>
         </div>
       </div>
-      <Image src={ChartSvg} alt="chart" className="rounded-3xl mt-auto" />
+      <Image src={ChartSvg} alt="chart" className="mt-auto rounded-3xl" />
     </motion.div>
   );
 }
