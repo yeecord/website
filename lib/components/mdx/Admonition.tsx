@@ -3,25 +3,25 @@ import { ReactElement } from "react";
 import { ReactNode } from "react";
 
 export function Admonition({
-    children,
-    title,
-    type,
+  children,
+  title,
+  type,
 }: {
-    title?: string;
-    children?: ReactNode;
-    type?: "info" | "warning" | "error" | "default";
+  title?: string;
+  children?: ReactNode;
+  type?: "info" | "warning" | "error" | "default";
 }) {
-    return (
-        <Callout type={type}>
-            <b>{title}</b>
-            <span className="text-base block">{children}</span>
-        </Callout>
-    );
+  return (
+    <Callout type={type}>
+      <b>{title}</b>
+      <span className="text-base block">{children}</span>
+    </Callout>
+  );
 }
 
 type ShortCut = (props: {
-    title?: string;
-    children: ReactNode;
+  title?: string;
+  children: ReactNode;
 }) => ReactElement;
 
 export const Tip: ShortCut = (p) => <Admonition {...p} type="default" />;

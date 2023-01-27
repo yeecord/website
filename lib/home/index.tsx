@@ -9,56 +9,56 @@ import { GetStaticProps } from "next";
 import { useSSG } from "nextra/data";
 
 export type HomeProps = {
-    serverMembers: number;
-    guildCount: number;
+  serverMembers: number;
+  guildCount: number;
 };
 
 export const getStaticProps: GetStaticProps<{ ssg: HomeProps }> = async () => {
-    const { guildCount, serverMembers } = await fetchGuild().catch(() => ({
-        guildCount: 0,
-        serverMembers: 0,
-    }));
+  const { guildCount, serverMembers } = await fetchGuild().catch(() => ({
+    guildCount: 0,
+    serverMembers: 0,
+  }));
 
-    return {
-        props: {
-            ssg: {
-                serverMembers,
-                guildCount,
-            },
-        },
-        revalidate: 60,
-    };
+  return {
+    props: {
+      ssg: {
+        serverMembers,
+        guildCount,
+      },
+    },
+    revalidate: 60,
+  };
 };
 
 export default function HomePage() {
-    const { guildCount, serverMembers } = useSSG() as HomeProps;
+  const { guildCount, serverMembers } = useSSG() as HomeProps;
 
-    return (
-        <div className="bg-white dark:bg-black">
-            <style global jsx>
-                {`
-                    html,
-                    body {
-                        max-width: 100% !important;
-                        height: 100% !important;
-                        width: 100% !important;
-                        overflow-x: hidden !important;
-                        overflow-y: auto !important;
-                    }
+  return (
+    <div className="bg-white dark:bg-black">
+      <style global jsx>
+        {`
+          html,
+          body {
+            max-width: 100% !important;
+            height: 100% !important;
+            width: 100% !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+          }
 
-                    .nx-overflow-x-hidden {
-                        overflow-x: unset !important;
-                    }
-                `}
-            </style>
-            <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
-                <Hero />
-                <Features />
-                <RpgSystem />
-                <Customers usedBy={guildCount} />
-            </div>
-            <Sponsor />
-            <Community joined={serverMembers} />
-        </div>
-    );
+          .nx-overflow-x-hidden {
+            overflow-x: unset !important;
+          }
+        `}
+      </style>
+      <div className="flex flex-col px-3 md:px-6 max-w-[1400px] mx-auto">
+        <Hero />
+        <Features />
+        <RpgSystem />
+        <Customers usedBy={guildCount} />
+      </div>
+      <Sponsor />
+      <Community joined={serverMembers} />
+    </div>
+  );
 }
