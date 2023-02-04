@@ -12,6 +12,7 @@ import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { GetStaticProps } from "next";
 import { BlogPage, BlogPageSchema } from "@schema/blog";
+import { getBlogPageMap } from "./utils/get-page-map";
 
 type Props = {
   pages: BlogPage[];
@@ -19,9 +20,7 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const pages = getPagesUnderRoute("/blog").flatMap((page) => {
-    if (page.kind !== "MdxPage") return [];
-
+  const pages = getBlogPageMap().flatMap((page) => {
     const result = BlogPageSchema.safeParse(page);
     if (!result.success) {
       console.error(page.route, result.error.issues);

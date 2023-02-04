@@ -48,8 +48,8 @@ const classes = {
     "dark:hover:from-cyan-100 dark:hover:to-blue-600"
   ),
   secondary: clsx(
-    "bg-zinc-100 dark:bg-zinc-800",
-    "hover:bg-zinc-200 dark:hover:bg-zinc-700"
+    "bg-zinc-100 dark:bg-slate-700/60",
+    "hover:bg-zinc-200 dark:hover:bg-slate-700 dark:text-white"
   ),
 };
 
