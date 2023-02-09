@@ -108,8 +108,8 @@ const config: Partial<DocsThemeConfig> = {
     toggleButton: true,
   },
   banner: {
-    key: "ratelimit-0229",
-    text: <span>⚠️ 目前機器人遭到 Discord 限速需要等待數小時才能重新啟動</span>,
+    key: "service-back-0209",
+    text: <span>🎉 我們的服務成功回來了</span>,
   },
   gitTimestamp: ({ timestamp }) => {
     return (
