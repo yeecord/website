@@ -108,8 +108,8 @@ const config: Partial<DocsThemeConfig> = {
     toggleButton: true,
   },
   banner: {
-    key: "new-year",
-    text: <span>🎊 新年快樂！</span>,
+    key: "service-back-0209",
+    text: <span>🎉 我們的服務成功回來了</span>,
   },
   gitTimestamp: ({ timestamp }) => {
     return (
