@@ -39,6 +39,11 @@ export const footer: FooterCategory[] = [
         newWindow: true,
       },
       {
+        label: "Twitter",
+        href: "https://twitter.com/yeecord",
+        newWindow: true,
+      },
+      {
         label: "top.gg",
         href: "https://top.gg/bot/584213384409382953",
         newWindow: true,
@@ -61,6 +66,11 @@ export const footer: FooterCategory[] = [
       {
         label: "Discord",
         href: "https://discord.gg/yeecord",
+        newWindow: true,
+      },
+      {
+        label: "服務狀態",
+        href: "https://status.yeecord.com/",
         newWindow: true,
       },
     ],

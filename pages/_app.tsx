@@ -6,6 +6,7 @@ import { AdsProvider } from "@ads/adsense";
 
 import "nextra-theme-docs/style.css";
 import "../styles/global.css";
+import Script from "next/script";
 
 export const noto = Inter({
   variable: "--font-noto",
@@ -22,6 +23,13 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
           --font-noto: ${noto.style.fontFamily};
         }
       `}</style>
+      <Script
+        src="https://betteruptime.com/widgets/announcement.js"
+        data-id="156363"
+        type="text/javascript"
+        strategy="lazyOnload"
+        async
+      />
       <AdsProvider>
         <Component {...pageProps} />
       </AdsProvider>

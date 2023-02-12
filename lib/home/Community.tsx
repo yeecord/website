@@ -7,6 +7,7 @@ import clsx from "clsx";
 import formatter from "@utils/formatter";
 import { FaDiscord } from "react-icons/fa";
 import styles from "./community.module.css";
+import { BsTwitter } from "react-icons/bs";
 
 export function Community({ joined }: { joined: number }) {
   return (
@@ -15,14 +16,15 @@ export function Community({ joined }: { joined: number }) {
         src={CyanPinkGradient}
         className="absolute top-0 left-0 -z-[1] h-full w-full overflow-visible object-cover opacity-20"
       />
-      <h1 className="heading-xl xl:text-6xl">
-        <span className="mr-2 text-cyan-400 [text-shadow:_#e66ad0_3px_5px]">
-          Discord
+      <h1 className="heading-xl text-pink-400 xl:text-6xl">
+        <span>與</span>
+        <span className="mx-2 text-cyan-300 [text-shadow:_#e66ad0_3px_5px]">
+          我們
         </span>
-        <span className="text-pink-400">社群</span>
+        <span>聯繫</span>
       </h1>
       <h3 className="heading-md  text-black dark:text-slate-200">
-        我們歡迎大家！
+        獲取我們的最新消息
       </h3>
 
       <JoinButton joined={joined} />
@@ -41,18 +43,27 @@ function JoinButton({ joined }: { joined: number }) {
           styles["rotate-z"]
         )}
       />
-      <LinkButton
-        href="https://discord.gg/yeecord"
-        target="_blank"
-        className={clsx(
-          "icon-button h-fit w-fit rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3",
-          "text-3xl text-white shadow-xl shadow-cyan-400/50"
-        )}
-        aria-label="Join"
-      >
-        <FaDiscord className="text-5xl" />
-        {formatter.format(joined)}
-      </LinkButton>
+      <div className="flex flex-row gap-4">
+        <LinkButton
+          href="https://twitter.com/yeecord"
+          className="h-full rounded-full bg-blue-500 p-4 text-white shadow-xl shadow-blue-300 dark:shadow-blue-800"
+          target="_blank"
+        >
+          <BsTwitter className="text-4xl" />
+        </LinkButton>
+        <LinkButton
+          href="https://discord.gg/yeecord"
+          target="_blank"
+          className={clsx(
+            "icon-button h-full rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3",
+            "text-3xl text-white shadow-xl shadow-cyan-400/50"
+          )}
+          aria-label="Join"
+        >
+          <FaDiscord className="text-5xl" />
+          <span className="mr-2">{formatter.format(joined)}</span>
+        </LinkButton>
+      </div>
     </div>
   );
 }

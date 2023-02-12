@@ -107,10 +107,6 @@ const config: Partial<DocsThemeConfig> = {
     },
     toggleButton: true,
   },
-  banner: {
-    key: "service-back-0209",
-    text: <span>🎉 我們的服務成功回來了</span>,
-  },
   gitTimestamp: ({ timestamp }) => {
     return (
       <p className="text-lg">最後更新於 {timestamp.toLocaleDateString()}</p>
