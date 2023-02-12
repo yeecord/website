@@ -39,6 +39,11 @@ export const footer: FooterCategory[] = [
         newWindow: true,
       },
       {
+        label: "Twitter",
+        href: "https://twitter.com/yeecord",
+        newWindow: true,
+      },
+      {
         label: "top.gg",
         href: "https://top.gg/bot/584213384409382953",
         newWindow: true,
