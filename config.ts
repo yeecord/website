@@ -63,6 +63,11 @@ export const footer: FooterCategory[] = [
         href: "https://discord.gg/yeecord",
         newWindow: true,
       },
+      {
+        label: "服務狀態",
+        href: "https://status.yeecord.com/",
+        newWindow: true,
+      },
     ],
   },
 ];
