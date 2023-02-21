@@ -1,6 +1,7 @@
 import { AiFillCaretDown } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion";
 import { ReactNode, useState } from "react";
+import clsx from "clsx";
 
 type AccordionProps = {
   title: string;
@@ -10,7 +11,12 @@ export function Accordion({ title, children }: AccordionProps) {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <motion.header className="mt-4 rounded-xl bg-blue-50 dark:bg-zinc-900">
+    <motion.header
+      className={clsx(
+        "mt-4 rounded-xl border border-gray-200 bg-white shadow-xl shadow-gray-100",
+        "dark:border-neutral-800 dark:bg-background/50 dark:shadow-background"
+      )}
+    >
       <div
         className="h-stack cursor-pointer justify-between p-4 text-black dark:text-white"
         onClick={() => setOpen((prev) => !prev)}

@@ -3,7 +3,7 @@ title: 自定義組件
 description: 利用自定義組件改進你的文章!
 ---
 
-import { Tabs, Tab } from "nextra-theme-docs";
+import { Tabs, Tab, FileTree } from "nextra-theme-docs";
 import {
   Accordion,
   Admonition,
@@ -196,6 +196,48 @@ I don't know programming
 
   </Tab>
 </Tabs>
+
+## 文件列表
+
+顯示文件和文件夾，對於教程很有用
+
+```mdx
+import { FileTree } from "nextra-theme-docs";
+
+<FileTree>
+  <FileTree.Folder name="你的文件" defaultOpen>
+    <FileTree.Folder name="frameworks" defaultOpen>
+      <FileTree.File name="react.mdx" />
+      <FileTree.File name="svelte.mdx" />
+      <FileTree.File name="vue.mdx" />
+    </FileTree.Folder>
+    <FileTree.Folder name="fruits" defaultOpen>
+      <FileTree.File name="apple.mdx" />
+      <FileTree.File name="banana.mdx" />
+    </FileTree.Folder>
+    <FileTree.File name="_meta.json" />
+    <FileTree.File name="about.mdx" />
+    <FileTree.File name="index.mdx" />
+  </FileTree.Folder>
+</FileTree>
+```
+
+<FileTree>
+  <FileTree.Folder name="你的文件" defaultOpen>
+    <FileTree.Folder name="frameworks" defaultOpen>
+      <FileTree.File name="react.mdx" />
+      <FileTree.File name="svelte.mdx" />
+      <FileTree.File name="vue.mdx" />
+    </FileTree.Folder>
+    <FileTree.Folder name="fruits" defaultOpen>
+      <FileTree.File name="apple.mdx" />
+      <FileTree.File name="banana.mdx" />
+    </FileTree.Folder>
+    <FileTree.File name="_meta.json" />
+    <FileTree.File name="about.mdx" />
+    <FileTree.File name="index.mdx" />
+  </FileTree.Folder>
+</FileTree>
 
 <br />
 
