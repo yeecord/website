@@ -115,7 +115,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
       {authors.map((author, i) => (
         <a
           key={i}
-          className="h-stack rounded-xl bg-zinc-100 p-4 dark:bg-zinc-800"
+          className="h-stack rounded-xl bg-zinc-100 p-4 dark:bg-zinc-900"
           href={author.url ?? "#"}
           target="_blank"
           rel="nofollow noreferrer"
