@@ -1,5 +1,5 @@
 import { API_ENDPOINT, CDN_ENDPOINT } from "../../config";
-import * as process from "process";
+import {getAll} from "@vercel/edge-config";
 
 export async function fetchUser() {
   const res = await fetch(`${API_ENDPOINT}/users/@me`, {
@@ -26,20 +26,11 @@ export type User = {
   avatar?: string;
 };
 
-export async function fetchGuild(): Promise<{
-  serverMembers: number;
-  guildCount: number;
-}> {
-  const { approximate_member_count } = await fetch(
-    "https://discord.com/api/v10/invites/yeecord?with_counts=true"
-  ).then((r) => r.json());
-
-  const info =
-    process.env.NODE_ENV === "production" &&
-    (await fetch(`${API_ENDPOINT}/info`).then((r) => r.json()));
+export async function fetchGuild() {
+  const config = await getAll(["guilds", "members"]);
 
   return {
-    serverMembers: approximate_member_count as number,
-    guildCount: info?.guilds || 100_000,
-  };
+    serverMembers: config?.members || 10000,
+    guildCount: config?.guilds || 100_000,
+  } as const;
 }
