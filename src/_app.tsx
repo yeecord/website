@@ -2,7 +2,7 @@ import { AppProps } from "next/app";
 import { ReactElement } from "react";
 import { Inter } from "@next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import { AdsProvider } from "@ads/adsense";
+import { AdsProvider } from "./adsense";
 
 import Script from "next/script";
 

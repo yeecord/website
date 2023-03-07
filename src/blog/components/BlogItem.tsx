@@ -4,7 +4,7 @@ import React from "react";
 import { getTitle } from "@utils/mdx";
 import { getTagHref } from "@blog/utils/tags";
 import clsx from "clsx";
-import { BlogPage } from "@schema/blog";
+import { BlogPage } from "../../schema/blog";
 
 export function BlogItem({ page }: { page: BlogPage }) {
   const frontMatter = page.frontMatter;

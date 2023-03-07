@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 import { PageOpts } from "nextra";
-import { DocsPageOpts } from "@schema/docs";
+import { DocsPageOpts } from "../../schema/docs";
 import { ArticleJsonLd } from "next-seo";
 
 export default function DocsLayout({

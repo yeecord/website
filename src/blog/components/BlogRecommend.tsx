@@ -2,7 +2,7 @@ import React from "react";
 import { getTitle } from "@utils/mdx";
 import clsx from "clsx";
 import Link from "next/link";
-import { BlogPage } from "@schema/blog";
+import { BlogPage } from "../../schema/blog";
 
 export function BlogRecommend({ page }: { page: BlogPage }) {
   return (

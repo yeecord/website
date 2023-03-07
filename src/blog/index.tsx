@@ -10,7 +10,7 @@ import { BlogRecommend } from "./components/BlogRecommend";
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { GetStaticProps } from "next";
-import { BlogPage, BlogPageSchema } from "@schema/blog";
+import { BlogPage, BlogPageSchema } from "../schema/blog";
 import { getBlogPageMap } from "./utils/get-page-map";
 
 type Props = {

@@ -4,7 +4,7 @@ import { getBlogPageMap } from "../utils/get-page-map";
 import { PageMapItem } from "nextra";
 import { BlogItem } from "../components/BlogItem";
 import { LinkButton } from "@components/mdx";
-import { BlogPage, BlogPageSchema } from "@schema/blog";
+import { BlogPage, BlogPageSchema } from "../../schema/blog";
 
 //Important: upper case urls are invalid
 //We will convert the tag name into lower case to avoid the issue

@@ -1,6 +1,6 @@
 import { PageOpts } from "nextra";
 import { z } from "zod";
-import { blogAuthors } from "../config";
+import { blogAuthors } from "../../config";
 
 const authors = Object.keys(blogAuthors) as [string, ...string[]];
 
