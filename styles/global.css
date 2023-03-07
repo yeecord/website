@@ -51,6 +51,14 @@
     @apply inline-flex items-center gap-2 rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black transition-all hover:bg-blue-300/40 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
   }
 
+  article main h1 {
+    @apply mt-8 !important;
+  }
+
+  article main p img {
+    @apply mx-auto max-h-[768px] object-contain
+  }
+
   .steps-container {
     margin-left: 1rem;
     padding-left: 1.7rem;
