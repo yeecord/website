@@ -4,11 +4,9 @@ import { Inter } from "@next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { AdsProvider } from "@ads/adsense";
 
-import "nextra-theme-docs/style.css";
-import "../styles/global.css";
 import Script from "next/script";
 
-export const noto = Inter({
+const noto = Inter({
   variable: "--font-noto",
   preload: true,
   subsets: ["latin"],
