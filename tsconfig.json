@@ -15,16 +15,15 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@schema/*": ["./schema/*"],
-      "@utils/*": ["./lib/utils/*"],
-      "@blog/*": ["./lib/blog/*"],
-      "@home/*": ["./lib/home/*"],
-      "@components/*": ["./lib/components/*"],
+      "@schema/*": ["./src/schema/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@blog/*": ["./src/blog/*"],
+      "@home/*": ["./src/home/*"],
+      "@components/*": ["./src/components/*"],
       "@static/*": ["./public/*"],
-      "@layout/*": ["./layout/*"],
-      "@ads/*": ["./lib/ads/*"]
+      "@app": ["./src/_app"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/index.mdx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

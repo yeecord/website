@@ -17,8 +17,8 @@ specifiers:
   next: 13.1.4
   next-seo: ^5.15.0
   next-sitemap: ^3.1.47
-  nextra: 2.2.15
-  nextra-theme-docs: 2.2.15
+  nextra: 2.2.17
+  nextra-theme-docs: 2.2.17
   postcss: ^8.4.21
   prettier: ^2.8.3
   prettier-plugin-tailwindcss: ^0.2.1
@@ -41,8 +41,8 @@ dependencies:
   framer-motion: 8.5.2_biqbaboplfbrettd7655fr4n2y
   next: 13.1.4_biqbaboplfbrettd7655fr4n2y
   next-seo: 5.15.0_gru2niblrprbai56sdagiiy5sa
-  nextra: 2.2.15_gru2niblrprbai56sdagiiy5sa
-  nextra-theme-docs: 2.2.15_mfbaekfsrmzjroz3ench73wkie
+  nextra: 2.2.17_gru2niblrprbai56sdagiiy5sa
+  nextra-theme-docs: 2.2.17_uawocb7nsp73f3lvcw4j3e5u4e
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
@@ -3151,11 +3151,11 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
 
-  /nextra-theme-docs/2.2.15_mfbaekfsrmzjroz3ench73wkie:
-    resolution: {integrity: sha512-SErAWgwrERgg2/rdfLi8BllDBhd0r2CZ3EYrqilzYzqcBED7H0rAB2xseLsrJMpRUjIuGb0hf64IfZ7h3ymp+Q==}
+  /nextra-theme-docs/2.2.17_uawocb7nsp73f3lvcw4j3e5u4e:
+    resolution: {integrity: sha512-GTTie4YtTjiBdh3PqSYX5xtOQaCcLWoHWrubR2ikmBMq0GYxM2AX26J6O3gZ/xzzJje+vWmZGOilop/bG2RCog==}
     peerDependencies:
       next: '>=9.5.3'
-      nextra: 2.2.15
+      nextra: 2.2.17
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
     dependencies:
@@ -3170,15 +3170,15 @@ packages:
       next: 13.1.4_biqbaboplfbrettd7655fr4n2y
       next-seo: 5.15.0_gru2niblrprbai56sdagiiy5sa
       next-themes: 0.2.1_gru2niblrprbai56sdagiiy5sa
-      nextra: 2.2.15_gru2niblrprbai56sdagiiy5sa
+      nextra: 2.2.17_gru2niblrprbai56sdagiiy5sa
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       scroll-into-view-if-needed: 3.0.4
       zod: 3.20.2
     dev: false
 
-  /nextra/2.2.15_gru2niblrprbai56sdagiiy5sa:
-    resolution: {integrity: sha512-LuJz7Pd/f0Ghkj3Ifeh1H120YAIC/uED+ZkxOOI0K44iiJp7CYEat8I+SoJZbFBB5ajRTIvzErgqeC6GjeyFdw==}
+  /nextra/2.2.17_gru2niblrprbai56sdagiiy5sa:
+    resolution: {integrity: sha512-IRfvDfUut6YgbivBVP8cG2DkxEBvODWQFiv7rqHD1tR9lBjiDKugyCi64zl1CiOlW5awc8xmbPDrzYak9l+A/w==}
     peerDependencies:
       next: '>=9.5.3'
       react: '>=16.13.1'

@@ -2,28 +2,66 @@
 description: "設定一個自動化的身分組系統，成員只需要點選訊息下的按鈕就可以獲得身分組！"
 ---
 
-import { Adsense, Info } from "@components/mdx";
+import { Adsense, Admonition } from "@components/mdx";
 
-# 自動身分組
+# 使用自助領取身份組簡化社群
 
-設定一個自動化的身分組系統，成員只需要點選訊息下的按鈕就可以獲得身分組！
+在一些大型Discord群組中，為了管理成員，經常會設置不同的身份組，而身份組一個個管理很複雜，
 
-![自動身分組](@static/docs/role/role.png)
+你有看過這種帥氣的領取身份組訊息嗎？你也可以來一個！設定一個自助的身分組系統，成員只需要點選訊息下的按鈕就可以獲得身分組。
 
-## 初始化
+![自助身分組](@static/docs/role/role.png)
+
+## 設定自助身份組訊息
+
+### ㄧ、建立頻道
+
+我們要先建立一個頻道來擺放該訊息，首先點選 Discord 群組名稱後，選擇建立頻道選項，
+
+![建立頻道](@static/docs/role/create-channel.png)
+
+選擇 Text 文字類型頻道，並取一個名稱，點選建立。
+
+![建立頻道](@static/docs/role/create-channel-modal.png)
 
 <Adsense />
 
-首先使用 `&role` 指令彈出詳細說明，點選 `開始設定` 來初始化，別擔心你可以設定很多個訊息！
+接下來要將該頻道設定為唯讀，滑鼠移動到剛建立的頻道名稱上，點選右邊的齒輪打開頻道設定，點選左邊權限分頁，點選預設身份組後，照下圖方式設定成唯讀。
 
-![初始化 自動身分組](@static/docs/role/setup.png)
+![設定唯讀權限](@static/docs/role/set-permissions.png)
 
-之後會彈出一個下拉選單可以選擇你想自動化的身分組，你想要幾個就可以選擇幾個。
+### 二、建立身份組
 
-<Info title="我想先提醒你">
-  因為 Discord 官方的限制，下拉選單以及按鈕最多是 25 個為限制，這點還請見諒。
-</Info>
+和第一步驟一樣，點選伺服器名稱後，進到伺服器設定頁面，點選左邊的身份組標籤，右邊建立身份組的按鈕可以進行建立。
 
-![下拉選單 自動身分組](@static/docs/role/menu.png)
+![建立身份組](@static/docs/role/create-roles.png)
+
+<Admonition type="warning">
+  請注意要設定的身份組需要在機器龍身份組的下方，不然機器龍沒有權限進行給予的動作。
+</Admonition>
+
+### 三、機器人設定
+
+打開 [網頁面板](https://app.yeecord.com/)，點選中間使用 Discord 登入按鈕先進行授權，
+
+![登入使用者](@static/docs/dashboard/login.png)
+
+登入後畫面上將會顯示你有權限進行設定的伺服器，選擇要設定的伺服器，
+
+<Adsense />
+
+![選擇伺服器](@static/docs/dashboard/select-server.png)
+
+在左邊選擇領取身份組訊息後，選擇第一步驟建立的頻道，在下方點選新增身份組，把需要的身份組填入後就完成了。
+
+![建立自助身份組](@static/docs/role/settings.png)
+
+#### 如何在訊息內容中使用表情符號？
+
+如果需要設計有表情符號的訊息，可以先在 Discord 打好表情後，游標移到符號前面，並輸入一個反斜線 `\`，表情符號會變成如 `:thonk:` 的字樣，送出訊息後，將會有完整的表情符號編號如 `<:thonk:732416919088398377>`。
+
+將這串編號放入訊息內容中將可以使用，不過需要注意該表情符號必須在機器人有在的群組內才能生效。
+
+![有表情符號的訊息](@static/docs/role/emoji.png)
 
 <Adsense />
