@@ -56,7 +56,7 @@
   }
 
   article main p img {
-    @apply mx-auto max-h-[768px] object-contain
+    @apply mx-auto max-h-[480px] object-contain
   }
 
   .steps-container {
