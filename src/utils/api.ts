@@ -2,12 +2,12 @@ import { CDN_ENDPOINT } from "../../config";
 import {getAll} from "@vercel/edge-config";
 
 export async function fetchUser() {
-  const res = await fetch("https://app.yeecord.com/api/yee/session.get", {
+  const res = await fetch("/api/user", {
     credentials: "include",
   });
 
   // optional: use zod
-  return (await res.json().then(result => result?.data?.json?.user)) as User;
+  return (await res.json()) as User;
 }
 
 export function resolveUserAvatar(user: User) {
