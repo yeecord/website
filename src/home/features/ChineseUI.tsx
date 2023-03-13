@@ -48,7 +48,7 @@ export function ChineseUI() {
           <Skeleton />
           <div
             className={clsx(
-              "-ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:mr-[14%] xl:ml-auto"
+              "relative -ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:mr-[14%] xl:ml-auto"
             )}
           >
             <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
