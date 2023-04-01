@@ -17,7 +17,7 @@
     "framer-motion": "^10.2.4",
     "iron-session": "^6.3.1",
     "next": "13.2.4",
-    "next-seo": "^5.15.0",
+    "next-seo": "^6.0.0",
     "nextra": "2.3.0",
     "nextra-theme-docs": "2.3.0",
     "react": "18.2.0",
