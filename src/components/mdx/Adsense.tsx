@@ -12,11 +12,13 @@ export function Adsense() {
   useEffect(() => {
     if (failed) return;
 
-    // try {
+    try {
       ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
         {}
       );
-    // } catch (e) {}
+    } catch (e) {
+      console.error(`[Adsense] ${(e as Error).message}`);
+    }
   }, [failed]);
 
   if (failed)
