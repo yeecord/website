@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@next/env": "^13.2.4",
-    "@vercel/analytics": "^0.1.11",
+    "@vercel/analytics": "^1.0.0",
     "@vercel/edge-config": "^0.1.1",
     "clsx": "^1.2.1",
     "framer-motion": "^10.2.4",
