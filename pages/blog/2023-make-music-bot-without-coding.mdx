@@ -1,0 +1,211 @@
+---
+slug: "2023-make-music-bot-without-coding"
+title: "猴子都能懂得 Discord 音樂機器人製作教學 [2023]"
+description: "abc"
+authors: ["nathan"]
+tags: ["Discord", "dc", "製作", "音樂", "機器人", "Python", "程式","coding", "2023", "Lava", "教學", "Rythm", "Groovy", "youtube", "spotify", "bilibili"]
+date: 2023-4-23T13:01:00
+---
+
+
+import {Tip, Warning} from "@components/mdx";
+import {Tab, Tabs} from "nextra-theme-docs";
+
+
+都 2023 了，還在為了音樂機器人播放不了 YouTube 而苦惱？
+來做一台你自己的吧！
+
+## 為什麼我要自己做？
+
+當然要，應該說，為什麼不要？
+因為 YouTube 的政策，最近公開的音樂機器人都不能夠播放來自 YouTube 的音樂，
+但如果我們自己有一台音樂機器人呢？誰管的到我們！
+
+- 精美，可互動的介面
+![精美，可互動的介面](@static/blog/2023-make-music-bot-without-coding/beautiful-ui.png)
+
+- 多語言支援
+![多語言支援](@static/blog/2023-make-music-bot-without-coding/multi-language-support.png)
+
+- 各種平台
+![BiliBili 的音樂](@static/blog/2023-make-music-bot-without-coding/audio-from-bilibili.png)
+> yeah i found a undeleted video about 推しの子 on bilibili, such a miracle right?
+
+還有更多只屬於你音樂機器人的特色...
+
+## 安裝 Python
+
+因為網路上有一大堆安裝 Python 的教學，所以我就不多說了，以下是幾篇可能有用的文章
+
+<Warning title="注意">
+    這個音樂機器人需要 Python 3.10+ 才能夠運作，請確保你安裝的是 3.10 或更高版本
+</Warning>
+
+- [在Windows底下最適當安裝Python環境的方法](https://ithelp.ithome.com.tw/articles/10210071)
+- [給自學者的Python教學(0) : 如何安裝Python(Mac/Windows)](https://chunyeung.medium.com/給自學者的python教學-1-如何安裝python-126f8ce2f967)
+
+## 創建 Discord 機器人
+
+如果你已經有了一個 Discord 機器人，你可以跳過這個區段
+<div className='steps-container'>
+
+    ### 創建 Application
+
+    前往 [Discord Developer Portal](https://discord.com/developers) 並登入你的帳號，接著點擊 New Application
+
+    ![developer-portal.png](@static/blog/2023-make-music-bot-without-coding/developer-portal.png)
+
+    ### 為機器人取名
+
+    這個名字將會顯示在 Discord 上，選一個你覺得好聽的名字吧！
+
+    ![name-your-application.png](@static/blog/2023-make-music-bot-without-coding/name-your-application.png)
+
+    ### 獲得 Token
+
+    到左方的 Bots，點擊 Reset Token 獲得 Token
+
+    Token 會看起來像這樣：<br/>
+    `MTA5ODYxNDI5NjExMzU3Nzk5NA.Ga7fZq.j9XXSVOWDdXJIlbZpOrkL7fsT4xB42zlHjB7Fg`<br/>
+    請將這個字串儲存起來，我們稍後會使用到
+
+    ![get-token.png](@static/blog/2023-make-music-bot-without-coding/get-token.png)
+
+    <Warning title="警告">
+        請不要將這串 Token 分享給任何人，這就像是你機器人的帳號密碼，得到了它，就可以肆意控制你的機器人
+    </Warning>
+
+    ### 開啟 Intents
+
+    從剛剛的頁面往下捲，開啟 Intents<br/>
+    機器人需要這些 Intent 才能夠運作，將三個 Intent 開啟後，請記得點擊 Save Changes
+
+    ![enable-intents.png](@static/blog/2023-make-music-bot-without-coding/enable-intents.png)
+
+    ### 獲得機器人邀請連結
+
+    請勾選 `bot` 和 `applications.commands`
+
+    ![setup-scopes.png](@static/blog/2023-make-music-bot-without-coding/setup-scopes.png)
+
+    並捲到下方，點擊 `Copy` 來複製邀請連結
+
+    ![copy-invite-link.png](@static/blog/2023-make-music-bot-without-coding/copy-invite-link.png)
+</div>
+
+## 設置 Spotify
+
+這是為了對 [Spotify](https://open.spotify.com/) 連結的支援，以及自動播放，
+如果你不需要這些功能，你可以跳過這個區段
+
+<div className='steps-container'>
+
+    ### 創建 Spotify 應用程式
+
+    前往 [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)，並登入你的 Spotify 帳號，接著 Create
+    App
+
+    ![create-spotify-app.png](@static/blog/2023-make-music-bot-without-coding/create-spotify-app.png)
+
+    ### 創建 App
+
+    `App name`, `App description`, `Website` 可以隨意填寫，但 `Redirect URIs` 請填入 `http://localhost/`
+
+    填完後點擊 `Save`
+
+    ![fill-in-forms.png](@static/blog/2023-make-music-bot-without-coding/fill-in-forms.png)
+
+    ### 獲得 Client ID 和 Client Secrets
+
+    進入 Settings
+
+    ![get-into-settings.png](@static/blog/2023-make-music-bot-without-coding/get-into-settings.png)
+
+    點擊 View Client Secrets
+
+    ![show-client-secrets.png](@static/blog/2023-make-music-bot-without-coding/view-client-secrets.png)
+
+    複製 Client ID 和 Client Secrets 並儲存，我們稍後會使用到
+
+    ![copy-fields.png](@static/blog/2023-make-music-bot-without-coding/copy-fields.png)
+
+    <Warning title="警告">
+        Client ID 和 Client Secrets 也是私密資訊，任何人只要得到了它，就可以肆意控制你的 Spotify 帳號
+    </Warning>
+</div>
+
+## 開始架設 Lava
+
+<div className='steps-container'>
+
+    ### 下載 LavaLauncher
+
+    你可以使用 `git clone` 或是直接前往 [LavaLauncher](https://github.com/Nat1anWasTaken/LavaLauncher) 下載 ZIP 檔
+
+    ```bash
+    git clone https://github.com/Nat1anWasTaken/LavaLauncher.git
+    ```
+
+    ![下載 LavaLauncher](@static/blog/2023-make-music-bot-without-coding/get-lavalauncher.png)
+
+    記得將下載下來的 ZIP 檔案解壓縮到一個你喜歡的地方
+
+    ### 運行腳本
+    <Tabs items={["Windows", "Linux / Mac", "Pterodactyl"]}>
+        <Tab>
+            右鍵 `run.ps1`，並點擊 `Run with Powershell`
+
+            ![啟動 run.ps1](@static/blog/2023-make-music-bot-without-coding/run-powershell.png)
+        </Tab>
+        <Tab>
+            運行 `run.sh`
+
+            ```bash
+            cd LavaLauncher
+            ./run.sh
+            ```
+            <Tip> 如果你遇到了 Permission Error，試著 `sudo chmod +x run.sh` </Tip>
+        </Tab>
+        <Tab>
+            直接運行 `run.py`
+
+            ```bash
+            python3 run.py
+            ```
+        </Tab>
+    </Tabs>
+
+    3. 輸入資料
+
+    [LavaLauncher](https://github.com/Nat1anWasTaken/LavaLauncher) 的第一次啟動可能需要一點時間，請耐心等待
+    在啟動完成後，你會看到幾個彈出來的問題
+
+    - `[?] Please enter the port for lavalink:` <br/>
+    請輸入你想要的 Lavalink 連接埠，預設即可，Pterodactyl 面板請輸入任何一個開放的 Port
+
+    - `[?] TOKEN:`
+    請輸入你在上方 [創建機器人](#創建-discord-機器人) 獲得的 TOKEN
+
+    - `[?] Do you want to enable Spotify support?`
+    請輸入 `y` 或 `n` 來決定是否啟用 Spotify 支援
+
+    - `[?] SPOTIFY_CLIENT_ID:`, `[?] SPOTIFY_CLIENT_SECRET:`
+    請輸入你在上方 [設置 Spotify](#設置-spotify) 獲得的 Client ID 和 Client Secrets
+
+    `[?] SPOTIFY_REDIRECT_URI:`
+    請輸入 `http://localhost/`
+
+    接著，LavaLauncher 會跳出一個連結，請點擊它並授權
+    授權完成後，顯示 `http://localhost/ 拒絕連線` 是正常的，此時你應該將瀏覽器分頁的連結複製下來，並貼到 LavaLauncher 的輸入框中
+
+    4. 運行機器人
+
+    [LavaLauncher](https://github.com/Nat1anWasTaken/LavaLauncher) 會自動安裝所需的套件，並啟動機器人
+    如果你看到 `Logged in as` 這行字，恭喜你，你已經成功啟動了 Lava
+
+</div>
+
+## 支援
+
+需要協助？你可以前往 [A.C.G.M CITY](https://discord.gg/acgmcity) 詢問有關 Lava 的問題，
+或是直接 [開啟一個 Issue](https://github.com/Nat1anWasTaken/LavaLauncher/issues)
