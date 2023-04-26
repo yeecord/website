@@ -1,9 +1,5 @@
-import { withIronSessionApiRoute } from "iron-session/next";
-import { ironOptions } from "@utils/session";
-import { NextApiRequest, NextApiResponse } from "next";
+import { withAuthApiRouter } from "@utils/session";
 
-function user(req: NextApiRequest, res: NextApiResponse) {
+export default withAuthApiRouter((req, res) => {
   return res.json(req.session.user);
-}
-
-export default withIronSessionApiRoute(user, ironOptions);
+});
