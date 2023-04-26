@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 
 export function SafeLink(props: Omit<ComponentProps<"a">, "ref">) {
   const safe =

@@ -1,13 +1,13 @@
-import { BlogPageOpts } from "../../schema/blog";
+import { type BlogPageOpts } from "../../schema/blog";
 import Image from "next/image";
 import React from "react";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import Link from "next/link";
 import clsx from "clsx";
 import { Fragment } from "react";
 import { getTagHref } from "@blog/utils/tags";
-import { PageOpts } from "nextra";
-import { AuthorData, BlogFrontMatterSchema } from "../../schema/blog";
+import { type PageOpts } from "nextra";
+import { type AuthorData, BlogFrontMatterSchema } from "../../schema/blog";
 import { BlogJsonLd } from "./blog-json-ld";
 
 export default function BlogLayout({

@@ -4,7 +4,7 @@ import Step from "../components/Step";
 import styles from "./games.module.css";
 import { RiGameFill, RiSwordFill } from "react-icons/ri";
 import LinkButton from "../components/LinkButton";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { BsBarChartFill, BsPencilFill } from "react-icons/bs";
 
 const grid = {

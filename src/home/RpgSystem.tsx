@@ -9,7 +9,7 @@ export function RpgSystem() {
     <motion.div
       className={clsx(
         "relative flex flex-col items-start gap-5 md:items-center",
-        "z-[2] mt-[15rem]"
+        "z-[2] mt-[15rem]",
       )}
       whileInView={{ y: 0, opacity: 1 }}
       initial={{ y: "5rem", opacity: 0 }}
@@ -101,7 +101,7 @@ function Job({
     <div
       className={clsx(
         "card flex flex-col gap-3 bg-white/70 backdrop-blur-3xl dark:bg-[rgba(10,10,10,0.7)]",
-        optional && "max-md:hidden"
+        optional && "max-md:hidden",
       )}
     >
       <h3 className="heading-md">{name}</h3>

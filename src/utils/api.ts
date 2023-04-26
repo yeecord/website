@@ -27,7 +27,10 @@ export type User = {
 };
 
 export async function fetchGuild() {
-  const config = await getAll(["guilds", "members"]);
+  const config = await getAll<{
+    guilds: number;
+    members: number;
+  }>(["guilds", "members"]);
 
   return {
     serverMembers: config?.members || 10000,

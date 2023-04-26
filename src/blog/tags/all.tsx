@@ -1,9 +1,9 @@
 import { LinkButton } from "@components/mdx";
 import clsx from "clsx";
-import { GetStaticProps } from "next";
+import { type GetStaticProps } from "next";
 import Link from "next/link";
 import { BsEyeFill } from "react-icons/bs";
-import { getStaticTagsMap, getTagHref, TagInfo } from "../utils/tags";
+import { getStaticTagsMap, getTagHref, type TagInfo } from "../utils/tags";
 import { getBlogPageMap } from "../utils/get-page-map";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   tags: [string, TagInfo][];
 };
 
-export const getStaticProps: GetStaticProps<Props> = async () => {
+export const getStaticProps: GetStaticProps<Props> = () => {
   const data = getStaticTagsMap(getBlogPageMap());
   const tags = [...data.entries()].sort((a, b) => b[1].count - a[1].count);
 
@@ -44,7 +44,7 @@ export default function AllTags({ tags }: Props) {
             href={getTagHref(tag)}
             className={clsx(
               "h-stack justify-between rounded-lg p-3",
-              "bg-zinc-100 dark:bg-zinc-800"
+              "bg-zinc-100 dark:bg-zinc-800",
             )}
           >
             <span className="text-lg font-bold">{tag}</span>

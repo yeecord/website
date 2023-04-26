@@ -1,6 +1,6 @@
 import { AiFillCaretDown } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion";
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 import clsx from "clsx";
 
 type AccordionProps = {

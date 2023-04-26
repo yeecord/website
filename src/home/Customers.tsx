@@ -2,7 +2,7 @@ import PinkWave from "@static/home/pink-wave.svg";
 import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, type MotionValue, useTransform } from "framer-motion";
 import formatter from "@utils/formatter";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 
@@ -10,7 +10,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
   const { count, start } = useAnimatedCounter(
     usedBy,
     Math.max(usedBy - 10000, 0),
-    1
+    1,
   );
 
   return (
@@ -88,7 +88,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
       <Image
         className={clsx(
           "custom relative -z-[1] -mt-[10rem] h-[300px] w-full object-cover md:-mt-[1rem]",
-          "[mask-image:linear-gradient(to_right,_transparent,white_10%,white_70%,_transparent)]"
+          "[mask-image:linear-gradient(to_right,_transparent,white_10%,white_70%,_transparent)]",
         )}
         alt="wave"
         src={PinkWave}
@@ -99,7 +99,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
 
 function ServerCount({ count }: { count: MotionValue<number> }) {
   const rounded = useTransform(count, (v: number) =>
-    formatter.format(Math.floor(v))
+    formatter.format(Math.floor(v)),
   );
 
   return <motion.span>{rounded}</motion.span>;
@@ -122,7 +122,7 @@ function Comment({
         "flex cursor-pointer flex-col gap-3 rounded-xl bg-white p-4 dark:bg-slate-900/70 dark:backdrop-blur-3xl",
         "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
         "border-[2px] border-gray-300 transition-colors dark:border-slate-800",
-        "hover:dark:border-pink-400 hover:dark:bg-slate-900"
+        "hover:dark:border-pink-400 hover:dark:bg-slate-900",
       )}
     >
       <div className="h-stack">

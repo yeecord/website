@@ -1,6 +1,6 @@
-import { NextraThemeLayoutProps, PageOpts } from "nextra";
+import { type NextraThemeLayoutProps, type PageOpts } from "nextra";
 import BaseLayout from "nextra-theme-docs";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import dynamic from "next/dynamic";
 
 const BlogLayout = dynamic(() => import("./blog").then((mod) => mod.default), {

@@ -1,7 +1,7 @@
 import type { IronSessionOptions } from "iron-session";
-import { User } from "@utils/api";
+import { type User } from "@utils/api";
 import { withIronSessionApiRoute } from "iron-session/next";
-import { NextApiHandler } from "next";
+import { type NextApiHandler } from "next";
 
 const default_secret = "+RXqpG/85W1VsSxtGWattG3IbpJEFIdtN8nHuoIy8PY=";
 export function withAuthApiRouter(handler: NextApiHandler): NextApiHandler {

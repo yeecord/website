@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { RiFeedbackFill, RiGithubFill } from "react-icons/ri";
 
 export default function Sponsor() {

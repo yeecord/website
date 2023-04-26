@@ -9,8 +9,8 @@ import { RiGithubFill } from "react-icons/ri";
 import { BlogRecommend } from "./components/BlogRecommend";
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
-import { GetStaticProps } from "next";
-import { BlogPage, BlogPageSchema } from "../schema/blog";
+import { type GetStaticProps } from "next";
+import { type BlogPage, BlogPageSchema } from "../schema/blog";
 import { getBlogPageMap } from "./utils/get-page-map";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
   recommendations: BlogPage[];
 };
 
-export const getStaticProps: GetStaticProps<Props> = async () => {
+export const getStaticProps: GetStaticProps<Props> = () => {
   const pages = getBlogPageMap().flatMap((page) => {
     const result = BlogPageSchema.safeParse(page);
     if (!result.success) {
@@ -45,7 +45,7 @@ export default function BlogIndex({ pages, recommendations }: Props) {
     <div
       className={clsx(
         "flex max-w-[1300px] flex-col gap-5 p-5 text-slate-700 dark:text-gray-200",
-        "mx-auto mb-[5rem]"
+        "mx-auto mb-[5rem]",
       )}
     >
       <div className="mt-16 mb-5">
@@ -104,7 +104,7 @@ function Recommendations({ items }: { items: BlogPage[] }) {
     <div
       className={clsx(
         "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.8fr]",
-        "mb-16 gap-5 lg:gap-10"
+        "mb-16 gap-5 lg:gap-10",
       )}
     >
       {items[0] != null && <LargeBlogItem page={items[0]} />}

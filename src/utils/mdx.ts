@@ -1,9 +1,13 @@
-import { MdxFile, Page } from "nextra";
+import type { MdxFile } from "nextra";
 
 export const NEXTRA_INTERNAL = Symbol.for("__nextra_internal__");
 
-export function getTitle(page: Page & MdxFile): string {
-  const frontMatter = page.frontMatter;
+type TypedPage = MdxFile<{ title: string }> & {
+  meta?: {
+    title?: string;
+  };
+};
 
-  return page.meta?.title || frontMatter?.title || page.name;
+export function getTitle(page: TypedPage): string {
+  return (page.meta?.title as string) || page.frontMatter?.title || page.name;
 }
