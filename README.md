@@ -16,7 +16,7 @@
 
 ### 執行
 
-使用 `npm run dev` 開始執行，並會在 `http://localhost:3000` 可以進行預覽
+使用 `pnpm run dev` 開始執行，並會在 `http://localhost:3000` 可以進行預覽
 
 ## 📝 授權
 

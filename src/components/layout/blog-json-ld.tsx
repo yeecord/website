@@ -1,4 +1,4 @@
-import { BlogPageOpts, AuthorData } from "../../schema/blog";
+import { type BlogPageOpts, type AuthorData } from "../../schema/blog";
 import { ArticleJsonLd } from "next-seo";
 
 export function BlogJsonLd({ page }: { page: BlogPageOpts }) {

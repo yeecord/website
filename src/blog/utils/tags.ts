@@ -1,13 +1,14 @@
-import { MdxFile, PageMapItem } from "nextra";
+import { type MdxFile, type PageMapItem } from "nextra";
 
 interface RawPage extends MdxFile {
   children?: RawPage[];
 }
 
 const flattenPageMap = (page: RawPage, result: PageMapItem[] = []) => {
-  if (Array.isArray(page.children!)) {
+  if (page.children != null && Array.isArray(page.children)) {
     page.children.forEach((p) => flattenPageMap(p, result));
   }
+
   result.push(page);
 };
 
@@ -15,7 +16,7 @@ const flattenPageMaps = (pages: RawPage[], result: PageMapItem[] = []) => {
   pages.forEach((v) => flattenPageMap(v, result));
 };
 
-export const getStaticTags = (pageMap: PageMapItem[]) => {
+export const getStaticTags = (pageMap: PageMapItem[]): string[] => {
   const result: RawPage[] = [];
   flattenPageMaps(pageMap as RawPage[], result);
   return Array.from(new Set(result.map(getTags).flat(1).filter(Boolean)));
@@ -47,12 +48,13 @@ export const getStaticTagsMap = (pageMap: PageMapItem[]) => {
   return map;
 };
 
-export function getTags(page: MdxFile) {
+export function getTags(page: MdxFile): string[] {
   if (!page.frontMatter) {
     return [];
   }
 
-  return page.frontMatter.tags?.map((tag: string) => tag.toLowerCase()) || [];
+  const tags = page.frontMatter.tags as string[];
+  return tags?.map((tag: string) => tag.toLowerCase()) || [];
 }
 
 export function getTagHref(tag: string) {

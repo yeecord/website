@@ -1,4 +1,4 @@
-import { fetchUser, resolveUserAvatar } from "@utils/api";
+import { type User, fetchUser, resolveUserAvatar } from "@utils/api";
 import clsx from "clsx";
 import Image from "next/image";
 import { RiUserFill } from "react-icons/ri";
@@ -9,7 +9,7 @@ export default function LoginButton() {
     data: user,
     isLoading,
     error,
-  } = useSWR("user", fetchUser, {
+  } = useSWR<User, unknown>("user", fetchUser, {
     refreshInterval: () => 10000,
     errorRetryCount: 0,
   });
@@ -19,7 +19,7 @@ export default function LoginButton() {
       <button
         className={clsx(
           "break-keep rounded-md px-5 py-1 font-bold",
-          "bg-black text-white dark:bg-white dark:text-black"
+          "bg-black text-white dark:bg-white dark:text-black",
         )}
       >
         控制面板
@@ -32,7 +32,7 @@ export default function LoginButton() {
       <div
         className={clsx(
           "flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full",
-          "bg-blue-400 text-white"
+          "bg-blue-400 text-white",
         )}
       >
         <RiUserFill className="text-lg" />

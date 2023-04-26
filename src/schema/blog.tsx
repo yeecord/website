@@ -1,4 +1,4 @@
-import { PageOpts } from "nextra";
+import { type PageOpts } from "nextra";
 import { z } from "zod";
 import { blogAuthors } from "../../config";
 
@@ -11,9 +11,7 @@ export type AuthorData = {
   image_url?: string;
 };
 
-export type BlogPageOpts = Omit<PageOpts, "frontMatter"> & {
-  frontMatter: BlogFrontMatter;
-};
+export type BlogPageOpts = PageOpts<BlogFrontMatter>;
 
 export const AuthorEnum = z.enum(authors);
 
@@ -28,7 +26,7 @@ export const BlogFrontMatterSchema = z.object({
     .optional(),
   date: z.string({ description: "Release date of the blog" }).refine(
     (s) => !Number.isNaN(Date.parse(s)),
-    (v) => ({ message: `Invalid date time ${v}` })
+    (v) => ({ message: `Invalid date time ${v}` }),
   ),
   image: z.string({ description: "Blog image" }).optional(),
   tags: z.array(z.string()),
@@ -36,7 +34,7 @@ export const BlogFrontMatterSchema = z.object({
     .union([AuthorEnum, z.array(AuthorEnum)])
     .transform<AuthorData[]>((rel) => {
       return (Array.isArray(rel) ? rel : [rel]).map(
-        (author) => blogAuthors[author]
+        (author) => blogAuthors[author],
       );
     }),
   theme: z

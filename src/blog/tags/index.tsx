@@ -1,10 +1,10 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { type GetStaticPaths, type GetStaticProps } from "next";
 import { getStaticTags, getTags } from "../utils/tags";
 import { getBlogPageMap } from "../utils/get-page-map";
-import { PageMapItem } from "nextra";
+import { type PageMapItem } from "nextra";
 import { BlogItem } from "../components/BlogItem";
 import { LinkButton } from "@components/mdx";
-import { BlogPage, BlogPageSchema } from "../../schema/blog";
+import { type BlogPage, BlogPageSchema } from "../../schema/blog";
 
 //Important: upper case urls are invalid
 //We will convert the tag name into lower case to avoid the issue
@@ -31,7 +31,7 @@ export default function TagPage({ pages, tag }: Props) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths<{ tag: string }> = () => {
   const tags = getStaticTags(getBlogPageMap());
 
   return {

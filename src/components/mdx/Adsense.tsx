@@ -13,8 +13,9 @@ export function Adsense() {
     if (failed) return;
 
     try {
+      // eslint-disable-next-line
       ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
-        {}
+        {},
       );
     } catch (e) {
       console.error(`[Adsense] ${(e as Error).message}`);
@@ -34,7 +35,7 @@ export function Adsense() {
       <div
         className={clsx(
           "relative min-h-[280px] after:z-[-1] after:text-gray-500 after:content-['太無情了阿怎麼沒有顯示廣告']",
-          "after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transform after:text-sm"
+          "after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transform after:text-sm",
         )}
       >
         <ins

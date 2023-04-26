@@ -1,0 +1,90 @@
+---
+title: "在本地運行項目"
+description: "了解如何為我們的項目做出貢獻"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# 在本地運行項目
+
+## 項目架構
+
+我們的前端項目並不復雜，我們現在使用的框架或程式庫：
+
+- Next.js
+- React
+- Tailwind CSS
+
+## 你需要了解什麼
+
+通常情況下如果你只是一個內容創作者，你大概永遠不會使用它們
+
+然而，如果你打算在本地運行這個項目，你可能需要一些基本的 Web 開發經驗
+
+## 開始前的準備
+
+為了在本地運行和預覽您的文章，您必須準備一些東西
+
+<div className="steps-container">
+
+### 準備你的編輯器
+
+我們推薦使用 Visual Studio Code，但你當然可以使用任何你喜歡的編輯器
+
+[他們的官網 ->](https://code.visualstudio.com/)
+
+### 安裝 Node.js
+
+你需要 [Node.js](https://nodejs.org) 來運行這個項目
+
+安裝後輸入下面的命令，您應該看到當前的 NPM 版本
+```
+npm -v
+```
+
+### 安裝 PNPM
+
+因為我們使用 pnpm 而不是 npm，你必須先安裝 pnpm：
+
+<Tabs items={['Windows', 'POSIX']}>
+  <Tab>
+
+```
+iwr https://get.pnpm.io/install.ps1 -useb | iex
+```
+
+  </Tab>
+  <Tab>
+
+**curl**
+
+```
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+```
+
+**wget**
+
+```
+wget -qO- https://get.pnpm.io/install.sh | sh -
+```
+
+  </Tab>
+</Tabs>
+
+[了解更多 ->](https://pnpm.io/)
+
+</div>
+
+## 讓我們運行吧
+
+**運行下面的命令**
+```
+pnpm run dev
+```
+
+**你應該看到以下輸出**
+```
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+```
+
+現在打開 [http://localhost:3000](http://localhost:3000), 你應該看到網站已經準備好了

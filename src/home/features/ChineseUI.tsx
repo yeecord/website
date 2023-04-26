@@ -1,12 +1,12 @@
 import clsx from "clsx";
-import { motion, Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import cn_styles from "./chinese.module.css";
 import Step from "../components/Step";
 import Gradient from "../components/Gradient";
 
 import { BsShieldFillCheck, BsTextCenter, BsTranslate } from "react-icons/bs";
 import GardientSvg from "@static/home/purple-gradient.svg";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { RiMouseFill } from "react-icons/ri";
 
 export function ChineseUI() {

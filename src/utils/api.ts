@@ -1,5 +1,5 @@
 import { CDN_ENDPOINT } from "../../config";
-import {getAll} from "@vercel/edge-config";
+import { getAll } from "@vercel/edge-config";
 
 export async function fetchUser() {
   const res = await fetch("/api/user", {
@@ -27,7 +27,10 @@ export type User = {
 };
 
 export async function fetchGuild() {
-  const config = await getAll(["guilds", "members"]);
+  const config = await getAll<{
+    guilds: number;
+    members: number;
+  }>(["guilds", "members"]);
 
   return {
     serverMembers: config?.members || 10000,

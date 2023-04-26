@@ -1,8 +1,6 @@
-import { PageOpts, FrontMatter } from "nextra";
+import { type PageOpts, type FrontMatter } from "nextra";
 
-export type DocsPageOpts = Omit<PageOpts, "frontMatter"> & {
-  frontMatter: DocsFrontMatter;
-};
+export type DocsPageOpts = PageOpts<DocsFrontMatter>;
 
 export type DocsFrontMatter = FrontMatter & {
   title: string;

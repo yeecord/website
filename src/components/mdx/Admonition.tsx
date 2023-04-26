@@ -1,6 +1,6 @@
 import { Callout } from "nextra-theme-docs";
-import { ReactElement } from "react";
-import { ReactNode } from "react";
+import { type ReactElement } from "react";
+import { type ReactNode } from "react";
 
 export function Admonition({
   children,

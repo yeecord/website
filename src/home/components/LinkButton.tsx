@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ComponentProps, HTMLAttributeAnchorTarget } from "react";
+import { type ComponentProps, type HTMLAttributeAnchorTarget } from "react";
 
 export default function LinkButton({
   href,

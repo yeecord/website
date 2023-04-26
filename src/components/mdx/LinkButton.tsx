@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { ComponentProps, ReactNode } from "react";
+import { type ComponentProps, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import { FiArrowRight } from "react-icons/fi";
 

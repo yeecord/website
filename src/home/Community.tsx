@@ -40,7 +40,7 @@ function JoinButton({ joined }: { joined: number }) {
         src={GradientRing}
         className={clsx(
           "pointer-events-none absolute top-0 left-0 -z-[1] h-full w-full select-none object-contain",
-          styles["rotate-z"]
+          styles["rotate-z"],
         )}
       />
       <div className="flex flex-row gap-4">
@@ -56,7 +56,7 @@ function JoinButton({ joined }: { joined: number }) {
           target="_blank"
           className={clsx(
             "icon-button h-full rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3",
-            "text-3xl text-white shadow-xl shadow-cyan-400/50"
+            "text-3xl text-white shadow-xl shadow-cyan-400/50",
           )}
           aria-label="Join"
         >

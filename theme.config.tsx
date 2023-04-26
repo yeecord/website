@@ -2,7 +2,7 @@ import Footer from "@components/Footer";
 import LoginButton from "@components/LoginButton";
 import Image from "next/image";
 import Link from "next/link";
-import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
+import { type DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import { footer } from "./config";
 import { useRouter } from "next/router";
 import { ThemeToggle } from "@components/ThemeToggle";
@@ -41,7 +41,10 @@ const config: Partial<DocsThemeConfig> = {
   },
   useNextSeoProps() {
     const { asPath, route } = useRouter();
-    const { frontMatter, title } = useConfig();
+    const { frontMatter, title } = useConfig<{
+      image?: string;
+      description?: string;
+    }>();
 
     const image = frontMatter.image != null && {
       alt: title,

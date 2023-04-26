@@ -5,7 +5,7 @@ import { RpgSystem } from "./RpgSystem";
 import { Features } from "./features";
 import Sponsor from "./Sponsor";
 import { fetchGuild } from "@utils/api";
-import { GetStaticProps } from "next";
+import { type GetStaticProps } from "next";
 import { useSSG } from "nextra/data";
 
 export type HomeProps = {

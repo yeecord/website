@@ -1,10 +1,15 @@
-import { animate, useMotionValue } from "framer-motion";
+import { type MotionValue, animate, useMotionValue } from "framer-motion";
+
+type Result = {
+  count: MotionValue<number>;
+  start: () => () => void;
+};
 
 export const useAnimatedCounter = (
   maxValue: number,
   initialValue = 0,
-  duration = 1
-) => {
+  duration = 1,
+): Result => {
   const count = useMotionValue(initialValue);
 
   return {
