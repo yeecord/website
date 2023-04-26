@@ -1,19 +1,34 @@
 import type { IronSessionOptions } from "iron-session";
 import { User } from "@utils/api";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { NextApiHandler } from "next";
 
-if(process.env.NODE_ENV === 'production' && process.env.JWT_SECRET == null)
-  throw new Error("JWT secret not provided.");
+const default_secret = "+RXqpG/85W1VsSxtGWattG3IbpJEFIdtN8nHuoIy8PY=";
+export function withAuthApiRouter(handler: NextApiHandler): NextApiHandler {
+  //allow no secret code on development mode
+  if (
+    process.env.NODE_ENV !== "development" &&
+    process.env.JWT_SECRET == null
+  ) {
+    throw new Error(
+      "JWT secret not provided, try adding a JWT_SECRET variable to .env file?"
+    );
+  }
 
-export const ironOptions: IronSessionOptions = {
-  cookieName: "cute-fox",
-  password: process.env.JWT_SECRET ?? 'ee52b95f4590fafe2d78139e9be65f96c9dc64948a5d3c4424de6b8e42629a089fa9dd9975b2f59d87cc94763a74ec416d3c34453d688d4dbbbc88a5f35c610c',
-  cookieOptions: {
-    secure: process.env.NODE_ENV === "production",
-    httpOnly: true,
-    domain: process.env.NODE_ENV === "production" ? ".yeecord.com" : "localhost",
-  },
-  ttl: 604800,
-};
+  const ironOptions: IronSessionOptions = {
+    cookieName: "cute-fox",
+    password: process.env.JWT_SECRET ?? default_secret,
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      domain:
+        process.env.NODE_ENV === "production" ? ".yeecord.com" : "localhost",
+    },
+    ttl: 604800,
+  };
+
+  return withIronSessionApiRoute(handler, ironOptions);
+}
 
 declare module "iron-session" {
   interface IronSessionData {
