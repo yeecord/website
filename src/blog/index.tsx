@@ -19,15 +19,21 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = () => {
-  const pages = getBlogPageMap().flatMap((page) => {
-    const result = BlogPageSchema.safeParse(page);
-    if (!result.success) {
-      console.error(page.route, result.error.issues);
-      return [];
-    }
+  const pages = getBlogPageMap()
+    .flatMap((page) => {
+      const result = BlogPageSchema.safeParse(page);
+      if (!result.success) {
+        console.error(page.route, result.error.issues);
+        return [];
+      }
 
-    return [result.data];
-  });
+      return [result.data];
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.frontMatter.date).getTime() -
+        new Date(a.frontMatter.date).getTime(),
+    );
 
   const recommendations = blogRecommendations.flatMap((name) => {
     return pages.find((page) => page.name === name) ?? [];
