@@ -19,28 +19,25 @@ export function Hero() {
         className="absolute -top-[200px] -right-0 -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
       />
       <h1
-        className={clsx(
-          "font-bold leading-[1.1]",
-          "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-5xl lg:text-7xl xl:text-8xl",
-        )}
+        className={
+          "text-5xl font-bold min-[360px]:text-6xl sm:text-7xl xl:text-8xl"
+        }
       >
         萬中選一的
-        <br className="md:hidden" />
         <span
           className={clsx(
-            "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
+            "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 max-lg:my-2 max-lg:block",
             styles["animated-gradient"],
           )}
         >
           Discord
         </span>
-        <br className="md:hidden" />
         機器人
       </h1>
       <h2
         className={clsx(
-          "max-w-[450px] font-bold text-secondary-light dark:text-secondary-dark",
-          "text-lg sm:text-xl md:max-w-[650px] lg:text-3xl",
+          "max-w-[450px] text-xl text-secondary-light dark:text-secondary-dark",
+          "md:max-w-[650px] lg:text-3xl",
         )}
       >
         YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
