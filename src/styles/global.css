@@ -129,7 +129,7 @@ html[class~="dark"] .nextra-nav-container .dark\:nx-bg-dark {
 }
 
 article {
-  @apply text-slate-600 sm:text-lg !important;
+  @apply text-slate-600 sm:text-base !important;
 }
 
 .dark article {

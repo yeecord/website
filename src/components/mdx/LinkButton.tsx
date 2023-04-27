@@ -38,18 +38,18 @@ export function LinkButton({
 
 const classes = {
   base: clsx(
-    "w-full h-full py-2 text-lg rounded-lg font-bold",
-    "flex flex-row gap-2 items-center justify-center"
+    "w-full h-full py-2 text-lg rounded-lg font-bold text-base",
+    "flex flex-row gap-2 items-center justify-center",
   ),
   primary: clsx(
-    "text-white bg-gradient-to-br from-cyan-300 to-blue-600",
-    "shadow-lg shadow-blue-400 dark:shadow-blue-600",
+    "text-white bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-blue-400",
+    "dark:shadow-md dark:shadow-blue-600",
     "hover:from-blue-500 hover:to-blue-600",
-    "dark:hover:from-cyan-100 dark:hover:to-blue-600"
+    "dark:hover:from-blue-500 dark:hover:to-blue-600",
   ),
   secondary: clsx(
     "bg-white text-black shadow-xl hover:bg-zinc-200 border-[1px] border-zinc-400/50",
-    "dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-white dark:shadow-none"
+    "dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-white dark:shadow-none",
   ),
 };
 
@@ -69,13 +69,11 @@ function InnerButton({
   return (
     <button
       className={twMerge(
-        clsx(
-          classes.base,
-          variant === "primary" && classes.primary,
-          variant === "secondary" && classes.secondary
-        ),
+        classes.base,
+        variant === "primary" && classes.primary,
+        variant === "secondary" && classes.secondary,
         icon != null ? "px-6" : "pl-7 pr-5",
-        className
+        className,
       )}
     >
       {icon} {children} {icon == null && <FiArrowRight className="text-xl" />}
