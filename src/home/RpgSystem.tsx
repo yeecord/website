@@ -16,23 +16,30 @@ export function RpgSystem() {
     >
       <Background />
 
-      <h1 className="mx-4 text-4xl font-bold sm:text-5xl">
-        <span className="text-gradient from-green-400 to-blue-400 dark:to-blue-200">
-          開創性
-        </span>
-        的角色扮演系&#8288;統
-      </h1>
-      <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
-        進入這個奇幻世界，開始你的冒險吧！
-      </h3>
-      <LinkButton
-        href="/docs/rpg"
-        className={clsx(
-          "mt-4 rounded-full bg-gradient-to-b from-green-400 to-green-600 px-6 py-3 text-lg font-bold text-white",
-        )}
-      >
-        開始使用
-      </LinkButton>
+      <div className="flex flex-col gap-10">
+        <p
+          className={clsx(
+            "mx-auto w-fit bg-gradient-to-br from-green-400 to-green-600 py-2 px-4 font-semibold text-white",
+            "text-3xl sm:text-4xl",
+          )}
+        >
+          冒險模式
+        </p>
+        <h1 className="font-yahei text-5xl font-bold sm:text-5xl lg:text-6xl">
+          開創性的<span className="whitespace-nowrap">角色扮演系統</span>
+        </h1>
+        <h2 className="mx-auto max-w-2xl text-xl text-secondary-light dark:text-secondary-dark">
+          進入這個奇幻世界，開始你的冒險吧！
+        </h2>
+        <LinkButton
+          href="/docs/rpg"
+          className={clsx(
+            "rounded-lg bg-gradient-to-b from-green-400 to-green-600 px-10 py-3 text-lg font-bold text-white",
+          )}
+        >
+          開始使用
+        </LinkButton>
+      </div>
       <Jobs />
     </motion.div>
   );
