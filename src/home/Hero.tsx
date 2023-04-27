@@ -5,13 +5,14 @@ import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
+import { twMerge } from "tailwind-merge";
 
 export function Hero() {
   return (
     <div
       className={clsx(
         "relative z-[2] mt-[6rem] flex w-full flex-col gap-12 px-[1rem] md:mt-[10rem] xl:mt-[14rem]",
-        "items-center text-center"
+        "items-center text-center",
       )}
     >
       <Gradient
@@ -19,36 +20,38 @@ export function Hero() {
         className="absolute -top-[200px] -right-0 -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
       />
       <h1
-        className={clsx(
-          "font-bold leading-[1.1]",
-          "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-5xl lg:text-7xl xl:text-8xl"
-        )}
+        className={
+          "font-yahei text-5xl font-bold min-[360px]:text-6xl sm:text-7xl xl:text-8xl"
+        }
       >
         萬中選一的
-        <br className="md:hidden" />
         <span
           className={clsx(
-            "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
-            styles["animated-gradient"]
+            "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 max-lg:my-2 max-lg:block",
+            styles["animated-gradient"],
           )}
         >
           Discord
         </span>
-        <br className="md:hidden" />
         機器人
       </h1>
-      <h2 className="heading-md text-secondary max-w-[450px] md:max-w-[650px] lg:text-3xl">
+      <h2
+        className={clsx(
+          "max-w-[450px] text-xl text-secondary-light dark:text-secondary-dark",
+          "md:max-w-[650px] lg:text-2xl",
+        )}
+      >
         YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
       </h2>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
-        <p className="text-secondary mb-3 text-lg font-semibold md:mb-4">
+        <p className="mb-3 text-lg font-semibold text-secondary-light dark:text-secondary-dark md:mb-4">
           各大伺服器一致好評
         </p>
         <div
           className={clsx(
             "overflow-hidden",
-            "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
+            "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
           )}
         >
           <div className={clsx(styles.servers, "inline-block max-md:w-max")}>
@@ -62,7 +65,7 @@ export function Hero() {
 }
 
 function Buttons() {
-  const bn = "text-lg font-bold sm:text-xl rounded-md w-full px-6 py-3 sm:px-8";
+  const bn = "text-lg font-bold sm:text-lg rounded-md w-full px-6 py-3 sm:px-8";
 
   return (
     <div className="grid w-full max-w-[500px] grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2">
@@ -72,7 +75,11 @@ function Buttons() {
       <LinkButton
         href="/invite"
         target="_blank"
-        className={clsx("icon-button justify-center", bn)}
+        className={twMerge(
+          "inline-flex items-center justify-center gap-2.5 bg-black text-white",
+          "dark:bg-white dark:text-black",
+          bn,
+        )}
       >
         <IoMdOpen />
         邀請機器人
@@ -87,7 +94,7 @@ function Servers({ secondary }: { secondary?: boolean }) {
       className={clsx(
         "inline-flex flex-row justify-center",
         "md:max-w-[64rem] md:flex-wrap",
-        secondary && "md:hidden"
+        secondary && "md:hidden",
       )}
     >
       <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
@@ -125,10 +132,10 @@ function Server({
         height="45"
         className={clsx(
           "rounded-full grayscale",
-          transparent && "brightness-[0%] dark:brightness-100"
+          transparent && "brightness-[0%] dark:brightness-100",
         )}
       />
-      <h3 className="heading-md">{name}</h3>
+      <h3 className="text-lg font-bold sm:text-xl">{name}</h3>
     </div>
   );
 }

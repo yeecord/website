@@ -42,14 +42,19 @@ function PageContainer({
 
   return (
     <div className="mt-10">
-      <p className="text-link text-base font-semibold lg:text-lg">
+      <p className="text-base font-semibold text-blue-600 dark:text-blue-400 lg:text-lg">
         {page.readingTime != null &&
           `閱讀時間約 ${Math.round(page.readingTime.minutes)} 分鐘`}
       </p>
       <h1 className="mb-2 text-3xl font-extrabold leading-normal md:!text-[2.4rem]">
         {page.title}
       </h1>
-      <div className="text-secondary mb-6 mt-3 flex flex-row flex-wrap gap-1 text-lg font-bold">
+      <div
+        className={clsx(
+          "mb-6 mt-3 flex flex-row flex-wrap gap-1 text-lg font-bold text-secondary-light",
+          "dark:text-secondary-dark",
+        )}
+      >
         <div className="h-stack flex-wrap gap-1">
           {frontMatter.authors.map((author, i) => (
             <Fragment key={i}>
@@ -131,7 +136,9 @@ function Footer({ page }: { page: BlogPageOpts }) {
           )}
           <div>
             <h2 className="text-2xl font-bold">{author.name}</h2>
-            <p className="text-secondary text-lg">{author.title}</p>
+            <p className="text-lg text-secondary-light dark:text-secondary-dark">
+              {author.title}
+            </p>
           </div>
         </a>
       ))}
@@ -139,7 +146,7 @@ function Footer({ page }: { page: BlogPageOpts }) {
         className={clsx(
           "flex flex-col gap-3 rounded-xl p-4",
           "bg-gradient-to-br from-pink-50/50 via-pink-100 to-cyan-200/50",
-          "dark:from-cyan-800/20 dark:to-purple-400/50"
+          "dark:from-cyan-800/20 dark:to-purple-400/50",
         )}
       >
         <h2 className="font-extrabold">

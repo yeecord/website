@@ -16,7 +16,7 @@ export function BlogItem({ page }: { page: BlogPage }) {
       className={clsx(
         "flex flex-col gap-3 rounded-lg bg-white p-5 transition-colors",
         "shadow-xl shadow-blue-500/10 hover:bg-blue-50 ",
-        "dark:bg-zinc-900 dark:shadow-none dark:hover:bg-zinc-800"
+        "dark:bg-zinc-900 dark:shadow-none dark:hover:bg-zinc-800",
       )}
     >
       <Link href={page.route} className="relative aspect-video h-auto w-full">
@@ -46,7 +46,7 @@ export function BlogItem({ page }: { page: BlogPage }) {
             <Link
               key={i}
               href={getTagHref(tag)}
-              className="text-secondary flex-shrink-0 font-extrabold"
+              className="flex-shrink-0 font-extrabold text-secondary-light dark:text-secondary-dark"
             >
               #{tag}
             </Link>
@@ -79,7 +79,7 @@ export function LargeBlogItem({ page }: { page: BlogPage }) {
       className={clsx(
         "flex h-fit flex-col overflow-hidden rounded-2xl bg-white",
         "shadow-2xl shadow-blue-700/20",
-        "dark:bg-zinc-900 dark:shadow-none"
+        "dark:bg-zinc-900 dark:shadow-none",
       )}
     >
       <Link href={page.route} className="relative aspect-video w-full">
@@ -105,7 +105,7 @@ export function LargeBlogItem({ page }: { page: BlogPage }) {
         )}
       </Link>
       <div className="flex flex-col p-5">
-        <div className="text-link flex flex-row gap-3 overflow-hidden font-extrabold">
+        <div className="flex flex-row gap-3 overflow-hidden font-extrabold text-blue-600 dark:text-blue-400">
           {frontMatter.tags.map((tag, i) => (
             <Link key={i} href={getTagHref(tag)} className="flex-shrink-0">
               #{tag}

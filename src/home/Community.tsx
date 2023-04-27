@@ -16,14 +16,14 @@ export function Community({ joined }: { joined: number }) {
         src={CyanPinkGradient}
         className="absolute top-0 left-0 -z-[1] h-full w-full overflow-visible object-cover opacity-20"
       />
-      <h1 className="heading-xl text-pink-400 xl:text-6xl">
+      <h1 className="text-5xl font-bold text-pink-400 xl:text-6xl">
         <span>與</span>
         <span className="mx-2 text-cyan-300 [text-shadow:_#e66ad0_3px_5px]">
           我們
         </span>
         <span>聯繫</span>
       </h1>
-      <h3 className="heading-md  text-black dark:text-slate-200">
+      <h3 className="text-lg font-bold text-black  dark:text-slate-200 sm:text-xl">
         獲取我們的最新消息
       </h3>
 
@@ -55,7 +55,7 @@ function JoinButton({ joined }: { joined: number }) {
           href="https://discord.gg/yeecord"
           target="_blank"
           className={clsx(
-            "icon-button h-full rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3",
+            "inline-flex h-full items-center gap-2.5 rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3 font-bold",
             "text-3xl text-white shadow-xl shadow-cyan-400/50",
           )}
           aria-label="Join"

@@ -36,20 +36,24 @@ export function Customers({ usedBy }: { usedBy: number }) {
         }}
         className="flex flex-col items-center gap-5 text-center"
       >
-        <h1 className="heading-xl">
+        <h1 className="text-5xl font-bold">
           受超過
           <span className="text-gradient mx-2 block from-pink-600 to-orange-400 max-md:text-7xl md:inline">
             <ServerCount count={count} />
           </span>
           個伺服器使用
         </h1>
-        <h3 className="heading-md text-secondary">
+        <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
           受到無數大型社群的廣泛信任
         </h3>
         <div className="h-stack">
           <LinkButton
             href="/invite"
-            className="secondary-button shadow-lg backdrop-blur-lg"
+            className={clsx(
+              "rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black shadow-lg transition-all",
+              "hover:bg-blue-300/40",
+              "dark:bg-white/10 dark:text-white dark:hover:bg-white/20",
+            )}
           >
             邀請機器人
           </LinkButton>
@@ -137,11 +141,15 @@ function Comment({
           <p className="font-semibold text-pink-700 dark:text-pink-300">
             {title}
           </p>
-          <h3 className="heading-md text-black dark:text-white">{author}</h3>
+          <h3 className="text-lg font-bold text-black dark:text-white sm:text-xl">
+            {author}
+          </h3>
         </div>
       </div>
 
-      <p className="text-secondary dark:text-slate-300 md:text-lg">{content}</p>
+      <p className="text-secondary-light dark:text-slate-300 md:text-lg">
+        {content}
+      </p>
     </div>
   );
 }

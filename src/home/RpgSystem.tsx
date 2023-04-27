@@ -8,7 +8,7 @@ export function RpgSystem() {
   return (
     <motion.div
       className={clsx(
-        "relative flex flex-col items-start gap-5 md:items-center",
+        "relative flex flex-col items-center gap-5 text-center",
         "z-[2] mt-[15rem]",
       )}
       whileInView={{ y: 0, opacity: 1 }}
@@ -16,18 +16,20 @@ export function RpgSystem() {
     >
       <Background />
 
-      <h1 className="heading-xl">
+      <h1 className="mx-4 text-4xl font-bold sm:text-5xl">
         <span className="text-gradient from-green-400 to-blue-400 dark:to-blue-200">
           開創性
         </span>
-        的角色扮演系統
+        的角色扮演系&#8288;統
       </h1>
-      <h3 className="heading-md text-secondary">
+      <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
         進入這個奇幻世界，開始你的冒險吧！
       </h3>
       <LinkButton
         href="/docs/rpg"
-        className="primary-button mt-4 bg-gradient-to-b from-green-400 to-green-600"
+        className={clsx(
+          "mt-4 rounded-full bg-gradient-to-b from-green-400 to-green-600 px-6 py-3 text-lg font-bold text-white",
+        )}
       >
         開始使用
       </LinkButton>
@@ -100,12 +102,15 @@ function Job({
   return (
     <div
       className={clsx(
-        "card flex flex-col gap-3 bg-white/70 backdrop-blur-3xl dark:bg-[rgba(10,10,10,0.7)]",
+        "flex flex-col gap-3 rounded-xl border-[1px] border-black/10 bg-white/70 p-4 shadow-lg backdrop-blur-3xl",
+        "dark:border-white/10 dark:bg-[rgba(10,10,10,0.7)]",
         optional && "max-md:hidden",
       )}
     >
-      <h3 className="heading-md">{name}</h3>
-      <p className="text-secondary font-bold">{description}</p>
+      <h3 className="text-lg font-bold sm:text-xl">{name}</h3>
+      <p className="font-bold text-secondary-light dark:text-secondary-dark">
+        {description}
+      </p>
     </div>
   );
 }

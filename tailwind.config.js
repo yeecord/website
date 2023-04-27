@@ -10,23 +10,12 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: [
-        "var(--font-noto)",
-        "PingFang TC",
-        "Heiti TC",
-        "微軟正黑體",
-        ...defaultTheme.fontFamily.sans,
-      ],
-      ms: [
-        "var(--font-noto)",
-        "PingFang TC",
-        "Heiti TC",
-        "Microsoft YaHei",
-        "微軟正黑體",
-        ...defaultTheme.fontFamily.sans,
-      ],
+      sans: ["var(--font-noto)", ...defaultTheme.fontFamily.sans],
     },
     extend: {
+      fontFamily: {
+        yahei: ["Microsoft YaHei", ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         background: "#0a0c10",
         secondary: {

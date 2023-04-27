@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 
 const card = clsx(
   "bg-slate-100 rounded-3xl p-5 shadow-xl flex flex-col",
-  "dark:bg-slate-900"
+  "dark:bg-slate-900",
 );
 
 export function Dashboard() {
@@ -22,11 +22,11 @@ export function Dashboard() {
         <div
           className={clsx(
             "h-[9rem] w-1 bg-gradient-to-b",
-            "from-transparent via-purple-400 to-purple-600 dark:to-purple-100"
+            "from-transparent via-purple-400 to-purple-600 dark:to-purple-100",
           )}
         />
-        <h1 className="features-heading">簡易的控制面板</h1>
-        <h3 className="heading-md text-secondary">
+        <h1 className="text-3xl font-bold sm:text-5xl">簡易的控制面板</h1>
+        <h3 className="text-lg text-secondary-light dark:text-secondary-dark sm:text-xl">
           通過美觀、簡易的方式來自定義
           <br className="sm:hidden" />
           你的機器人
@@ -42,8 +42,10 @@ export function Dashboard() {
               <BsMusicNoteBeamed />
             </div>
             <div>
-              <h3 className="heading-md">音樂系統</h3>
-              <p className="text-secondary font-bold">下一首歌</p>
+              <h3 className="text-lg font-bold sm:text-xl">音樂系統</h3>
+              <p className="font-bold text-secondary-light dark:text-secondary-dark">
+                下一首歌
+              </p>
             </div>
           </div>
           <div className="h-stack mt-auto pt-2">
@@ -69,8 +71,10 @@ function Settings() {
           <RiSettings2Fill />
         </div>
         <div>
-          <h3 className="heading-md">設置</h3>
-          <p className="text-secondary font-bold">下拉選單身分組</p>
+          <h3 className="text-lg font-bold sm:text-xl">設置</h3>
+          <p className="font-bold text-secondary-light dark:text-secondary-dark">
+            下拉選單身分組
+          </p>
         </div>
       </div>
       <div
@@ -80,7 +84,7 @@ function Settings() {
         <RoleItem />
         <RoleItem />
       </div>
-      <button className="primary-button mt-auto rounded-xl from-purple-400 to-purple-600">
+      <button className="mt-auto rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 px-6 py-3 text-lg font-bold text-white">
         + 添加身分組
       </button>
     </motion.div>
@@ -89,7 +93,7 @@ function Settings() {
 
 function RoleItem() {
   return (
-    <div className="flex items-center justify-center rounded-xl bg-purple-200 p-3 text-white">
+    <div className="flex items-center justify-center rounded-xl bg-purple-200 p-3 text-white dark:bg-purple-500/50">
       <BsEmojiAngryFill className="text-3xl" />
     </div>
   );
@@ -108,8 +112,10 @@ function Chart() {
           <BsBarChartFill />
         </div>
         <div>
-          <h3 className="heading-md">你的伺服器</h3>
-          <p className="text-secondary font-bold">數據分析</p>
+          <h3 className="text-lg font-bold sm:text-xl">你的伺服器</h3>
+          <p className="font-bold text-secondary-light dark:text-secondary-dark">
+            數據分析
+          </p>
         </div>
       </div>
       <Image src={ChartSvg} alt="chart" className="mt-auto rounded-3xl" />

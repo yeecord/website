@@ -2,53 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-background: theme("colors.background");
+  --navbar-background: theme("colors.background / 0.5");
+}
+
 @layer components {
-  .heading-xl {
-    @apply text-5xl font-bold;
-  }
-
-  .heading-lg {
-    @apply text-3xl font-bold;
-  }
-
-  .heading-md {
-    @apply text-lg font-bold sm:text-xl;
-  }
-
-  .features-heading {
-    @apply text-3xl font-bold sm:text-5xl;
-  }
-
-  .text-link {
-    @apply text-blue-600 dark:text-blue-400;
-  }
-
-  .text-secondary {
-    @apply text-secondary-light dark:text-secondary-dark;
-  }
-
   .text-gradient {
     @apply bg-gradient-to-b bg-clip-text text-transparent;
   }
 
-  .card {
-    @apply rounded-xl border-[1px] border-black/10 bg-white/40 p-4 shadow-lg dark:border-white/10 dark:bg-white/10;
-  }
-
   .h-stack {
     @apply flex flex-row items-center gap-2.5;
-  }
-
-  .primary-button {
-    @apply rounded-full bg-gradient-to-br px-6 py-3 text-lg font-bold text-white transition-all;
-  }
-
-  .icon-button {
-    @apply inline-flex items-center gap-2 rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black transition-all hover:bg-blue-300/40 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
-  }
-
-  .secondary-button {
-    @apply inline-flex items-center gap-2 rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black transition-all hover:bg-blue-300/40 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
   }
 
   article main h1 {
@@ -108,11 +73,11 @@ html[class~="dark"] .nextra-breadcrumb .dark\:nx-text-gray-400 {
 
 .dark body,
 html[class~="dark"] .dark\:nx-bg-dark {
-  background: theme("colors.background") !important;
+  background: var(--main-background) !important;
 }
 
 html[class~="dark"] .nextra-nav-container .dark\:nx-bg-dark {
-  background: theme("colors.background / 0.5") !important;
+  background: var(--navbar-background) !important;
 }
 
 .nx-text-sm {
@@ -129,7 +94,7 @@ html[class~="dark"] .nextra-nav-container .dark\:nx-bg-dark {
 }
 
 article {
-  @apply text-slate-600 sm:text-lg !important;
+  @apply text-slate-600 sm:text-base !important;
 }
 
 .dark article {
@@ -147,10 +112,6 @@ article h6 {
 
 article p {
   line-height: 2rem !important;
-}
-
-h1 {
-  @apply font-ms;
 }
 
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {

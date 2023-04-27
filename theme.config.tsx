@@ -13,7 +13,7 @@ const config: Partial<DocsThemeConfig> = {
     a: (props) => (
       <SafeLink
         {...props}
-        className="text-link underline decoration-from-font [text-underline-position:from-font]"
+        className="text-blue-600 underline decoration-from-font [text-underline-position:from-font] dark:text-blue-400"
       />
     ),
   },

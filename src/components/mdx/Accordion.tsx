@@ -14,14 +14,14 @@ export function Accordion({ title, children }: AccordionProps) {
     <motion.header
       className={clsx(
         "mt-4 rounded-xl border border-gray-200 bg-white shadow-xl shadow-gray-100",
-        "dark:border-neutral-800 dark:bg-background/50 dark:shadow-background"
+        "dark:border-neutral-800 dark:bg-background/50 dark:shadow-background",
       )}
     >
       <div
         className="h-stack cursor-pointer justify-between p-4 text-black dark:text-white"
         onClick={() => setOpen((prev) => !prev)}
       >
-        <p className="heading-md">{title}</p>
+        <p className="text-lg font-bold sm:text-xl">{title}</p>
         <motion.div
           animate={isOpen ? "open" : "collapsed"}
           variants={{
@@ -47,7 +47,7 @@ export function Accordion({ title, children }: AccordionProps) {
               duration: 0.4,
               ease: [0.04, 0.62, 0.23, 0.98],
             }}
-            className="text-secondary"
+            className="text-secondary-light dark:text-secondary-dark"
           >
             <div className="px-4 pb-4">{children}</div>
           </motion.section>

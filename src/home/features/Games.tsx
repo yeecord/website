@@ -27,7 +27,7 @@ export function Games() {
     <div
       className={clsx(
         "z-[2] min-h-[190vh] w-full pr-8 pt-[10rem] pb-10 sm:min-h-[140vh] md:min-h-[140vh] lg:min-h-[136vh]",
-        styles["steps-container"]
+        styles["steps-container"],
       )}
     >
       <motion.div
@@ -44,17 +44,19 @@ export function Games() {
           }}
           className={clsx(
             "flex flex-col-reverse gap-5 rounded-2xl",
-            "w-full lg:flex-row lg:justify-between"
+            "w-full lg:flex-row lg:justify-between",
           )}
         >
           <div>
-            <h1 className="features-heading mb-2">不只是聊天平台</h1>
-            <h3 className="heading-md text-secondary">
+            <h1 className="mb-2 text-2xl font-bold sm:text-3xl">
+              不只是聊天平台
+            </h1>
+            <h3 className="text-lg text-secondary-light dark:text-secondary-dark sm:text-xl">
               透過機器人各種有趣的系統，讓你的 Discord
               更加有趣，同時朋友也可以和你一起玩
             </h3>
             <LinkButton
-              className="primary-button mt-6 from-orange-400 to-pink-500"
+              className="mt-6 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 px-6 py-3 text-lg font-bold text-white"
               href="/docs/rpg/"
             >
               了解更多
@@ -76,7 +78,7 @@ export function Games() {
           <div
             className={clsx(
               "aspect-square w-[150px] rounded-md fill-black dark:fill-white max-[430px]:hidden",
-              "mt-auto max-w-[20rem] border-b-4 border-black dark:border-white lg:w-full"
+              "mt-auto max-w-[20rem] border-b-4 border-black dark:border-white lg:w-full",
             )}
           >
             <DinoSvg />
@@ -104,13 +106,13 @@ function Item({
         active && [
           "bg-gradient-to-br from-blue-600 to-purple-500",
           "text-white shadow-xl shadow-blue-400/40 max-[430px]:col-span-2 max-[430px]:row-start-1",
-        ]
+        ],
       )}
     >
       <div className="flex flex-col items-center justify-center text-3xl sm:text-6xl lg:text-7xl">
         {icon}
       </div>
-      <p className="heading-md">{children}</p>
+      <p className="text-lg font-bold sm:text-xl">{children}</p>
     </motion.div>
   );
 }

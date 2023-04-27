@@ -44,11 +44,13 @@ export default function AllTags({ tags }: Props) {
             href={getTagHref(tag)}
             className={clsx(
               "h-stack justify-between rounded-lg p-3",
-              "bg-zinc-100 dark:bg-zinc-800",
+              "bg-zinc-100 dark:bg-zinc-900",
             )}
           >
             <span className="text-lg font-bold">{tag}</span>
-            <span className="text-secondary">{info.count}</span>
+            <span className="text-secondary-light dark:text-secondary-dark">
+              {info.count}
+            </span>
           </Link>
         ))}
       </div>

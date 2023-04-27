@@ -109,8 +109,8 @@ function Recommendations({ items }: { items: BlogPage[] }) {
   return (
     <div
       className={clsx(
-        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.8fr]",
-        "mb-16 gap-5 lg:gap-10",
+        "grid grid-cols-1 min-[816px]:grid-cols-2",
+        "mb-16 gap-3",
       )}
     >
       {items[0] != null && <LargeBlogItem page={items[0]} />}
