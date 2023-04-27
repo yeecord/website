@@ -1,12 +1,10 @@
 import { type NextraThemeLayoutProps, type PageOpts } from "nextra";
 import BaseLayout from "nextra-theme-docs";
 import { type ReactNode } from "react";
+import DocsLayout from "./docs";
 import dynamic from "next/dynamic";
 
 const BlogLayout = dynamic(() => import("./blog").then((mod) => mod.default), {
-  ssr: true,
-});
-const DocsLayout = dynamic(() => import("./docs").then((mod) => mod.default), {
   ssr: true,
 });
 
@@ -22,9 +20,7 @@ export default function Layout({
 }
 
 function Main({ page, children }: { page: PageOpts; children: ReactNode }) {
-  if (page.route.startsWith("/blog/tags")) return <>{children}</>;
-
-  if (page.route.startsWith("/blog/")) {
+  if (page.route.startsWith("/blog/") && !page.route.startsWith("/blog/tags")) {
     return <BlogLayout page={page}>{children}</BlogLayout>;
   }
 
