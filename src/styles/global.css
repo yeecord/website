@@ -114,10 +114,6 @@ article p {
   line-height: 2rem !important;
 }
 
-h1 {
-  @apply font-ms;
-}
-
 .dark .nextra-sidebar-container .dark\:nx-text-neutral-500 {
   @apply text-slate-400;
 }

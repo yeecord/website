@@ -8,7 +8,7 @@ export function RpgSystem() {
   return (
     <motion.div
       className={clsx(
-        "relative flex flex-col items-start gap-5 md:items-center",
+        "relative flex flex-col items-center gap-5 text-center",
         "z-[2] mt-[15rem]",
       )}
       whileInView={{ y: 0, opacity: 1 }}
@@ -16,11 +16,11 @@ export function RpgSystem() {
     >
       <Background />
 
-      <h1 className="text-5xl font-bold">
+      <h1 className="mx-4 text-4xl font-bold sm:text-5xl">
         <span className="text-gradient from-green-400 to-blue-400 dark:to-blue-200">
           開創性
         </span>
-        的角色扮演系統
+        的角色扮演系&#8288;統
       </h1>
       <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
         進入這個奇幻世界，開始你的冒險吧！

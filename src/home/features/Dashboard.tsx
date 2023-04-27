@@ -26,7 +26,7 @@ export function Dashboard() {
           )}
         />
         <h1 className="text-3xl font-bold sm:text-5xl">簡易的控制面板</h1>
-        <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
+        <h3 className="text-lg text-secondary-light dark:text-secondary-dark sm:text-xl">
           通過美觀、簡易的方式來自定義
           <br className="sm:hidden" />
           你的機器人

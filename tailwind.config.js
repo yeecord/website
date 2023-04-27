@@ -11,9 +11,11 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ["var(--font-noto)", ...defaultTheme.fontFamily.sans],
-      ms: ["var(--font-noto)", ...defaultTheme.fontFamily.sans],
     },
     extend: {
+      fontFamily: {
+        yahei: ["Microsoft YaHei", ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         background: "#0a0c10",
         secondary: {

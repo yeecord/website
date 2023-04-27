@@ -21,7 +21,7 @@ export function Hero() {
       />
       <h1
         className={
-          "text-5xl font-bold min-[360px]:text-6xl sm:text-7xl xl:text-8xl"
+          "font-yahei text-5xl font-bold min-[360px]:text-6xl sm:text-7xl xl:text-8xl"
         }
       >
         萬中選一的
