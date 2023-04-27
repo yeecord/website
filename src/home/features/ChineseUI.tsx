@@ -14,7 +14,7 @@ export function ChineseUI() {
     <div
       className={clsx(
         "mt-20 min-h-[150vh] w-full pr-8 sm:min-h-[160vh] xl:min-h-[150vh]",
-        cn_styles["steps-container"]
+        cn_styles["steps-container"],
       )}
     >
       <motion.div
@@ -41,14 +41,14 @@ export function ChineseUI() {
           }}
           className="relative z-[2]"
         >
-          <h1 className="features-heading mb-2">全中文化界面</h1>
-          <h3 className="heading-md text-secondary">
+          <h1 className="mb-2 text-3xl font-bold sm:text-5xl">全中文化界面</h1>
+          <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
             我們提供了全中文化的界面，讓英文不再成為優質機器人的隔閡
           </h3>
           <Skeleton />
           <div
             className={clsx(
-              "relative -ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:mr-[14%] xl:ml-auto"
+              "relative -ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:mr-[14%] xl:ml-auto",
             )}
           >
             <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
@@ -61,7 +61,7 @@ export function ChineseUI() {
           className={clsx(
             "absolute -z-[1] w-[50rem] max-w-none",
             "-max-xl:bottom-[14rem] max-xl:left-0",
-            "xl:-right-[5rem] xl:-top-[14rem]"
+            "xl:-right-[5rem] xl:-top-[14rem]",
           )}
         />
       </motion.div>
@@ -74,7 +74,7 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
     <motion.div
       className={clsx(
         "h-stack mt-4 h-fit rounded-xl bg-white p-4 dark:bg-slate-900 xl:pr-[4rem]",
-        "shadow-2xl shadow-blue-800/30 dark:shadow-black/60"
+        "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
       )}
       variants={{
         show: {
@@ -120,7 +120,7 @@ function Skeleton() {
         "mt-8 aspect-[6/3] max-w-[45rem] flex-1 rounded-lg bg-slate-100 p-5 dark:bg-slate-900/70",
         "grid grid-cols-[0.5fr_1fr] gap-6",
         "relative shadow-xl",
-        "min-h-[17rem] min-w-[26rem]"
+        "min-h-[17rem] min-w-[26rem]",
       )}
     >
       <motion.div
@@ -157,7 +157,7 @@ function Skeleton() {
         }}
         transition={{ duration: 1 }}
       >
-        <h2 className="heading-md">指令區</h2>
+        <h2 className="text-lg font-bold sm:text-xl">指令區</h2>
         <div className={`${foreground} h-7`} />
         <div className={`${foreground} h-6 w-[70%]`} />
       </motion.div>

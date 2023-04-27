@@ -48,7 +48,9 @@ export default function AllTags({ tags }: Props) {
             )}
           >
             <span className="text-lg font-bold">{tag}</span>
-            <span className="text-secondary">{info.count}</span>
+            <span className="text-secondary-light dark:text-secondary-dark">
+              {info.count}
+            </span>
           </Link>
         ))}
       </div>

@@ -11,7 +11,7 @@ export function Hero() {
     <div
       className={clsx(
         "relative z-[2] mt-[6rem] flex w-full flex-col gap-12 px-[1rem] md:mt-[10rem] xl:mt-[14rem]",
-        "items-center text-center"
+        "items-center text-center",
       )}
     >
       <Gradient
@@ -21,7 +21,7 @@ export function Hero() {
       <h1
         className={clsx(
           "font-bold leading-[1.1]",
-          "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-5xl lg:text-7xl xl:text-8xl"
+          "text-5xl min-[360px]:text-6xl sm:text-7xl md:text-5xl lg:text-7xl xl:text-8xl",
         )}
       >
         萬中選一的
@@ -29,7 +29,7 @@ export function Hero() {
         <span
           className={clsx(
             "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400",
-            styles["animated-gradient"]
+            styles["animated-gradient"],
           )}
         >
           Discord
@@ -37,18 +37,23 @@ export function Hero() {
         <br className="md:hidden" />
         機器人
       </h1>
-      <h2 className="heading-md text-secondary max-w-[450px] md:max-w-[650px] lg:text-3xl">
+      <h2
+        className={clsx(
+          "max-w-[450px] font-bold text-secondary-light dark:text-secondary-dark",
+          "text-lg sm:text-xl md:max-w-[650px] lg:text-3xl",
+        )}
+      >
         YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
       </h2>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
-        <p className="text-secondary mb-3 text-lg font-semibold md:mb-4">
+        <p className="mb-3 text-lg font-semibold text-secondary-light dark:text-secondary-dark md:mb-4">
           各大伺服器一致好評
         </p>
         <div
           className={clsx(
             "overflow-hidden",
-            "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
+            "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
           )}
         >
           <div className={clsx(styles.servers, "inline-block max-md:w-max")}>
@@ -87,7 +92,7 @@ function Servers({ secondary }: { secondary?: boolean }) {
       className={clsx(
         "inline-flex flex-row justify-center",
         "md:max-w-[64rem] md:flex-wrap",
-        secondary && "md:hidden"
+        secondary && "md:hidden",
       )}
     >
       <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
@@ -125,10 +130,10 @@ function Server({
         height="45"
         className={clsx(
           "rounded-full grayscale",
-          transparent && "brightness-[0%] dark:brightness-100"
+          transparent && "brightness-[0%] dark:brightness-100",
         )}
       />
-      <h3 className="heading-md">{name}</h3>
+      <h3 className="text-lg font-bold sm:text-xl">{name}</h3>
     </div>
   );
 }
