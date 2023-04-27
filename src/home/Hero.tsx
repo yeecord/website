@@ -5,6 +5,7 @@ import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
+import { twMerge } from "tailwind-merge";
 
 export function Hero() {
   return (
@@ -37,7 +38,7 @@ export function Hero() {
       <h2
         className={clsx(
           "max-w-[450px] text-xl text-secondary-light dark:text-secondary-dark",
-          "md:max-w-[650px] lg:text-3xl",
+          "md:max-w-[650px] lg:text-2xl",
         )}
       >
         YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
@@ -64,7 +65,7 @@ export function Hero() {
 }
 
 function Buttons() {
-  const bn = "text-lg font-bold sm:text-xl rounded-md w-full px-6 py-3 sm:px-8";
+  const bn = "text-lg font-bold sm:text-lg rounded-md w-full px-6 py-3 sm:px-8";
 
   return (
     <div className="grid w-full max-w-[500px] grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2">
@@ -74,7 +75,11 @@ function Buttons() {
       <LinkButton
         href="/invite"
         target="_blank"
-        className={clsx("icon-button justify-center", bn)}
+        className={twMerge(
+          "inline-flex items-center justify-center gap-2.5 bg-black text-white",
+          "dark:bg-white dark:text-black",
+          bn,
+        )}
       >
         <IoMdOpen />
         邀請機器人

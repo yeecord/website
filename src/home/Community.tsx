@@ -55,7 +55,7 @@ function JoinButton({ joined }: { joined: number }) {
           href="https://discord.gg/yeecord"
           target="_blank"
           className={clsx(
-            "icon-button h-full rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3",
+            "inline-flex h-full items-center gap-2.5 rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3 font-bold",
             "text-3xl text-white shadow-xl shadow-cyan-400/50",
           )}
           aria-label="Join"
