@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-background: theme("colors.background");
+  --navbar-background: theme("colors.background / 0.5");
+}
+
 @layer components {
   .heading-xl {
     @apply text-5xl font-bold;
@@ -108,11 +113,11 @@ html[class~="dark"] .nextra-breadcrumb .dark\:nx-text-gray-400 {
 
 .dark body,
 html[class~="dark"] .dark\:nx-bg-dark {
-  background: theme("colors.background") !important;
+  background: var(--main-background) !important;
 }
 
 html[class~="dark"] .nextra-nav-container .dark\:nx-bg-dark {
-  background: theme("colors.background / 0.5") !important;
+  background: var(--navbar-background) !important;
 }
 
 .nx-text-sm {

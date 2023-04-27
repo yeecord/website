@@ -34,11 +34,13 @@ export default function HomePage() {
   const { guildCount, serverMembers } = useSSG() as HomeProps;
 
   return (
-    <div className="bg-white dark:bg-black">
+    <>
       <style global jsx>
         {`
           html,
           body {
+            --main-background: black;
+            --navbar-background: rgba(0, 0, 0, 0.5);
             max-width: 100% !important;
             height: 100% !important;
             width: 100% !important;
@@ -59,6 +61,6 @@ export default function HomePage() {
       </div>
       <Sponsor />
       <Community joined={serverMembers} />
-    </div>
+    </>
   );
 }
