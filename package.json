@@ -16,7 +16,7 @@
     "clsx": "^1.2.1",
     "framer-motion": "^10.2.4",
     "iron-session": "^6.3.1",
-    "next": "13.3.1",
+    "next": "13.3.2",
     "next-seo": "^6.0.0",
     "nextra": "2.4.2",
     "nextra-theme-docs": "2.4.2",
