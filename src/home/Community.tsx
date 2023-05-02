@@ -48,6 +48,7 @@ function JoinButton({ joined }: { joined: number }) {
           href="https://twitter.com/yeecord"
           className="h-full rounded-full bg-blue-500 p-4 text-white shadow-xl shadow-blue-300 dark:shadow-blue-800"
           target="_blank"
+          aria-label="Follow Yeecord on Twitter"
         >
           <BsTwitter className="text-4xl" />
         </LinkButton>
@@ -58,7 +59,7 @@ function JoinButton({ joined }: { joined: number }) {
             "inline-flex h-full items-center gap-2.5 rounded-full bg-gradient-to-br from-pink-400 to-cyan-400 p-3 font-bold",
             "text-3xl text-white shadow-xl shadow-cyan-400/50",
           )}
-          aria-label="Join"
+          aria-label="Join Yeecord Discord group"
         >
           <FaDiscord className="text-5xl" />
           <span className="mr-2">{formatter.format(joined)}</span>
