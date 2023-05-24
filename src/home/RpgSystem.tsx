@@ -1,5 +1,4 @@
 import Gradient from "./components/Gradient";
-import LinkButton from "./components/LinkButton";
 import GreenGradient from "@static/home/green-gradient.svg";
 import clsx from "clsx";
 import { motion } from "framer-motion";
