@@ -35,25 +35,7 @@ export function Dashboard() {
       <div className="mt-[2rem] grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Chart />
         <Settings />
-
-        <div className={card}>
-          <div className="h-stack">
-            <div className="rounded-xl bg-green-500 p-3 text-3xl text-white">
-              <BsMusicNoteBeamed />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold sm:text-xl">音樂系統</h3>
-              <p className="font-bold text-secondary-light dark:text-secondary-dark">
-                下一首歌
-              </p>
-            </div>
-          </div>
-          <div className="h-stack mt-auto pt-2">
-            <p>1:02</p>
-            <Progress track="w-[36%]" />
-            <p>3:20</p>
-          </div>
-        </div>
+        <Music />
       </div>
     </div>
   );
@@ -121,4 +103,31 @@ function Chart() {
       <Image src={ChartSvg} alt="chart" className="mt-auto rounded-3xl" />
     </motion.div>
   );
+}
+
+function Music() {
+  return (
+    <motion.div
+      className={`${card} gap-3`}
+      whileInView={{ y: 0 }}
+      initial={{ y: "10rem" }}
+    >
+          <div className="h-stack">
+            <div className="rounded-xl bg-green-500 p-3 text-3xl text-white">
+              <BsMusicNoteBeamed />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold sm:text-xl">音樂系統</h3>
+              <p className="font-bold text-secondary-light dark:text-secondary-dark">
+                下一首歌
+              </p>
+            </div>
+          </div>
+          <div className="h-stack mt-auto pt-2">
+            <p>1:02</p>
+            <Progress track="w-[36%]" />
+            <p>3:20</p>
+          </div>
+      </motion.div>
+  )
 }
