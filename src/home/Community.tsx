@@ -43,14 +43,21 @@ function JoinButton({ joined }: { joined: number }) {
           styles["rotate-z"],
         )}
       />
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row flex-wrap justify-center gap-4">
         <LinkButton
           href="https://twitter.com/yeecord"
-          className="h-full rounded-full bg-blue-500 p-4 text-white shadow-xl shadow-blue-300 dark:shadow-blue-800"
+          /*
+          h-full rounded-full bg-blue-500 p-4 text-white shadow-xl shadow-blue-300 dark:shadow-blue-800
+          */
           target="_blank"
           aria-label="Follow Yeecord on Twitter"
+          className={clsx(
+            "inline-flex h-full items-center gap-2.5 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-500 p-3 font-bold",
+            "text-3xl text-white shadow-xl shadow-cyan-400/50",
+          )}
         >
           <BsTwitter className="text-4xl" />
+          <span className="mr-2 text-2xl">@yeecord</span>
         </LinkButton>
         <LinkButton
           href="https://discord.gg/yeecord"
@@ -61,8 +68,10 @@ function JoinButton({ joined }: { joined: number }) {
           )}
           aria-label="Join Yeecord Discord group"
         >
-          <FaDiscord className="text-5xl" />
-          <span className="mr-2">{formatter.format(joined)}</span>
+          <FaDiscord className="text-4xl" />
+          <span className="mr-2 text-2xl">
+            {formatter.format(joined) + "個成員"}
+          </span>
         </LinkButton>
       </div>
     </div>
