@@ -19,7 +19,7 @@ export function RpgSystem() {
       <div className="flex flex-col gap-10">
         <p
           className={clsx(
-            "mx-auto w-fit bg-gradient-to-br from-green-400 to-green-600 py-2 px-4 font-semibold text-white",
+            "mx-auto w-fit bg-gradient-to-br rounded-md from-green-400 to-green-600 py-2 px-4 font-semibold text-white",
             "text-3xl sm:text-4xl",
           )}
         >
