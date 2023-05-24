@@ -6,20 +6,16 @@ import { motion } from "framer-motion";
 
 export function RpgSystem() {
   return (
-    <motion.div
+    <div
       className={clsx(
         "relative flex flex-col items-center gap-5 text-center",
         "z-[2] mt-[15rem]",
       )}
-      whileInView={{ y: 0, opacity: 1 }}
-      initial={{ y: "5rem", opacity: 0 }}
     >
-      <Background />
-
       <div className="flex flex-col gap-10">
         <p
           className={clsx(
-            "mx-auto w-fit bg-gradient-to-br rounded-md from-green-400 to-green-600 py-2 px-4 font-semibold text-white",
+            "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 py-2 px-4 font-semibold text-white",
             "text-3xl sm:text-4xl",
           )}
         >
@@ -31,17 +27,15 @@ export function RpgSystem() {
         <h2 className="mx-auto max-w-2xl text-xl text-secondary-light dark:text-secondary-dark">
           進入這個奇幻世界，開始你的冒險吧！
         </h2>
-        <LinkButton
-          href="/docs/rpg"
-          className={clsx(
-            "rounded-lg bg-gradient-to-b from-green-400 to-green-600 px-10 py-3 text-lg font-bold text-white",
-          )}
-        >
-          開始使用
-        </LinkButton>
       </div>
-      <Jobs />
-    </motion.div>
+      <Background />
+      <motion.div
+        whileInView={{ y: 0, opacity: 1 }}
+        initial={{ y: "5rem", opacity: 0 }}
+      >
+        <Jobs />
+      </motion.div>
+    </div>
   );
 }
 
