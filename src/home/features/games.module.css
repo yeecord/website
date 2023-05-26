@@ -23,7 +23,7 @@
   }
 
   :global(.dark) .item-card {
-    @apply bg-zinc-900/50 text-zinc-300;
+    @apply bg-slate-900 text-zinc-300;
   }
 
   .item-card:hover {

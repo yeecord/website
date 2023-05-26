@@ -36,6 +36,14 @@ export function Customers({ usedBy }: { usedBy: number }) {
         }}
         className="flex flex-col items-center gap-5 text-center"
       >
+        <p
+          className={clsx(
+            "mx-auto mb-8 w-fit rounded-md bg-gradient-to-br from-orange-400 to-orange-500 py-2 px-4 font-semibold text-white",
+            "text-3xl sm:text-4xl",
+          )}
+        >
+          倍受信賴
+        </p>
         <h1 className="text-5xl font-bold">
           受超過
           <span className="text-gradient mx-2 block from-pink-600 to-orange-400 max-md:text-7xl md:inline">

@@ -10,7 +10,7 @@ export function Features() {
       <div className="mt-[10rem] flex flex-col gap-10 text-center sm:mt-[15rem]">
         <p
           className={clsx(
-            "mx-auto w-fit bg-gradient-to-br from-orange-400 to-red-500 py-2 px-4 font-semibold text-white",
+            "mx-auto w-fit bg-gradient-to-br rounded-md from-purple-500 to-purple-600 dark:from-purple-400 dark:to-purple-600 py-2 px-4 font-semibold text-white",
             "text-3xl sm:text-4xl",
           )}
         >

@@ -88,7 +88,7 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
       }}
       transition={{ duration: 0.5 }}
     >
-      <div className="rounded-full bg-purple-400 p-2 text-xl text-white dark:bg-purple-500 sm:text-2xl">
+      <div className="rounded-full bg-purple-500 p-2 text-xl text-white dark:bg-purple-500 sm:text-2xl">
         {icon}
       </div>
       <p className="text-lg font-bold">{children}</p>

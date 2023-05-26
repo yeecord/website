@@ -60,7 +60,7 @@ function Card({
   return (
     <div className="rounded-xl border-[1px] border-black/10 bg-white/40 p-4 text-start shadow-lg dark:border-white/10 dark:bg-white/10">
       <div className="h-stack">
-        <div className="rounded-md bg-purple-400 p-3 text-2xl text-white dark:bg-purple-500">
+        <div className="rounded-xl bg-purple-400 p-3 text-2xl text-white dark:bg-purple-500">
           {icon}
         </div>
         <div>
@@ -73,7 +73,7 @@ function Card({
       <a href={href} target="_blank" rel="noreferrer">
         <button
           className={clsx(
-            "text-md mt-6 w-[8rem] rounded-xl py-1 font-bold text-white shadow-lg",
+            "text-md mt-7 w-[8rem] rounded-md py-2 font-bold text-white shadow-lg",
             "bg-purple-400 shadow-purple-300",
             "dark:bg-purple-500 dark:shadow-purple-700",
           )}
