@@ -13,7 +13,7 @@
     "@next/env": "^13.2.4",
     "@vercel/analytics": "^1.0.0",
     "@vercel/edge-config": "^0.2.0",
-    "clsx": "^1.2.1",
+    "clsx": "^2.0.0",
     "framer-motion": "^10.2.4",
     "iron-session": "^6.3.1",
     "next": "13.3.4",
