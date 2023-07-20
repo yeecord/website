@@ -15,7 +15,7 @@ export type NextraInternal = {
     {
       Content: React.FC;
       pageOpts: PageOpts;
-      themeConfig: unknown | null;
+      themeConfig: unknown;
     }
   >;
   refreshListeners: Record<string, (() => void)[]>;
