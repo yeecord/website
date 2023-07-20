@@ -23,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
           async
           src="https://analytics.trycatchcloud.host/script.js"
           data-website-id="d5e1c212-34bc-4766-afae-2edb2fb0c87b"
+          strategy="afterInteractive"
         />
       )}
       <AdsProvider>
