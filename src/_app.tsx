@@ -1,9 +1,7 @@
 import { type AppProps } from "next/app";
 import { type ReactElement } from "react";
 import { Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
 import { AdsProvider } from "./adsense";
-
 import Script from "next/script";
 
 const noto = Inter({
@@ -15,19 +13,18 @@ const noto = Inter({
 export default function App({ Component, pageProps }: AppProps): ReactElement {
   return (
     <>
-      <Analytics />
       <style jsx global>{`
         html {
           --font-noto: ${noto.style.fontFamily};
         }
       `}</style>
-      <Script
-        src="https://betteruptime.com/widgets/announcement.js"
-        data-id="156363"
-        type="text/javascript"
-        strategy="lazyOnload"
-        async
-      />
+      {process.env.NODE_ENV === "production" && (
+        <Script
+          async
+          src="https://analytics.trycatchcloud.host/script.js"
+          data-website-id="d5e1c212-34bc-4766-afae-2edb2fb0c87b"
+        />
+      )}
       <AdsProvider>
         <Component {...pageProps} />
       </AdsProvider>
