@@ -21,8 +21,8 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
       {process.env.NODE_ENV === "production" && (
         <Script
           async
-          src="https://analytics.trycatchcloud.host/script.js"
-          data-website-id="d5e1c212-34bc-4766-afae-2edb2fb0c87b"
+          src="https://a.yeecord.com/script.js"
+          data-website-id="27e8ff22-0917-4feb-bda6-8af777989ba2"
           strategy="afterInteractive"
         />
       )}
