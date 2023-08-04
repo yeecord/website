@@ -8,7 +8,19 @@ const redirectsFile = readFileSync("redirects.txt", "utf-8")
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  analyticsId: process.env.VERCEL_ANALYTICS_ID,
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+        ],
+      },
+    ];
+  },
   redirects() {
     const redirects = redirectsFile.map((args) => {
       const [source, destination, permanent] = args.split(" ");
