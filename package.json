@@ -38,7 +38,7 @@
     "autoprefixer": "^10.4.14",
     "eslint": "8.46.0",
     "eslint-config-next": "^13.4.10",
-    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "7.33.1",
     "next-sitemap": "^4.1.8",
     "postcss": "^8.4.26",
