@@ -1,5 +1,4 @@
 import { LinkButton } from "@components/mdx";
-import clsx from "clsx";
 import Link from "next/link";
 import { BsEyeFill } from "react-icons/bs";
 import { getTagHref, getTags, type TagInfo } from "@utils/tags";
@@ -10,9 +9,9 @@ export default function AllTags() {
   );
 
   return (
-    <div className="mx-auto my-16 flex max-w-[1500px] flex-col gap-3 p-6">
+    <div className="mx-auto my-16 flex w-full max-w-[1500px] flex-col gap-3 p-6">
       <div className="mb-3 flex flex-col gap-3">
-        <h1 className="text-center text-5xl font-bold md:text-6xl">所有標籤</h1>
+        <h1 className="mb-4 text-center text-5xl font-bold">所有標籤</h1>
         <LinkButton
           href="/blog"
           wrapper={{ className: "mx-auto" }}
@@ -28,13 +27,10 @@ export default function AllTags() {
           <Link
             key={tag}
             href={getTagHref(tag)}
-            className={clsx(
-              "h-stack justify-between rounded-lg p-3",
-              "bg-zinc-100 dark:bg-zinc-900",
-            )}
+            className="flex flex-row justify-between gap-3 rounded-md border bg-card p-2 text-card-foreground"
           >
-            <span className="text-lg font-bold">{tag}</span>
-            <span className="text-muted-foreground">{info.count}</span>
+            <span className="font-medium">{tag}</span>
+            <span className="text-sm text-muted-foreground">{info.count}</span>
           </Link>
         ))}
       </div>

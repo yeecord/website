@@ -13,7 +13,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
   return (
     <div className="mx-auto my-16 flex max-w-[1300px] flex-col gap-5">
       <div className="mb-5 flex flex-col gap-5">
-        <h1 className="text-center text-3xl font-bold md:text-4xl">{`帶有「${params.tag}」標籤的文章`}</h1>
+        <h1 className="mb-4 text-center text-3xl font-bold">{`帶有「${params.tag}」標籤的文章`}</h1>
 
         <LinkButton href="/blog/tags" className="mx-auto">
           所有標籤
