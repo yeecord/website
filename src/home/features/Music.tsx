@@ -1,3 +1,5 @@
+"use client";
+
 import Image, { type ImageProps } from "next/image";
 import { AiFillCaretRight } from "react-icons/ai";
 import {
@@ -36,7 +38,7 @@ export function Music() {
         )}
       />
       <Content />
-      <div className="absolute top-0 right-8 z-[2] max-sm:hidden lg:right-16">
+      <div className="absolute right-8 top-0 z-[2] max-sm:hidden lg:right-16">
         <div className="mx-auto h-36 w-[2px] bg-gradient-to-b from-green-400 to-cyan-600" />
         <div
           className={clsx(
@@ -53,7 +55,7 @@ export function Music() {
         initial={{ y: 100 }}
         transition={{ duration: 0.5 }}
         className={clsx(
-          "mt-2 -mr-[20rem] flex w-[650px] flex-col max-lg:ml-8 max-md:ml-5",
+          "-mr-[20rem] mt-2 flex w-[650px] flex-col max-lg:ml-8 max-md:ml-5",
           "max-h-[10rem] lg:mt-[5rem] lg:max-h-full",
         )}
       >
@@ -77,7 +79,7 @@ function Content() {
       )}
     >
       <h1 className="text-3xl font-bold sm:text-5xl">輕鬆播放音樂</h1>
-      <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
+      <h3 className="text-lg font-bold text-muted-foreground sm:text-xl">
         讓你可以和朋友一起收聽 Spotify 和 SoundCloud
         上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
       </h3>
@@ -98,7 +100,7 @@ function Content() {
 
 function Playlist() {
   return (
-    <div className="ml-[150px] -mt-[60px] flex flex-col gap-5">
+    <div className="-mt-[60px] ml-[150px] flex flex-col gap-5">
       <Song img={FightSong} duration="4:18">
         Eve - Fight Song
       </Song>
@@ -128,9 +130,7 @@ function Song({
         />
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-bold sm:text-xl">{children}</h3>
-          <p className="text-lg text-secondary-light dark:text-secondary-dark">
-            {duration}
-          </p>
+          <p className="text-lg text-muted-foreground">{duration}</p>
         </div>
       </div>
     </div>

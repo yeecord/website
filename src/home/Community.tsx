@@ -11,10 +11,10 @@ import { BsTwitter } from "react-icons/bs";
 
 export function Community({ joined }: { joined: number }) {
   return (
-    <div className="relative z-[2] mt-[2rem] flex w-full flex-col items-center gap-5 overflow-hidden py-[3rem] px-3 text-center md:px-6">
+    <div className="relative z-[2] mt-[2rem] flex w-full flex-col items-center gap-5 overflow-hidden px-3 py-[3rem] text-center md:px-6">
       <Gradient
         src={CyanPinkGradient}
-        className="absolute top-0 left-0 -z-[1] h-full w-full overflow-visible object-cover opacity-20"
+        className="absolute left-0 top-0 -z-[1] h-full w-full overflow-visible object-cover opacity-20"
       />
       <h1 className="text-5xl font-bold text-pink-400 xl:text-6xl">
         <span>與</span>
@@ -23,7 +23,7 @@ export function Community({ joined }: { joined: number }) {
         </span>
         <span>聯繫</span>
       </h1>
-      <h3 className="text-lg font-bold text-black  dark:text-slate-200 sm:text-xl">
+      <h3 className="text-lg text-black  dark:text-slate-200 sm:text-xl">
         獲取我們的最新消息
       </h3>
 
@@ -39,7 +39,7 @@ function JoinButton({ joined }: { joined: number }) {
         alt=""
         src={GradientRing}
         className={clsx(
-          "pointer-events-none absolute top-0 left-0 -z-[1] h-full w-full select-none object-contain",
+          "pointer-events-none absolute left-0 top-0 -z-[1] h-full w-full select-none object-contain",
           styles["rotate-z"],
         )}
       />

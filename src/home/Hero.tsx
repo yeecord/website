@@ -17,7 +17,7 @@ export function Hero() {
     >
       <Gradient
         src={HeroGradient}
-        className="absolute -top-[200px] -right-0 -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
+        className="absolute -right-0 -top-[200px] -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
       />
       <h1
         className={
@@ -37,7 +37,7 @@ export function Hero() {
       </h1>
       <h2
         className={clsx(
-          "max-w-[450px] text-xl text-secondary-light dark:text-secondary-dark",
+          "max-w-[450px] text-xl text-muted-foreground",
           "md:max-w-[650px] lg:text-2xl",
         )}
       >
@@ -45,7 +45,7 @@ export function Hero() {
       </h2>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
-        <p className="mb-3 text-lg font-semibold text-secondary-light dark:text-secondary-dark md:mb-4">
+        <p className="mb-3 text-lg font-semibold text-muted-foreground md:mb-4">
           各大伺服器一致好評
         </p>
         <div

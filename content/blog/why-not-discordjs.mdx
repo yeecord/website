@@ -1,0 +1,172 @@
+---
+title: 為什麼不該更新 discord.js v14？踩坑經驗「這三點」聽完再決定！
+authors: [kane]
+description: discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為他簡單且強大的函式庫，讓入門開發者能快速的製作出穩定的機器人，而同時也因為這些方便而損失了很多性能上的優勢
+tags:
+  [
+    "Discord",
+    "dc",
+    "機器人",
+    "建立機器人",
+    "discordjs",
+    "discord.js",
+    "discordeno",
+    "deno",
+  ]
+date: 2023/1/22
+image: /blog/why-not-discordjs/why-not-discordjs.jpeg
+---
+
+![為什麼不該更新 discord.js v14？踩坑經驗「這三點」聽完再決定！](/blog/why-not-discordjs/why-not-discordjs.jpeg)
+
+discord.js 是一個在 Discord 上開發機器人的 JavaScript 框架，因為他簡單且強大的函式庫，讓入門開發者能快速的製作出穩定的機器人，而同時也因為這些方便而損失了很多性能上的優勢，我們將會來逐一探討。
+
+## 前言
+
+還記得剛開始摸索的時候是在 2019 年的樣子，那時候 Google 上壓根沒什麼中文的 Discord 機器人教學，亂翻看到了一篇在講 discord.js 的文章，就此掉入了這個大坑裡面，
+
+後來機器龍在疫情線上上課那時候大爆炸才開始意識到這些嚴重性，每天跟穩定性戰鬥，還好在那時候也有救星的出現，我們最下面的章節將會談到除了 discord.js 還有 [其他的選擇](#那我有其他的選擇嗎)。
+
+## 所以是為什麼？
+
+<Adsense />
+
+以下是我踩坑了挺多次總結出來的問題點，比較屬於我個人的意見，可能每個人的感受也不會相同，看完了再來決定要不要使用 discord.js，或是也可以直接跳去看 [我該繼續用 discord.js 嗎？](#我該繼續用-discordjs-嗎)：
+
+### 大更新像是抄家一樣
+
+人都是有惰性存在的，而使用 discord.js 絕對可以讓你改掉這個壞習慣，我們知道這個套件有許多貼心幫你包好的如 `avatarURL`、`awaitMessageComponent` 函式，好用歸好用，不過遇到 discord.js 大更新時你就得開始忙起來了，
+
+到文章撰寫的時候 discord.js 已經更新到了 v14，我們可以翻閱一下從 [v13 更新到 v14](https://discordjs.guide/additional-info/changes-in-v14.html)、[v12 更新到 v13](https://discordjs.guide/additional-info/changes-in-v13.html) 的文件，看到側邊欄的目錄超過整個頁面的長度，我覺得我還是去躺好好了...
+
+![discordjs 更新攻略](/blog/why-not-discordjs/discordjs-update-guide.png)
+
+雖然開發團隊在 Discord 伺服器中提及到 v13 版將會繼續支援，並且還沒有訂定該版本的結束週期 EOL (End-of-life)，但可以確定的是，這個版本終將會被棄用，還是必須要進行痛苦的轉移過程。
+
+<Adsense />
+
+![v13 將會繼續維護](/blog/why-not-discordjs/v13-maintain.png)
+
+不過他們的其中一位開發者 McSquiddleton 在一篇 Reddit 文章 [When should I upgrade to V14?](https://www.reddit.com/r/Discordjs/comments/w46kxp/when_should_i_upgrade_to_v14/) 中指到：
+
+> 「因為 Discord 將棄用舊版的 Gateway 格式，於是我們推送了 v13 更新，而 v13 升級到 v14 只是一些命名上的更改。」
+
+不過這部分可能每個人的看法不同，如果你很喜歡 discord.js 並且想要避免每次大更新都要重寫一次，可以將大量使用的函式包一個自己的版本，我們拿 `User#avatarURL` 來舉個例子：
+
+```js
+/**
+ * @param {import("discord.js").User} user
+ */
+function avatarUrl(user) {
+  return user.avatarURL();
+}
+```
+
+這樣每當大更新時只需要更改自己包的版本就好了，剩下的時間拿來多打點 APEX 也不過分。
+
+### 快取無法更動
+
+discord.js 完善的快取系統在普通的小量使用上確實是挺方便的，不過在規模越來越成長下，越需要去注意到記憶體的控管，是不是可以努力減少一些不必要的快取，
+
+而 discord.js 的快取在預設都是無法更動的，雖然有提供了 [`Options#makeCache`](https://github.com/discordjs/discord.js/blob/8b70f497a1207e30edebdecd12b926c981c13d28/packages/discord.js/src/util/Options.js#L82) 的選項，不過在文檔中說明到 `GuildManager`、`ChannelManager` 等核心的功能還是不能被覆寫，像是頻道、身分組及表情符號是最占用記憶體的前幾名，這樣還是令人堪憂。
+
+<Adsense />
+
+![discord.js make cache](/blog/why-not-discordjs/make-cache.png)
+
+#### discord.js-light
+
+幸好有人發現了這個問題並製作出 [discord.js-light](https://www.npmjs.com/package/discord.js-light) 套件，可以直接覆蓋掉幾乎所有的 Manager 設定，不過因為還是第三方軟體，並不是 discord.js 自帶功能，最好在使用之前注意會不會讓程式崩壞。
+
+![discord.js-light npm page](/blog/why-not-discordjs/discordjs-light.png)
+
+我自己有發現了一個神奇但是挺好用的解法，可以直接使用 JavaScript 神奇的 [ProtoType](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) 特性，
+
+舉個例子：若你發現你真的不會使用到 `ChannelManager#cache` 裡的東西，先將 `bot.channels` 的 `set` 函式清空，需要用到時使用 `ChannelManager#cache` 的原型 `Map` 來執行 `set` 的工作，
+
+```js
+const bot = new Client({ ... })
+
+// make the set function does nothing
+bot.channels.cache.set = () => {}
+
+bot.on("ready", () => {
+	console.log(bot.channels.cache.size) // 0
+})
+
+// resolver example
+async function resolveChannel(channelId) {
+	if(bot.channels.has(channelId))
+		return bot.channels.get(channelId)
+
+	const resolved = await bot.channels.fetch(channelId)
+
+	Map.prototype.set.call(bot.channels, channelId, resolved)
+
+	return resolved
+}
+```
+
+可以看到機器人在準備完成後，預先快取的頻道數量是 `0`，而當我們需要手動抓取頻道的時候，使用 `resolveChannel` 函式去手動執行快取的操作，雖然這不是個最佳解，不過 JavaScript 是個神奇的語言所以... 恩！
+
+<Adsense />
+
+### 機器人規模成長後難維護
+
+當機器人成長到一定的大小後，如何架構將是一個重要的課題，架構層面我們先從如何做解耦 (decouple) 開始，可以把它簡單的理解成兩個元件要如何做拆解，詳細的架構說明可以參考 [Day 23: 元件原則 — 耦合性 by JC](https://ithelp.ithome.com.tw/articles/10279202)。
+
+Discord 機器人通常可以拆解為 Gateway 和 Discord 溝通或是接收 Discord 的事件，REST API Proxy 執行發送訊息等操作，而到我最後使用 v13 版本時，所有功能還是都包在一起的，可能他們有在嘗試做一些改變不過我不太確定。
+
+![discord.js Github repo](/blog/why-not-discordjs/discordjs-repo.png)
+
+緊耦合對維護來說非常困難，機器人在上線時會依照伺服器數量來分配分片 (Sharding) 的數量，每個分片上線都要先等待五秒的冷卻時間，若每次更新需要重開時，都需要經過一次這樣的上線流程，
+
+而造成的下線時間 (Downtime) 十幾分鐘可是對穩定性和可靠性非常大的致命傷，~~可以看我們 Google 搜尋結果都可以被洗成這樣了...~~
+
+![Yeecord Google SERP](/blog/why-not-discordjs/yeecord-search-result.png)
+
+## 那我有其他的選擇嗎？
+
+Create-React-App 在過去是個很棒的 React 工具，用簡單的 `react-scripts` 指令就可以跑起 React，而不用擔心後面 babel、webpack 繁雜的設定等等，
+
+<Adsense />
+
+而在時代不斷的更迭到了現在 2023 年，我們有了更多如 Vite、NextJS 等的新選擇，在速度與可擴展性上都有大幅的提升，從前端框架的現象我們也可以來觀察一下，JavaScript 是否還有其他解決方案來製作 Discord 機器人。
+
+### 先看一下函式庫比較圖表
+
+[Discord API Library Comparisons](https://libs.advaith.io/#javascript) 這網站統計了大多數用來呼叫 Discord API 的套件，我們將會專注在套件的支援程度上面，
+
+可以看到除了 discord.js 之外，其他套件也不惶多讓，下面將來講一下我們觀察到的結果。
+
+![Discord bot library in JavaScript](/blog/why-not-discordjs/discord-bot-library-javascript.png)
+
+### Discordeno
+
+![Discordeno](/blog/why-not-discordjs/discordeno.png)
+
+[Discordeno](https://github.com/discordeno/discordeno) 是使用 Deno 編寫的 Discord API 套件，並且在 NodeJS 也可以使用，從他們的 GitHub 首頁來看，上面列舉了許多讓人心動的優勢，讓我們能夠信任並且把機器龍轉移過去：
+
+#### 零下線時間
+
+在我們前面有講到的元件之間的耦合性問題，Discordeno 允許我們將 REST、Gateway 分開來部屬，這樣當我們有要推新功能時，就不用去重啟整個架構，達成幾乎完全沒下線時間 (Zero Downtime)。
+
+#### 蓋掉你不喜歡的東西
+
+Discordeno 使用函式化 (Functional API) 的概念來設計，終結掉物件導向錯綜複雜的繼承等關係，並且在閱讀上也非常的簡單，
+
+還有如前面提及到快取的問題，Discordeno 的一切都是可以被覆寫的！例如我希望快取存放在 Redis 上，或是我不需要快取表情符號，你都可以透過覆寫預設的函式來達成效果，有非常好的彈性。
+
+不過不太建議去過度的覆寫 Discordeno 內建的函式，還是使用上面自己包一個函式出來，這樣在未來可能有大更新時會比較輕鬆。
+
+#### 缺少教學文件
+
+雖然說這是個很美好的框架及架構，不過因為目前使用者及開發者人數還沒有達到如隔壁 discord.js 那麼熱門，因此許多東西需要去翻閱原始碼直接了解怎麼運作，可能對新手來說會是一個比較大的負擔，~~不過你終究都要用的，那為什麼不一開始就用。~~
+
+而網頁上列舉到的套件我們還沒有去實際體驗過，因此還沒有來得及寫心得，各位有想法想補充也可以到點選右邊編輯此頁面的按鈕，來幫我們補充。
+
+## 我該繼續用 discord.js 嗎？
+
+discord.js 在活躍的社群及各位開發者的努力下，API 覆蓋率將近 100%，相信之後將會進續演進的更好，若期待之後的演變，可以繼續跟隨 discord.js 的腳步，若你已迫不及待的想要做出更多的優化或改變，或許這篇文章是你的契機可以開始尋找適合你的新套件。
+
+<Adsense />

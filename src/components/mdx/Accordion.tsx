@@ -1,3 +1,4 @@
+"use client";
 import { AiFillCaretDown } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion";
 import { type ReactNode, useState } from "react";
@@ -47,7 +48,7 @@ export function Accordion({ title, children }: AccordionProps) {
               duration: 0.4,
               ease: [0.04, 0.62, 0.23, 0.98],
             }}
-            className="text-secondary-light dark:text-secondary-dark"
+            className="text-muted-foreground"
           >
             <div className="px-4 pb-4">{children}</div>
           </motion.section>

@@ -1,0 +1,21 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .text-gradient {
+    @apply bg-gradient-to-b bg-clip-text text-transparent;
+  }
+
+  .h-stack {
+    @apply flex flex-row items-center gap-2.5;
+  }
+}
+
+.nd-prose-text
+  :where(h2, h3, h4, h5, h6):not(:where([class~="nd-not-prose"] *)) {
+  @apply font-bold;
+}
+
+.nd-prose {
+  --tw-prose-body: hsl(var(--muted-foreground));
+}

@@ -1,17 +1,18 @@
+"use client";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { BsCaretUpFill } from "react-icons/bs";
 import { IoMdOpen } from "react-icons/io";
-import { ThemeSwitch } from "nextra-theme-docs";
+import { ThemeToggle } from "next-docs-ui/components";
 
 export type FooterCategory = {
   title: string;
   items: FooterItem[];
 };
 
-export type FooterItem = {
+type FooterItem = {
   label: string;
   href: string;
   newWindow?: boolean;
@@ -23,7 +24,7 @@ export default function Footer({
   categories: FooterCategory[];
 }) {
   return (
-    <div className="mx-auto mt-6 max-w-[90rem] p-6">
+    <div className="container mt-6 p-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row">
         <Info />
         {categories.map((category, i) => (
@@ -31,8 +32,8 @@ export default function Footer({
         ))}
       </div>
       <div className="mt-10 flex flex-row flex-wrap justify-between gap-3">
-        <ThemeSwitch />
-        <p className="text-secondary-light dark:text-secondary-dark">
+        <ThemeToggle />
+        <p className="text-muted-foreground">
           YEE式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}
         </p>
       </div>
@@ -63,7 +64,7 @@ function Category({ category }: { category: FooterCategory }) {
   return (
     <div className="flex flex-col">
       <p
-        className="mb-2 cursor-pointer text-lg font-bold sm:text-xl"
+        className="mb-2 font-medium sm:text-xl"
         onClick={() => setExpend((prev) => !prev)}
       >
         {category.title}{" "}
@@ -81,7 +82,7 @@ function Category({ category }: { category: FooterCategory }) {
           <Link
             key={j}
             href={item.href}
-            className="text-secondary-light dark:text-secondary-dark"
+            className="text-sm text-muted-foreground transition-colors hover:text-accent"
             target={item.newWindow === true ? "_blank" : "_self"}
           >
             {item.label} {item.newWindow && <IoMdOpen className="inline" />}

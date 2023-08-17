@@ -1,0 +1,57 @@
+---
+title: 私人頻道
+---
+
+當你正在舉辦一個抽獎，或是希望各位能回報問題給你，但是又不希望其他人私訊你的時候，私人頻道能夠解決這些困擾，在伺服器上創建屬於一個人和管理員的溝通頻道
+
+## 設定私人頻道功能
+
+<Admonition>
+  請確認機器人擁有 `管理頻道` 的權限，才能避免發生權限不足的錯誤！
+</Admonition>
+
+### ㄧ、建立頻道
+
+首先，我們要先建立私人頻道會綁定的類別，點選要設定的伺服器左上角名稱，選擇建立類別填好名字後點選建立，
+
+![建立類別選項](/docs/commands/ticket/create-category.png)
+
+我們需要建立一個頻道讓機器人顯示訊息，在剛建立的類別頻道右邊點選＋號，
+
+![在類別頻道裡建立頻道](/docs/commands/ticket/category-create-channel.png)
+
+跳出來的框框選擇 Text 類別，並取一個名稱，之後點選建立頻道。
+
+![建立頻道](/docs/commands/ticket/create-channel-modal.png)
+
+而該頻道將會是唯讀的，請將滑鼠移到剛建立的頻道名稱上方，並點選旁邊的齒輪進入頻道設定，在權限分頁中，點選預設身份組，將檢視訊息設為開啟，發送訊息設為關閉。
+
+![設定唯讀頻道權限](/docs/commands/ticket/create-channel-modal.png)
+
+### 二、機器人設定
+
+打開 [網頁面板](https://app.yeecord.com/)，點選中間使用 Discord 登入按鈕先進行授權，
+
+![登入使用者](/docs/dashboard/login.png)
+
+登入後畫面上將會顯示你有權限進行設定的伺服器，選擇要設定的伺服器，
+
+<Adsense />
+
+![選擇伺服器](/docs/dashboard/select-server.png)
+
+在功能選單選擇私人頻道功能，打開啟用的開關，選擇剛剛建立的類別頻道後，點選儲存設定。
+
+![私人頻道設定](/docs/commands/ticket/settings.png)
+
+### 三、發送建立訊息
+
+在同個頁面點選建立訊息按鈕，選擇要發送的頻道，之後點選確認就完成了。
+
+![發送建立訊息](/docs/commands/ticket/send-message.png)
+
+回到 Discord 就可以看到機器人發送了一則消息，並附帶了一顆按鈕，使用者在點選後就可以開啟一個私人頻道。
+
+![建立私人頻道訊息](/docs/commands/ticket/ticket-message.png)
+
+<Adsense />

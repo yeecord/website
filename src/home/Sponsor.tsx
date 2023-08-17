@@ -6,7 +6,7 @@ export default function Sponsor() {
   return (
     <div
       className={clsx(
-        "mt-[5rem] bg-white p-4 py-[6rem] dark:bg-zinc-900/50",
+        "mt-[5rem] p-4 py-20",
         "flex w-full flex-col items-center gap-3 text-center",
         "font-semibold",
       )}
@@ -15,7 +15,7 @@ export default function Sponsor() {
         喜歡YEE式機器龍?
       </p>
       <h1 className="text-5xl font-bold">支持我們</h1>
-      <p className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
+      <p className="text-lg text-muted-foreground sm:text-xl">
         照顧機器龍是一項艱鉅的工作
         <span className="max-sm:hidden">, </span>
         <br className="sm:hidden" />
@@ -65,9 +65,7 @@ function Card({
         </div>
         <div>
           <p className="text-lg font-bold sm:text-xl">{title}</p>
-          <p className="text-secondary-light dark:text-secondary-dark">
-            {text}
-          </p>
+          <p className="text-muted-foreground">{text}</p>
         </div>
       </div>
       <a href={href} target="_blank" rel="noreferrer">
