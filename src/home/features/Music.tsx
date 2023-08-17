@@ -83,7 +83,7 @@ function Content() {
         讓你可以和朋友一起收聽 Spotify 和 SoundCloud
         上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
       </h3>
-      <div className="h-stack mt-3">
+      <div className="mt-3 flex flex-row gap-2.5">
         <LinkButton
           className={clsx(
             "rounded-full bg-gradient-to-r from-cyan-500 to-green-500 px-6 py-3 text-lg font-bold text-white",
@@ -145,12 +145,12 @@ function MusicPlayer() {
 
   return (
     <div className="flex w-full max-w-[400px] flex-col gap-3 rounded-2xl bg-white p-5 dark:bg-zinc-900">
-      <div className="h-stack mb-2">
+      <div className="mb-2 flex flex-row gap-2.5">
         <BsMusicNoteBeamed />
         <p className="font-bold">ZUTOMAYO - Study Me</p>
       </div>
       <Progress track="w-[66%]" />
-      <div className="h-stack mt-2">
+      <div className="mt-2 flex flex-row gap-2.5">
         <button aria-label="prev" className={greenButton}>
           <BsArrowLeft />
         </button>

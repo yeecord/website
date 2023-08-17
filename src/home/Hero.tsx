@@ -27,7 +27,7 @@ export function Hero() {
         萬中選一的
         <span
           className={clsx(
-            "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 max-lg:my-2 max-lg:block",
+            "mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 bg-clip-text text-transparent max-lg:my-2 max-lg:block",
             styles["animated-gradient"],
           )}
         >
@@ -124,7 +124,7 @@ function Server({
   transparent?: boolean;
 }) {
   return (
-    <div className="h-stack mx-4 my-1 flex-shrink-0 gap-3 text-black dark:text-white">
+    <div className="mx-4 my-1 flex flex-shrink-0 flex-row gap-3 text-black dark:text-white">
       <Image
         alt={name}
         src={img}

@@ -59,7 +59,7 @@ function Card({
 }) {
   return (
     <div className="rounded-xl border-[1px] border-black/10 bg-white/40 p-4 text-start shadow-lg dark:border-white/10 dark:bg-white/10">
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <div className="rounded-xl bg-purple-400 p-3 text-2xl text-white dark:bg-purple-500">
           {icon}
         </div>

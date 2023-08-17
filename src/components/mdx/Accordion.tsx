@@ -19,7 +19,7 @@ export function Accordion({ title, children }: AccordionProps) {
       )}
     >
       <div
-        className="h-stack cursor-pointer justify-between p-4 text-black dark:text-white"
+        className="flex cursor-pointer flex-row justify-between gap-2.5 p-4 text-black dark:text-white"
         onClick={() => setOpen((prev) => !prev)}
       >
         <p className="text-lg font-bold sm:text-xl">{title}</p>

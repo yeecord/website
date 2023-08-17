@@ -45,5 +45,10 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
   return {
     title: page.title,
     description: page.description,
+    openGraph: {
+      images: "/opengraph-image.png",
+      title: page.title,
+      description: page.description,
+    },
   } satisfies Metadata;
 }

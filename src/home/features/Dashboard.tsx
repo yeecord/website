@@ -50,7 +50,7 @@ function Settings() {
       whileInView={{ y: 0 }}
       initial={{ y: "10rem" }}
     >
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <div className="rounded-xl bg-purple-500 p-3 text-3xl text-white">
           <RiSettings2Fill />
         </div>
@@ -89,7 +89,7 @@ function Chart() {
       initial={{ x: "8rem", opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <div className="rounded-xl bg-blue-600 p-5 text-3xl text-white">
           <BsBarChartFill />
         </div>
@@ -110,7 +110,7 @@ function Music() {
       whileInView={{ y: 0 }}
       initial={{ y: "10rem" }}
     >
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <div className="rounded-xl bg-green-500 p-3 text-3xl text-white">
           <BsMusicNoteBeamed />
         </div>
@@ -119,7 +119,7 @@ function Music() {
           <p className="font-bold text-muted-foreground">下一首歌</p>
         </div>
       </div>
-      <div className="h-stack mt-auto pt-2">
+      <div className="mt-auto flex flex-row gap-2.5 pt-2">
         <p>1:02</p>
         <Progress track="w-[36%]" />
         <p>3:20</p>

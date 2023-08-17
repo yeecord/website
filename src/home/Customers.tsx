@@ -48,7 +48,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
         </p>
         <h1 className="text-5xl font-bold">
           受超過
-          <span className="text-gradient mx-2 block from-pink-600 to-orange-400 max-md:text-7xl md:inline">
+          <span className="mx-2 block bg-gradient-to-b from-pink-600 to-orange-400 bg-clip-text text-transparent max-md:text-7xl md:inline">
             <ServerCount count={count} />
           </span>
           個伺服器使用
@@ -56,7 +56,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
         <h3 className="text-lg text-muted-foreground sm:text-xl">
           受到無數大型社群的廣泛信任
         </h3>
-        <div className="h-stack">
+        <div className="flex flex-row gap-2.5">
           <LinkButton
             href="/invite"
             className={clsx(
@@ -135,7 +135,7 @@ function Comment({
         "hover:bg-accent hover:text-accent-foreground hover:dark:border-pink-400",
       )}
     >
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <Image
           alt={author}
           src={icon}

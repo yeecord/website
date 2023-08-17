@@ -75,7 +75,7 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
   return (
     <motion.div
       className={clsx(
-        "h-stack mt-4 h-fit rounded-xl bg-white p-4 dark:bg-slate-900 xl:pr-[4rem]",
+        "mt-4 flex h-fit flex-row gap-2.5 rounded-xl bg-white p-4 dark:bg-slate-900 xl:pr-[4rem]",
         "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
       )}
       variants={{
