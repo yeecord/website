@@ -1,5 +1,5 @@
-import { FooterCategory } from "@components/Footer";
-import type { AuthorData } from "@schema/blog";
+import type { FooterCategory } from "@components/Footer";
+import type { AuthorData } from "@/src/types";
 
 export const isProduction = process.env.NODE_ENV === "production";
 export const API_ENDPOINT = isProduction

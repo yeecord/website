@@ -5,9 +5,9 @@ import Link from "next/link";
 import clsx from "clsx";
 import { Fragment } from "react";
 import { getTagHref } from "@utils/tags";
-import { Blog, allBlogs } from "@/.contentlayer/generated";
+import { type Blog, allBlogs } from "@/.contentlayer/generated";
 import { notFound } from "next/navigation";
-import { AuthorData } from "@schema/blog";
+import type { AuthorData } from "@/src/types";
 import { blogAuthors } from "@/config";
 
 export default function BlogLayout({

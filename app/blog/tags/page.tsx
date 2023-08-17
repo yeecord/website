@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { LinkButton } from "@components/mdx";
 import clsx from "clsx";
 import Link from "next/link";

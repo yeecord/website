@@ -20,8 +20,8 @@ const noto = Noto_Sans_HK({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-Hant-TW" className={clsx("overflow-x-clip", noto.className)}>
-      <body>
+    <html lang="zh-Hant-TW" className={clsx(noto.className)}>
+      <body className="overflow-x-clip">
         <RootProvider>
           <AdsProvider>
             <DocsLayoutWrapper tree={tree}>{children}</DocsLayoutWrapper>
