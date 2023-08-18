@@ -12,11 +12,11 @@ import { Steps, Step } from "next-docs-ui/components/steps";
 
 ### 我的頁面在哪裡？
 
-所有 mdx 檔案都已移至 `/pages`
+所有 mdx 檔案都已移至 `/content`
 
-| 文檔          | 部落格        |
-| ------------- | ------------- |
-| `/pages/docs` | `/pages/blog` |
+| 文檔            | 部落格          |
+| --------------- | --------------- |
+| `/content/docs` | `/content/blog` |
 
 </Step>
 
@@ -60,7 +60,7 @@ import { Steps, Step } from "next-docs-ui/components/steps";
 
 <Tab value="文檔">
 
-在 `/pages/docs` 資料夾中建立檔案
+在 `/content/docs` 資料夾中建立檔案
 
 ```mdx
 ---
@@ -75,7 +75,7 @@ description: 這是關於什麼的?
 
 <Tab value="部落格">
   
-在 `/pages/blog` 資料夾中建立檔案
+在 `/content/blog` 資料夾中建立檔案
 
 ```mdx
 ---
@@ -140,7 +140,7 @@ export const blogAuthors: Record<string, AuthorData> = {
 
 ### 排序頁面
 
-您必須編輯 `_meta.json` 以更改每個頁面的順序：
+您必須編輯 `meta.json` 以更改每個頁面的順序：
 
 ```json
 {
