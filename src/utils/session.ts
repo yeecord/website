@@ -1,5 +1,5 @@
 import type { IronSessionOptions } from "iron-session";
-import { type User } from "@utils/api";
+import { type User } from "@/utils/api";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { type NextApiHandler } from "next";
 
@@ -11,7 +11,7 @@ export function withAuthApiRouter(handler: NextApiHandler): NextApiHandler {
     process.env.JWT_SECRET == null
   ) {
     throw new Error(
-      "JWT secret not provided, try adding a JWT_SECRET variable to .env file?"
+      "JWT secret not provided, try adding a JWT_SECRET variable to .env file?",
     );
   }
 

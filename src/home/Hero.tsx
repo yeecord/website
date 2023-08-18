@@ -5,7 +5,7 @@ import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
-import { cn } from "@utils/cn";
+import { cn } from "@/utils/cn";
 
 export function Hero() {
   return (

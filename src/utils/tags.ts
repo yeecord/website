@@ -1,4 +1,4 @@
-import { allBlogs } from "@/.contentlayer/generated";
+import { allBlogs } from "contentlayer/generated";
 
 export type TagInfo = {
   count: number;

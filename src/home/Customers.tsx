@@ -5,7 +5,7 @@ import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import { motion, type MotionValue, useTransform } from "framer-motion";
-import formatter from "@utils/formatter";
+import formatter from "@/utils/formatter";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 
 export function Customers({ usedBy }: { usedBy: number }) {

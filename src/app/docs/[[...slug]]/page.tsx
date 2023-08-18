@@ -5,7 +5,7 @@ import { MDXContent } from "next-docs-ui/mdx";
 import { DocsPage } from "next-docs-ui/page";
 import { getTableOfContents, findNeighbour } from "next-docs-zeta/server";
 import { notFound } from "next/navigation";
-import { Content } from "@/src/components/content";
+import { Content } from "@/components/content";
 
 export default async function Page({
   params,

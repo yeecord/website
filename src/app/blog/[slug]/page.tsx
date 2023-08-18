@@ -1,6 +1,6 @@
-import { allBlogs } from "@/.contentlayer/generated";
-import { Content } from "@components/content";
-import { blogAuthors } from "@/config";
+import { allBlogs } from "contentlayer/generated";
+import { Content } from "@/components/content";
+import { blogAuthors } from "@config";
 import type { Metadata } from "next";
 import { MDXContent } from "next-docs-ui/mdx";
 import { notFound } from "next/navigation";

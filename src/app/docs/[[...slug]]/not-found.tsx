@@ -1,5 +1,5 @@
-import { buttonVariants } from "@components/ui/button";
-import { cn } from "@utils/cn";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/utils/cn";
 import Link from "next/link";
 
 export default function NotFound() {

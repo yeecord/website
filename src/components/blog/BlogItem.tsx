@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { getTagHref } from "@utils/tags";
-import type { Blog } from "@/.contentlayer/generated";
+import { getTagHref } from "@/utils/tags";
+import type { Blog } from "contentlayer/generated";
 
 export function BlogItem({ page }: { page: Blog }) {
   return (

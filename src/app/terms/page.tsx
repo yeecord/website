@@ -1,10 +1,10 @@
-import { allDocs } from "@/.contentlayer/generated";
+import { allDocs } from "contentlayer/generated";
 import { MDXContent } from "next-docs-ui/mdx";
 import { notFound } from "next/navigation";
-import { Content } from "@/src/components/content";
+import { Content } from "@/components/content";
 
-export default function PrivacyPage() {
-  const page = allDocs.find((docs) => docs.slug === "privacy");
+export default function TermsPage() {
+  const page = allDocs.find((docs) => docs.slug === "terms");
   if (!page) notFound();
   return (
     <main className="py-10">

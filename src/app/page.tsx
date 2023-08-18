@@ -1,10 +1,10 @@
-import { Community } from "@/src/home/Community";
-import { Customers } from "@/src/home/Customers";
-import { Hero } from "@/src/home/Hero";
-import { RpgSystem } from "@/src/home/RpgSystem";
-import { Features } from "@/src/home/features";
-import Sponsor from "@/src/home/Sponsor";
-import { fetchGuild } from "@utils/api";
+import { Community } from "@/home/Community";
+import { Customers } from "@/home/Customers";
+import { Hero } from "@/home/Hero";
+import { RpgSystem } from "@/home/RpgSystem";
+import { Features } from "@/home/features";
+import Sponsor from "@/home/Sponsor";
+import { fetchGuild } from "@/utils/api";
 
 export const revalidate = 60;
 

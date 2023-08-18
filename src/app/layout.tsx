@@ -1,5 +1,5 @@
 import { Noto_Sans_HK } from "next/font/google";
-import { AdsProvider } from "@/src/adsense";
+import { AdsProvider } from "@/adsense";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { RootProvider } from "next-docs-ui/provider";
@@ -7,8 +7,8 @@ import { RootProvider } from "next-docs-ui/provider";
 import { tree } from "./source";
 import { DocsLayoutWrapper } from "./docs-layout";
 import clsx from "clsx";
-import Footer from "@components/Footer";
-import { footer } from "@/config";
+import Footer from "@/components/Footer";
+import { footer } from "@config";
 import type { Metadata } from "next";
 
 import "next-docs-ui/style.css";

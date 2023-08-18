@@ -3,11 +3,11 @@ import React from "react";
 import { type ReactNode } from "react";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getTagHref } from "@utils/tags";
-import { type Blog, allBlogs } from "@/.contentlayer/generated";
+import { getTagHref } from "@/utils/tags";
+import { type Blog, allBlogs } from "contentlayer/generated";
 import { notFound } from "next/navigation";
-import type { AuthorData } from "@/src/types";
-import { blogAuthors } from "@/config";
+import type { AuthorData } from "@/types";
+import { blogAuthors } from "@config";
 
 export default function BlogLayout({
   params,

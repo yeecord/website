@@ -1,4 +1,4 @@
-import { cn } from "@utils/cn";
+import { cn } from "@/utils/cn";
 import { type ComponentProps } from "react";
 
 export default function Step({

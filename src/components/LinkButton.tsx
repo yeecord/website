@@ -2,7 +2,7 @@ import { type ComponentProps, type ReactNode } from "react";
 import { SafeLink } from "next-docs-zeta/link";
 import { ChevronRightIcon } from "lucide-react";
 import { buttonVariants } from "./ui/button";
-import { cn } from "@utils/cn";
+import { cn } from "@/utils/cn";
 
 /**
  * For safe, Won't accept all props from Link

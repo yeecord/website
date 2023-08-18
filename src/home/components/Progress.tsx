@@ -1,4 +1,4 @@
-import { cn } from "@utils/cn";
+import { cn } from "@/utils/cn";
 
 export function Progress({ track }: { track: string }) {
   return (

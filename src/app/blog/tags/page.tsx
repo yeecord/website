@@ -1,7 +1,7 @@
-import { LinkButton } from "@components/mdx";
+import { LinkButton } from "@/components/mdx";
 import Link from "next/link";
 import { BsEyeFill } from "react-icons/bs";
-import { getTagHref, getTags, type TagInfo } from "@utils/tags";
+import { getTagHref, getTags, type TagInfo } from "@/utils/tags";
 
 export default function AllTags() {
   const tags: [string, TagInfo][] = [...getTags().entries()].sort(

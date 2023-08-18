@@ -21,13 +21,9 @@
       }
     ],
     "paths": {
-      "@schema/*": ["./src/schema/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@home/*": ["./src/home/*"],
-      "@components/*": ["./src/components/*"],
+      "@config": ["./config.ts"],
       "@static/*": ["./public/*"],
-      "@app": ["./src/_app"],
-      "@/*": ["./*"],
+      "@/*": ["./src/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },

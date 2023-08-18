@@ -1,12 +1,12 @@
 import React from "react";
-import { BlogItem, LargeBlogItem } from "@components/blog/BlogItem";
+import { BlogItem, LargeBlogItem } from "@/components/blog/BlogItem";
 import clsx from "clsx";
-import { LinkButton } from "@components/LinkButton";
+import { LinkButton } from "@/components/LinkButton";
 import { BsEyeFill } from "react-icons/bs";
-import { blogRecommendations } from "../../config";
+import { blogRecommendations } from "@config";
 import { RiGithubFill } from "react-icons/ri";
-import { BlogRecommend } from "@components/blog/BlogRecommend";
-import { type Blog, allBlogs } from "@/.contentlayer/generated";
+import { BlogRecommend } from "@/components/blog/BlogRecommend";
+import { type Blog, allBlogs } from "contentlayer/generated";
 import { CheckCircle2Icon } from "lucide-react";
 
 export default function BlogIndex() {
@@ -65,12 +65,7 @@ export default function BlogIndex() {
 
 function Recommendations({ items }: { items: Blog[] }) {
   return (
-    <div
-      className={clsx(
-        "grid grid-cols-1 min-[816px]:grid-cols-2",
-        "mb-16 gap-3",
-      )}
-    >
+    <div className="mb-16 grid grid-cols-1 gap-8 min-[816px]:grid-cols-2">
       {items[0] != null && <LargeBlogItem page={items[0]} />}
       <div className="max-md:-ml-3">
         <h2 className="mb-3 ml-3 inline-flex items-center gap-2 text-2xl font-medium">

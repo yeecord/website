@@ -4,7 +4,7 @@ import CyanPinkGradient from "@static/home/cyan-pink-gradient.svg";
 import GradientRing from "@static/home/gradient-ring.svg";
 import Image from "next/image";
 import clsx from "clsx";
-import formatter from "@utils/formatter";
+import formatter from "@/utils/formatter";
 import { FaDiscord } from "react-icons/fa";
 import styles from "./community.module.css";
 import { BsTwitter } from "react-icons/bs";

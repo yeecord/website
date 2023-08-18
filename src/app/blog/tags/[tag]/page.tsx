@@ -1,6 +1,6 @@
-import { BlogItem } from "@components/blog/BlogItem";
-import { LinkButton } from "@components/LinkButton";
-import { getTags } from "@utils/tags";
+import { BlogItem } from "@/components/blog/BlogItem";
+import { LinkButton } from "@/components/LinkButton";
+import { getTags } from "@/utils/tags";
 import { allBlogs } from "contentlayer/generated";
 
 export default function TagPage({ params }: { params: { tag: string } }) {
