@@ -7,7 +7,6 @@ import { blogRecommendations } from "@config";
 import { RiGithubFill } from "react-icons/ri";
 import { BlogRecommend } from "@/components/blog/BlogRecommend";
 import { type Blog, allBlogs } from "contentlayer/generated";
-import { CheckCircle2Icon } from "lucide-react";
 
 export default function BlogIndex() {
   const pages = allBlogs.sort(
@@ -69,7 +68,7 @@ function Recommendations({ items }: { items: Blog[] }) {
       {items[0] != null && <LargeBlogItem page={items[0]} />}
       <div className="max-md:-ml-3">
         <h2 className="mb-3 ml-3 inline-flex items-center gap-2 text-2xl font-medium">
-          精選文章 <CheckCircle2Icon className="h-6 w-6 text-green-400" />
+          精選文章
         </h2>
         <div className="flex flex-col gap-3">
           {items.map((page, i) => {
