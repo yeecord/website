@@ -23,7 +23,7 @@ export default function Footer({
   categories: FooterCategory[];
 }) {
   return (
-    <div className="container mt-6 border-t p-8 pb-20">
+    <div className="container mt-auto border-t p-8 pb-20">
       <div className="flex flex-col justify-between gap-4 sm:flex-row">
         <Info />
         {categories.map((category, i) => (

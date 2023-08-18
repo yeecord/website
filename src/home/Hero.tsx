@@ -5,7 +5,7 @@ import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@utils/cn";
 
 export function Hero() {
   return (
@@ -75,7 +75,7 @@ function Buttons() {
       <LinkButton
         href="/invite"
         target="_blank"
-        className={twMerge(
+        className={cn(
           "inline-flex items-center justify-center gap-2.5 bg-black text-white",
           "dark:bg-white dark:text-black",
           bn,

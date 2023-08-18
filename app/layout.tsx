@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-Hant" className={clsx(noto.className)}>
-      <body className="overflow-x-clip">
+      <body className="flex min-h-screen flex-col overflow-x-clip">
         <RootProvider>
           <AdsProvider>
             <DocsLayoutWrapper tree={tree}>{children}</DocsLayoutWrapper>

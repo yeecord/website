@@ -4,6 +4,7 @@ import {
   type DocumentType,
 } from "contentlayer/source-files";
 import { createConfig } from "next-docs-zeta/contentlayer/configuration";
+import { structure } from "next-docs-zeta/mdx-plugins";
 
 const Blog = defineDocumentType(() => ({
   name: "Blog",
@@ -28,7 +29,14 @@ const Blog = defineDocumentType(() => ({
   },
 }));
 
-const config = createConfig();
+const config = createConfig({
+  docsComputedFields: {
+    structuredData: {
+      type: "json",
+      resolve: (page) => structure(page.body.raw),
+    },
+  },
+});
 
 (config.documentTypes as DocumentType[]).push(Blog);
 

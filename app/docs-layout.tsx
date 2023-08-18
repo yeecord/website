@@ -1,7 +1,7 @@
 "use client";
 import { DocsLayout } from "next-docs-ui/layout";
 import { I18nProvider } from "next-docs-ui/i18n";
-import type { TreeNode } from "next-docs-zeta/server";
+import type { PageTree } from "next-docs-zeta/server";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -9,7 +9,7 @@ export function DocsLayoutWrapper({
   tree,
   children,
 }: {
-  tree: TreeNode[];
+  tree: PageTree;
   children: ReactNode;
 }) {
   const pathname = usePathname();
