@@ -1,5 +1,5 @@
 import { allBlogs } from "@/.contentlayer/generated";
-import { Content } from "@/app/docs/[[...slug]]/content";
+import { Content } from "@components/content";
 import { blogAuthors } from "@/config";
 import type { Metadata } from "next";
 import { MDXContent } from "next-docs-ui/mdx";
