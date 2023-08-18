@@ -1,9 +1,5 @@
-"use client";
-import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { BsCaretUpFill } from "react-icons/bs";
 import { IoMdOpen } from "react-icons/io";
 
 export type FooterCategory = {
@@ -24,7 +20,7 @@ export default function Footer({
 }) {
   return (
     <div className="container mt-auto border-t p-8 pb-20">
-      <div className="flex flex-col justify-between gap-4 sm:flex-row">
+      <div className="flex flex-col justify-between gap-6 sm:flex-row">
         <Info />
         {categories.map((category, i) => (
           <Category key={i} category={category} />
@@ -55,28 +51,10 @@ function Info() {
 }
 
 function Category({ category }: { category: FooterCategory }) {
-  const [extend, setExpend] = useState(false);
-
   return (
     <div className="flex flex-col">
-      <p
-        className="mb-2 font-medium max-sm:cursor-pointer"
-        onClick={() => setExpend((prev) => !prev)}
-      >
-        {category.title}{" "}
-        <BsCaretUpFill
-          className={clsx(
-            "inline transition-transform sm:hidden",
-            extend ? "rotate-0" : "rotate-180",
-          )}
-        />
-      </p>
-      <div
-        className={clsx(
-          "flex-col gap-1 text-sm",
-          extend ? "flex" : "hidden sm:flex",
-        )}
-      >
+      <p className="mb-2 font-medium max-sm:cursor-pointer">{category.title}</p>
+      <div className="flex flex-col gap-1 text-sm">
         {category.items.map((item, j) => (
           <Link
             key={j}
