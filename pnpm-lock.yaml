@@ -36,11 +36,11 @@ dependencies:
     specifier: ^0.3.4
     version: 0.3.4(contentlayer@0.3.4)(esbuild@0.18.20)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
   next-docs-ui:
-    specifier: ^1.6.2
-    version: 1.6.2(@types/react-dom@18.2.7)(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1)
+    specifier: ^1.6.3
+    version: 1.6.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1)
   next-docs-zeta:
-    specifier: ^1.6.2
-    version: 1.6.2(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1)
+    specifier: ^1.6.3
+    version: 1.6.3(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1)
   next-seo:
     specifier: ^6.1.0
     version: 6.1.0(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
@@ -5164,8 +5164,8 @@ packages:
       - supports-color
     dev: false
 
-  /next-docs-ui@1.6.2(@types/react-dom@18.2.7)(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1):
-    resolution: {integrity: sha512-t7JimWr6/FcD0lSjOjVB/5hVi9S2YHng6h8y2OTvJQnZfg1eqd0g+AGUBzfBX8L2t+kldJJjBAEWhdX++E+BDQ==}
+  /next-docs-ui@1.6.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1):
+    resolution: {integrity: sha512-mb0cT+UJNFB8sQyuhlgSBf8ZJPPvxYcn+fRD/GCal5tzRImhLDGHhYIQNfJgXbHsmVaT38nkleGz0UDFbC+zxQ==}
     peerDependencies:
       next: 13.x
       react: 18.x
@@ -5182,7 +5182,7 @@ packages:
       cmdk: 0.2.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
       lucide-react: 0.268.0(react@18.2.0)
       next: 13.4.16(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
-      next-docs-zeta: 1.6.2(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1)
+      next-docs-zeta: 1.6.3(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1)
       next-themes: 0.2.1(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -5194,8 +5194,8 @@ packages:
       - supports-color
     dev: false
 
-  /next-docs-zeta@1.6.2(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1):
-    resolution: {integrity: sha512-Mj4xKAxH7CrUQvF/OlxxXqq4UayzsHm+9J6uELTuZ3gRu3bdGjdNy182aDl5j0ZajbL1sIY8lxGHRls9FiVd5g==}
+  /next-docs-zeta@1.6.3(@types/react@18.2.15)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.1):
+    resolution: {integrity: sha512-fPjMxua2g7VPWO9gwK+6QLxbboSAKl9uHpX+NFK8hF0Iyoiusj8ACART0wBq4O/2ywrmgXggKtAEB+WpD6WqYQ==}
     peerDependencies:
       next: 13.x
       react: 18.x
