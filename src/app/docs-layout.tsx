@@ -43,11 +43,7 @@ export function DocsLayoutWrapper({
             children: "部落格",
           },
         ]}
-        sidebar={
-          pathname === "/docs" || pathname.startsWith("/docs/")
-            ? undefined
-            : false
-        }
+        sidebar={pathname === "/docs" || pathname.startsWith("/docs/")}
         navTitle="Yeecord"
       >
         {children}
