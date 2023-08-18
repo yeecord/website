@@ -9,7 +9,7 @@ export default function AllTags() {
   );
 
   return (
-    <div className="mx-auto my-16 flex w-full max-w-[1500px] flex-col gap-3 p-6">
+    <main className="my-16 flex w-full flex-col gap-3">
       <div className="mb-3 flex flex-col gap-3">
         <h1 className="mb-4 text-center text-5xl font-bold">所有標籤</h1>
         <LinkButton
@@ -34,6 +34,6 @@ export default function AllTags() {
           </Link>
         ))}
       </div>
-    </div>
+    </main>
   );
 }

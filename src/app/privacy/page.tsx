@@ -7,7 +7,7 @@ export default function PrivacyPage() {
   const page = allDocs.find((docs) => docs.slug === "privacy");
   if (!page) notFound();
   return (
-    <main className="py-10">
+    <main className="container py-10">
       <MDXContent>
         <h1>{page.title}</h1>
         <Content code={page.body.code} />

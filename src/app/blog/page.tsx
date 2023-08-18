@@ -1,6 +1,5 @@
 import React from "react";
 import { BlogItem, LargeBlogItem } from "@/components/blog/BlogItem";
-import clsx from "clsx";
 import { LinkButton } from "@/components/LinkButton";
 import { BsEyeFill } from "react-icons/bs";
 import { blogRecommendations } from "@config";
@@ -18,12 +17,7 @@ export default function BlogIndex() {
   });
 
   return (
-    <div
-      className={clsx(
-        "flex max-w-[1300px] flex-col gap-5 p-5 text-slate-700 dark:text-gray-200",
-        "mx-auto mb-[5rem]",
-      )}
-    >
+    <main className="mb-20 flex flex-1 flex-col gap-5">
       <div className="mb-5 mt-16">
         <h1 className="mb-8 text-center text-4xl font-bold md:text-5xl">
           我們的部落格
@@ -58,7 +52,7 @@ export default function BlogIndex() {
           return <BlogItem key={page._id} page={page} />;
         })}
       </div>
-    </div>
+    </main>
   );
 }
 

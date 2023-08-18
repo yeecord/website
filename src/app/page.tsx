@@ -15,7 +15,7 @@ export default async function HomePage() {
   }));
 
   return (
-    <main className="w-0 flex-1">
+    <main className="overflow-x-clip">
       <div className="mx-auto flex max-w-[1400px] flex-col px-3 md:px-6">
         <Hero />
         <Features />

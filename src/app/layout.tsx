@@ -4,9 +4,7 @@ import Script from "next/script";
 import type { ReactNode } from "react";
 import { RootProvider } from "next-docs-ui/provider";
 
-import { tree } from "./source";
-import { DocsLayoutWrapper } from "./docs-layout";
-import clsx from "clsx";
+import { NextDocsProvider } from "./next-docs-provider";
 import Footer from "@/components/Footer";
 import { footer } from "@config";
 import type { Metadata } from "next";
@@ -48,11 +46,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-Hant" className={clsx(noto.className)}>
-      <body className="flex min-h-screen flex-col overflow-x-clip">
+    <html lang="zh-Hant" className={noto.className}>
+      <body className="flex min-h-screen flex-col">
         <RootProvider>
           <AdsProvider>
-            <DocsLayoutWrapper tree={tree}>{children}</DocsLayoutWrapper>
+            <NextDocsProvider>{children}</NextDocsProvider>
             <Footer categories={footer} />
           </AdsProvider>
         </RootProvider>

@@ -11,7 +11,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
   );
 
   return (
-    <div className="mx-auto my-16 flex w-full max-w-[1300px] flex-col gap-5">
+    <main className="my-16 flex w-full flex-1 flex-col gap-5">
       <div className="mb-5 flex flex-col gap-5">
         <h1 className="mb-4 text-center text-3xl font-bold">{`帶有「${params.tag}」標籤的文章`}</h1>
 
@@ -19,12 +19,12 @@ export default function TagPage({ params }: { params: { tag: string } }) {
           所有標籤
         </LinkButton>
       </div>
-      <div className="grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => (
           <BlogItem key={page._id} page={page} />
         ))}
       </div>
-    </div>
+    </main>
   );
 }
 
