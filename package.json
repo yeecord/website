@@ -9,6 +9,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.18.20"
+    }
+  },
   "dependencies": {
     "@next/env": "^13.4.19",
     "@vercel/edge-config": "^0.2.1",
@@ -20,8 +25,8 @@
     "lucide-react": "^0.268.0",
     "next": "13.4.19",
     "next-contentlayer": "^0.3.4",
-    "next-docs-ui": "^1.6.5",
-    "next-docs-zeta": "^1.6.5",
+    "next-docs-ui": "^1.6.6",
+    "next-docs-zeta": "^1.6.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
