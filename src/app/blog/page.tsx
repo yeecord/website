@@ -1,11 +1,17 @@
-import React from "react";
 import { BlogItem, LargeBlogItem } from "@/components/blog/BlogItem";
 import { LinkButton } from "@/components/LinkButton";
 import { BsEyeFill } from "react-icons/bs";
-import { blogRecommendations } from "@config";
+import { blogRecommendations, domain } from "@config";
 import { RiGithubFill } from "react-icons/ri";
 import { BlogRecommend } from "@/components/blog/BlogRecommend";
 import { type Blog, allBlogs } from "contentlayer/generated";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${domain}/blog`,
+  },
+};
 
 export default function BlogIndex() {
   const pages = allBlogs.sort(

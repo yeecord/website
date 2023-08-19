@@ -2,6 +2,14 @@ import { allDocs } from "contentlayer/generated";
 import { MDXContent } from "next-docs-ui/mdx";
 import { notFound } from "next/navigation";
 import { Content } from "@/components/content";
+import type { Metadata } from "next";
+import { domain } from "@config";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${domain}/privacy`,
+  },
+};
 
 export default function PrivacyPage() {
   const page = allDocs.find((docs) => docs.slug === "privacy");

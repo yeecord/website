@@ -5,8 +5,16 @@ import { RpgSystem } from "@/home/RpgSystem";
 import { Features } from "@/home/features";
 import Sponsor from "@/home/Sponsor";
 import { fetchGuild } from "@/utils/api";
+import type { Metadata } from "next";
+import { domain } from "@config";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: domain,
+  },
+}
 
 export default async function HomePage() {
   const { guildCount, serverMembers } = await fetchGuild().catch(() => ({

@@ -1,6 +1,6 @@
 import { allBlogs } from "contentlayer/generated";
 import { Content } from "@/components/content";
-import { blogAuthors } from "@config";
+import { blogAuthors, domain } from "@config";
 import type { Metadata } from "next";
 import { MDXContent } from "next-docs-ui/mdx";
 import { notFound } from "next/navigation";
@@ -34,6 +34,9 @@ export function generateMetadata({
   return {
     title: blog.title,
     description: blog.description,
+    alternates: {
+      canonical: `${domain}/blog/${params.slug}`,
+    },
     openGraph: {
       type: "article",
       tags: blog.tags,

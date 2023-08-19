@@ -11,7 +11,6 @@ import type { Metadata } from "next";
 
 import "next-docs-ui/style.css";
 import "./global.css";
-import { headers } from "next/headers";
 
 const noto = Noto_Sans_TC({
   preload: true,
@@ -46,15 +45,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const path = headers().get("x-invoke-path");
-
   return (
     <html lang="zh-Hant-TW" className={noto.className}>
-      <head>
-        {path && (
-          <link rel="canonical" content={`https://yeecord.com${path}`} />
-        )}
-      </head>
       <body className="flex min-h-screen flex-col">
         <RootProvider>
           <AdsProvider>

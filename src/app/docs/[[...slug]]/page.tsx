@@ -6,6 +6,7 @@ import { DocsPage } from "next-docs-ui/page";
 import { getTableOfContents, findNeighbour } from "next-docs-zeta/server";
 import { notFound } from "next/navigation";
 import { Content } from "@/components/content";
+import { domain } from "@config";
 
 export default async function Page({
   params,
@@ -45,6 +46,9 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
   return {
     title: page.title,
     description: page.description,
+    alternates: {
+      canonical: `${domain}/docs/` + (params.slug ?? []).join("/"),
+    },
     openGraph: {
       images: "/opengraph-image.png",
       title: page.title,

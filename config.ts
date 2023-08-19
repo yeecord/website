@@ -7,6 +7,8 @@ export const API_ENDPOINT = isProduction
   : "http://127.0.0.1:3001";
 export const CDN_ENDPOINT = "https://cdn.discordapp.com";
 
+export const domain = "https://yeecord.com";
+
 export const footer: FooterCategory[] = [
   {
     title: "連結",

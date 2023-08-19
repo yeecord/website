@@ -2,6 +2,14 @@ import { LinkButton } from "@/components/mdx";
 import Link from "next/link";
 import { BsEyeFill } from "react-icons/bs";
 import { getTagHref, getTags, type TagInfo } from "@/utils/tags";
+import { domain } from "@config";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${domain}/blog/tags`,
+  },
+};
 
 export default function AllTags() {
   const tags: [string, TagInfo][] = [...getTags().entries()].sort(

@@ -1,7 +1,9 @@
 import { BlogItem } from "@/components/blog/BlogItem";
 import { LinkButton } from "@/components/LinkButton";
 import { getTags } from "@/utils/tags";
+import { domain } from "@config";
 import { allBlogs } from "contentlayer/generated";
+import type { Metadata } from "next";
 
 export default function TagPage({ params }: { params: { tag: string } }) {
   const pages = allBlogs.filter(
@@ -34,9 +36,16 @@ export function generateStaticParams() {
   return tags.map(([key]) => ({ params: { tag: key.toLowerCase() } }));
 }
 
-export function generateMetadata({ params }: { params: { tag: string } }) {
+export function generateMetadata({
+  params,
+}: {
+  params: { tag: string };
+}): Metadata {
   return {
     title: `帶有「${params.tag}」標籤的文章`,
+    alternates: {
+      canonical: `${domain}/blog/tags/${params.tag}`,
+    },
     openGraph: {
       images: "/opengraph-image.png",
       title: `帶有「${params.tag}」標籤的文章`,
