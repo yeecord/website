@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Admonition from "@/components/mdx/Admonition";
-import { useAdsContext } from "../../adsense";
+import { useAdsContext } from "@/adsense";
 import clsx from "clsx";
 
 /**
