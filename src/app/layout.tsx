@@ -14,6 +14,7 @@ import "./global.css";
 
 const noto = Noto_Sans_TC({
   preload: true,
+  display: "swap",
   weight: "400",
   subsets: ["latin"],
 });
