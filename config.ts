@@ -1,11 +1,13 @@
-import { FooterCategory } from "@components/Footer";
-import type { AuthorData } from "@schema/blog";
+import type { FooterCategory } from "@/components/Footer";
+import type { AuthorData } from "@/types";
 
 export const isProduction = process.env.NODE_ENV === "production";
 export const API_ENDPOINT = isProduction
   ? "https://api.yeecord.com"
   : "http://127.0.0.1:3001";
 export const CDN_ENDPOINT = "https://cdn.discordapp.com";
+
+export const domain = "https://yeecord.com";
 
 export const footer: FooterCategory[] = [
   {
@@ -113,9 +115,9 @@ export const blogAuthors: Record<string, AuthorData> = {
     image_url: "/blog/nathan.jpg",
   },
   money: {
-    name: "Money",
+    name: "Fuma",
     title: "Yeecord 網站的前端工程師",
-    url: "https://money-portfolio.vercel.app",
+    url: "https://fuma-dev.vercel.app",
     image_url: "/blog/money.jpg",
   },
 };

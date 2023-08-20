@@ -1,3 +1,4 @@
+"use client";
 import { AiFillCaretDown } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion";
 import { type ReactNode, useState } from "react";
@@ -18,7 +19,7 @@ export function Accordion({ title, children }: AccordionProps) {
       )}
     >
       <div
-        className="h-stack cursor-pointer justify-between p-4 text-black dark:text-white"
+        className="flex cursor-pointer flex-row justify-between gap-2.5 p-4 text-black dark:text-white"
         onClick={() => setOpen((prev) => !prev)}
       >
         <p className="text-lg font-bold sm:text-xl">{title}</p>
@@ -47,7 +48,7 @@ export function Accordion({ title, children }: AccordionProps) {
               duration: 0.4,
               ease: [0.04, 0.62, 0.23, 0.98],
             }}
-            className="text-secondary-light dark:text-secondary-dark"
+            className="text-muted-foreground"
           >
             <div className="px-4 pb-4">{children}</div>
           </motion.section>

@@ -1,6 +1,7 @@
+"use client";
 import React, { useEffect } from "react";
-import Admonition from "@components/mdx/Admonition";
-import { useAdsContext } from "../../adsense";
+import Admonition from "@/components/mdx/Admonition";
+import { useAdsContext } from "@/adsense";
 import clsx from "clsx";
 
 /**
@@ -25,7 +26,7 @@ export function Adsense() {
   if (failed)
     return (
       <Admonition title="太無情了擋廣告" type="warning">
-        關閉 AdBlocker 讓機器龍多活一天
+        <p>關閉 AdBlocker 讓機器龍多活一天</p>
       </Admonition>
     );
 
@@ -35,7 +36,7 @@ export function Adsense() {
       <div
         className={clsx(
           "relative min-h-[280px] after:z-[-1] after:text-gray-500 after:content-['太無情了阿怎麼沒有顯示廣告']",
-          "after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transform after:text-sm",
+          "after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transform after:text-sm",
         )}
       >
         <ins

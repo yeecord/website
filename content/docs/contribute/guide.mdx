@@ -1,0 +1,181 @@
+---
+title: "貢獻指南"
+description: 協助我們將文檔變得更完善!
+---
+
+import { Tabs, Tab } from "next-docs-ui/components/tabs";
+import { Steps, Step } from "next-docs-ui/components/steps";
+
+<Steps>
+
+<Step>
+
+### 我的頁面在哪裡？
+
+所有 mdx 檔案都已移至 `/content`
+
+| 文檔            | 部落格          |
+| --------------- | --------------- |
+| `/content/docs` | `/content/blog` |
+
+</Step>
+
+<Step>
+
+### 圖片引入方法更新
+
+以前的版本允許您從 `/static` 資料夾引入圖片, 例如:
+
+```mdx
+![說明文字](/my-photo.png)
+```
+
+現在你必須將你的圖片放入 `/public` 資料夾並使用 `![alt](/my-photo.png)` 導入。
+
+```mdx
+# 以前
+
+![alt](/docs/my-photo.png)
+
+# 現在
+
+![alt](/docs/my-photo.png)
+```
+
+</Step>
+
+</Steps>
+
+## 新增頁面的方法
+
+<Steps>
+  
+<Step>
+
+### 建立 .mdx 檔案
+
+請填寫所有字段
+
+<Tabs items={["文檔", "部落格"]} defaultValue="文檔">
+
+<Tab value="文檔">
+
+在 `/content/docs` 資料夾中建立檔案
+
+```mdx
+---
+title: 你的標題
+description: 這是關於什麼的?
+---
+
+內文...
+```
+
+</Tab>
+
+<Tab value="部落格">
+  
+在 `/content/blog` 資料夾中建立檔案
+
+```mdx
+---
+title: 你的標題
+description: 這是關於什麼的?
+authors: [<作者編號>]
+date: 2023/1/1
+image: "/blog/banner.jpg"
+tags: ["文章標籤"]
+---
+```
+
+#### 得到你自己的作者編號
+
+打開 `config.ts` 文件, 滾動到 `blogAuthors` 並添加您的個人信息
+
+- 避免文字太長
+- 不要放可疑的網址
+
+```ts
+export const blogAuthors: Record<string, AuthorData> = {
+  //...
+  henry: {
+    name: "你的名字",
+    title: "簡短的自我介紹",
+    url: "https://my-website.com",
+    image_url: "/blog/henry.jpg", //將圖像放入 /public/blog/henry.jpg
+  },
+};
+```
+
+之後你便可以用 `henry` 作為你的作者編號
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+<Step>
+
+### 創建內容
+
+我相信你已經學習了一些基本的 Markdown 語法
+
+#### 你需要注意這些事情
+
+- 適當的用詞
+- 禁止自我宣傳
+- 不應帶偏見或政治立場
+
+#### 改進你的文章
+
+- **漂亮的排版:**
+  使用標題而不是大量雜亂無章的文字
+- **數字和英文之間的空格:**
+  一切都遵循 [中文案排版指南](https://github.com/sparanoid/chinese-copywriting-guidelines)
+
+</Step>
+
+<Step>
+
+### 排序頁面
+
+您必須編輯 `meta.json` 以更改每個頁面的順序：
+
+```json
+{
+  "my-new-page": "新頁面標題",
+  "index": "快速入門",
+  "commands": "指令"
+}
+```
+
+</Step>
+
+<Step>
+
+### 對此有疑問？
+
+有支援需求可以聯絡我們的支援群組
+
+<div className="mt-4 flex flex-row gap-2.5">
+  <LinkButton
+    href="https://discord.gg/yeecord"
+    variant="primary"
+    children="加入服務器"
+  />
+</div>
+
+</Step>
+
+</Steps>
+
+### 我們刪除了那些舊語法
+
+請改用自定義組件
+
+```
+::: warning 警告
+這不再受支持
+:::
+```

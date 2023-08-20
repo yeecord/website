@@ -5,7 +5,7 @@ import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/utils/cn";
 
 export function Hero() {
   return (
@@ -17,7 +17,7 @@ export function Hero() {
     >
       <Gradient
         src={HeroGradient}
-        className="absolute -top-[200px] -right-0 -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
+        className="absolute -right-0 -top-[200px] -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
       />
       <h1
         className={
@@ -27,7 +27,7 @@ export function Hero() {
         萬中選一的
         <span
           className={clsx(
-            "text-gradient mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 max-lg:my-2 max-lg:block",
+            "mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 bg-clip-text text-transparent max-lg:my-2 max-lg:block",
             styles["animated-gradient"],
           )}
         >
@@ -37,7 +37,7 @@ export function Hero() {
       </h1>
       <h2
         className={clsx(
-          "max-w-[450px] text-xl text-secondary-light dark:text-secondary-dark",
+          "max-w-[450px] text-xl text-muted-foreground",
           "md:max-w-[650px] lg:text-2xl",
         )}
       >
@@ -45,7 +45,7 @@ export function Hero() {
       </h2>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
-        <p className="mb-3 text-lg font-semibold text-secondary-light dark:text-secondary-dark md:mb-4">
+        <p className="mb-3 text-lg font-semibold text-muted-foreground md:mb-4">
           各大伺服器一致好評
         </p>
         <div
@@ -75,7 +75,7 @@ function Buttons() {
       <LinkButton
         href="/invite"
         target="_blank"
-        className={twMerge(
+        className={cn(
           "inline-flex items-center justify-center gap-2.5 bg-black text-white",
           "dark:bg-white dark:text-black",
           bn,
@@ -124,7 +124,7 @@ function Server({
   transparent?: boolean;
 }) {
   return (
-    <div className="h-stack mx-4 my-1 flex-shrink-0 gap-3 text-black dark:text-white">
+    <div className="mx-4 my-1 flex flex-shrink-0 flex-row gap-3 text-black dark:text-white">
       <Image
         alt={name}
         src={img}

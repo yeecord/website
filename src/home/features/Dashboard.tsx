@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import ChartSvg from "@static/home/chart.svg";
 import Image from "next/image";
@@ -26,7 +28,7 @@ export function Dashboard() {
           )}
         />
         <h1 className="text-3xl font-bold sm:text-5xl">簡易的控制面板</h1>
-        <h3 className="text-lg text-secondary-light dark:text-secondary-dark sm:text-xl">
+        <h3 className="text-lg text-muted-foreground sm:text-xl">
           通過美觀、簡易的方式來自定義
           <br className="sm:hidden" />
           你的機器人
@@ -48,15 +50,13 @@ function Settings() {
       whileInView={{ y: 0 }}
       initial={{ y: "10rem" }}
     >
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <div className="rounded-xl bg-purple-500 p-3 text-3xl text-white">
           <RiSettings2Fill />
         </div>
         <div>
           <h3 className="text-lg font-bold sm:text-xl">設置</h3>
-          <p className="font-bold text-secondary-light dark:text-secondary-dark">
-            下拉選單身分組
-          </p>
+          <p className="font-bold text-muted-foreground">下拉選單身分組</p>
         </div>
       </div>
       <div
@@ -89,15 +89,13 @@ function Chart() {
       initial={{ x: "8rem", opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <div className="rounded-xl bg-blue-600 p-5 text-3xl text-white">
           <BsBarChartFill />
         </div>
         <div>
           <h3 className="text-lg font-bold sm:text-xl">你的伺服器</h3>
-          <p className="font-bold text-secondary-light dark:text-secondary-dark">
-            數據分析
-          </p>
+          <p className="font-bold text-muted-foreground">數據分析</p>
         </div>
       </div>
       <Image src={ChartSvg} alt="chart" className="mt-auto rounded-3xl" />
@@ -112,22 +110,20 @@ function Music() {
       whileInView={{ y: 0 }}
       initial={{ y: "10rem" }}
     >
-          <div className="h-stack">
-            <div className="rounded-xl bg-green-500 p-3 text-3xl text-white">
-              <BsMusicNoteBeamed />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold sm:text-xl">音樂系統</h3>
-              <p className="font-bold text-secondary-light dark:text-secondary-dark">
-                下一首歌
-              </p>
-            </div>
-          </div>
-          <div className="h-stack mt-auto pt-2">
-            <p>1:02</p>
-            <Progress track="w-[36%]" />
-            <p>3:20</p>
-          </div>
-      </motion.div>
-  )
+      <div className="flex flex-row gap-2.5">
+        <div className="rounded-xl bg-green-500 p-3 text-3xl text-white">
+          <BsMusicNoteBeamed />
+        </div>
+        <div>
+          <h3 className="text-lg font-bold sm:text-xl">音樂系統</h3>
+          <p className="font-bold text-muted-foreground">下一首歌</p>
+        </div>
+      </div>
+      <div className="mt-auto flex flex-row gap-2.5 pt-2">
+        <p>1:02</p>
+        <Progress track="w-[36%]" />
+        <p>3:20</p>
+      </div>
+    </motion.div>
+  );
 }

@@ -1,5 +1,12 @@
+"use client";
 import Script from "next/script";
-import { createContext, type ReactNode, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 const AdsContext = createContext({
   failed: false,

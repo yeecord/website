@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { motion, type Variants } from "framer-motion";
 import cn_styles from "./chinese.module.css";
@@ -42,13 +44,13 @@ export function ChineseUI() {
           className="relative z-[2]"
         >
           <h1 className="mb-2 text-2xl font-bold sm:text-3xl">全中文化界面</h1>
-          <h3 className="text-lg text-secondary-light dark:text-secondary-dark sm:text-xl">
+          <h3 className="text-lg text-muted-foreground sm:text-xl">
             我們提供了全中文化的界面，讓英文不再成為優質機器人的隔閡
           </h3>
           <Skeleton />
           <div
             className={clsx(
-              "relative -ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:mr-[14%] xl:ml-auto",
+              "relative -ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:ml-auto xl:mr-[14%]",
             )}
           >
             <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
@@ -73,7 +75,7 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
   return (
     <motion.div
       className={clsx(
-        "h-stack mt-4 h-fit rounded-xl bg-white p-4 dark:bg-slate-900 xl:pr-[4rem]",
+        "mt-4 flex h-fit flex-row gap-2.5 rounded-xl bg-white p-4 dark:bg-slate-900 xl:pr-[4rem]",
         "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
       )}
       variants={{

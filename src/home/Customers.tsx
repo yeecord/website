@@ -1,9 +1,11 @@
+"use client";
+
 import PinkWave from "@static/home/pink-wave.svg";
 import Image from "next/image";
 import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import { motion, type MotionValue, useTransform } from "framer-motion";
-import formatter from "@utils/formatter";
+import formatter from "@/utils/formatter";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 
 export function Customers({ usedBy }: { usedBy: number }) {
@@ -38,7 +40,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
       >
         <p
           className={clsx(
-            "mx-auto mb-8 w-fit rounded-md bg-gradient-to-br from-orange-400 to-orange-500 py-2 px-4 font-semibold text-white",
+            "mx-auto mb-8 w-fit rounded-md bg-gradient-to-br from-orange-400 to-orange-500 px-4 py-2 font-semibold text-white",
             "text-3xl sm:text-4xl",
           )}
         >
@@ -46,21 +48,19 @@ export function Customers({ usedBy }: { usedBy: number }) {
         </p>
         <h1 className="text-5xl font-bold">
           受超過
-          <span className="text-gradient mx-2 block from-pink-600 to-orange-400 max-md:text-7xl md:inline">
+          <span className="mx-2 block bg-gradient-to-b from-pink-600 to-orange-400 bg-clip-text text-transparent max-md:text-7xl md:inline">
             <ServerCount count={count} />
           </span>
           個伺服器使用
         </h1>
-        <h3 className="text-lg font-bold text-secondary-light dark:text-secondary-dark sm:text-xl">
+        <h3 className="text-lg text-muted-foreground sm:text-xl">
           受到無數大型社群的廣泛信任
         </h3>
-        <div className="h-stack">
+        <div className="flex flex-row gap-2.5">
           <LinkButton
             href="/invite"
             className={clsx(
-              "rounded-full bg-blue-200/30 px-6 py-3 text-lg font-bold text-black shadow-lg transition-all",
-              "hover:bg-blue-300/40",
-              "dark:bg-white/10 dark:text-white dark:hover:bg-white/20",
+              "rounded-full bg-secondary px-6 py-3 text-lg font-medium text-secondary-foreground shadow-lg transition-all hover:bg-accent hover:text-accent-foreground",
             )}
           >
             邀請機器人
@@ -131,13 +131,11 @@ function Comment({
   return (
     <div
       className={clsx(
-        "flex cursor-pointer flex-col gap-3 rounded-xl bg-white p-4 dark:bg-slate-900/70 dark:backdrop-blur-3xl",
-        "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
-        "border-[2px] border-gray-300 transition-colors dark:border-slate-800",
-        "hover:dark:border-pink-400 hover:dark:bg-slate-900",
+        "flex cursor-pointer flex-col gap-3 rounded-xl border-2 p-4 shadow-2xl shadow-blue-800/30 transition-colors dark:shadow-black/60 dark:backdrop-blur-3xl",
+        "hover:bg-accent hover:text-accent-foreground hover:dark:border-pink-400",
       )}
     >
-      <div className="h-stack">
+      <div className="flex flex-row gap-2.5">
         <Image
           alt={author}
           src={icon}
@@ -146,18 +144,14 @@ function Comment({
           className="aspect-square rounded-full"
         />
         <div>
-          <p className="font-semibold text-pink-700 dark:text-pink-300">
-            {title}
-          </p>
+          <p className="text-pink-700 dark:text-pink-300">{title}</p>
           <h3 className="text-lg font-bold text-black dark:text-white sm:text-xl">
             {author}
           </h3>
         </div>
       </div>
 
-      <p className="text-secondary-light dark:text-slate-300 md:text-lg">
-        {content}
-      </p>
+      <p className="text-muted-foreground">{content}</p>
     </div>
   );
 }

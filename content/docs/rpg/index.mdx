@@ -1,0 +1,57 @@
+---
+title: RPG 總覽
+description: 將 Discord 變身成一個有趣的遊樂場！結合了工作、捕魚、商店、寵物、結婚等系統，讓你的 Discord 更有趣！
+---
+
+import {
+  RiMoneyCnyBoxFill as Money,
+  RiErrorWarningFill as Warning,
+  RiShoppingCart2Fill as Shopping,
+} from "react-icons/ri";
+import { GiWoodenSign as Craft } from "react-icons/gi";
+
+將 Discord 變身成一個有趣的遊樂場！結合了工作、捕魚、商店、寵物、結婚等系統，讓你的 Discord 更有趣！
+
+<div className='flex flex-row gap-2.5 mt-4 mb-8'>
+
+<LinkButton
+  variant="primary"
+  href="/docs/rpg/introduction"
+  children="開始使用"
+/>
+
+</div>
+
+<Cards>
+
+<Card
+  icon={<Money />}
+  title="民生工作"
+  href="/docs/rpg/jobs"
+  description="得到你的第一份工作!"
+/>
+
+<Card
+  icon={<Warning />}
+  title="遊戲規則"
+  href="/docs/rpg/introduction/#規則"
+  description="確保您已仔細閱讀此內容"
+/>
+
+<Card
+  icon={<Craft />}
+  title="製作物品"
+  href="/docs/rpg/make"
+  description="透過使用 &make 指令來合成出物品"
+/>
+
+<Card
+  icon={<Shopping />}
+  title="去逛街"
+  href="/docs/rpg/shop"
+  description="試試我們強大的店鋪系統吧！"
+/>
+
+</Cards>
+
+<Adsense />

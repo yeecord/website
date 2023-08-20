@@ -1,3 +1,5 @@
+"use client";
+
 import Gradient from "./components/Gradient";
 import GreenGradient from "@static/home/green-gradient.svg";
 import clsx from "clsx";
@@ -14,7 +16,7 @@ export function RpgSystem() {
       <div className="flex flex-col gap-10">
         <p
           className={clsx(
-            "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 py-2 px-4 font-semibold text-white",
+            "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 px-4 py-2 font-semibold text-white",
             "text-3xl sm:text-4xl",
           )}
         >
@@ -23,7 +25,7 @@ export function RpgSystem() {
         <h1 className="font-yahei text-5xl font-bold sm:text-5xl lg:text-6xl">
           開創性的<span className="whitespace-nowrap">角色扮演系統</span>
         </h1>
-        <h2 className="mx-auto max-w-2xl text-xl text-secondary-light dark:text-secondary-dark">
+        <h2 className="mx-auto max-w-2xl text-xl text-muted-foreground">
           進入這個奇幻世界，開始你的冒險吧！
         </h2>
       </div>
@@ -102,15 +104,12 @@ function Job({
   return (
     <div
       className={clsx(
-        "flex flex-col gap-3 rounded-xl border-[1px] border-black/10 bg-white/70 p-4 shadow-lg backdrop-blur-3xl",
-        "dark:border-white/10 dark:bg-[rgba(10,10,10,0.7)]",
+        "flex flex-col gap-3 rounded-xl border bg-secondary/70 p-4 text-secondary-foreground shadow-lg backdrop-blur-3xl",
         optional && "max-md:hidden",
       )}
     >
-      <h3 className="text-lg font-bold sm:text-xl">{name}</h3>
-      <p className="font-bold text-secondary-light dark:text-secondary-dark">
-        {description}
-      </p>
+      <h3 className="text-lg font-medium">{name}</h3>
+      <p className="text-muted-foreground">{description}</p>
     </div>
   );
 }

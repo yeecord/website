@@ -44,15 +44,6 @@ const nextConfig = {
   },
 };
 
-/** @type {import('nextra').NextraConfig} */
-const nextraConfig = {
-  theme: "@components/layout",
-  themeConfig: "./theme.config.tsx",
-  staticImage: true,
-  defaultShowCopyCode: true,
-  readingTime: true,
-};
+const { withContentlayer } = require("next-contentlayer");
 
-const withNextra = require("nextra")(nextraConfig);
-
-module.exports = withNextra(nextConfig);
+module.exports = withContentlayer(nextConfig);

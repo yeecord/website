@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+.contentlayer
+
 # testing
 /coverage
 
