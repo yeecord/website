@@ -14,7 +14,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-        yahei: ["Microsoft YaHei", ...fontFamily.sans],
+        yahei: ["Microsoft YaHei", "微軟正黑體", ...fontFamily.sans],
       },
       colors: {
         border: "hsl(var(--border))",
