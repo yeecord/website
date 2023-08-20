@@ -6,7 +6,10 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1rem",
+        sm: "2rem",
+      },
       screens: {
         "2xl": "1300px",
       },
@@ -14,7 +17,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-        yahei: ["Microsoft YaHei", ...fontFamily.sans],
+        yahei: ["Microsoft YaHei", "微軟正黑體", ...fontFamily.sans],
       },
       colors: {
         border: "hsl(var(--border))",
