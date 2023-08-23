@@ -2,7 +2,6 @@ import { Noto_Sans_TC } from "next/font/google";
 import { AdsProvider } from "@/adsense";
 import Script from "next/script";
 import type { ReactNode } from "react";
-import { RootProvider } from "next-docs-ui/provider";
 
 import { NextDocsProvider } from "./next-docs-provider";
 import Footer from "@/components/Footer";
@@ -49,12 +48,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-Hant-TW" className={noto.className}>
       <body className="flex min-h-screen flex-col">
-        <RootProvider>
-          <AdsProvider>
-            <NextDocsProvider>{children}</NextDocsProvider>
+        <AdsProvider>
+          <NextDocsProvider>
+            {children}
             <Footer categories={footer} />
-          </AdsProvider>
-        </RootProvider>
+          </NextDocsProvider>
+        </AdsProvider>
         {process.env.NODE_ENV === "production" && (
           <Script
             async
