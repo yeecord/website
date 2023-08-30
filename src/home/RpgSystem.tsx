@@ -22,7 +22,7 @@ export function RpgSystem() {
         >
           冒險模式
         </p>
-        <h1 className="font-yahei text-5xl font-bold sm:text-5xl lg:text-6xl">
+        <h1 className="text-5xl font-bold sm:text-5xl lg:text-6xl">
           開創性的<span className="whitespace-nowrap">角色扮演系統</span>
         </h1>
         <h2 className="mx-auto max-w-2xl text-xl text-muted-foreground">

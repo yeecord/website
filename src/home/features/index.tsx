@@ -16,7 +16,7 @@ export function Features() {
         >
           功能強大
         </p>
-        <h1 className="font-yahei text-5xl font-bold sm:text-5xl lg:text-6xl">
+        <h1 className="text-5xl font-bold sm:text-5xl lg:text-6xl">
           您需要的功能都&#8288;在&#8288;這&#8288;裡
         </h1>
         <h2 className="mx-auto max-w-2xl text-xl text-muted-foreground">

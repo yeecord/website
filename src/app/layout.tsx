@@ -12,8 +12,8 @@ import "next-docs-ui/style.css";
 import "./global.css";
 
 const noto = Noto_Sans_TC({
-  display: "swap",
   weight: "400",
+  display: "swap",
   subsets: ["latin"],
 });
 

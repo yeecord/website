@@ -1,5 +1,3 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./content/**/*.{js,ts,jsx,tsx,mdx}", "./src/**/*.{jsx,tsx}"],
@@ -12,10 +10,6 @@ module.exports = {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        yahei: ["Microsoft YaHei", "微軟正黑體", ...fontFamily.sans],
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
