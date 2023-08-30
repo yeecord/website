@@ -21,7 +21,7 @@ export function AdsProvider({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({ failed }), [failed]);
 
   return (
-    <>
+    <AdsContext.Provider value={value}>
       <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
@@ -29,7 +29,7 @@ export function AdsProvider({ children }: { children: ReactNode }) {
         strategy="lazyOnload"
         onError={() => setFailed(true)}
       />
-      <AdsContext.Provider value={value}>{children}</AdsContext.Provider>
-    </>
+      {children}
+    </AdsContext.Provider>
   );
 }

@@ -8,7 +8,6 @@ import Footer from "@/components/Footer";
 import { footer, url_base } from "@config";
 import type { Metadata } from "next";
 
-import "next-docs-ui/style.css";
 import "./global.css";
 
 const noto = Noto_Sans_TC({
