@@ -53,10 +53,10 @@ export function Games() {
             <h1 className="mb-2 text-2xl font-bold sm:text-3xl">
               不只是聊天平台
             </h1>
-            <h3 className="text-lg text-muted-foreground sm:text-xl">
+            <p className="text-lg text-muted-foreground sm:text-xl">
               透過機器人各種有趣的系統，讓你的 Discord
               更加有趣，同時朋友也可以和你一起玩
-            </h3>
+            </p>
             <LinkButton
               className="mt-6 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 px-6 py-3 text-lg font-bold text-white"
               href="/docs/rpg/"

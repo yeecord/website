@@ -53,9 +53,9 @@ export function Customers({ usedBy }: { usedBy: number }) {
           </span>
           個伺服器使用
         </h1>
-        <h3 className="text-lg text-muted-foreground sm:text-xl">
+        <p className="text-lg text-muted-foreground sm:text-xl">
           受到無數大型社群的廣泛信任
-        </h3>
+        </p>
         <div className="flex flex-row gap-2.5">
           <LinkButton
             href="/invite"
@@ -145,9 +145,9 @@ function Comment({
         />
         <div>
           <p className="text-pink-700 dark:text-pink-300">{title}</p>
-          <h3 className="text-lg font-bold text-black dark:text-white sm:text-xl">
+          <p className="text-lg font-bold text-black dark:text-white sm:text-xl">
             {author}
-          </h3>
+          </p>
         </div>
       </div>
 

@@ -44,9 +44,9 @@ export function ChineseUI() {
           className="relative z-[2]"
         >
           <h1 className="mb-2 text-2xl font-bold sm:text-3xl">全中文化界面</h1>
-          <h3 className="text-lg text-muted-foreground sm:text-xl">
+          <p className="text-lg text-muted-foreground sm:text-xl">
             我們提供了全中文化的界面，讓英文不再成為優質機器人的隔閡
-          </h3>
+          </p>
           <Skeleton />
           <div
             className={clsx(

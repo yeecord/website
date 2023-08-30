@@ -28,11 +28,11 @@ export function Dashboard() {
           )}
         />
         <h1 className="text-3xl font-bold sm:text-5xl">簡易的控制面板</h1>
-        <h3 className="text-lg text-muted-foreground sm:text-xl">
+        <p className="text-lg text-muted-foreground sm:text-xl">
           通過美觀、簡易的方式來自定義
           <br className="sm:hidden" />
           你的機器人
-        </h3>
+        </p>
       </div>
       <div className="mt-[2rem] grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Chart />
@@ -55,7 +55,7 @@ function Settings() {
           <RiSettings2Fill />
         </div>
         <div>
-          <h3 className="text-lg font-bold sm:text-xl">設置</h3>
+          <p className="text-lg font-bold sm:text-xl">設置</p>
           <p className="font-bold text-muted-foreground">下拉選單身分組</p>
         </div>
       </div>
@@ -94,7 +94,7 @@ function Chart() {
           <BsBarChartFill />
         </div>
         <div>
-          <h3 className="text-lg font-bold sm:text-xl">你的伺服器</h3>
+          <p className="text-lg font-bold sm:text-xl">你的伺服器</p>
           <p className="font-bold text-muted-foreground">數據分析</p>
         </div>
       </div>
@@ -115,7 +115,7 @@ function Music() {
           <BsMusicNoteBeamed />
         </div>
         <div>
-          <h3 className="text-lg font-bold sm:text-xl">音樂系統</h3>
+          <p className="text-lg font-bold sm:text-xl">音樂系統</p>
           <p className="font-bold text-muted-foreground">下一首歌</p>
         </div>
       </div>
