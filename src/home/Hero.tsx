@@ -135,7 +135,7 @@ function Server({
           transparent && "brightness-[0%] dark:brightness-100",
         )}
       />
-      <h3 className="text-lg sm:text-xl">{name}</h3>
+      <p className="text-lg sm:text-xl">{name}</p>
     </div>
   );
 }

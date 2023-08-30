@@ -108,7 +108,7 @@ function Job({
         optional && "max-md:hidden",
       )}
     >
-      <h3 className="text-lg font-medium">{name}</h3>
+      <p className="text-lg font-medium">{name}</p>
       <p className="text-muted-foreground">{description}</p>
     </div>
   );

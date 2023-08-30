@@ -41,7 +41,7 @@ export default async function Page({
           href={`https://github.com/yeecord/website/tree/master/content/${page._raw.sourceFilePath}`}
           rel="noreferrer noopener"
           target="_blank"
-          className="mt-4 inline-flex items-center border-t pt-4 text-xs text-muted-foreground hover:text-accent-foreground"
+          className="inline-flex items-center text-xs text-muted-foreground hover:text-accent-foreground"
         >
           在 Github 上編輯此頁面 <ExternalLinkIcon className="ml-2 h-3 w-3" />
         </a>

@@ -79,10 +79,10 @@ function Content() {
       )}
     >
       <h1 className="text-3xl font-bold sm:text-5xl">輕鬆播放音樂</h1>
-      <h3 className="text-lg font-bold text-muted-foreground sm:text-xl">
+      <p className="text-lg font-bold text-muted-foreground sm:text-xl">
         讓你可以和朋友一起收聽 Spotify 和 SoundCloud
         上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
-      </h3>
+      </p>
       <div className="mt-3 flex flex-row gap-2.5">
         <LinkButton
           className={clsx(
@@ -129,7 +129,7 @@ function Song({
           src={img}
         />
         <div className="flex flex-col gap-3">
-          <h3 className="text-lg font-bold sm:text-xl">{children}</h3>
+          <p className="text-lg font-bold sm:text-xl">{children}</p>
           <p className="text-lg text-muted-foreground">{duration}</p>
         </div>
       </div>
