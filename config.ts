@@ -6,6 +6,11 @@ export const API_ENDPOINT = isProduction
   ? "https://api.yeecord.com"
   : "http://127.0.0.1:3001";
 export const CDN_ENDPOINT = "https://cdn.discordapp.com";
+export const url_base = new URL(
+  process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000",
+);
 
 export const domain = "https://yeecord.com";
 
