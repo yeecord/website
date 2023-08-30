@@ -124,7 +124,7 @@ function Server({
   transparent?: boolean;
 }) {
   return (
-    <div className="mx-4 my-1 flex flex-shrink-0 flex-row gap-3 text-black dark:text-white">
+    <div className="mx-4 my-1 flex flex-shrink-0 flex-row items-center gap-3">
       <Image
         alt={name}
         src={img}
@@ -135,7 +135,7 @@ function Server({
           transparent && "brightness-[0%] dark:brightness-100",
         )}
       />
-      <h3 className="text-lg font-bold sm:text-xl">{name}</h3>
+      <h3 className="text-lg sm:text-xl">{name}</h3>
     </div>
   );
 }
