@@ -73,7 +73,12 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
       canonical: `${domain}/docs/` + (params.slug ?? []).join("/"),
     },
     openGraph: {
-      images: "/opengraph-image.png",
+      images: {
+        url: `/api/og/${(params.slug ?? []).join("/")}`,
+        width: 1200,
+        height: 630,
+        alt: "Banner",
+      },
       title: page.title,
       description: page.description,
     },

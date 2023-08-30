@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 import { NextDocsProvider } from "./next-docs-provider";
 import Footer from "@/components/Footer";
-import { footer } from "@config";
+import { footer, url_base } from "@config";
 import type { Metadata } from "next";
 
 import "next-docs-ui/style.css";
@@ -37,11 +37,7 @@ export const metadata: Metadata = {
     description:
       "YEE式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間",
   },
-  metadataBase: new URL(
-    process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000",
-  ),
+  metadataBase: url_base,
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
