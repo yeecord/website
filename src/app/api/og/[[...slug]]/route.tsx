@@ -11,7 +11,7 @@ export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
   if (!page) return NextResponse.json("Not Found", { status: 404 });
 
   noto ??= readFileSync(
-    resolve(process.cwd(), "public/noto-sans–semi-bold.woff"),
+    resolve(process.cwd(), "public/noto-sans-semi-bold.woff"),
   );
 
   return new ImageResponse(
