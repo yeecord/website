@@ -10,11 +10,9 @@ export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
   const page = getPage(params.slug);
   if (!page) return NextResponse.json("Not Found", { status: 404 });
 
-  if (noto == null) {
-    const file = readFileSync(resolve(process.cwd(), "public/noto-sans.ttf"));
-
-    noto = file;
-  }
+  noto ??= readFileSync(
+    resolve(process.cwd(), "public/noto-sans–semi-bold.woff"),
+  );
 
   return new ImageResponse(
     (
