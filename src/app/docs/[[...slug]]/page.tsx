@@ -36,16 +36,18 @@ export default async function Page({
       toc={toc}
       footer={neighbours}
       lastUpdate={time}
-      tocContent={
-        <a
-          href={`https://github.com/yeecord/website/tree/master/content/${page._raw.sourceFilePath}`}
-          rel="noreferrer noopener"
-          target="_blank"
-          className="inline-flex items-center text-xs text-muted-foreground hover:text-accent-foreground"
-        >
-          在 Github 上編輯此頁面 <ExternalLinkIcon className="ml-2 h-3 w-3" />
-        </a>
-      }
+      tableOfContent={{
+        footer: (
+          <a
+            href={`https://github.com/yeecord/website/tree/master/content/${page._raw.sourceFilePath}`}
+            rel="noreferrer noopener"
+            target="_blank"
+            className="inline-flex items-center text-xs text-muted-foreground hover:text-accent-foreground"
+          >
+            在 Github 上編輯此頁面 <ExternalLinkIcon className="ml-2 h-3 w-3" />
+          </a>
+        ),
+      }}
     >
       <MDXContent>
         <h1>{page.title}</h1>
