@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { IoMdOpen } from "react-icons/io";
+import { ExternalLinkIcon } from "lucide-react";
 
 export type FooterCategory = {
   title: string;
@@ -55,14 +55,17 @@ function Category({ category }: { category: FooterCategory }) {
     <div className="flex flex-col">
       <p className="mb-2 font-medium max-sm:cursor-pointer">{category.title}</p>
       <div className="flex flex-col gap-1 text-sm">
-        {category.items.map((item, j) => (
+        {category.items.map((item, i) => (
           <Link
-            key={j}
+            key={i}
             href={item.href}
             className="text-muted-foreground transition-colors hover:text-accent-foreground"
             target={item.newWindow === true ? "_blank" : "_self"}
           >
-            {item.label} {item.newWindow && <IoMdOpen className="inline" />}
+            {item.label}
+            {item.newWindow && (
+              <ExternalLinkIcon className="ml-1.5 inline h-3 w-3" />
+            )}
           </Link>
         ))}
       </div>

@@ -40,8 +40,7 @@ export function Customers({ usedBy }: { usedBy: number }) {
       >
         <p
           className={clsx(
-            "mx-auto mb-8 w-fit rounded-md bg-gradient-to-br from-orange-400 to-orange-500 px-4 py-2 font-semibold text-white",
-            "text-3xl sm:text-4xl",
+            "mx-auto mb-8 w-fit rounded-md bg-gradient-to-br from-orange-400 to-orange-500 px-6 py-2 text-xl font-semibold text-white sm:text-3xl",
           )}
         >
           倍受信賴

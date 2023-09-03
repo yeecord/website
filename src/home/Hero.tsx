@@ -1,4 +1,4 @@
-import { IoMdOpen } from "react-icons/io";
+import { ExternalLinkIcon } from "lucide-react";
 import Gradient from "./components/Gradient";
 import HeroGradient from "@static/hero.svg";
 import Image from "next/image";
@@ -81,7 +81,7 @@ function Buttons() {
           bn,
         )}
       >
-        <IoMdOpen />
+        <ExternalLinkIcon />
         邀請機器人
       </LinkButton>
     </div>

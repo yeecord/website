@@ -1,16 +1,9 @@
-import clsx from "clsx";
 import { type ReactNode } from "react";
-import { RiFeedbackFill, RiGithubFill } from "react-icons/ri";
+import { GithubIcon, MessageSquarePlusIcon } from "lucide-react";
 
 export default function Sponsor() {
   return (
-    <div
-      className={clsx(
-        "mt-[5rem] p-4 py-20",
-        "flex w-full flex-col items-center gap-3 text-center",
-        "font-semibold",
-      )}
-    >
+    <div className="mt-20 flex flex-col items-center gap-3 bg-gradient-to-b from-secondary/50 px-4 py-40 text-center">
       <p className="text-lg tracking-widest text-purple-400">
         喜歡YEE式機器龍?
       </p>
@@ -26,7 +19,7 @@ export default function Sponsor() {
         <Card
           title="照顧機器龍"
           text="在 Github 上貢獻"
-          icon={<RiGithubFill />}
+          icon={<GithubIcon />}
           href="https://github.com/yeecord/website"
         >
           貢獻
@@ -34,7 +27,7 @@ export default function Sponsor() {
         <Card
           title="給予反饋"
           text="在 Discord 回饋資訊給我們"
-          icon={<RiFeedbackFill />}
+          icon={<MessageSquarePlusIcon />}
           href="https://discord.gg/yeecord"
         >
           加入群組
@@ -60,22 +53,16 @@ function Card({
   return (
     <div className="rounded-xl border-[1px] border-black/10 bg-white/40 p-4 text-start shadow-lg dark:border-white/10 dark:bg-white/10">
       <div className="flex flex-row gap-2.5">
-        <div className="rounded-xl bg-purple-400 p-3 text-2xl text-white dark:bg-purple-500">
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-400 text-white dark:bg-purple-500">
           {icon}
         </div>
         <div>
-          <p className="text-lg font-bold sm:text-xl">{title}</p>
-          <p className="text-muted-foreground">{text}</p>
+          <p className="text-lg font-semibold">{title}</p>
+          <p className="text-sm text-muted-foreground">{text}</p>
         </div>
       </div>
       <a href={href} target="_blank" rel="noreferrer">
-        <button
-          className={clsx(
-            "text-md mt-7 w-[8rem] rounded-md py-2 font-bold text-white shadow-lg",
-            "bg-purple-400 shadow-purple-300",
-            "dark:bg-purple-500 dark:shadow-purple-700",
-          )}
-        >
+        <button className="mt-7 w-full rounded-md bg-purple-400 py-2 text-sm font-medium text-white shadow-lg shadow-purple-300 dark:bg-purple-500 dark:shadow-purple-700 sm:w-[8rem]">
           {children}
         </button>
       </a>

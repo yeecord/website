@@ -16,8 +16,7 @@ export function RpgSystem() {
       <div className="flex flex-col gap-10">
         <p
           className={clsx(
-            "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 px-4 py-2 font-semibold text-white",
-            "text-3xl sm:text-4xl",
+            "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 px-6 py-2 text-xl font-semibold text-white sm:text-3xl",
           )}
         >
           冒險模式
@@ -104,7 +103,7 @@ function Job({
   return (
     <div
       className={clsx(
-        "flex flex-col gap-3 rounded-xl border bg-secondary/70 p-4 text-secondary-foreground shadow-lg backdrop-blur-3xl",
+        "flex flex-col gap-3 rounded-xl border bg-background/50 bg-gradient-to-b from-secondary p-4 text-secondary-foreground shadow-lg backdrop-blur-3xl",
         optional && "max-md:hidden",
       )}
     >

@@ -1,8 +1,7 @@
 import { BlogItem, LargeBlogItem } from "@/components/blog/BlogItem";
 import { LinkButton } from "@/components/LinkButton";
-import { BsEyeFill } from "react-icons/bs";
+import { EyeIcon, GithubIcon } from "lucide-react";
 import { blogRecommendations, domain } from "@config";
-import { RiGithubFill } from "react-icons/ri";
 import { BlogRecommend } from "@/components/blog/BlogRecommend";
 import { type Blog, allBlogs } from "contentlayer/generated";
 import type { Metadata } from "next";
@@ -31,14 +30,14 @@ export default function BlogIndex() {
         <div className="flex flex-row justify-center gap-2.5 max-sm:flex-col max-sm:items-stretch">
           <LinkButton
             href="/blog/tags"
-            icon={<BsEyeFill className="text-xl" />}
+            icon={<EyeIcon className="h-4 w-4" />}
             variant="primary"
           >
             查看所有標籤
           </LinkButton>
           <LinkButton
             href="https://github.com/yeecord/website"
-            icon={<RiGithubFill className="text-xl" />}
+            icon={<GithubIcon className="h-4 w-4" />}
             target="_blank"
           >
             加入我們

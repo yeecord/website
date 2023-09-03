@@ -4,11 +4,11 @@ description: 將 Discord 變身成一個有趣的遊樂場！結合了工作、�
 ---
 
 import {
-  RiMoneyCnyBoxFill as Money,
-  RiErrorWarningFill as Warning,
-  RiShoppingCart2Fill as Shopping,
-} from "react-icons/ri";
-import { GiWoodenSign as Craft } from "react-icons/gi";
+  ShoppingCart,
+  Milestone,
+  CircleDollarSign,
+  ScissorsLineDashed,
+} from "lucide-react";
 
 將 Discord 變身成一個有趣的遊樂場！結合了工作、捕魚、商店、寵物、結婚等系統，讓你的 Discord 更有趣！
 
@@ -25,28 +25,28 @@ import { GiWoodenSign as Craft } from "react-icons/gi";
 <Cards>
 
 <Card
-  icon={<Money />}
+  icon={<CircleDollarSign />}
   title="民生工作"
   href="/docs/rpg/jobs"
   description="得到你的第一份工作!"
 />
 
 <Card
-  icon={<Warning />}
+  icon={<Milestone />}
   title="遊戲規則"
   href="/docs/rpg/introduction/#規則"
   description="確保您已仔細閱讀此內容"
 />
 
 <Card
-  icon={<Craft />}
+  icon={<ScissorsLineDashed />}
   title="製作物品"
   href="/docs/rpg/make"
   description="透過使用 &make 指令來合成出物品"
 />
 
 <Card
-  icon={<Shopping />}
+  icon={<ShoppingCart />}
   title="去逛街"
   href="/docs/rpg/shop"
   description="試試我們強大的店鋪系統吧！"

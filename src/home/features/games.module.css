@@ -16,21 +16,3 @@
     padding-left: 2.5rem;
   }
 }
-
-@layer {
-  .item-card {
-    @apply flex cursor-pointer flex-col gap-4 rounded-3xl bg-slate-100 p-3 text-center text-gray-700 transition-all duration-500 sm:p-5;
-  }
-
-  :global(.dark) .item-card {
-    @apply bg-slate-900 text-zinc-300;
-  }
-
-  .item-card:hover {
-    @apply bg-gradient-to-br from-orange-200 to-pink-400 text-pink-700 shadow-xl;
-  }
-
-  :global(.dark) .item-card:hover {
-    @apply from-orange-300 to-pink-800 text-pink-100;
-  }
-}

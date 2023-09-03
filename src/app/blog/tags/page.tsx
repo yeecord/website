@@ -1,6 +1,5 @@
 import { LinkButton } from "@/components/mdx";
 import Link from "next/link";
-import { BsEyeFill } from "react-icons/bs";
 import { getTagHref, getTags, type TagInfo } from "@/utils/tags";
 import { domain } from "@config";
 import type { Metadata } from "next";
@@ -24,7 +23,6 @@ export default function AllTags() {
           href="/blog"
           wrapper={{ className: "mx-auto" }}
           variant="primary"
-          icon={<BsEyeFill />}
         >
           查看文章
         </LinkButton>

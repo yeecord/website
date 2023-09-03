@@ -21,7 +21,6 @@
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.4",
     "framer-motion": "^10.16.0",
-    "iron-session": "^6.3.1",
     "lucide-react": "^0.272.0",
     "next": "13.4.19",
     "next-contentlayer": "^0.3.4",
@@ -29,7 +28,6 @@
     "next-docs-zeta": "^2.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.10.1",
     "react-twitter-embed": "^4.0.4",
     "tailwind-merge": "^1.14.0",
     "zod": "^3.22.2"
@@ -43,7 +41,6 @@
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "autoprefixer": "^10.4.15",
-    "esbuild": "0.19.2",
     "eslint": "8.48.0",
     "eslint-config-next": "^13.4.19",
     "eslint-config-prettier": "^9.0.0",
