@@ -6,10 +6,14 @@ import cn_styles from "./chinese.module.css";
 import Step from "../components/Step";
 import Gradient from "../components/Gradient";
 
-import { BsShieldFillCheck, BsTextCenter, BsTranslate } from "react-icons/bs";
+import {
+  AlignCenterIcon,
+  LanguagesIcon,
+  MousePointerIcon,
+  ShieldCheckIcon,
+} from "lucide-react";
 import GardientSvg from "@static/home/purple-gradient.svg";
 import { type ReactNode } from "react";
-import { RiMouseFill } from "react-icons/ri";
 
 export function ChineseUI() {
   return (
@@ -39,7 +43,7 @@ export function ChineseUI() {
           icon={{
             className:
               "bg-gradient-to-br from-purple-400 to-purple-600 shadow-purple-400",
-            children: <BsTranslate className="inline" />,
+            children: <LanguagesIcon className="inline sm:h-8 sm:w-8" />,
           }}
           className="relative z-[2]"
         >
@@ -53,9 +57,9 @@ export function ChineseUI() {
               "relative -ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:ml-auto xl:mr-[14%]",
             )}
           >
-            <Feature icon={<BsShieldFillCheck />}>豐富的社群管理功能</Feature>
-            <Feature icon={<BsTextCenter />}>通俗易懂的文檔</Feature>
-            <Feature icon={<RiMouseFill />}>無需繁雜的操作</Feature>
+            <Feature icon={<ShieldCheckIcon />}>豐富的社群管理功能</Feature>
+            <Feature icon={<AlignCenterIcon />}>通俗易懂的文檔</Feature>
+            <Feature icon={<MousePointerIcon />}>無需繁雜的操作</Feature>
           </div>
         </Step>
         <Gradient
@@ -74,10 +78,7 @@ export function ChineseUI() {
 function Feature({ children, icon }: { children: string; icon: ReactNode }) {
   return (
     <motion.div
-      className={clsx(
-        "mt-4 flex h-fit flex-row gap-2.5 rounded-xl bg-white p-4 dark:bg-slate-900 xl:pr-[4rem]",
-        "shadow-2xl shadow-blue-800/30 dark:shadow-black/60",
-      )}
+      className="mt-4 flex flex-row items-center gap-3 rounded-xl bg-secondary p-4 text-secondary-foreground shadow-2xl shadow-blue-800/30 dark:shadow-black/60 xl:pr-[4rem]"
       variants={{
         show: {
           y: 0,
@@ -93,14 +94,14 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
       <div className="rounded-full bg-purple-500 p-2 text-xl text-white dark:bg-purple-500 sm:text-2xl">
         {icon}
       </div>
-      <p className="text-lg font-bold">{children}</p>
+      <p className="text-lg font-medium">{children}</p>
     </motion.div>
   );
 }
 
 function Skeleton() {
-  const foreground = "bg-slate-300 dark:bg-slate-800 rounded-full";
-  const skeleton = "rounded-full bg-slate-200 dark:bg-slate-800 h-7";
+  const foreground = "bg-muted-foreground/20 rounded-full";
+  const skeleton = "rounded-full bg-muted-foreground/20 h-7";
   const list: Variants = {
     show: { transition: { staggerChildren: 0.1, delayChildren: 0 } },
     hidden: {},
@@ -117,16 +118,9 @@ function Skeleton() {
   };
 
   return (
-    <div
-      className={clsx(
-        "mt-8 aspect-[6/3] max-w-[45rem] flex-1 rounded-lg bg-slate-100 p-5 dark:bg-slate-900/70",
-        "grid grid-cols-[0.5fr_1fr] gap-6",
-        "relative shadow-xl",
-        "min-h-[17rem] min-w-[26rem]",
-      )}
-    >
+    <div className="relative mt-8 grid aspect-[6/3] min-h-[17rem] min-w-[26rem] max-w-[45rem] flex-1 grid-cols-[0.5fr_1fr] gap-6 rounded-lg bg-card p-5 shadow-xl">
       <motion.div
-        className="flex flex-1 flex-col gap-4 rounded-md bg-white p-4 dark:bg-slate-900/50"
+        className="flex flex-1 flex-col gap-4 rounded-md bg-secondary p-4"
         variants={list}
       >
         <motion.div
@@ -146,7 +140,7 @@ function Skeleton() {
         />
       </motion.div>
       <motion.div
-        className="flex flex-col gap-4 text-xl font-bold"
+        className="flex flex-col gap-4 text-xl"
         variants={{
           show: {
             paddingRight: "0px",

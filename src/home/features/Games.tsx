@@ -4,10 +4,15 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import Step from "../components/Step";
 import styles from "./games.module.css";
-import { RiGameFill, RiSwordFill } from "react-icons/ri";
+import {
+  BarChartIcon,
+  SwordIcon,
+  PencilLineIcon,
+  Gamepad2Icon,
+} from "lucide-react";
 import LinkButton from "../components/LinkButton";
 import { type ReactNode } from "react";
-import { BsBarChartFill, BsPencilFill } from "react-icons/bs";
+import { cn } from "@/utils/cn";
 
 const grid = {
   hidden: {},
@@ -42,7 +47,7 @@ export function Games() {
           icon={{
             className:
               "bg-gradient-to-br from-orange-400 to-pink-600 shadow-purple-400",
-            children: <RiGameFill className="inline" />,
+            children: <Gamepad2Icon className="inline h-8 w-8" />,
           }}
           className={clsx(
             "flex flex-col-reverse gap-5 rounded-2xl",
@@ -64,14 +69,16 @@ export function Games() {
               了解更多
             </LinkButton>
             <motion.div
-              className="mt-8 grid grid-cols-2 gap-5 min-[430px]:grid-cols-3"
+              className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3"
               variants={grid}
               whileInView="show"
               initial="hidden"
             >
-              <Item icon={<BsBarChartFill />}>投票系統</Item>
-              <Item icon={<BsPencilFill />}>1A2B遊戲</Item>
-              <Item icon={<RiSwordFill />} active>
+              <Item icon={<BarChartIcon className="h-8 w-8" />}>投票系統</Item>
+              <Item icon={<PencilLineIcon className="h-8 w-8" />}>
+                1A2B遊戲
+              </Item>
+              <Item icon={<SwordIcon className="h-8 w-8" />} active>
                 冒險系統
               </Item>
             </motion.div>
@@ -103,18 +110,16 @@ function Item({
   return (
     <motion.div
       variants={item}
-      className={clsx(
-        `${styles["item-card"]} break-keep`,
-        active && [
-          "bg-gradient-to-br from-blue-600 to-purple-500",
-          "text-white shadow-xl shadow-blue-400/40 max-[430px]:col-span-2 max-[430px]:row-start-1",
-        ],
+      className={cn(
+        `flex flex-col gap-4 rounded-3xl border bg-gradient-to-b from-secondary p-5 text-center transition-colors duration-500`,
+        active &&
+          "border-2 border-blue-400 from-black to-blue-800 text-cyan-200 shadow-xl shadow-blue-600/50 max-sm:col-span-full max-sm:row-start-1",
       )}
     >
       <div className="flex flex-col items-center justify-center text-3xl sm:text-6xl lg:text-7xl">
         {icon}
       </div>
-      <p className="text-lg font-bold sm:text-xl">{children}</p>
+      <p className="text-lg font-semibold sm:text-xl">{children}</p>
     </motion.div>
   );
 }

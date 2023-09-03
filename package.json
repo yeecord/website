@@ -29,7 +29,6 @@
     "next-docs-zeta": "^2.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.10.1",
     "react-twitter-embed": "^4.0.4",
     "tailwind-merge": "^1.14.0",
     "zod": "^3.22.2"
