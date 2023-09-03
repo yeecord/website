@@ -42,8 +42,8 @@ dependencies:
     specifier: ^1.6.9
     version: 1.6.9(@types/react-dom@18.2.7)(@types/react@18.2.20)(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.3)
   next-docs-zeta:
-    specifier: ^1.6.9
-    version: 1.6.9(@types/react@18.2.20)(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.3)
+    specifier: ^2.0.0
+    version: 2.0.0(@types/react@18.2.20)(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.3)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -2117,6 +2117,12 @@ packages:
       '@types/unist': 2.0.7
     dev: false
 
+  /@types/hast@3.0.0:
+    resolution: {integrity: sha512-SoytUJRuf68HXYqcXicQIhCrLQjqeYU2anikr4G3p3Iz+OZO5QDQpDj++gv+RenHsnUBwNZ2dumBArF8VLSk2Q==}
+    dependencies:
+      '@types/unist': 3.0.0
+    dev: false
+
   /@types/http-assert@1.5.3:
     resolution: {integrity: sha512-FyAOrDuQmBi8/or3ns4rwPno7/9tJTijVW6aQQjK02+kOQ8zmoNg2XJtAuQhvQcy1ASJq38wirX5//9J1EqoUA==}
     dev: false
@@ -3960,6 +3966,12 @@ packages:
       '@types/hast': 2.3.5
     dev: false
 
+  /hast-util-to-string@3.0.0:
+    resolution: {integrity: sha512-OGkAxX1Ua3cbcW6EJ5pT/tslVb90uViVkcJ4ZZIMW/R33DX/AkcJcRrPebPwJkHYwlDHXz4aIwvAAaAdtrACFA==}
+    dependencies:
+      '@types/hast': 3.0.0
+    dev: false
+
   /hast-util-whitespace@2.0.1:
     resolution: {integrity: sha512-nAxA0v8+vXSBDt3AnRUNjyRIQ0rD+ntpbAp4LnPkumc5M9yUbSMa4XDU9Q6etY4f1Wp4bNgvc1yjiZtsTTrSng==}
     dev: false
@@ -5173,6 +5185,36 @@ packages:
       flexsearch: 0.7.21
       github-slugger: 2.0.0
       hast-util-to-string: 2.0.0
+      negotiator: 0.6.3
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-remove-scroll: 2.5.6(@types/react@18.2.20)(react@18.2.0)
+      rehype-img-size: 1.0.1
+      rehype-pretty-code: 0.9.11(shiki@0.14.3)
+      remark: 14.0.3
+      remark-gfm: 3.0.1
+      remark-mdx: 2.3.0
+      scroll-into-view-if-needed: 3.0.10
+      swr: 2.2.1(react@18.2.0)
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - shiki
+      - supports-color
+    dev: false
+
+  /next-docs-zeta@2.0.0(@types/react@18.2.20)(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)(shiki@0.14.3):
+    resolution: {integrity: sha512-Wy09Gex2p/fWrPdYHknk1TLcNIMzf1y2qnwIS+FQtuOHDvedpPBXKeLchaelJCgNWB8zXHxOIUUyiIWCLjU6jg==}
+    peerDependencies:
+      next: 13.x
+      react: 18.x
+      react-dom: 18.x
+    dependencies:
+      '@formatjs/intl-localematcher': 0.4.0
+      flexsearch: 0.7.21
+      github-slugger: 2.0.0
+      hast-util-to-string: 3.0.0
       negotiator: 0.6.3
       next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
