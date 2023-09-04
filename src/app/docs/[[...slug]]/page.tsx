@@ -26,9 +26,18 @@ export default async function Page({
 
   const toc = await getTableOfContents(page.body.raw);
   const neighbours = findNeighbour(tree, getPageUrl(params.slug));
+  const headers = new Headers();
+
+  if (process.env.GITHUB_TOKEN)
+    headers.append("Authorization", `Bearer ${process.env.GITHUB_TOKEN}`);
+
   const time = await getGitLastEditTime(
     "yeecord/website",
     "content/" + page._raw.sourceFilePath,
+    undefined,
+    {
+      headers,
+    },
   );
 
   return (
