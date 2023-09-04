@@ -3,14 +3,13 @@
 import { useMDXComponent } from "next-contentlayer/hooks";
 import defaultComponents from "next-docs-ui/mdx";
 import * as C from "@/components/mdx";
-import type { ImgHTMLAttributes } from "react";
+import { ImageZoom } from "next-docs-ui/components/image-zoom";
 
 const components = {
   ...defaultComponents,
   ...C,
-  img: (props: ImgHTMLAttributes<HTMLImageElement>) => (
-    <defaultComponents.img {...props} className="rounded-lg" />
-  ),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  img: (props: any) => <ImageZoom {...props} className="rounded-lg" />,
 };
 
 export function Content({ code }: { code: string }) {
