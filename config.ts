@@ -88,7 +88,7 @@ export const footer: FooterCategory[] = [
  * a list of blog file names
  */
 export const blogRecommendations = [
-  "welcome-to-v2",
+  "welcome-to-v3",
   "fix-music-lag",
   "discord-bot-troubleshooting",
   "how-to-invite-bot",
