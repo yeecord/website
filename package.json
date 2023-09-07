@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@next/env": "^13.4.19",
-    "@vercel/edge-config": "^0.2.1",
+    "@vercel/edge-config": "^0.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.4",
