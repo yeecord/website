@@ -48,14 +48,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer categories={footer} />
           </NextDocsProvider>
         </AdsProvider>
-        {process.env.NODE_ENV === "production" && (
-          <Script
-            async
-            src="https://a.yeecord.com/script.js"
-            data-website-id="27e8ff22-0917-4feb-bda6-8af777989ba2"
-            strategy="afterInteractive"
-          />
-        )}
       </body>
     </html>
   );
