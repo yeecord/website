@@ -1,6 +1,5 @@
 import { Noto_Sans_TC } from "next/font/google";
 import { AdsProvider } from "@/adsense";
-import Script from "next/script";
 import type { ReactNode } from "react";
 
 import { NextDocsProvider } from "./next-docs-provider";
