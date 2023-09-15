@@ -16,8 +16,6 @@ export function NextDocsProvider({ children }: { children: ReactNode }) {
         onChange: () => {},
         text: {
           toc: "目錄",
-          footerNext: "下一頁",
-          footerPrevious: "上一頁",
           light: "淺色主題",
           dark: "黑暗主題",
           system: "系統默認",
