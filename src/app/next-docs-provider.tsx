@@ -21,6 +21,7 @@ export function NextDocsProvider({ children }: { children: ReactNode }) {
           system: "系統默認",
           search: "搜索文檔",
           lastUpdate: "最後更新於",
+          searchNoResult: "沒有結果",
         },
       }}
     >
