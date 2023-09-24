@@ -125,4 +125,10 @@ export const blogAuthors: Record<string, AuthorData> = {
     url: "https://fuma-dev.vercel.app",
     image_url: "/blog/money.jpg",
   },
+  taipei: {
+    name: "Taipei101",
+    title: "Yeecord 網路工程師 兼 台北 101 網路股份有限公司創始人",
+    url: "https://taipei101.xyz",
+    image_url: "/blog/taipei.jpg",
+  },
 };
