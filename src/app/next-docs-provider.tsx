@@ -3,7 +3,7 @@ import { I18nProvider } from "next-docs-ui/i18n";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { GithubIcon } from "lucide-react";
-import { Nav } from "next-docs-ui/components";
+import { Nav } from "next-docs-ui/nav";
 import { RootProvider } from "next-docs-ui/provider";
 
 export function NextDocsProvider({ children }: { children: ReactNode }) {
@@ -21,6 +21,7 @@ export function NextDocsProvider({ children }: { children: ReactNode }) {
           system: "系統默認",
           search: "搜索文檔",
           lastUpdate: "最後更新於",
+          searchNoResult: "沒有結果",
         },
       }}
     >
