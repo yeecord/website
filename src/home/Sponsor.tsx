@@ -62,7 +62,7 @@ function Card({
         </div>
       </div>
       <a href={href} target="_blank" rel="noreferrer">
-        <button className="mt-7 w-full rounded-md bg-purple-400 py-2 text-sm font-medium text-white shadow-lg shadow-purple-300 dark:bg-purple-500 dark:shadow-purple-700 sm:w-[8rem]">
+        <button className="mt-7 w-full rounded-md bg-purple-500 py-2 text-sm font-medium text-white shadow-lg shadow-purple-300 dark:bg-purple-500 dark:shadow-purple-700 sm:w-[8rem]">
           {children}
         </button>
       </a>
