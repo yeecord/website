@@ -12,7 +12,7 @@ export function Community({ joined }: { joined: number }) {
     <div className="relative z-[2] mt-8 flex flex-col items-center gap-5 overflow-hidden px-4 py-40 text-center">
       <Gradient
         src={CyanPinkGradient}
-        className="absolute left-0 top-0 -z-[1] h-full w-full overflow-visible object-cover opacity-20"
+        className="absolute left-0 top-0 -z-[1] h-full w-full overflow-hidden object-cover opacity-20"
       />
       <h2 className="text-5xl font-bold text-pink-400 xl:text-6xl">
         <span>與</span>
