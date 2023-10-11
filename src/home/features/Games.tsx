@@ -55,9 +55,9 @@ export function Games() {
           )}
         >
           <div>
-            <h1 className="mb-2 text-2xl font-bold sm:text-3xl">
+            <h2 className="mb-2 text-2xl font-bold sm:text-3xl">
               不只是聊天平台
-            </h1>
+            </h2>
             <p className="text-lg text-muted-foreground sm:text-xl">
               透過機器人各種有趣的系統，讓你的 Discord
               更加有趣，同時朋友也可以和你一起玩

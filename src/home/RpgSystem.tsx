@@ -21,12 +21,12 @@ export function RpgSystem() {
         >
           冒險模式
         </p>
-        <h1 className="text-5xl font-bold sm:text-5xl lg:text-6xl">
+        <h2 className="text-5xl font-bold sm:text-5xl lg:text-6xl">
           開創性的<span className="whitespace-nowrap">角色扮演系統</span>
-        </h1>
-        <h2 className="mx-auto max-w-2xl text-xl text-muted-foreground">
-          進入這個奇幻世界，開始你的冒險吧！
         </h2>
+        <h3 className="mx-auto max-w-2xl text-xl text-muted-foreground">
+          進入這個奇幻世界，開始你的冒險吧！
+        </h3>
       </div>
       <Background />
       <motion.div

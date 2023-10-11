@@ -41,7 +41,7 @@ function Info() {
           height={40}
           className="rounded-full"
         />
-        <h1 className="text-xl font-bold">Yeecord</h1>
+        <p className="text-xl font-bold">Yeecord</p>
       </div>
       <p className="mt-auto text-xs text-muted-foreground">
         YEE式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}

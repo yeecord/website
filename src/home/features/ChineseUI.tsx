@@ -47,7 +47,7 @@ export function ChineseUI() {
           }}
           className="relative z-[2]"
         >
-          <h1 className="mb-2 text-2xl font-bold sm:text-3xl">全中文化界面</h1>
+          <h2 className="mb-2 text-2xl font-bold sm:text-3xl">全中文化界面</h2>
           <p className="text-lg text-muted-foreground sm:text-xl">
             我們提供了全中文化的界面，讓英文不再成為優質機器人的隔閡
           </p>
@@ -153,7 +153,7 @@ function Skeleton() {
         }}
         transition={{ duration: 1 }}
       >
-        <h2 className="text-lg font-bold sm:text-xl">指令區</h2>
+        <p className="text-lg font-bold sm:text-xl">指令區</p>
         <div className={`${foreground} h-7`} />
         <div className={`${foreground} h-6 w-[70%]`} />
       </motion.div>

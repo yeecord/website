@@ -14,13 +14,13 @@ export function Community({ joined }: { joined: number }) {
         src={CyanPinkGradient}
         className="absolute left-0 top-0 -z-[1] h-full w-full overflow-visible object-cover opacity-20"
       />
-      <h1 className="text-5xl font-bold text-pink-400 xl:text-6xl">
+      <h2 className="text-5xl font-bold text-pink-400 xl:text-6xl">
         <span>與</span>
         <span className="mx-2 text-cyan-300 [text-shadow:_#e66ad0_3px_5px]">
           我們
         </span>
         <span>聯繫</span>
-      </h1>
+      </h2>
       <p className="text-lg text-black  dark:text-slate-200 sm:text-xl">
         獲取我們的最新消息
       </p>

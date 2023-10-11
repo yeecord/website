@@ -35,14 +35,14 @@ export function Hero() {
         </span>
         機器人
       </h1>
-      <h2
+      <p
         className={clsx(
           "max-w-[450px] text-xl text-muted-foreground",
           "md:max-w-[650px] lg:text-2xl",
         )}
       >
         YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
-      </h2>
+      </p>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
         <p className="mb-3 text-lg font-semibold text-muted-foreground md:mb-4">
