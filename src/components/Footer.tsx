@@ -43,7 +43,7 @@ function Info() {
         />
         <p className="text-xl font-bold">Yeecord</p>
       </div>
-      <p className="mt-auto text-xs text-muted-foreground">
+      <p className="mt-2 text-xs text-muted-foreground">
         YEE式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}
       </p>
     </div>
@@ -59,7 +59,7 @@ function Category({ category }: { category: FooterCategory }) {
           <Link
             key={i}
             href={item.href}
-            className="text-muted-foreground transition-colors hover:text-accent-foreground"
+            className="py-1 text-muted-foreground transition-colors hover:text-accent-foreground"
             target={item.newWindow === true ? "_blank" : "_self"}
           >
             {item.label}

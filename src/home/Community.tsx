@@ -45,7 +45,6 @@ function JoinButton({ joined }: { joined: number }) {
         <LinkButton
           href="https://x.com/yeecord"
           target="_blank"
-          aria-label="Follow @yeecord on X"
           className="inline-flex items-center gap-3 rounded-lg bg-primary px-4 py-2 text-lg font-medium text-primary-foreground"
         >
           <svg width="26" height="26" viewBox="0 0 24 24">
@@ -61,9 +60,6 @@ function JoinButton({ joined }: { joined: number }) {
           href="https://discord.gg/yeecord"
           target="_blank"
           className="inline-flex items-center gap-3 rounded-lg border bg-secondary px-4 py-2 text-lg font-medium text-secondary-foreground"
-          aria-label={`Join Yeecord Discord group with ${formatter.format(
-            joined,
-          )} members.`}
         >
           <svg width="26" height="26" viewBox="0 0 24 24">
             <title>Discord</title>
