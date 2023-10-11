@@ -63,7 +63,7 @@ export function Music() {
 function Content() {
   return (
     <div className="flex max-w-[750px] flex-col gap-3 sm:p-5 lg:max-w-none">
-      <h1 className="mb-2 text-3xl font-bold sm:text-4xl">輕鬆播放音樂</h1>
+      <h2 className="mb-2 text-3xl font-bold sm:text-4xl">輕鬆播放音樂</h2>
       <p className="text-lg text-muted-foreground">
         讓你可以和朋友一起收聽 Spotify 和 SoundCloud
         上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單

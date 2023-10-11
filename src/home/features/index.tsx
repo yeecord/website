@@ -15,14 +15,14 @@ export function Features() {
         >
           功能強大
         </p>
-        <h1 className="text-5xl font-bold sm:text-5xl lg:text-6xl">
+        <h2 className="text-5xl font-bold sm:text-5xl lg:text-6xl">
           您需要的功能都&#8288;在&#8288;這&#8288;裡
-        </h1>
-        <h2 className="mx-auto max-w-2xl text-xl text-muted-foreground">
+        </h2>
+        <h3 className="mx-auto max-w-2xl text-xl text-muted-foreground">
           從伺服器管理、歡迎消息到音樂播放器和角色扮演系統
           <br />
           我們為您的伺服器提供強大的功能
-        </h2>
+        </h3>
       </div>
       <ChineseUI />
       <Games />

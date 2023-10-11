@@ -21,8 +21,14 @@ export default function BlogLayout({
   if (!page) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-[800px] py-10 sm:py-20">
-      <h1 className="mb-2 text-3xl font-bold leading-normal">{page.title}</h1>
+    <main
+      className="mx-auto w-full max-w-[800px] py-10 sm:py-20"
+      itemType="http://schema.org/Article"
+      itemScope
+    >
+      <h1 className="mb-2 text-3xl font-bold leading-normal" itemProp="name">
+        {page.title}
+      </h1>
       <div className="mb-6 mt-3 flex flex-row flex-wrap items-center gap-1">
         <div className="flex flex-row flex-wrap gap-1">
           {page.authors?.map((author, i) => (
@@ -35,9 +41,11 @@ export default function BlogLayout({
 
         <p className="text-sm text-muted-foreground">
           <span className="mr-1">•</span>
-          {new Date(page.date).toLocaleDateString("zh", {
-            dateStyle: "long",
-          })}
+          <span itemProp="datePublished">
+            {new Date(page.date).toLocaleDateString("zh", {
+              dateStyle: "long",
+            })}
+          </span>
         </p>
       </div>
       {children}
@@ -53,6 +61,7 @@ function SmallAuthor({ author }: { author: AuthorData }) {
       href={author.url ?? "#"}
       rel="nofollow noreferrer"
       target="_blank"
+      itemProp="author"
     >
       {author.image_url != null && (
         <Image
@@ -96,6 +105,7 @@ function Footer({ page }: { page: Blog }) {
           >
             {author.image_url != null && (
               <Image
+                itemProp="image"
                 alt="avatar"
                 src={author.image_url}
                 width={40}
@@ -104,8 +114,12 @@ function Footer({ page }: { page: Blog }) {
               />
             )}
             <div>
-              <h2 className="font-medium">{author.name}</h2>
-              <p className="text-sm text-muted-foreground">{author.title}</p>
+              <p itemProp="name" className="font-medium">
+                {author.name}
+              </p>
+              <p itemProp="jobTitle" className="text-sm text-muted-foreground">
+                {author.title}
+              </p>
             </div>
           </a>
         ))}

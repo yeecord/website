@@ -45,13 +45,13 @@ export function Customers({ usedBy }: { usedBy: number }) {
         >
           倍受信賴
         </p>
-        <h1 className="text-5xl font-bold">
+        <h2 className="text-5xl font-bold">
           受超過
           <span className="mx-2 block bg-gradient-to-b from-pink-600 to-orange-400 bg-clip-text text-transparent max-md:text-7xl md:inline">
             <ServerCount count={count} />
           </span>
           個伺服器使用
-        </h1>
+        </h2>
         <p className="text-lg text-muted-foreground sm:text-xl">
           受到無數大型社群的廣泛信任
         </p>

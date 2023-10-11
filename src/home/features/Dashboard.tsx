@@ -21,7 +21,7 @@ export function Dashboard() {
             "from-transparent via-purple-400 to-purple-600 dark:to-purple-100",
           )}
         />
-        <h1 className="text-3xl font-bold sm:text-5xl">簡易的控制面板</h1>
+        <h2 className="text-3xl font-bold sm:text-5xl">簡易的控制面板</h2>
         <p className="text-lg text-muted-foreground sm:text-xl">
           通過美觀、簡易的方式來自定義
           <br className="sm:hidden" />

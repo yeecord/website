@@ -7,7 +7,7 @@ export default function Sponsor() {
       <p className="text-lg tracking-widest text-purple-400">
         喜歡YEE式機器龍?
       </p>
-      <h1 className="text-5xl font-bold">支持我們</h1>
+      <h2 className="text-5xl font-bold">支持我們</h2>
       <p className="text-lg text-muted-foreground sm:text-xl">
         照顧機器龍是一項艱鉅的工作
         <span className="max-sm:hidden">, </span>
