@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { ExternalLinkIcon } from "lucide-react";
 
 export type FooterCategory = {
