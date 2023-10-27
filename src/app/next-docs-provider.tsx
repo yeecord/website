@@ -12,7 +12,6 @@ export function NextDocsProvider({ children }: { children: ReactNode }) {
   return (
     <I18nProvider
       value={{
-        locale: "zh-Hant",
         onChange: () => {},
         text: {
           toc: "目錄",

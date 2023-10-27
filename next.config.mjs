@@ -16,7 +16,7 @@ const redirectsFile = readFileSync("redirects.txt", "utf-8")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ["tsx", "mdx"],
+  pageExtensions: ["ts", "tsx", "mdx"],
   async headers() {
     return [
       {

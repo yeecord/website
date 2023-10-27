@@ -1,8 +1,8 @@
-import { getPage } from "@/app/source";
-import { allDocs } from "contentlayer/generated";
+import { allDocs, getPage } from "@/app/source";
 import { readFileSync } from "fs";
-import { ImageResponse, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { resolve } from "path";
+import { ImageResponse } from "next/og";
 
 let noto: Buffer | null = null;
 
@@ -39,9 +39,9 @@ export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
               fill="hsl(0 0% 98%)"
             />
           </svg>
-          <p tw="text-white font-bold text-6xl">{page.title}</p>
+          <p tw="text-white font-bold text-6xl">{page.matter.title}</p>
           <p tw="text-2xl" style={{ color: "hsl(0 0% 63.9%)" }}>
-            {page.description}
+            {page.matter.description}
           </p>
         </div>
       </div>
@@ -61,6 +61,6 @@ export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
 
 export function generateStaticParams() {
   return allDocs.map((docs) => ({
-    slug: docs.slug.split("/"),
+    slug: docs.slugs.slice(1),
   }));
 }
