@@ -4,10 +4,11 @@ import { type ReactNode } from "react";
 import Link from "next/link";
 import { Fragment } from "react";
 import { getTagHref } from "@/utils/tags";
-import { type Blog, allBlogs } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 import type { AuthorData } from "@/types";
 import { blogAuthors } from "@config";
+import { allBlog } from "@/app/source";
+import type { Page } from "next-docs-mdx/types";
 
 export default function BlogLayout({
   params,
@@ -16,7 +17,7 @@ export default function BlogLayout({
   params: { slug: string };
   children: ReactNode;
 }) {
-  const page = allBlogs.find((blog) => blog.slug === params.slug);
+  const page = allBlog.find((blog) => blog.slugs[1] === params.slug);
 
   if (!page) notFound();
 
@@ -27,11 +28,11 @@ export default function BlogLayout({
       itemScope
     >
       <h1 className="mb-2 text-3xl font-bold leading-normal" itemProp="name">
-        {page.title}
+        {page.matter.title}
       </h1>
       <div className="mb-6 mt-3 flex flex-row flex-wrap items-center gap-1">
         <div className="flex flex-row flex-wrap gap-1">
-          {page.authors?.map((author, i) => (
+          {page.matter.authors.map((author, i) => (
             <Fragment key={i}>
               {i !== 0 && <span className="mx-1">+</span>}
               <SmallAuthor author={blogAuthors[author]} />
@@ -42,7 +43,7 @@ export default function BlogLayout({
         <p className="text-sm text-muted-foreground">
           <span className="mr-1">•</span>
           <span itemProp="datePublished">
-            {new Date(page.date).toLocaleDateString("zh", {
+            {new Date(page.matter.date).toLocaleDateString("zh", {
               dateStyle: "long",
             })}
           </span>
@@ -77,12 +78,12 @@ function SmallAuthor({ author }: { author: AuthorData }) {
   );
 }
 
-function Footer({ page }: { page: Blog }) {
+function Footer({ page }: { page: Page }) {
   return (
     <div className="mt-[5rem] flex flex-col gap-6">
       <div className="flex flex-row flex-wrap gap-2 text-base">
         <p>標籤</p>
-        {page.tags?.map((tag) => (
+        {page.matter.tags.map((tag) => (
           <Link
             key={tag}
             href={getTagHref(tag)}
@@ -93,8 +94,8 @@ function Footer({ page }: { page: Blog }) {
           </Link>
         ))}
       </div>
-      {page.authors
-        ?.map((author) => blogAuthors[author])
+      {page.matter.authors
+        .map((author) => blogAuthors[author])
         .map((author, i) => (
           <a
             key={i}

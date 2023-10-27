@@ -3,8 +3,9 @@ import { LinkButton } from "@/components/LinkButton";
 import { EyeIcon, GithubIcon } from "lucide-react";
 import { blogRecommendations, domain } from "@config";
 import { BlogRecommend } from "@/components/blog/BlogRecommend";
-import { type Blog, allBlogs } from "contentlayer/generated";
 import type { Metadata } from "next";
+import { allBlog } from "../source";
+import type { Page } from "next-docs-mdx/types";
 
 export const metadata: Metadata = {
   alternates: {
@@ -13,12 +14,13 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndex() {
-  const pages = allBlogs.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  const pages = allBlog.sort(
+    (a, b) =>
+      new Date(b.matter.date).getTime() - new Date(a.matter.date).getTime(),
   );
 
   const recommendations = blogRecommendations.flatMap((name) => {
-    return pages.find((page) => page.slug === name) ?? [];
+    return pages.find((page) => page.slugs[1] === name) ?? [];
   });
 
   return (
@@ -54,14 +56,14 @@ export default function BlogIndex() {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => {
-          return <BlogItem key={page._id} page={page} />;
+          return <BlogItem key={page.file.id} page={page} />;
         })}
       </div>
     </main>
   );
 }
 
-function Recommendations({ items }: { items: Blog[] }) {
+function Recommendations({ items }: { items: Page[] }) {
   return (
     <div className="mb-16 grid grid-cols-1 gap-8 min-[816px]:grid-cols-2">
       {items[0] != null && <LargeBlogItem page={items[0]} />}
@@ -73,7 +75,7 @@ function Recommendations({ items }: { items: Blog[] }) {
           {items.map((page, i) => {
             if (i === 0) return;
 
-            return <BlogRecommend key={page._id} page={page} />;
+            return <BlogRecommend key={page.file.id} page={page} />;
           })}
         </div>
       </div>

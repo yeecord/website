@@ -1,41 +1,12 @@
-import { FileWarningIcon, InfoIcon } from "lucide-react";
-import type { ReactNode, ReactElement } from "react";
+import { Callout as Admonition } from "next-docs-ui/components/callout";
 
-export function Admonition({
-  children,
-  title,
-  type,
-}: {
-  title?: string;
-  children?: ReactNode;
-  type?: "info" | "warning" | "error" | "default";
-}) {
-  return (
-    <div className="my-8 rounded-lg border bg-secondary px-4 text-muted-foreground">
-      <div className="nd-not-prose mt-4 flex flex-row items-center gap-2">
-        {
-          {
-            info: <InfoIcon className="h-4 w-4" />,
-            warning: <FileWarningIcon className="h-4 w-4" />,
-            error: <FileWarningIcon className="h-4 w-4" />,
-            default: <InfoIcon className="h-4 w-4" />,
-          }[type ?? "default"]
-        }
-        <p className="font-medium">{title}</p>
-      </div>
-      <span className="text-sm text-muted-foreground">{children}</span>
-    </div>
-  );
-}
-
-type Shortcut = (props: {
-  title?: string;
-  children: ReactNode;
-}) => ReactElement;
-
-export const Tip: Shortcut = (p) => <Admonition {...p} type="default" />;
-export const Info: Shortcut = (p) => <Admonition {...p} type="info" />;
-export const Warning: Shortcut = (p) => <Admonition {...p} type="warning" />;
-export const Error: Shortcut = (p) => <Admonition {...p} type="error" />;
-
-export default Admonition;
+export const Tip = ((p) => <Admonition {...p} />) as typeof Admonition;
+export const Info = ((p) => (
+  <Admonition {...p} type="info" />
+)) as typeof Admonition;
+export const Warning = ((p) => (
+  <Admonition {...p} type="warn" />
+)) as typeof Admonition;
+export const Error = ((p) => (
+  <Admonition {...p} type="error" />
+)) as typeof Admonition;

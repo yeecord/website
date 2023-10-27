@@ -1,9 +1,16 @@
----
-title: 服務條款
-description: 透過使用「YEE式機器龍」（以下簡稱本服務），您即同意並遵守本服務的使用條款。我們的條款旨在為所有使用者保持一個熱情和安全的環境，所以請您熟讀本條款之內容，避免自身權益的損失。
----
+import { MDXContent as Layout } from "next-docs-ui/mdx-server";
+import { domain } from "@config";
 
-<div className="contentContainer">
+export const metadata = {
+  title: "服務條款",
+  description:
+    "透過使用「YEE式機器龍」（以下簡稱本服務），您即同意並遵守本服務的使用條款。我們的條款旨在為所有使用者保持一個熱情和安全的環境，所以請您熟讀本條款之內容，避免自身權益的損失。",
+  alternates: {
+    canonical: `${domain}/terms`,
+  },
+};
+
+# 服務條款
 
 > 最後更新: 2022-05-21
 
@@ -50,4 +57,8 @@ description: 透過使用「YEE式機器龍」（以下簡稱本服務），您�
 
 本服務服務條款將因應需求隨時進行修正，修正後的條款將刊登於網站上，並公告於 [支援群組](https://discord.gg/yeecord)。
 
-</div>
+export default (p) => (
+  <main className="container py-12">
+    <Layout {...p} />
+  </main>
+);

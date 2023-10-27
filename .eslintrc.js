@@ -8,6 +8,7 @@ const config = {
   ],
   rules: {
     "@next/next/no-html-link-for-pages": "off",
+    "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
@@ -23,7 +24,7 @@ const config = {
     ],
     "@typescript-eslint/no-unsafe-assignment": "off",
   },
-  ignorePatterns: ["**/*.config.js", "**/*.config.cjs"],
+  ignorePatterns: ["**/*.config.js", "**/*.config.mjs", "**/*.config.cjs"],
   reportUnusedDisableDirectives: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {

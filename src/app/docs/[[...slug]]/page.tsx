@@ -1,31 +1,25 @@
-import { getPage, getPageUrl, tree } from "@/app/source";
-import { allDocs } from "contentlayer/generated";
+import { allDocs, docsTree, getPage, getPageUrl } from "@/app/source";
 import type { Metadata } from "next";
-import { MDXContent } from "next-docs-ui/mdx";
+import { MDXContent } from "next-docs-ui/mdx-server";
 import { DocsPage } from "next-docs-ui/page";
-import {
-  getTableOfContents,
-  findNeighbour,
-  getGitLastEditTime,
-} from "next-docs-zeta/server";
+import { findNeighbour, getGitLastEditTime } from "next-docs-zeta/server";
 import { notFound } from "next/navigation";
-import { Content } from "@/components/content";
 import { domain } from "@config";
 import { ExternalLinkIcon } from "lucide-react";
+import { resolve } from "url";
 
 export default async function Page({
   params,
 }: {
   params: { slug?: string[] };
 }) {
-  const page = getPage(params.slug);
+  const page = getPage(["docs", ...(params.slug ?? [])]);
 
   if (page == null) {
     notFound();
   }
 
-  const toc = await getTableOfContents(page.body.raw);
-  const neighbours = findNeighbour(tree, getPageUrl(params.slug));
+  const neighbours = findNeighbour(docsTree, getPageUrl(page.slugs));
   const headers = new Headers();
 
   if (process.env.GITHUB_TOKEN)
@@ -33,22 +27,24 @@ export default async function Page({
 
   const time = await getGitLastEditTime(
     "yeecord/website",
-    "content/" + page._raw.sourceFilePath,
+    resolve("", page.file.path),
     undefined,
     {
       headers,
     },
   );
 
+  const Content = page.data.default;
+
   return (
     <DocsPage
-      toc={toc}
+      toc={page.data.toc}
       footer={neighbours}
       lastUpdate={time}
       tableOfContent={{
         footer: (
           <a
-            href={`https://github.com/yeecord/website/tree/master/content/${page._raw.sourceFilePath}`}
+            href={`https://github.com/yeecord/website/tree/master/${page.file.path}`}
             rel="noreferrer noopener"
             target="_blank"
             className="inline-flex items-center text-xs text-muted-foreground hover:text-accent-foreground"
@@ -59,8 +55,8 @@ export default async function Page({
       }}
     >
       <MDXContent>
-        <h1>{page.title}</h1>
-        <Content code={page.body.code} />
+        <h1>{page.matter.title}</h1>
+        <Content />
       </MDXContent>
     </DocsPage>
   );
@@ -68,18 +64,18 @@ export default async function Page({
 
 export function generateStaticParams(): { slug: string[] }[] {
   return allDocs.map((page) => ({
-    slug: page.slug.split("/"),
+    slug: page.slugs.slice(1),
   }));
 }
 
 export function generateMetadata({ params }: { params: { slug?: string[] } }) {
-  const page = getPage(params.slug);
+  const page = getPage(["docs", ...(params.slug ?? [])]);
 
-  if (page == null) return;
+  if (page == null) notFound();
 
   return {
-    title: page.title,
-    description: page.description,
+    title: page.matter.title,
+    description: page.matter.description,
     alternates: {
       canonical: `${domain}/docs/` + (params.slug ?? []).join("/"),
     },
@@ -90,8 +86,8 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
         height: 630,
         alt: "Banner",
       },
-      title: page.title,
-      description: page.description,
+      title: page.matter.title,
+      description: page.matter.description,
     },
   } satisfies Metadata;
 }

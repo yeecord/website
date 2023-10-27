@@ -1,4 +1,13 @@
-const { readFileSync } = require("fs");
+import { readFileSync } from "fs";
+import createNextDocs from "next-docs-mdx/config";
+import { rehypeImgSize } from "next-docs-zeta/mdx-plugins";
+
+const withNextDocs = createNextDocs({
+  rootMapPath: "./src/_map.ts",
+  mdxOptions: {
+    rehypePlugins: [[rehypeImgSize, { dir: "./public" }]],
+  },
+});
 
 const redirectsFile = readFileSync("redirects.txt", "utf-8")
   .toString()
@@ -7,7 +16,7 @@ const redirectsFile = readFileSync("redirects.txt", "utf-8")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  pageExtensions: ["tsx", "mdx"],
   async headers() {
     return [
       {
@@ -44,6 +53,4 @@ const nextConfig = {
   },
 };
 
-const { withContentlayer } = require("next-contentlayer");
-
-module.exports = withContentlayer(nextConfig);
+export default withNextDocs(nextConfig);

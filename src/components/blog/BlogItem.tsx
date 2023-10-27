@@ -1,19 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import type { Blog } from "contentlayer/generated";
+import type { Page } from "next-docs-mdx/types";
+import { getPageUrl } from "@/app/source";
 
-export function BlogItem({ page }: { page: Blog }) {
+export function BlogItem({ page }: { page: Page }) {
   return (
     <Link
-      href={"/blog/" + page.slug}
+      href={getPageUrl(page.slugs)}
       className="flex flex-col overflow-hidden rounded-lg border bg-card text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
     >
       <div className="relative aspect-video h-auto w-full">
-        {page.image != null ? (
+        {page.matter.image != null ? (
           <Image
             alt="image"
-            src={page.image}
+            src={page.matter.image}
             className="h-full object-cover"
             fill
             sizes="(max-width: 760px) 90vw, 400px"
@@ -31,30 +32,30 @@ export function BlogItem({ page }: { page: Blog }) {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-3 p-4">
-        <p className="text-lg font-medium">{page.title}</p>
+        <p className="text-lg font-medium">{page.matter.title}</p>
         <p className="overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-muted-foreground">
-          {page.description}
+          {page.matter.description}
         </p>
 
         <p className="mt-auto pt-2 text-end text-sm text-muted-foreground">
-          {new Date(page.date).toLocaleDateString()}
+          {new Date(page.matter.date).toLocaleDateString()}
         </p>
       </div>
     </Link>
   );
 }
 
-export function LargeBlogItem({ page }: { page: Blog }) {
+export function LargeBlogItem({ page }: { page: Page }) {
   return (
     <Link
-      href={"/blog/" + page.slug}
+      href={getPageUrl(page.slugs)}
       className="flex h-fit flex-col overflow-hidden rounded-lg border bg-card text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
     >
       <div className="relative aspect-video w-full">
-        {page.image != null ? (
+        {page.matter.image != null ? (
           <Image
             alt="image"
-            src={page.image}
+            src={page.matter.image}
             className="h-full object-cover"
             fill
             priority
@@ -73,9 +74,9 @@ export function LargeBlogItem({ page }: { page: Blog }) {
         )}
       </div>
       <div className="flex flex-col p-5">
-        <p className="text-lg font-medium">{page.title}</p>
+        <p className="text-lg font-medium">{page.matter.title}</p>
         <p className="overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-muted-foreground">
-          {page.description}
+          {page.matter.description}
         </p>
       </div>
     </Link>
