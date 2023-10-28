@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 import createNextDocs from "next-docs-mdx/config";
 import { rehypeImgSize } from "next-docs-zeta/mdx-plugins";
 
@@ -17,6 +17,9 @@ const redirectsFile = readFileSync("redirects.txt", "utf-8")
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "mdx"],
+  experimental: {
+    webpackBuildWorker: true
+  },
   async headers() {
     return [
       {
