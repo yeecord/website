@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import Admonition from "@/components/mdx/Admonition";
+import { Warning } from "@/components/mdx/Admonition";
 import { useAdsContext } from "@/adsense";
 import clsx from "clsx";
 
@@ -25,9 +25,9 @@ export function Adsense() {
 
   if (failed)
     return (
-      <Admonition title="太無情了擋廣告" type="warning">
+      <Warning title="太無情了擋廣告" type="warn">
         <p>關閉 AdBlocker 讓機器龍多活一天</p>
-      </Admonition>
+      </Warning>
     );
 
   return (

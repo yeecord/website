@@ -1,16 +1,16 @@
+import { allBlog } from "@/app/source";
 import { BlogItem } from "@/components/blog/BlogItem";
 import { LinkButton } from "@/components/LinkButton";
 import { getTags } from "@/utils/tags";
 import { domain } from "@config";
-import { allBlogs } from "contentlayer/generated";
 import type { Metadata } from "next";
 
 export default function TagPage({ params }: { params: { tag: string } }) {
   const decodedTag = decodeURIComponent(params.tag);
-  const pages = allBlogs.filter(
-    (blog) =>
-      blog.tags != null &&
-      blog.tags.some((tag) => tag.toLowerCase() === decodedTag.toLowerCase()),
+  const pages = allBlog.filter((blog) =>
+    blog.matter.tags.some(
+      (tag) => tag.toLowerCase() === decodedTag.toLowerCase(),
+    ),
   );
 
   return (
@@ -24,7 +24,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => (
-          <BlogItem key={page._id} page={page} />
+          <BlogItem key={page.file.id} page={page} />
         ))}
       </div>
     </main>
@@ -42,7 +42,6 @@ export function generateMetadata({
 }: {
   params: { tag: string };
 }): Metadata {
-
   const decodedTag = decodeURIComponent(params.tag);
 
   return {

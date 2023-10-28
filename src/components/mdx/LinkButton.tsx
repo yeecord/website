@@ -1,5 +1,5 @@
 import { type ComponentProps, type ReactNode } from "react";
-import { SafeLink } from "next-docs-zeta/link";
+import Link, { type LinkProps } from "next-docs-zeta/link";
 import { ChevronRightIcon } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
@@ -17,10 +17,10 @@ export function LinkButton({
   icon?: ReactNode;
   variant?: "secondary" | "primary";
   wrapper?: ComponentProps<"div">;
-} & ComponentProps<typeof SafeLink>) {
+} & LinkProps) {
   return (
     <div {...wrapper} className={cn("nd-not-prose flex", wrapper?.className)}>
-      <SafeLink
+      <Link
         {...props}
         className={cn(
           buttonVariants({ color: variant ?? "secondary" }),
@@ -30,7 +30,7 @@ export function LinkButton({
       >
         {icon} {children}
         {icon == null && <ChevronRightIcon className="h-4 w-4" />}
-      </SafeLink>
+      </Link>
     </div>
   );
 }

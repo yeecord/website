@@ -1,9 +1,16 @@
----
-title: 隱私權聲明
-description: 非常歡迎您光臨及使用 「YEE式機器龍」（以下簡稱本服務），為了讓您能夠安心的使用本服務的各項服務與資訊，特此向您說明本服務的隱私權保護政策，以保障您的權益，請您詳閱下列內容
----
+import { MDXContent as Layout } from "next-docs-ui/mdx-server";
+import { domain } from "@config";
 
-<div className="contentContainer">
+export const metadata = {
+  title: "隱私權聲明",
+  description:
+    "非常歡迎您光臨及使用 「YEE式機器龍」（以下簡稱本服務），為了讓您能夠安心的使用本服務的各項服務與資訊，特此向您說明本服務的隱私權保護政策，以保障您的權益，請您詳閱下列內容",
+  alternates: {
+    canonical: `${domain}/terms`,
+  },
+};
+
+# 隱私權聲明
 
 > 最後更新: 2022-03-05
 
@@ -52,4 +59,8 @@ description: 非常歡迎您光臨及使用 「YEE式機器龍」（以下簡稱
 
 本服務隱私權保護政策將因應需求隨時進行修正，修正後的條款將刊登於網站上。
 
-</div>
+export default (p) => (
+  <main className="container py-12">
+    <Layout {...p} />
+  </main>
+);
