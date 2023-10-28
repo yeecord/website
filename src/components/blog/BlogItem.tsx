@@ -2,12 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import type { Page } from "next-docs-mdx/types";
-import { getPageUrl } from "@/app/source";
+import { blog } from "@/app/source";
 
 export function BlogItem({ page }: { page: Page }) {
   return (
     <Link
-      href={getPageUrl(page.slugs)}
+      href={blog.getPageUrl(page.slugs)}
       className="flex flex-col overflow-hidden rounded-lg border bg-card text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
     >
       <div className="relative aspect-video h-auto w-full">
@@ -38,7 +38,7 @@ export function BlogItem({ page }: { page: Page }) {
         </p>
 
         <p className="mt-auto pt-2 text-end text-sm text-muted-foreground">
-          {new Date(page.matter.date).toLocaleDateString()}
+          {page.matter.date.toLocaleDateString()}
         </p>
       </div>
     </Link>
@@ -48,7 +48,7 @@ export function BlogItem({ page }: { page: Page }) {
 export function LargeBlogItem({ page }: { page: Page }) {
   return (
     <Link
-      href={getPageUrl(page.slugs)}
+      href={blog.getPageUrl(page.slugs)}
       className="flex h-fit flex-col overflow-hidden rounded-lg border bg-card text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
     >
       <div className="relative aspect-video w-full">

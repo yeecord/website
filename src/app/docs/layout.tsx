@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BookIcon, LayoutListIcon, Undo2Icon } from "lucide-react";
 import { cva } from "class-variance-authority";
 import { cn } from "@/utils/cn";
-import { docsTree } from "../source";
+import { docs } from "../source";
 
 const itemVariants = cva(
   "inline-flex flex-row items-center gap-2 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:text-primary",
@@ -21,7 +21,7 @@ const itemVariants = cva(
 export default function RootDocsLayout({ children }: { children: ReactNode }) {
   return (
     <DocsLayout
-      tree={docsTree}
+      tree={docs.tree}
       nav={{ enabled: false }}
       sidebar={{
         banner: (

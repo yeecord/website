@@ -1,43 +1,38 @@
-import {
-  resolveFiles,
-  createPageUtils,
-  getPageTreeBuilder,
-  defaultValidators,
-} from "next-docs-mdx/map";
+import { defaultValidators, fromMap } from "next-docs-mdx/map";
 import { map } from "@/_map";
 import { z } from "zod";
+import type { FileInfo } from "next-docs-mdx/types";
 
 const frontmatterSchema = defaultValidators.frontmatter.extend({
   tags: z.array(z.string()).default([]),
   image: z.string().optional(),
   authors: z.array(z.string()).default([]),
-  date: z.string().default(new Date().toISOString()),
+  date: z
+    .string()
+    .transform((s) => new Date(s))
+    .default(new Date().toISOString()),
 });
 
-const resolved = resolveFiles({
-  map,
-  root: "./content",
+const slugs = (file: FileInfo) =>
+  file.flattenedPath
+    .split("/")
+    .filter((p) => !["index", ""].includes(p))
+    .slice(1);
+
+export const blog = fromMap(map, {
+  baseUrl: "/blog",
+  rootDir: "blog",
+  slugs,
   validate: {
     frontmatter: frontmatterSchema,
   },
 });
 
-const pageUtils = createPageUtils(resolved, "", []);
-const getUrl = pageUtils.getPageUrl;
-pageUtils.getPageUrl = (s, locale) => "/" + getUrl(s, locale);
-
-const builder = getPageTreeBuilder(resolved, {
-  getUrl: pageUtils.getPageUrl,
+export const docs = fromMap(map, {
+  rootDir: "docs",
+  slugs,
+  baseUrl: "/docs",
 });
-
-export const docsTree = builder.build({ root: "docs" });
-export const { getPage, getPageUrl } = pageUtils;
-export const allDocs = resolved.pages.filter(
-  (page) => page.slugs[0] === "docs",
-);
-export const allBlog = resolved.pages.filter(
-  (page) => page.slugs[0] === "blog",
-);
 
 declare module "next-docs-mdx/types" {
   interface Frontmatter extends z.infer<typeof frontmatterSchema> {}

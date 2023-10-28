@@ -1,4 +1,4 @@
-import { allBlog } from "@/app/source";
+import { blog } from "@/app/source";
 
 export type TagInfo = {
   count: number;
@@ -11,8 +11,8 @@ export function getTagHref(tag: string) {
 export function getTags() {
   const map = new Map<string, TagInfo>();
 
-  for (const blog of allBlog) {
-    for (const tag of blog.matter.tags) {
+  for (const page of blog.pages) {
+    for (const tag of page.matter.tags) {
       if (map.has(tag)) {
         map.get(tag)!.count++;
       } else {

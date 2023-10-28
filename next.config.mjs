@@ -4,6 +4,7 @@ import { rehypeImgSize } from "next-docs-zeta/mdx-plugins";
 
 const withNextDocs = createNextDocs({
   rootMapPath: "./src/_map.ts",
+  rootContentPath: "./content",
   mdxOptions: {
     rehypePlugins: [[rehypeImgSize, { dir: "./public" }]],
   },
