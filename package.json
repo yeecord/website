@@ -44,7 +44,7 @@
     "@typescript-eslint/parser": "^6.7.5",
     "autoprefixer": "^10.4.16",
     "eslint": "8.51.0",
-    "eslint-config-next": "^13.5.4",
+    "eslint-config-next": "^14.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "7.33.2",
     "next-sitemap": "^4.2.3",
