@@ -1,4 +1,4 @@
-import { allDocs, docsTree, getPage, getPageUrl } from "@/app/source";
+import { docs } from "@/app/source";
 import type { Metadata } from "next";
 import { MDXContent } from "next-docs-ui/mdx-server";
 import { DocsPage } from "next-docs-ui/page";
@@ -13,13 +13,13 @@ export default async function Page({
 }: {
   params: { slug?: string[] };
 }) {
-  const page = getPage(["docs", ...(params.slug ?? [])]);
+  const page = docs.getPage(params.slug);
 
   if (page == null) {
     notFound();
   }
 
-  const neighbours = findNeighbour(docsTree, getPageUrl(page.slugs));
+  const neighbours = findNeighbour(docs.tree, docs.getPageUrl(page.slugs));
   const headers = new Headers();
 
   if (process.env.GITHUB_TOKEN)
@@ -63,13 +63,13 @@ export default async function Page({
 }
 
 export function generateStaticParams(): { slug: string[] }[] {
-  return allDocs.map((page) => ({
-    slug: page.slugs.slice(1),
+  return docs.pages.map((page) => ({
+    slug: page.slugs,
   }));
 }
 
 export function generateMetadata({ params }: { params: { slug?: string[] } }) {
-  const page = getPage(["docs", ...(params.slug ?? [])]);
+  const page = docs.getPage(params.slug);
 
   if (page == null) notFound();
 

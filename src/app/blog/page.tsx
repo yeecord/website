@@ -4,7 +4,7 @@ import { EyeIcon, GithubIcon } from "lucide-react";
 import { blogRecommendations, domain } from "@config";
 import { BlogRecommend } from "@/components/blog/BlogRecommend";
 import type { Metadata } from "next";
-import { allBlog } from "../source";
+import { blog } from "../source";
 import type { Page } from "next-docs-mdx/types";
 
 export const metadata: Metadata = {
@@ -14,13 +14,12 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndex() {
-  const pages = allBlog.sort(
-    (a, b) =>
-      new Date(b.matter.date).getTime() - new Date(a.matter.date).getTime(),
+  const pages = blog.pages.sort(
+    (a, b) => b.matter.date.getTime() - a.matter.date.getTime(),
   );
 
   const recommendations = blogRecommendations.flatMap((name) => {
-    return pages.find((page) => page.slugs[1] === name) ?? [];
+    return pages.find((page) => page.slugs[0] === name) ?? [];
   });
 
   return (

@@ -39,14 +39,14 @@ dependencies:
     specifier: ^14.0.0
     version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
   next-docs-mdx:
-    specifier: ^4.0.1
-    version: 4.0.1(@next/mdx@14.0.0)(next-docs-zeta@4.0.1)
+    specifier: ^4.0.3
+    version: 4.0.3(@next/mdx@14.0.0)(next-docs-zeta@4.0.3)
   next-docs-ui:
-    specifier: ^4.0.1
-    version: 4.0.1(@types/react-dom@18.2.13)(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.0.3
+    version: 4.0.3(@types/react-dom@18.2.13)(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
   next-docs-zeta:
-    specifier: ^4.0.1
-    version: 4.0.1(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.0.3
+    version: 4.0.3(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -4107,23 +4107,23 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: false
 
-  /next-docs-mdx@4.0.1(@next/mdx@14.0.0)(next-docs-zeta@4.0.1):
-    resolution: {integrity: sha512-/Morlv0qEo9b2FVmMCfr+pD7+6ChxDd3c20C7EHr09JE/DMM6Wn+GiQo9uzxHNGE/A1rj0F/xoWpz3aUgq/3Ow==}
+  /next-docs-mdx@4.0.3(@next/mdx@14.0.0)(next-docs-zeta@4.0.3):
+    resolution: {integrity: sha512-3uGZ8EdeOp9ghQFQSlJll1E1ptTDvteClr6gO4USqTpRQ6obxD6/gGCipDEBjhGDP/drZAVLsyzmW72P/yMSLw==}
     peerDependencies:
       '@next/mdx': '>= 13'
-      next-docs-zeta: 4.0.1
+      next-docs-zeta: 4.0.3
     dependencies:
       '@next/mdx': 14.0.0(@mdx-js/loader@2.3.0)(@mdx-js/react@2.3.0)
       estree-util-value-to-estree: 3.0.1
       fast-glob: 3.3.1
-      next-docs-zeta: 4.0.1(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
+      next-docs-zeta: 4.0.3(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
       remark-frontmatter: 4.0.1
       yaml: 2.3.3
       zod: 3.22.4
     dev: false
 
-  /next-docs-ui@4.0.1(@types/react-dom@18.2.13)(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-d2p8XZZ7VYpztN7wyx3ndjzJVuiMkWmFz+2zmzoboWOLWfZHxZatSfQ8QMEEfUmkKe6ZAuoMPfIUJrnHkEAOrA==}
+  /next-docs-ui@4.0.3(@types/react-dom@18.2.13)(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-WibOrO6Kx5KOHLKc/3Ou6q9Duffr7mFNcB7T2bWheLc5tkZiTZgzX41p6iKB9JXWMfniOzb2V4L9O3EgN9WY/A==}
     peerDependencies:
       next: '>= 13'
       react: '>= 18'
@@ -4141,7 +4141,7 @@ packages:
       cmdk: 0.2.0(@types/react@18.2.28)(react-dom@18.2.0)(react@18.2.0)
       lucide-react: 0.290.0(react@18.2.0)
       next: 14.0.0(react-dom@18.2.0)(react@18.2.0)
-      next-docs-zeta: 4.0.1(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
+      next-docs-zeta: 4.0.3(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
       next-themes: 0.2.1(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -4153,8 +4153,8 @@ packages:
       - supports-color
     dev: false
 
-  /next-docs-zeta@4.0.1(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-MCqtvU+oayZKp2nuccpTDuzzOLxQ4xBwgYd//WvMpDTFQaf/O1ntJcACk5RayJc4jRHbBR3TSIpr/wblxA2rqg==}
+  /next-docs-zeta@4.0.3(@types/react@18.2.28)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Bma+MTufrBerPwKHH/KbpTgH6GJjR5NPpY0XLY4vJ+OcIkJiS30TgpjfxBYHiJRMDMh4uaIeEicDTYM+OCELxw==}
     peerDependencies:
       next: '>= 13'
       react: '>= 18'
@@ -4499,7 +4499,7 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.31
-      yaml: 2.3.1
+      yaml: 2.3.3
     dev: true
 
   /postcss-nested@6.0.1(postcss@8.4.31):
@@ -5739,15 +5739,9 @@ packages:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
     dev: true
 
-  /yaml@2.3.1:
-    resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
-    engines: {node: '>= 14'}
-    dev: true
-
   /yaml@2.3.3:
     resolution: {integrity: sha512-zw0VAJxgeZ6+++/su5AFoqBbZbrEakwu+X0M5HmcwUiBL7AzcuPKjj5we4xfQLp78LkEMpD0cOnUhmgOVy3KdQ==}
     engines: {node: '>= 14'}
-    dev: false
 
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}

@@ -1,4 +1,4 @@
-import { allBlog } from "@/app/source";
+import { blog } from "@/app/source";
 import { BlogItem } from "@/components/blog/BlogItem";
 import { LinkButton } from "@/components/LinkButton";
 import { getTags } from "@/utils/tags";
@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 
 export default function TagPage({ params }: { params: { tag: string } }) {
   const decodedTag = decodeURIComponent(params.tag);
-  const pages = allBlog.filter((blog) =>
+  const pages = blog.pages.filter((blog) =>
     blog.matter.tags.some(
       (tag) => tag.toLowerCase() === decodedTag.toLowerCase(),
     ),

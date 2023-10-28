@@ -7,7 +7,7 @@ import { getTagHref } from "@/utils/tags";
 import { notFound } from "next/navigation";
 import type { AuthorData } from "@/types";
 import { blogAuthors } from "@config";
-import { allBlog } from "@/app/source";
+import { blog } from "@/app/source";
 import type { Page } from "next-docs-mdx/types";
 
 export default function BlogLayout({
@@ -17,7 +17,7 @@ export default function BlogLayout({
   params: { slug: string };
   children: ReactNode;
 }) {
-  const page = allBlog.find((blog) => blog.slugs[1] === params.slug);
+  const page = blog.getPage([params.slug]);
 
   if (!page) notFound();
 
@@ -43,7 +43,7 @@ export default function BlogLayout({
         <p className="text-sm text-muted-foreground">
           <span className="mr-1">•</span>
           <span itemProp="datePublished">
-            {new Date(page.matter.date).toLocaleDateString("zh", {
+            {page.matter.date.toLocaleDateString("zh", {
               dateStyle: "long",
             })}
           </span>

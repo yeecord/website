@@ -1,4 +1,4 @@
-import { allDocs, getPage } from "@/app/source";
+import { docs } from "@/app/source";
 import { readFileSync } from "fs";
 import { NextResponse } from "next/server";
 import { resolve } from "path";
@@ -7,7 +7,7 @@ import { ImageResponse } from "next/og";
 let noto: Buffer | null = null;
 
 export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
-  const page = getPage(params.slug);
+  const page = docs.getPage(params.slug);
   if (!page) return NextResponse.json("Not Found", { status: 404 });
 
   noto ??= readFileSync(
@@ -60,7 +60,7 @@ export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
 }
 
 export function generateStaticParams() {
-  return allDocs.map((docs) => ({
-    slug: docs.slugs.slice(1),
+  return docs.pages.map((docs) => ({
+    slug: docs.slugs,
   }));
 }
