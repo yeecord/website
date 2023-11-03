@@ -6,6 +6,7 @@ import Image from "next/image";
 import { BarChartIcon, MusicIcon, SettingsIcon } from "lucide-react";
 import { Progress } from "../components/Progress";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const card = clsx(
   "text-secondary-foreground bg-gradient-to-b from-secondary border rounded-2xl border p-5 shadow-xl flex flex-col",
@@ -53,9 +54,11 @@ function Settings() {
           <p className="text-muted-foreground">下拉選單身分組</p>
         </div>
       </div>
-      <button className="mt-auto rounded-xl bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-3 text-sm font-medium text-white">
-        + 添加身分組
-      </button>
+      <Link href="/docs/commands/role">
+        <button className="mt-auto rounded-xl bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-3 text-sm font-medium text-white">
+          + 添加身分組
+        </button>
+      </Link>
     </motion.div>
   );
 }
