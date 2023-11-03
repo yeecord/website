@@ -54,10 +54,11 @@ function Settings() {
           <p className="text-muted-foreground">下拉選單身分組</p>
         </div>
       </div>
-      <Link href="/docs/commands/role">
-        <button className="mt-auto rounded-xl bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-3 text-sm font-medium text-white">
-          + 添加身分組
-        </button>
+      <Link
+        href="/docs/commands/role"
+        className="mt-auto rounded-xl bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-3 text-sm font-medium text-white"
+      >
+        + 添加身分組
       </Link>
     </motion.div>
   );
