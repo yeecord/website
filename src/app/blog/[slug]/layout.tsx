@@ -58,7 +58,7 @@ export default function BlogLayout({
 function SmallAuthor({ author }: { author: AuthorData }) {
   return (
     <a
-      className="flex flex-row items-center gap-1 text-foreground"
+      className="flex flex-row items-center gap-1.5 text-foreground"
       href={author.url ?? "#"}
       rel="nofollow noreferrer"
       target="_blank"
@@ -70,7 +70,7 @@ function SmallAuthor({ author }: { author: AuthorData }) {
           src={author.image_url}
           width={25}
           height={25}
-          className="rounded-full"
+          className="h-full rounded-full"
         />
       )}
       {author.name}
@@ -111,7 +111,7 @@ function Footer({ page }: { page: Page }) {
                 src={author.image_url}
                 width={40}
                 height={40}
-                className="rounded-full"
+                className="h-full rounded-full"
               />
             )}
             <div>
