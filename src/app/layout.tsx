@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-Hant-TW" className={noto.className}>
+    <html lang="zh-Hant-TW" className={noto.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <AdsProvider>
           <NextDocsProvider>
