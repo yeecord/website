@@ -1,11 +1,6 @@
 import type { FooterCategory } from "@/components/Footer";
 import type { AuthorData } from "@/types";
 
-export const isProduction = process.env.NODE_ENV === "production";
-export const API_ENDPOINT = isProduction
-  ? "https://api.yeecord.com"
-  : "http://127.0.0.1:3001";
-export const CDN_ENDPOINT = "https://cdn.discordapp.com";
 export const url_base = new URL(
   process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -96,9 +91,9 @@ export const blogRecommendations = [
 
 export const blogAuthors: Record<string, AuthorData> = {
   kane: {
-    name: "凱恩Kane",
+    name: "Kane Wang",
     title: "YEE式機器龍作者",
-    url: "https://github.com/Gary50613",
+    url: "https://bento.me/kanewang",
     image_url: "/blog/Gary50613.jpg",
   },
   wolf: {

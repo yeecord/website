@@ -31,6 +31,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-twitter-embed": "^4.0.4",
+    "sharp": "^0.32.6",
     "tailwind-merge": "^1.14.0",
     "zod": "^3.22.4"
   },
