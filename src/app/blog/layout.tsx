@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: {
-    template: "Yeecord Blog - %s",
+    template: "%s - Yeecord Blog",
     default: "Yeecord Blog",
     absolute: "Yeecord Blog",
   },
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: "/opengraph-image.png",
     title: {
-      template: "Yeecord Blog - %s",
+      template: "%s - Yeecord Blog",
       absolute: "Yeecord Blog",
       default: "Yeecord Blog",
     },
