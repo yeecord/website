@@ -94,7 +94,7 @@ export const blogAuthors: Record<string, AuthorData> = {
     name: "Kane Wang",
     title: "YEE式機器龍作者",
     url: "https://bento.me/kanewang",
-    image_url: "/blog/Gary50613.jpg",
+    image_url: "/blog/kane50613.jpg",
   },
   wolf: {
     name: "Wolf yuan 狼苑",
