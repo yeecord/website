@@ -17,5 +17,5 @@ cmds = ["pnpm build"]
 LD_PRELOAD = "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
 
 [start]
-cmd = "pnpm start"
+cmd = "next start -H 0.0.0.0"
 runImage = "node:21"
