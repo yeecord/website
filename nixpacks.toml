@@ -1,0 +1,21 @@
+[phases.setup]
+nixPkgs = ["nodejs-18_x"]
+aptPkgs = ["libjemalloc-dev"]
+
+[phases.install]
+cmds = [
+    "node -v",
+    "corepack enable",
+    "corepack prepare pnpm@latest --activate",
+    "pnpm i --frozen-lockfile"
+]
+
+[phases.build]
+cmds = ["pnpm build"]
+
+[variables]
+LD_PRELOAD = "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
+
+[start]
+cmd = "pnpm start"
+runImage = "node:21"
