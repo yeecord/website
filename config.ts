@@ -1,7 +1,7 @@
 import type { FooterCategory } from "@/components/Footer";
 import type { AuthorData } from "@/types";
 
-export const url_base = new URL(
+export const urlBase = new URL(
   process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000",
