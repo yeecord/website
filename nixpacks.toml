@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nodejs-20_x"]
+nixPkgs = ["nodejs-18_x"]
 aptPkgs = ["libjemalloc-dev"]
 
 [phases.install]
