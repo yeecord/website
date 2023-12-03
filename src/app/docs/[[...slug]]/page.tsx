@@ -15,9 +15,6 @@ export default function Page({ params }: { params: { slug?: string[] } }) {
   const neighbours = findNeighbour(docs.tree, docs.getPageUrl(page.slugs));
   // const headers = new Headers();
 
-  // if (process.env.GITHUB_TOKEN)
-  //   headers.append("Authorization", `Bearer ${process.env.GITHUB_TOKEN}`);
-
   // const time = await getGitLastEditTime(
   //   "yeecord/website",
   //   resolve("", page.file.path),
@@ -74,7 +71,7 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
     },
     openGraph: {
       images: {
-        url: `/api/og/${(params.slug ?? []).join("/")}`,
+        url: `/og${docs.getPageUrl(page.slugs)}.png`,
         width: 1200,
         height: 630,
         alt: "Banner",

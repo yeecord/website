@@ -32,9 +32,11 @@ export default function TagPage({ params }: { params: { tag: string } }) {
 }
 
 export function generateStaticParams() {
-  const tags = [...getTags().entries()];
+  const tags = [...getTags().keys()];
 
-  return tags.map(([key]) => ({ params: { tag: key.toLowerCase() } }));
+  return tags.map(([key]) => ({
+    tag: key.toLowerCase(),
+  }));
 }
 
 export function generateMetadata({

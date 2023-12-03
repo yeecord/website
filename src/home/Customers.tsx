@@ -8,10 +8,10 @@ import { motion, type MotionValue, useTransform } from "framer-motion";
 import formatter from "@/utils/formatter";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 
-export function Customers({ usedBy }: { usedBy: number }) {
+export function Customers() {
   const { count, start } = useAnimatedCounter(
-    usedBy,
-    Math.max(usedBy - 10000, 0),
+    1_000_000,
+    Math.max(1_000_000 - 10000, 0),
     1,
   );
 

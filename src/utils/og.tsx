@@ -1,15 +1,12 @@
 import { docs } from "@/app/source";
 import { readFileSync } from "fs";
-import { NextResponse } from "next/server";
 import { resolve } from "path";
 import { ImageResponse } from "next/og";
+import type { Page } from "next-docs-mdx/types";
 
 let noto: Buffer | null = null;
 
-export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
-  const page = docs.getPage(params.slug);
-  if (!page) return NextResponse.json("Not Found", { status: 404 });
-
+export function createOgImage(page: Page) {
   noto ??= readFileSync(
     resolve(process.cwd(), "public/noto-sans-semi-bold.woff"),
   );
@@ -56,7 +53,7 @@ export function GET(_: Request, { params }: { params: { slug?: string[] } }) {
         },
       ],
     },
-  );
+  ).arrayBuffer();
 }
 
 export function generateStaticParams() {

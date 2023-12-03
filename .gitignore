@@ -38,3 +38,6 @@ yarn-error.log*
 next-env.d.ts
 .idea
 .vscode
+
+public/_map_indexes.json
+public/og
