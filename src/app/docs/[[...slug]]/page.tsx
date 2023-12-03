@@ -2,37 +2,30 @@ import { docs } from "@/app/source";
 import type { Metadata } from "next";
 import { MDXContent } from "next-docs-ui/mdx-server";
 import { DocsPage } from "next-docs-ui/page";
-import { findNeighbour, getGitLastEditTime } from "next-docs-zeta/server";
+import { findNeighbour } from "next-docs-zeta/server";
 import { notFound } from "next/navigation";
 import { domain } from "@config";
 import { ExternalLinkIcon } from "lucide-react";
-import { resolve } from "url";
 
-export default async function Page({
-  params,
-}: {
-  params: { slug?: string[] };
-}) {
+export default function Page({ params }: { params: { slug?: string[] } }) {
   const page = docs.getPage(params.slug);
 
-  if (page == null) {
-    notFound();
-  }
+  if (!page) notFound();
 
   const neighbours = findNeighbour(docs.tree, docs.getPageUrl(page.slugs));
-  const headers = new Headers();
+  // const headers = new Headers();
 
-  if (process.env.GITHUB_TOKEN)
-    headers.append("Authorization", `Bearer ${process.env.GITHUB_TOKEN}`);
+  // if (process.env.GITHUB_TOKEN)
+  //   headers.append("Authorization", `Bearer ${process.env.GITHUB_TOKEN}`);
 
-  const time = await getGitLastEditTime(
-    "yeecord/website",
-    resolve("", page.file.path),
-    undefined,
-    {
-      headers,
-    },
-  );
+  // const time = await getGitLastEditTime(
+  //   "yeecord/website",
+  //   resolve("", page.file.path),
+  //   undefined,
+  //   {
+  //     headers,
+  //   },
+  // );
 
   const Content = page.data.default;
 
@@ -40,7 +33,7 @@ export default async function Page({
     <DocsPage
       toc={page.data.toc}
       footer={neighbours}
-      lastUpdate={time}
+      lastUpdate={null}
       tableOfContent={{
         footer: (
           <a
