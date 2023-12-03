@@ -12,6 +12,9 @@
   "pnpm": {
     "overrides": {
       "esbuild": "0.18.20"
+    },
+    "patchedDependencies": {
+      "next-docs-zeta@4.0.9": "patches/next-docs-zeta@4.0.9.patch"
     }
   },
   "dependencies": {

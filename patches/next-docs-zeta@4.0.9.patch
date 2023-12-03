@@ -1,0 +1,13 @@
+diff --git a/dist/search/client.js b/dist/search/client.js
+index 0d54dff8f2f19f7877eee0b36bda42f3c4657343..f76013992854c4ebd618d73457db46a2a5756ec8 100644
+--- a/dist/search/client.js
++++ b/dist/search/client.js
+@@ -9,7 +9,7 @@ function useDocsSearch(locale, tag) {
+   const [search, setSearch] = useState("");
+   const debouncedValue = useDebounce(search, 100);
+   const searchQuery = useSWR(
+-    ["/api/search", debouncedValue, locale, tag],
++    ["https://search.yeecord.com/search", debouncedValue, locale, tag],
+     (_0) => __async(this, [_0], function* ([url, query, locale2, tag2]) {
+       if (query.length === 0)
+         return "empty";

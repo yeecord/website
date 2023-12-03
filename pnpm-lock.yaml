@@ -7,6 +7,11 @@ settings:
 overrides:
   esbuild: 0.18.20
 
+patchedDependencies:
+  next-docs-zeta@4.0.9:
+    hash: vkzpcsqphiytzshuwcya5b5zra
+    path: patches/next-docs-zeta@4.0.9.patch
+
 dependencies:
   '@mdx-js/loader':
     specifier: ^2.3.0
@@ -43,7 +48,7 @@ dependencies:
     version: 4.0.9(@types/react-dom@18.2.17)(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
   next-docs-zeta:
     specifier: ^4.0.9
-    version: 4.0.9(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
+    version: 4.0.9(patch_hash=vkzpcsqphiytzshuwcya5b5zra)(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -4471,7 +4476,7 @@ packages:
       '@next/mdx': 14.0.3(@mdx-js/loader@2.3.0)(@mdx-js/react@2.3.0)
       estree-util-value-to-estree: 3.0.1
       fast-glob: 3.3.2
-      next-docs-zeta: 4.0.9(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
+      next-docs-zeta: 4.0.9(patch_hash=vkzpcsqphiytzshuwcya5b5zra)(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
       remark-frontmatter: 4.0.1
       yaml: 2.3.4
       zod: 3.22.4
@@ -4496,7 +4501,7 @@ packages:
       cmdk: 0.2.0(@types/react@18.2.41)(react-dom@18.2.0)(react@18.2.0)
       lucide-react: 0.293.0(react@18.2.0)
       next: 14.0.3(react-dom@18.2.0)(react@18.2.0)
-      next-docs-zeta: 4.0.9(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
+      next-docs-zeta: 4.0.9(patch_hash=vkzpcsqphiytzshuwcya5b5zra)(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
       next-themes: 0.2.1(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -4508,7 +4513,7 @@ packages:
       - supports-color
     dev: false
 
-  /next-docs-zeta@4.0.9(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0):
+  /next-docs-zeta@4.0.9(patch_hash=vkzpcsqphiytzshuwcya5b5zra)(@types/react@18.2.41)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Me0ug6AiN44gKorD0Cou/n5p46JDyUq5vsuLSNcSv609pxaOPzKssCgrfc7rpeDySLaXKswVBhjzREwQoqPTQw==}
     peerDependencies:
       next: '>= 13.4'
@@ -4536,6 +4541,7 @@ packages:
       - '@types/react'
       - supports-color
     dev: false
+    patched: true
 
   /next-sitemap@4.2.3(next@14.0.3):
     resolution: {integrity: sha512-vjdCxeDuWDzldhCnyFCQipw5bfpl4HmZA7uoo3GAaYGjGgfL4Cxb1CiztPuWGmS+auYs7/8OekRS8C2cjdAsjQ==}
