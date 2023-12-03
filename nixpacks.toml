@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nodejs-18_x"]
+nixPkgs = ["nodejs-20_x"]
 aptPkgs = ["libjemalloc-dev"]
 
 [phases.install]
@@ -15,7 +15,3 @@ cmds = ["pnpm build"]
 
 [variables]
 LD_PRELOAD = "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
-
-[start]
-cmd = "next start -H 0.0.0.0"
-runImage = "node:21"
