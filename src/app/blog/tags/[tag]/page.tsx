@@ -34,7 +34,9 @@ export default function TagPage({ params }: { params: { tag: string } }) {
 export function generateStaticParams() {
   const tags = [...getTags().keys()];
 
-  return tags.map(([key]) => ({
+  console.log(`Generating ${tags.length} tag pages...`);
+
+  return tags.map((key) => ({
     tag: key.toLowerCase(),
   }));
 }
