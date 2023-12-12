@@ -26,7 +26,7 @@
     "framer-motion": "^10.16.12",
     "lucide-react": "^0.294.0",
     "next": "^14.0.3",
-    "next-docs-mdx": "^4.0.9",
+    "next-docs-mdx": "^6.0.0",
     "next-docs-ui": "^4.0.9",
     "next-docs-zeta": "^4.0.9",
     "react": "18.2.0",
