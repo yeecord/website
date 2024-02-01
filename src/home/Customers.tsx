@@ -10,8 +10,8 @@ import { useAnimatedCounter } from "./utils/use-animated-counter";
 
 export function Customers() {
   const { count, start } = useAnimatedCounter(
-    1_000_000,
-    Math.max(1_000_000 - 10000, 0),
+    250_000,
+    Math.max(250_000 - 10000, 0),
     1,
   );
 
