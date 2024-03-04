@@ -1,8 +1,6 @@
 import { docs } from "@/app/source";
 import type { Metadata } from "next";
-import { MDXContent } from "next-docs-ui/mdx-server";
-import { DocsPage } from "next-docs-ui/page";
-import { findNeighbour } from "next-docs-zeta/server";
+import { DocsBody, DocsPage } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { domain } from "@config";
 import { ExternalLinkIcon } from "lucide-react";
@@ -12,7 +10,6 @@ export default function Page({ params }: { params: { slug?: string[] } }) {
 
   if (!page) notFound();
 
-  const neighbours = findNeighbour(docs.tree, docs.getPageUrl(page.slugs));
   // const headers = new Headers();
 
   // const time = await getGitLastEditTime(
@@ -24,13 +21,11 @@ export default function Page({ params }: { params: { slug?: string[] } }) {
   //   },
   // );
 
-  const Content = page.data.default;
+  const Content = page.data.exports.default;
 
   return (
     <DocsPage
-      toc={page.data.toc}
-      footer={neighbours}
-      lastUpdate={null}
+      toc={page.data.exports.toc}
       tableOfContent={{
         footer: (
           <a
@@ -44,16 +39,16 @@ export default function Page({ params }: { params: { slug?: string[] } }) {
         ),
       }}
     >
-      <MDXContent>
-        <h1>{page.matter.title}</h1>
+      <DocsBody>
+        <h1>{page.data.title}</h1>
         <Content />
-      </MDXContent>
+      </DocsBody>
     </DocsPage>
   );
 }
 
 export function generateStaticParams(): { slug: string[] }[] {
-  return docs.pages.map((page) => ({
+  return docs.getPages().map((page) => ({
     slug: page.slugs,
   }));
 }
@@ -64,20 +59,20 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
   if (page == null) notFound();
 
   return {
-    title: page.matter.title,
-    description: page.matter.description,
+    title: page.data.title,
+    description: page.data.description,
     alternates: {
       canonical: `${domain}/docs/` + (params.slug ?? []).join("/"),
     },
     openGraph: {
       images: {
-        url: `/og${docs.getPageUrl(page.slugs)}.png`,
+        url: `/og${page.url}.png`,
         width: 1200,
         height: 630,
         alt: "Banner",
       },
-      title: page.matter.title,
-      description: page.matter.description,
+      title: page.data.title,
+      description: page.data.description,
     },
   } satisfies Metadata;
 }

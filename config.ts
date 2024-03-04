@@ -1,5 +1,4 @@
 import type { FooterCategory } from "@/components/Footer";
-import type { AuthorData } from "@/types";
 
 export const urlBase = new URL(
   process.env.VERCEL_URL
@@ -126,4 +125,11 @@ export const blogAuthors: Record<string, AuthorData> = {
     url: "https://taipei101.xyz",
     image_url: "/blog/taipei.jpg",
   },
+};
+
+export type AuthorData = {
+  name: string;
+  url?: string;
+  title?: string;
+  image_url?: string;
 };

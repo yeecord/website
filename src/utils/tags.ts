@@ -5,14 +5,14 @@ export type TagInfo = {
 };
 
 export function getTagHref(tag: string) {
-  return `/blog/tags/${tag.toLowerCase()}`;
+  return `/blog/tags/${encodeURIComponent(tag.toLowerCase())}`;
 }
 
 export function getTags() {
   const map = new Map<string, TagInfo>();
 
-  for (const page of blog.pages) {
-    for (const tag of page.matter.tags) {
+  for (const page of blog.getPages()) {
+    for (const tag of page.data.tags) {
       if (map.has(tag)) {
         map.get(tag)!.count++;
       } else {

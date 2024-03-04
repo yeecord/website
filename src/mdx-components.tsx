@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import defaultComponents from "next-docs-ui/mdx-server";
+import defaultComponents from "fumadocs-ui/mdx";
 import {
   Adsense,
   Error,
@@ -12,7 +12,7 @@ import {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,
-    Adsense: (() => <Adsense />) as typeof Adsense,
+    Adsense,
     Error,
     Info,
     LinkButton,

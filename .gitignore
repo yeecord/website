@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 
-.contentlayer
+src/_map.ts
 
 # testing
 /coverage

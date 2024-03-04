@@ -24,7 +24,6 @@
       "@config": ["./config.ts"],
       "@static/*": ["./public/*"],
       "@/*": ["./src/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
   "include": [

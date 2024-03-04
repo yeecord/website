@@ -1,12 +1,11 @@
-@import "next-docs-ui/style.css";
+@import "fumadocs-ui/style.css";
 @tailwind components;
 @tailwind utilities;
 
-.nd-prose-text
-  :where(h2, h3, h4, h5, h6):not(:where([class~="nd-not-prose"] *)) {
+.prose-text :where(h2, h3, h4, h5, h6):not(:where([class~="nd-not-prose"] *)) {
   @apply font-bold;
 }
 
-.nd-prose {
+.prose {
   --tw-prose-body: hsl(var(--muted-foreground));
 }

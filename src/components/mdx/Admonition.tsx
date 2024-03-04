@@ -1,4 +1,4 @@
-import { Callout as Admonition } from "next-docs-ui/components/callout";
+import { Callout as Admonition } from "fumadocs-ui/components/callout";
 
 export const Tip = ((p) => <Admonition {...p} />) as typeof Admonition;
 export const Info = ((p) => (
