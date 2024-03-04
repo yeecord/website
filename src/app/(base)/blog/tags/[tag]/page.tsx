@@ -6,7 +6,7 @@ import { domain } from "@config";
 import type { Metadata } from "next";
 
 export default function TagPage({ params }: { params: { tag: string } }) {
-  const decodedTag = decodeURIComponent(params.tag).toLowerCase();
+  const decodedTag = decodeURIComponent(params.tag);
   const pages = blog
     .getPages()
     .filter((blog) =>
@@ -35,7 +35,7 @@ export function generateStaticParams() {
   const tags = [...getTags().keys()];
 
   return tags.map((key) => ({
-    tag: encodeURIComponent(key.toLowerCase()),
+    tag: key.toLowerCase(),
   }));
 }
 

@@ -87,7 +87,6 @@ function Footer({ page }: { page: InferPageType<typeof blog> }) {
             key={tag}
             href={getTagHref(tag)}
             className="rounded-md bg-primary/10 px-1 py-0.5 text-sm text-primary"
-            prefetch={false}
           >
             # {tag}
           </Link>
