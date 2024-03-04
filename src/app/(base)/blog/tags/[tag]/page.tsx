@@ -6,13 +6,11 @@ import { domain } from "@config";
 import type { Metadata } from "next";
 
 export default function TagPage({ params }: { params: { tag: string } }) {
-  const decodedTag = decodeURIComponent(params.tag);
+  const decodedTag = decodeURIComponent(params.tag).toLowerCase();
   const pages = blog
     .getPages()
     .filter((blog) =>
-      blog.data.tags.some(
-        (tag) => tag.toLowerCase() === decodedTag.toLowerCase(),
-      ),
+      blog.data.tags.some((tag) => tag.toLowerCase() === decodedTag),
     );
 
   return (
@@ -37,7 +35,7 @@ export function generateStaticParams() {
   const tags = [...getTags().keys()];
 
   return tags.map((key) => ({
-    tag: key.toLowerCase(),
+    tag: encodeURIComponent(key.toLowerCase()),
   }));
 }
 
