@@ -87,6 +87,9 @@ devDependencies:
   eslint-plugin-react:
     specifier: 7.33.2
     version: 7.33.2(eslint@8.55.0)
+  next-build-id:
+    specifier: ^3.0.0
+    version: 3.0.0
   next-sitemap:
     specifier: ^4.2.3
     version: 4.2.3(next@14.1.1)
@@ -4212,6 +4215,11 @@ packages:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
     dev: false
+
+  /next-build-id@3.0.0:
+    resolution: {integrity: sha512-B3JCsL/9Z/wkmo3EySukQHCgx89Aw0i4LPi2MEhCboQBJ6wpkYTIu1z6hOYKuw/S1Wy8ZRqCEq0dVY/ST6jGqg==}
+    engines: {node: '>=8'}
+    dev: true
 
   /next-sitemap@4.2.3(next@14.1.1):
     resolution: {integrity: sha512-vjdCxeDuWDzldhCnyFCQipw5bfpl4HmZA7uoo3GAaYGjGgfL4Cxb1CiztPuWGmS+auYs7/8OekRS8C2cjdAsjQ==}

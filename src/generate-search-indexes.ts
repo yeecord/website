@@ -1,7 +1,9 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import {} from "node:fs/promises";
 import { docs } from "./app/source";
 import { createOgImage } from "./utils/og";
 import type { StructuredData } from "fumadocs-core/mdx-plugins";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import path from "node:path";
 
 // Access and export MDX pages data to json file
 // So that we can update search indexes after the build
@@ -20,20 +22,37 @@ export type Index = {
   structuredData: StructuredData;
 };
 
-export async function generate() {
-  if (global.__NEXT_DOCS_INDEX_UPDATED) return;
+const CACHE_LOG_FILE = path.resolve("./.next/FUMADOCS");
+const buildId = process.env.NEXT_BUILD_ID;
+
+export function generate() {
+  if (!buildId) {
+    console.warn("Cannot detect bulid id");
+    return;
+  }
+
+  if (
+    existsSync(CACHE_LOG_FILE) &&
+    readFileSync(CACHE_LOG_FILE).toString() === buildId
+  )
+    return;
+
   console.log("generate search indexes");
 
-  for (const page of docs.getPages()) {
-    const image = await createOgImage(page);
-    const path = page.url;
+  writeFileSync(CACHE_LOG_FILE, buildId);
 
-    await mkdir(`./public/og${path.split("/").slice(0, -1).join("/")}`, {
-      recursive: true,
-    }).catch(() => {});
+  void Promise.all(
+    docs.getPages().map(async (page) => {
+      const image = await createOgImage(page);
+      const path = page.url;
 
-    await writeFile(`./public/og${path}.png`, Buffer.from(image));
-  }
+      mkdirSync(`./public/og${path.split("/").slice(0, -1).join("/")}`, {
+        recursive: true,
+      });
+
+      writeFileSync(`./public/og${path}.png`, Buffer.from(image));
+    }),
+  );
 
   const indexes: Index[] = docs.getPages().map((page) => ({
     id: page.url,
@@ -42,7 +61,5 @@ export async function generate() {
     structuredData: page.data.exports.structuredData,
   }));
 
-  await writeFile("./public/_map_indexes.json", JSON.stringify(indexes));
-
-  global.__NEXT_DOCS_INDEX_UPDATED = true;
+  writeFileSync("./public/_map_indexes.json", JSON.stringify(indexes));
 }

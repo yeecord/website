@@ -34,5 +34,5 @@ export const docs = loader({
 });
 
 if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) {
-  void generate();
+  generate();
 }
