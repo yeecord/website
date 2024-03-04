@@ -1,8 +1,6 @@
 import { Noto_Sans_TC } from "next/font/google";
-import { AdsProvider } from "@/adsense";
 import type { ReactNode } from "react";
-
-import { NextDocsProvider } from "./next-docs-provider";
+import { DocsProvider } from "./docs-provider";
 import Footer from "@/components/Footer";
 import { footer, urlBase } from "@config";
 import type { Metadata } from "next";
@@ -41,12 +39,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-Hant-TW" className={noto.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <AdsProvider>
-          <NextDocsProvider>
-            {children}
-            <Footer categories={footer} />
-          </NextDocsProvider>
-        </AdsProvider>
+        <DocsProvider>
+          {children}
+          <Footer categories={footer} />
+        </DocsProvider>
       </body>
     </html>
   );

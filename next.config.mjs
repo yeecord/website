@@ -1,24 +1,17 @@
-import createNextDocs from "next-docs-mdx/config";
-import { rehypeImgSize } from "next-docs-zeta/mdx-plugins";
+import createMDX from "fumadocs-mdx/config";
 
-const withNextDocs = createNextDocs({
+const withMDX = createMDX({
   rootMapPath: "./src/_map.ts",
   rootContentPath: "./content",
-  mdxOptions: {
-    rehypePlugins: [[rehypeImgSize, { dir: "./public" }]],
-  },
 });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "mdx"],
-  experimental: {
-    webpackBuildWorker: true,
-  },
   images: {
     unoptimized: true,
   },
   output: "export",
 };
 
-export default withNextDocs(nextConfig);
+export default withMDX(nextConfig);

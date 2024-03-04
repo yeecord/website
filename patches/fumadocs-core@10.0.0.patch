@@ -1,0 +1,60 @@
+diff --git a/dist/search/client.js b/dist/search/client.js
+index 87337d609438f6e0d7fa6f2b993d71a1e663d3f1..4c5bee312276844a5414f3590f405782de7fb693 100644
+--- a/dist/search/client.js
++++ b/dist/search/client.js
+@@ -1,23 +1,17 @@
+-import {
+-  __async
+-} from "../chunk-WEAGW6MQ.js";
++import { __async } from "../chunk-WEAGW6MQ.js";
+ 
+ // src/search/client.ts
+ import { useEffect, useState } from "react";
+ import useSWR from "swr";
+ function fetchDocs(api, query, locale, tag) {
+   return __async(this, null, function* () {
+-    if (query.length === 0)
+-      return "empty";
++    if (query.length === 0) return "empty";
+     const params = new URLSearchParams();
+     params.set("query", query);
+-    if (locale)
+-      params.set("locale", locale);
+-    if (tag)
+-      params.set("tag", tag);
++    if (locale) params.set("locale", locale);
++    if (tag) params.set("tag", tag);
+     const res = yield fetch(`${api}?${params.toString()}`);
+-    if (!res.ok)
+-      throw new Error(yield res.text());
++    if (!res.ok) throw new Error(yield res.text());
+     return yield res.json();
+   });
+ }
+@@ -25,12 +19,13 @@ function useDocsSearch(locale, tag) {
+   const [search, setSearch] = useState("");
+   const debouncedValue = useDebounce(search, 100);
+   const query = useSWR(
+-    ["/api/search", debouncedValue, locale, tag],
+-    (_0) => __async(this, [_0], function* ([api, value]) {
+-      return fetchDocs(api, value, locale, tag);
+-    }),
++    ["https://search.yeecord.com/search", debouncedValue, locale, tag],
++    (_0) =>
++      __async(this, [_0], function* ([api, value]) {
++        return fetchDocs(api, value, locale, tag);
++      }),
+     {
+-      keepPreviousData: true
++      keepPreviousData: true,
+     }
+   );
+   return { search, setSearch, query };
+@@ -47,6 +42,4 @@ function useDebounce(value, delayMs = 1e3) {
+   }, [value, delayMs]);
+   return debouncedValue;
+ }
+-export {
+-  useDocsSearch
+-};
++export { useDocsSearch };

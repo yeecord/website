@@ -4,8 +4,8 @@ import { EyeIcon, GithubIcon } from "lucide-react";
 import { blogRecommendations, domain } from "@config";
 import { BlogRecommend } from "@/components/blog/BlogRecommend";
 import type { Metadata } from "next";
-import { blog } from "../source";
-import type { Page } from "next-docs-mdx/types";
+import { blog } from "@/app/source";
+import type { InferPageType } from "fumadocs-core/source";
 
 export const metadata: Metadata = {
   alternates: {
@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndex() {
-  const pages = blog.pages.sort(
-    (a, b) => b.matter.date.getTime() - a.matter.date.getTime(),
-  );
+  const pages = blog
+    .getPages()
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
   const recommendations = blogRecommendations.flatMap((name) => {
     return pages.find((page) => page.slugs[0] === name) ?? [];
@@ -55,14 +55,14 @@ export default function BlogIndex() {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => {
-          return <BlogItem key={page.file.id} page={page} />;
+          return <BlogItem key={page.url} page={page} />;
         })}
       </div>
     </main>
   );
 }
 
-function Recommendations({ items }: { items: Page[] }) {
+function Recommendations({ items }: { items: InferPageType<typeof blog>[] }) {
   return (
     <div className="mb-16 grid grid-cols-1 gap-8 min-[816px]:grid-cols-2">
       {items[0] != null && <LargeBlogItem page={items[0]} />}
@@ -74,7 +74,7 @@ function Recommendations({ items }: { items: Page[] }) {
           {items.map((page, i) => {
             if (i === 0) return;
 
-            return <BlogRecommend key={page.file.id} page={page} />;
+            return <BlogRecommend key={page.url} page={page} />;
           })}
         </div>
       </div>

@@ -1,17 +1,17 @@
-import { docs } from "@/app/source";
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import type { docs } from "@/app/source";
+import { resolve } from "node:path";
 import { ImageResponse } from "next/og";
-import type { Page } from "next-docs-mdx/types";
+import type { InferPageType } from "fumadocs-core/source";
+import { readFile } from "node:fs/promises";
 
 let noto: Buffer | null = null;
 
-export function createOgImage(page: Page) {
-  noto ??= readFileSync(
-    resolve(process.cwd(), "public/noto-sans-semi-bold.woff"),
+export async function createOgImage(page: InferPageType<typeof docs>) {
+  noto ??= await readFile(
+    resolve(process.cwd(), "./public/noto-sans-semi-bold.woff"),
   );
 
-  return new ImageResponse(
+  return await new ImageResponse(
     (
       <div
         tw="flex h-full w-full p-12"
@@ -36,9 +36,9 @@ export function createOgImage(page: Page) {
               fill="hsl(0 0% 98%)"
             />
           </svg>
-          <p tw="text-white font-bold text-6xl">{page.matter.title}</p>
+          <p tw="text-white font-bold text-6xl">{page.data.title}</p>
           <p tw="text-2xl" style={{ color: "hsl(0 0% 63.9%)" }}>
-            {page.matter.description}
+            {page.data.description}
           </p>
         </div>
       </div>
@@ -54,10 +54,4 @@ export function createOgImage(page: Page) {
       ],
     },
   ).arrayBuffer();
-}
-
-export function generateStaticParams() {
-  return docs.pages.map((docs) => ({
-    slug: docs.slugs,
-  }));
 }

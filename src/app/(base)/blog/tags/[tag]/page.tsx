@@ -7,11 +7,13 @@ import type { Metadata } from "next";
 
 export default function TagPage({ params }: { params: { tag: string } }) {
   const decodedTag = decodeURIComponent(params.tag);
-  const pages = blog.pages.filter((blog) =>
-    blog.matter.tags.some(
-      (tag) => tag.toLowerCase() === decodedTag.toLowerCase(),
-    ),
-  );
+  const pages = blog
+    .getPages()
+    .filter((blog) =>
+      blog.data.tags.some(
+        (tag) => tag.toLowerCase() === decodedTag.toLowerCase(),
+      ),
+    );
 
   return (
     <main className="my-16 flex w-full flex-1 flex-col gap-5">
@@ -24,7 +26,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => (
-          <BlogItem key={page.file.id} page={page} />
+          <BlogItem key={page.url} page={page} />
         ))}
       </div>
     </main>
@@ -33,8 +35,6 @@ export default function TagPage({ params }: { params: { tag: string } }) {
 
 export function generateStaticParams() {
   const tags = [...getTags().keys()];
-
-  console.log(`Generating ${tags.length} tag pages...`);
 
   return tags.map((key) => ({
     tag: key.toLowerCase(),

@@ -5,10 +5,9 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { getTagHref } from "@/utils/tags";
 import { notFound } from "next/navigation";
-import type { AuthorData } from "@/types";
-import { blogAuthors } from "@config";
+import { blogAuthors, type AuthorData } from "@config";
 import { blog } from "@/app/source";
-import type { Page } from "next-docs-mdx/types";
+import { type InferPageType } from "fumadocs-core/source";
 
 export default function BlogLayout({
   params,
@@ -28,11 +27,11 @@ export default function BlogLayout({
       itemScope
     >
       <h1 className="mb-2 text-3xl font-bold leading-normal" itemProp="name">
-        {page.matter.title}
+        {page.data.title}
       </h1>
       <div className="mb-6 mt-3 flex flex-row flex-wrap items-center gap-1">
         <div className="flex flex-row flex-wrap gap-1">
-          {page.matter.authors.map((author, i) => (
+          {page.data.authors.map((author, i) => (
             <Fragment key={i}>
               {i !== 0 && <span className="mx-1">+</span>}
               <SmallAuthor author={blogAuthors[author]} />
@@ -43,7 +42,7 @@ export default function BlogLayout({
         <p className="text-sm text-muted-foreground">
           <span className="mr-1">•</span>
           <span itemProp="datePublished">
-            {page.matter.date.toLocaleDateString("zh", {
+            {page.data.date.toLocaleDateString("zh", {
               dateStyle: "long",
             })}
           </span>
@@ -78,12 +77,12 @@ function SmallAuthor({ author }: { author: AuthorData }) {
   );
 }
 
-function Footer({ page }: { page: Page }) {
+function Footer({ page }: { page: InferPageType<typeof blog> }) {
   return (
     <div className="mt-[5rem] flex flex-col gap-6">
       <div className="flex flex-row flex-wrap gap-2 text-base">
         <p>標籤</p>
-        {page.matter.tags.map((tag) => (
+        {page.data.tags.map((tag) => (
           <Link
             key={tag}
             href={getTagHref(tag)}
@@ -94,7 +93,7 @@ function Footer({ page }: { page: Page }) {
           </Link>
         ))}
       </div>
-      {page.matter.authors
+      {page.data.authors
         .map((author) => blogAuthors[author])
         .map((author, i) => (
           <a

@@ -1,5 +1,5 @@
 import { type ComponentProps, type ReactNode } from "react";
-import { SafeLink } from "next-docs-zeta/link";
+import Link from "fumadocs-core/link";
 import { ChevronRightIcon } from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/utils/cn";
@@ -15,9 +15,9 @@ export function LinkButton({
 }: {
   icon?: ReactNode;
   variant?: "secondary" | "primary";
-} & ComponentProps<typeof SafeLink>) {
+} & ComponentProps<typeof Link>) {
   return (
-    <SafeLink
+    <Link
       {...props}
       className={cn(
         buttonVariants({ color: variant ?? "secondary" }),
@@ -27,6 +27,6 @@ export function LinkButton({
     >
       {icon} {children}
       {icon == null && <ChevronRightIcon className="h-4 w-4" />}
-    </SafeLink>
+    </Link>
   );
 }
