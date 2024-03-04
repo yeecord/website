@@ -1,4 +1,3 @@
-import {} from "node:fs/promises";
 import { docs } from "./app/source";
 import { createOgImage } from "./utils/og";
 import type { StructuredData } from "fumadocs-core/mdx-plugins";
