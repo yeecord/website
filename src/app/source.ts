@@ -2,8 +2,6 @@ import { createMDXSource, defaultSchemas } from "fumadocs-mdx";
 import { map } from "@/_map";
 import { z } from "zod";
 import { loader } from "fumadocs-core/source";
-import { PHASE_PRODUCTION_BUILD } from "next/constants";
-import { generate } from "@/generate-search-indexes";
 
 const blogFrontmatterSchema = defaultSchemas.frontmatter.extend({
   tags: z.array(z.string()).default([]),
@@ -32,7 +30,3 @@ export const docs = loader({
   source: createMDXSource(map),
   baseUrl: "/docs",
 });
-
-if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) {
-  generate();
-}

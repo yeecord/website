@@ -23,11 +23,12 @@
     "paths": {
       "@config": ["./config.ts"],
       "@static/*": ["./public/*"],
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": [
     "prettier.config.cjs",
+    "scripts/*.mjs",
     ".eslintrc.js",
     "next-env.d.ts",
     "**/*.ts",

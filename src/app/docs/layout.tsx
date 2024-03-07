@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { DocsLayout } from "fumadocs-ui/layout";
 import { docs } from "../source";
-import { layoutProps } from "../docs-provider";
+import { layoutProps } from "@/app/layout.shared";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

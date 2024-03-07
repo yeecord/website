@@ -4,6 +4,8 @@ import { DocsProvider } from "./docs-provider";
 import Footer from "@/components/Footer";
 import { footer, urlBase } from "@config";
 import type { Metadata } from "next";
+import { AdsProvider } from "@/components/adsense";
+import { I18nProvider } from "fumadocs-ui/i18n";
 
 import "./global.css";
 
@@ -39,10 +41,25 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-Hant-TW" className={noto.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <DocsProvider>
-          {children}
-          <Footer categories={footer} />
-        </DocsProvider>
+        <I18nProvider
+          locale="cn"
+          translations={{
+            cn: {
+              name: "Chinese",
+              toc: "目錄",
+              search: "搜索文檔",
+              lastUpdate: "最後更新於",
+              searchNoResult: "沒有結果",
+            },
+          }}
+        >
+          <AdsProvider>
+            <DocsProvider>
+              {children}
+              <Footer categories={footer} />
+            </DocsProvider>
+          </AdsProvider>
+        </I18nProvider>
       </body>
     </html>
   );
