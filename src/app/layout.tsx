@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             cn: {
               name: "Chinese",
               toc: "目錄",
-              search: "搜索文檔",
+              search: "搜尋文檔",
               lastUpdate: "最後更新於",
               searchNoResult: "沒有結果",
             },
