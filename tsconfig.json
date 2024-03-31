@@ -28,11 +28,15 @@
   },
   "include": [
     "prettier.config.cjs",
-    "scripts/*.mjs",
     ".eslintrc.js",
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "config.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.mts",
+    "scripts/**/*.ts",
+    "scripts/**/*.mts",
+    "scripts/**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
