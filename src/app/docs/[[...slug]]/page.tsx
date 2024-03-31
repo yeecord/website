@@ -10,17 +10,6 @@ export default function Page({ params }: { params: { slug?: string[] } }) {
 
   if (!page) notFound();
 
-  // const headers = new Headers();
-
-  // const time = await getGitLastEditTime(
-  //   "yeecord/website",
-  //   resolve("", page.file.path),
-  //   undefined,
-  //   {
-  //     headers,
-  //   },
-  // );
-
   const Content = page.data.exports.default;
 
   return (

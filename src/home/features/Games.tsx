@@ -10,9 +10,9 @@ import {
   PencilLineIcon,
   Gamepad2Icon,
 } from "lucide-react";
-import LinkButton from "../components/LinkButton";
 import { type ReactNode } from "react";
 import { cn } from "@/utils/cn";
+import Link from "fumadocs-core/link";
 
 const grid = {
   hidden: {},
@@ -62,12 +62,12 @@ export function Games() {
               透過機器人各種有趣的系統，讓你的 Discord
               更加有趣，同時朋友也可以和你一起玩
             </p>
-            <LinkButton
+            <Link
               className="mt-6 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 px-6 py-3 text-lg font-bold text-white"
-              href="/docs/rpg/"
+              href="/docs/rpg"
             >
               了解更多
-            </LinkButton>
+            </Link>
             <motion.div
               className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3"
               variants={grid}

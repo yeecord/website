@@ -12,15 +12,6 @@
     -5px -5px 25px theme("colors.cyan.500 / 50%");
 }
 
-.rainbow-border:hover {
-  color: white;
-  background: linear-gradient(
-    to bottom right,
-    theme("colors.green.400"),
-    theme("colors.cyan.500")
-  );
-}
-
 @media (max-width: theme("screens.md")) {
   .servers {
     animation: servers-loop infinite 30s linear;
