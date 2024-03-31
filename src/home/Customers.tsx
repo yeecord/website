@@ -2,11 +2,11 @@
 
 import PinkWave from "@static/home/pink-wave.svg";
 import Image from "next/image";
-import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import { motion, type MotionValue, useTransform } from "framer-motion";
 import formatter from "@/utils/formatter";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
+import Link from "fumadocs-core/link";
 
 export function Customers() {
   const { count, start } = useAnimatedCounter(
@@ -56,14 +56,14 @@ export function Customers() {
           受到無數大型社群的廣泛信任
         </p>
         <div className="flex flex-row gap-2.5">
-          <LinkButton
+          <Link
             href="/invite"
             className={clsx(
               "rounded-full bg-secondary px-6 py-3 text-lg font-medium text-secondary-foreground shadow-lg transition-all hover:bg-accent hover:text-accent-foreground",
             )}
           >
             邀請機器人
-          </LinkButton>
+          </Link>
         </div>
         <motion.div
           className="grid grid-cols-1 gap-4 text-start sm:grid-cols-2 md:mt-[4rem] lg:grid-cols-3"

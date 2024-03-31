@@ -1,10 +1,12 @@
 import Gradient from "./components/Gradient";
-import LinkButton from "./components/LinkButton";
+import Link from "fumadocs-core/link";
 import CyanPinkGradient from "@static/home/cyan-pink-gradient.svg";
 import GradientRing from "@static/home/gradient-ring.svg";
 import Image from "next/image";
 import clsx from "clsx";
 import styles from "./community.module.css";
+import { cn } from "@/utils/cn";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Community() {
   return (
@@ -41,12 +43,12 @@ function JoinButton() {
         )}
       />
       <div className="flex flex-row flex-wrap justify-center gap-4">
-        <LinkButton
+        <Link
           href="https://x.com/yeecord"
           target="_blank"
-          className="inline-flex items-center gap-3 rounded-lg bg-primary px-4 py-2 text-lg font-medium text-primary-foreground"
+          className={cn(buttonVariants({ color: "primary", size: "lg" }))}
         >
-          <svg width="26" height="26" viewBox="0 0 24 24">
+          <svg className="size-5" viewBox="0 0 24 24">
             <title>X</title>
             <path
               fill="currentColor"
@@ -54,13 +56,13 @@ function JoinButton() {
             />
           </svg>
           @yeecord
-        </LinkButton>
-        <LinkButton
+        </Link>
+        <Link
           href="https://discord.gg/yeecord"
           target="_blank"
-          className="inline-flex items-center gap-3 rounded-lg border bg-secondary px-4 py-2 text-lg font-medium text-secondary-foreground"
+          className={cn(buttonVariants({ color: "secondary", size: "lg" }))}
         >
-          <svg width="26" height="26" viewBox="0 0 24 24">
+          <svg className="size-5" viewBox="0 0 24 24">
             <title>Discord</title>
             <path
               fill="currentColor"
@@ -68,7 +70,7 @@ function JoinButton() {
             />
           </svg>
           <span>Discord</span>
-        </LinkButton>
+        </Link>
       </div>
     </div>
   );

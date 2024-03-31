@@ -2,10 +2,11 @@ import { ExternalLinkIcon } from "lucide-react";
 import Gradient from "./components/Gradient";
 import HeroGradient from "@static/hero.svg";
 import Image from "next/image";
-import LinkButton from "./components/LinkButton";
 import clsx from "clsx";
 import styles from "./hero.module.css";
 import { cn } from "@/utils/cn";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "fumadocs-core/link";
 
 export function Hero() {
   return (
@@ -65,25 +66,30 @@ export function Hero() {
 }
 
 function Buttons() {
-  const bn = "text-lg font-bold sm:text-lg rounded-md w-full px-6 py-3 sm:px-8";
-
   return (
     <div className="grid w-full max-w-[500px] grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2">
-      <LinkButton href="/docs" className={clsx(bn, styles["rainbow-border"])}>
-        使用教學
-      </LinkButton>
-      <LinkButton
-        href="/invite"
-        target="_blank"
+      <Link
+        href="/docs"
         className={cn(
-          "inline-flex items-center justify-center gap-2.5 bg-black text-white",
-          "dark:bg-white dark:text-black",
-          bn,
+          buttonVariants({ color: "ghost", size: "lg" }),
+          styles["rainbow-border"],
         )}
       >
-        <ExternalLinkIcon />
+        使用教學
+      </Link>
+      <Link
+        href="https://app.yeecord.com/invite"
+        target="_blank"
+        className={cn(
+          buttonVariants({
+            color: "secondary",
+            size: "lg",
+          }),
+        )}
+      >
+        <ExternalLinkIcon className="size-5" />
         邀請機器人
-      </LinkButton>
+      </Link>
     </div>
   );
 }

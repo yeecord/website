@@ -9,7 +9,6 @@ import { motion } from "framer-motion";
 import Gradient from "../components/Gradient";
 import clsx from "clsx";
 import styles from "./music.module.css";
-import LinkButton from "../components/LinkButton";
 import {
   ArrowLeftIcon,
   ArrowRightCircleIcon,
@@ -17,6 +16,7 @@ import {
   MusicIcon,
   StopCircleIcon,
 } from "lucide-react";
+import Link from "fumadocs-core/link";
 
 export function Music() {
   return (
@@ -69,7 +69,7 @@ function Content() {
         上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
       </p>
       <div className="mt-3 flex flex-row gap-2.5">
-        <LinkButton
+        <Link
           className={clsx(
             "rounded-full bg-gradient-to-r from-cyan-500 to-green-500 px-6 py-3 text-base font-medium text-white",
             "flex h-fit flex-row items-center gap-2",
@@ -77,7 +77,7 @@ function Content() {
           href="/docs"
         >
           了解更多 <ArrowRightCircleIcon className="inline" />
-        </LinkButton>
+        </Link>
       </div>
     </div>
   );

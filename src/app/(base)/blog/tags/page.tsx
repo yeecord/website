@@ -1,8 +1,9 @@
-import { LinkButton } from "@/components/mdx";
 import Link from "next/link";
 import { getTagHref, getTags, type TagInfo } from "@/utils/tags";
 import { domain } from "@config";
 import type { Metadata } from "next";
+import { cn } from "@/utils/cn";
+import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   alternates: {
@@ -17,15 +18,11 @@ export default function AllTags() {
 
   return (
     <main className="my-16 flex w-full flex-col gap-3">
-      <div className="mb-3 flex flex-col gap-3">
-        <h1 className="mb-4 text-center text-5xl font-bold">所有標籤</h1>
-        <LinkButton
-          href="/blog"
-          wrapper={{ className: "mx-auto" }}
-          variant="primary"
-        >
+      <div className="mb-3 flex flex-col items-center gap-3 text-center">
+        <h1 className="mb-4 text-5xl font-bold">所有標籤</h1>
+        <Link href="/blog" className={cn(buttonVariants({ color: "primary" }))}>
           查看文章
-        </LinkButton>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
