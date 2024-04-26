@@ -24,7 +24,7 @@ const config = {
     ],
     "@typescript-eslint/no-unsafe-assignment": "off",
   },
-  ignorePatterns: ["**/*.config.js", "**/*.config.mjs", "**/*.config.cjs"],
+  ignorePatterns: ["**/*.config.js", "**/*.config.mjs", "**/*.config.cjs", "**/out"],
   reportUnusedDisableDirectives: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
