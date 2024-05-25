@@ -58,10 +58,8 @@ export const metadata = {
 
 本服務隱私權保護政策將因應需求隨時進行修正，修正後的條款將刊登於網站上。
 
-export default (p) => (
+export default ({ children }) => (
   <main className="container py-12">
-    <div className="nd-prose" {...p} />
+    <div className="prose">{children}</div>
   </main>
 );
-
-export const dynamic = "force-static";

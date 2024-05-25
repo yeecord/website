@@ -20,11 +20,13 @@ export const layoutProps: Omit<BaseLayoutProps, "children"> = {
       url: "/docs",
       icon: <BookIcon />,
       text: "使用教學",
+      active: "nested-url",
     },
     {
       url: "/blog",
       icon: <LayoutListIcon />,
       text: "部落格",
+      active: "nested-url",
     },
     {
       url: "https://app.yeecord.com",

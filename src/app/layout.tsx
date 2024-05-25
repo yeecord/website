@@ -50,6 +50,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               search: "搜尋文檔",
               lastUpdate: "最後更新於",
               searchNoResult: "沒有結果",
+              previousPage: "上一頁",
+              nextPage: "下一頁",
             },
           }}
         >
