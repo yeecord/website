@@ -1,14 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
-import React from "react";
 import type { blog } from "@/app/source";
 import type { InferPageType } from "fumadocs-core/source";
+import { blogAuthors } from "@config";
+import { cn } from "@/utils/cn";
 
 export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
   return (
     <Link
       href={page.url}
-      className="flex flex-col overflow-hidden rounded-lg border bg-card text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+      className="flex flex-col overflow-hidden rounded-lg bg-card text-card-foreground shadow-lg transition-colors hover:bg-accent hover:text-accent-foreground"
     >
       <div className="relative aspect-video h-auto w-full">
         {page.data.image != null ? (
@@ -31,53 +32,35 @@ export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
           </div>
         )}
       </div>
-      <div className="flex flex-1 flex-col gap-3 p-4">
-        <p className="text-lg font-medium">{page.data.title}</p>
-        <p className="overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-muted-foreground">
+      <div className="flex flex-1 flex-col gap-2 rounded-b-lg border-x border-b p-4">
+        <p className="font-semibold">{page.data.title}</p>
+        <p className="truncate text-sm text-muted-foreground">
           {page.data.description}
         </p>
 
-        <p className="mt-auto pt-2 text-end text-sm text-muted-foreground">
-          {page.data.date.toLocaleDateString()}
-        </p>
-      </div>
-    </Link>
-  );
-}
+        <div className="mt-auto flex flex-row items-end pt-2">
+          {page.data.authors.flatMap((author, i) => {
+            const info = blogAuthors[author];
+            if (!info?.image_url) return [];
 
-export function LargeBlogItem({ page }: { page: InferPageType<typeof blog> }) {
-  return (
-    <Link
-      href={page.url}
-      className="flex h-fit flex-col overflow-hidden rounded-lg border bg-card text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-    >
-      <div className="relative aspect-video w-full">
-        {page.data.image != null ? (
-          <Image
-            alt="image"
-            src={page.data.image}
-            className="h-full object-cover"
-            fill
-            priority
-            sizes="80vw"
-          />
-        ) : (
-          <div className="flex h-full flex-1 flex-col bg-green-400">
-            <Image
-              alt="logo"
-              src="/img/logo-transparent.png"
-              className="m-auto h-20 w-20"
-              width={128}
-              height={128}
-            />
-          </div>
-        )}
-      </div>
-      <div className="flex flex-col p-5">
-        <p className="text-lg font-medium">{page.data.title}</p>
-        <p className="overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-muted-foreground">
-          {page.data.description}
-        </p>
+            return (
+              <Image
+                key={info.name}
+                src={info.image_url}
+                alt={info.name}
+                width={30}
+                height={30}
+                className={cn(
+                  "rounded-full border-4 border-background",
+                  i !== 0 && "-ml-4",
+                )}
+              />
+            );
+          })}
+          <p className="ml-auto text-xs text-muted-foreground">
+            {page.data.date.toLocaleDateString()}
+          </p>
+        </div>
       </div>
     </Link>
   );

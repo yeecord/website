@@ -78,16 +78,6 @@ export const footer: FooterCategory[] = [
   },
 ];
 
-/**
- * a list of blog file names
- */
-export const blogRecommendations = [
-  "welcome-to-v3",
-  "fix-music-lag",
-  "discord-bot-troubleshooting",
-  "how-to-invite-bot",
-];
-
 export const blogAuthors: Record<string, AuthorData> = {
   kane: {
     name: "Kane Wang",
