@@ -45,7 +45,7 @@ export function generateStaticParams(): { slug: string[] }[] {
 export function generateMetadata({ params }: { params: { slug?: string[] } }) {
   const page = docs.getPage(params.slug);
 
-  if (page == null) notFound();
+  if (!page) notFound();
 
   return {
     title: page.data.title,
