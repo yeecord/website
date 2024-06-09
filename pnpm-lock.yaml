@@ -18,8 +18,8 @@ dependencies:
     specifier: ^11.2.6
     version: 11.2.6(react-dom@18.3.1)(react@18.3.1)
   fumadocs-core:
-    specifier: ^11.2.1
-    version: 11.2.1(@types/react@18.3.3)(next@14.2.3)(react-dom@18.3.1)(react@18.3.1)
+    specifier: ^12.0.0
+    version: 12.0.0(@types/react@18.3.3)(next@14.2.3)(react-dom@18.3.1)(react@18.3.1)
   fumadocs-mdx:
     specifier: ^8.2.23
     version: 8.2.23(@types/react@18.3.3)(next@14.2.3)(react-dom@18.3.1)(react@18.3.1)
@@ -1617,6 +1617,10 @@ packages:
     resolution: {integrity: sha512-NIEAi5U5R7BLkbW1pG/ZKu3eb1lzc3/+jD0lFsuxMT7zjaf9bbNwdNyMr7zh/Zl8EXQtQ+MYBAt5G+JLu+5DlA==}
     dev: false
 
+  /@shikijs/core@1.6.3:
+    resolution: {integrity: sha512-QnJKHFUW95GnlJLJGP6QLx4M69HM0KlXk+R2Y8lr/x4nAx1Yb/lsuxq4XwybuUjTxbJk+BT0g/kvn0bcsjGGHg==}
+    dev: false
+
   /@shikijs/rehype@1.6.0:
     resolution: {integrity: sha512-wSypSZqPUWe7ec/UUN56Qg+PKf5UF3cZww+wRHMLsk3m9ollU//bN0zQKN8ymV35IS5VU4gdzpJMpaT8wXYKzA==}
     dependencies:
@@ -1628,10 +1632,27 @@ packages:
       unist-util-visit: 5.0.0
     dev: false
 
+  /@shikijs/rehype@1.6.3:
+    resolution: {integrity: sha512-724+2zopOy3pNDONss0mjblgos+hKKVoy4MmboIkDLds3ZKf4squv6bGHBGEjHxP+RIKe9Vmt2wwf3wSCS6/Pw==}
+    dependencies:
+      '@shikijs/transformers': 1.6.3
+      '@types/hast': 3.0.4
+      hast-util-to-string: 3.0.0
+      shiki: 1.6.3
+      unified: 11.0.4
+      unist-util-visit: 5.0.0
+    dev: false
+
   /@shikijs/transformers@1.6.0:
     resolution: {integrity: sha512-qGfHe1ECiqfE2STPWvfogIj/9Q0SK+MCRJdoITkW7AmFuB7DmbFnBT2US84+zklJOB51MzNO8RUXZiauWssJlQ==}
     dependencies:
       shiki: 1.6.0
+    dev: false
+
+  /@shikijs/transformers@1.6.3:
+    resolution: {integrity: sha512-ptBuP/IIeqCzK3zZO/knFICZWs58uZWzbv7ND+bKOewe5NcCjZfSiMyzFwOyl23ewPJ1APjRBwLi6Asrodmmxw==}
+    dependencies:
+      shiki: 1.6.3
     dev: false
 
   /@shuding/opentype.js@1.4.0-beta.0:
@@ -3236,6 +3257,37 @@ packages:
       remark-mdx: 3.0.1
       scroll-into-view-if-needed: 3.1.0
       shiki: 1.6.0
+      swr: 2.2.5(react@18.3.1)
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+    dev: false
+
+  /fumadocs-core@12.0.0(@types/react@18.3.3)(next@14.2.3)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-JsWaN3hSPOoL3m9p4mz4a/W2x93vMjDu0IFkF0BqWldivtjTnOsOkaBOuMU868TgryfXwofzXfq6nzar9bMQHA==}
+    peerDependencies:
+      next: '>= 14.1.0'
+      react: '>= 18'
+      react-dom: '>= 18'
+    dependencies:
+      '@formatjs/intl-localematcher': 0.5.4
+      '@shikijs/rehype': 1.6.3
+      '@shikijs/transformers': 1.6.3
+      flexsearch: 0.7.21
+      github-slugger: 2.0.0
+      hast-util-to-estree: 3.1.0
+      negotiator: 0.6.3
+      next: 14.2.3(react-dom@18.3.1)(react@18.3.1)
+      npm-to-yarn: 2.2.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-remove-scroll: 2.5.10(@types/react@18.3.3)(react@18.3.1)
+      remark: 15.0.1
+      remark-gfm: 4.0.0
+      remark-mdx: 3.0.1
+      scroll-into-view-if-needed: 3.1.0
+      shiki: 1.6.3
       swr: 2.2.5(react@18.3.1)
       unist-util-visit: 5.0.0
     transitivePeerDependencies:
@@ -5436,6 +5488,12 @@ packages:
     resolution: {integrity: sha512-P31ROeXcVgW/k3Z+vUUErcxoTah7ZRaimctOpzGuqAntqnnSmx1HOsvnbAB8Z2qfXPRhw61yptAzCsuKOhTHwQ==}
     dependencies:
       '@shikijs/core': 1.6.0
+    dev: false
+
+  /shiki@1.6.3:
+    resolution: {integrity: sha512-lE1/YGlzFY0hQSyEfsZj18xGrTWxyhFQkaiILALqTBZPbJeYFWpbUhlmTGPOupYB/qC+H6sV4UznJzcEh3WMHQ==}
+    dependencies:
+      '@shikijs/core': 1.6.3
     dev: false
 
   /side-channel@1.0.6:
