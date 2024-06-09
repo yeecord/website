@@ -1,7 +1,7 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layout";
 import { BookIcon, ExternalLinkIcon, LayoutListIcon } from "lucide-react";
 
-export const layoutProps: Omit<BaseLayoutProps, "children"> = {
+export const layoutProps: BaseLayoutProps = {
   nav: {
     title: (
       <>

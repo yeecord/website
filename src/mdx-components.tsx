@@ -1,5 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import defaultComponents from "fumadocs-ui/mdx";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
 import {
   Adsense,
   Error,
@@ -16,6 +18,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Error,
     Info,
     LinkButton,
+    img: ImageZoom as (
+      props: React.ImgHTMLAttributes<HTMLImageElement>,
+    ) => React.ReactElement,
     Tip,
     Warning,
     ...components,
