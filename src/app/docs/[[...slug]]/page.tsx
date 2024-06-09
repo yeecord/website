@@ -4,6 +4,7 @@ import { DocsBody, DocsPage } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { domain } from "@config";
 import { ExternalLinkIcon } from "lucide-react";
+import { RollButton } from "fumadocs-ui/components/roll-button";
 
 export default function Page({ params }: { params: { slug?: string[] } }) {
   const page = docs.getPage(params.slug);
@@ -31,6 +32,7 @@ export default function Page({ params }: { params: { slug?: string[] } }) {
       <DocsBody>
         <h1>{page.data.title}</h1>
         <Content />
+        <RollButton />
       </DocsBody>
     </DocsPage>
   );

@@ -1,13 +1,12 @@
 import { Noto_Sans_TC } from "next/font/google";
 import type { ReactNode } from "react";
-import { DocsProvider } from "./docs-provider";
-import Footer from "@/components/Footer";
-import { footer, urlBase } from "@config";
+import { urlBase } from "@config";
 import type { Metadata } from "next";
 import { AdsProvider } from "@/components/adsense";
 import { I18nProvider } from "fumadocs-ui/i18n";
 
 import "./global.css";
+import { RootProvider } from "fumadocs-ui/provider";
 
 const noto = Noto_Sans_TC({
   weight: "400",
@@ -56,10 +55,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         >
           <AdsProvider>
-            <DocsProvider>
+            <RootProvider
+              search={{
+                options: { api: "https://search.yeecord.com/search" },
+              }}
+            >
               {children}
-              <Footer categories={footer} />
-            </DocsProvider>
+            </RootProvider>
           </AdsProvider>
         </I18nProvider>
       </body>

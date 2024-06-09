@@ -22,7 +22,7 @@ export function Community() {
         </span>
         <span>聯繫</span>
       </h2>
-      <p className="text-lg text-black  dark:text-slate-200 sm:text-xl">
+      <p className="text-lg text-black dark:text-slate-200 sm:text-xl">
         獲取我們的最新消息
       </p>
 
