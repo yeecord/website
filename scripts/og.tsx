@@ -1,16 +1,8 @@
 import React from "react";
-import { resolve } from "node:path";
-import { readFile } from "node:fs/promises";
 import type { SearchIndex } from "fumadocs-mdx";
 import satori from "satori";
 
-let noto: Buffer | null = null;
-
-export async function createOgImage(page: SearchIndex) {
-  noto ??= await readFile(
-    resolve(process.cwd(), "./public/noto-sans-semi-bold.woff"),
-  );
-
+export async function createOgImage(page: SearchIndex, noto: Buffer) {
   return await satori(
     <div
       tw="flex h-full w-full p-12"
