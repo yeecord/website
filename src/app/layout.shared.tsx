@@ -1,7 +1,7 @@
-import type { BaseLayoutProps } from "fumadocs-ui/layout";
+import type { HomeLayoutProps } from "fumadocs-ui/home-layout";
 import { BookIcon, ExternalLinkIcon, LayoutListIcon } from "lucide-react";
 
-export const layoutProps: BaseLayoutProps = {
+export const layoutProps: HomeLayoutProps = {
   nav: {
     title: (
       <>
@@ -35,7 +35,7 @@ export const layoutProps: BaseLayoutProps = {
       external: true,
     },
     {
-      type: "secondary",
+      type: "icon",
       url: "https://github.com/yeecord",
       text: "GitHub",
       icon: (
@@ -46,7 +46,7 @@ export const layoutProps: BaseLayoutProps = {
       external: true,
     },
     {
-      type: "secondary",
+      type: "icon",
       url: "https://discord.gg/yeecord",
       text: "Discord",
       icon: (

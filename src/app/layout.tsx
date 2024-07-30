@@ -43,15 +43,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <I18nProvider
           locale="cn"
           translations={{
-            cn: {
-              name: "Chinese",
-              toc: "目錄",
-              search: "搜尋文檔",
-              lastUpdate: "最後更新於",
-              searchNoResult: "沒有結果",
-              previousPage: "上一頁",
-              nextPage: "下一頁",
-            },
+            toc: "目錄",
+            search: "搜尋文檔",
+            lastUpdate: "最後更新於",
+            searchNoResult: "沒有結果",
+            previousPage: "上一頁",
+            nextPage: "下一頁",
+            chooseTheme: "選擇外觀主題",
+            tocNoHeadings: "沒有子標題",
           }}
         >
           <AdsProvider>

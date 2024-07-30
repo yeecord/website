@@ -9,5 +9,5 @@ export default {
     "./content/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{jsx,tsx,mdx}",
   ],
-  presets: [createPreset({ preset: "neutral" })],
+  presets: [createPreset({ preset: "neutral", addGlobalColors: true })],
 };

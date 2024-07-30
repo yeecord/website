@@ -4,11 +4,8 @@ description: 協助我們將文檔變得更完善!
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Steps, Step } from "fumadocs-ui/components/steps";
 
-<Steps>
-
-<Step>
+<div className='steps [&>h3]:step'>
 
 ### 我的頁面在哪裡？
 
@@ -17,10 +14,6 @@ import { Steps, Step } from "fumadocs-ui/components/steps";
 | 文檔            | 部落格          |
 | --------------- | --------------- |
 | `/content/docs` | `/content/blog` |
-
-</Step>
-
-<Step>
 
 ### 圖片引入方法更新
 
@@ -42,16 +35,12 @@ import { Steps, Step } from "fumadocs-ui/components/steps";
 ![alt](/docs/my-photo.png)
 ```
 
-</Step>
-
-</Steps>
+</div>
 
 ## 新增頁面的方法
 
-<Steps>
+<div className='steps [&>h3]:step'>
   
-<Step>
-
 ### 建立 .mdx 檔案
 
 請填寫所有字段
@@ -113,10 +102,6 @@ export const blogAuthors: Record<string, AuthorData> = {
 
 </Tabs>
 
-</Step>
-
-<Step>
-
 ### 創建內容
 
 我相信你已經學習了一些基本的 Markdown 語法
@@ -134,10 +119,6 @@ export const blogAuthors: Record<string, AuthorData> = {
 - **數字和英文之間的空格:**
   一切都遵循 [中文案排版指南](https://github.com/sparanoid/chinese-copywriting-guidelines)
 
-</Step>
-
-<Step>
-
 ### 排序頁面
 
 您必須編輯 `meta.json` 以更改每個頁面的順序：
@@ -147,10 +128,6 @@ export const blogAuthors: Record<string, AuthorData> = {
   "pages": ["index", "my-new-page"]
 }
 ```
-
-</Step>
-
-<Step>
 
 ### 對此有疑問？
 
@@ -164,9 +141,7 @@ export const blogAuthors: Record<string, AuthorData> = {
   />
 </div>
 
-</Step>
-
-</Steps>
+</div>
 
 ### 我們刪除了那些舊語法
 
