@@ -5,43 +5,13 @@ description: 協助我們將文檔變得更完善!
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 
-<div className='steps [&>h3]:step'>
-
-### 我的頁面在哪裡？
-
-所有 mdx 檔案都已移至 `/content`
-
-| 文檔            | 部落格          |
-| --------------- | --------------- |
-| `/content/docs` | `/content/blog` |
-
-### 圖片引入方法更新
-
-以前的版本允許您從 `/static` 資料夾引入圖片, 例如:
-
-```mdx
-![說明文字](/my-photo.png)
-```
-
-現在你必須將你的圖片放入 `/public` 資料夾並使用 `![alt](/my-photo.png)` 導入。
-
-```mdx
-# 以前
-
-![alt](/docs/my-photo.png)
-
-# 現在
-
-![alt](/docs/my-photo.png)
-```
-
-</div>
-
 ## 新增頁面的方法
+
+我們使用 Fumadocs 來製作我們的文檔，您可以參考 [他們的指南](https://fumadocs.vercel.app/docs/ui/markdown) 來了解它的更多功能。
 
 <div className='steps [&>h3]:step'>
   
-### 建立 .mdx 檔案
+### 建立 MDX 檔案
 
 請填寫所有字段
 
@@ -51,7 +21,7 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 
 在 `/content/docs` 資料夾中建立檔案
 
-```mdx
+```mdx title="page.mdx"
 ---
 title: 你的標題
 description: 這是關於什麼的?
@@ -66,7 +36,7 @@ description: 這是關於什麼的?
   
 在 `/content/blog` 資料夾中建立檔案
 
-```mdx
+```mdx title="page.mdx"
 ---
 title: 你的標題
 description: 這是關於什麼的?
@@ -75,9 +45,11 @@ date: 2023/1/1
 image: "/blog/banner.jpg"
 tags: ["文章標籤"]
 ---
+
+內文...
 ```
 
-#### 得到你自己的作者編號
+<h4>得到你自己的作者編號</h4>
 
 打開 `config.ts` 文件, 滾動到 `blogAuthors` 並添加您的個人信息
 
