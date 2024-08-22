@@ -51,6 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             nextPage: "下一頁",
             chooseTheme: "選擇外觀主題",
             tocNoHeadings: "沒有子標題",
+            editOnGithub: "在 Github 上編輯此頁面",
           }}
         >
           <AdsProvider>

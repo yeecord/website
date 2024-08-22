@@ -1,9 +1,8 @@
 import { docs } from "@/app/source";
 import type { Metadata } from "next";
-import { DocsBody, DocsPage } from "fumadocs-ui/page";
+import { DocsBody, DocsCategory, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { domain } from "@config";
-import { ExternalLinkIcon } from "lucide-react";
 import { getGithubLastEdit } from "fumadocs-core/server";
 
 export default async function Page({
@@ -26,23 +25,26 @@ export default async function Page({
   return (
     <DocsPage
       toc={page.data.exports.toc}
-      lastUpdate={lastEdit ?? undefined}
       tableOfContent={{
-        footer: (
-          <a
-            href={`https://github.com/yeecord/website/tree/master/${page.file.path}`}
-            rel="noreferrer noopener"
-            target="_blank"
-            className="inline-flex items-center text-xs text-muted-foreground hover:text-accent-foreground"
-          >
-            在 Github 上編輯此頁面 <ExternalLinkIcon className="ml-2 h-3 w-3" />
-          </a>
-        ),
+        style: "clerk",
+      }}
+      lastUpdate={lastEdit ?? undefined}
+      editOnGithub={{
+        sha: "master",
+        owner: "yeecord",
+        repo: "website",
+        path: `content/docs/${page.file.path}`,
       }}
     >
+      <DocsTitle>{page.data.title}</DocsTitle>
       <DocsBody>
-        <h1>{page.data.title}</h1>
-        <Content />
+        <Content
+          components={{
+            Category: () => (
+              <DocsCategory page={page} pages={docs.getPages()} />
+            ),
+          }}
+        />
       </DocsBody>
     </DocsPage>
   );
