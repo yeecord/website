@@ -73,6 +73,18 @@ date: 2023/1/18
 
 ![機器人設定](/blog/make-discord-music-bot-without-coding/bot.png)
 
+<Tip title="注意">
+  如果使用新版本的 JMusicBot，可能會看到錯誤訊息：
+
+  ```JMusicBot cannot be run on this Discord bot: "Public Bot" is enabled. Using JMusicBot as a public bot is not supported. Please disable it in the Developer Dashboard.```
+
+  詳情可以看 ["Public Bot" feature #1498](https://github.com/jagrosh/MusicBot/discussions/1498#discussioncomment-8732355) 這個 Issue。
+
+  要解決這個問題的話，需要到同樣頁面下方的 `Authorization Flow` 取消勾選 `PUBLIC BOT`，再重新啟動機器人。
+
+  不過機器人將只能透過擁有者自己邀請，別人沒辦法透過連結邀請機器人。
+</Tip>
+
 對你就這樣創建好一個機器人應用程式了。
 **特別要注意，不能讓任何人知道你的機器人 Token**，就像是你不會把你家的鑰匙給別人，
 **擁有這個 Token 就可以登錄到你的機器人帳號!**
