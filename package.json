@@ -29,7 +29,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/eslint": "^8.56.11",
+    "@types/eslint": "^9.0.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20.14.13",
     "@types/react": "^18.3.4",
