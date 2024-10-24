@@ -1,10 +1,10 @@
-import { docs } from "@/app/source";
-import { mdxComponents } from "@/components/mdx";
-import { domain } from "@config";
-import { getGithubLastEdit } from "fumadocs-core/server";
-import { DocsBody, DocsCategory, DocsPage, DocsTitle } from "fumadocs-ui/page";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import {docs} from "@/app/source";
+import {mdxComponents} from "@/components/mdx";
+import {metadataImage} from "@/utils/metadata";
+import {domain} from "@config";
+import {getGithubLastEdit} from "fumadocs-core/server";
+import {DocsBody, DocsCategory, DocsPage, DocsTitle} from "fumadocs-ui/page";
+import {notFound} from "next/navigation";
 
 export default async function Page({
   params,
@@ -61,7 +61,7 @@ export async function generateMetadata(props: {
 
   if (!page) notFound();
 
-  return {
+  return metadataImage.withImage(params.slug ?? [], {
     title: page.data.title,
     description: page.data.description,
     alternates: {
@@ -77,5 +77,5 @@ export async function generateMetadata(props: {
       title: page.data.title,
       description: page.data.description,
     },
-  } satisfies Metadata;
+  });
 }

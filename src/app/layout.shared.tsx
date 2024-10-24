@@ -1,8 +1,9 @@
-import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { BookIcon, ExternalLinkIcon, LayoutListIcon } from "lucide-react";
+import type {BaseLayoutProps} from "fumadocs-ui/layouts/shared";
+import {ExternalLinkIcon, LayoutListIcon,} from "lucide-react";
 
-export const layoutProps: BaseLayoutProps = {
+export const layoutProps = {
   nav: {
+    url: '/',
     title: (
       <>
         <svg width="24" height="24" viewBox="0 0 128 128">
@@ -17,12 +18,6 @@ export const layoutProps: BaseLayoutProps = {
     ),
   },
   links: [
-    {
-      url: "/docs",
-      icon: <BookIcon />,
-      text: "使用教學",
-      active: "nested-url",
-    },
     {
       url: "/blog",
       icon: <LayoutListIcon />,
@@ -60,4 +55,4 @@ export const layoutProps: BaseLayoutProps = {
       external: true,
     },
   ],
-};
+} satisfies BaseLayoutProps;
