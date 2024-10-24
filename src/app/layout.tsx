@@ -1,9 +1,9 @@
+import { AdsProvider } from "@/components/adsense";
+import { urlBase } from "@config";
+import { I18nProvider } from "fumadocs-ui/i18n";
+import type { Metadata } from "next";
 import { Noto_Sans_TC } from "next/font/google";
 import type { ReactNode } from "react";
-import { urlBase } from "@config";
-import type { Metadata } from "next";
-import { AdsProvider } from "@/components/adsense";
-import { I18nProvider } from "fumadocs-ui/i18n";
 
 import "./global.css";
 import { RootProvider } from "fumadocs-ui/provider";
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-Hant-TW" className={noto.className} suppressHydrationWarning>
+    <html lang="zh-TW" className={noto.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <I18nProvider
           locale="cn"

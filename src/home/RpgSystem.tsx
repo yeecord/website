@@ -16,15 +16,15 @@ export function RpgSystem() {
       <div className="flex flex-col gap-10">
         <p
           className={clsx(
-            "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 px-6 py-2 text-xl font-semibold text-white sm:text-3xl",
+            "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 px-6 py-2 font-semibold text-white text-xl sm:text-3xl",
           )}
         >
           冒險模式
         </p>
-        <h2 className="text-5xl font-bold sm:text-5xl lg:text-6xl">
+        <h2 className="font-bold text-5xl sm:text-5xl lg:text-6xl">
           開創性的<span className="whitespace-nowrap">角色扮演系統</span>
         </h2>
-        <h3 className="mx-auto max-w-2xl text-xl text-muted-foreground">
+        <h3 className="mx-auto max-w-2xl text-muted-foreground text-xl">
           進入這個奇幻世界，開始你的冒險吧！
         </h3>
       </div>
@@ -43,7 +43,7 @@ function Background() {
   return (
     <Gradient
       src={GreenGradient}
-      className="absolute -bottom-[100px] -z-[1] w-full min-w-[800px] opacity-80 lg:-bottom-[40%]"
+      className="-bottom-[100px] -z-[1] lg:-bottom-[40%] absolute w-full min-w-[800px] opacity-80"
     />
   );
 }
@@ -107,7 +107,7 @@ function Job({
         optional && "max-md:hidden",
       )}
     >
-      <p className="text-lg font-medium">{name}</p>
+      <p className="font-medium text-lg">{name}</p>
       <p className="text-muted-foreground">{description}</p>
     </div>
   );

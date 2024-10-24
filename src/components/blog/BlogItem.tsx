@@ -34,7 +34,7 @@ export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
       </div>
       <div className="flex flex-1 flex-col gap-2 rounded-b-lg border-x border-b p-4">
         <p className="font-semibold">{page.data.title}</p>
-        <p className="truncate text-sm text-muted-foreground">
+        <p className="truncate text-muted-foreground text-sm">
           {page.data.description}
         </p>
 
@@ -57,7 +57,7 @@ export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
               />
             );
           })}
-          <p className="ml-auto text-xs text-muted-foreground">
+          <p className="ml-auto text-muted-foreground text-xs">
             {page.data.date.toLocaleDateString()}
           </p>
         </div>

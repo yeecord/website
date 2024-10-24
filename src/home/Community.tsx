@@ -13,16 +13,16 @@ export function Community() {
     <div className="relative z-[2] mt-8 flex flex-col items-center gap-5 overflow-hidden px-4 py-40 text-center">
       <Gradient
         src={CyanPinkGradient}
-        className="absolute left-0 top-0 -z-[1] h-full w-full overflow-hidden object-cover opacity-20"
+        className="-z-[1] absolute top-0 left-0 h-full w-full overflow-hidden object-cover opacity-20"
       />
-      <h2 className="text-5xl font-bold text-pink-400 xl:text-6xl">
+      <h2 className="font-bold text-5xl text-pink-400 xl:text-6xl">
         <span>與</span>
         <span className="mx-2 text-cyan-300 [text-shadow:_#e66ad0_3px_5px]">
           我們
         </span>
         <span>聯繫</span>
       </h2>
-      <p className="text-lg text-black dark:text-slate-200 sm:text-xl">
+      <p className="text-black text-lg sm:text-xl dark:text-slate-200">
         獲取我們的最新消息
       </p>
 
@@ -38,7 +38,7 @@ function JoinButton() {
         alt="gradient ring"
         src={GradientRing}
         className={clsx(
-          "pointer-events-none absolute left-0 top-0 -z-[1] h-full w-full select-none object-contain",
+          "-z-[1] pointer-events-none absolute top-0 left-0 h-full w-full select-none object-contain",
           styles["rotate-z"],
         )}
       />

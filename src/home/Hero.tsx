@@ -18,11 +18,11 @@ export function Hero() {
     >
       <Gradient
         src={HeroGradient}
-        className="absolute -right-0 -top-[200px] -z-[1] hidden w-full min-w-[800px] lg:-right-[300px]"
+        className="-right-0 -top-[200px] -z-[1] lg:-right-[300px] absolute hidden w-full min-w-[800px]"
       />
       <h1
         className={
-          "text-5xl font-bold min-[360px]:text-6xl sm:text-7xl xl:text-8xl"
+          "font-bold text-5xl sm:text-7xl xl:text-8xl min-[360px]:text-6xl"
         }
       >
         萬中選一的
@@ -38,7 +38,7 @@ export function Hero() {
       </h1>
       <p
         className={clsx(
-          "max-w-[450px] text-xl text-muted-foreground",
+          "max-w-[450px] text-muted-foreground text-xl",
           "md:max-w-[650px] lg:text-2xl",
         )}
       >
@@ -46,7 +46,7 @@ export function Hero() {
       </p>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
-        <p className="mb-3 text-lg font-semibold text-muted-foreground md:mb-4">
+        <p className="mb-3 font-semibold text-lg text-muted-foreground md:mb-4">
           各大伺服器一致好評
         </p>
         <div

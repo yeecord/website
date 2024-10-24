@@ -1,14 +1,11 @@
 "use client";
 
-import Image, { type ImageProps } from "next/image";
-import { Progress } from "../components/Progress";
-import KickBack from "@static/home/songs/kick-back.jpg";
-import FightSong from "@static/home/songs/eve-fight-song.jpg";
 import GreenGradient from "@static/home/green-gradient.svg";
-import { motion } from "framer-motion";
-import Gradient from "../components/Gradient";
+import FightSong from "@static/home/songs/eve-fight-song.jpg";
+import KickBack from "@static/home/songs/kick-back.jpg";
 import clsx from "clsx";
-import styles from "./music.module.css";
+import { motion } from "framer-motion";
+import Link from "fumadocs-core/link";
 import {
   ArrowLeftIcon,
   ArrowRightCircleIcon,
@@ -16,7 +13,10 @@ import {
   MusicIcon,
   StopCircleIcon,
 } from "lucide-react";
-import Link from "fumadocs-core/link";
+import Image, { type ImageProps } from "next/image";
+import Gradient from "../components/Gradient";
+import { Progress } from "../components/Progress";
+import styles from "./music.module.css";
 
 export function Music() {
   return (
@@ -29,14 +29,14 @@ export function Music() {
       <Gradient
         src={GreenGradient}
         className={clsx(
-          "absolute -bottom-[400px] -left-[30%] -z-[1] w-full min-w-[800px] opacity-60",
+          "-bottom-[400px] -left-[30%] -z-[1] absolute w-full min-w-[800px] opacity-60",
           "lg:-top-[50%] lg:left-[40%] lg:w-[1000px] lg:opacity-80",
         )}
       />
       <Content />
-      <div className="absolute right-8 top-0 z-[2] max-sm:hidden lg:right-16">
+      <div className="absolute top-0 right-8 z-[2] max-sm:hidden lg:right-16">
         <div className="mx-auto h-36 w-[2px] bg-gradient-to-b from-green-400 to-cyan-600" />
-        <div className="rounded-full bg-gradient-to-br from-green-400 to-cyan-600 p-4 text-white shadow-lg shadow-green-300/50">
+        <div className="rounded-full bg-gradient-to-br from-green-400 to-cyan-600 p-4 text-white shadow-green-300/50 shadow-lg">
           <MusicIcon className="h-8 w-8" />
         </div>
       </div>
@@ -45,7 +45,7 @@ export function Music() {
         initial={{ y: 100 }}
         transition={{ duration: 0.5 }}
         className={clsx(
-          "-mr-[20rem] mt-2 flex w-[650px] flex-col max-lg:ml-8 max-md:ml-5",
+          "-mr-[20rem] mt-2 flex w-[650px] flex-col max-md:ml-5 max-lg:ml-8",
           "max-h-[10rem] lg:mt-[5rem] lg:max-h-full",
         )}
       >
@@ -63,7 +63,7 @@ export function Music() {
 function Content() {
   return (
     <div className="flex max-w-[750px] flex-col gap-3 sm:p-5 lg:max-w-none">
-      <h2 className="mb-2 text-3xl font-bold sm:text-4xl">輕鬆播放音樂</h2>
+      <h2 className="mb-2 font-bold text-3xl sm:text-4xl">輕鬆播放音樂</h2>
       <p className="text-lg text-muted-foreground">
         讓你可以和朋友一起收聽 Spotify 和 SoundCloud
         上的音樂，並且可以自訂播放清單，讓分享好音樂變簡單
@@ -71,7 +71,7 @@ function Content() {
       <div className="mt-3 flex flex-row gap-2.5">
         <Link
           className={clsx(
-            "rounded-full bg-gradient-to-r from-cyan-500 to-green-500 px-6 py-3 text-base font-medium text-white",
+            "rounded-full bg-gradient-to-r from-cyan-500 to-green-500 px-6 py-3 font-medium text-base text-white",
             "flex h-fit flex-row items-center gap-2",
           )}
           href="/docs"
@@ -113,8 +113,8 @@ function Song({
         src={img}
       />
       <div className="flex flex-col gap-2">
-        <p className="text-lg font-medium">{children}</p>
-        <p className="text-sm text-muted-foreground">{duration}</p>
+        <p className="font-medium text-lg">{children}</p>
+        <p className="text-muted-foreground text-sm">{duration}</p>
       </div>
     </div>
   );
@@ -134,16 +134,16 @@ function MusicPlayer() {
       </div>
       <Progress track="w-[66%]" />
       <div className="mt-2 flex flex-row gap-2.5">
-        <button aria-label="prev" className={greenButton}>
+        <button type="button" aria-label="prev" className={greenButton}>
           <ArrowLeftIcon />
         </button>
         <div className="w-full" />
-        <button className={greenButton} aria-label="play">
+        <button type="button" className={greenButton} aria-label="play">
           <StopCircleIcon />
         </button>
         <div className="w-full" />
 
-        <button className={greenButton} aria-label="next">
+        <button type="button" className={greenButton} aria-label="next">
           <ArrowRightIcon />
         </button>
       </div>

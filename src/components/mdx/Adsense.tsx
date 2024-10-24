@@ -1,27 +1,29 @@
 "use client";
-import React, { useEffect } from "react";
-import { Warning } from "@/components/mdx/Admonition";
 import { useAdsContext } from "@/components/adsense";
+import { Warning } from "@/components/mdx/Admonition";
 import clsx from "clsx";
+import React, { useEffect, useRef } from "react";
 
 /**
  * Google Ads :)
  */
 export function Adsense() {
   const { failed } = useAdsContext();
+  const addedRef = useRef(false);
 
   useEffect(() => {
-    if (failed) return;
+    if (addedRef.current) return;
 
     try {
-      // eslint-disable-next-line
-      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
-        {},
-      );
+      const win = window as unknown as { adsbygoogle: unknown[] };
+      win.adsbygoogle ??= [];
+      win.adsbygoogle.push({});
+
+      addedRef.current = true;
     } catch (e) {
       console.error(`[Adsense] ${(e as Error).message}`);
     }
-  }, [failed]);
+  }, []);
 
   if (failed)
     return (
@@ -32,11 +34,11 @@ export function Adsense() {
 
   return (
     <div aria-label="ads">
-      <p className="my-2 text-center text-sm text-gray-400">機器龍的精神食糧</p>
+      <p className="my-2 text-center text-gray-400 text-sm">機器龍的精神食糧</p>
       <div
         className={clsx(
-          "relative min-h-[280px] after:z-[-1] after:text-gray-500 after:content-['太無情了阿怎麼沒有顯示廣告']",
-          "after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transform after:text-sm",
+          "relative min-h-[280px] overflow-hidden after:z-[-1] after:text-gray-500 after:content-['太無情了阿怎麼沒有顯示廣告']",
+          "after:-translate-x-1/2 after:-translate-y-1/2 after:absolute after:top-1/2 after:left-1/2 after:transform after:text-sm",
         )}
       >
         <ins

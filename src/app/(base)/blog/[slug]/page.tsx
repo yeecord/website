@@ -1,33 +1,35 @@
 import { blog } from "@/app/source";
-import { blogAuthors, domain } from "@config";
+import { mdxComponents } from "@/components/mdx";
+import { domain, blogAuthors } from "@config";
+import { DocsBody } from "fumadocs-ui/page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DocsBody } from "fumadocs-ui/page";
 
-export default function BlogPage({ params }: { params: { slug: string } }) {
-  const page = blog.getPage([params.slug]);
+export default async function BlogPage({
+  params,
+}: { params: Promise<{ slug: string }> }) {
+  const page = blog.getPage([(await params).slug]);
 
   if (!page) notFound();
-  const Content = page.data.exports.default;
+  const Content = page.data.body;
 
   return (
     <DocsBody>
-      <Content />
+      <Content components={mdxComponents} />
     </DocsBody>
   );
 }
 
 export function generateStaticParams() {
-  return blog.getPages().map((blog) => ({
-    slug: blog.slugs[0],
+  return blog.generateParams().map((blog) => ({
+    slug: blog.slug[0],
   }));
 }
 
-export function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
+}) {
+  const params = await props.params;
   const page = blog.getPage([params.slug]);
   if (!page) notFound();
 
@@ -45,5 +47,5 @@ export function generateMetadata({
       description: page.data.description,
       images: page.data.image ?? "/opengraph-image.png",
     },
-  };
+  } satisfies Metadata;
 }
