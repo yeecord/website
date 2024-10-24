@@ -1,20 +1,20 @@
 import { docs } from "@/app/source";
-import type { Metadata } from "next";
-import { DocsBody, DocsCategory, DocsPage, DocsTitle } from "fumadocs-ui/page";
-import { notFound } from "next/navigation";
+import { mdxComponents } from "@/components/mdx";
 import { domain } from "@config";
 import { getGithubLastEdit } from "fumadocs-core/server";
+import { DocsBody, DocsCategory, DocsPage, DocsTitle } from "fumadocs-ui/page";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,
 }: {
-  params: { slug?: string[] };
+  params: Promise<{ slug?: string[] }>;
 }) {
-  const page = docs.getPage(params.slug);
-
+  const page = docs.getPage((await params).slug);
   if (!page) notFound();
 
-  const Content = page.data.exports.default;
+  const Content = page.data.body;
   const lastEdit = await getGithubLastEdit({
     path: `content/docs/${page.file.path}`,
     owner: "yeecord",
@@ -24,7 +24,7 @@ export default async function Page({
 
   return (
     <DocsPage
-      toc={page.data.exports.toc}
+      toc={page.data.toc}
       tableOfContent={{
         style: "clerk",
       }}
@@ -40,9 +40,8 @@ export default async function Page({
       <DocsBody>
         <Content
           components={{
-            Category: () => (
-              <DocsCategory page={page} pages={docs.getPages()} />
-            ),
+            ...mdxComponents,
+            Category: () => <DocsCategory page={page} from={docs} />,
           }}
         />
       </DocsBody>
@@ -51,12 +50,13 @@ export default async function Page({
 }
 
 export function generateStaticParams(): { slug: string[] }[] {
-  return docs.getPages().map((page) => ({
-    slug: page.slugs,
-  }));
+  return docs.generateParams();
 }
 
-export function generateMetadata({ params }: { params: { slug?: string[] } }) {
+export async function generateMetadata(props: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const params = await props.params;
   const page = docs.getPage(params.slug);
 
   if (!page) notFound();
@@ -65,7 +65,7 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
     title: page.data.title,
     description: page.data.description,
     alternates: {
-      canonical: `${domain}/docs/` + (params.slug ?? []).join("/"),
+      canonical: `${domain}/docs/${(params.slug ?? []).join("/")}`,
     },
     openGraph: {
       images: {

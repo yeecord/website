@@ -19,7 +19,7 @@ export default function AllTags() {
   return (
     <main className="my-16 flex w-full flex-col gap-3">
       <div className="mb-3 flex flex-col items-center gap-3 text-center">
-        <h1 className="mb-4 text-5xl font-bold">所有標籤</h1>
+        <h1 className="mb-4 font-bold text-5xl">所有標籤</h1>
         <Link href="/blog" className={cn(buttonVariants({ color: "primary" }))}>
           查看文章
         </Link>
@@ -33,7 +33,7 @@ export default function AllTags() {
             className="flex flex-row justify-between gap-3 rounded-md border bg-card p-2 text-card-foreground"
           >
             <span className="font-medium">{tag}</span>
-            <span className="text-sm text-muted-foreground">{info.count}</span>
+            <span className="text-muted-foreground text-sm">{info.count}</span>
           </Link>
         ))}
       </div>

@@ -23,12 +23,13 @@ export default function BlogIndex() {
       <div
         className="py-16"
         style={{
-          backgroundImage: `linear-gradient(to bottom,transparent 50%,hsl(var(--background))), radial-gradient(circle at center, hsl(var(--muted-foreground)) 1px, hsl(var(--background)) 0)`,
+          backgroundImage:
+            "linear-gradient(to bottom,transparent 50%,hsl(var(--background))), radial-gradient(circle at center, hsl(var(--muted-foreground)) 1px, hsl(var(--background)) 0)",
           backgroundSize: "100%, 1.5rem 1.5rem",
           backgroundRepeat: "none, round",
         }}
       >
-        <h1 className="mb-8 text-center text-4xl font-bold md:text-5xl">
+        <h1 className="mb-8 text-center font-bold text-4xl md:text-5xl">
           我們的部落格
         </h1>
         <div className="flex flex-row justify-center gap-2.5 max-sm:flex-col max-sm:items-stretch">
@@ -61,7 +62,7 @@ export default function BlogIndex() {
       <div className="mt-8 flex flex-row items-end gap-2 rounded-xl border bg-card p-4 shadow-lg">
         <div>
           <h2 className="mb-1 font-semibold">關注我們的新貼文</h2>
-          <p className="text-sm text-muted-foreground">立即訂閱我們的部落格</p>
+          <p className="text-muted-foreground text-sm">立即訂閱我們的部落格</p>
         </div>
         <a
           href="/rss.xml"
@@ -69,6 +70,7 @@ export default function BlogIndex() {
           className={cn(
             buttonVariants({ color: "primary", className: "ml-auto" }),
           )}
+          rel="noreferrer"
         >
           RSS
         </a>

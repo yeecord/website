@@ -22,7 +22,7 @@ export function Dashboard() {
             "from-transparent via-purple-400 to-purple-600 dark:to-purple-100",
           )}
         />
-        <h2 className="text-3xl font-bold sm:text-5xl">簡易的控制面板</h2>
+        <h2 className="font-bold text-3xl sm:text-5xl">簡易的控制面板</h2>
         <p className="text-lg text-muted-foreground sm:text-xl">
           通過美觀、簡易的方式來自定義
           <br className="sm:hidden" />
@@ -50,13 +50,13 @@ function Settings() {
           <SettingsIcon />
         </div>
         <div>
-          <p className="text-lg font-bold sm:text-xl">設置</p>
+          <p className="font-bold text-lg sm:text-xl">設置</p>
           <p className="text-muted-foreground">下拉選單身分組</p>
         </div>
       </div>
       <Link
         href="/docs/commands/role"
-        className="mt-auto rounded-xl bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-3 text-center text-sm font-medium text-white"
+        className="mt-auto rounded-xl bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-3 text-center font-medium text-sm text-white"
       >
         + 添加身分組
       </Link>
@@ -76,7 +76,7 @@ function Chart() {
           <BarChartIcon />
         </div>
         <div>
-          <p className="text-lg font-bold sm:text-xl">你的伺服器</p>
+          <p className="font-bold text-lg sm:text-xl">你的伺服器</p>
           <p className="text-muted-foreground">數據分析</p>
         </div>
       </div>
@@ -97,7 +97,7 @@ function Music() {
           <MusicIcon />
         </div>
         <div>
-          <p className="text-lg font-bold sm:text-xl">音樂系統</p>
+          <p className="font-bold text-lg sm:text-xl">音樂系統</p>
           <p className="text-muted-foreground">下一首歌</p>
         </div>
       </div>

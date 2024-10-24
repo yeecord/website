@@ -1,13 +1,13 @@
-import { type ReactNode } from "react";
 import { GithubIcon, MessageSquarePlusIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 export default function Sponsor() {
   return (
     <div className="mt-20 flex flex-col items-center gap-3 bg-gradient-to-b from-secondary/50 px-4 py-40 text-center">
-      <p className="text-lg tracking-widest text-purple-400">
+      <p className="text-lg text-purple-400 tracking-widest">
         喜歡YEE式機器龍?
       </p>
-      <h2 className="text-5xl font-bold">支持我們</h2>
+      <h2 className="font-bold text-5xl">支持我們</h2>
       <p className="text-lg text-muted-foreground sm:text-xl">
         照顧機器龍是一項艱鉅的工作
         <span className="max-sm:hidden">, </span>
@@ -57,14 +57,17 @@ function Card({
           {icon}
         </div>
         <div>
-          <p className="text-lg font-semibold">{title}</p>
-          <p className="text-sm text-muted-foreground">{text}</p>
+          <p className="font-semibold text-lg">{title}</p>
+          <p className="text-muted-foreground text-sm">{text}</p>
         </div>
       </div>
-      <a href={href} target="_blank" rel="noreferrer">
-        <button className="mt-7 w-full rounded-md bg-purple-500 py-2 text-sm font-medium text-white shadow-lg shadow-purple-300 dark:bg-purple-500 dark:shadow-purple-700 sm:w-[8rem]">
-          {children}
-        </button>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-7 block w-full rounded-md bg-purple-500 py-2 font-medium text-sm text-white shadow-lg shadow-purple-300 sm:w-[8rem] dark:bg-purple-500 dark:shadow-purple-700"
+      >
+        {children}
       </a>
     </div>
   );

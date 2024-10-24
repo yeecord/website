@@ -13,8 +13,10 @@ export function getTags() {
 
   for (const page of blog.getPages()) {
     for (const tag of page.data.tags) {
-      if (map.has(tag)) {
-        map.get(tag)!.count++;
+      const record = map.get(tag);
+
+      if (record) {
+        record.count++;
       } else {
         map.set(tag, { count: 1 });
       }
