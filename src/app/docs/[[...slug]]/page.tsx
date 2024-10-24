@@ -1,10 +1,10 @@
-import {docs} from "@/app/source";
-import {mdxComponents} from "@/components/mdx";
-import {metadataImage} from "@/utils/metadata";
-import {domain} from "@config";
-import {getGithubLastEdit} from "fumadocs-core/server";
-import {DocsBody, DocsCategory, DocsPage, DocsTitle} from "fumadocs-ui/page";
-import {notFound} from "next/navigation";
+import { docs } from "@/app/source";
+import { mdxComponents } from "@/components/mdx";
+import { metadataImage } from "@/utils/metadata";
+import { domain } from "@config";
+import { getGithubLastEdit } from "fumadocs-core/server";
+import { DocsBody, DocsCategory, DocsPage, DocsTitle } from "fumadocs-ui/page";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,

@@ -37,7 +37,7 @@ export function Adsense() {
       <p className="my-2 text-center text-gray-400 text-sm">機器龍的精神食糧</p>
       <div
         className={clsx(
-          "relative min-h-[280px] after:z-[-1] after:text-gray-500 after:content-['太無情了阿怎麼沒有顯示廣告']",
+          "relative min-h-[280px] overflow-hidden after:z-[-1] after:text-gray-500 after:content-['太無情了阿怎麼沒有顯示廣告']",
           "after:-translate-x-1/2 after:-translate-y-1/2 after:absolute after:top-1/2 after:left-1/2 after:transform after:text-sm",
         )}
       >
