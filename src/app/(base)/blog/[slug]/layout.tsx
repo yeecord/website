@@ -1,23 +1,21 @@
-import Image from "next/image";
-import React from "react";
-import { type ReactNode } from "react";
-import Link from "next/link";
-import { Fragment } from "react";
-import { getTagHref } from "@/utils/tags";
-import { notFound } from "next/navigation";
-import { blogAuthors, type AuthorData } from "@config";
 import { blog } from "@/app/source";
-import { type InferPageType } from "fumadocs-core/source";
+import { getTagHref } from "@/utils/tags";
+import { type AuthorData, blogAuthors } from "@config";
+import type { InferPageType } from "fumadocs-core/source";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
+import { Fragment } from "react";
 
-export default function BlogLayout({
+export default async function BlogLayout({
   params,
   children,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
   children: ReactNode;
 }) {
-  const page = blog.getPage([params.slug]);
-
+  const page = blog.getPage([(await params).slug]);
   if (!page) notFound();
 
   return (
@@ -26,10 +24,10 @@ export default function BlogLayout({
       itemType="http://schema.org/Article"
       itemScope
     >
-      <h1 className="mb-2 text-3xl font-bold leading-normal" itemProp="name">
+      <h1 className="mb-2 font-bold text-3xl leading-normal" itemProp="name">
         {page.data.title}
       </h1>
-      <div className="mb-6 mt-3 flex flex-row flex-wrap items-center gap-1">
+      <div className="mt-3 mb-6 flex flex-row flex-wrap items-center gap-1">
         <div className="flex flex-row flex-wrap gap-1">
           {page.data.authors.map((author, i) => (
             <Fragment key={i}>
@@ -39,7 +37,7 @@ export default function BlogLayout({
           ))}
         </div>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           <span className="mr-1">•</span>
           <span itemProp="datePublished">
             {page.data.date.toLocaleDateString("zh", {
@@ -86,7 +84,7 @@ function Footer({ page }: { page: InferPageType<typeof blog> }) {
           <Link
             key={tag}
             href={getTagHref(tag)}
-            className="rounded-md bg-primary/10 px-1 py-0.5 text-sm text-primary"
+            className="rounded-md bg-primary/10 px-1 py-0.5 text-primary text-sm"
           >
             # {tag}
           </Link>
@@ -116,7 +114,7 @@ function Footer({ page }: { page: InferPageType<typeof blog> }) {
               <p itemProp="name" className="font-medium">
                 {author.name}
               </p>
-              <p itemProp="jobTitle" className="text-sm text-muted-foreground">
+              <p itemProp="jobTitle" className="text-muted-foreground text-sm">
                 {author.title}
               </p>
             </div>

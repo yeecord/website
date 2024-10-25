@@ -40,12 +40,12 @@ export function Customers() {
       >
         <p
           className={clsx(
-            "mx-auto mb-8 w-fit rounded-md bg-gradient-to-br from-orange-400 to-orange-500 px-6 py-2 text-xl font-semibold text-white sm:text-3xl",
+            "mx-auto mb-8 w-fit rounded-md bg-gradient-to-br from-orange-400 to-orange-500 px-6 py-2 font-semibold text-white text-xl sm:text-3xl",
           )}
         >
           倍受信賴
         </p>
-        <h2 className="text-5xl font-bold">
+        <h2 className="font-bold text-5xl">
           受超過
           <span className="mx-2 block bg-gradient-to-b from-pink-600 to-orange-400 bg-clip-text text-transparent max-md:text-7xl md:inline">
             <ServerCount count={count} />
@@ -59,7 +59,7 @@ export function Customers() {
           <Link
             href="/invite"
             className={clsx(
-              "rounded-full bg-secondary px-6 py-3 text-lg font-medium text-secondary-foreground shadow-lg transition-all hover:bg-accent hover:text-accent-foreground",
+              "rounded-full bg-secondary px-6 py-3 font-medium text-lg text-secondary-foreground shadow-lg transition-all hover:bg-accent hover:text-accent-foreground",
             )}
           >
             邀請機器人
@@ -98,7 +98,7 @@ export function Customers() {
       </motion.div>
       <Image
         className={clsx(
-          "custom relative -z-[1] -mt-[10rem] h-[300px] w-full object-cover md:-mt-[1rem]",
+          "custom -z-[1] -mt-[10rem] md:-mt-[1rem] relative h-[300px] w-full object-cover",
           "[mask-image:linear-gradient(to_right,_transparent,white_10%,white_70%,_transparent)]",
         )}
         alt="wave"
@@ -144,7 +144,7 @@ function Comment({
         />
         <div>
           <p className="text-pink-700 dark:text-pink-300">{title}</p>
-          <p className="text-lg font-bold text-black dark:text-white sm:text-xl">
+          <p className="font-bold text-black text-lg sm:text-xl dark:text-white">
             {author}
           </p>
         </div>

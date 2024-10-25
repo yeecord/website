@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <main className="py-8 sm:py-16">
-      <h1 className="mb-4 text-2xl font-semibold">找不到頁面</h1>
-      <p className="mb-8 text-sm text-muted-foreground">
+      <h1 className="mb-4 font-semibold text-2xl">找不到頁面</h1>
+      <p className="mb-8 text-muted-foreground text-sm">
         好像不在這裡...
         <br />
         發現無效的超鏈接？向我們報告吧

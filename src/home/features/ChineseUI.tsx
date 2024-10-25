@@ -13,7 +13,7 @@ import {
   ShieldCheckIcon,
 } from "lucide-react";
 import GardientSvg from "@static/home/purple-gradient.svg";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export function ChineseUI() {
   return (
@@ -47,14 +47,14 @@ export function ChineseUI() {
           }}
           className="relative z-[2]"
         >
-          <h2 className="mb-2 text-2xl font-bold sm:text-3xl">全中文化界面</h2>
+          <h2 className="mb-2 font-bold text-2xl sm:text-3xl">全中文化界面</h2>
           <p className="text-lg text-muted-foreground sm:text-xl">
             我們提供了全中文化的界面，讓英文不再成為優質機器人的隔閡
           </p>
           <Skeleton />
           <div
             className={clsx(
-              "relative -ml-[1rem] -mt-[14rem] w-fit sm:-mt-[15rem] xl:-mt-[25rem] xl:ml-auto xl:mr-[14%]",
+              "-ml-[1rem] -mt-[14rem] sm:-mt-[15rem] xl:-mt-[25rem] relative w-fit xl:mr-[14%] xl:ml-auto",
             )}
           >
             <Feature icon={<ShieldCheckIcon />}>豐富的社群管理功能</Feature>
@@ -65,7 +65,7 @@ export function ChineseUI() {
         <Gradient
           src={GardientSvg}
           className={clsx(
-            "absolute -z-[1] w-[50rem] max-w-none",
+            "-z-[1] absolute w-[50rem] max-w-none",
             "-max-xl:bottom-[14rem] max-xl:left-0",
             "xl:-right-[5rem] xl:-top-[14rem]",
           )}
@@ -78,7 +78,7 @@ export function ChineseUI() {
 function Feature({ children, icon }: { children: string; icon: ReactNode }) {
   return (
     <motion.div
-      className="mt-4 flex flex-row items-center gap-3 rounded-xl bg-secondary p-4 text-secondary-foreground shadow-2xl shadow-blue-800/30 dark:shadow-black/60 xl:pr-[4rem]"
+      className="mt-4 flex flex-row items-center gap-3 rounded-xl bg-secondary p-4 text-secondary-foreground shadow-2xl shadow-blue-800/30 xl:pr-[4rem] dark:shadow-black/60"
       variants={{
         show: {
           y: 0,
@@ -91,10 +91,10 @@ function Feature({ children, icon }: { children: string; icon: ReactNode }) {
       }}
       transition={{ duration: 0.5 }}
     >
-      <div className="rounded-full bg-purple-500 p-2 text-xl text-white dark:bg-purple-500 sm:text-2xl">
+      <div className="rounded-full bg-purple-500 p-2 text-white text-xl sm:text-2xl dark:bg-purple-500">
         {icon}
       </div>
-      <p className="text-lg font-medium">{children}</p>
+      <p className="font-medium text-lg">{children}</p>
     </motion.div>
   );
 }
@@ -153,7 +153,7 @@ function Skeleton() {
         }}
         transition={{ duration: 1 }}
       >
-        <p className="text-lg font-bold sm:text-xl">指令區</p>
+        <p className="font-bold text-lg sm:text-xl">指令區</p>
         <div className={`${foreground} h-7`} />
         <div className={`${foreground} h-6 w-[70%]`} />
       </motion.div>

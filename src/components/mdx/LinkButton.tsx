@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import Link, { type LinkProps } from "fumadocs-core/link";
 import { ChevronRightIcon } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -21,7 +21,7 @@ export function LinkButton({
       {...props}
       className={cn(
         buttonVariants({ color: variant, className: "not-prose" }),
-        icon != null ? "px-6" : "pl-7 pr-5",
+        icon != null ? "px-6" : "pr-5 pl-7",
         props.className,
       )}
     >

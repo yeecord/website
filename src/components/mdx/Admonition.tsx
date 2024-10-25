@@ -7,6 +7,6 @@ export const Info = ((p) => (
 export const Warning = ((p) => (
   <Admonition {...p} type="warn" />
 )) as typeof Admonition;
-export const Error = ((p) => (
+export const ErrorCallout = ((p) => (
   <Admonition {...p} type="error" />
 )) as typeof Admonition;

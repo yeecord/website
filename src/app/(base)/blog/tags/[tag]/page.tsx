@@ -4,11 +4,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import { getTags } from "@/utils/tags";
 import { domain } from "@config";
-import type { Metadata } from "next";
 import Link from "next/link";
 
-export default function TagPage({ params }: { params: { tag: string } }) {
-  const decodedTag = decodeURIComponent(params.tag);
+export default async function TagPage({
+  params,
+}: { params: Promise<{ tag: string }> }) {
+  const decodedTag = decodeURIComponent((await params).tag);
   const pages = blog
     .getPages()
     .filter((blog) =>
@@ -18,7 +19,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
   return (
     <main className="my-16 flex w-full flex-1 flex-col gap-5">
       <div className="mb-5 flex flex-col items-center gap-5 text-center">
-        <h1 className="mb-4 text-3xl font-bold">{`帶有「${decodedTag}」標籤的文章`}</h1>
+        <h1 className="mb-4 font-bold text-3xl">{`帶有「${decodedTag}」標籤的文章`}</h1>
 
         <Link
           href="/blog/tags"
@@ -48,11 +49,10 @@ export function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({
-  params,
-}: {
-  params: { tag: string };
-}): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ tag: string }>;
+}) {
+  const params = await props.params;
   const decodedTag = decodeURIComponent(params.tag);
 
   return {
