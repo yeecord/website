@@ -12,7 +12,8 @@
       "content/**/*",
       "scripts/**/*",
       "config.ts",
-      "*.config.ts"
+      "*.config.ts",
+      "tailwind.config.js"
     ],
     "ignore": ["**/*.module.css"]
   },
