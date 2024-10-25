@@ -65,7 +65,7 @@ function Card({
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="mt-7 block w-full rounded-md bg-purple-500 py-2 font-medium text-sm text-white shadow-lg shadow-purple-300 sm:w-[8rem] dark:bg-purple-500 dark:shadow-purple-700"
+        className="mt-7 block w-full rounded-md bg-purple-500 py-2 text-center font-medium text-sm text-white shadow-lg shadow-purple-300 sm:w-[8rem] dark:bg-purple-500 dark:shadow-purple-700"
       >
         {children}
       </a>
