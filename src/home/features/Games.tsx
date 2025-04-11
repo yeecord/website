@@ -54,7 +54,7 @@ export function Games() {
             "w-full lg:flex-row lg:justify-between",
           )}
         >
-          <div>
+          <div className="flex-1">
             <h2 className="mb-2 font-bold text-2xl sm:text-3xl">
               不只是聊天平台
             </h2>
@@ -63,7 +63,7 @@ export function Games() {
               更加有趣，同時朋友也可以和你一起玩
             </p>
             <Link
-              className="mt-6 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 px-6 py-3 font-bold text-lg text-white"
+              className="mt-6 inline-block rounded-full bg-gradient-to-br from-orange-400 to-pink-500 px-6 py-3 font-bold text-lg text-white"
               href="/docs/rpg"
             >
               了解更多
@@ -87,7 +87,7 @@ export function Games() {
           <div
             className={clsx(
               "aspect-square w-[150px] rounded-md fill-black max-[430px]:hidden dark:fill-white",
-              "mt-auto max-w-[20rem] border-black border-b-4 lg:w-full dark:border-white",
+              "mt-auto mb-4 max-w-[20rem] border-black border-b-4 lg:mb-0 lg:ml-4 lg:w-full dark:border-white",
             )}
           >
             <DinoSvg />
