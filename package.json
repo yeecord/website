@@ -32,7 +32,7 @@
     "@biomejs/biome": "1.9.4",
     "@fumadocs/cli": "^0.0.2",
     "@types/mdx": "^2.0.13",
-    "@types/node": "^20.14.13",
+    "@types/node": "^22.0.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/rss": "^0.0.32",
