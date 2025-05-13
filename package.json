@@ -9,7 +9,7 @@
     "lint": "biome lint --write --unsafe",
     "format": "biome format --write"
   },
-  "packageManager": "pnpm@9.2.0",
+  "packageManager": "pnpm@10.11.0",
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "class-variance-authority": "^0.7.0",
