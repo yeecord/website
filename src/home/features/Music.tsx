@@ -17,6 +17,7 @@ import Image, { type ImageProps } from "next/image";
 import Gradient from "../components/Gradient";
 import { Progress } from "../components/Progress";
 import styles from "./music.module.css";
+import { cn } from "@/utils/cn";
 
 export function Music() {
   return (
@@ -49,7 +50,7 @@ export function Music() {
           "max-h-[10rem] lg:mt-[5rem] lg:max-h-full",
         )}
       >
-        <div className={`${styles["music-player"]} mr-20`}>
+        <div className={cn(styles["music-player"], "mr-20 translate-y-[5px]")}>
           <MusicPlayer />
         </div>
         <div className={`z-[2] ${styles["play-list"]}`}>

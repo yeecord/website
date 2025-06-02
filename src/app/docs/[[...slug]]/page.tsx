@@ -2,8 +2,9 @@ import { docs } from "@/app/source";
 import { mdxComponents } from "@/components/mdx";
 import { metadataImage } from "@/utils/metadata";
 import { domain } from "@config";
-import { getGithubLastEdit } from "fumadocs-core/server";
-import { DocsBody, DocsCategory, DocsPage, DocsTitle } from "fumadocs-ui/page";
+import { getGithubLastEdit, getPageTreePeers } from "fumadocs-core/server";
+import { Card, Cards } from "fumadocs-ui/components/card";
+import { DocsBody, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 
 export default async function Page({
@@ -41,7 +42,15 @@ export default async function Page({
         <Content
           components={{
             ...mdxComponents,
-            Category: () => <DocsCategory page={page} from={docs} />,
+            Category: () => (
+              <Cards>
+                {getPageTreePeers(docs.pageTree, page.url).map((peer) => (
+                  <Card key={peer.url} title={peer.name} href={peer.url}>
+                    {peer.description}
+                  </Card>
+                ))}
+              </Cards>
+            ),
           }}
         />
       </DocsBody>

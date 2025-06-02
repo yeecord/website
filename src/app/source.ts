@@ -8,6 +8,6 @@ export const blog = loader({
 });
 
 export const docs = loader({
-  source: createMDXSource(source.docs, source.meta),
+  source: source.docs.toFumadocsSource(),
   baseUrl: "/docs",
 });

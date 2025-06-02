@@ -1,12 +1,10 @@
 import { AdsProvider } from "@/components/adsense";
 import { urlBase } from "@config";
-import { I18nProvider } from "fumadocs-ui/i18n";
 import type { Metadata } from "next";
 import { Noto_Sans_TC } from "next/font/google";
 import type { ReactNode } from "react";
-
 import "./global.css";
-import { RootProvider } from "fumadocs-ui/provider";
+import { Provider } from "@/app/layout.client";
 
 const noto = Noto_Sans_TC({
   weight: "400",
@@ -40,30 +38,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-TW" className={noto.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <I18nProvider
-          locale="cn"
-          translations={{
-            toc: "目錄",
-            search: "搜尋文檔",
-            lastUpdate: "最後更新於",
-            searchNoResult: "沒有結果",
-            previousPage: "上一頁",
-            nextPage: "下一頁",
-            chooseTheme: "選擇外觀主題",
-            tocNoHeadings: "沒有子標題",
-            editOnGithub: "在 Github 上編輯此頁面",
-          }}
-        >
-          <AdsProvider>
-            <RootProvider
-              search={{
-                options: { api: "https://search.yeecord.com/search" },
-              }}
-            >
-              {children}
-            </RootProvider>
-          </AdsProvider>
-        </I18nProvider>
+        <AdsProvider>
+          <Provider
+            i18n={{
+              locale: "cn",
+              translations: {
+                toc: "目錄",
+                search: "搜尋文檔",
+                lastUpdate: "最後更新於",
+                searchNoResult: "沒有結果",
+                previousPage: "上一頁",
+                nextPage: "下一頁",
+                chooseTheme: "選擇外觀主題",
+                tocNoHeadings: "沒有子標題",
+                editOnGithub: "在 Github 上編輯此頁面",
+              },
+            }}
+          >
+            {children}
+          </Provider>
+        </AdsProvider>
       </body>
     </html>
   );
