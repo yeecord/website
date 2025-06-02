@@ -6,7 +6,9 @@ import {
 } from "fumadocs-mdx/config";
 import { z } from "zod";
 
-export const { meta, docs } = defineDocs();
+export const docs = defineDocs({
+  dir: "content/docs",
+});
 
 export const blog = defineCollections({
   type: "doc",

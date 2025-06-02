@@ -2,7 +2,6 @@
 
 import clsx from "clsx";
 import { motion, type Variants } from "framer-motion";
-import cn_styles from "./chinese.module.css";
 import Step from "../components/Step";
 import Gradient from "../components/Gradient";
 
@@ -18,10 +17,15 @@ import type { ReactNode } from "react";
 export function ChineseUI() {
   return (
     <div
-      className={clsx(
-        "mt-20 min-h-[150vh] w-full pr-8 sm:min-h-[160vh] xl:min-h-[150vh]",
-        cn_styles["steps-container"],
-      )}
+      className="z-[2] ml-[1.3rem] min-h-[150vh] w-full border-l pt-[10rem] pr-8 pb-10 pl-1 sm:ml-1 sm:min-h-[140vh] sm:pl-[2.5rem]"
+      style={{
+        borderImage: `linear-gradient(
+      to bottom,
+      theme("colors.purple.400") 60%,
+      theme("colors.orange.400")
+    )
+    1 100%`,
+      }}
     >
       <motion.div
         className="sticky top-[20vh] flex flex-col gap-5"

@@ -1,12 +1,12 @@
-import { ExternalLinkIcon } from "lucide-react";
-import Gradient from "./components/Gradient";
-import HeroGradient from "@static/hero.svg";
-import Image from "next/image";
-import clsx from "clsx";
-import styles from "./hero.module.css";
-import { cn } from "@/utils/cn";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/utils/cn";
+import HeroGradient from "@static/hero.svg";
+import clsx from "clsx";
 import Link from "fumadocs-core/link";
+import { ExternalLinkIcon } from "lucide-react";
+import Image from "next/image";
+import Gradient from "./components/Gradient";
+import styles from "./hero.module.css";
 
 export function Hero() {
   return (
@@ -55,7 +55,12 @@ export function Hero() {
             "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
           )}
         >
-          <div className={clsx(styles.servers, "inline-block max-md:w-max")}>
+          <div
+            className={clsx(
+              styles.servers,
+              "inline-block max-md:w-max max-md:animate-[servers-loop_infinite_30s_linear]",
+            )}
+          >
             <Servers />
             <Servers secondary />
           </div>
@@ -74,6 +79,13 @@ function Buttons() {
           buttonVariants({ color: "ghost", size: "lg" }),
           styles["rainbow-border"],
         )}
+        style={{
+          boxShadow: `
+          inset 2px 2px 0 var(--color-green-400),
+          inset -2px -2px 0 var(--color-cyan-500),
+          5px 5px 25px color-mix(in oklab, var(--color-green-400) 50%, transparent),
+          -5px -5px 25px color-mix(in oklab, var(--color-cyan-500) 50%, transparent)`,
+        }}
       >
         使用教學
       </Link>
