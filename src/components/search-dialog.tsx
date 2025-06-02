@@ -6,7 +6,7 @@ import {
 import { useDocsSearch } from "fumadocs-core/search/client";
 import { create } from "@orama/orama";
 import { createTokenizer } from "@orama/tokenizers/mandarin";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 export default function DefaultSearchDialog(props: SharedProps) {
   const { search, setSearch, query } = useDocsSearch({

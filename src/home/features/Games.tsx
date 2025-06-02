@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import Step from "../components/Step";
-import styles from "./games.module.css";
 
 const grid = {
   hidden: {},
@@ -32,10 +31,14 @@ const item = {
 export function Games() {
   return (
     <div
-      className={clsx(
-        "z-[2] min-h-[190vh] w-full pt-[10rem] pr-8 pb-10 sm:min-h-[140vh] md:min-h-[140vh] lg:min-h-[136vh]",
-        styles["steps-container"],
-      )}
+      className="z-[2] ml-[1.3rem] min-h-[190vh] w-full border-l pt-[10rem] pr-8 pb-10 pl-1 sm:ml-1 sm:min-h-[140vh] sm:pl-[2.5rem] md:min-h-[140vh] lg:min-h-[136vh]"
+      style={{
+        borderImage: `linear-gradient(
+      to bottom,
+      theme("colors.orange.400"),
+      transparent
+) 1 100%`,
+      }}
     >
       <motion.div
         className="sticky top-[20vh] gap-5"
