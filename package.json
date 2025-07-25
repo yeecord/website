@@ -29,7 +29,7 @@
     "rss": "^1.2.2",
     "satori": "^0.13.1",
     "tailwind-merge": "^3.3.0",
-    "zod": "^3.25.48"
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
