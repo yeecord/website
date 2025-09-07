@@ -1,0 +1,178 @@
+---
+title: 還想在 Discord 上聽音樂怎麼辦：2025 還能使用的 Discord 音樂機器人
+authors: [nathan]
+description: "如果你的家不住在石頭底下，你應該知道，前陣子，有許多大型的音樂機器人一個個的停下了，YEE 式機器龍也在猶豫了許久後關閉了音樂功能，但不要擔心，這一篇文章會告訴你，2025 年要怎麼在 Discrod 上使用音樂機器人"
+tags: ["Discord", "dc", "機器人", "音樂", "自架", "免費"]
+date: 2025/9/7
+---
+
+import InvitationLinkGenerator from "../../src/components/blog/listening-to-music-after-yeecord-music-shutting-down/InvitationLinkGenerator";
+
+如果你的家不住在石頭底下，你應該知道，前陣子，有許多大型的音樂機器人一個個的停下了，YEE 式機器龍也在猶豫了許久後關閉了音樂功能。
+
+這一篇文章會告訴你，2025 年要怎麼在 Discrod 上使用音樂機器人
+
+# 怎麼可能？！這用了什麼魔法？
+
+我們會使用一個名為 Lava 的開源專案，在 5 分鐘內生出一台**屬於你自己**的音樂機器人，只要你願意，它永遠不會被停下；也永遠都不會被 Discord 下架。
+
+# 什麼是音樂機器人？
+
+> *音樂機器人是一種特別的 Discord 機器人，它可以讓你在語音頻道裡聽你想聽的音樂，你只要在文字頻道裡輸入指令，就可以讓機器人加入你的語音頻道，並且播放音樂，或是 Spotify 上的播放清單，這樣你就可以和你的朋友一起分享你喜歡的音樂，也可以讓你的伺服器更有氣氛，更吸引人。
+
+<Adsense />
+
+# 開始施展魔法 🪄
+
+## 安裝 Docker
+
+首先，我們需要在自己的電腦上安裝 [Docker](https://www.docker.com/)
+
+### 1. 下載 [Docker Desktop](https://www.docker.com/)
+
+[請戳我](https://www.docker.com/) 前往 Docker 的官方網站，你會看到兩個大大的按鈕，其中一個上面寫著「Download Docker Desktop」，請戳他
+
+![Docker 官網](/blog/listening-to-music-after-yeecord-music-shutting-down/docker-website.png)
+
+然後選擇你的作業系統，如果你是 Mac 的話要額外注意
+
+- M 系列晶片的 Mac，請選擇 **Downlaod for Mac - Apple Silicon**
+- 非 M 系列晶片的 Mac，請選擇 **Download for Mac - Intel Chip**
+
+至於 Windows 用戶，直接選擇 **Download for Windows - AMD64** 即可
+（除非你買了 Snapdragon Elite 晶片的電腦）
+
+![選擇作業系統](/blog/listening-to-music-after-yeecord-music-shutting-down/select-platform.png)
+
+### 2. 安裝 Docker Desktop
+
+#### macOS
+
+對於 Mac 用戶，直接把下載下來的 dmg 檔案打開，拖進你的 Applications 資料夾就好了
+
+![在 Mac 上安裝 Docker](/blog/listening-to-music-after-yeecord-music-shutting-down/install-docker-on-mac.png)
+
+#### Windows
+
+對於 Windows 用戶，請點開那個下載好的 `Docker Desktop Installer` 檔案，確保你勾選了這個選項
+
+- [x] Use WSL 2 instead of Hyper-V (recommended)
+
+![Docker Desktop 設定](/blog/listening-to-music-after-yeecord-music-shutting-down/windows-docker-desktop-configuration.png)
+
+然後戳那個 OK，接著等待一段時間，出現這個畫面就可以**將電腦重新啟動了**
+
+![Docker Desktop 安裝完成](/blog/listening-to-music-after-yeecord-music-shutting-down/windows-docker-desktop-installed.png)
+
+
+## 註冊 Discord 機器人
+
+安裝完必要的工具後，接下來就是要註冊一個 Discord 機器人了，請[戳我前往 Discord Develpoer Portal](https://discord.com/developers/applications)
+
+進到 Discord Developer Portal 後，先點擊右上角的 New Application
+
+![創建新的應用程式](/blog/listening-to-music-after-yeecord-music-shutting-down/create-new-application.png)
+
+然後**輸入機器人的名字，你可以自由發揮你的創意**
+
+![輸入機器人的名字](/blog/listening-to-music-after-yeecord-music-shutting-down/enter-application-name.png)
+
+再來，到左邊的 **Bot** 頁面，你可以在這裡幫你的機器人換頭像，但我們現在要做的是**點擊機器人名字下面的 Reset Token**
+
+![生成機器人的 Token](/blog/listening-to-music-after-yeecord-music-shutting-down/generate-token.png)
+
+戳下去之後，Discord 可能會要你輸入你的 2FA 驗證碼，這很正常，請照著它說的做，然後你就會在機器人的名字下面看到一個長這樣的字串：
+
+![機器人的 Token](/blog/listening-to-music-after-yeecord-music-shutting-down/copy-token.png)
+
+**這個 Token 是你機器人的權杖，絕對不能外洩給任何人，只要知道這個權杖，就都以自由操作你的機器人**
+
+將這個 Token 存在一個安全的地方，我們會在等等的過程中用到
+
+接下來，到左邊的 **OAuth2** 頁面，你應該會看到一串叫做 Client ID 的數字，複製起來，貼到這裡：
+
+<InvitationLinkGenerator />
+
+然後你就可以把機器人邀請到你的伺服器了！
+
+## 運行 Lava
+
+再來就是運行 Lava 本身了，首先我們要前往 [Lava 的 GitHub](https://github.com/Nat1anWasTaken/Lava)，**點擊 Code，然後再點擊 Download ZIP**，將 Lava 下載到你的電腦上
+
+![下載 Lava](/blog/listening-to-music-after-yeecord-music-shutting-down/downloading-lava.png)
+
+> 如果你可以的話，請也輕輕的戳一下那顆星星 ⭐，這能讓 Lava 的開發更加順利 :)
+
+在下載完成後，在你的電腦上將它解壓縮，接下來：
+
+### macOS
+
+打開你的終端機，接著輸入 `cd {解壓後的路徑}` 像是這樣 `cd /Users/nathan/Downloads/Lava-master`
+
+![cd 到 Lava](/blog/listening-to-music-after-yeecord-music-shutting-down/cd-to-lava.png)
+
+<Info title="小提示">
+按住 ⌥ Option 對資料夾右鍵，會看到一個 **複製資料夾路徑** 的選項
+</Info>
+
+接著，輸入以下的這些指令：
+
+```bash
+chmod +x ./start.sh
+./start.sh
+```
+
+如果是初次運行，應該會出現 `Enter TOKEN (the value you just copied from the Discord Developer Portal):` 這句話，將你剛剛在 [註冊機器人](#3-註冊-discord-機器人) 時複製的 Token 貼上，並按下 Enter
+
+![在 macOS 上輸入 Token](/blog/listening-to-music-after-yeecord-music-shutting-down/entering-token-on-mac.png)
+
+如果出現了 `Cannot connect to the Docker daemon at unix:///Users/nathan/.orbstack/run/docker.sock. Is the docker daemon running?`，請先將剛剛安裝好的 Docker Desktop 打開，再次運行上面的指令
+
+如果一切順利的話，你應該會發現你的機器人成功運行起來了 🚀
+
+
+### Windows
+
+對資料夾裡面的 `start.bat` 檔案右鍵，然後 **以管理員身份運行**，初次啟動時，應該會出現
+
+`Enter TOKEN from Discord Developer Portal: `
+
+這串字
+
+![在 Windows 上啟動 Lava](/blog/listening-to-music-after-yeecord-music-shutting-down/launching-lava-on-windows.png)
+
+將你剛剛在 [註冊機器人](#3-註冊-discord-機器人) 時複製的 Token 貼上，並按下 Enter
+
+接下來，如果你剛剛安裝好 Docker Desktop，**有可能會彈出一個藍藍的介面要你登入，直接選擇 Skip 就好**
+
+你有可能會看到這個頁面，請跟著它的指示**安裝 WSL**
+
+![Docker 說你的 WSL 需要更新](/blog/listening-to-music-after-yeecord-music-shutting-down/wsl-needs-updating.png)
+
+如果你看到這個視窗彈出來，請**按鍵盤上的任何一個按鈕，讓他開始安裝 WSL**
+
+![安裝 WSL](/blog/listening-to-music-after-yeecord-music-shutting-down/installing-wsl.png)
+
+一切準備就緒後，你的機器人應該就跑起來了 🚀
+
+## 使用機器人
+
+使用的方式非常簡單，先加入一個語音頻道，然後在任意一個文字頻道輸入 `/play` 然後打上你要播放的歌曲，等待幾秒讓機器人搜尋，接著按下 Enter，機器人就會跑到你的語音頻道裡面開始播音樂了
+
+<video controls autoplay name="media">
+  <source src="/blog/listening-to-music-after-yeecord-music-shutting-down/showcase.mp4" type="video/mp4" />
+</video>
+
+# 結論
+
+到了這裡，你應該已經成功在自己的電腦上建立了一台專屬的 Discord 音樂機器人。從安裝 Docker，到註冊並設定機器人，再到運行 Lava，整個流程看似繁瑣，但其實只要跟著步驟走，五分鐘之內就能完成。
+
+和那些因政策或審查而下架的公用音樂機器人不同，自己架設的機器人完全由你掌控，不僅能確保它永遠不會被迫停用，還能隨著需求自由擴充功能。更重要的是，這也是一個進入自架服務與開源專案世界的最佳起點。
+
+所以，下次你想和朋友在 Discord 上一起聽音樂，不必再擔心哪天服務突然停掉——因為你已經有了一個屬於自己的、穩定可靠的音樂機器人。
+
+🚀 試著享受音樂的同時，也享受「自己動手打造」的成就感吧！
+
+👉 喜歡的話，也請務必到 [Lava 的 GitHub](https://github.com/Nat1anWasTaken/Lava) 上給一顆星星 ⭐，這能讓專案的開發走得更長久，也鼓勵作者持續更新！
+
+<Adsense />
