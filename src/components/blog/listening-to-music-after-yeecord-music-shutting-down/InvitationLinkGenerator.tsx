@@ -89,7 +89,7 @@ export function InvitationLinkGenerator() {
             disabled={!inviteUrl}
             className={cn(
               buttonVariants({ color: "primary" }),
-              !inviteUrl && "opacity-50 cursor-not-allowed",
+              !inviteUrl ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
             )}
           >
             {copied ? "已複製！" : "複製連結"}
