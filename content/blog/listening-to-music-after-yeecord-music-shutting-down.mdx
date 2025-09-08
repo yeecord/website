@@ -28,33 +28,22 @@ import InvitationLinkGenerator from "../../src/components/blog/listening-to-musi
 
 首先，我們需要在自己的電腦上安裝 [Docker](https://www.docker.com/)
 
-### 1. 下載 [Docker Desktop](https://www.docker.com/)
+### Windows
+
+#### 1. 下載 [Docker Desktop](https://www.docker.com/)
 
 [請戳我](https://www.docker.com/) 前往 Docker 的官方網站，你會看到兩個大大的按鈕，其中一個上面寫著「Download Docker Desktop」，請戳他
 
 ![Docker 官網](/blog/listening-to-music-after-yeecord-music-shutting-down/docker-website.png)
 
-然後選擇你的作業系統，如果你是 Mac 的話要額外注意
-
-- M 系列晶片的 Mac，請選擇 **Downlaod for Mac - Apple Silicon**
-- 非 M 系列晶片的 Mac，請選擇 **Download for Mac - Intel Chip**
-
-至於 Windows 用戶，直接選擇 **Download for Windows - AMD64** 即可
+然後選擇你的作業系統，如果你用的是 Windows 的話，直接選擇 **Download for Windows - AMD64** 即可
 （除非你買了 Snapdragon Elite 晶片的電腦）
 
 ![選擇作業系統](/blog/listening-to-music-after-yeecord-music-shutting-down/select-platform.png)
 
-### 2. 安裝 Docker Desktop
+#### 2. 安裝 Docker Desktop
 
-#### macOS
-
-對於 Mac 用戶，直接把下載下來的 dmg 檔案打開，拖進你的 Applications 資料夾就好了
-
-![在 Mac 上安裝 Docker](/blog/listening-to-music-after-yeecord-music-shutting-down/install-docker-on-mac.png)
-
-#### Windows
-
-對於 Windows 用戶，請點開那個下載好的 `Docker Desktop Installer` 檔案，確保你勾選了這個選項
+接下來，請點開那個下載好的 `Docker Desktop Installer.exe` 檔案，確保你勾選了這個選項
 
 - [x] Use WSL 2 instead of Hyper-V (recommended)
 
@@ -63,6 +52,29 @@ import InvitationLinkGenerator from "../../src/components/blog/listening-to-musi
 然後戳那個 OK，接著等待一段時間，出現這個畫面就可以**將電腦重新啟動了**
 
 ![Docker Desktop 安裝完成](/blog/listening-to-music-after-yeecord-music-shutting-down/windows-docker-desktop-installed.png)
+
+### macOS
+
+在 macOS 上，比起 Docker Desktop，我們有一個更好的替代品，叫做 [OrbStack](https://orbstack.dev/)
+
+#### 1. 下載 OrbStack
+
+首先，前往 [OrbStack 官網的下載頁面](https://orbstack.dev/download)，這邊有一點要特別注意：
+
+- 如果你用的是 M 系列晶片的 Mac（M1 ~ M4）的話，請**選擇左邊的 Download Apple Silicon**
+- 如果你用的是 Intel 時期的 Mac 的話，請**選擇右邊的 Download Intel**
+
+戳下去之後，他會彈出一個對話框要你輸入 Email，你可以不用理他
+
+![下載 OrbStack](/blog/listening-to-music-after-yeecord-music-shutting-down/orbstack-download.png)
+
+#### 2. 安裝 OrbStack
+
+接下來，點開那個下載下來的 `.dmg` 檔案，將 OrbStack 的圖標拖進你的 Applications 資料夾
+
+![安裝 OrbStack](/blog/listening-to-music-after-yeecord-music-shutting-down/orbstack-install.png)
+
+接著啟動 OrbStack，就可以往下一步走了 🚀
 
 
 ## 註冊 Discord 機器人
