@@ -1,9 +1,7 @@
 import { domain } from "@config";
-import { getGithubLastEdit, getPageTreePeers } from "fumadocs-core/server";
-import { Card, Cards } from "fumadocs-ui/components/card";
+import { getGithubLastEdit } from "fumadocs-core/server";
 import { DocsBody, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
-import { useCallback } from "react";
 import { docs } from "@/app/source";
 import { mdxComponents } from "@/components/mdx";
 import { metadataImage } from "@/utils/metadata";
@@ -24,19 +22,6 @@ export default async function Page({
     token: process.env.GITHUB_TOKEN,
   });
 
-  const Category = useCallback(
-    () => (
-      <Cards>
-        {getPageTreePeers(docs.pageTree, page.url).map((peer) => (
-          <Card key={peer.url} title={peer.name} href={peer.url}>
-            {peer.description}
-          </Card>
-        ))}
-      </Cards>
-    ),
-    [page.url],
-  );
-
   return (
     <DocsPage
       toc={page.data.toc}
@@ -53,12 +38,7 @@ export default async function Page({
     >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsBody>
-        <Content
-          components={{
-            ...mdxComponents,
-            Category,
-          }}
-        />
+        <Content components={mdxComponents} />
       </DocsBody>
     </DocsPage>
   );
