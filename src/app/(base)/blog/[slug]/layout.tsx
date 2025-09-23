@@ -1,5 +1,3 @@
-import { blog } from "@/app/source";
-import { getTagHref } from "@/utils/tags";
 import { type AuthorData, blogAuthors } from "@config";
 import type { InferPageType } from "fumadocs-core/source";
 import Image from "next/image";
@@ -7,6 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Fragment } from "react";
+import { blog } from "@/app/source";
+import { getTagHref } from "@/utils/tags";
 
 export default async function BlogLayout({
   params,
@@ -30,7 +30,7 @@ export default async function BlogLayout({
       <div className="mt-3 mb-6 flex flex-row flex-wrap items-center gap-1">
         <div className="flex flex-row flex-wrap gap-1">
           {page.data.authors.map((author, i) => (
-            <Fragment key={i}>
+            <Fragment key={author}>
               {i !== 0 && <span className="mx-1">+</span>}
               <SmallAuthor author={blogAuthors[author]} />
             </Fragment>
@@ -92,9 +92,9 @@ function Footer({ page }: { page: InferPageType<typeof blog> }) {
       </div>
       {page.data.authors
         .map((author) => blogAuthors[author])
-        .map((author, i) => (
+        .map((author) => (
           <a
-            key={i}
+            key={author.name}
             className="flex flex-row gap-2 rounded-xl bg-card p-4 text-card-foreground"
             href={author.url ?? "#"}
             target="_blank"

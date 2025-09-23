@@ -1,21 +1,9 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
   "vcs": {
-    "enabled": false,
+    "enabled": true,
     "clientKind": "git",
-    "useIgnoreFile": false
-  },
-  "files": {
-    "ignoreUnknown": false,
-    "include": [
-      "src/**/*",
-      "content/**/*",
-      "scripts/**/*",
-      "config.ts",
-      "*.config.ts",
-      "tailwind.config.js"
-    ],
-    "ignore": ["**/*.module.css"]
+    "useIgnoreFile": true
   },
   "formatter": {
     "enabled": true,
@@ -28,24 +16,50 @@
     "attributePosition": "auto",
     "bracketSpacing": true
   },
-  "organizeImports": {
-    "enabled": true
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
-      "correctness": {
-        "noUnusedVariables": "error"
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "error",
+        "noUselessStringConcat": "error",
+        "noUselessUndefinedInitialization": "error",
+        "useDateNow": "error",
+        "noUselessEscapeInRegex": "error"
       },
-      "nursery": {
-        "useSortedClasses": "warn"
+      "style": {
+        "noNamespace": "error",
+        "noNegationElse": "error",
+        "noYodaExpression": "error",
+        "useDefaultSwitchClause": "error",
+        "useExplicitLengthCheck": "error",
+        "useThrowOnlyError": "error",
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error",
+        "useCollapsedIf": "error"
       },
       "suspicious": {
-        "noArrayIndexKey": "off"
+        "noTsIgnore": "error",
+        "useErrorMessage": "error",
+        "useAwait": "error",
+        "noTemplateCurlyInString": "error"
       }
-    },
-    "ignore": ["**/*.config.js", "**/*.config.mjs", "**/*.config.cjs"]
+    }
   },
   "javascript": {
     "formatter": {

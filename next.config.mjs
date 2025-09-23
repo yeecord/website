@@ -1,4 +1,4 @@
-import {createMDX} from "fumadocs-mdx/next";
+import { createMDX } from "fumadocs-mdx/next";
 
 const withMDX = createMDX();
 
@@ -12,6 +12,7 @@ const nextConfig = {
     webpackBuildWorker: true,
   },
   output: "export",
+  outputFileTracingRoot: import.meta.dirname,
 };
 
 export default withMDX(nextConfig);

@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
-import type { blog } from "@/app/source";
-import type { InferPageType } from "fumadocs-core/source";
 import { blogAuthors } from "@config";
+import type { InferPageType } from "fumadocs-core/source";
+import Image from "next/image";
+import Link from "next/link";
+import type { blog } from "@/app/source";
 import { cn } from "@/utils/cn";
 
 export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {

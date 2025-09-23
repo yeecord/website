@@ -1,14 +1,16 @@
+import { domain } from "@config";
+import Link from "next/link";
 import { blog } from "@/app/source";
 import { BlogItem } from "@/components/blog/BlogItem";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import { getTags } from "@/utils/tags";
-import { domain } from "@config";
-import Link from "next/link";
 
 export default async function TagPage({
   params,
-}: { params: Promise<{ tag: string }> }) {
+}: {
+  params: Promise<{ tag: string }>;
+}) {
   const decodedTag = decodeURIComponent((await params).tag);
   const pages = blog
     .getPages()

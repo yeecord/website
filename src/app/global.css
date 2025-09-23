@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noUnknownAtRules: Tailwind custom at functions are used */
+
 @import "tailwindcss";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
@@ -78,7 +80,6 @@
     animation-timing-function: ease-in-out;
   }
 }
-
 
 #nd-home-layout li > a {
   @apply mx-0;

@@ -1,8 +1,8 @@
+import clsx from "clsx";
 import { ChineseUI } from "./ChineseUI";
 import { Dashboard } from "./Dashboard";
-import { Music } from "./Music";
 import { Games } from "./Games";
-import clsx from "clsx";
+import { Music } from "./Music";
 
 export function Features() {
   return (

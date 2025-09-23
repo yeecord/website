@@ -27,8 +27,6 @@
     }
   },
   "include": [
-    "prettier.config.cjs",
-    ".eslintrc.js",
     "next-env.d.ts",
     "config.ts",
     "src/**/*.ts",

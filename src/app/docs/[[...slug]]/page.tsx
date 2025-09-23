@@ -1,11 +1,11 @@
-import { docs } from "@/app/source";
-import { mdxComponents } from "@/components/mdx";
-import { metadataImage } from "@/utils/metadata";
 import { domain } from "@config";
 import { getGithubLastEdit, getPageTreePeers } from "fumadocs-core/server";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { DocsBody, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
+import { docs } from "@/app/source";
+import { mdxComponents } from "@/components/mdx";
+import { metadataImage } from "@/utils/metadata";
 
 export default async function Page({
   params,
@@ -17,7 +17,7 @@ export default async function Page({
 
   const Content = page.data.body;
   const lastEdit = await getGithubLastEdit({
-    path: `content/docs/${page.file.path}`,
+    path: `content/docs/${page.path}`,
     owner: "yeecord",
     repo: "website",
     token: process.env.GITHUB_TOKEN,
@@ -34,7 +34,7 @@ export default async function Page({
         sha: "master",
         owner: "yeecord",
         repo: "website",
-        path: `content/docs/${page.file.path}`,
+        path: `content/docs/${page.path}`,
       }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
@@ -42,19 +42,27 @@ export default async function Page({
         <Content
           components={{
             ...mdxComponents,
-            Category: () => (
-              <Cards>
-                {getPageTreePeers(docs.pageTree, page.url).map((peer) => (
-                  <Card key={peer.url} title={peer.name} href={peer.url}>
-                    {peer.description}
-                  </Card>
-                ))}
-              </Cards>
-            ),
+            Category,
           }}
         />
       </DocsBody>
     </DocsPage>
+  );
+}
+
+function Category({
+  page,
+}: {
+  page: NonNullable<ReturnType<typeof docs.getPage>>;
+}) {
+  return (
+    <Cards>
+      {getPageTreePeers(docs.pageTree, page.url).map((peer) => (
+        <Card key={peer.url} title={peer.name} href={peer.url}>
+          {peer.description}
+        </Card>
+      ))}
+    </Cards>
   );
 }
 

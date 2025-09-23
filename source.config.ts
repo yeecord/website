@@ -20,7 +20,7 @@ export const blog = defineCollections({
       z
         .string()
         .transform((s) => new Date(s))
-        .default(new Date().toISOString()),
+        .default(new Date()),
     ),
   }),
   dir: "content/blog",

@@ -1,8 +1,8 @@
 "use client";
+import clsx from "clsx";
+import { useEffect, useRef } from "react";
 import { useAdsContext } from "@/components/adsense";
 import { Warning } from "@/components/mdx/Admonition";
-import clsx from "clsx";
-import React, { useEffect, useRef } from "react";
 
 /**
  * Google Ads :)
@@ -33,7 +33,7 @@ export function Adsense() {
     );
 
   return (
-    <div aria-label="ads">
+    <div>
       <p className="my-2 text-center text-gray-400 text-sm">機器龍的精神食糧</p>
       <div
         className={clsx(
@@ -43,7 +43,6 @@ export function Adsense() {
       >
         <ins
           className="adsbygoogle"
-          aria-label="promote"
           style={{ display: "block" }}
           data-ad-client="ca-pub-1801171681307308"
           data-ad-slot="7480799616"

@@ -1,11 +1,11 @@
+import { domain } from "@config";
+import type { Metadata } from "next";
 import { Community } from "@/home/Community";
 import { Customers } from "@/home/Customers";
+import { Features } from "@/home/features";
 import { Hero } from "@/home/Hero";
 import { RpgSystem } from "@/home/RpgSystem";
-import { Features } from "@/home/features";
 import Sponsor from "@/home/Sponsor";
-import type { Metadata } from "next";
-import { domain } from "@config";
 
 export const metadata: Metadata = {
   alternates: {

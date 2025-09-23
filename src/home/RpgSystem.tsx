@@ -1,9 +1,9 @@
 "use client";
 
-import Gradient from "./components/Gradient";
 import GreenGradient from "@static/home/green-gradient.svg";
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import Gradient from "./components/Gradient";
 
 export function RpgSystem() {
   return (

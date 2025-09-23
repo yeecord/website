@@ -1,11 +1,11 @@
-import { BlogItem } from "@/components/blog/BlogItem";
-import { EyeIcon } from "lucide-react";
 import { domain } from "@config";
+import { EyeIcon } from "lucide-react";
 import type { Metadata } from "next";
-import { blog } from "@/app/source";
 import Link from "next/link";
-import { cn } from "@/utils/cn";
+import { blog } from "@/app/source";
+import { BlogItem } from "@/components/blog/BlogItem";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/utils/cn";
 
 export const metadata: Metadata = {
   alternates: {

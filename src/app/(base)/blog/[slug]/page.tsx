@@ -1,13 +1,15 @@
-import { blog } from "@/app/source";
-import { mdxComponents } from "@/components/mdx";
-import { domain, blogAuthors } from "@config";
+import { blogAuthors, domain } from "@config";
 import { DocsBody } from "fumadocs-ui/page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { blog } from "@/app/source";
+import { mdxComponents } from "@/components/mdx";
 
 export default async function BlogPage({
   params,
-}: { params: Promise<{ slug: string }> }) {
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const page = blog.getPage([(await params).slug]);
 
   if (!page) notFound();

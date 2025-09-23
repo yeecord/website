@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { metadataImage } from "@/utils/metadata";
 import { ImageResponse } from "next/og";
+import { metadataImage } from "@/utils/metadata";
 
 const noto = await readFile(
   resolve(process.cwd(), "./public/noto-sans-semi-bold.woff"),

@@ -1,12 +1,12 @@
 "use client";
 
-import clsx from "clsx";
 import ChartSvg from "@static/home/chart.svg";
-import Image from "next/image";
-import { BarChartIcon, MusicIcon, SettingsIcon } from "lucide-react";
-import { Progress } from "../components/Progress";
+import clsx from "clsx";
 import { motion } from "framer-motion";
+import { BarChartIcon, MusicIcon, SettingsIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { Progress } from "../components/Progress";
 
 const card = clsx(
   "text-secondary-foreground bg-gradient-to-b from-secondary border rounded-2xl border p-5 shadow-xl flex flex-col",

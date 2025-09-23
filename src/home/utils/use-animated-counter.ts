@@ -1,4 +1,4 @@
-import { type MotionValue, animate, useMotionValue } from "framer-motion";
+import { animate, type MotionValue, useMotionValue } from "framer-motion";
 
 type Result = {
   count: MotionValue<number>;

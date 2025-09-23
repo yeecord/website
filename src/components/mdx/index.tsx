@@ -1,9 +1,9 @@
-import { ErrorCallout, Info, Tip, Warning } from "@/components/mdx/Admonition";
-import Adsense from "@/components/mdx/Adsense";
-import { LinkButton } from "@/components/mdx/LinkButton";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { FC, ImgHTMLAttributes } from "react";
+import { ErrorCallout, Info, Tip, Warning } from "@/components/mdx/Admonition";
+import Adsense from "@/components/mdx/Adsense";
+import { LinkButton } from "@/components/mdx/LinkButton";
 
 export * from "./Admonition";
 export * from "./Adsense";

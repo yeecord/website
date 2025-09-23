@@ -1,11 +1,19 @@
 "use client";
-import {
-  SearchDialog,
-  type SharedProps,
-} from "fumadocs-ui/components/dialog/search";
-import { useDocsSearch } from "fumadocs-core/search/client";
+
 import { create } from "@orama/orama";
 import { createTokenizer } from "@orama/tokenizers/mandarin";
+import { useDocsSearch } from "fumadocs-core/search/client";
+import {
+  SearchDialog,
+  SearchDialogClose,
+  SearchDialogContent,
+  SearchDialogHeader,
+  SearchDialogIcon,
+  SearchDialogInput,
+  SearchDialogList,
+  SearchDialogOverlay,
+  type SharedProps,
+} from "fumadocs-ui/components/dialog/search";
 import { useCallback } from "react";
 
 export default function DefaultSearchDialog(props: SharedProps) {
@@ -28,8 +36,17 @@ export default function DefaultSearchDialog(props: SharedProps) {
       search={search}
       onSearchChange={setSearch}
       isLoading={query.isLoading}
-      results={query.data ?? []}
       {...props}
-    />
+    >
+      <SearchDialogOverlay />
+      <SearchDialogContent>
+        <SearchDialogHeader>
+          <SearchDialogIcon />
+          <SearchDialogInput />
+          <SearchDialogClose />
+        </SearchDialogHeader>
+        <SearchDialogList items={query.data !== "empty" ? query.data : null} />
+      </SearchDialogContent>
+    </SearchDialog>
   );
 }

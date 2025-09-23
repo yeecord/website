@@ -1,18 +1,17 @@
 "use client";
 
+import GardientSvg from "@static/home/purple-gradient.svg";
 import clsx from "clsx";
 import { motion, type Variants } from "framer-motion";
-import Step from "../components/Step";
-import Gradient from "../components/Gradient";
-
 import {
   AlignCenterIcon,
   LanguagesIcon,
   MousePointerIcon,
   ShieldCheckIcon,
 } from "lucide-react";
-import GardientSvg from "@static/home/purple-gradient.svg";
 import type { ReactNode } from "react";
+import Gradient from "../components/Gradient";
+import Step from "../components/Step";
 
 export function ChineseUI() {
   return (

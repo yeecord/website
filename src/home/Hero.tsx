@@ -1,10 +1,10 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
 import HeroGradient from "@static/hero.svg";
 import clsx from "clsx";
 import Link from "fumadocs-core/link";
 import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/utils/cn";
 import Gradient from "./components/Gradient";
 import styles from "./hero.module.css";
 

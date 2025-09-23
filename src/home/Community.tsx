@@ -1,12 +1,12 @@
-import Gradient from "./components/Gradient";
-import Link from "fumadocs-core/link";
 import CyanPinkGradient from "@static/home/cyan-pink-gradient.svg";
 import GradientRing from "@static/home/gradient-ring.svg";
-import Image from "next/image";
 import clsx from "clsx";
-import styles from "./community.module.css";
-import { cn } from "@/utils/cn";
+import Link from "fumadocs-core/link";
+import Image from "next/image";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/utils/cn";
+import styles from "./community.module.css";
+import Gradient from "./components/Gradient";
 
 export function Community() {
   return (

@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { getTagHref, getTags, type TagInfo } from "@/utils/tags";
 import { domain } from "@config";
 import type { Metadata } from "next";
-import { cn } from "@/utils/cn";
+import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/utils/cn";
+import { getTagHref, getTags, type TagInfo } from "@/utils/tags";
 
 export const metadata: Metadata = {
   alternates: {

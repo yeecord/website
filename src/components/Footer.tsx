@@ -1,7 +1,6 @@
+import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-import { ExternalLinkIcon } from "lucide-react";
 
 export type FooterCategory = {
   title: string;
@@ -24,7 +23,7 @@ export default function Footer({
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row">
         <Info />
         {categories.map((category, i) => (
-          <Category key={i} category={category} />
+          <Category key={`${category.title}-${i}`} category={category} />
         ))}
       </div>
     </div>
@@ -58,7 +57,7 @@ function Category({ category }: { category: FooterCategory }) {
       <div className="flex flex-col gap-1 text-sm">
         {category.items.map((item, i) => (
           <Link
-            key={i}
+            key={`${item.label}-${i}`}
             href={item.href}
             className="py-1 text-muted-foreground transition-colors hover:text-accent-foreground"
             target={item.newWindow === true ? "_blank" : "_self"}

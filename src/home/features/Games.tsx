@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/utils/cn";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import Link from "fumadocs-core/link";
@@ -11,6 +10,7 @@ import {
   SwordIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { cn } from "@/utils/cn";
 import Step from "../components/Step";
 
 const grid = {

@@ -1,8 +1,8 @@
-import { AdsProvider } from "@/components/adsense";
 import { urlBase } from "@config";
 import type { Metadata } from "next";
 import { Noto_Sans_TC } from "next/font/google";
 import type { ReactNode } from "react";
+import { AdsProvider } from "@/components/adsense";
 import "./global.css";
 import { Provider } from "@/app/layout.client";
 

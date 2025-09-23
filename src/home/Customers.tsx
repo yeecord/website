@@ -1,12 +1,12 @@
 "use client";
 
 import PinkWave from "@static/home/pink-wave.svg";
-import Image from "next/image";
 import clsx from "clsx";
-import { motion, type MotionValue, useTransform } from "framer-motion";
+import { type MotionValue, motion, useTransform } from "framer-motion";
+import Link from "fumadocs-core/link";
+import Image from "next/image";
 import formatter from "@/utils/formatter";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
-import Link from "fumadocs-core/link";
 
 export function Customers() {
   const { count, start } = useAnimatedCounter(

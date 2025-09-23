@@ -1,9 +1,9 @@
-import { layoutProps } from "@/app/layout.shared";
-import Footer from "@/components/Footer";
 import { footer } from "@config";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { BookIcon, SwordIcon, TerminalIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { layoutProps } from "@/app/layout.shared";
+import Footer from "@/components/Footer";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

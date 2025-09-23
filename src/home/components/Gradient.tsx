@@ -1,5 +1,5 @@
-import { cn } from "@/utils/cn";
 import Image, { type ImageProps } from "next/image";
+import { cn } from "@/utils/cn";
 
 export default function Gradient(props: Omit<ImageProps, "alt">) {
   return (
