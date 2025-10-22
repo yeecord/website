@@ -1,10 +1,9 @@
 import { domain } from "@config";
-import { getGithubLastEdit } from "fumadocs-core/server";
+import { getGithubLastEdit } from "fumadocs-core/content/github";
 import { DocsBody, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { docs } from "@/app/source";
 import { mdxComponents } from "@/components/mdx";
-import { metadataImage } from "@/utils/metadata";
 
 export default async function Page({
   params,
@@ -56,7 +55,9 @@ export async function generateMetadata(props: {
 
   if (!page) notFound();
 
-  return metadataImage.withImage(params.slug ?? [], {
+  const ogImageSlugs = ['/og', ...page.slugs, 'image.png']
+
+  return  {
     title: page.data.title,
     description: page.data.description,
     alternates: {
@@ -64,7 +65,7 @@ export async function generateMetadata(props: {
     },
     openGraph: {
       images: {
-        url: `/og${page.url}.png`,
+        url: ogImageSlugs.join('/'),
         width: 1200,
         height: 630,
         alt: "Banner",
@@ -72,5 +73,5 @@ export async function generateMetadata(props: {
       title: page.data.title,
       description: page.data.description,
     },
-  });
+  };
 }

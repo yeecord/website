@@ -77,7 +77,7 @@ function SmallAuthor({ author }: { author: AuthorData }) {
 
 function Footer({ page }: { page: InferPageType<typeof blog> }) {
   return (
-    <div className="mt-[5rem] flex flex-col gap-6">
+    <div className="mt-20 flex flex-col gap-6">
       <div className="flex flex-row flex-wrap gap-2 text-base">
         <p>標籤</p>
         {page.data.tags.map((tag) => (

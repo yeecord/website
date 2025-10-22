@@ -1,13 +1,22 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { ImageResponse } from "next/og";
-import { metadataImage } from "@/utils/metadata";
+import { docs } from "../../../source";
+import { notFound } from "next/navigation";
 
 const noto = await readFile(
   resolve(process.cwd(), "./public/noto-sans-semi-bold.woff"),
 );
 
-export const GET = metadataImage.createAPI((page) => {
+export async function GET(
+  _req: Request,
+  { params }: RouteContext<"/og/docs/[...slug]">,
+) {
+  const { slug } = await params;
+
+  const page = docs.getPage(slug.slice(0, -1));
+  if (!page) notFound();
+
   return new ImageResponse(
     <div
       tw="flex h-full w-full p-12"
@@ -50,8 +59,11 @@ export const GET = metadataImage.createAPI((page) => {
       ],
     },
   );
-});
+}
 
-export function generateStaticParams() {
-  return metadataImage.generateParams();
+export function generateStaticParams(): { slug: string[] }[] {
+  return docs.getPages().map(page => ({
+    locale: page.locale,
+    slug: [...page.slugs, 'image.png']
+  }));
 }
