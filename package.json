@@ -16,7 +16,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.19",
-    "fumadocs-core": "^15.7.13",
+    "fumadocs-core": "^16.0.0",
     "fumadocs-mdx": "^12.0.0",
     "fumadocs-ui": "^15.7.13",
     "lucide-react": "^0.544.0",
