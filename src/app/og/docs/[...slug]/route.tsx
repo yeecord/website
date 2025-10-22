@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 import { docs } from "../../../source";
-import { notFound } from "next/navigation";
 
 const noto = await readFile(
   resolve(process.cwd(), "./public/noto-sans-semi-bold.woff"),
@@ -62,8 +62,8 @@ export async function GET(
 }
 
 export function generateStaticParams(): { slug: string[] }[] {
-  return docs.getPages().map(page => ({
+  return docs.getPages().map((page) => ({
     locale: page.locale,
-    slug: [...page.slugs, 'image.png']
+    slug: [...page.slugs, "image.png"],
   }));
 }

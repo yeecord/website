@@ -55,9 +55,9 @@ export async function generateMetadata(props: {
 
   if (!page) notFound();
 
-  const ogImageSlugs = ['/og', ...page.slugs, 'image.png']
+  const ogImageSlugs = ["/og", "docs", ...page.slugs, "image.png"];
 
-  return  {
+  return {
     title: page.data.title,
     description: page.data.description,
     alternates: {
@@ -65,7 +65,7 @@ export async function generateMetadata(props: {
     },
     openGraph: {
       images: {
-        url: ogImageSlugs.join('/'),
+        url: ogImageSlugs.join("/"),
         width: 1200,
         height: 630,
         alt: "Banner",

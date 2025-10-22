@@ -1,6 +1,6 @@
 import { loader } from "fumadocs-core/source";
-import * as source from "../../.source";
 import { createMDXSource } from "fumadocs-mdx/runtime/next";
+import * as source from "../../.source";
 
 export const blog = loader({
   source: createMDXSource(source.blog, []),
