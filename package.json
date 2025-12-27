@@ -7,7 +7,7 @@
     "build": "next build && next-sitemap --config next-sitemap.config.js",
     "lint": "biome check --write --unsafe ."
   },
-  "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8",
+  "packageManager": "pnpm@10.26.2+sha512.0e308ff2005fc7410366f154f625f6631ab2b16b1d2e70238444dd6ae9d630a8482d92a451144debc492416896ed16f7b114a86ec68b8404b2443869e68ffda6",
   "dependencies": {
     "@orama/orama": "^3.1.16",
     "@orama/tokenizers": "^3.1.16",
@@ -19,10 +19,10 @@
     "fumadocs-core": "^16.0.1",
     "fumadocs-mdx": "^13.0.0",
     "fumadocs-ui": "^16.0.1",
-    "lucide-react": "^0.546.0",
+    "lucide-react": "^0.562.0",
     "next": "^16.0.0",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-twitter-embed": "^4.0.4",
     "rss": "^1.2.2",
     "satori": "^0.18.3",
@@ -30,7 +30,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.7",
+    "@biomejs/biome": "2.3.10",
     "@fumadocs/cli": "^1.0.3",
     "@types/mdx": "^2.0.13",
     "@types/node": "^24.9.1",
