@@ -11,12 +11,13 @@
 /blog/Gary50613.jpg /blog/kane50613.jpg 301
 /docs/migrate-to-v4 /docs 301
 /docs/intro /docs 301
-/docs/role /docs/commands/role 301
+/docs/role /docs/commands/role-menu 301
 /docs/join-message /docs/commands/member-notification 301
 /docs/dvc /docs/commands/auto-channels 301
 /docs/poll /docs/commands/poll 301
 /docs/chat /docs 301
 /docs/ticket /docs/commands/ticket 301
+/docs/commands/role /docs/commands/role-menu 301
 /docs/commands/dvc /docs/commands/auto-channels 301
 /docs/commands/join-message /docs/commands/member-notification 301
 /docs/commands/chat /docs 301
