@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { LayoutListIcon } from "lucide-react";
+import { BookIcon, LayoutListIcon } from "lucide-react";
 
 const discordIcon = (
   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -27,6 +27,12 @@ export const baseOptions = {
   },
   links: [
     {
+      url: "/docs",
+      icon: <BookIcon />,
+      text: "使用教學",
+      active: "nested-url",
+    },
+    {
       url: "/blog",
       icon: <LayoutListIcon />,
       text: "部落格",
@@ -45,6 +51,12 @@ export const baseOptions = {
 export const cnBaseOptions = {
   ...baseOptions,
   links: [
+    {
+      url: "/zh-cn/docs",
+      icon: <BookIcon />,
+      text: "使用教程",
+      active: "nested-url",
+    },
     {
       url: "/blog",
       icon: <LayoutListIcon />,
