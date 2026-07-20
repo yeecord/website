@@ -1,3 +1,4 @@
+import { CirclePlus, Gift, SmilePlus } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
@@ -17,25 +18,36 @@ export function SlashCommand({
   description?: string;
 }) {
   return (
-    <div className="not-prose my-4 overflow-hidden rounded-lg border bg-fd-card text-sm">
-      <div className="flex flex-wrap items-center gap-1.5 px-3 py-2.5 font-mono">
-        <span className="font-semibold text-blue-500">/{name}</span>
-        {options.map((option) => (
-          <span
-            key={option.name}
-            className={cn(
-              "rounded-md px-1.5 py-0.5",
-              option.value
-                ? "bg-blue-500/10 text-blue-500"
-                : "bg-fd-muted text-fd-muted-foreground",
-            )}
-          >
-            {option.value ?? `${option.name}${option.required ? "" : "?"}`}
+    <div className="not-prose my-4">
+      <div className="flex items-center gap-3 rounded-lg bg-[#383a40] px-4 py-2.5 text-sm text-[#dbdee1]">
+        <CirclePlus className="size-5 shrink-0 text-[#b5bac1]" />
+        <span className="flex min-w-0 flex-wrap items-center gap-1 font-medium">
+          <span className="rounded bg-[#3c4270] px-1.5 py-0.5 text-[#c9cdfb]">
+            /{name}
           </span>
-        ))}
+          {options.map((option) => (
+            <span
+              key={option.name}
+              className={cn(
+                "rounded px-1.5 py-0.5",
+                option.value
+                  ? "bg-[#3c4270] text-[#c9cdfb]"
+                  : "text-[#6d6f78]",
+              )}
+            >
+              {option.value
+                ? `${option.name}: ${option.value}`
+                : `${option.name}${option.required ? "" : "?"}`}
+            </span>
+          ))}
+        </span>
+        <span className="ms-auto flex shrink-0 items-center gap-3 text-[#b5bac1]">
+          <Gift className="size-5" />
+          <SmilePlus className="size-5" />
+        </span>
       </div>
       {description ? (
-        <p className="border-t px-3 py-2 text-fd-muted-foreground">
+        <p className="mt-2 px-1 text-sm text-fd-muted-foreground">
           {description}
         </p>
       ) : null}
