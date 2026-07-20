@@ -1,16 +1,11 @@
-import { zhTW } from "@fumapress/language/zh-tw";
 import { canonicalUrl, domain } from "@config";
-import { defineTranslations } from "fumadocs-core/i18n";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
-import { i18nProvider, uiTranslations } from "fumadocs-ui/i18n";
 import { defineConfig } from "fumapress";
 import { fumadocsMdx } from "fumapress/adapters/mdx";
 import { createDocsLayoutPage } from "fumapress/layouts/docs";
-import { createRootLayout } from "fumapress/layouts/root";
 import { createLayoutSwitchAuto } from "fumapress/layouts/switch";
 import { blogPlugin } from "fumapress/plugins/blog";
 import { llmsPlugin } from "fumapress/plugins/llms.txt";
-import { oramaSearchPlugin } from "fumapress/plugins/orama-search";
 import { sitemapPlugin } from "fumapress/plugins/sitemap";
 import { takumiPlugin } from "fumapress/plugins/takumi";
 import { googleFonts } from "takumi-js/helpers";
@@ -24,16 +19,18 @@ import {
   BlogTags,
 } from "./src/blog/layouts";
 import { mdxComponents } from "./src/components/mdx";
-import SearchDialog from "./src/components/search-dialog";
-import { baseOptions } from "./src/layout-config";
+import { createCmd } from "./src/components/mdx/cmd";
+import { i18n, RootLayout, translations } from "./src/root-layout";
+import { baseOptions, cnBaseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
 import { OgImage } from "./src/og-image";
+import { defaultLocalePlugin } from "./src/default-locale-plugin";
 import { rssPlugin } from "./src/rss-plugin";
-
-const translations = defineTranslations().preset(zhTW());
+import { searchPlugin } from "./src/search-plugin";
 
 const config = defineConfig({
   mode: "static",
+  i18n,
   content: {
     docs: docs.toFumadocsSource({ baseDir: "docs" }),
     blog: blog.toFumadocsSource({ baseDir: "blog" }),
@@ -92,13 +89,15 @@ const config = defineConfig({
         return {
           ...defaultMdxComponents,
           ...mdxComponents,
+          Cmd: createCmd(page.locale === "cn" ? "cn" : "tw"),
           a: createRelativeLink(source, page),
         };
       },
     }),
   )
   .plugins(
-    oramaSearchPlugin(),
+    defaultLocalePlugin(),
+    searchPlugin(),
     sitemapPlugin({
       getEntry(page) {
         return { loc: canonicalUrl(page.url), priority: 0.8 };
@@ -141,22 +140,15 @@ export default config
     }),
   )
   .layouts({
-    root: createRootLayout({
-      providerProps: {
-        i18n: i18nProvider(translations.extend(uiTranslations())),
-        search: {
-          SearchDialog,
-        },
-      },
-    }),
-    defaultProps() {
-      return baseOptions;
+    root: RootLayout,
+    defaultProps({ lang }) {
+      return lang === "cn" ? cnBaseOptions : baseOptions;
     },
     page: createLayoutSwitchAuto({
       docs: createDocsLayoutPage({
-        async render() {
+        async render(page) {
           const source = await this.getLoader();
-          let tree = source.getPageTree(this.lang);
+          let tree = source.getPageTree(page.locale ?? i18n.defaultLanguage);
 
           for (const child of tree.children) {
             if (child.type === "folder" && child.$id === "docs") {
