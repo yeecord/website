@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 import SearchDialog from "@/components/search-dialog";
 
 export const i18n = defineI18n({
-  languages: ["zh-tw", "cn"],
+  languages: ["zh-tw", "zh-cn"],
   defaultLanguage: "zh-tw",
   hideLocale: "default-locale",
 });
@@ -15,7 +15,7 @@ export const i18n = defineI18n({
 export const translations = i18n
   .translations()
   .preset("zh-tw", zhTW())
-  .preset("cn", zhCN());
+  .preset("zh-cn", zhCN());
 
 // i18n 模式下 fumapress 只把 root layout 掛在 /[lang] 下，
 // autoI18n: false 的頁面（首頁、404）要透過 src/pages/_layout.tsx 掛同一個

@@ -23,7 +23,7 @@ export function searchPlugin(): ServerPlugin<PressContext> {
       const server = createFromSource(this.getLoader, {
         localeMap: {
           "zh-tw": mandarin,
-          cn: mandarin,
+          "zh-cn": mandarin,
         },
         buildIndex: async (page) => {
           for (const adapter of this.adapters) {
