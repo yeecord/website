@@ -19,10 +19,10 @@ export function SlashCommand({
 }) {
   return (
     <div className="not-prose my-4">
-      <div className="flex items-center gap-3 rounded-lg bg-[#383a40] px-4 py-2.5 text-sm text-[#dbdee1]">
-        <CirclePlus className="size-5 shrink-0 text-[#b5bac1]" />
+      <div className="flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 text-sm text-discord-text">
+        <CirclePlus className="size-5 shrink-0 text-discord-icon" />
         <span className="flex min-w-0 flex-wrap items-center gap-1 font-medium">
-          <span className="rounded bg-[#3c4270] px-1.5 py-0.5 text-[#c9cdfb]">
+          <span className="rounded bg-discord-pill px-1.5 py-0.5 text-discord-pill-foreground">
             /{name}
           </span>
           {options.map((option) => (
@@ -31,8 +31,8 @@ export function SlashCommand({
               className={cn(
                 "rounded px-1.5 py-0.5",
                 option.value
-                  ? "bg-[#3c4270] text-[#c9cdfb]"
-                  : "text-[#6d6f78]",
+                  ? "bg-discord-pill text-discord-pill-foreground"
+                  : "text-discord-placeholder",
               )}
             >
               {option.value
@@ -41,7 +41,7 @@ export function SlashCommand({
             </span>
           ))}
         </span>
-        <span className="ms-auto flex shrink-0 items-center gap-3 text-[#b5bac1]">
+        <span className="ms-auto flex shrink-0 items-center gap-3 text-discord-icon">
           <Gift className="size-5" />
           <SmilePlus className="size-5" />
         </span>
@@ -57,7 +57,7 @@ export function SlashCommand({
 
 export function DiscordChat({ children }: { children: ReactNode }) {
   return (
-    <div className="not-prose my-4 flex flex-col gap-4 rounded-lg border bg-[#313338] p-4 text-sm text-[#dbdee1]">
+    <div className="not-prose my-4 flex flex-col gap-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
       {children}
     </div>
   );
@@ -77,7 +77,7 @@ export function DiscordMessage({
   return (
     <div className="flex gap-3">
       <div
-        className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-[#5865f2] font-semibold text-white"
+        className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-discord-blurple font-semibold text-white"
         style={color ? { backgroundColor: color } : undefined}
       >
         {author.slice(0, 1)}
@@ -86,7 +86,7 @@ export function DiscordMessage({
         <div className="flex items-center gap-1.5">
           <span className="font-medium text-white">{author}</span>
           {bot ? (
-            <span className="rounded bg-[#5865f2] px-1 py-px text-[10px] font-semibold uppercase text-white">
+            <span className="rounded bg-discord-blurple px-1 py-px text-[10px] font-semibold uppercase text-white">
               App
             </span>
           ) : null}
@@ -101,7 +101,7 @@ export function DiscordMessage({
 
 export function DiscordEmbed({
   title,
-  color = "#5865f2",
+  color = "var(--color-discord-blurple)",
   children,
 }: {
   title?: string;
@@ -110,7 +110,7 @@ export function DiscordEmbed({
 }) {
   return (
     <div
-      className="max-w-md rounded border-l-4 bg-[#2b2d31] p-3"
+      className="max-w-md rounded border-l-4 bg-discord-embed p-3"
       style={{ borderLeftColor: color }}
     >
       {title ? <p className="mb-1 font-semibold text-white">{title}</p> : null}
@@ -130,10 +130,10 @@ export function DiscordButton({
     <span
       className={cn(
         "inline-flex items-center gap-1 rounded px-3 py-1.5 text-sm font-medium text-white",
-        variant === "primary" && "bg-[#5865f2]",
-        variant === "secondary" && "bg-[#4e5058]",
-        variant === "success" && "bg-[#248046]",
-        variant === "danger" && "bg-[#da373c]",
+        variant === "primary" && "bg-discord-blurple",
+        variant === "secondary" && "bg-discord-secondary",
+        variant === "success" && "bg-discord-success",
+        variant === "danger" && "bg-discord-danger",
       )}
     >
       {children}

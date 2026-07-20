@@ -26,14 +26,14 @@ const roles = [
   { name: "遊戲玩家", color: "#9b59b6" },
 ];
 
-const botRole = { name: "YEE式機器龍", color: "#5865f2" };
+const botRole = { name: "YEE式機器龍", color: "var(--color-discord-blurple)" };
 
 export function RoleOrderDemo() {
   const step = useLoop(2, 2200);
   const list = step === 0 ? [...roles.slice(0, 2), botRole, ...roles.slice(2)] : [botRole, ...roles];
 
   return (
-    <div className="not-prose my-4 rounded-lg border bg-[#313338] p-4 text-sm text-[#dbdee1]">
+    <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
       <p className="mb-3 font-semibold text-white">伺服器設定 → 身分組</p>
       <div className="flex flex-col gap-1.5">
         {list.map((role) => (
@@ -42,25 +42,25 @@ export function RoleOrderDemo() {
             layout
             transition={{ type: "spring", stiffness: 350, damping: 30 }}
             className={cn(
-              "flex items-center gap-2 rounded-md bg-[#2b2d31] px-3 py-2",
-              role === botRole && "ring-2 ring-[#5865f2]",
+              "flex items-center gap-2 rounded-md bg-discord-embed px-3 py-2",
+              role === botRole && "ring-2 ring-discord-blurple",
             )}
           >
-            <GripVertical className="size-4 text-[#80848e]" />
+            <GripVertical className="size-4 text-discord-muted" />
             <span
               className="size-3 rounded-full"
               style={{ backgroundColor: role.color }}
             />
             {role.name}
             {role === botRole && (
-              <span className="ml-auto text-xs text-[#80848e]">
+              <span className="ml-auto text-xs text-discord-muted">
                 {step === 0 ? "把我拖到最上面" : "這樣就對了！"}
               </span>
             )}
           </motion.div>
         ))}
       </div>
-      <p className="mt-3 text-xs text-[#80848e]">
+      <p className="mt-3 text-xs text-discord-muted">
         機器龍只能給予排在自己「下面」的身分組
       </p>
     </div>
@@ -76,7 +76,7 @@ export function ChannelPermissionDemo() {
   const step = useLoop(3, 1800);
 
   return (
-    <div className="not-prose my-4 rounded-lg border bg-[#313338] p-4 text-sm text-[#dbdee1]">
+    <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
       <p className="mb-3 font-semibold text-white">頻道設定 → 權限 → @everyone</p>
       <div className="flex flex-col gap-2">
         {permissions.map((permission, index) => {
@@ -85,23 +85,23 @@ export function ChannelPermissionDemo() {
           return (
             <div
               key={permission.name}
-              className="flex items-center justify-between rounded-md bg-[#2b2d31] px-3 py-2"
+              className="flex items-center justify-between rounded-md bg-discord-embed px-3 py-2"
             >
               {permission.name}
-              <div className="flex overflow-hidden rounded-md border border-[#4e5058]">
+              <div className="flex overflow-hidden rounded-md border border-discord-secondary">
                 <AnimatePresence initial={false}>
                   <Cell
                     active={done && !permission.enabled}
-                    className="bg-[#da373c]"
+                    className="bg-discord-danger"
                   >
                     <X className="size-4" />
                   </Cell>
-                  <Cell active={!done} className="bg-[#4e5058]">
+                  <Cell active={!done} className="bg-discord-secondary">
                     <span className="px-1 text-xs">／</span>
                   </Cell>
                   <Cell
                     active={done && permission.enabled}
-                    className="bg-[#248046]"
+                    className="bg-discord-success"
                   >
                     <Check className="size-4" />
                   </Cell>
@@ -111,7 +111,7 @@ export function ChannelPermissionDemo() {
           );
         })}
       </div>
-      <p className="mt-3 text-xs text-[#80848e]">
+      <p className="mt-3 text-xs text-discord-muted">
         「檢視頻道」開、「發送訊息」關，就是一個大家看得到但只有管理員能發言的頻道
       </p>
     </div>
