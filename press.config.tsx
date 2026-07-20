@@ -2,7 +2,6 @@ import { zhTW } from "@fumapress/language/zh-tw";
 import { domain } from "@config";
 import { defineTranslations } from "fumadocs-core/i18n";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
-import { generate as generateOgNode } from "fumadocs-ui/og/takumi";
 import { i18nProvider, uiTranslations } from "fumadocs-ui/i18n";
 import { defineConfig } from "fumapress";
 import { fumadocsMdx } from "fumapress/adapters/mdx";
@@ -28,6 +27,7 @@ import { mdxComponents } from "./src/components/mdx";
 import SearchDialog from "./src/components/search-dialog";
 import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
+import { OgImage } from "./src/og-image";
 import { rssPlugin } from "./src/rss-plugin";
 
 const translations = defineTranslations().preset(zhTW());
@@ -94,15 +94,16 @@ const config = defineConfig({
     takumiPlugin({
       generate(page) {
         return {
-          node: generateOgNode({
-            title: page.data.title,
-            description: page.data.description,
-            primaryColor: "hsla(145, 65%, 55%, 0.3)",
-            primaryTextColor: "#4ade80",
-            site: "Yeecord",
-          }),
+          node: (
+            <OgImage
+              title={page.data.title}
+              description={page.data.description}
+            />
+          ),
           options: {
-            fonts: googleFonts([{ name: "Noto Sans TC", weight: [600, 800] }]),
+            fonts: googleFonts([
+              { name: "Noto Sans TC", weight: [400, 600, 800] },
+            ]),
             module: wasmModule,
           },
         };

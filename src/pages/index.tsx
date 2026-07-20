@@ -11,7 +11,7 @@ import { baseOptions } from "@/layout-config";
 
 const TITLE = "Yeecord - 萬中選一的 Discord 機器人";
 const DESCRIPTION =
-  "YEE式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間";
+  "YEE 式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間";
 
 export default function HomePage() {
   return (

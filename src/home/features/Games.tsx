@@ -79,7 +79,7 @@ export function Games() {
             >
               <Item icon={<BarChartIcon className="h-8 w-8" />}>投票系統</Item>
               <Item icon={<PencilLineIcon className="h-8 w-8" />}>
-                1A2B遊戲
+                1A2B 遊戲
               </Item>
               <Item icon={<SwordIcon className="h-8 w-8" />} active>
                 冒險系統

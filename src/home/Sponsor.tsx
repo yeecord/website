@@ -14,7 +14,7 @@ export default function Sponsor() {
   return (
     <div className="mt-20 flex flex-col items-center gap-3 bg-gradient-to-b from-secondary/50 px-4 py-40 text-center">
       <p className="text-lg text-purple-400 tracking-widest">
-        喜歡YEE式機器龍?
+        喜歡 YEE 式機器龍?
       </p>
       <h2 className="font-bold text-5xl">支持我們</h2>
       <p className="text-lg text-muted-foreground sm:text-xl">

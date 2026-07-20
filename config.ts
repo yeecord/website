@@ -75,7 +75,7 @@ export const footer: FooterCategory[] = [
 export const blogAuthors: Record<string, AuthorData> = {
   kane: {
     name: "Kane Wang",
-    title: "YEE式機器龍作者",
+    title: "YEE 式機器龍作者",
     url: "https://bento.me/kanewang",
     image_url: "/blog/kane50613.jpg",
   },

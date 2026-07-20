@@ -79,7 +79,7 @@ export const BlogIndex: BlogIndexPage<PressContext> = async () => {
     <main className="flex flex-1 flex-col pb-20">
       <Meta
         title="Yeecord Blog"
-        description="YEE式機器龍各種用肝和 ❤️ 製作的部落格"
+        description="YEE 式機器龍各種用肝和 ❤️ 製作的部落格"
         path="/blog"
       />
       <div

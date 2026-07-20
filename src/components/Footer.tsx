@@ -43,7 +43,7 @@ function Info() {
         <p className="font-bold text-xl">Yeecord</p>
       </div>
       <p className="mt-2 text-muted-foreground text-xs">
-        YEE式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}
+        YEE 式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}
       </p>
     </div>
   );

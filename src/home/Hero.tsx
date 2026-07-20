@@ -41,7 +41,7 @@ export function Hero() {
           "md:max-w-[650px] lg:text-2xl",
         )}
       >
-        YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
+        YEE 式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
       </p>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
