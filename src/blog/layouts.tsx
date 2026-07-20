@@ -64,7 +64,9 @@ function Meta({
 export const BlogSiteLayout: BlogLayout<PressContext> = ({ children }) => {
   return (
     <HomeLayout {...baseOptions}>
-      <div className="container flex flex-1 flex-col">{children}</div>
+      <div className="container mx-auto flex max-w-[1400px] flex-1 flex-col px-4">
+        {children}
+      </div>
       <Footer categories={footer} />
     </HomeLayout>
   );

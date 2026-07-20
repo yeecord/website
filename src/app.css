@@ -5,6 +5,17 @@
 
 :root {
   --default-font-family: "Noto Sans TC", sans-serif;
+
+  /* yeecord green, matches the green-400/cyan gradients used across the site */
+  --color-fd-primary: oklch(0.627 0.17 149.2);
+  --color-fd-primary-foreground: oklch(0.985 0 0);
+  --color-fd-ring: oklch(0.627 0.17 149.2);
+}
+
+.dark {
+  --color-fd-primary: oklch(0.792 0.178 151.7);
+  --color-fd-primary-foreground: oklch(0.266 0.052 153.1);
+  --color-fd-ring: oklch(0.792 0.178 151.7);
 }
 
 @theme {

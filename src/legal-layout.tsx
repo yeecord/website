@@ -27,7 +27,7 @@ export const LegalPage: FC<{
       {page.data.description && (
         <meta name="description" content={page.data.description} />
       )}
-      <main className="container py-10 sm:py-16">
+      <main className="container mx-auto px-4 py-10 sm:py-16">
         <DocsBody className="mx-auto max-w-[800px]">{body}</DocsBody>
       </main>
       <Footer categories={footer} />

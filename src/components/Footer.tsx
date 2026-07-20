@@ -18,7 +18,7 @@ export default function Footer({
   categories: FooterCategory[];
 }) {
   return (
-    <div className="container mt-auto border-t p-8 pb-20">
+    <div className="container mx-auto mt-auto border-t p-8 pb-20">
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row">
         <Info />
         {categories.map((category, i) => (
