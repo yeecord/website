@@ -1,0 +1,45 @@
+---
+title: 机器人防御
+description: 自动对付进服务器乱发消息的广告机器人：防御模式、陷阱频道、诈骗图片过滤。
+---
+
+被广告机器人和诈骗消息骚扰？<Cmd name="bot-fight" /> 提供三层防御。需要 **封禁成员**、**管理消息** 权限。
+
+## 防御模式
+
+<SlashCommand
+  name="bot-fight enable"
+  options={[{ name: "enabled", value: "True", required: true }]}
+  description="开启机器人防御模式"
+/>
+
+## 陷阱频道
+
+设一个正常成员不会发言的频道当陷阱，广告机器人通常会对每个频道乱枪打鸟：
+
+<SlashCommand
+  name="bot-fight trap-channel"
+  options={[{ name: "channel", value: "#不要在这里发言", required: true }]}
+  description="在陷阱频道发言的非管理员会被立即封禁"
+/>
+
+在陷阱频道发言的非管理员会被 **立即封禁**，并清除他 24 小时内的所有消息。
+
+<Warning>
+  记得把陷阱频道权限设成普通成员看得到但不会想发言的样子（例如频道名称直接写明），
+  设置时如果频道是公开的，机器龙也会提醒你。误触的成员需要管理员手动解封。
+</Warning>
+
+不会设频道权限？参考 [频道权限的设置教程](/cn/docs/basics/#频道权限怎么设)。
+
+不需要时用 <Cmd name="bot-fight clear-trap-channel" /> 移除。
+
+## 诈骗图片过滤
+
+<SlashCommand
+  name="bot-fight scam-filter"
+  options={[{ name: "enabled", value: "True", required: true }]}
+  description="自动检测并处理诈骗图片消息"
+/>
+
+需要额外的 **禁言成员** 权限。

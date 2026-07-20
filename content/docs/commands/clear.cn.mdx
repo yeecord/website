@@ -1,0 +1,29 @@
+---
+title: 大量删除消息
+description: 一次删除最多 1000 条消息，可以只删特定成员的消息，任务排进队列慢慢跑不怕刷屏。
+---
+
+<Cmd name="clear" /> 大量删除频道消息。删除任务会排进队列在后台执行，就算要删 1000 条也不用等它跑完。需要 **管理消息** 权限。
+
+## 新增删除任务
+
+<SlashCommand
+  name="clear add"
+  options={[
+    { name: "amount", value: "100", required: true },
+    { name: "user", value: "@某人" },
+  ]}
+  description="删除这个频道最近的 100 条消息，加 user 参数就只删他的"
+/>
+
+| 参数 | 必填 | 说明 |
+| ---- | ---- | ---- |
+| `amount` | ✅ | 要删的数量，2 到 1000 |
+| `user` | | 只删这位成员的消息 |
+
+## 管理队列
+
+| 命令 | 说明 |
+| ---- | ---- |
+| <Cmd name="clear list" /> | 查看进行中和排队中的任务，包括剩余数量 |
+| <Cmd name="clear flush" /> | 取消所有还没跑完的任务 |

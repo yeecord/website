@@ -1,0 +1,52 @@
+---
+title: 快速上手
+description: YEE 式机器龙是一只全中文的 Discord 机器人，投票、抽奖、动态语音、找吃的 RPG 都有，装到自己账号上就能到处使用。
+---
+
+import { Gamepad2, Vote, AudioLines } from "lucide-react";
+
+YEE 式机器龙是一只全中文的 Discord 机器人。所有功能都用斜杠命令操作，界面、说明、错误消息都是中文。
+
+<LinkButton
+  href="https://yeecord.com/link"
+  variant="primary"
+  children="邀请机器龙"
+/>
+
+## 两种安装方式
+
+| 安装方式 | 说明 |
+| -------- | ---- |
+| 加入服务器 | 整个服务器的成员都能使用 |
+| 安装到账号 | 装在你自己的 Discord 账号上，私信、群组私信、任何服务器都能用 |
+
+点开邀请链接后 Discord 会让你选，两种可以同时装。装到账号之后，<Cmd name="poll" />、<Cmd name="profile" />、<Cmd name="find-food" /> 这类命令在没有机器龙的地方也能使用。
+
+## 功能一览
+
+<Cards className="mt-5">
+  <Card
+    title="投票"
+    href="/cn/docs/commands/poll/"
+    icon={<Vote />}
+    description="匿名、锁票、开票保密，结果实时画成图片"
+  />
+  <Card
+    title="动态语音频道"
+    href="/cn/docs/commands/auto-channels/"
+    icon={<AudioLines />}
+    description="一个频道满足所有人的语音需求"
+  />
+  <Card
+    title="找吃的"
+    href="/cn/docs/find-food/"
+    icon={<Gamepad2 />}
+    description="陪 Yee 出门觅食、煮一桌、喂它"
+  />
+</Cards>
+
+完整清单在 [命令总览](/cn/docs/commands/)。
+
+## 遇到问题？
+
+用 <Cmd name="feedback" /> 命令直接反馈给我们，或到 [支持服务器](https://discord.gg/yeecord) 的 **#公開支援** 频道提问。

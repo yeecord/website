@@ -1,0 +1,40 @@
+---
+title: 动态语音频道
+description: 一个频道满足所有人的语音需求，成员加入时自动生成专属频道，没人用就自动回收。
+---
+
+为了不同用途开一堆语音频道，像是 `游戏用`、`听歌用`，频道一多列表就会很乱。
+
+动态语音频道只需要一个「入口频道」：成员加入时，机器龙自动生成一个专属于他的频道并把他移过去；频道没人之后自动删除。
+
+## 安装
+
+需要你有 **管理频道** 权限，机器龙有 **管理频道**、**移动成员** 权限。
+
+<SlashCommand
+  name="auto-channels setup"
+  options={[{ name: "channel", value: "#创建频道", required: true }]}
+  description="把一个语音频道设为动态语音入口"
+/>
+
+选一个现有的语音频道当入口就完成了。每个服务器最多设 2 个入口，机器龙生成的频道不能再被设为入口。
+
+## 保留频道
+
+生成的频道默认没人就删。想留下某个频道（例如已经布置好权限的），用：
+
+<SlashCommand
+  name="auto-channels keep"
+  options={[{ name: "channel", value: "#开黑频道", required: true }]}
+  description="让这个频道不会被自动删除"
+/>
+
+## 卸载
+
+<SlashCommand
+  name="auto-channels remove"
+  options={[{ name: "channel", value: "#创建频道", required: true }]}
+  description="移除动态语音入口"
+/>
+
+入口移除后，已经生成的频道等没人之后照常回收。

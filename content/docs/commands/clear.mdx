@@ -1,0 +1,29 @@
+---
+title: 大量刪除訊息
+description: 一次刪除最多 1000 則訊息，可以只刪特定成員的訊息，任務排進佇列慢慢跑不怕洗版。
+---
+
+<Cmd name="clear" /> 大量刪除頻道訊息。刪除任務會排進佇列在背景執行，就算要刪 1000 則也不用等它跑完。需要 **管理訊息** 權限。
+
+## 新增刪除任務
+
+<SlashCommand
+  name="clear add"
+  options={[
+    { name: "amount", value: "100", required: true },
+    { name: "user", value: "@某人" },
+  ]}
+  description="刪除這個頻道最近的 100 則訊息，加 user 參數就只刪他的"
+/>
+
+| 參數 | 必填 | 說明 |
+| ---- | ---- | ---- |
+| `amount` | ✅ | 要刪的數量，2 到 1000 |
+| `user` | | 只刪這位成員的訊息 |
+
+## 管理佇列
+
+| 指令 | 說明 |
+| ---- | ---- |
+| <Cmd name="clear list" /> | 查看進行中和排隊中的任務，包含剩餘數量 |
+| <Cmd name="clear flush" /> | 取消所有還沒跑完的任務 |

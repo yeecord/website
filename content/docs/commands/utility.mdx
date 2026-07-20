@@ -1,0 +1,53 @@
+---
+title: 實用小工具
+description: 個人資訊卡片、名言圖片、隨機抽籤、1A2B、唬爛產生器等小工具指令。
+---
+
+這些指令大多 [到處可用](/docs/commands/#在哪裡可以用)：裝到帳號後私訊、群組私訊都能玩。
+
+## 圖片卡片
+
+機器龍會把這些結果畫成精美的圖片：
+
+| 指令 | 說明 |
+| ---- | ---- |
+| <Cmd name="profile" /> | 個人資訊卡片，含頭貼和橫幅 |
+| <Cmd name="quote" /> | 把某人最近的訊息做成名言圖片 |
+
+<Cmd name="quote" /> 也有右鍵版本：對任何訊息按右鍵（手機長按）→ 應用程式 → **quote-message**，直接把那則訊息做成名言圖。
+
+## 查詢
+
+| 指令 | 說明 |
+| ---- | ---- |
+| <Cmd name="status" /> | 機器龍狀態：延遲、伺服器數、帳號安裝數、運行時間 |
+| <Cmd name="guild" /> | 目前伺服器的資訊 |
+| <Cmd name="avatar" /> | 取得使用者頭貼原圖（2048px） |
+| <Cmd name="banner" /> | 取得使用者旗幟原圖 |
+| <Cmd name="minecraft player" /> | Minecraft 玩家資訊，可綁定自己的 ID |
+| <Cmd name="minecraft server" /> | Minecraft 伺服器狀態 |
+
+## 娛樂
+
+| 指令 | 說明 |
+| ---- | ---- |
+| <Cmd name="pick" /> | 丟一個問題，機器龍幫你選答案 |
+| <Cmd name="random number" /> | 抽一個範圍內的數字 |
+| <Cmd name="random voice-channel" /> | 從語音頻道隨機抽一位成員，抽獎神器 |
+| <Cmd name="1a2b" /> | 1A2B 猜數字，5 種難度 |
+| <Cmd name="bullshit" /> | 道歉文、情書唬爛產生器，可指定字數 |
+
+<SlashCommand
+  name="bullshit"
+  options={[
+    { name: "topic", value: "遲到的道歉文", required: true },
+    { name: "length", value: "500" },
+  ]}
+  description="產生一篇 500 字的唬爛文，超過 1500 字會用文字檔附上"
+/>
+
+## 回報問題
+
+<SlashCommand name="feedback" description="跳出表單，把問題或建議直接送到開發團隊手上" />
+
+錯誤訊息出現時也會附上回報按鈕，點了就能直接回報。

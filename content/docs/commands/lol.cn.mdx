@@ -1,0 +1,25 @@
+---
+title: 英雄联盟
+description: 绑定 Riot ID 之后查战绩、看实时对局、追踪本周免费轮换英雄。
+---
+
+<Cmd name="lol" /> 查询英雄联盟的玩家信息，战绩卡片会画成图片。
+
+## 绑定账号
+
+<SlashCommand
+  name="lol link"
+  options={[{ name: "name", value: "Hide on bush#KR1", required: true }]}
+  description="绑定你的 Riot ID，格式是 名称#Tag"
+/>
+
+绑定后其他子命令的 `name` 都可以留空，直接查自己。
+
+## 查询
+
+| 命令 | 说明 |
+| ---- | ---- |
+| <Cmd name="lol player" /> | 玩家卡片：等级、单双排／灵活排位分、英雄成就 |
+| <Cmd name="lol matches" /> | 最近 10 场战绩，附上一场／下一场按钮翻页 |
+| <Cmd name="lol live" /> | 正在进行的对局，蓝红方阵容 |
+| <Cmd name="lol rotation" /> | 本周免费轮换英雄 |

@@ -1,0 +1,48 @@
+---
+title: 抽獎
+description: 在伺服器舉辦抽獎活動，可以限制參加資格、設定自動開獎時間。
+---
+
+<Cmd name="giveaway" /> 讓你在伺服器舉辦抽獎，成員點一顆按鈕就能參加，時間到自動開獎。需要 **管理伺服器** 權限。
+
+## 建立抽獎
+
+<SlashCommand
+  name="giveaway create"
+  options={[
+    { name: "amount_of_winners", value: "3", required: true },
+    { name: "title", value: "Nitro 抽獎", required: true },
+    { name: "end_in", value: "7d" },
+  ]}
+  description="建立一場 7 天後開獎、抽出 3 位得獎者的抽獎"
+/>
+
+| 參數 | 必填 | 說明 |
+| ---- | ---- | ---- |
+| `amount_of_winners` | ✅ | 獲獎人數 |
+| `title` | ✅ | 標題，最多 100 字 |
+| `mention` | | 發布時標註的對象 |
+| `description` | | 描述，最多 1000 字 |
+| `end_in` | | 多久後自動開獎，例如 `7d`，留空表示手動開獎 |
+| `minimum_join_time` | | 加入伺服器多久後才能參加，防小號 |
+| `allowed_role` | | 限定某個身分組才能參加 |
+| `image` | | 大圖 |
+| `thumbnail` | | 縮圖 |
+
+<DiscordChat>
+  <DiscordMessage>
+    <DiscordEmbed title="🎉 Nitro 抽獎" color="#eb459e">
+      <p>7 天後抽出 3 位得獎者</p>
+    </DiscordEmbed>
+    <p>
+      <DiscordButton variant="primary">點我參加</DiscordButton>{" "}
+      <DiscordButton variant="danger">終止抽獎</DiscordButton>
+    </p>
+  </DiscordMessage>
+</DiscordChat>
+
+成員加入時間不夠久、或沒有指定身分組時，點參加會被擋下並告知原因。
+
+## 重新傳送
+
+抽獎訊息被洗版時，用 <Cmd name="giveaway resend" /> 把它重新傳到最下面，`giveaway` 參數有自動補全。

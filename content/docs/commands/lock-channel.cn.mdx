@@ -1,0 +1,39 @@
+---
+title: 锁定语音频道
+description: 给语音频道上密码，输入正确密码的成员才能进入。
+---
+
+<Cmd name="lock-channel" /> 给语音频道上密码，适合开小团体讨论又不想另外设置权限的时候。需要 **管理频道** 权限才能设置；加入则是任何成员都可以。
+
+## 上锁
+
+<SlashCommand
+  name="lock-channel setup"
+  options={[
+    { name: "channel", value: "#干部频道", required: true },
+    { name: "password", value: "••••••", required: true },
+  ]}
+  description="给语音频道设置密码"
+/>
+
+上锁后成员会进不去这个频道，要用 `join` 输入密码。
+
+## 加入
+
+<SlashCommand
+  name="lock-channel join"
+  options={[
+    { name: "channel", value: "#干部频道", required: true },
+    { name: "password", value: "••••••", required: true },
+  ]}
+  description="输入密码获得进入权限"
+/>
+
+密码正确就会获得该频道的进入权限。
+
+## 管理
+
+| 命令 | 说明 |
+| ---- | ---- |
+| <Cmd name="lock-channel change" /> | 更换密码 |
+| <Cmd name="lock-channel remove" /> | 解除锁定 |
