@@ -1,11 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import {
-  BookIcon,
-  ExternalLinkIcon,
-  LayoutListIcon,
-  TerminalIcon,
-  UtensilsIcon,
-} from "lucide-react";
+import { LayoutListIcon } from "lucide-react";
 
 const discordIcon = (
   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -33,42 +27,10 @@ export const baseOptions = {
   },
   links: [
     {
-      url: "/docs",
-      text: "使用教學",
-      type: "menu",
-      items: [
-        {
-          icon: <BookIcon />,
-          url: "/docs",
-          text: "快速入門",
-          description:
-            "YEE 式機器龍是一隻全中文的 Discord 機器人，邀請、安裝到帳號的方法都在這",
-        },
-        {
-          url: "/docs/commands",
-          icon: <TerminalIcon />,
-          text: "指令總覽",
-          description: "投票、抽獎、動態語音等所有指令的用法",
-        },
-        {
-          icon: <UtensilsIcon />,
-          url: "/docs/find-food",
-          text: "找吃的",
-          description: "陪 Yee 出門覓食、煮一桌、餵牠的放置型小遊戲",
-        },
-      ],
-    },
-    {
       url: "/blog",
       icon: <LayoutListIcon />,
       text: "部落格",
       active: "nested-url",
-    },
-    {
-      url: "https://app.yeecord.com",
-      icon: <ExternalLinkIcon />,
-      text: "網頁面板",
-      external: true,
     },
     {
       type: "icon",
@@ -84,42 +46,10 @@ export const cnBaseOptions = {
   ...baseOptions,
   links: [
     {
-      url: "/zh-cn/docs",
-      text: "使用教程",
-      type: "menu",
-      items: [
-        {
-          icon: <BookIcon />,
-          url: "/zh-cn/docs",
-          text: "快速上手",
-          description:
-            "YEE 式机器龙是一只全中文的 Discord 机器人，邀请、安装到账号的方法都在这",
-        },
-        {
-          url: "/zh-cn/docs/commands",
-          icon: <TerminalIcon />,
-          text: "命令总览",
-          description: "投票、抽奖、动态语音等所有命令的用法",
-        },
-        {
-          icon: <UtensilsIcon />,
-          url: "/zh-cn/docs/find-food",
-          text: "找吃的",
-          description: "陪 Yee 出门觅食、煮一桌、喂它的放置型小游戏",
-        },
-      ],
-    },
-    {
       url: "/blog",
       icon: <LayoutListIcon />,
       text: "博客",
       active: "nested-url",
-    },
-    {
-      url: "https://app.yeecord.com",
-      icon: <ExternalLinkIcon />,
-      text: "网页面板",
-      external: true,
     },
     {
       type: "icon",
