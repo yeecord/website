@@ -1,4 +1,5 @@
 import { canonicalUrl, domain } from "@config";
+import type { ReactNode } from "react";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
 import { defineConfig } from "fumapress";
 import { fumadocsMdx } from "fumapress/adapters/mdx";
@@ -27,6 +28,49 @@ import { OgImage } from "./src/og-image";
 import { defaultLocalePlugin } from "./src/default-locale-plugin";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
+
+// 側欄頁面對應的斜線指令，slug 即指令名；一頁多指令的（role、utility）不標
+const sidebarCommands = new Set([
+  "poll",
+  "giveaway",
+  "auto-channels",
+  "lock-channel",
+  "member-notification",
+  "ticket",
+  "clear",
+  "bot-fight",
+  "lol",
+  "find-food",
+]);
+
+function withCommandBadges<T extends { type: string }>(items: T[]): T[] {
+  return items.map((item) => {
+    if (item.type === "folder" && "children" in item)
+      return {
+        ...item,
+        children: withCommandBadges(item.children as { type: string }[]),
+      };
+
+    if (item.type === "page" && "url" in item && "name" in item) {
+      const slug = String(item.url).replace(/\/$/, "").split("/").at(-1);
+
+      if (slug && sidebarCommands.has(slug))
+        return {
+          ...item,
+          name: (
+            <>
+              {item.name as ReactNode}
+              <code className="ms-auto rounded bg-fd-muted px-1.5 py-0.5 font-mono text-[10px] text-fd-muted-foreground">
+                /{slug}
+              </code>
+            </>
+          ),
+        };
+    }
+
+    return item;
+  });
+}
 
 const config = defineConfig({
   mode: "static",
@@ -158,7 +202,7 @@ export default config
             layoutProps: {
               tree:
                 docsFolder?.type === "folder"
-                  ? { ...tree, children: docsFolder.children }
+                  ? { ...tree, children: withCommandBadges(docsFolder.children) }
                   : tree,
               sidebar: { defaultOpenLevel: 1 },
             },
