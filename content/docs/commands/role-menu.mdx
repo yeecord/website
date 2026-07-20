@@ -1,0 +1,40 @@
+---
+title: 身分組選單
+description: 發一則訊息讓成員自己點按鈕領取身分組，管理員不用再手動發。
+---
+
+<Cmd name="role-menu" /> 發一則帶按鈕或下拉選單的訊息，成員自己點就能領身分組。需要 **管理身分組** 權限。
+
+## 建立選單
+
+<SlashCommand name="role-menu" description="傳送一則自助領取身分組的訊息" />
+
+執行後會跳出表單：
+
+| 欄位 | 說明 |
+| ---- | ---- |
+| 樣式 | 按鈕或下拉選單 |
+| 訊息內容 | 最多 4000 字，支援 Markdown |
+| 身分組 | 最多 25 個 |
+
+<DiscordChat>
+  <DiscordMessage>
+    <p>點下面的按鈕領取你的身分組！</p>
+    <p>
+      <DiscordButton>🔔 活動通知</DiscordButton>{" "}
+      <DiscordButton>🎮 遊戲玩家</DiscordButton>{" "}
+      <DiscordButton>🎨 創作者</DiscordButton>
+    </p>
+  </DiscordMessage>
+</DiscordChat>
+
+成員點按鈕獲得身分組，再點一次取消。
+
+<Warning>
+  要發的身分組必須排在機器龍最高身分組的下面，不然機器龍沒有權限給予，
+  詳見 [身分組順序的調整教學](/docs/basics/#身分組的順序很重要)。
+</Warning>
+
+## 想改成自動發放？
+
+新成員一進來就該有的身分組，用 [新成員身分組](/docs/commands/auto-role/) 自動發。

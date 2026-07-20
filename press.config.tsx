@@ -29,9 +29,11 @@ import { defaultLocalePlugin } from "./src/default-locale-plugin";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
 
-// 側欄頁面對應的斜線指令，slug 即指令名；一頁多指令的（role、utility）不標
+// 側欄頁面對應的斜線指令，slug 即指令名；一頁多指令的（utility）不標
 const sidebarCommands = new Set([
   "poll",
+  "auto-role",
+  "role-menu",
   "giveaway",
   "auto-channels",
   "lock-channel",
