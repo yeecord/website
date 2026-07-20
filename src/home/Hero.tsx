@@ -1,7 +1,6 @@
 const HeroGradient = "/hero.svg";
 import clsx from "clsx";
 import Link from "fumadocs-core/link";
-import { ExternalLinkIcon } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import Gradient from "./components/Gradient";
@@ -89,8 +88,7 @@ function Buttons() {
         使用教學
       </Link>
       <Link
-        href="https://app.yeecord.com/invite"
-        target="_blank"
+        href="/invite"
         className={cn(
           buttonVariants({
             color: "secondary",
@@ -98,7 +96,6 @@ function Buttons() {
           }),
         )}
       >
-        <ExternalLinkIcon className="size-5" />
         邀請機器人
       </Link>
     </div>
