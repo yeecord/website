@@ -1,6 +1,5 @@
-/invite https://app.yeecord.com/invite 302
-/i https://app.yeecord.com/invite 302
-/link https://app.yeecord.com/invite 302
+/i /invite 302
+/link /invite 302
 /discord https://discord.gg/yeecord 302
 /support https://discord.gg/yeecord 302
 /tos /terms 302
