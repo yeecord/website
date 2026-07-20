@@ -84,26 +84,26 @@ export const cnBaseOptions = {
   ...baseOptions,
   links: [
     {
-      url: "/cn/docs",
+      url: "/zh-cn/docs",
       text: "使用教程",
       type: "menu",
       items: [
         {
           icon: <BookIcon />,
-          url: "/cn/docs",
+          url: "/zh-cn/docs",
           text: "快速上手",
           description:
             "YEE 式机器龙是一只全中文的 Discord 机器人，邀请、安装到账号的方法都在这",
         },
         {
-          url: "/cn/docs/commands",
+          url: "/zh-cn/docs/commands",
           icon: <TerminalIcon />,
           text: "命令总览",
           description: "投票、抽奖、动态语音等所有命令的用法",
         },
         {
           icon: <UtensilsIcon />,
-          url: "/cn/docs/find-food",
+          url: "/zh-cn/docs/find-food",
           text: "找吃的",
           description: "陪 Yee 出门觅食、煮一桌、喂它的放置型小游戏",
         },

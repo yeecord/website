@@ -89,7 +89,7 @@ const config = defineConfig({
         return {
           ...defaultMdxComponents,
           ...mdxComponents,
-          Cmd: createCmd(page.locale === "cn" ? "cn" : "tw"),
+          Cmd: createCmd(page.locale === "zh-cn" ? "cn" : "tw"),
           a: createRelativeLink(source, page),
         };
       },
@@ -142,7 +142,7 @@ export default config
   .layouts({
     root: RootLayout,
     defaultProps({ lang }) {
-      return lang === "cn" ? cnBaseOptions : baseOptions;
+      return lang === "zh-cn" ? cnBaseOptions : baseOptions;
     },
     page: createLayoutSwitchAuto({
       docs: createDocsLayoutPage({
