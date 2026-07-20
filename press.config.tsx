@@ -26,6 +26,7 @@ import { baseOptions, cnBaseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
 import { OgImage } from "./src/og-image";
 import { defaultLocalePlugin } from "./src/default-locale-plugin";
+import { localeSwitchPlugin } from "./src/locale-switch-plugin";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
 
@@ -124,6 +125,12 @@ const config = defineConfig({
         </>
       );
     },
+    // 預設語系（zh-tw）同時存在於 /docs 與 /zh-tw/docs，canonical 一律指向無前綴版
+    page(page) {
+      const canonical = page.url.replace(/^\/zh-tw(?=\/|$)/, "") || "/";
+
+      return <link rel="canonical" href={`${domain}${canonical}`} />;
+    },
   },
   translations,
 })
@@ -143,6 +150,7 @@ const config = defineConfig({
   )
   .plugins(
     defaultLocalePlugin(),
+    localeSwitchPlugin(),
     searchPlugin(),
     sitemapPlugin({
       getEntry(page) {

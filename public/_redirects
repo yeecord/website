@@ -25,5 +25,6 @@
 /docs/commands/reference/* /docs/commands 301
 /docs/rpg/* /docs/find-food 301
 /docs/rpg /docs/find-food 301
+/zh-tw /  301
 /zh-tw/* /:splat 301
 /index / 301
