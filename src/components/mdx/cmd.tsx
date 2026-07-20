@@ -1,3 +1,10 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 // 顯示名稱同步自 yeecord repo src/infrastructure/i18n/{zh-TW,zh-CN}.json 的 slash.*.name
 const commandNames: Record<string, { tw: string; cn: string }> = {
   "1a2b": { tw: "1a2b", cn: "1a2b" },
@@ -31,15 +38,26 @@ const commandNames: Record<string, { tw: string; cn: string }> = {
 export function createCmd(locale: "tw" | "cn") {
   return function Cmd({ name }: { name: string }) {
     const display = commandNames[name.split(" ")[0]]?.[locale];
+
+    if (!display) return <code>/{name}</code>;
+
     const label = locale === "cn" ? "在 Discord 中显示为" : "在 Discord 中顯示為";
 
     return (
-      <code
-        title={display ? `${label}「${display}」` : undefined}
-        className={display ? "cursor-help underline decoration-dotted" : undefined}
-      >
-        /{name}
-      </code>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <code className="cursor-help underline decoration-dotted" />
+            }
+          >
+            /{name}
+          </TooltipTrigger>
+          <TooltipContent>
+            {label}「{display}」
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     );
   };
 }
