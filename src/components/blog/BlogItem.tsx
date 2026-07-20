@@ -37,11 +37,12 @@ export function BlogItem({ page }: { page: BlogPost }) {
         </p>
 
         <div className="mt-auto flex flex-row items-end pt-2">
-          {page.data.authors.flatMap((author, i) => {
-            const info = blogAuthors[author];
-            if (!info?.image_url) return [];
-
-            return (
+          {page.data.authors
+            .flatMap((author) => {
+              const info = blogAuthors[author];
+              return info?.image_url ? [info] : [];
+            })
+            .map((info, i) => (
               <img
                 key={info.name}
                 src={info.image_url}
@@ -53,8 +54,7 @@ export function BlogItem({ page }: { page: BlogPost }) {
                   i !== 0 && "-ml-4",
                 )}
               />
-            );
-          })}
+            ))}
           <p className="ml-auto text-muted-foreground text-xs">
             {page.data.date.toLocaleDateString()}
           </p>

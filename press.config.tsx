@@ -1,4 +1,5 @@
-import { blogAuthors, domain, footer } from "@config";
+import { zhTW } from "@fumapress/language/zh-tw";
+import { domain } from "@config";
 import { defineTranslations } from "fumadocs-core/i18n";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
 import { generate as generateOgNode } from "fumadocs-ui/og/takumi";
@@ -29,21 +30,7 @@ import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
 import { rssPlugin } from "./src/rss-plugin";
 
-const translations = defineTranslations()
-  .extend(uiTranslations())
-  .add({
-    "On this page(table of contents)": "目錄",
-    "Search(search dialog)": "搜尋文檔",
-    "Search(search trigger)": "搜尋文檔",
-    "Last updated on(page footer)": "最後更新於",
-    "No results found(search dialog)": "沒有結果",
-    "Previous Page(pagination)": "上一頁",
-    "Next Page(pagination)": "下一頁",
-    "No Headings(table of contents)": "沒有子標題",
-    "Edit on GitHub(edit page)": "在 Github 上編輯此頁面",
-    "Page Not Found(404 not found page)": "找不到頁面",
-    "Back to Home(404 not found page)": "返回主頁",
-  });
+const translations = defineTranslations().preset(zhTW());
 
 const config = defineConfig({
   mode: "static",

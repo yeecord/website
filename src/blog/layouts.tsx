@@ -86,7 +86,7 @@ export const BlogIndex: BlogIndexPage<PressContext> = async () => {
           backgroundImage:
             "linear-gradient(to bottom,transparent 50%,hsl(var(--background))), radial-gradient(circle at center, hsl(var(--muted-foreground)) 1px, hsl(var(--background)) 0)",
           backgroundSize: "100%, 1.5rem 1.5rem",
-          backgroundRepeat: "none, round",
+          backgroundRepeat: "no-repeat, round",
         }}
       >
         <h1 className="mb-8 text-center font-bold text-4xl md:text-5xl">
@@ -156,12 +156,14 @@ export const BlogPage: BlogLayoutPage<PressContext> = async ({ page }) => {
       </h1>
       <div className="mt-3 mb-6 flex flex-row flex-wrap items-center gap-1">
         <div className="flex flex-row flex-wrap gap-1">
-          {page.data.authors.map((author, i) => (
-            <Fragment key={author}>
-              {i !== 0 && <span className="mx-1">+</span>}
-              <SmallAuthor author={blogAuthors[author]} />
-            </Fragment>
-          ))}
+          {page.data.authors
+            .flatMap((author) => blogAuthors[author] ?? [])
+            .map((author, i) => (
+              <Fragment key={author.name}>
+                {i !== 0 && <span className="mx-1">+</span>}
+                <SmallAuthor author={author} />
+              </Fragment>
+            ))}
         </div>
 
         <p className="text-muted-foreground text-sm">
@@ -216,7 +218,7 @@ function PostFooter({ page }: { page: BlogPost }) {
         ))}
       </div>
       {page.data.authors
-        .map((author) => blogAuthors[author])
+        .flatMap((author) => blogAuthors[author] ?? [])
         .map((author) => (
           <a
             key={author.name}
