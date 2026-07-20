@@ -1,126 +1,43 @@
 ---
-title: "貢獻指南"
-description: 協助我們將文檔變得更完善!
+title: 貢獻指南
+description: 幫我們把文件寫得更好，新增或修改頁面的方法都在這。
 ---
 
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+文件都在 GitHub 上的 [yeecord/website](https://github.com/yeecord/website)，每頁右邊都有「編輯此頁」可以直接改。
 
-## 新增頁面的方法
+## 新增頁面
 
-我們使用 Fumadocs 來製作我們的文檔，您可以參考 [他們的指南](https://fumadocs.vercel.app/docs/ui/markdown) 來了解它的更多功能。
+在 `content/docs/` 建立 MDX 檔案，開頭一定要有 frontmatter：
 
-<div className='steps [&>h3]:step'>
-  
-### 建立 MDX 檔案
-
-請填寫所有字段
-
-<Tabs items={["文檔", "部落格"]}>
-
-<Tab value="文檔">
-
-在 `/content/docs` 資料夾中建立檔案
-
-```mdx title="page.mdx"
+```mdx title="my-page.mdx"
 ---
 title: 你的標題
-description: 這是關於什麼的?
+description: 這一頁在講什麼？
 ---
 
 內文...
 ```
 
-</Tab>
-
-<Tab value="部落格">
-  
-在 `/content/blog` 資料夾中建立檔案
-
-```mdx title="page.mdx"
----
-title: 你的標題
-description: 這是關於什麼的?
-authors: [<作者編號>]
-date: 2023/1/1
-image: "/blog/banner.jpg"
-tags: ["文章標籤"]
----
-
-內文...
-```
-
-<h4>得到你自己的作者編號</h4>
-
-打開 `config.ts` 文件, 滾動到 `blogAuthors` 並添加您的個人信息
-
-- 避免文字太長
-- 不要放可疑的網址
-
-```ts
-export const blogAuthors: Record<string, AuthorData> = {
-  //...
-  henry: {
-    name: "你的名字",
-    title: "簡短的自我介紹",
-    url: "https://my-website.com",
-    image_url: "/blog/henry.jpg", //將圖像放入 /public/blog/henry.jpg
-  },
-};
-```
-
-之後你便可以用 `henry` 作為你的作者編號
-
-</Tab>
-
-</Tabs>
-
-### 創建內容
-
-我相信你已經學習了一些基本的 Markdown 語法
-
-#### 你需要注意這些事情
-
-- 適當的用詞
-- 禁止自我宣傳
-- 不應帶偏見或政治立場
-
-#### 改進你的文章
-
-- **漂亮的排版:**
-  使用標題而不是大量雜亂無章的文字
-- **數字和英文之間的空格:**
-  一切都遵循 [中文案排版指南](https://github.com/sparanoid/chinese-copywriting-guidelines)
-
-### 排序頁面
-
-您必須編輯 `meta.json` 以更改每個頁面的順序：
+新頁面要加進同資料夾的 `meta.json` 才會出現在側欄：
 
 ```json
 {
-  "pages": ["index", "my-new-page"]
+  "pages": ["index", "my-page"]
 }
 ```
 
-### 對此有疑問？
+部落格文章放在 `content/blog/`，多了 `authors`、`date`、`tags` 欄位，作者資訊定義在 `config.ts` 的 `blogAuthors`。
 
-有支援需求可以聯絡我們的支援群組
+## 寫作原則
 
-<div className="mt-4 flex flex-row gap-2.5">
-  <LinkButton
-    href="https://discord.gg/yeecord"
-    variant="primary"
-    children="加入服務器"
-  />
-</div>
+- 用表格和標題，不要一大坨文字
+- 假設讀者可能沒用過 Discord，術語第一次出現時連到 [新手入門](/docs/basics/)
+- 展示指令用 `<SlashCommand />`、模擬機器人回覆用 `<DiscordChat />`，不用截圖
+- 中英文和數字之間留空格，照 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines)
+- 不要自我宣傳、不帶政治立場
 
-</div>
+MDX 的其他功能可以參考 [fumadocs 的文件](https://fumadocs.dev/docs/ui/markdown)。
 
-### 我們刪除了那些舊語法
+## 有問題？
 
-請改用自定義組件
-
-```
-::: warning 警告
-這不再受支持
-:::
-```
+到 [支援伺服器](https://discord.gg/yeecord) 找我們聊。

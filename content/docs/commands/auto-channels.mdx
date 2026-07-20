@@ -1,0 +1,40 @@
+---
+title: 動態語音頻道
+description: 一個頻道滿足所有人的語音需求，成員加入時自動生出專屬頻道，沒人用就自動回收。
+---
+
+為了不同用途開一堆語音頻道，像是 `遊戲用`、`聽音樂用`，頻道一多列表就會很亂。
+
+動態語音頻道只需要一個「入口頻道」：成員加入時，機器龍自動生出一個專屬於他的頻道並把他移過去；頻道沒人之後自動刪除。
+
+## 安裝
+
+需要你有 **管理頻道** 權限，機器龍有 **管理頻道**、**移動成員** 權限。
+
+<SlashCommand
+  name="auto-channels setup"
+  options={[{ name: "channel", value: "#創建頻道", required: true }]}
+  description="把一個語音頻道設為動態語音入口"
+/>
+
+選一個現有的語音頻道當入口就完成了。每個伺服器最多設 2 個入口，機器龍生出來的頻道不能再被設為入口。
+
+## 保留頻道
+
+生出來的頻道預設沒人就刪。想留下某個頻道（例如已經佈置好權限的），用：
+
+<SlashCommand
+  name="auto-channels keep"
+  options={[{ name: "channel", value: "#隊聚頻道", required: true }]}
+  description="讓這個頻道不會被自動刪除"
+/>
+
+## 解除安裝
+
+<SlashCommand
+  name="auto-channels remove"
+  options={[{ name: "channel", value: "#創建頻道", required: true }]}
+  description="移除動態語音入口"
+/>
+
+入口移除後，已經生出來的頻道等沒人之後照常回收。

@@ -1,18 +1,64 @@
 ---
-title: 怎麼使用 YEE 式機器龍的指令?
+title: 指令總覽
+description: YEE 式機器龍的所有斜線指令，以及哪些指令可以在私訊使用。
 ---
 
-1. 當要呼叫 YEE 式機器龍的指令的時候使用 `&` 或是 `@YEE式機器龍` 開頭
-2. 在 `&` 之後加上 `指令名稱`
-3. 如有額外 `子指令` 或 `參數` 需要傳遞，使用 `空格` 分割
-4. `<>` 內為必填， `[]` 內為非必填參數
+在輸入框打 `/` 就會列出機器龍的指令，Discord 會提示每個參數的名稱跟說明，必填參數不填會直接擋下來。
 
-以下是使用的範例
+<SlashCommand
+  name="poll create"
+  description="輸入 / 之後選擇指令，Discord 會引導你填完參數"
+/>
 
-![使用指令範例](/docs/commands/example-usage.png)
+以前的 `&` 文字指令已經退役。輸入舊指令時，機器龍會告訴你對應的斜線指令是哪一個。
 
-## 我忘記怎麼使用的時候怎麼辦
+## 在哪裡可以用
 
-別擔心！你可以在每個指令後頭加上 `help`，我就會告訴你怎麼用了！
+把機器龍 [安裝到帳號](/docs/#兩種安裝方式) 之後，標了「到處可用」的指令在私訊、群組私訊、任何伺服器都能使用；其他指令只能在裝了機器龍的伺服器裡用。
 
-![指令幫助清單範例](/docs/commands/example-help.png)
+## 伺服器管理
+
+| 指令 | 說明 | 需要權限 |
+| ---- | ---- | -------- |
+| [<Cmd name="auto-channels" />](/docs/commands/auto-channels/) | 動態語音頻道 | 管理頻道 |
+| [<Cmd name="lock-channel" />](/docs/commands/lock-channel/) | 密碼鎖定語音頻道 | 管理頻道 |
+| <Cmd name="afk-channel" /> | 設定 AFK 語音頻道 | 管理伺服器 |
+| [<Cmd name="clear" />](/docs/commands/clear/) | 大量刪除訊息 | 管理訊息 |
+| [<Cmd name="bot-fight" />](/docs/commands/bot-fight/) | 機器人防禦模式 | 封鎖成員 |
+| [<Cmd name="auto-role" />](/docs/commands/role/) | 新成員自動身分組 | 管理身分組 |
+| [<Cmd name="role-menu" />](/docs/commands/role/) | 自助領取身分組選單 | 管理身分組 |
+| [<Cmd name="member-notification" />](/docs/commands/member-notification/) | 成員加入／離開通知 | 管理伺服器 |
+| [<Cmd name="ticket" />](/docs/commands/ticket/) | 私人頻道 | 管理頻道 |
+
+## 活動
+
+| 指令 | 說明 | 到處可用 |
+| ---- | ---- | -------- |
+| [<Cmd name="poll" />](/docs/commands/poll/) | 超高自訂投票系統 | ✅ |
+| [<Cmd name="giveaway" />](/docs/commands/giveaway/) | 抽獎活動 | |
+
+## 遊戲
+
+| 指令 | 說明 | 到處可用 |
+| ---- | ---- | -------- |
+| [<Cmd name="find-food" />](/docs/find-food/) | 陪 Yee 出門找吃的、煮一桌、餵牠 | ✅ |
+| <Cmd name="1a2b" /> | 1A2B 猜數字小遊戲 | ✅ |
+| [<Cmd name="lol" />](/docs/commands/lol/) | 英雄聯盟戰績查詢 | |
+| <Cmd name="minecraft" /> | 查詢 Minecraft 玩家／伺服器 | ✅ |
+
+## 實用工具
+
+詳細說明在 [實用小工具](/docs/commands/utility/)。
+
+| 指令 | 說明 | 到處可用 |
+| ---- | ---- | -------- |
+| <Cmd name="status" /> | 機器人狀態 | ✅ |
+| <Cmd name="guild" /> | 伺服器資訊 | |
+| <Cmd name="profile" /> | 個人資訊卡片 | ✅ |
+| <Cmd name="avatar" /> | 取得使用者頭貼 | ✅ |
+| <Cmd name="banner" /> | 取得使用者旗幟 | ✅ |
+| <Cmd name="quote" /> | 把訊息做成名言圖片 | |
+| <Cmd name="pick" /> | 幫你選一個答案 | ✅ |
+| <Cmd name="random" /> | 隨機抽數字或語音頻道成員 | ✅ |
+| <Cmd name="bullshit" /> | 道歉文、情書唬爛產生器 | ✅ |
+| <Cmd name="feedback" /> | 回報問題或提供建議 | ✅ |

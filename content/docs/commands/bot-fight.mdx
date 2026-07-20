@@ -1,0 +1,45 @@
+---
+title: 機器人防禦
+description: 自動對付進伺服器亂發訊息的廣告機器人：防禦模式、陷阱頻道、詐騙圖片過濾。
+---
+
+被廣告機器人和詐騙訊息騷擾？<Cmd name="bot-fight" /> 提供三層防禦。需要 **封鎖成員**、**管理訊息** 權限。
+
+## 防禦模式
+
+<SlashCommand
+  name="bot-fight enable"
+  options={[{ name: "enabled", value: "True", required: true }]}
+  description="開啟機器人防禦模式"
+/>
+
+## 陷阱頻道
+
+設一個正常成員不會發言的頻道當陷阱，廣告機器人通常會對每個頻道亂槍打鳥：
+
+<SlashCommand
+  name="bot-fight trap-channel"
+  options={[{ name: "channel", value: "#不要在這裡發言", required: true }]}
+  description="在陷阱頻道發言的非管理員會被立即封鎖"
+/>
+
+在陷阱頻道發言的非管理員會被 **立即封鎖**，並清除他 24 小時內的所有訊息。
+
+<Warning>
+  記得把陷阱頻道權限設成一般成員看得到但不會想發言的樣子（例如頻道名稱直接寫明），
+  設定時如果頻道是公開的，機器龍也會提醒你。誤觸的成員需要管理員手動解除封鎖。
+</Warning>
+
+不會設頻道權限？參考 [頻道權限的設定教學](/docs/basics/#頻道權限怎麼設)。
+
+不需要時用 <Cmd name="bot-fight clear-trap-channel" /> 移除。
+
+## 詐騙圖片過濾
+
+<SlashCommand
+  name="bot-fight scam-filter"
+  options={[{ name: "enabled", value: "True", required: true }]}
+  description="自動偵測並處理詐騙圖片訊息"
+/>
+
+需要額外的 **禁言成員** 權限。

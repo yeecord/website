@@ -1,0 +1,39 @@
+---
+title: 鎖定語音頻道
+description: 幫語音頻道上密碼，輸入正確密碼的成員才能進入。
+---
+
+<Cmd name="lock-channel" /> 幫語音頻道上密碼，適合開小團體討論又不想另外設定權限的時候。需要 **管理頻道** 權限才能設定；加入則是任何成員都可以。
+
+## 上鎖
+
+<SlashCommand
+  name="lock-channel setup"
+  options={[
+    { name: "channel", value: "#幹部頻道", required: true },
+    { name: "password", value: "••••••", required: true },
+  ]}
+  description="幫語音頻道設定密碼"
+/>
+
+上鎖後成員會看不進去這個頻道，要用 `join` 輸入密碼。
+
+## 加入
+
+<SlashCommand
+  name="lock-channel join"
+  options={[
+    { name: "channel", value: "#幹部頻道", required: true },
+    { name: "password", value: "••••••", required: true },
+  ]}
+  description="輸入密碼獲得進入權限"
+/>
+
+密碼正確就會獲得該頻道的進入權限。
+
+## 管理
+
+| 指令 | 說明 |
+| ---- | ---- |
+| <Cmd name="lock-channel change" /> | 更換密碼 |
+| <Cmd name="lock-channel remove" /> | 解除鎖定 |

@@ -1,0 +1,48 @@
+---
+title: 抽奖
+description: 在服务器举办抽奖活动，可以限制参加资格、设置自动开奖时间。
+---
+
+<Cmd name="giveaway" /> 让你在服务器举办抽奖，成员点一个按钮就能参加，时间到自动开奖。需要 **管理服务器** 权限。
+
+## 创建抽奖
+
+<SlashCommand
+  name="giveaway create"
+  options={[
+    { name: "amount_of_winners", value: "3", required: true },
+    { name: "title", value: "Nitro 抽奖", required: true },
+    { name: "end_in", value: "7d" },
+  ]}
+  description="创建一场 7 天后开奖、抽出 3 位获奖者的抽奖"
+/>
+
+| 参数 | 必填 | 说明 |
+| ---- | ---- | ---- |
+| `amount_of_winners` | ✅ | 获奖人数 |
+| `title` | ✅ | 标题，最多 100 字 |
+| `mention` | | 发布时提及的对象 |
+| `description` | | 描述，最多 1000 字 |
+| `end_in` | | 多久后自动开奖，例如 `7d`，留空表示手动开奖 |
+| `minimum_join_time` | | 加入服务器多久后才能参加，防小号 |
+| `allowed_role` | | 限定某个身份组才能参加 |
+| `image` | | 大图 |
+| `thumbnail` | | 缩略图 |
+
+<DiscordChat>
+  <DiscordMessage>
+    <DiscordEmbed title="🎉 Nitro 抽奖" color="#eb459e">
+      <p>7 天后抽出 3 位获奖者</p>
+    </DiscordEmbed>
+    <p>
+      <DiscordButton variant="primary">点我参加</DiscordButton>{" "}
+      <DiscordButton variant="danger">终止抽奖</DiscordButton>
+    </p>
+  </DiscordMessage>
+</DiscordChat>
+
+成员加入时间不够久、或没有指定身份组时，点参加会被拦下并告知原因。
+
+## 重新发送
+
+抽奖消息被刷屏时，用 <Cmd name="giveaway resend" /> 把它重新发到最下面，`giveaway` 参数有自动补全。

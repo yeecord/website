@@ -1,0 +1,84 @@
+---
+title: 投票
+description: 匿名投票、锁票、开票前保密、身份组权重，投票结果实时画成图片，还能导出 CSV 和 Excel。
+---
+
+<Cmd name="poll" /> 是机器龙最强的功能之一。投票结果会实时画成一张图片，每次有人投票都会更新，还支持匿名、锁票、开票前保密这些高级选项。
+
+把机器龙 [安装到账号](/cn/docs/#两种安装方式) 之后，投票在私信、群组私信、任何服务器都能发起。
+
+## 发起投票
+
+<SlashCommand name="poll create" description="发起投票，会弹出表单让你填内容" />
+
+发送命令后会弹出表单：
+
+| 字段 | 说明 |
+| ---- | ---- |
+| 标题 | 最多 100 字 |
+| 选项 | 一行一个，2 到 18 个选项 |
+| 描述 | 选填，最多 1000 字 |
+| 结束时间 | 选填，例如 `30m`、`2h`、`3d`，留空表示手动结束 |
+
+表单里还有一个高级选项菜单，可以多选：
+
+| 选项 | 效果 |
+| ---- | ---- |
+| 匿名投票 | 结果只显示票数，看不到谁投了什么 |
+| 投票后不能改票 | 投下去就不能反悔 |
+| 开票前保密 | 结束前所有人（包括你）都看不到票数 |
+
+<DiscordChat>
+  <DiscordMessage>
+    <DiscordEmbed title="🗳️ 晚饭吃什么？" color="#5865f2">
+      <p>投票结果会画成图片显示在这里，每次投票实时更新。</p>
+    </DiscordEmbed>
+    <p>
+      <DiscordButton variant="primary">投票</DiscordButton>{" "}
+      <DiscordButton>收回我的票</DiscordButton>{" "}
+      <DiscordButton variant="danger">结束投票</DiscordButton>
+    </p>
+  </DiscordMessage>
+</DiscordChat>
+
+## 管理投票
+
+每个子命令的 `poll` 参数都有自动补全，输入时直接选你的投票就好。
+
+| 命令 | 说明 |
+| ---- | ---- |
+| <Cmd name="poll edit" /> | 修改标题、描述、结束时间、图片，或补开匿名等设置 |
+| <Cmd name="poll end" /> | 结束投票 |
+| <Cmd name="poll resend" /> | 重新发送投票消息（原本的消息被刷屏时很好用） |
+| <Cmd name="poll remove-vote" /> | 移除某位成员的票 |
+| <Cmd name="poll role-weight" /> | 设置身份组的票数权重 |
+| <Cmd name="poll export" /> | 导出结果 |
+
+## 身份组权重
+
+<SlashCommand
+  name="poll role-weight"
+  options={[
+    { name: "poll", value: "poll", required: true },
+    { name: "role", value: "@干部", required: true },
+    { name: "weight", value: "2", required: true },
+  ]}
+  description="让某个身份组的成员一票顶多票"
+/>
+
+权重范围 0 到 100。设 0 可以让某个身份组的票不算数，设 2 就是一票顶两票。
+
+## 导出结果
+
+<Cmd name="poll export" /> 会同时给你 CSV 和 Excel 两种文件，字段包括选项、投票者、投票者 ID、权重、投票时间。
+
+投票途中或结束后都能导出。
+
+<Info>
+  CSV 直接用 Excel 打开会让投票者 ID 溢出变成科学计数法，建议直接用附上的
+  `.xlsx` 文件。
+</Info>
+
+## 旧版投票
+
+用旧版命令发起的投票按钮仍然可以正常工作，不用担心升级后坏掉。
