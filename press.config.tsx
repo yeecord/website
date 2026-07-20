@@ -148,17 +148,18 @@ export default config
       docs: createDocsLayoutPage({
         async render(page) {
           const source = await this.getLoader();
-          let tree = source.getPageTree(page.locale ?? i18n.defaultLanguage);
-
-          for (const child of tree.children) {
-            if (child.type === "folder" && child.$id === "docs") {
-              tree = { ...tree, children: child.children };
-            }
-          }
+          const tree = source.getPageTree(page.locale ?? i18n.defaultLanguage);
+          const docsFolder = tree.children.find(
+            (child) =>
+              child.type === "folder" && child.$id?.split(":").at(-1) === "docs",
+          );
 
           return {
             layoutProps: {
-              tree,
+              tree:
+                docsFolder?.type === "folder"
+                  ? { ...tree, children: docsFolder.children }
+                  : tree,
               sidebar: { defaultOpenLevel: 1 },
             },
           };
