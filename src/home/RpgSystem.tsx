@@ -1,6 +1,6 @@
 "use client";
 
-import GreenGradient from "@static/home/green-gradient.svg";
+const GreenGradient = "/home/green-gradient.svg";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import Gradient from "./components/Gradient";

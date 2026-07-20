@@ -1,8 +1,11 @@
-/** biome-ignore-all lint/suspicious/noUnknownAtRules: Tailwind custom at functions are used */
-
 @import "tailwindcss";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
+@import "fumapress/css/preset.css";
+
+:root {
+  --default-font-family: "Noto Sans TC", sans-serif;
+}
 
 @theme {
   --color-background: var(--color-fd-background);

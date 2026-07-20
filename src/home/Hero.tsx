@@ -1,8 +1,7 @@
-import HeroGradient from "@static/hero.svg";
+const HeroGradient = "/hero.svg";
 import clsx from "clsx";
 import Link from "fumadocs-core/link";
 import { ExternalLinkIcon } from "lucide-react";
-import Image from "next/image";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import Gradient from "./components/Gradient";
@@ -143,7 +142,7 @@ function Server({
 }) {
   return (
     <div className="mx-4 my-1 flex flex-shrink-0 flex-row items-center gap-3">
-      <Image
+      <img
         alt={name}
         src={img}
         width="45"

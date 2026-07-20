@@ -1,11 +1,10 @@
 "use client";
 
-import ChartSvg from "@static/home/chart.svg";
+const ChartSvg = "/home/chart.svg";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { BarChartIcon, MusicIcon, SettingsIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import Link from "fumadocs-core/link";
 import { Progress } from "../components/Progress";
 
 const card = clsx(
@@ -80,7 +79,7 @@ function Chart() {
           <p className="text-muted-foreground">數據分析</p>
         </div>
       </div>
-      <Image src={ChartSvg} alt="chart" className="mt-auto rounded-3xl" />
+      <img src={ChartSvg} alt="chart" className="mt-auto rounded-3xl" />
     </motion.div>
   );
 }

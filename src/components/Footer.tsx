@@ -1,6 +1,5 @@
+import Link from "fumadocs-core/link";
 import { ExternalLinkIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 
 export type FooterCategory = {
   title: string;
@@ -34,7 +33,7 @@ function Info() {
   return (
     <div className="hidden flex-col gap-2 sm:flex">
       <div className="flex flex-row items-center gap-2">
-        <Image
+        <img
           alt="logo"
           src="/img/logo_128x128.png"
           width={40}

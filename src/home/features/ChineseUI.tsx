@@ -1,6 +1,6 @@
 "use client";
 
-import GardientSvg from "@static/home/purple-gradient.svg";
+const GardientSvg = "/home/purple-gradient.svg";
 import clsx from "clsx";
 import { motion, type Variants } from "framer-motion";
 import {

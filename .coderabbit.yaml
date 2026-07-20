@@ -1,0 +1,4 @@
+language: "zh-TW"
+reviews:
+  poem: false
+  sequence_diagrams: false

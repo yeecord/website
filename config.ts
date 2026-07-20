@@ -1,11 +1,5 @@
 import type { FooterCategory } from "@/components/Footer";
 
-export const urlBase = new URL(
-  process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000",
-);
-
 export const domain = "https://yeecord.com";
 
 export const footer: FooterCategory[] = [
