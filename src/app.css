@@ -32,6 +32,25 @@
   --color-destructive-foreground: oklch(0.985 0 0);
 }
 
+/* Discord 深色版官方色，給文件的聊天視覺模擬元件用 */
+@theme {
+  --color-discord-bg: #313338;
+  --color-discord-embed: #2b2d31;
+  --color-discord-input: #383a40;
+  --color-discord-pill: #3c4270;
+  --color-discord-pill-foreground: #c9cdfb;
+  --color-discord-text: #dbdee1;
+  --color-discord-icon: #b5bac1;
+  --color-discord-placeholder: #6d6f78;
+  --color-discord-muted: #80848e;
+  --color-discord-blurple: #5865f2;
+  --color-discord-secondary: #4e5058;
+  --color-discord-success: #248046;
+  --color-discord-danger: #da373c;
+  --color-discord-gold: #f0b232;
+  --color-discord-fuchsia: #eb459e;
+}
+
 :root {
   --default-font-family: "Noto Sans TC", sans-serif;
 
