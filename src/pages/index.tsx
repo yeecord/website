@@ -40,5 +40,6 @@ export default function HomePage() {
 export function getConfig() {
   return {
     render: "static",
+    autoI18n: false,
   } as const;
 }
