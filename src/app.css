@@ -1,10 +1,35 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumapress/css/preset.css";
 
 @theme {
   --color-discord-blurple: #5865f2;
+}
+
+/* shadcn (base-nova) 的 token 全部對映到 fumadocs 的 fd 變數，
+   單一色彩來源，dark mode 跟著 .dark 的 fd 變數自動切換 */
+@theme inline {
+  --color-background: var(--color-fd-background);
+  --color-foreground: var(--color-fd-foreground);
+  --color-card: var(--color-fd-card);
+  --color-card-foreground: var(--color-fd-card-foreground);
+  --color-popover: var(--color-fd-popover);
+  --color-popover-foreground: var(--color-fd-popover-foreground);
+  --color-primary: var(--color-fd-primary);
+  --color-primary-foreground: var(--color-fd-primary-foreground);
+  --color-secondary: var(--color-fd-secondary);
+  --color-secondary-foreground: var(--color-fd-secondary-foreground);
+  --color-muted: var(--color-fd-muted);
+  --color-muted-foreground: var(--color-fd-muted-foreground);
+  --color-accent: var(--color-fd-accent);
+  --color-accent-foreground: var(--color-fd-accent-foreground);
+  --color-border: var(--color-fd-border);
+  --color-input: var(--color-fd-border);
+  --color-ring: var(--color-fd-ring);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive-foreground: oklch(0.985 0 0);
 }
 
 :root {
