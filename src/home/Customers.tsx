@@ -1,10 +1,9 @@
 "use client";
 
-import PinkWave from "@static/home/pink-wave.svg";
+const PinkWave = "/home/pink-wave.svg";
 import clsx from "clsx";
 import { type MotionValue, motion, useTransform } from "framer-motion";
 import Link from "fumadocs-core/link";
-import Image from "next/image";
 import formatter from "@/utils/formatter";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 
@@ -96,7 +95,7 @@ export function Customers() {
           />
         </motion.div>
       </motion.div>
-      <Image
+      <img
         className={clsx(
           "custom -z-[1] -mt-[10rem] md:-mt-[1rem] relative h-[300px] w-full object-cover",
           "[mask-image:linear-gradient(to_right,_transparent,white_10%,white_70%,_transparent)]",
@@ -135,7 +134,7 @@ function Comment({
       )}
     >
       <div className="flex flex-row gap-2.5">
-        <Image
+        <img
           alt={author}
           src={icon}
           width="50"

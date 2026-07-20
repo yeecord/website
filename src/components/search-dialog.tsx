@@ -3,6 +3,7 @@
 import { create } from "@orama/orama";
 import { createTokenizer } from "@orama/tokenizers/mandarin";
 import { useDocsSearch } from "fumadocs-core/search/client";
+import { oramaStaticClient } from "fumadocs-core/search/client/orama-static";
 import {
   SearchDialog,
   SearchDialogClose,
@@ -14,21 +15,22 @@ import {
   SearchDialogOverlay,
   type SharedProps,
 } from "fumadocs-ui/components/dialog/search";
-import { useCallback } from "react";
+
+function initOrama() {
+  return create({
+    schema: { _: "string" },
+    components: {
+      tokenizer: createTokenizer(),
+    },
+  });
+}
 
 export default function DefaultSearchDialog(props: SharedProps) {
   const { search, setSearch, query } = useDocsSearch({
-    type: "static",
-    initOrama: useCallback(
-      () =>
-        create({
-          schema: { _: "string" },
-          components: {
-            tokenizer: createTokenizer(),
-          },
-        }),
-      [],
-    ),
+    client: oramaStaticClient({
+      initOrama,
+      from: "/api/search",
+    }),
   });
 
   return (

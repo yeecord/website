@@ -1,11 +1,5 @@
 import type { FooterCategory } from "@/components/Footer";
 
-export const urlBase = new URL(
-  process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000",
-);
-
 export const domain = "https://yeecord.com";
 
 export const footer: FooterCategory[] = [
@@ -81,7 +75,7 @@ export const footer: FooterCategory[] = [
 export const blogAuthors: Record<string, AuthorData> = {
   kane: {
     name: "Kane Wang",
-    title: "YEE式機器龍作者",
+    title: "YEE 式機器龍作者",
     url: "https://bento.me/kanewang",
     image_url: "/blog/kane50613.jpg",
   },

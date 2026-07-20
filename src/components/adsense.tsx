@@ -1,35 +1,39 @@
 "use client";
-import Script from "next/script";
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
 
-const AdsContext = createContext({
-  failed: false,
-});
+import { useEffect, useState } from "react";
 
-export function useAdsContext() {
-  return useContext(AdsContext);
+const SCRIPT_SRC =
+  "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308";
+
+let scriptFailed = false;
+const listeners = new Set<(failed: boolean) => void>();
+
+function loadScript() {
+  if (document.querySelector(`script[src="${SCRIPT_SRC}"]`)) return;
+
+  const script = document.createElement("script");
+  script.src = SCRIPT_SRC;
+  script.async = true;
+  script.crossOrigin = "anonymous";
+  script.onerror = () => {
+    scriptFailed = true;
+    for (const listener of listeners) listener(true);
+  };
+  document.head.appendChild(script);
 }
 
-export function AdsProvider({ children }: { children: ReactNode }) {
+export function useAdsScript() {
   const [failed, setFailed] = useState(false);
-  const value = useMemo(() => ({ failed }), [failed]);
 
-  return (
-    <AdsContext.Provider value={value}>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1801171681307308"
-        crossOrigin="anonymous"
-        strategy="lazyOnload"
-        onError={() => setFailed(true)}
-      />
-      {children}
-    </AdsContext.Provider>
-  );
+  useEffect(() => {
+    setFailed(scriptFailed);
+    listeners.add(setFailed);
+    loadScript();
+
+    return () => {
+      listeners.delete(setFailed);
+    };
+  }, []);
+
+  return { failed };
 }

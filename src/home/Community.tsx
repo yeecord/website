@@ -1,8 +1,7 @@
-import CyanPinkGradient from "@static/home/cyan-pink-gradient.svg";
-import GradientRing from "@static/home/gradient-ring.svg";
+const CyanPinkGradient = "/home/cyan-pink-gradient.svg";
+const GradientRing = "/home/gradient-ring.svg";
 import clsx from "clsx";
 import Link from "fumadocs-core/link";
-import Image from "next/image";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import styles from "./community.module.css";
@@ -34,7 +33,7 @@ export function Community() {
 function JoinButton() {
   return (
     <div className="relative z-[2] p-[6rem]">
-      <Image
+      <img
         alt="gradient ring"
         src={GradientRing}
         className={clsx(

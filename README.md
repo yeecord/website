@@ -10,13 +10,13 @@
 
 ## ⚠️ 請注意
 
-### pnpm
+### Bun
 
-若要在本地進行測試，請確保使用 `pnpm` 套件管理器（[安裝方式](https://pnpm.io/zh-TW/installation)）而非 `npm` 會無法安裝套件️！！
+若要在本地進行測試，請使用 [Bun](https://bun.com/)（`bun install` 安裝套件）。
 
 ### 執行
 
-使用 `pnpm dev` 開始執行，並會在 `http://localhost:3000` 可以進行預覽
+使用 `bun dev` 開始執行，並會在 `http://localhost:3000` 可以進行預覽
 
 ## 📝 授權
 

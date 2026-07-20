@@ -1,8 +1,7 @@
-import HeroGradient from "@static/hero.svg";
+const HeroGradient = "/hero.svg";
 import clsx from "clsx";
 import Link from "fumadocs-core/link";
 import { ExternalLinkIcon } from "lucide-react";
-import Image from "next/image";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import Gradient from "./components/Gradient";
@@ -42,7 +41,7 @@ export function Hero() {
           "md:max-w-[650px] lg:text-2xl",
         )}
       >
-        YEE式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
+        YEE 式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
       </p>
       <Buttons />
       <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
@@ -143,7 +142,7 @@ function Server({
 }) {
   return (
     <div className="mx-4 my-1 flex flex-shrink-0 flex-row items-center gap-3">
-      <Image
+      <img
         alt={name}
         src={img}
         width="45"

@@ -1,14 +1,14 @@
 "use client";
 import clsx from "clsx";
 import { useEffect, useRef } from "react";
-import { useAdsContext } from "@/components/adsense";
+import { useAdsScript } from "@/components/adsense";
 import { Warning } from "@/components/mdx/Admonition";
 
 /**
  * Google Ads :)
  */
 export function Adsense() {
-  const { failed } = useAdsContext();
+  const { failed } = useAdsScript();
   const addedRef = useRef(false);
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 "use client";
 
-import GreenGradient from "@static/home/green-gradient.svg";
-import FightSong from "@static/home/songs/eve-fight-song.jpg";
-import KickBack from "@static/home/songs/kick-back.jpg";
+const GreenGradient = "/home/green-gradient.svg";
+const FightSong = "/home/songs/eve-fight-song.jpg";
+const KickBack = "/home/songs/kick-back.jpg";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import Link from "fumadocs-core/link";
@@ -13,7 +13,6 @@ import {
   MusicIcon,
   StopCircleIcon,
 } from "lucide-react";
-import Image, { type ImageProps } from "next/image";
 import Gradient from "../components/Gradient";
 import { Progress } from "../components/Progress";
 
@@ -100,13 +99,13 @@ function Song({
   duration,
   children,
 }: {
-  img: ImageProps["src"];
+  img: string;
   duration: string;
   children: string;
 }) {
   return (
     <div className="flex flex-row gap-3 rounded-xl border bg-card p-4 text-card-foreground">
-      <Image
+      <img
         className="h-14 w-14 rounded-lg bg-blue-400 object-cover"
         alt={children}
         src={img}

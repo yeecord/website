@@ -1,11 +1,11 @@
 import { blogAuthors } from "@config";
-import type { InferPageType } from "fumadocs-core/source";
-import Image from "next/image";
-import Link from "next/link";
-import type { blog } from "@/app/source";
+import Link from "fumadocs-core/link";
+import type { PressContext } from "../../../press.config";
 import { cn } from "@/utils/cn";
 
-export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
+export type BlogPost = Extract<PressContext["page"], { type: "blog" }>;
+
+export function BlogItem({ page }: { page: BlogPost }) {
   return (
     <Link
       href={page.url}
@@ -13,16 +13,14 @@ export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
     >
       <div className="relative aspect-video h-auto w-full">
         {page.data.image != null ? (
-          <Image
+          <img
             alt="image"
             src={page.data.image}
-            className="h-full object-cover"
-            fill
-            sizes="(max-width: 760px) 90vw, 400px"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
           <div className="flex h-full flex-1 flex-col bg-green-400">
-            <Image
+            <img
               alt="logo"
               src="/img/logo-transparent.png"
               className="m-auto h-20 w-20 rounded-full"
@@ -39,12 +37,13 @@ export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
         </p>
 
         <div className="mt-auto flex flex-row items-end pt-2">
-          {page.data.authors.flatMap((author, i) => {
-            const info = blogAuthors[author];
-            if (!info?.image_url) return [];
-
-            return (
-              <Image
+          {page.data.authors
+            .flatMap((author) => {
+              const info = blogAuthors[author];
+              return info?.image_url ? [info] : [];
+            })
+            .map((info, i) => (
+              <img
                 key={info.name}
                 src={info.image_url}
                 alt={info.name}
@@ -55,8 +54,7 @@ export function BlogItem({ page }: { page: InferPageType<typeof blog> }) {
                   i !== 0 && "-ml-4",
                 )}
               />
-            );
-          })}
+            ))}
           <p className="ml-auto text-muted-foreground text-xs">
             {page.data.date.toLocaleDateString()}
           </p>
