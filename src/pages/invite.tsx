@@ -57,5 +57,6 @@ export default function InvitePage() {
 export function getConfig() {
   return {
     render: "static",
+    autoI18n: false,
   } as const;
 }
