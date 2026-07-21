@@ -21,8 +21,8 @@ export default function HomePage() {
       <meta property="og:description" content={DESCRIPTION} />
       <meta property="og:image" content={`${domain}/opengraph-image.png`} />
       <main className="overflow-x-clip">
-        <div className="mx-auto flex max-w-[1400px] flex-col px-3 md:px-6">
-          <Hero />
+        <Hero />
+        <div className="mx-auto flex max-w-[1100px] flex-col px-3 md:px-6">
           <DemoServer />
           <Trust />
         </div>

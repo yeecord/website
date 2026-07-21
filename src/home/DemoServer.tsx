@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
 import { HashIcon, Volume2Icon } from "lucide-react";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import {
-  DiscordButton,
   DiscordEmbed,
   DiscordMessage,
   SlashCommand,
@@ -12,21 +12,21 @@ import {
 
 export function DemoServer() {
   return (
-    <div className="z-[2] mt-32 flex flex-col gap-8">
+    <div className="z-[2] mt-24 flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
           進來參觀一下
         </h2>
         <p className="text-lg text-muted-foreground">
-          下面這些都是真的指令，裝好就能照著玩。
+          下面這些都是真的指令，按鈕也真的能按，玩玩看。
         </p>
       </div>
       <motion.div
-        whileInView={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+        initial={{ opacity: 0, y: 32, rotate: -0.8 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.4 }}
-        className="grid overflow-hidden rounded-xl border bg-discord-bg md:grid-cols-[15rem_1fr]"
+        transition={{ duration: 0.5 }}
+        className="grid overflow-hidden rounded-xl border bg-discord-bg shadow-xl md:grid-cols-[15rem_1fr]"
       >
         <Sidebar />
         <div className="flex min-w-0 flex-col">
@@ -37,67 +37,52 @@ export function DemoServer() {
               機器龍的日常
             </span>
           </div>
-          <div className="p-4">
-            <div className="flex flex-col gap-4 text-discord-text text-sm">
-              <p className="text-discord-muted text-xs">
-                — 有新成員加入，機器龍自動接待 —
-              </p>
-              <DiscordMessage>
-                <DiscordEmbed
-                  title="👋 歡迎 阿龍的粉絲！"
-                  color="var(--color-primary)"
-                >
-                  <p>歡迎來到伺服器，先去領個身分組，讓大家認識你。</p>
-                </DiscordEmbed>
-                <p>
-                  <DiscordButton variant="primary">🎮 遊戲仔</DiscordButton>{" "}
-                  <DiscordButton>🌙 夜貓子</DiscordButton>{" "}
-                  <DiscordButton>🎨 創作者</DiscordButton>
-                </p>
-              </DiscordMessage>
-              <p className="text-discord-muted text-xs">
-                — 管理員辦抽獎，一條指令的事 —
-              </p>
-              <SlashCommand
-                name="lottery"
-                description="舉辦抽獎"
-                options={[
-                  { name: "獎品", value: "Nitro 一個月" },
-                  { name: "得獎人數", value: "3" },
-                ]}
-              />
-              <DiscordMessage>
-                <DiscordEmbed
-                  title="🎉 抽獎開始"
-                  color="var(--color-discord-fuchsia)"
-                >
-                  <p>獎品：Nitro 一個月，按下面的按鈕參加！</p>
-                </DiscordEmbed>
-                <p>
-                  <DiscordButton variant="primary">參加抽獎</DiscordButton>{" "}
-                  <DiscordButton>目前 42 人</DiscordButton>
-                </p>
-              </DiscordMessage>
-              <p className="text-discord-muted text-xs">
-                — 掛機的人在餵恐龍 —
-              </p>
-              <DiscordMessage author="阿龍的粉絲" bot={false} color="#e8a33d">
-                <p>/find-food</p>
-              </DiscordMessage>
-              <DiscordMessage>
-                <DiscordEmbed
-                  title="🍳 Yee 的小店"
-                  color="var(--color-discord-gold)"
-                >
-                  <p>Yee 剛從河邊回來，袋子裝了七成滿，看起來心情不錯。</p>
-                </DiscordEmbed>
-                <p>
-                  <DiscordButton variant="primary">帶牠去找吃的</DiscordButton>{" "}
-                  <DiscordButton variant="success">開煮</DiscordButton>{" "}
-                  <DiscordButton>餵牠</DiscordButton>
-                </p>
-              </DiscordMessage>
-            </div>
+          <div className="flex flex-col gap-4 p-4 text-discord-text text-sm">
+            <p className="text-discord-muted text-xs">
+              — 有新成員加入，機器龍自動接待 —
+            </p>
+            <DiscordMessage>
+              <DiscordEmbed
+                title="👋 歡迎 阿龍的粉絲！"
+                color="var(--color-primary)"
+              >
+                <p>歡迎來到伺服器，先挑個身分組，讓大家認識你。</p>
+              </DiscordEmbed>
+              <RolePicker />
+            </DiscordMessage>
+            <p className="text-discord-muted text-xs">
+              — 管理員辦抽獎，一條指令的事 —
+            </p>
+            <SlashCommand
+              name="lottery"
+              description="舉辦抽獎"
+              options={[
+                { name: "獎品", value: "Nitro 一個月" },
+                { name: "得獎人數", value: "3" },
+              ]}
+            />
+            <DiscordMessage>
+              <DiscordEmbed
+                title="🎉 抽獎開始"
+                color="var(--color-discord-fuchsia)"
+              >
+                <p>獎品：Nitro 一個月，按下面的按鈕參加！</p>
+              </DiscordEmbed>
+              <Lottery />
+            </DiscordMessage>
+            <p className="text-discord-muted text-xs">— 掛機的人在餵恐龍 —</p>
+            <DiscordMessage author="阿龍的粉絲" bot={false} color="#e8a33d">
+              <p>/find-food</p>
+            </DiscordMessage>
+            <DiscordMessage>
+              <DiscordEmbed
+                title="🍳 Yee 的小店"
+                color="var(--color-discord-gold)"
+              >
+                <p>Yee 剛從河邊回來，袋子裝了七成滿，看起來心情不錯。</p>
+              </DiscordEmbed>
+              <FindFoodButtons />
+            </DiscordMessage>
           </div>
         </div>
       </motion.div>
@@ -113,6 +98,150 @@ export function DemoServer() {
         </a>
         點一點就改好，不用背任何設定指令。
       </p>
+    </div>
+  );
+}
+
+function ChatButton({
+  variant = "secondary",
+  selected,
+  onClick,
+  children,
+}: {
+  variant?: "primary" | "secondary" | "success";
+  selected?: boolean;
+  onClick?: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={clsx(
+        "inline-flex cursor-pointer items-center gap-1 rounded px-3 py-1.5 font-medium text-sm text-white transition-all active:translate-y-px",
+        variant === "primary" && "bg-discord-blurple hover:brightness-110",
+        variant === "secondary" && "bg-discord-secondary hover:brightness-110",
+        variant === "success" && "bg-discord-success hover:brightness-110",
+        selected && "ring-2 ring-white/70",
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+function RolePicker() {
+  const [picked, setPicked] = useState<string>();
+  const roles = ["🎮 遊戲仔", "🌙 夜貓子", "🎨 創作者"];
+
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {roles.map((role) => (
+        <ChatButton
+          key={role}
+          variant={picked === role ? "primary" : "secondary"}
+          selected={picked === role}
+          onClick={() => setPicked(role)}
+        >
+          {role}
+        </ChatButton>
+      ))}
+      <AnimatePresence>
+        {picked && (
+          <motion.span
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0 }}
+            className="self-center text-discord-muted text-xs"
+          >
+            已領取 {picked}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function Lottery() {
+  const [joined, setJoined] = useState(false);
+  const [count, setCount] = useState(42);
+  const [burst, setBurst] = useState(0);
+
+  function join() {
+    if (joined) return;
+
+    setJoined(true);
+    setCount((c) => c + 1);
+    setBurst(Date.now());
+  }
+
+  return (
+    <div className="relative flex flex-wrap gap-1.5">
+      <ChatButton variant="primary" onClick={join}>
+        {joined ? "已參加 ✅" : "參加抽獎"}
+      </ChatButton>
+      <ChatButton>
+        目前{" "}
+        <motion.span
+          key={count}
+          initial={{ scale: 1.5 }}
+          animate={{ scale: 1 }}
+          className="inline-block font-semibold"
+        >
+          {count}
+        </motion.span>{" "}
+        人
+      </ChatButton>
+      <AnimatePresence>
+        {burst > 0 && (
+          <motion.span
+            key={burst}
+            initial={{ opacity: 1, y: 0, scale: 0.6 }}
+            animate={{ opacity: 0, y: -34, scale: 1.4 }}
+            transition={{ duration: 0.8 }}
+            className="pointer-events-none absolute left-6 select-none"
+          >
+            🎉
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function FindFoodButtons() {
+  const [status, setStatus] = useState<string>();
+
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      <ChatButton
+        variant="primary"
+        onClick={() => setStatus("Yee 揹起袋子出門了，明天回來收成！")}
+      >
+        帶牠去找吃的
+      </ChatButton>
+      <ChatButton
+        variant="success"
+        onClick={() => setStatus("下鍋！煮出了「河鮮味噌鍋」，Yee 眼睛都亮了。")}
+      >
+        開煮
+      </ChatButton>
+      <ChatButton onClick={() => setStatus("Yee 吃得很開心，感情 +1 ❤️")}>
+        餵牠
+      </ChatButton>
+      <AnimatePresence mode="wait">
+        {status && (
+          <motion.p
+            key={status}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="w-full text-discord-muted text-xs"
+          >
+            {status}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

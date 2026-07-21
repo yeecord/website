@@ -124,6 +124,55 @@
   --tw-prose-body: var(--color-fd-muted-foreground);
 }
 
+:root {
+  --hill-back: color-mix(in oklab, var(--color-fd-primary) 14%, var(--color-fd-background));
+  --hill-mid: color-mix(in oklab, var(--color-fd-primary) 26%, var(--color-fd-background));
+  --hill-front: color-mix(in oklab, var(--color-fd-primary) 20%, var(--color-fd-background));
+}
+
+.dark {
+  --hill-back: color-mix(in oklab, var(--color-fd-primary) 10%, var(--color-fd-background));
+  --hill-mid: color-mix(in oklab, var(--color-fd-primary) 18%, var(--color-fd-background));
+  --hill-front: color-mix(in oklab, var(--color-fd-primary) 14%, var(--color-fd-background));
+}
+
+@theme inline {
+  --color-hill-back: var(--hill-back);
+  --color-hill-mid: var(--hill-mid);
+  --color-hill-front: var(--hill-front);
+}
+
+/* Duolingo 式玩具按鈕：實色硬陰影，按下時往下沉 */
+.btn-chunky,
+.btn-chunky-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: --spacing(2);
+  border-radius: var(--radius-2xl);
+  padding: --spacing(3) --spacing(6);
+  font-weight: var(--font-weight-bold);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-chunky {
+  background-color: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+  box-shadow: 0 4px 0 color-mix(in oklab, var(--color-fd-primary) 55%, black);
+}
+
+.btn-chunky-secondary {
+  background-color: var(--color-fd-secondary);
+  color: var(--color-fd-secondary-foreground);
+  box-shadow: 0 4px 0 color-mix(in oklab, var(--color-fd-secondary) 60%, black);
+}
+
+.btn-chunky:active,
+.btn-chunky-secondary:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 transparent;
+}
+
 
 #nd-home-layout li > a {
   @apply mx-0;

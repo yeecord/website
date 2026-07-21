@@ -1,45 +1,71 @@
 import clsx from "clsx";
 import Link from "fumadocs-core/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
+import { DinoMascot } from "./DinoMascot";
 
 export function Hero() {
   return (
-    <div className="relative z-[2] mt-16 flex w-full flex-col gap-16 px-4 md:mt-24">
-      <div className="flex items-center justify-between gap-8">
-        <div className="flex flex-col gap-7 text-center md:text-start">
-          <h1 className="font-bold text-5xl leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
-            一隻恐龍
-            <br />
-            搞定整個<span className="text-primary">伺服器</span>
-          </h1>
-          <p className="mx-auto max-w-[34rem] text-lg text-muted-foreground sm:text-xl md:mx-0">
-            YEE 式機器龍是全中文的 Discord
-            機器人：抽獎、身分組、動態語音、找吃的小遊戲通通都有，25
-            萬個伺服器都在用。
-          </p>
-          <div className="flex flex-col justify-center gap-3 sm:flex-row md:justify-start">
-            <Link
-              href="/invite/"
-              className={cn(buttonVariants({ color: "primary", size: "lg" }))}
-            >
-              免費安裝機器人
-            </Link>
-            <Link
-              href="/zh-tw/docs"
-              className={cn(buttonVariants({ color: "secondary", size: "lg" }))}
-            >
-              看使用教學
-            </Link>
-          </div>
+    <div className="relative z-[2] w-full">
+      <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-64 text-center md:pt-28">
+        <Sky />
+        <h1 className="font-bold text-5xl leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
+          一隻恐龍
+          <br />
+          搞定整個<span className="text-primary">伺服器</span>
+        </h1>
+        <p className="max-w-[34rem] text-lg text-muted-foreground sm:text-xl">
+          YEE 式機器龍是全中文的 Discord
+          機器人：抽獎、身分組、動態語音、找吃的小遊戲通通都有，25
+          萬個伺服器都在用。
+        </p>
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <Link href="/invite/" className="btn-chunky">
+            免費安裝機器人
+          </Link>
+          <Link href="/zh-tw/docs" className="btn-chunky-secondary">
+            看使用教學
+          </Link>
         </div>
-        <img
-          alt="YEE 式機器龍"
-          src="/img/logo.svg"
-          className="h-56 animate-[updown_5s_infinite] drop-shadow-xl max-md:hidden lg:h-72"
-        />
+        <Hills />
+        <DinoMascot className="absolute bottom-10 right-[8%] sm:right-[12%]" />
       </div>
-      <ServerMarquee />
+      <div className="bg-hill-front pt-2 pb-10">
+        <ServerMarquee />
+      </div>
+    </div>
+  );
+}
+
+function Sky() {
+  const firefly =
+    "absolute size-1.5 rounded-full bg-primary/60 animate-pulse motion-reduce:animate-none";
+
+  return (
+    <div className="-z-[1] absolute inset-0 overflow-hidden">
+      <span className={clsx(firefly, "top-[18%] left-[12%]")} />
+      <span
+        className={clsx(firefly, "top-[34%] left-[22%] [animation-delay:.6s]")}
+      />
+      <span
+        className={clsx(firefly, "top-[22%] right-[18%] [animation-delay:.3s]")}
+      />
+      <span
+        className={clsx(firefly, "top-[45%] right-[9%] [animation-delay:.9s]")}
+      />
+      <span
+        className={clsx(firefly, "top-[60%] left-[7%] [animation-delay:1.2s]")}
+      />
+    </div>
+  );
+}
+
+function Hills() {
+  return (
+    <div className="-z-[1] absolute inset-x-0 bottom-0 overflow-hidden">
+      <div className="-mb-14 sm:-mb-20 relative h-56">
+        <div className="-left-[20%] absolute bottom-0 h-52 w-[75%] rounded-[50%] bg-hill-back" />
+        <div className="-right-[25%] absolute bottom-[-2rem] h-56 w-[85%] rounded-[50%] bg-hill-mid" />
+        <div className="-inset-x-[10%] absolute bottom-[-5rem] h-44 rounded-[50%] bg-hill-front" />
+      </div>
     </div>
   );
 }
@@ -70,7 +96,7 @@ function Servers({ secondary }: { secondary?: boolean }) {
     <div
       className={clsx(
         "inline-flex flex-row justify-center",
-        "md:max-w-[64rem] md:flex-wrap",
+        "md:w-full md:flex-wrap",
         secondary && "md:hidden",
       )}
     >
