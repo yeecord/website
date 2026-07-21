@@ -1,4 +1,4 @@
-import { CirclePlus, Gift, SmilePlus } from "lucide-react";
+import { Gift, SmilePlus } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
@@ -18,26 +18,31 @@ export function SlashCommand({
   description?: string;
 }) {
   return (
-    <div className="not-prose my-4">
-      <div className="flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 text-sm text-discord-text">
-        <CirclePlus className="size-5 shrink-0 text-discord-icon" />
-        <span className="flex min-w-0 flex-wrap items-center gap-1 font-medium">
-          <span className="rounded bg-discord-pill px-1.5 py-0.5 text-discord-pill-foreground">
-            /{name}
-          </span>
+    <div className="not-prose my-4 overflow-hidden rounded-lg bg-discord-embed text-sm">
+      <div className="flex items-baseline gap-2.5 px-4 py-2">
+        <span className="font-semibold text-white">{name.split(" ")[0]}</span>
+        {description ? (
+          <span className="text-discord-muted">{description}</span>
+        ) : null}
+      </div>
+      <div className="flex items-center gap-2.5 bg-discord-input px-4 py-2.5 text-discord-text">
+        <img
+          src="/img/logo.svg"
+          alt=""
+          className="size-6 shrink-0 rounded-full bg-discord-avatar p-0.5"
+        />
+        <span className="flex min-w-0 flex-wrap items-center gap-1.5">
+          <span className="font-semibold text-white">/{name}</span>
           {options.map((option) => (
             <span
               key={option.name}
               className={cn(
-                "rounded px-1.5 py-0.5",
                 option.value
-                  ? "bg-discord-pill text-discord-pill-foreground"
+                  ? "rounded border border-discord-option-border/60 bg-discord-option px-2 py-0.5 text-discord-text"
                   : "text-discord-placeholder",
               )}
             >
-              {option.value
-                ? `${option.name}: ${option.value}`
-                : `${option.name}${option.required ? "" : "?"}`}
+              {option.value ?? `${option.name}${option.required ? "" : "?"}`}
             </span>
           ))}
         </span>
@@ -46,11 +51,6 @@ export function SlashCommand({
           <SmilePlus className="size-5" />
         </span>
       </div>
-      {description ? (
-        <p className="mt-2 px-1 text-sm text-fd-muted-foreground">
-          {description}
-        </p>
-      ) : null}
     </div>
   );
 }
