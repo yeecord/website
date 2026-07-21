@@ -28,6 +28,8 @@
 /docs/commands/dvc /zh-tw/docs/commands/auto-channels 301
 /docs/commands/join-message /zh-tw/docs/commands/member-notification 301
 /docs/commands/chat /zh-tw/docs 301
+/docs/commands/music /zh-tw/docs 301
+/docs/music /zh-tw/docs 301
 /docs/commands/list /zh-tw/docs/commands 301
 /docs/commands/reference/* /zh-tw/docs/commands 301
 /docs/rpg/* /zh-tw/docs/find-food 301
