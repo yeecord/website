@@ -43,7 +43,7 @@ export function DinoMascot({ className }: { className?: string }) {
           <img
             alt="YEE 式機器龍"
             src="/img/logo.svg"
-            className="h-40 drop-shadow-lg sm:h-52 lg:h-64"
+            className="h-40 animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg motion-reduce:animate-none sm:h-52 lg:h-64"
             draggable={false}
           />
         </motion.button>

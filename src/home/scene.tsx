@@ -23,7 +23,7 @@ export function Cloud({
       height={width * 0.6}
       draggable={false}
       className={clsx(
-        "absolute select-none object-contain dark:opacity-25",
+        "absolute animate-[drift_18s_ease-in-out_infinite] select-none object-contain motion-reduce:animate-none dark:opacity-25",
         className,
       )}
     />
@@ -45,7 +45,11 @@ export function Plant({
       alt=""
       height={height}
       draggable={false}
-      className={clsx("absolute select-none", plantDim, className)}
+      className={clsx(
+        "absolute origin-bottom animate-[sway_5.5s_ease-in-out_infinite] select-none motion-reduce:animate-none",
+        plantDim,
+        className,
+      )}
       style={{ height, width: "auto" }}
     />
   );

@@ -97,27 +97,33 @@
     }
   }
 
-  @keyframes twinkle {
+  @keyframes drift {
     0%,
     100% {
-      opacity: 0.25;
-      transform: scale(0.75);
+      transform: translateX(0);
     }
     50% {
-      opacity: 1;
-      transform: scale(1);
+      transform: translateX(26px);
     }
   }
 
-  @keyframes updown {
-    from {
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-1.2deg);
+    }
+    50% {
+      transform: rotate(1.4deg);
+    }
+  }
+
+  @keyframes bob {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
-      transform: translateY(1.5rem);
-    }
-    to {
-      transform: translateY(0);
+      transform: translateY(-6px);
     }
   }
 
@@ -125,24 +131,6 @@
 
 .prose {
   --tw-prose-body: var(--color-fd-muted-foreground);
-}
-
-:root {
-  --hill-back: color-mix(in oklab, var(--color-fd-primary) 14%, var(--color-fd-background));
-  --hill-mid: color-mix(in oklab, var(--color-fd-primary) 26%, var(--color-fd-background));
-  --hill-front: color-mix(in oklab, var(--color-fd-primary) 20%, var(--color-fd-background));
-}
-
-.dark {
-  --hill-back: color-mix(in oklab, var(--color-fd-primary) 10%, var(--color-fd-background));
-  --hill-mid: color-mix(in oklab, var(--color-fd-primary) 18%, var(--color-fd-background));
-  --hill-front: color-mix(in oklab, var(--color-fd-primary) 14%, var(--color-fd-background));
-}
-
-@theme inline {
-  --color-hill-back: var(--hill-back);
-  --color-hill-mid: var(--hill-mid);
-  --color-hill-front: var(--hill-front);
 }
 
 /* Duolingo 式玩具按鈕：實色硬陰影，按下時往下沉 */
