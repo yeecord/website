@@ -20,7 +20,7 @@ export function searchPlugin(): ServerPlugin<PressContext> {
       const mandarin = {
         components: { tokenizer: createTokenizer() },
       };
-      const server = createFromSource(this.getLoader, {
+      const server = createFromSource(() => this.getLoader(), {
         localeMap: {
           "zh-tw": mandarin,
           "zh-cn": mandarin,
