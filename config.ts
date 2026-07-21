@@ -60,8 +60,7 @@ export const footer: FooterCategory[] = [
       },
       {
         label: "邀請機器人",
-        href: "https://app.yeecord.com/invite",
-        newWindow: true,
+        href: "/invite",
       },
       {
         label: "Discord",
