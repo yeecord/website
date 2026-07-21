@@ -5,7 +5,7 @@ import { Community } from "@/home/Community";
 import { Customers } from "@/home/Customers";
 import { Features } from "@/home/features";
 import { Hero } from "@/home/Hero";
-import { RpgSystem } from "@/home/RpgSystem";
+import { FindFood } from "@/home/FindFood";
 import Sponsor from "@/home/Sponsor";
 import { baseOptions } from "@/layout-config";
 
@@ -26,7 +26,7 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-[1400px] flex-col px-3 md:px-6">
           <Hero />
           <Features />
-          <RpgSystem />
+          <FindFood />
           <Customers />
         </div>
         <Sponsor />

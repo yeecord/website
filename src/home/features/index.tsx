@@ -19,7 +19,7 @@ export function Features() {
           您需要的功能都&#8288;在&#8288;這&#8288;裡
         </h2>
         <h3 className="mx-auto max-w-2xl text-muted-foreground text-xl">
-          從伺服器管理、歡迎消息到音樂播放器和角色扮演系統
+          從伺服器管理、歡迎訊息到音樂播放器和找吃的小遊戲
           <br />
           我們為您的伺服器提供強大的功能
         </h3>

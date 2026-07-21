@@ -2,7 +2,7 @@
     <img src="https://yeecord.com/img/logo-transparent.png" alt="Yeecord" width="48" height="48">
     YEE式機器龍
 </h1>
-<p align="center">一隻全中文的機器人，並結合了音樂系統、RPG、動態語音頻道、跨群聊天等功能，讓 Discord 不再只是聊天軟體</p>
+<p align="center">一隻全中文的機器人，並結合了音樂系統、找吃的小遊戲、動態語音頻道、跨群聊天等功能，讓 Discord 不再只是聊天軟體</p>
 
 ## ❓ 這是哪
 

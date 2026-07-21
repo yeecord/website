@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import Gradient from "./components/Gradient";
 
-export function RpgSystem() {
+export function FindFood() {
   return (
     <div
       className={clsx(
@@ -19,13 +19,13 @@ export function RpgSystem() {
             "mx-auto w-fit rounded-md bg-gradient-to-br from-green-400 to-green-600 px-6 py-2 font-semibold text-white text-xl sm:text-3xl",
           )}
         >
-          冒險模式
+          放置型小遊戲
         </p>
         <h2 className="font-bold text-5xl sm:text-5xl lg:text-6xl">
-          開創性的<span className="whitespace-nowrap">角色扮演系統</span>
+          陪 Yee <span className="whitespace-nowrap">出門找吃的</span>
         </h2>
         <h3 className="mx-auto max-w-2xl text-muted-foreground text-xl">
-          進入這個奇幻世界，開始你的冒險吧！
+          出門覓食、下鍋烹飪、餵牠養感情，全按鈕操作，不用背任何指令。
         </h3>
       </div>
       <Background />
@@ -33,7 +33,7 @@ export function RpgSystem() {
         whileInView={{ y: 0, opacity: 1 }}
         initial={{ y: "5rem", opacity: 0 }}
       >
-        <Jobs />
+        <Plays />
       </motion.div>
     </div>
   );
@@ -48,50 +48,41 @@ function Background() {
   );
 }
 
-function Jobs() {
+function Plays() {
   return (
     <div className="mt-10 grid grid-cols-1 gap-3 text-start md:grid-cols-2 lg:grid-cols-3">
-      <Job
-        name="農夫"
-        description="和漁夫是差不多辛勤的職業，不過在這個世界，農夫的收益比漁夫還要高"
+      <Play
+        name="覓食"
+        description="選個地點帶 Yee 出門，袋子隨時間慢慢裝滿，收成時揭曉這趟撿到什麼"
       />
-      <Job
-        name="漁夫"
-        description="是個需要勞力的職業，你必須要努力勤奮的抓魚，才會獲得收益"
+      <Play
+        name="烹飪"
+        description="從背包挑幾樣食材下鍋，Yee 會評分，從能吃的普通料理到完美的絕品都有"
       />
-      <Job
-        name="藥劑師"
-        description="是受一般人敬仰的職業，透過進行科學實驗生產藥水，能夠獲得很高的收益"
+      <Play
+        name="黑暗料理"
+        description="搭配得太離譜就會煮出黑暗料理，不過牠們有自己的隱藏菜譜可以收集"
       />
-      <Job
-        name="廚師"
-        description="跟農夫以及漁夫購買食材，再透過烘烤食物並轉賣來獲得收益"
+      <Play
+        name="菜譜"
+        description="記錄你煮出過的所有料理，收集控的天堂"
         optional
       />
-      <Job
-        name="礦工"
-        description="在深不見底的洞窟裡挖礦，雖然可能沒有很好的收穫，不過有機會也可以挖到鑽石等好東西"
-      />
-      <Job
-        name="牧農"
-        description="飼養各類的禽類豬雞牛等還獲得肉類"
+      <Play
+        name="餵牠"
+        description="把料理餵給 Yee 培養感情，感情越好互動越多"
         optional
       />
-      <Job
-        name="鐵匠"
-        description="通常會和礦工合作來熔煉礦物並販賣出很高的價錢"
-        optional
-      />
-      <Job
-        name="伐木工"
-        description="在森林中砍伐木頭，是木頭的來源"
+      <Play
+        name="今日想吃"
+        description="每天一個風味提示，只給方向不給答案，照著煮容易拿高分"
         optional
       />
     </div>
   );
 }
 
-function Job({
+function Play({
   name,
   description,
   optional,
