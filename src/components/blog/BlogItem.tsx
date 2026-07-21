@@ -22,7 +22,7 @@ export function BlogItem({ page }: { page: BlogPost }) {
           <div className="flex h-full flex-1 flex-col bg-green-400">
             <img
               alt="logo"
-              src="/img/logo-transparent.png"
+              src="/img/logo.svg"
               className="m-auto h-20 w-20 rounded-full"
               width={128}
               height={128}

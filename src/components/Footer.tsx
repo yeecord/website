@@ -35,7 +35,7 @@ function Info() {
       <div className="flex flex-row items-center gap-2">
         <img
           alt="logo"
-          src="/img/logo_128x128.png"
+          src="/img/logo.svg"
           width={40}
           height={40}
           className="rounded-full"
