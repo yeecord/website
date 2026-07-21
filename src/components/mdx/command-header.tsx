@@ -80,8 +80,14 @@ export function createCommandHeader(locale: "tw" | "cn") {
           label={t.where}
           items={anywhere ? [t.server, t.dm, t.groupDm] : [t.server]}
         />
-        <p className="px-4 py-2 text-xs text-fd-muted-foreground">
-          {t.hint} <a href={t.basicsUrl}>{t.hintLink}</a>
+        <p className="px-4 py-2 text-xs text-muted-foreground">
+          {t.hint}{" "}
+          <a 
+            className="text-foreground underline decoration-primary underline-offset-4 transition-opacity hover:opacity-80" 
+            href={t.basicsUrl}
+          >
+            {t.hintLink}
+          </a>
         </p>
       </div>
     );
