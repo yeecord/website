@@ -9,6 +9,8 @@
 /github https://github.com/yeecord/website 302
 
 # 舊 docs 網址（改名 / 移除）→ 現址，指定條在 blanket 之前
+/docs/ticket /zh-tw/docs/commands 301
+/docs/commands/ticket /zh-tw/docs/commands 301
 /docs/migrate-to-v4 /zh-tw/docs 301
 /docs/intro /zh-tw/docs 301
 /docs/role /zh-tw/docs/commands/role-menu 301

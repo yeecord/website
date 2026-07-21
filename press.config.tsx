@@ -21,6 +21,7 @@ import {
 } from "./src/blog/layouts";
 import { mdxComponents } from "./src/components/mdx";
 import { createCmd } from "./src/components/mdx/cmd";
+import { createCommandHeader } from "./src/components/mdx/command-header";
 import { i18n, RootLayout, translations } from "./src/root-layout";
 import { baseOptions, cnBaseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
@@ -152,6 +153,9 @@ const config = defineConfig({
           ...defaultMdxComponents,
           ...mdxComponents,
           Cmd: createCmd(page.locale === "zh-cn" ? "cn" : "tw"),
+          CommandHeader: createCommandHeader(
+            page.locale === "zh-cn" ? "cn" : "tw",
+          ),
           a: createRelativeLink(source, page),
         };
       },
