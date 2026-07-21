@@ -17,6 +17,7 @@ export const commandNames: Record<string, { tw: string; cn: string }> = {
   bullshit: { tw: "唬爛產生器", cn: "胡说八道生成器" },
   clear: { tw: "大量刪除訊息", cn: "大量删除消息" },
   feedback: { tw: "回報", cn: "反馈" },
+  form: { tw: "表單", cn: "表单" },
   "find-food": { tw: "找吃的", cn: "找吃的" },
   giveaway: { tw: "抽獎", cn: "抽奖" },
   guild: { tw: "伺服器資訊", cn: "服务器信息" },

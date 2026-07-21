@@ -4,6 +4,7 @@
     "index",
     "poll",
     "giveaway",
+    "form",
     "auto-channels",
     "lock-channel",
     "auto-role",
