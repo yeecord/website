@@ -126,17 +126,17 @@ const config = defineConfig({
           <link
             rel="alternate"
             hrefLang="zh-Hant"
-            href={`${domain}/zh-tw${slugs}`}
+            href={canonicalUrl(`/zh-tw${slugs}`)}
           />
           <link
             rel="alternate"
             hrefLang="zh-Hans"
-            href={`${domain}/zh-cn${slugs}`}
+            href={canonicalUrl(`/zh-cn${slugs}`)}
           />
           <link
             rel="alternate"
             hrefLang="x-default"
-            href={`${domain}/zh-tw${slugs}`}
+            href={canonicalUrl(`/zh-tw${slugs}`)}
           />
         </>
       );
