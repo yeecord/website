@@ -1,6 +1,11 @@
 import type { FooterCategory } from "@/components/Footer";
 
-export const domain = "https://yeecord.com";
+// CF Pages 的 preview build（非 master）部署在 next.yeecord.com，
+// og:image / canonical 這些絕對網址要跟著指過去，不然會指到 yeecord.com 上不存在的路徑
+export const domain =
+  process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== "master"
+    ? "https://next.yeecord.com"
+    : "https://yeecord.com";
 
 // Cloudflare Pages 對目錄頁一律 308 到帶斜線網址，canonical 必須指向最終網址
 export function canonicalUrl(path: string) {
