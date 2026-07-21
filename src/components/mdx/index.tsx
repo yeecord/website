@@ -14,6 +14,14 @@ import {
   ChannelPermissionDemo,
   RoleOrderDemo,
 } from "@/components/mdx/discord-demo";
+import {
+  AutoChannelsDemo,
+  GiveawayFlowDemo,
+  LockChannelDemo,
+  PollFlowDemo,
+  RoleMenuDemo,
+} from "@/components/mdx/feature-flows";
+import { FormBuilderDemo, FormFlowDemo } from "@/components/mdx/form-flow";
 import { LinkButton } from "@/components/mdx/LinkButton";
 
 export * from "./Admonition";
@@ -24,12 +32,19 @@ export * from "./LinkButton";
 export const mdxComponents = {
   ...defaultMdxComponents,
   Adsense,
+  AutoChannelsDemo,
   ChannelPermissionDemo,
   DiscordButton,
   DiscordChat,
   DiscordEmbed,
   DiscordMessage,
   Error: ErrorCallout,
+  FormBuilderDemo,
+  FormFlowDemo,
+  GiveawayFlowDemo,
+  LockChannelDemo,
+  PollFlowDemo,
+  RoleMenuDemo,
   Info,
   LinkButton,
   img: ImageZoom as FC<ImgHTMLAttributes<HTMLImageElement>>,

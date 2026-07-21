@@ -34,6 +34,7 @@ const sidebarCommands = new Set([
   "poll",
   "auto-role",
   "role-menu",
+  "form",
   "giveaway",
   "auto-channels",
   "lock-channel",
