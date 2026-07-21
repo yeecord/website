@@ -67,6 +67,7 @@ export function GroundBand({
           sceneTint,
         )}
       />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent" />
       <div className="relative">{children}</div>
     </div>
   );
