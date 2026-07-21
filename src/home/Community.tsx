@@ -45,22 +45,6 @@ export function Community() {
             加入 Discord 社群
           </Link>
         </div>
-        <div className="flex flex-row gap-5 text-muted-foreground text-sm">
-          <Link
-            href="https://x.com/yeecord"
-            target="_blank"
-            className="hover:text-foreground"
-          >
-            X @yeecord
-          </Link>
-          <Link
-            href="https://github.com/yeecord"
-            target="_blank"
-            className="hover:text-foreground"
-          >
-            GitHub 貢獻
-          </Link>
-        </div>
       </div>
     </div>
   );
