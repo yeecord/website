@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/tooltip";
 
 // 顯示名稱同步自 yeecord repo src/infrastructure/i18n/{zh-TW,zh-CN}.json 的 slash.*.name
-const commandNames: Record<string, { tw: string; cn: string }> = {
+export const commandNames: Record<string, { tw: string; cn: string }> = {
   "1a2b": { tw: "1a2b", cn: "1a2b" },
   "afk-channel": { tw: "afk-channel", cn: "afk-channel" },
   "auto-channels": { tw: "動態語音頻道", cn: "動態語音頻道" },

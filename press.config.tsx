@@ -155,6 +155,7 @@ const config = defineConfig({
           Cmd: createCmd(page.locale === "zh-cn" ? "cn" : "tw"),
           CommandHeader: createCommandHeader(
             page.locale === "zh-cn" ? "cn" : "tw",
+            page.slugs.at(-1),
           ),
           a: createRelativeLink(source, page),
         };
