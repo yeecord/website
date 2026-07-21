@@ -3,7 +3,7 @@ import { Cloud, GroundBand, Plant } from "./scene";
 
 export function Community() {
   return (
-    <div className="relative z-[2] mt-40">
+    <div className="relative z-2 mt-40">
       <div className="relative flex flex-col items-center gap-6 px-4 pt-16 text-center">
         <Cloud n={2} width={140} className="top-[6%] left-[14%]" />
         <Cloud
@@ -28,12 +28,12 @@ export function Community() {
         <h2 className="font-bold text-4xl tracking-tight sm:text-5xl">
           把機器龍帶回家
         </h2>
-        <p className="max-w-[32rem] text-lg text-muted-foreground">
+        <p className="max-w-lg text-lg text-muted-foreground">
           安裝免費，設定五分鐘。卡關了就來 Discord 社群喊一聲，我們都在。
         </p>
         <div className="flex flex-row flex-wrap justify-center gap-3 pb-10">
           <Link href="/invite/" className="btn-chunky">
-            免費安裝機器人
+            安裝機器人
           </Link>
           <Link
             href="https://discord.gg/yeecord"

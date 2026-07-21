@@ -14,7 +14,7 @@ const SERVERS = [
 
 export function Hero() {
   return (
-    <div className="relative z-[2] w-full">
+    <div className="relative z-2 w-full">
       <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-56 text-center sm:pb-72 md:pt-28">
         <Cloud n={1} width={190} className="top-[4%] left-[6%] max-sm:w-24" />
         <Cloud
@@ -37,12 +37,12 @@ export function Hero() {
           <br />
           搞定整個<span className="text-primary">伺服器</span>
         </h1>
-        <p className="max-w-[34rem] text-lg text-muted-foreground text-pretty sm:text-xl">
+        <p className="max-w-136 text-lg text-muted-foreground text-pretty sm:text-xl">
           抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <Link href="/invite/" className="btn-chunky">
-            免費安裝機器人
+            安裝機器人
           </Link>
           <Link href="/zh-tw/docs" className="btn-chunky-secondary">
             看使用教學
@@ -62,31 +62,31 @@ export function Hero() {
 function Forest() {
   return (
     <div className="absolute inset-x-0 top-0">
-      <Plant src="treePine" height={150} className="top-[-118px] left-[4%]" />
+      <Plant src="treePine" height={150} className="-top-29.5 left-[4%]" />
       <Plant
         src="bush1"
         height={44}
-        className="top-[-14px] left-[11%] [animation-delay:-1.5s]"
+        className="-top-3.5 left-[11%] [animation-delay:-1.5s]"
       />
       <Plant
         src="treeSmall_green1"
         height={52}
-        className="top-[-22px] left-[17%] [animation-delay:-3s] max-sm:hidden"
+        className="-top-5.5 left-[17%] [animation-delay:-3s] max-sm:hidden"
       />
       <Plant
         src="tree"
         height={110}
-        className="top-[-80px] right-[24%] [animation-delay:-2s] max-md:hidden"
+        className="-top-20 right-[24%] [animation-delay:-2s] max-md:hidden"
       />
       <Plant
         src="bush2"
         height={40}
-        className="top-[-10px] right-[20%] [animation-delay:-4s]"
+        className="-top-2.5 right-[20%] [animation-delay:-4s]"
       />
       <Plant
         src="treeSmall_green2"
         height={48}
-        className="top-[-16px] right-[3%] [animation-delay:-2.6s]"
+        className="-top-4 right-[3%] [animation-delay:-2.6s]"
       />
     </div>
   );
