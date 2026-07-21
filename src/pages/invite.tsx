@@ -1,6 +1,6 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import Footer from "@/components/Footer";
-import { footer, domain } from "@config";
+import { canonicalUrl, domain, footer } from "@config";
 import { InvitePicker } from "@/components/invite/picker";
 import { baseOptions } from "@/layout-config";
 
@@ -13,9 +13,10 @@ export default function InvitePage() {
     <HomeLayout {...baseOptions}>
       <title>{TITLE}</title>
       <meta name="description" content={DESCRIPTION} />
-      <link rel="canonical" href={`${domain}/invite`} />
+      <link rel="canonical" href={canonicalUrl("/invite")} />
       <meta property="og:title" content={TITLE} />
       <meta property="og:description" content={DESCRIPTION} />
+      <meta property="og:image" content={`${domain}/opengraph-image.png`} />
       <main className="mx-auto w-full max-w-4xl px-4 pt-20 pb-24">
         <div className="mb-6 flex items-center justify-center gap-4">
           <img
