@@ -54,16 +54,16 @@
 :root {
   --default-font-family: "Noto Sans TC", sans-serif;
 
-  /* yeecord green, matches the green-400/cyan gradients used across the site */
-  --color-fd-primary: oklch(0.627 0.17 149.2);
+  /* 主題綠對齊新版恐龍 logo 的主體色 #6bb369 */
+  --color-fd-primary: oklch(0.701 0.128 143.5);
   --color-fd-primary-foreground: oklch(0.985 0 0);
-  --color-fd-ring: oklch(0.627 0.17 149.2);
+  --color-fd-ring: oklch(0.701 0.128 143.5);
 }
 
 .dark {
-  --color-fd-primary: oklch(0.792 0.178 151.7);
-  --color-fd-primary-foreground: oklch(0.266 0.052 153.1);
-  --color-fd-ring: oklch(0.792 0.178 151.7);
+  --color-fd-primary: oklch(0.8 0.13 143.5);
+  --color-fd-primary-foreground: oklch(0.27 0.05 143.5);
+  --color-fd-ring: oklch(0.8 0.13 143.5);
 }
 
 @theme {
