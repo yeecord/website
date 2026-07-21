@@ -1,5 +1,5 @@
 import { zhTW } from "@fumapress/language/zh-tw";
-import { domain } from "@config";
+import { canonicalUrl, domain } from "@config";
 import { defineTranslations } from "fumadocs-core/i18n";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
 import { i18nProvider, uiTranslations } from "fumadocs-ui/i18n";
@@ -89,7 +89,11 @@ const config = defineConfig({
   )
   .plugins(
     oramaSearchPlugin(),
-    sitemapPlugin(),
+    sitemapPlugin({
+      getEntry(page) {
+        return { loc: canonicalUrl(page.url), priority: 0.8 };
+      },
+    }),
     llmsPlugin(),
     takumiPlugin({
       generate(page) {

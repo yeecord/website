@@ -1,4 +1,4 @@
-import { domain, footer } from "@config";
+import { canonicalUrl, footer } from "@config";
 import { DocsBody } from "fumadocs-ui/page";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { getPressContext } from "fumapress";
@@ -23,7 +23,7 @@ export const LegalPage: FC<{
   return (
     <HomeLayout {...baseOptions}>
       <title>{`Yeecord - ${page.data.title}`}</title>
-      <link rel="canonical" href={`${domain}${page.url}`} />
+      <link rel="canonical" href={canonicalUrl(page.url)} />
       {page.data.description && (
         <meta name="description" content={page.data.description} />
       )}

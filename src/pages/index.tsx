@@ -1,4 +1,4 @@
-import { domain, footer } from "@config";
+import { canonicalUrl, footer } from "@config";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import Footer from "@/components/Footer";
 import { Community } from "@/home/Community";
@@ -18,7 +18,7 @@ export default function HomePage() {
     <HomeLayout {...baseOptions}>
       <title>{TITLE}</title>
       <meta name="description" content={DESCRIPTION} />
-      <link rel="canonical" href={domain} />
+      <link rel="canonical" href={canonicalUrl("/")} />
       <meta property="og:title" content={TITLE} />
       <meta property="og:description" content={DESCRIPTION} />
       <meta property="og:image" content="/opengraph-image.png" />

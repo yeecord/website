@@ -1,4 +1,4 @@
-import { blogAuthors, domain, footer, type AuthorData } from "@config";
+import { blogAuthors, canonicalUrl, footer, type AuthorData } from "@config";
 import Link from "fumadocs-core/link";
 import { DocsBody } from "fumadocs-ui/page";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
@@ -53,7 +53,7 @@ function Meta({
   return (
     <>
       <title>{title}</title>
-      <link rel="canonical" href={`${domain}${path}`} />
+      <link rel="canonical" href={canonicalUrl(path)} />
       <meta property="og:title" content={title} />
       {description && <meta name="description" content={description} />}
       {description && <meta property="og:description" content={description} />}
