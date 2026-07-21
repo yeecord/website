@@ -63,16 +63,25 @@ export function GroundBand({
   className?: string;
 }) {
   return (
-    <div className={clsx("relative", className)}>
+    <div>
+      <div className={clsx("relative", className)}>
+        <div
+          className={clsx(
+            "absolute inset-0 bg-[url(/home/scene/groundLayer1.png)] bg-repeat-x",
+            "[background-size:auto_200%] [background-position:top_left]",
+            sceneTint,
+          )}
+        />
+        <div className="relative">{children}</div>
+      </div>
       <div
+        aria-hidden
         className={clsx(
-          "absolute inset-0 bg-[url(/home/scene/groundLayer1.png)] bg-repeat-x",
-          "[background-size:auto_200%] [background-position:top_left]",
+          "-scale-y-100 h-12 bg-[url(/home/scene/groundLayer1.png)] bg-repeat-x",
+          "[background-size:auto_400%] [background-position:top_left]",
           sceneTint,
         )}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent" />
-      <div className="relative">{children}</div>
     </div>
   );
 }
