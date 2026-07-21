@@ -26,10 +26,10 @@ export const LegalPage: FC<{
       <link rel="canonical" href={canonicalUrl(page.url)} />
       <meta property="og:title" content={`${page.data.title} - Yeecord`} />
       {page.data.description && (
-        <meta name="description" content={page.data.description} />
-      )}
-      {page.data.description && (
-        <meta property="og:description" content={page.data.description} />
+        <>
+          <meta name="description" content={page.data.description} />
+          <meta property="og:description" content={page.data.description} />
+        </>
       )}
       <meta property="og:image" content={`${domain}/opengraph-image.png`} />
       <main className="container mx-auto px-4 py-10 sm:py-16">
