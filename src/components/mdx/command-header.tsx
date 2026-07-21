@@ -1,5 +1,7 @@
+import Link from "fumadocs-core/link";
 import { Bot, MapPin, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
+import { commandNames } from "./cmd";
 
 const labels = {
   tw: {
@@ -51,20 +53,32 @@ function Row({ icon, label, items }: { icon: ReactNode; label: string; items: st
   );
 }
 
-export function createCommandHeader(locale: "tw" | "cn") {
+export function createCommandHeader(locale: "tw" | "cn", slug?: string) {
   const t = labels[locale];
 
   return function CommandHeader({
+    name = slug,
     you = [],
     bot = [],
     anywhere,
   }: {
+    name?: string;
     you?: string[];
     bot?: string[];
     anywhere?: boolean;
   }) {
+    const display = name ? commandNames[name]?.[locale] : undefined;
+
     return (
       <div className="not-prose my-4 divide-y rounded-xl border bg-fd-card text-sm">
+        {display ? (
+          <div className="flex items-baseline gap-2.5 px-4 py-3">
+            <code className="font-semibold text-base text-fd-foreground">
+              /{name}
+            </code>
+            <span className="text-fd-muted-foreground">{display}</span>
+          </div>
+        ) : null}
         <Row
           icon={<UserRound />}
           label={t.you}
@@ -81,7 +95,13 @@ export function createCommandHeader(locale: "tw" | "cn") {
           items={anywhere ? [t.server, t.dm, t.groupDm] : [t.server]}
         />
         <p className="px-4 py-2 text-xs text-fd-muted-foreground">
-          {t.hint} <a href={t.basicsUrl}>{t.hintLink}</a>
+          {t.hint}{" "}
+          <Link
+            href={t.basicsUrl}
+            className="text-fd-primary underline underline-offset-2 hover:text-fd-primary/80"
+          >
+            {t.hintLink}
+          </Link>
         </p>
       </div>
     );
