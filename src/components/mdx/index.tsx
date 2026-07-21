@@ -14,6 +14,7 @@ import {
   ChannelPermissionDemo,
   RoleOrderDemo,
 } from "@/components/mdx/discord-demo";
+import { FormBuilderDemo, FormFlowDemo } from "@/components/mdx/form-flow";
 import { LinkButton } from "@/components/mdx/LinkButton";
 
 export * from "./Admonition";
@@ -30,6 +31,8 @@ export const mdxComponents = {
   DiscordEmbed,
   DiscordMessage,
   Error: ErrorCallout,
+  FormBuilderDemo,
+  FormFlowDemo,
   Info,
   LinkButton,
   img: ImageZoom as FC<ImgHTMLAttributes<HTMLImageElement>>,
