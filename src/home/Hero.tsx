@@ -1,6 +1,6 @@
 import Link from "fumadocs-core/link";
-import { Deco, PixelDino } from "./decor";
 import { DinoMascot } from "./DinoMascot";
+import { Cloud, GroundBand, HillsLayer, Plant } from "./scene";
 
 const SERVERS = [
   { img: "/home/customers/apex-tw.png", name: "APEX Taiwan" },
@@ -15,8 +15,11 @@ const SERVERS = [
 export function Hero() {
   return (
     <div className="relative z-[2] w-full">
-      <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-64 text-center md:pt-28">
-        <Sky />
+      <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-72 text-center md:pt-28">
+        <Cloud n={1} width={190} className="top-[9%] left-[6%]" />
+        <Cloud n={2} width={130} className="top-[34%] left-[20%] opacity-80" />
+        <Cloud n={3} width={230} className="top-[13%] right-[7%]" />
+        <Cloud n={1} width={110} className="top-[46%] right-[19%] opacity-70" />
         <h1 className="font-bold text-5xl leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
           一隻恐龍
           <br />
@@ -34,105 +37,59 @@ export function Hero() {
             看使用教學
           </Link>
         </div>
-        <Hills />
-        <DinoMascot className="absolute bottom-10 right-[8%] sm:right-[12%]" />
+        <HillsLayer className="bottom-16 h-40" />
+        <DinoMascot className="absolute bottom-12 right-[8%] sm:right-[12%]" />
       </div>
-      <div className="bg-hill-front pb-12">
+      <GroundBand className="-mt-24">
+        <Forest />
         <ServerProof />
-      </div>
+      </GroundBand>
     </div>
   );
 }
 
-function Sky() {
+function Forest() {
   return (
-    <div className="-z-[1] absolute inset-0 overflow-hidden">
-      <Deco name="sparkles" className="top-[16%] left-[13%]" size={24} twinkle />
-      <Deco
-        name="star"
-        className="top-[38%] left-[21%]"
-        size={14}
-        delay={0.7}
-        twinkle
+    <div className="absolute inset-x-0 top-0">
+      <Plant src="treePine" height={150} className="top-[-118px] left-[4%]" />
+      <Plant src="bush1" height={44} className="top-[-14px] left-[11%]" />
+      <Plant
+        src="treeSmall_green1"
+        height={52}
+        className="top-[-22px] left-[17%] max-sm:hidden"
       />
-      <Deco
-        name="sparkles"
-        className="top-[58%] left-[8%]"
-        size={17}
-        delay={1.6}
-        twinkle
+      <Plant
+        src="tree"
+        height={110}
+        className="top-[-80px] right-[24%] max-md:hidden"
       />
-      <Deco
-        name="star"
-        className="top-[19%] right-[16%]"
-        size={16}
-        delay={0.4}
-        twinkle
+      <Plant src="bush2" height={40} className="top-[-10px] right-[20%]" />
+      <Plant
+        src="treeSmall_green2"
+        height={48}
+        className="top-[-16px] right-[3%]"
       />
-      <Deco
-        name="sparkles"
-        className="top-[40%] right-[7%]"
-        size={26}
-        delay={1.1}
-        twinkle
-      />
-      <Deco
-        name="star"
-        className="top-[10%] right-[34%]"
-        size={12}
-        delay={2}
-        twinkle
-      />
-      <Deco
-        name="star"
-        className="top-[64%] right-[26%]"
-        size={13}
-        delay={1.4}
-        twinkle
-      />
-    </div>
-  );
-}
-
-function Hills() {
-  return (
-    <div className="-z-[1] absolute inset-x-0 bottom-0 overflow-hidden">
-      <div className="-mb-14 sm:-mb-20 relative h-56">
-        <div className="-left-[20%] absolute bottom-0 h-52 w-[75%] rounded-[50%] bg-hill-back" />
-        <PixelDino
-          className="bottom-[7.5rem] left-[13%] max-sm:hidden"
-          size={64}
-        />
-        <div className="-right-[25%] absolute bottom-[-2rem] h-56 w-[85%] rounded-[50%] bg-hill-mid" />
-        <div className="-inset-x-[10%] absolute bottom-[-5rem] h-44 rounded-[50%] bg-hill-front" />
-        <Deco name="herb" className="bottom-4 left-[24%]" size={26} />
-        <Deco name="blossom" className="bottom-10 left-[38%]" size={18} />
-        <Deco name="seedling" className="bottom-2 left-[48%]" size={20} />
-        <Deco name="herb" className="bottom-6 right-[30%]" size={20} />
-        <Deco name="mushroom" className="bottom-12 right-[13%]" size={18} />
-        <Deco name="blossom" className="bottom-3 right-[22%]" size={15} />
-      </div>
     </div>
   );
 }
 
 function ServerProof() {
   return (
-    <div className="mx-auto flex max-w-[60rem] flex-col items-center justify-center gap-4 px-4 sm:flex-row sm:gap-6">
-      <div className="-space-x-3 flex shrink-0">
+    <div className="flex flex-col items-center justify-center gap-3 px-4 pt-14 pb-10 sm:flex-row sm:gap-5">
+      <div className="-space-x-3 flex shrink-0 items-center">
         {SERVERS.map((server) => (
           <img
             key={server.name}
             alt={server.name}
             title={server.name}
             src={server.img}
-            width="44"
-            height="44"
-            className="size-11 rounded-full border-2 border-hill-front"
+            width="40"
+            height="40"
+            className="size-10 rounded-full border-2 border-white/70 shadow-sm"
           />
         ))}
       </div>
-      <p className="text-center sm:text-start">
+      <p className="font-medium leading-none">
         APEX Taiwan、VALORANT Taiwan 等
         <span className="mx-1 font-bold text-primary">350,000+</span>
         個伺服器都在用
