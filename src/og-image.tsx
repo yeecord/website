@@ -3,7 +3,7 @@ import logoSvg from "../public/img/logo.svg?raw";
 const GREEN = "#6bb369";
 
 function Logo({ size }: { size: number }) {
-  return <img src={logoSvg} width={size} height={size} />;
+  return <img src={logoSvg} width={size * (1580 / 2083)} height={size} />;
 }
 
 export function OgImage({
