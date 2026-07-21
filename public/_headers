@@ -1,2 +1,7 @@
 /*
     Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+# hash 檔名 content-addressed，同 hash 同內容，可永久快取；
+# 避免 deploy 傳播窗口 edge 送舊/404 chunk 觸發 Waku vite:preloadError 無限 reload
+/assets/*
+    Cache-Control: public, max-age=31536000, immutable
