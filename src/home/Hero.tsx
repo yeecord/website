@@ -72,7 +72,7 @@ function Buttons() {
   return (
     <div className="grid w-full max-w-[500px] grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2">
       <Link
-        href="/docs"
+        href="/zh-tw/docs"
         className={cn(
           buttonVariants({ color: "ghost", size: "lg" }),
           styles["rainbow-border"],

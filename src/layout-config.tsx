@@ -27,13 +27,13 @@ export const baseOptions = {
   },
   links: [
     {
-      url: "/docs",
+      url: "/zh-tw/docs",
       icon: <BookIcon />,
       text: "使用教學",
       active: "nested-url",
     },
     {
-      url: "/blog",
+      url: "/zh-tw/blog",
       icon: <LayoutListIcon />,
       text: "部落格",
       active: "nested-url",
@@ -58,7 +58,7 @@ export const cnBaseOptions = {
       active: "nested-url",
     },
     {
-      url: "/blog",
+      url: "/zh-cn/blog",
       icon: <LayoutListIcon />,
       text: "博客",
       active: "nested-url",

@@ -8,7 +8,6 @@ import SearchDialog from "@/components/search-dialog";
 export const i18n = defineI18n({
   languages: ["zh-tw", "zh-cn"],
   defaultLanguage: "zh-tw",
-  hideLocale: "default-locale",
 });
 
 export const translations = i18n

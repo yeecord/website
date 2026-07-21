@@ -72,7 +72,7 @@ function Content() {
             "rounded-full bg-gradient-to-r from-cyan-500 to-green-500 px-6 py-3 font-medium text-base text-white",
             "flex h-fit flex-row items-center gap-2",
           )}
-          href="/docs"
+          href="/zh-tw/docs"
         >
           了解更多 <ArrowRightCircleIcon className="inline" />
         </Link>

@@ -54,7 +54,7 @@ function Settings() {
         </div>
       </div>
       <Link
-        href="/docs/commands/role"
+        href="/zh-tw/docs/commands/role-menu"
         className="mt-auto rounded-xl bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-3 text-center font-medium text-sm text-white"
       >
         + 添加身分組

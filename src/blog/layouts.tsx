@@ -108,7 +108,7 @@ export const BlogIndex: BlogIndexPage<PressContext> = async () => {
         </h1>
         <div className="flex flex-row justify-center gap-2.5 max-sm:flex-col max-sm:items-stretch">
           <Link
-            href="/blog/tags"
+            href="/zh-tw/blog/tags"
             className={cn(buttonVariants({ color: "primary" }))}
           >
             <EyeIcon className="size-4" />
@@ -283,7 +283,7 @@ export const BlogTags: BlogTagsPage<PressContext> = async () => {
       <Meta title="所有標籤 - Yeecord Blog" path="/blog/tags" />
       <div className="mb-3 flex flex-col items-center gap-3 text-center">
         <h1 className="mb-4 font-bold text-5xl">所有標籤</h1>
-        <Link href="/blog" className={cn(buttonVariants({ color: "primary" }))}>
+        <Link href="/zh-tw/blog" className={cn(buttonVariants({ color: "primary" }))}>
           查看文章
         </Link>
       </div>
@@ -320,7 +320,7 @@ export const BlogTagPage: BlogTagPageType<PressContext> = async ({ tag }) => {
         <h1 className="mb-4 font-bold text-3xl">{`帶有「${decodedTag}」標籤的文章`}</h1>
 
         <Link
-          href="/blog/tags"
+          href="/zh-tw/blog/tags"
           className={cn(buttonVariants({ color: "primary" }))}
         >
           所有標籤

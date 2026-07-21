@@ -67,7 +67,7 @@ export function Games() {
             </p>
             <Link
               className="mt-6 inline-block rounded-full bg-gradient-to-br from-orange-400 to-pink-500 px-6 py-3 font-bold text-lg text-white"
-              href="/docs/rpg"
+              href="/zh-tw/docs/find-food"
             >
               了解更多
             </Link>
