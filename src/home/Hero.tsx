@@ -1,5 +1,5 @@
 import Link from "fumadocs-core/link";
-import { GrassTuft, PixelDino, Star } from "./decor";
+import { Deco, PixelDino } from "./decor";
 import { DinoMascot } from "./DinoMascot";
 
 const SERVERS = [
@@ -47,13 +47,49 @@ export function Hero() {
 function Sky() {
   return (
     <div className="-z-[1] absolute inset-0 overflow-hidden">
-      <Star className="top-[16%] left-[13%]" size={20} />
-      <Star className="top-[38%] left-[21%]" size={13} delay={0.7} />
-      <Star className="top-[58%] left-[8%]" size={16} delay={1.6} />
-      <Star className="top-[19%] right-[16%]" size={15} delay={0.4} />
-      <Star className="top-[40%] right-[7%]" size={22} delay={1.1} />
-      <Star className="top-[10%] right-[34%]" size={11} delay={2} />
-      <Star className="top-[64%] right-[26%]" size={12} delay={1.4} />
+      <Deco name="sparkles" className="top-[16%] left-[13%]" size={24} twinkle />
+      <Deco
+        name="star"
+        className="top-[38%] left-[21%]"
+        size={14}
+        delay={0.7}
+        twinkle
+      />
+      <Deco
+        name="sparkles"
+        className="top-[58%] left-[8%]"
+        size={17}
+        delay={1.6}
+        twinkle
+      />
+      <Deco
+        name="star"
+        className="top-[19%] right-[16%]"
+        size={16}
+        delay={0.4}
+        twinkle
+      />
+      <Deco
+        name="sparkles"
+        className="top-[40%] right-[7%]"
+        size={26}
+        delay={1.1}
+        twinkle
+      />
+      <Deco
+        name="star"
+        className="top-[10%] right-[34%]"
+        size={12}
+        delay={2}
+        twinkle
+      />
+      <Deco
+        name="star"
+        className="top-[64%] right-[26%]"
+        size={13}
+        delay={1.4}
+        twinkle
+      />
     </div>
   );
 }
@@ -69,10 +105,12 @@ function Hills() {
         />
         <div className="-right-[25%] absolute bottom-[-2rem] h-56 w-[85%] rounded-[50%] bg-hill-mid" />
         <div className="-inset-x-[10%] absolute bottom-[-5rem] h-44 rounded-[50%] bg-hill-front" />
-        <GrassTuft className="bottom-4 left-[24%]" />
-        <GrassTuft className="bottom-9 left-[40%]" width={16} />
-        <GrassTuft className="bottom-6 right-[30%]" width={26} />
-        <GrassTuft className="bottom-12 right-[12%]" width={16} />
+        <Deco name="herb" className="bottom-4 left-[24%]" size={26} />
+        <Deco name="blossom" className="bottom-10 left-[38%]" size={18} />
+        <Deco name="seedling" className="bottom-2 left-[48%]" size={20} />
+        <Deco name="herb" className="bottom-6 right-[30%]" size={20} />
+        <Deco name="mushroom" className="bottom-12 right-[13%]" size={18} />
+        <Deco name="blossom" className="bottom-3 right-[22%]" size={15} />
       </div>
     </div>
   );

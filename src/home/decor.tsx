@@ -1,49 +1,41 @@
 import clsx from "clsx";
-import { SparkleIcon } from "lucide-react";
 
-export function Star({
+export type DecoName =
+  | "seedling"
+  | "herb"
+  | "blossom"
+  | "sparkles"
+  | "star"
+  | "mushroom";
+
+export function Deco({
+  name,
   className,
-  size = 16,
+  size = 20,
   delay = 0,
+  twinkle,
 }: {
+  name: DecoName;
   className?: string;
   size?: number;
   delay?: number;
+  twinkle?: boolean;
 }) {
   return (
-    <SparkleIcon
-      aria-hidden
-      size={size}
-      strokeWidth={0}
+    <img
+      src={`/home/twemoji/${name}.svg`}
+      alt=""
+      width={size}
+      height={size}
+      draggable={false}
       className={clsx(
-        "absolute animate-[twinkle_3s_ease-in-out_infinite] fill-current text-primary/70 motion-reduce:animate-none",
+        "absolute select-none",
+        twinkle &&
+          "animate-[twinkle_3s_ease-in-out_infinite] motion-reduce:animate-none",
         className,
       )}
-      style={{ animationDelay: `${delay}s` }}
+      style={delay ? { animationDelay: `${delay}s` } : undefined}
     />
-  );
-}
-
-export function GrassTuft({
-  className,
-  width = 22,
-}: {
-  className?: string;
-  width?: number;
-}) {
-  return (
-    <svg
-      viewBox="0 0 16 8"
-      width={width}
-      height={width / 2}
-      aria-hidden
-      className={clsx("absolute text-primary/60", className)}
-    >
-      <path
-        fill="currentColor"
-        d="M1 8V4h2v4ZM5 8V1h2v7ZM9 8V5h2v3ZM13 8V3h2v5Z"
-      />
-    </svg>
   );
 }
 
