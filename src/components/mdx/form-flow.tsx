@@ -1,82 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronDown, Hash, Lock, MousePointer2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, Hash, Lock } from "lucide-react";
 import { cn } from "@/utils/cn";
-
-function useLoop(steps: number, interval = 3200) {
-  const [step, setStep] = useState(0);
-
-  // setTimeout keyed on step so picking a dot restarts the full interval
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setStep((current) => (current + 1) % steps);
-    }, interval);
-
-    return () => clearTimeout(timer);
-  }, [step, steps, interval]);
-
-  return [step, setStep] as const;
-}
-
-function StepDots({
-  labels,
-  step,
-  onPick,
-}: {
-  labels: string[];
-  step: number;
-  onPick: (index: number) => void;
-}) {
-  return (
-    <div className="mb-3 flex flex-wrap items-center gap-1.5">
-      {labels.map((title, index) => (
-        <button
-          key={title}
-          type="button"
-          onClick={() => onPick(index)}
-          className={cn(
-            "rounded-full px-2.5 py-1 text-xs transition-colors duration-300",
-            index === step
-              ? "bg-discord-blurple text-white"
-              : "bg-discord-embed text-discord-muted hover:text-discord-text",
-          )}
-        >
-          {index + 1}. {title}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function Scene({ children, id }: { children: React.ReactNode; id: number }) {
-  const reduce = useReducedMotion();
-
-  return (
-    <motion.div
-      key={id}
-      initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: reduce ? 0 : -10 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function ClickHint({ className }: { className?: string }) {
-  return (
-    <motion.span
-      className={cn("pointer-events-none absolute text-white", className)}
-      animate={{ scale: [1, 0.82, 1] }}
-      transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
-    >
-      <MousePointer2 className="size-4 drop-shadow" />
-    </motion.span>
-  );
-}
+import { ClickHint, Scene, StepDots, useLoop } from "@/components/mdx/flow";
 
 function ModalField({
   label,
