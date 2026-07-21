@@ -43,7 +43,11 @@ export function RoleOrderDemo() {
             transition={{ type: "spring", stiffness: 350, damping: 30 }}
             className={cn(
               "flex items-center gap-2 rounded-md bg-discord-embed px-3 py-2",
-              role === botRole && "ring-2 ring-discord-blurple",
+              role === botRole &&
+                cn(
+                  "ring-2 transition-shadow duration-500",
+                  step === 0 ? "ring-discord-blurple" : "ring-discord-green",
+                ),
             )}
           >
             <GripVertical className="size-4 text-discord-muted" />
@@ -53,7 +57,12 @@ export function RoleOrderDemo() {
             />
             {role.name}
             {role === botRole && (
-              <span className="ml-auto text-xs text-discord-muted">
+              <span
+                className={cn(
+                  "ml-auto text-xs transition-colors duration-500",
+                  step === 0 ? "text-discord-muted" : "text-discord-green",
+                )}
+              >
                 {step === 0 ? "把我拖到最上面" : "這樣就對了！"}
               </span>
             )}
