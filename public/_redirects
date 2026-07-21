@@ -1,3 +1,10 @@
+# 舊 logo 檔 → 新 svg
+/img/logo.png /img/logo.svg 301
+/img/logo-transparent.png /img/logo.svg 301
+/img/logo_128x128.png /img/logo.svg 301
+/img/logo_512x512.png /img/logo.svg 301
+/img/logo_1024x1024.png /img/logo.svg 301
+
 # 外部 / 短連結
 /i /invite 302
 /link /invite 302
