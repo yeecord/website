@@ -1,4 +1,4 @@
-import { canonicalUrl, footer } from "@config";
+import { canonicalUrl, domain, footer } from "@config";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import Footer from "@/components/Footer";
 import { Community } from "@/home/Community";
@@ -21,7 +21,7 @@ export default function HomePage() {
       <link rel="canonical" href={canonicalUrl("/")} />
       <meta property="og:title" content={TITLE} />
       <meta property="og:description" content={DESCRIPTION} />
-      <meta property="og:image" content="/opengraph-image.png" />
+      <meta property="og:image" content={`${domain}/opengraph-image.png`} />
       <main className="overflow-x-clip">
         <div className="mx-auto flex max-w-[1400px] flex-col px-3 md:px-6">
           <Hero />

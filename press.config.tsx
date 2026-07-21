@@ -49,6 +49,16 @@ const config = defineConfig({
     },
   },
   meta: {
+    page(page) {
+      return (
+        <>
+          <link rel="canonical" href={canonicalUrl(page.url)} />
+          {page.data.description && (
+            <meta name="description" content={page.data.description} />
+          )}
+        </>
+      );
+    },
     root() {
       return (
         <>

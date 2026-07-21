@@ -1,4 +1,10 @@
-import { blogAuthors, canonicalUrl, footer, type AuthorData } from "@config";
+import {
+  blogAuthors,
+  canonicalUrl,
+  domain,
+  footer,
+  type AuthorData,
+} from "@config";
 import Link from "fumadocs-core/link";
 import { DocsBody } from "fumadocs-ui/page";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
@@ -45,10 +51,12 @@ function Meta({
   title,
   description,
   path,
+  image,
 }: {
   title: string;
   description?: string;
   path: string;
+  image?: string;
 }) {
   return (
     <>
@@ -57,6 +65,10 @@ function Meta({
       <meta property="og:title" content={title} />
       {description && <meta name="description" content={description} />}
       {description && <meta property="og:description" content={description} />}
+      <meta
+        property="og:image"
+        content={image ?? `${domain}/opengraph-image.png`}
+      />
     </>
   );
 }
@@ -152,6 +164,7 @@ export const BlogPage: BlogLayoutPage<PressContext> = async ({ page }) => {
         title={`${page.data.title} - Yeecord Blog`}
         description={page.data.description}
         path={page.url}
+        image={`${domain}${page.url.replace(/\/$/, "")}.webp`}
       />
       <h1 className="mb-2 font-bold text-3xl leading-normal" itemProp="name">
         {page.data.title}
