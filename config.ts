@@ -13,15 +13,15 @@ export const footer: FooterCategory[] = [
     items: [
       {
         label: "部落格",
-        href: "/blog/",
+        href: "/zh-tw/blog/",
       },
       {
         label: "隱私權聲明",
-        href: "/privacy/",
+        href: "/zh-tw/privacy/",
       },
       {
         label: "使用條款",
-        href: "/terms/",
+        href: "/zh-tw/terms/",
       },
     ],
   },

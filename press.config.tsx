@@ -25,8 +25,6 @@ import { i18n, RootLayout, translations } from "./src/root-layout";
 import { baseOptions, cnBaseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
 import { OgImage } from "./src/og-image";
-import { defaultLocalePlugin } from "./src/default-locale-plugin";
-import { localeSwitchPlugin } from "./src/locale-switch-plugin";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
 
@@ -93,16 +91,6 @@ const config = defineConfig({
     },
   },
   meta: {
-    page(page) {
-      return (
-        <>
-          <link rel="canonical" href={canonicalUrl(page.url)} />
-          {page.data.description && (
-            <meta name="description" content={page.data.description} />
-          )}
-        </>
-      );
-    },
     root() {
       return (
         <>
@@ -125,11 +113,32 @@ const config = defineConfig({
         </>
       );
     },
-    // 預設語系（zh-tw）同時存在於 /docs 與 /zh-tw/docs，canonical 一律指向無前綴版
     page(page) {
-      const canonical = page.url.replace(/^\/zh-tw(?=\/|$)/, "") || "/";
+      const slugs = page.url.replace(/^\/(zh-tw|zh-cn)(?=\/|$)/, "");
 
-      return <link rel="canonical" href={`${domain}${canonical}`} />;
+      return (
+        <>
+          <link rel="canonical" href={canonicalUrl(page.url)} />
+          {page.data.description && (
+            <meta name="description" content={page.data.description} />
+          )}
+          <link
+            rel="alternate"
+            hrefLang="zh-Hant"
+            href={`${domain}/zh-tw${slugs}`}
+          />
+          <link
+            rel="alternate"
+            hrefLang="zh-Hans"
+            href={`${domain}/zh-cn${slugs}`}
+          />
+          <link
+            rel="alternate"
+            hrefLang="x-default"
+            href={`${domain}/zh-tw${slugs}`}
+          />
+        </>
+      );
     },
   },
   translations,
@@ -149,8 +158,6 @@ const config = defineConfig({
     }),
   )
   .plugins(
-    defaultLocalePlugin(),
-    localeSwitchPlugin(),
     searchPlugin(),
     sitemapPlugin({
       getEntry(page) {
