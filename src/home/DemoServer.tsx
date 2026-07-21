@@ -69,16 +69,7 @@ export function DemoServer() {
         </div>
       </motion.div>
       <p className="text-muted-foreground">
-        歡迎訊息、等級系統這些設定，在
-        <a
-          href="https://dash.yeecord.com"
-          target="_blank"
-          rel="noreferrer"
-          className="mx-1 text-primary hover:underline"
-        >
-          控制面板
-        </a>
-        點一點就改好，不用背任何設定指令。
+        歡迎訊息、身分組、抽獎這些設定，一句指令叫出來，剩下用選的、用填的，不用記落落長的參數。
       </p>
     </div>
   );

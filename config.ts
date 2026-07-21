@@ -59,11 +59,6 @@ export const footer: FooterCategory[] = [
     title: "其他",
     items: [
       {
-        label: "控制面板",
-        href: "https://app.yeecord.com",
-        newWindow: true,
-      },
-      {
         label: "邀請機器人",
         href: "/invite",
       },
