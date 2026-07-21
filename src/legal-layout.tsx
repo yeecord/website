@@ -22,9 +22,9 @@ export const LegalPage: FC<{
 
   return (
     <HomeLayout {...baseOptions}>
-      <title>{`Yeecord - ${page.data.title}`}</title>
+      <title>{`${page.data.title} - Yeecord`}</title>
       <link rel="canonical" href={canonicalUrl(page.url)} />
-      <meta property="og:title" content={`Yeecord - ${page.data.title}`} />
+      <meta property="og:title" content={`${page.data.title} - Yeecord`} />
       {page.data.description && (
         <meta name="description" content={page.data.description} />
       )}
