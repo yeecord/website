@@ -77,8 +77,8 @@ export function GroundBand({
       <div
         aria-hidden
         className={clsx(
-          "-scale-y-100 h-12 bg-[url(/home/scene/groundLayer1.png)] bg-repeat-x",
-          "[background-size:auto_400%] [background-position:top_left]",
+          "-scale-y-100 -mt-px h-14 bg-[url(/home/scene/groundLayer1.png)] bg-repeat-x",
+          "[background-size:auto_400px] [background-position:top_left]",
           sceneTint,
         )}
       />

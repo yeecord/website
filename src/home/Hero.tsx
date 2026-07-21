@@ -37,7 +37,7 @@ export function Hero() {
           <br />
           搞定整個<span className="text-primary">伺服器</span>
         </h1>
-        <p className="max-w-[34rem] text-lg text-muted-foreground sm:text-xl">
+        <p className="max-w-[34rem] text-lg text-muted-foreground text-pretty sm:text-xl">
           抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
@@ -94,7 +94,7 @@ function Forest() {
 
 function ServerProof() {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 px-4 pt-14 pb-10 sm:flex-row sm:gap-5">
+    <div className="flex flex-col items-center justify-center gap-3 px-4 pt-5 pb-8 sm:flex-row sm:gap-5">
       <div className="-space-x-3 flex shrink-0 items-center">
         {SERVERS.map((server) => (
           <img
