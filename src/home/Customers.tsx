@@ -56,12 +56,12 @@ export function Customers() {
         </p>
         <div className="flex flex-row gap-2.5">
           <Link
-            href="/invite"
+            href="/invite/"
             className={clsx(
               "rounded-full bg-secondary px-6 py-3 font-medium text-lg text-secondary-foreground shadow-lg transition-all hover:bg-accent hover:text-accent-foreground",
             )}
           >
-            邀請機器人
+            安裝機器人
           </Link>
         </div>
         <motion.div
