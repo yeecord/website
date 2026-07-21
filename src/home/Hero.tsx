@@ -15,22 +15,22 @@ const SERVERS = [
 export function Hero() {
   return (
     <div className="relative z-[2] w-full">
-      <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-72 text-center md:pt-28">
-        <Cloud n={1} width={190} className="top-[9%] left-[6%]" />
+      <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-56 text-center sm:pb-72 md:pt-28">
+        <Cloud n={1} width={190} className="top-[4%] left-[6%] max-sm:w-24" />
         <Cloud
           n={2}
           width={130}
-          className="top-[34%] left-[20%] opacity-80 [animation-delay:-6s]"
+          className="top-[34%] left-[20%] opacity-80 [animation-delay:-6s] max-sm:hidden"
         />
         <Cloud
           n={3}
           width={230}
-          className="top-[13%] right-[7%] [animation-delay:-11s]"
+          className="top-[8%] right-[7%] [animation-delay:-11s] max-sm:top-[3%] max-sm:w-28"
         />
         <Cloud
           n={1}
           width={110}
-          className="top-[46%] right-[19%] opacity-70 [animation-delay:-3s]"
+          className="top-[46%] right-[19%] opacity-70 [animation-delay:-3s] max-sm:hidden"
         />
         <h1 className="font-bold text-5xl leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
           一隻恐龍
@@ -49,7 +49,7 @@ export function Hero() {
           </Link>
         </div>
         <HillsLayer className="bottom-16 h-40" />
-        <DinoMascot className="absolute bottom-12 right-[8%] sm:right-[12%]" />
+        <DinoMascot className="absolute bottom-10 right-[5%] sm:bottom-12 sm:right-[12%]" />
       </div>
       <GroundBand className="-mt-24">
         <Forest />
@@ -108,7 +108,7 @@ function ServerProof() {
           />
         ))}
       </div>
-      <p className="font-medium leading-none">
+      <p className="text-center font-medium leading-snug max-sm:text-sm">
         APEX Taiwan、VALORANT Taiwan 等
         <span className="mx-1 font-bold text-primary">350,000+</span>
         個伺服器都在用
