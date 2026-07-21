@@ -88,21 +88,24 @@
   --color-accent-foreground: var(--color-fd-accent-foreground);
   --color-ring: var(--color-fd-ring);
 
-  @keyframes servers-loop {
-    from {
-      transform: translateZ(0);
-    }
-    to {
-      transform: translate3d(-50%, 0, 0);
-    }
-  }
-
   @keyframes background-loop {
     from {
       background-position-x: 0;
     }
     to {
       background-position-x: 200%;
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.25;
+      transform: scale(0.75);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 

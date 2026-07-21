@@ -1,11 +1,17 @@
 import Link from "fumadocs-core/link";
+import { GrassTuft, Star } from "./decor";
 
 export function Community() {
   return (
     <div className="relative z-[2] mt-40 overflow-hidden">
       <div className="relative flex flex-col items-center gap-6 px-4 pt-16 pb-24 text-center">
-        <div className="-z-[1] absolute inset-x-0 bottom-0 overflow-hidden">
+        <div className="-z-[1] absolute inset-0 overflow-hidden">
+          <Star className="top-[12%] left-[18%]" size={13} delay={0.5} />
+          <Star className="top-[30%] right-[14%]" size={15} delay={1.3} />
+          <Star className="top-[8%] right-[30%]" size={9} delay={2.1} />
           <div className="-inset-x-[15%] absolute bottom-[-9rem] h-64 rounded-[50%] bg-hill-front" />
+          <GrassTuft className="bottom-6 left-[22%]" />
+          <GrassTuft className="bottom-3 right-[26%]" width={16} />
         </div>
         <div className="relative">
           <span className="-right-6 -top-2 absolute animate-pulse font-bold text-muted-foreground/70 text-xl">

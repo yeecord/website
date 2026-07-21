@@ -7,8 +7,8 @@ import { useAnimatedCounter } from "./utils/use-animated-counter";
 
 export function Trust() {
   const { count, start } = useAnimatedCounter(
-    250_000,
-    Math.max(250_000 - 10000, 0),
+    350_000,
+    Math.max(350_000 - 10000, 0),
     1,
   );
 
