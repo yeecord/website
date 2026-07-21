@@ -182,7 +182,9 @@ const config = defineConfig({
           ),
           options: {
             fonts: googleFonts([
-              { name: "Noto Sans TC", weight: [400, 600, 800] },
+              { name: "Manrope", weight: [500, 800] },
+              { name: "Noto Sans TC", weight: [400, 500, 800] },
+              { name: "Noto Sans SC", weight: [400, 500, 800] },
             ]),
             module: wasmModule,
           },
