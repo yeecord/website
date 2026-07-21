@@ -1,103 +1,66 @@
-const HeroGradient = "/hero.svg";
 import clsx from "clsx";
 import Link from "fumadocs-core/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
-import Gradient from "./components/Gradient";
-import styles from "./hero.module.css";
 
 export function Hero() {
   return (
-    <div
-      className={clsx(
-        "relative z-[2] mt-[6rem] flex w-full flex-col gap-12 px-[1rem] md:mt-[10rem] xl:mt-[14rem]",
-        "items-center text-center",
-      )}
-    >
-      <Gradient
-        src={HeroGradient}
-        className="-right-0 -top-[200px] -z-[1] lg:-right-[300px] absolute hidden w-full min-w-[800px]"
-      />
-      <h1
-        className={
-          "font-bold text-5xl sm:text-7xl xl:text-8xl min-[360px]:text-6xl"
-        }
-      >
-        萬中選一的
-        <span
-          className={clsx(
-            "mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 bg-clip-text text-transparent max-lg:my-2 max-lg:block",
-            styles["animated-gradient"],
-          )}
-        >
-          Discord
-        </span>
-        機器人
-      </h1>
-      <p
-        className={clsx(
-          "max-w-[450px] text-muted-foreground text-xl",
-          "md:max-w-[650px] lg:text-2xl",
-        )}
-      >
-        YEE 式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
-      </p>
-      <Buttons />
-      <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
-        <p className="mb-3 font-semibold text-lg text-muted-foreground md:mb-4">
-          各大伺服器一致好評
-        </p>
-        <div
-          className={clsx(
-            "overflow-hidden",
-            "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
-          )}
-        >
-          <div
-            className={clsx(
-              styles.servers,
-              "inline-block max-md:w-max max-md:animate-[servers-loop_infinite_30s_linear]",
-            )}
-          >
-            <Servers />
-            <Servers secondary />
+    <div className="relative z-[2] mt-16 flex w-full flex-col gap-16 px-4 md:mt-24">
+      <div className="flex items-center justify-between gap-8">
+        <div className="flex flex-col gap-7 text-center md:text-start">
+          <h1 className="font-bold text-5xl leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
+            一隻恐龍
+            <br />
+            搞定整個<span className="text-primary">伺服器</span>
+          </h1>
+          <p className="mx-auto max-w-[34rem] text-lg text-muted-foreground sm:text-xl md:mx-0">
+            YEE 式機器龍是全中文的 Discord
+            機器人：抽獎、身分組、動態語音、找吃的小遊戲通通都有，25
+            萬個伺服器都在用。
+          </p>
+          <div className="flex flex-col justify-center gap-3 sm:flex-row md:justify-start">
+            <Link
+              href="/invite/"
+              className={cn(buttonVariants({ color: "primary", size: "lg" }))}
+            >
+              免費安裝機器人
+            </Link>
+            <Link
+              href="/zh-tw/docs"
+              className={cn(buttonVariants({ color: "secondary", size: "lg" }))}
+            >
+              看使用教學
+            </Link>
           </div>
         </div>
+        <img
+          alt="YEE 式機器龍"
+          src="/img/logo.svg"
+          className="h-56 animate-[updown_5s_infinite] drop-shadow-xl max-md:hidden lg:h-72"
+        />
       </div>
+      <ServerMarquee />
     </div>
   );
 }
 
-function Buttons() {
+function ServerMarquee() {
   return (
-    <div className="grid w-full max-w-[500px] grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2">
-      <Link
-        href="/zh-tw/docs"
-        className={cn(
-          buttonVariants({ color: "ghost", size: "lg" }),
-          styles["rainbow-border"],
-        )}
-        style={{
-          boxShadow: `
-          inset 2px 2px 0 var(--color-green-400),
-          inset -2px -2px 0 var(--color-cyan-500),
-          5px 5px 25px color-mix(in oklab, var(--color-green-400) 50%, transparent),
-          -5px -5px 25px color-mix(in oklab, var(--color-cyan-500) 50%, transparent)`,
-        }}
-      >
-        使用教學
-      </Link>
-      <Link
-        href="/invite/"
-        className={cn(
-          buttonVariants({
-            color: "secondary",
-            size: "lg",
-          }),
+    <div className="flex w-full flex-col gap-5">
+      <p className="text-center font-semibold text-lg text-muted-foreground">
+        各大伺服器一致好評
+      </p>
+      <div
+        className={clsx(
+          "overflow-hidden",
+          "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
         )}
       >
-        安裝機器人
-      </Link>
+        <div className="inline-block max-md:w-max max-md:animate-[servers-loop_infinite_30s_linear]">
+          <Servers />
+          <Servers secondary />
+        </div>
+      </div>
     </div>
   );
 }

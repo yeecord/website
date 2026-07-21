@@ -2,16 +2,14 @@ import { canonicalUrl, domain, footer } from "@config";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import Footer from "@/components/Footer";
 import { Community } from "@/home/Community";
-import { Customers } from "@/home/Customers";
-import { Features } from "@/home/features";
+import { DemoServer } from "@/home/DemoServer";
 import { Hero } from "@/home/Hero";
-import { FindFood } from "@/home/FindFood";
-import Sponsor from "@/home/Sponsor";
+import { Trust } from "@/home/Trust";
 import { baseOptions } from "@/layout-config";
 
 const TITLE = "Yeecord - 萬中選一的 Discord 機器人";
 const DESCRIPTION =
-  "YEE 式機器龍的指令及使用教學，透過簡單的一鍵式指令以及中文介面的音樂功能快速建立好和朋友玩耍的優質空間";
+  "YEE 式機器龍是全中文的 Discord 機器人：抽獎、身分組、動態語音、找吃的小遊戲通通都有，25 萬個伺服器都在用";
 
 export default function HomePage() {
   return (
@@ -25,11 +23,9 @@ export default function HomePage() {
       <main className="overflow-x-clip">
         <div className="mx-auto flex max-w-[1400px] flex-col px-3 md:px-6">
           <Hero />
-          <Features />
-          <FindFood />
-          <Customers />
+          <DemoServer />
+          <Trust />
         </div>
-        <Sponsor />
         <Community />
       </main>
       <Footer categories={footer} />

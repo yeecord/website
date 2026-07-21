@@ -118,34 +118,12 @@
     }
   }
 
-  @keyframes updown-slow {
-    from {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(1.7rem);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
 }
 
 .prose {
   --tw-prose-body: var(--color-fd-muted-foreground);
 }
 
-@variant lg {
-  .play-list {
-    animation: updown-slow 4s infinite;
-    animation-timing-function: ease-in-out;
-  }
-
-  .music-player {
-    animation: updown 5s infinite;
-    animation-timing-function: ease-in-out;
-  }
-}
 
 #nd-home-layout li > a {
   @apply mx-0;
