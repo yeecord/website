@@ -205,7 +205,7 @@ export function InvitePicker() {
                   className={cn(
                     "rounded-xl border p-5 text-left transition-colors",
                     checked
-                      ? "bg-fd-card"
+                      ? "border-green-600/50 bg-fd-card dark:border-green-500/50"
                       : "bg-fd-card/50 hover:bg-fd-card",
                   )}
                 >
