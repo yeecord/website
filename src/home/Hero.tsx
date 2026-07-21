@@ -88,7 +88,7 @@ function Buttons() {
         使用教學
       </Link>
       <Link
-        href="/invite"
+        href="/invite/"
         className={cn(
           buttonVariants({
             color: "secondary",
@@ -96,7 +96,7 @@ function Buttons() {
           }),
         )}
       >
-        邀請機器人
+        安裝機器人
       </Link>
     </div>
   );
