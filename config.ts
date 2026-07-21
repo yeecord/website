@@ -2,6 +2,11 @@ import type { FooterCategory } from "@/components/Footer";
 
 export const domain = "https://yeecord.com";
 
+// Cloudflare Pages 對目錄頁一律 308 到帶斜線網址，canonical 必須指向最終網址
+export function canonicalUrl(path: string) {
+  return `${domain}${path.endsWith("/") ? path : `${path}/`}`;
+}
+
 export const footer: FooterCategory[] = [
   {
     title: "連結",
