@@ -1,5 +1,6 @@
 import { canonicalUrl, domain } from "@config";
 import type { ReactNode } from "react";
+import { lucideIconsPlugin } from "fumadocs-core/source/plugins/lucide-icons";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
 import { defineConfig } from "fumapress";
 import { fumadocsMdx } from "fumapress/adapters/mdx";
@@ -82,6 +83,9 @@ const config = defineConfig({
     docs: docs.toFumadocsSource({ baseDir: "docs" }),
     blog: blog.toFumadocsSource({ baseDir: "blog" }),
     legal: legal.toFumadocsSource(),
+  },
+  loaderOptions: {
+    plugins: [lucideIconsPlugin()],
   },
   site: {
     name: "Yeecord",

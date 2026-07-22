@@ -1,4 +1,5 @@
 {
+  "icon": "GitPullRequest",
   "title": "文檔協作大全",
   "pages": ["guide", "run-project"]
 }
