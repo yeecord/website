@@ -15,7 +15,7 @@
 /rules https://hackmd.io/@yeecord/HJtapIa55 302
 /github https://github.com/yeecord/website 302
 
-# 舊 docs 網址（改名 / 移除）→ 現址，指定條在 blanket 之前
+# 舊 docs 網址（改名 / 移除）→ 現址
 /docs/ticket /zh-tw/docs/commands 301
 /docs/commands/ticket /zh-tw/docs/commands 301
 /docs/migrate-to-v4 /zh-tw/docs 301
@@ -31,13 +31,8 @@
 /docs/commands/music /zh-tw/docs 301
 /docs/music /zh-tw/docs 301
 /docs/commands/list /zh-tw/docs/commands 301
-/docs/commands/reference/* /zh-tw/docs/commands 301
-/docs/rpg/* /zh-tw/docs/find-food 301
 /docs/rpg /zh-tw/docs/find-food 301
-
-# 其餘舊 docs 一律搬到 zh-tw 前綴（圖片已移除，可安全 blanket）
 /docs /zh-tw/docs 301
-/docs/* /zh-tw/docs/:splat 301
 
 # 條款頁
 /tos /zh-tw/terms 301
@@ -66,9 +61,13 @@
 /blog/welcome-to-v2 /zh-tw/blog/welcome-to-v2 301
 /blog/welcome-to-v3 /zh-tw/blog/welcome-to-v3 301
 /blog/why-not-discordjs /zh-tw/blog/why-not-discordjs 301
-/blog/yeecord-music-lag-blog-ep1 /zh-tw/blog/yeecord-music-lag-blog-ep1 301
 /blog /zh-tw/blog 301
 
 /zh-tw / 301
 /zh-cn / 301
 /index / 301
+
+# splat 規則放最後，靜態規則才能走快速路徑
+/docs/commands/reference/* /zh-tw/docs/commands 301
+/docs/rpg/* /zh-tw/docs/find-food 301
+/docs/* /zh-tw/docs/:splat 301
