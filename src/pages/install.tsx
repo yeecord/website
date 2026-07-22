@@ -1,7 +1,7 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import Footer from "@/components/Footer";
 import { canonicalUrl, domain, footer } from "@config";
-import { InvitePicker } from "@/components/invite/picker";
+import { InstallPicker } from "@/components/install/picker";
 import { Cloud, GroundBand, Plant } from "@/home/scene";
 import { baseOptions } from "@/layout-config";
 
@@ -54,7 +54,7 @@ export default function InstallPage() {
           <p className="mx-auto mt-4 mb-10 max-w-md text-center text-fd-muted-foreground text-lg">
             權限自己勾，勾多少拿多少。不放心的先不給，之後隨時能補。
           </p>
-          <InvitePicker />
+          <InstallPicker />
         </div>
         <GroundBand className="h-28">
           <Plant
