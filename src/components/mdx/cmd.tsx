@@ -28,7 +28,6 @@ export const commandNames: Record<string, { tw: string; cn: string }> = {
   minecraft: { tw: "麥塊", cn: "我的世界" },
   pick: { tw: "選擇", cn: "选择" },
   poll: { tw: "投票", cn: "投票" },
-  profile: { tw: "我的資訊", cn: "我的信息" },
   quote: { tw: "引用", cn: "引用消息" },
   random: { tw: "隨機抽籤", cn: "随机抽签" },
   "role-menu": { tw: "建立身分組選單", cn: "创建身份组菜单" },
