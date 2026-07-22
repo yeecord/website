@@ -120,7 +120,7 @@ function Checkbox({ checked }: { checked: boolean }) {
       className={cn(
         "flex size-5 shrink-0 items-center justify-center rounded-md border transition-colors",
         checked
-          ? "border-green-600 bg-green-600 text-white dark:border-green-500 dark:bg-green-500"
+          ? "border-primary bg-primary text-primary-foreground"
           : "border-fd-border bg-fd-background",
       )}
     >
@@ -174,7 +174,7 @@ export function InvitePicker() {
 
       {mode === "guild" ? (
         <>
-          <div className="rounded-xl border bg-fd-card p-5">
+          <div className="rounded-2xl border bg-fd-card p-5">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="font-semibold">必要權限</h2>
               <span className="text-fd-muted-foreground text-xs">
@@ -202,9 +202,9 @@ export function InvitePicker() {
                   onClick={() => toggle(feature.id)}
                   aria-pressed={checked}
                   className={cn(
-                    "rounded-xl border p-5 text-left transition-colors",
+                    "rounded-2xl border p-5 text-left transition-colors",
                     checked
-                      ? "border-green-600/50 bg-fd-card dark:border-green-500/50"
+                      ? "border-primary/50 bg-fd-card"
                       : "bg-fd-card/50 hover:bg-fd-card",
                   )}
                 >
@@ -235,7 +235,7 @@ export function InvitePicker() {
           </div>
         </>
       ) : (
-        <div className="rounded-xl border bg-fd-card p-6">
+        <div className="rounded-2xl border bg-fd-card p-6">
           <h2 className="font-semibold">跟著你走，不用進伺服器</h2>
           <p className="mt-2 text-fd-muted-foreground text-sm">
             裝在自己的 Discord
