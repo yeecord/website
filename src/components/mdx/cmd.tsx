@@ -8,12 +8,12 @@ import {
 // 顯示名稱同步自 yeecord repo src/infrastructure/i18n/{zh-TW,zh-CN}.json 的 slash.*.name
 export const commandNames: Record<string, { tw: string; cn: string }> = {
   "1a2b": { tw: "1a2b", cn: "1a2b" },
-  "afk-channel": { tw: "afk-channel", cn: "afk-channel" },
+  "afk-channel": { tw: "閒置頻道", cn: "挂机频道" },
   "auto-channels": { tw: "動態語音頻道", cn: "動態語音頻道" },
   "auto-role": { tw: "新成員身分組", cn: "新成员身份组" },
   avatar: { tw: "頭貼", cn: "头像" },
   banner: { tw: "旗幟", cn: "旗帜" },
-  "bot-fight": { tw: "bot-fight", cn: "bot-fight" },
+  "bot-fight": { tw: "機器人防禦", cn: "机器人防御" },
   bullshit: { tw: "唬爛產生器", cn: "胡说八道生成器" },
   clear: { tw: "大量刪除訊息", cn: "大量删除消息" },
   feedback: { tw: "回報", cn: "反馈" },
@@ -25,7 +25,7 @@ export const commandNames: Record<string, { tw: string; cn: string }> = {
   "lock-channel": { tw: "鎖定頻道", cn: "锁定频道" },
   lol: { tw: "英雄聯盟", cn: "英雄联盟" },
   "member-notification": { tw: "成員通知", cn: "成员通知" },
-  minecraft: { tw: "minecraft", cn: "我的世界" },
+  minecraft: { tw: "麥塊", cn: "我的世界" },
   pick: { tw: "選擇", cn: "选择" },
   poll: { tw: "投票", cn: "投票" },
   profile: { tw: "我的資訊", cn: "我的信息" },
