@@ -77,7 +77,7 @@ const features: Feature[] = [
   },
 ];
 
-function inviteUrl(mode: "guild" | "user", selected: Set<string>) {
+function installUrl(mode: "guild" | "user", selected: Set<string>) {
   if (mode === "user")
     return `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&integration_type=1&scope=applications.commands`;
 
@@ -129,7 +129,7 @@ function Checkbox({ checked }: { checked: boolean }) {
   );
 }
 
-export function InvitePicker() {
+export function InstallPicker() {
   const [mode, setMode] = useState<"guild" | "user">("guild");
   const [selected, setSelected] = useState(
     () => new Set(features.map((feature) => feature.id)),
@@ -245,7 +245,7 @@ export function InvitePicker() {
             這個模式碰不到伺服器設定，所以一個權限都不用給。
           </p>
           <div className="mt-4 flex flex-wrap gap-1.5">
-            {["/poll", "/profile", "/find-food", "/pick", "/bullshit"].map(
+            {["/poll", "/find-food", "/pick", "/bullshit"].map(
               (command) => (
                 <Chip key={command} className="font-mono">
                   {command}
@@ -257,7 +257,7 @@ export function InvitePicker() {
       )}
 
       <a
-        href={inviteUrl(mode, selected)}
+        href={installUrl(mode, selected)}
         target="_blank"
         rel="noreferrer"
         className="btn-chunky mx-auto px-10"
