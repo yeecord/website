@@ -41,7 +41,7 @@ export function Hero() {
           抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <Link href="/invite/" className="btn-chunky">
+          <Link href="/install/" className="btn-chunky">
             安裝機器人
           </Link>
           <Link href="/zh-tw/docs" className="btn-chunky-secondary">

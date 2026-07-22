@@ -6,8 +6,9 @@
 /img/logo_1024x1024.png /img/logo.svg 301
 
 # 外部 / 短連結
-/i /invite 302
-/link /invite 302
+/i /install 302
+/link /install 302
+/invite /install 301
 /discord https://discord.gg/yeecord 302
 /support https://discord.gg/yeecord 302
 /topgg https://top.gg/bot/584213384409382953 302

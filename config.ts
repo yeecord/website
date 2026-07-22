@@ -59,8 +59,8 @@ export const footer: FooterCategory[] = [
     title: "其他",
     items: [
       {
-        label: "邀請機器人",
-        href: "/invite",
+        label: "安裝機器人",
+        href: "/install",
       },
       {
         label: "Discord",
