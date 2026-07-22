@@ -76,17 +76,25 @@ export function RoleOrderDemo() {
   );
 }
 
-const permissions = [
+const defaultPermissions = [
   { name: "檢視頻道", enabled: true },
   { name: "發送訊息", enabled: false },
 ];
 
-export function ChannelPermissionDemo() {
-  const step = useLoop(3, 1800);
+export function ChannelPermissionDemo({
+  title = "頻道設定 → 權限 → @everyone",
+  permissions = defaultPermissions,
+  caption = "「檢視頻道」開、「發送訊息」關，就是一個大家看得到但只有管理員能發言的頻道",
+}: {
+  title?: string;
+  permissions?: { name: string; enabled: boolean }[];
+  caption?: string;
+}) {
+  const step = useLoop(permissions.length + 1, 1800);
 
   return (
     <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
-      <p className="mb-3 font-semibold text-white">頻道設定 → 權限 → @everyone</p>
+      <p className="mb-3 font-semibold text-white">{title}</p>
       <div className="flex flex-col gap-2">
         {permissions.map((permission, index) => {
           const done = step > index;
@@ -120,9 +128,7 @@ export function ChannelPermissionDemo() {
           );
         })}
       </div>
-      <p className="mt-3 text-xs text-discord-muted">
-        「檢視頻道」開、「發送訊息」關，就是一個大家看得到但只有管理員能發言的頻道
-      </p>
+      <p className="mt-3 text-xs text-discord-muted">{caption}</p>
     </div>
   );
 }
