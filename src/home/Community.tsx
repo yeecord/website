@@ -32,7 +32,7 @@ export function Community() {
           安裝免費，設定五分鐘。卡關了就來 Discord 社群喊一聲，我們都在。
         </p>
         <div className="flex flex-row flex-wrap justify-center gap-3 pb-10">
-          <Link href="/invite/" className="btn-chunky">
+          <Link href="/install/" className="btn-chunky">
             安裝機器人
           </Link>
           <Link
