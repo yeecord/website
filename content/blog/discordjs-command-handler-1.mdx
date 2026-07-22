@@ -31,7 +31,7 @@ image: /blog/discordjs-command-handler-1/discordjs-command-handler-1.jpeg
 - [MSDN JavaScript Docs](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript)
 - [Fooish JavaScript 教學](https://www.fooish.com/javascript/)
 
-</Info>
+</Callout>
 
 ## 前言
 
@@ -126,7 +126,7 @@ Map 簡單來說就是一個儲存很多鍵值對 (key-value) 的物件，跟字
 
 </details>
 
-</Info>
+</Callout>
 
 ## 指令載入器
 
@@ -154,7 +154,7 @@ module.exports = loadCommands;
 module.exports = function loadCommands(client, directory) {};
 ```
 
-</Info>
+</Callout>
 
 <Adsense />
 
@@ -279,7 +279,7 @@ if (cmdObject) {
 
 再來，建立指令：
 
-<Warning>有用到 discord.js 的東西請記得匯入！（例如：`MessageEmbed`）</Warning>
+<Callout type="warn">有用到 discord.js 的東西請記得匯入！（例如：`MessageEmbed`）</Callout>
 
 ```js showLineNumbers
 const { MessageEmbed } = require("discord.js");

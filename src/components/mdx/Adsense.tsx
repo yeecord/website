@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import { useEffect, useRef } from "react";
 import { useAdsScript } from "@/components/adsense";
-import { Warning } from "@/components/mdx/Admonition";
+import { Callout } from "fumadocs-ui/components/callout";
 
 /**
  * Google Ads :)
@@ -27,9 +27,9 @@ export function Adsense() {
 
   if (failed)
     return (
-      <Warning title="太無情了擋廣告" type="warn">
+      <Callout title="太無情了擋廣告" type="warn">
         <p>關閉 AdBlocker 讓機器龍多活一天</p>
-      </Warning>
+      </Callout>
     );
 
   return (
