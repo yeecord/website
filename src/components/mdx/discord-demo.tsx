@@ -30,7 +30,7 @@ const botRole = { name: "YEE式機器龍", color: "var(--color-discord-blurple)"
 
 export function RoleOrderDemo() {
   const step = useLoop(2, 2200);
-  const list = step === 0 ? [...roles.slice(0, 2), botRole, ...roles.slice(2)] : [botRole, ...roles];
+  const list = step === 0 ? [...roles, botRole] : [...roles.slice(0, 2), botRole, ...roles.slice(2)];
 
   return (
     <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
@@ -63,7 +63,7 @@ export function RoleOrderDemo() {
                   step === 0 ? "text-discord-muted" : "text-discord-green",
                 )}
               >
-                {step === 0 ? "把我拖到最上面" : "這樣就對了！"}
+                {step === 0 ? "把我拖到要給的身分組上面" : "這樣就對了！"}
               </span>
             )}
           </motion.div>
