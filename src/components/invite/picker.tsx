@@ -2,7 +2,6 @@
 
 import { Check, Server, User } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 
 const CLIENT_ID = "584213384409382953";
@@ -261,10 +260,7 @@ export function InvitePicker() {
         href={inviteUrl(mode, selected)}
         target="_blank"
         rel="noreferrer"
-        className={cn(
-          buttonVariants({ color: "primary", size: "lg" }),
-          "mx-auto px-10",
-        )}
+        className="btn-chunky mx-auto px-10"
       >
         {mode === "guild" ? "帶我回家" : "安裝到我的帳號"}
       </a>

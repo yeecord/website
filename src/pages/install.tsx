@@ -4,16 +4,16 @@ import { canonicalUrl, domain, footer } from "@config";
 import { InvitePicker } from "@/components/invite/picker";
 import { baseOptions } from "@/layout-config";
 
-const TITLE = "邀請 YEE 式機器龍";
+const TITLE = "安裝 YEE 式機器龍";
 const DESCRIPTION =
   "權限自己勾，勾多少拿多少。也可以裝到自己的帳號上，私訊和任何伺服器都能用。";
 
-export default function InvitePage() {
+export default function InstallPage() {
   return (
     <HomeLayout {...baseOptions}>
       <title>{TITLE}</title>
       <meta name="description" content={DESCRIPTION} />
-      <link rel="canonical" href={canonicalUrl("/invite")} />
+      <link rel="canonical" href={canonicalUrl("/install")} />
       <meta property="og:title" content={TITLE} />
       <meta property="og:description" content={DESCRIPTION} />
       <meta property="og:image" content={`${domain}/opengraph-image.png`} />
