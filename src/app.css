@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumapress/css/preset.css";
@@ -7,19 +8,66 @@
   --color-discord-blurple: #5865f2;
 }
 
+/* shadcn (base-nova) 的 token 全部對映到 fumadocs 的 fd 變數，
+   單一色彩來源，dark mode 跟著 .dark 的 fd 變數自動切換 */
+@theme inline {
+  --color-background: var(--color-fd-background);
+  --color-foreground: var(--color-fd-foreground);
+  --color-card: var(--color-fd-card);
+  --color-card-foreground: var(--color-fd-card-foreground);
+  --color-popover: var(--color-fd-popover);
+  --color-popover-foreground: var(--color-fd-popover-foreground);
+  --color-primary: var(--color-fd-primary);
+  --color-primary-foreground: var(--color-fd-primary-foreground);
+  --color-secondary: var(--color-fd-secondary);
+  --color-secondary-foreground: var(--color-fd-secondary-foreground);
+  --color-muted: var(--color-fd-muted);
+  --color-muted-foreground: var(--color-fd-muted-foreground);
+  --color-accent: var(--color-fd-accent);
+  --color-accent-foreground: var(--color-fd-accent-foreground);
+  --color-border: var(--color-fd-border);
+  --color-input: var(--color-fd-border);
+  --color-ring: var(--color-fd-ring);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive-foreground: oklch(0.985 0 0);
+}
+
+/* Discord 深色版官方色，給文件的聊天視覺模擬元件用 */
+@theme {
+  --color-discord-bg: #313338;
+  --color-discord-embed: #2b2d31;
+  --color-discord-input: #383a40;
+  --color-discord-pill: #3c4270;
+  --color-discord-pill-foreground: #c9cdfb;
+  --color-discord-text: #dbdee1;
+  --color-discord-icon: #b5bac1;
+  --color-discord-placeholder: #6d6f78;
+  --color-discord-option: #1e1f22;
+  --color-discord-option-border: #7984f5;
+  --color-discord-avatar: #f0e6d2;
+  --color-discord-muted: #80848e;
+  --color-discord-blurple: #5865f2;
+  --color-discord-secondary: #4e5058;
+  --color-discord-success: #248046;
+  --color-discord-green: #23a55a;
+  --color-discord-danger: #da373c;
+  --color-discord-gold: #f0b232;
+  --color-discord-fuchsia: #eb459e;
+}
+
 :root {
   --default-font-family: "Noto Sans TC", sans-serif;
 
-  /* yeecord green, matches the green-400/cyan gradients used across the site */
-  --color-fd-primary: oklch(0.627 0.17 149.2);
+  /* 主題綠對齊新版恐龍 logo 的主體色 #6bb369 */
+  --color-fd-primary: oklch(0.701 0.128 143.5);
   --color-fd-primary-foreground: oklch(0.985 0 0);
-  --color-fd-ring: oklch(0.627 0.17 149.2);
+  --color-fd-ring: oklch(0.701 0.128 143.5);
 }
 
 .dark {
-  --color-fd-primary: oklch(0.792 0.178 151.7);
-  --color-fd-primary-foreground: oklch(0.266 0.052 153.1);
-  --color-fd-ring: oklch(0.792 0.178 151.7);
+  --color-fd-primary: oklch(0.8 0.13 143.5);
+  --color-fd-primary-foreground: oklch(0.27 0.05 143.5);
+  --color-fd-ring: oklch(0.8 0.13 143.5);
 }
 
 @theme {
@@ -40,15 +88,6 @@
   --color-accent-foreground: var(--color-fd-accent-foreground);
   --color-ring: var(--color-fd-ring);
 
-  @keyframes servers-loop {
-    from {
-      transform: translateZ(0);
-    }
-    to {
-      transform: translate3d(-50%, 0, 0);
-    }
-  }
-
   @keyframes background-loop {
     from {
       background-position-x: 0;
@@ -58,46 +97,73 @@
     }
   }
 
-  @keyframes updown {
-    from {
-      transform: translateY(0);
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translateX(0);
     }
     50% {
-      transform: translateY(1.5rem);
-    }
-    to {
-      transform: translateY(0);
+      transform: translateX(26px);
     }
   }
 
-  @keyframes updown-slow {
-    from {
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-1.2deg);
+    }
+    50% {
+      transform: rotate(1.4deg);
+    }
+  }
+
+  @keyframes bob {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
-      transform: translateY(1.7rem);
-    }
-    to {
-      transform: translateY(0);
+      transform: translateY(-6px);
     }
   }
+
 }
 
 .prose {
   --tw-prose-body: var(--color-fd-muted-foreground);
 }
 
-@variant lg {
-  .play-list {
-    animation: updown-slow 4s infinite;
-    animation-timing-function: ease-in-out;
-  }
-
-  .music-player {
-    animation: updown 5s infinite;
-    animation-timing-function: ease-in-out;
-  }
+/* Duolingo 式玩具按鈕：實色硬陰影，按下時往下沉 */
+.btn-chunky,
+.btn-chunky-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: --spacing(2);
+  border-radius: var(--radius-2xl);
+  padding: --spacing(3) --spacing(6);
+  font-weight: var(--font-weight-bold);
+  transition: transform 0.1s, box-shadow 0.1s;
 }
+
+.btn-chunky {
+  background-color: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+  box-shadow: 0 4px 0 color-mix(in oklab, var(--color-fd-primary) 55%, black);
+}
+
+.btn-chunky-secondary {
+  background-color: var(--color-fd-secondary);
+  color: var(--color-fd-secondary-foreground);
+  box-shadow: 0 4px 0 color-mix(in oklab, var(--color-fd-secondary) 60%, black);
+}
+
+.btn-chunky:active,
+.btn-chunky-secondary:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 transparent;
+}
+
 
 #nd-home-layout li > a {
   @apply mx-0;

@@ -1,20 +1,74 @@
-/i /invite 302
-/link /invite 302
+# 舊 logo 檔 → 新 svg
+/img/logo.png /img/logo.svg 301
+/img/logo-transparent.png /img/logo.svg 301
+/img/logo_128x128.png /img/logo.svg 301
+/img/logo_512x512.png /img/logo.svg 301
+/img/logo_1024x1024.png /img/logo.svg 301
+
+# 外部 / 短連結
+/i /install 302
+/link /install 302
+/invite /install 301
 /discord https://discord.gg/yeecord 302
 /support https://discord.gg/yeecord 302
-/tos /terms 302
 /topgg https://top.gg/bot/584213384409382953 302
 /dst https://discordservers.tw/bots/584213384409382953 302
 /rules https://hackmd.io/@yeecord/HJtapIa55 302
 /github https://github.com/yeecord/website 302
-/blog/discord-rpc-customize /blog/discord-rpc-optimize 301
+
+# 舊 docs 網址（改名 / 移除）→ 現址
+/docs/ticket /zh-tw/docs/commands 301
+/docs/commands/ticket /zh-tw/docs/commands 301
+/docs/migrate-to-v4 /zh-tw/docs 301
+/docs/intro /zh-tw/docs 301
+/docs/role /zh-tw/docs/commands/role-menu 301
+/docs/join-message /zh-tw/docs/commands/member-notification 301
+/docs/dvc /zh-tw/docs/commands/auto-channels 301
+/docs/chat /zh-tw/docs 301
+/docs/commands/role /zh-tw/docs/commands/role-menu 301
+/docs/commands/dvc /zh-tw/docs/commands/auto-channels 301
+/docs/commands/join-message /zh-tw/docs/commands/member-notification 301
+/docs/commands/chat /zh-tw/docs 301
+/docs/commands/music /zh-tw/docs 301
+/docs/music /zh-tw/docs 301
+/docs/commands/list /zh-tw/docs/commands 301
+/docs/rpg /zh-tw/docs/find-food 301
+/docs /zh-tw/docs 301
+
+# 條款頁
+/tos /zh-tw/terms 301
+/privacy /zh-tw/privacy 301
+/terms /zh-tw/terms 301
+
+# 部落格：逐篇搬到 zh-tw 前綴（不能 blanket，作者頭像也在 /blog/ 下）
+/blog/discord-rpc-customize /zh-tw/blog/discord-rpc-optimize 301
 /blog/Gary50613.jpg /blog/kane50613.jpg 301
-/docs/migrate-to-v4 /docs 301
-/docs/intro /docs 301
-/docs/role /docs/commands/role 301
-/docs/join-message /docs/commands/join-message 301
-/docs/dvc /docs/commands/dvc 301
-/docs/poll /docs/commands/poll 301
-/docs/chat /docs/commands/chat 301
-/docs/ticket /docs/commands/ticket 301
+/blog/0507-downtime-report /zh-tw/blog/0507-downtime-report 301
+/blog/discord-bot-troubleshooting /zh-tw/blog/discord-bot-troubleshooting 301
+/blog/discord-permissions-you-need-to-know /zh-tw/blog/discord-permissions-you-need-to-know 301
+/blog/discord-rpc-optimize /zh-tw/blog/discord-rpc-optimize 301
+/blog/discordjs-command-handler-1 /zh-tw/blog/discordjs-command-handler-1 301
+/blog/discordjs-dice-bot /zh-tw/blog/discordjs-dice-bot 301
+/blog/fix-music-lag /zh-tw/blog/fix-music-lag 301
+/blog/git-contribute-guide /zh-tw/blog/git-contribute-guide 301
+/blog/heroku-end-free-tier /zh-tw/blog/heroku-end-free-tier 301
+/blog/heroku-security /zh-tw/blog/heroku-security 301
+/blog/how-to-invite-bot /zh-tw/blog/how-to-invite-bot 301
+/blog/make-discord-music-bot-without-coding /zh-tw/blog/make-discord-music-bot-without-coding 301
+/blog/new-poll-command /zh-tw/blog/new-poll-command 301
+/blog/thats-why-i-gave-up-on-music /zh-tw/blog/thats-why-i-gave-up-on-music 301
+/blog/top-chinese-discord-bot /zh-tw/blog/top-chinese-discord-bot 301
+/blog/ubuntu-nala /zh-tw/blog/ubuntu-nala 301
+/blog/welcome-to-v2 /zh-tw/blog/welcome-to-v2 301
+/blog/welcome-to-v3 /zh-tw/blog/welcome-to-v3 301
+/blog/why-not-discordjs /zh-tw/blog/why-not-discordjs 301
+/blog /zh-tw/blog 301
+
+/zh-tw / 301
+/zh-cn / 301
 /index / 301
+
+# splat 規則放最後，靜態規則才能走快速路徑
+/docs/commands/reference/* /zh-tw/docs/commands 301
+/docs/rpg/* /zh-tw/docs/find-food 301
+/docs/* /zh-tw/docs/:splat 301

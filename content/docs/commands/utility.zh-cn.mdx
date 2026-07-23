@@ -1,0 +1,52 @@
+---
+title: 实用小工具
+description: 名言图片、随机抽签、1A2B、胡说八道生成器等小工具命令。
+---
+
+这些命令大多 [到处可用](./index.mdx#在哪里可以用)：装到账号后私信、群组私信都能玩。
+
+## 图片卡片
+
+机器龙会把结果画成精美的图片：
+
+| 命令 | 说明 |
+| ---- | ---- |
+| <Cmd name="quote" /> | 把某人最近的消息做成名言图片 |
+
+<Cmd name="quote" /> 也有右键版本：对任何消息点右键（手机长按）→ 应用 → **quote-message**，直接把那条消息做成名言图。
+
+## 查询
+
+| 命令 | 说明 |
+| ---- | ---- |
+| <Cmd name="status" /> | 机器龙状态：延迟、服务器数、账号安装数、运行时间 |
+| <Cmd name="guild" /> | 当前服务器的信息 |
+| <Cmd name="avatar" /> | 获取用户头像原图（2048px） |
+| <Cmd name="banner" /> | 获取用户横幅原图 |
+| <Cmd name="minecraft player" /> | Minecraft 玩家信息，可绑定自己的 ID |
+| <Cmd name="minecraft server" /> | Minecraft 服务器状态 |
+
+## 娱乐
+
+| 命令 | 说明 |
+| ---- | ---- |
+| <Cmd name="pick" /> | 丢一个问题，机器龙帮你选答案 |
+| <Cmd name="random number" /> | 抽一个范围内的数字 |
+| <Cmd name="random voice-channel" /> | 从语音频道随机抽一位成员，抽奖神器 |
+| <Cmd name="1a2b" /> | 1A2B 猜数字，5 种难度 |
+| <Cmd name="bullshit" /> | 道歉文、情书生成器，可指定字数 |
+
+<SlashCommand
+  name="bullshit"
+  options={[
+    { name: "topic", value: "迟到的道歉文", required: true },
+    { name: "length", value: "500" },
+  ]}
+  description="生成一篇 500 字的文章，超过 1500 字会用文本文件附上"
+/>
+
+## 反馈问题
+
+<SlashCommand name="feedback" description="弹出表单，把问题或建议直接送到开发团队手上" />
+
+错误消息出现时也会附上反馈按钮，点了就能直接反馈。

@@ -1,0 +1,27 @@
+---
+title: 英雄聯盟
+description: 綁定 Riot ID 之後查戰績、看即時對局、追蹤本週免費輪替英雄。
+---
+
+<Cmd name="lol" /> 查詢英雄聯盟的玩家資訊，戰績卡片會畫成圖片。
+
+<CommandHeader />
+
+## 綁定帳號
+
+<SlashCommand
+  name="lol link"
+  options={[{ name: "name", value: "Hide on bush#KR1", required: true }]}
+  description="綁定你的 Riot ID，格式是 名稱#Tag"
+/>
+
+綁定後其他子指令的 `name` 都可以留空，直接查自己。
+
+## 查詢
+
+| 指令 | 說明 |
+| ---- | ---- |
+| <Cmd name="lol player" /> | 玩家卡片：等級、單雙排／彈性積分、英雄專精 |
+| <Cmd name="lol matches" /> | 最近 10 場戰績，附上一場／下一場按鈕翻頁 |
+| <Cmd name="lol live" /> | 正在進行的對局，藍紅方陣容 |
+| <Cmd name="lol rotation" /> | 本週免費輪替英雄 |

@@ -1,0 +1,47 @@
+---
+title: 成员通知
+description: 成员加入或退出服务器时，在指定频道发送自定义的欢迎或道别消息。
+---
+
+<Cmd name="member-notification" /> 设置成员加入、退出服务器时的通知消息。
+
+<CommandHeader you={["管理服务器"]} />
+
+## 设置
+
+<SlashCommand
+  name="member-notification"
+  options={[{ name: "type", value: "join", required: true }]}
+  description="type 选 join 设置加入通知、leave 设置退出通知"
+/>
+
+执行后会弹出表单：
+
+| 字段 | 说明 |
+| ---- | ---- |
+| 启用状态 | 开或关 |
+| 发送频道 | 通知要发到哪个文字频道 |
+| 消息内容 | 最多 2000 字，支持 Markdown |
+
+消息内容里可以放 `{user}`，发送时会换成新成员的提及：
+
+<DiscordChat>
+  <DiscordMessage>
+    <p>欢迎 <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">@新成员</span> 加入服务器！先到规则频道看看吧 🎉</p>
+  </DiscordMessage>
+</DiscordChat>
+
+加入和退出的消息分开设置，各跑一次命令就好。
+
+<Callout type="warn">
+  发送频道被删掉、或机器龙看不到那个频道的时候，通知会自动关闭。频道被删了就重跑命令换一个；还在的话，到频道权限把机器龙这两项打开，再跑一次命令重新启用：
+
+  <ChannelPermissionDemo
+    title="频道设置 → 权限 → YEE式機器龍"
+    permissions={[
+      { name: "查看频道", enabled: true },
+      { name: "发送消息", enabled: true },
+    ]}
+    caption="两个都开，机器龙才能在这个频道发通知"
+  />
+</Callout>

@@ -1,0 +1,47 @@
+---
+title: 成員通知
+description: 成員加入或離開伺服器時，在指定頻道發送自訂的歡迎或道別訊息。
+---
+
+<Cmd name="member-notification" /> 設定成員加入、離開伺服器時的通知訊息。
+
+<CommandHeader you={["管理伺服器"]} />
+
+## 設定
+
+<SlashCommand
+  name="member-notification"
+  options={[{ name: "type", value: "join", required: true }]}
+  description="type 選 join 設定加入通知、leave 設定離開通知"
+/>
+
+執行後會跳出表單：
+
+| 欄位 | 說明 |
+| ---- | ---- |
+| 啟用狀態 | 開或關 |
+| 發送頻道 | 通知要發到哪個文字頻道 |
+| 訊息內容 | 最多 2000 字，支援 Markdown |
+
+訊息內容裡可以放 `{user}`，發送時會換成新成員的標記：
+
+<DiscordChat>
+  <DiscordMessage>
+    <p>歡迎 <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">@新成員</span> 加入伺服器！先到規則頻道看看吧 🎉</p>
+  </DiscordMessage>
+</DiscordChat>
+
+加入跟離開的訊息分開設定，各跑一次指令就好。
+
+<Callout type="warn">
+  發送頻道被刪掉、或機器龍看不到那個頻道的時候，通知會自動關閉。頻道被刪了就重跑指令換一個；還在的話，到頻道權限把機器龍這兩項打開，再跑一次指令重新啟用：
+
+  <ChannelPermissionDemo
+    title="頻道設定 → 權限 → YEE式機器龍"
+    permissions={[
+      { name: "檢視頻道", enabled: true },
+      { name: "發送訊息", enabled: true },
+    ]}
+    caption="兩個都開，機器龍才能在這個頻道發通知"
+  />
+</Callout>

@@ -1,0 +1,64 @@
+---
+title: 命令总览
+description: YEE 式机器龙的所有斜杠命令，以及哪些命令可以在私信使用。
+index: true
+---
+
+在输入框打 `/` 就会列出机器龙的命令，Discord 会提示每个参数的名称和说明，必填参数不填会直接拦下来。
+
+<SlashCommand
+  name="poll create"
+  description="输入 / 之后选择命令，Discord 会引导你填完参数"
+/>
+
+以前的 `&` 文字命令已经退役。输入旧命令时，机器龙会告诉你对应的斜杠命令是哪一个。
+
+## 在哪里可以用
+
+把机器龙 [安装到账号](../index.mdx#两种安装方式) 之后，标了「到处可用」的命令在私信、群组私信、任何服务器都能使用；其他命令只能在装了机器龙的服务器里用。
+
+## 服务器管理
+
+| 命令 | 说明 | 需要权限 |
+| ---- | ---- | -------- |
+| [<Cmd name="auto-channels" />](./auto-channels.mdx) | 动态语音频道 | 管理频道 |
+| [<Cmd name="lock-channel" />](./lock-channel.mdx) | 密码锁定语音频道 | 管理频道 |
+| <Cmd name="afk-channel" /> | 设置 AFK 语音频道 | 管理服务器 |
+| [<Cmd name="clear" />](./clear.mdx) | 大量删除消息 | 管理消息 |
+| [<Cmd name="bot-fight" />](./bot-fight.mdx) | 机器人防御模式 | 封禁成员 |
+| [<Cmd name="auto-role" />](./auto-role.mdx) | 新成员自动身份组 | 管理身份组 |
+| [<Cmd name="role-menu" />](./role-menu.mdx) | 自助领取身份组菜单 | 管理身份组 |
+| [<Cmd name="member-notification" />](./member-notification.mdx) | 成员加入／退出通知 | 管理服务器 |
+| [<Cmd name="form" />](./form.mdx) | 表单与回报系统 | 管理频道 |
+
+## 活动
+
+| 命令 | 说明 | 到处可用 |
+| ---- | ---- | -------- |
+| [<Cmd name="poll" />](./poll.mdx) | 超高自定义投票系统 | ✅ |
+| [<Cmd name="giveaway" />](./giveaway.mdx) | 抽奖活动 | |
+
+## 游戏
+
+| 命令 | 说明 | 到处可用 |
+| ---- | ---- | -------- |
+| [<Cmd name="find-food" />](../find-food.mdx) | 陪 Yee 出门找吃的、煮一桌、喂它 | ✅ |
+| <Cmd name="1a2b" /> | 1A2B 猜数字小游戏 | ✅ |
+| [<Cmd name="lol" />](./lol.mdx) | 英雄联盟战绩查询 | |
+| <Cmd name="minecraft" /> | 查询 Minecraft 玩家／服务器 | ✅ |
+
+## 实用工具
+
+详细说明在 [实用小工具](./utility.mdx)。
+
+| 命令 | 说明 | 到处可用 |
+| ---- | ---- | -------- |
+| <Cmd name="status" /> | 机器人状态 | ✅ |
+| <Cmd name="guild" /> | 服务器信息 | |
+| <Cmd name="avatar" /> | 获取用户头像 | ✅ |
+| <Cmd name="banner" /> | 获取用户横幅 | ✅ |
+| <Cmd name="quote" /> | 把消息做成名言图片 | |
+| <Cmd name="pick" /> | 帮你选一个答案 | ✅ |
+| <Cmd name="random" /> | 随机抽数字或语音频道成员 | ✅ |
+| <Cmd name="bullshit" /> | 道歉文、情书生成器 | ✅ |
+| <Cmd name="feedback" /> | 反馈问题或提供建议 | ✅ |

@@ -2,11 +2,13 @@
   "title": "使用教學",
   "pages": [
     "index",
-    "contribute",
-    "---使用指南---",
+    "basics",
+    "---功能---",
     "commands",
-    "rpg",
+    "find-food",
     "---其他---",
+    "faq",
+    "contribute",
     "..."
   ]
 }

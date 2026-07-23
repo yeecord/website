@@ -1,67 +1,53 @@
 ---
 title: 快速入門
-description: YEE 式機器龍是一隻全中文化的 Discord 機器人，我們不只提供音樂的服務，還有像是動態語音頻道、跨群聊天、等你不會想錯過的好東西
+icon: Rocket
+description: YEE 式機器龍是一隻全中文的 Discord 機器人，投票、抽獎、動態語音、找吃的小遊戲通通都有，裝到自己帳號上就能到處使用。
 ---
 
-import { Gamepad2, Music, MessageSquareDashed } from "lucide-react";
+import { Gamepad2, Vote, AudioLines } from "lucide-react";
 
-YEE 式機器龍是一隻全中文化的 Discord 機器人，我們提供了許多簡單且快速的整合性服務，讓您不需要再四處尋找中文的機器人
+YEE 式機器龍是一隻全中文的 Discord 機器人。所有功能都用斜線指令操作，介面、說明、錯誤訊息都是中文。
 
 <LinkButton
-  href="https://yeecord.com/link"
-  variant="primary"
-  children="邀請機器龍"
+  href="/install/"
+  variant="chunky"
+  children="安裝機器龍"
 />
 
-## 使用指南
+## 兩種安裝方式
 
-點選有興趣的選項開始你的旅程!
+| 安裝方式 | 說明 |
+| -------- | ---- |
+| 加入伺服器 | 整個伺服器的成員都能使用 |
+| 安裝到帳號 | 裝在你自己的 Discord 帳號上，私訊、群組私訊、任何伺服器都能用 |
+
+點開安裝連結後 Discord 會讓你選，兩種可以同時裝。裝到帳號之後，<Cmd name="poll" />、<Cmd name="find-food" /> 這類指令在沒有機器龍的地方也能使用。
+
+## 功能一覽
 
 <Cards className="mt-5">
   <Card
+    title="投票"
+    href="/zh-tw/docs/commands/poll/"
+    icon={<Vote />}
+    description="匿名、鎖票、開票保密，結果即時畫成圖片"
+  />
+  <Card
     title="動態語音頻道"
-    href="/docs/commands/dvc/"
-    icon={<Music />}
-    description="一個頻道就可以滿足各個人的需求"
+    href="/zh-tw/docs/commands/auto-channels/"
+    icon={<AudioLines />}
+    description="一個頻道滿足所有人的語音需求"
   />
   <Card
-    title="跨群聊天"
-    href="/docs/commands/chat/"
-    icon={<MessageSquareDashed />}
-    description="不用加入別的伺服器就能和別的伺服器的人聊天"
-  />
-  <Card
-    title="RPG 系統"
-    href="/docs/rpg/"
+    title="找吃的"
+    href="/zh-tw/docs/find-food/"
     icon={<Gamepad2 />}
-    description="將 Discord 變身成一個有趣的遊樂場"
+    description="陪 Yee 出門覓食、煮一桌、餵牠"
   />
 </Cards>
 
-<br />
-<Info title="我想先通知你">
-  如果在邀請或是使用時遇到問題可以查看這篇文章 [《「5
-  方法」排解機器人問題》](/blog/discord-bot-troubleshooting/)。
-</Info>
+完整清單在 [指令總覽](./commands/index.mdx)。
 
-## 什麼是 Discord 機器人?
+## 遇到問題？
 
-Discord 的機器人是一種特殊的使用者，他能夠透過程式來控制，並依據使用者輸入的指令做出回應，或是提供服務。
-
-
-## 為什麼要使用 YEE 式機器龍?
-
-首先，我能理解目前各大機器人都是只有英文能夠操控，當你看不懂英文的時候這對你就很痛苦對吧！
-YEE 式機器龍提供了 **全中文的介面**，讓你在和機器人的互動上，不會有語言上的障礙。
-
-再來，大家都很懷念已經 [被 YouTube 停止服務的 Rythm 和 Groovy](/blog/how-to-invite-bot/#rythm-%E5%92%8C-groovy-%E8%A2%AB%E4%B8%8B%E6%9E%B6) ，
-我們提供 **高品質的音樂播放服務**，讓朋友可以一起收聽喜歡的音樂。
-
-## 怎麼呼叫 YEE 式機器龍的指令?
-
-在 [這個頁面](./commands/index.mdx) 有寫到詳細的指令呼叫說明
-
-## 我還是不懂可以去哪裡問問題?
-
-[這裡](https://discord.gg/yeecord) 是我們的社群伺服器，你可以在 **#公開支援** 頻道問問題，或是到 **#一般** 跟我們一起聊天！
-
+用 <Cmd name="feedback" /> 指令直接回報給我們，或到 [支援伺服器](https://discord.gg/yeecord) 的 **#公開支援** 頻道發問。

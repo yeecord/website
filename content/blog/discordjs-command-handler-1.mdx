@@ -23,7 +23,7 @@ image: /blog/discordjs-command-handler-1/discordjs-command-handler-1.jpeg
 
 這篇文章會從 Wolf Yuan 先的 [《使用 discord.js 快速建立一個 Discord 骰子機器人》](/blog/discordjs-dice-bot/) 文章程式碼延伸，教大家簡單建立一個指令系統，讓管理指令更系統性以及方便。如果您是一個 discord.js 新手，並且對此文章要修改（不含撰寫）的程式碼感到陌生者，請先閱讀該文章！
 
-<Info title='我想先告知你'>
+<Callout title="我想先告知你">
 
 此文章會提及一些 JS 名詞，會盡量簡單介紹，如果您想要更深入地去瞭解那些東西，以下提供相關連結，我也會在文中的解析提供 MSDN 等其他平台連結讓您參考學習。
 
@@ -31,7 +31,7 @@ image: /blog/discordjs-command-handler-1/discordjs-command-handler-1.jpeg
 - [MSDN JavaScript Docs](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript)
 - [Fooish JavaScript 教學](https://www.fooish.com/javascript/)
 
-</Info>
+</Callout>
 
 ## 前言
 
@@ -103,7 +103,7 @@ client.on("ready", () => {
 });
 ```
 
-<Info title='我想要你做個筆記'>
+<Callout title="我想要你做個筆記">
 
 當然在此您也可以使用 Map，只是功能部分，Map 與 discord.js 官方撰寫的 Collection 相比，Collection 功能會比較多，使用起來會比較方便。
 
@@ -126,7 +126,7 @@ Map 簡單來說就是一個儲存很多鍵值對 (key-value) 的物件，跟字
 
 </details>
 
-</Info>
+</Callout>
 
 ## 指令載入器
 
@@ -146,7 +146,7 @@ function loadCommands(client, directory) {}
 module.exports = loadCommands;
 ```
 
-<Info title='筆記一下'>
+<Callout title="筆記一下">
 
 您也可以這樣寫（我也比較習慣這樣寫，但新手推薦上面那種）：
 
@@ -154,7 +154,7 @@ module.exports = loadCommands;
 module.exports = function loadCommands(client, directory) {};
 ```
 
-</Info>
+</Callout>
 
 <Adsense />
 
@@ -279,7 +279,7 @@ if (cmdObject) {
 
 再來，建立指令：
 
-<Warning>有用到 discord.js 的東西請記得匯入！（例如：`MessageEmbed`）</Warning>
+<Callout type="warn">有用到 discord.js 的東西請記得匯入！（例如：`MessageEmbed`）</Callout>
 
 ```js showLineNumbers
 const { MessageEmbed } = require("discord.js");

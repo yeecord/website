@@ -14,20 +14,26 @@ export function LinkButton({
   ...props
 }: {
   icon?: ReactNode;
-  variant?: "secondary" | "primary";
+  variant?: "secondary" | "primary" | "chunky";
 } & LinkProps) {
   return (
     <Link
       {...props}
       className={cn(
-        buttonVariants({ color: variant, className: "not-prose" }),
-        icon != null ? "px-6" : "pr-5 pl-7",
+        variant === "chunky"
+          ? "btn-chunky not-prose"
+          : [
+              buttonVariants({ color: variant, className: "not-prose" }),
+              icon != null ? "px-6" : "pr-5 pl-7",
+            ],
         props.className,
       )}
     >
       {icon}
       {children}
-      {icon == null && <ChevronRightIcon className="h-4 w-4" />}
+      {icon == null && variant !== "chunky" && (
+        <ChevronRightIcon className="h-4 w-4" />
+      )}
     </Link>
   );
 }

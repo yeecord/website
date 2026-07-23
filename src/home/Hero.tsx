@@ -1,155 +1,118 @@
-const HeroGradient = "/hero.svg";
-import clsx from "clsx";
 import Link from "fumadocs-core/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
-import Gradient from "./components/Gradient";
-import styles from "./hero.module.css";
+import { DinoMascot } from "./DinoMascot";
+import { Cloud, GroundBand, HillsLayer, Plant } from "./scene";
+
+const SERVERS = [
+  { img: "/home/customers/apex-tw.png", name: "APEX Taiwan" },
+  { img: "/home/customers/valorant-tw.png", name: "VALORANT Taiwan" },
+  { img: "/home/customers/avery.png", name: "Avery" },
+  { img: "/home/customers/zeitfrei.png", name: "ZeitFrei" },
+  { img: "/home/customers/daptor.png", name: "有感筆電軍團 - Daptor Army" },
+  { img: "/home/customers/empressival.png", name: "Empressival" },
+  { img: "/home/customers/daidai.png", name: "老查呆呆の迷因調查局總部" },
+];
 
 export function Hero() {
   return (
-    <div
-      className={clsx(
-        "relative z-[2] mt-[6rem] flex w-full flex-col gap-12 px-[1rem] md:mt-[10rem] xl:mt-[14rem]",
-        "items-center text-center",
-      )}
-    >
-      <Gradient
-        src={HeroGradient}
-        className="-right-0 -top-[200px] -z-[1] lg:-right-[300px] absolute hidden w-full min-w-[800px]"
-      />
-      <h1
-        className={
-          "font-bold text-5xl sm:text-7xl xl:text-8xl min-[360px]:text-6xl"
-        }
-      >
-        萬中選一的
-        <span
-          className={clsx(
-            "mx-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 bg-clip-text text-transparent max-lg:my-2 max-lg:block",
-            styles["animated-gradient"],
-          )}
-        >
-          Discord
-        </span>
-        機器人
-      </h1>
-      <p
-        className={clsx(
-          "max-w-[450px] text-muted-foreground text-xl",
-          "md:max-w-[650px] lg:text-2xl",
-        )}
-      >
-        YEE 式機器龍功能眾多且強大，讓你簡單創造出優秀的中文 Discord 社群
-      </p>
-      <Buttons />
-      <div className="mt=[3rem] flex w-full flex-col gap-5 md:mt-[4rem]">
-        <p className="mb-3 font-semibold text-lg text-muted-foreground md:mb-4">
-          各大伺服器一致好評
+    <div className="relative z-2 w-full">
+      <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-56 text-center sm:pb-72 md:pt-28">
+        <Cloud n={1} width={190} className="top-[4%] left-[6%] max-sm:w-24" />
+        <Cloud
+          n={2}
+          width={130}
+          className="top-[34%] left-[20%] opacity-80 [animation-delay:-6s] max-sm:hidden"
+        />
+        <Cloud
+          n={3}
+          width={230}
+          className="top-[8%] right-[7%] [animation-delay:-11s] max-sm:top-[3%] max-sm:w-28"
+        />
+        <Cloud
+          n={1}
+          width={110}
+          className="top-[46%] right-[19%] opacity-70 [animation-delay:-3s] max-sm:hidden"
+        />
+        <h1 className="font-bold text-5xl leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
+          一隻恐龍
+          <br />
+          搞定整個<span className="text-primary">伺服器</span>
+        </h1>
+        <p className="max-w-136 text-lg text-muted-foreground text-pretty sm:text-xl">
+          抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。
         </p>
-        <div
-          className={clsx(
-            "overflow-hidden",
-            "max-md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
-          )}
-        >
-          <div
-            className={clsx(
-              styles.servers,
-              "inline-block max-md:w-max max-md:animate-[servers-loop_infinite_30s_linear]",
-            )}
-          >
-            <Servers />
-            <Servers secondary />
-          </div>
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <Link href="/install/" className="btn-chunky">
+            安裝機器人
+          </Link>
+          <Link href="/zh-tw/docs" className="btn-chunky-secondary">
+            看使用教學
+          </Link>
         </div>
+        <HillsLayer className="bottom-16 h-40" />
+        <DinoMascot className="absolute bottom-10 right-[5%] sm:bottom-12 sm:right-[12%]" />
       </div>
+      <GroundBand className="-mt-24">
+        <Forest />
+        <ServerProof />
+      </GroundBand>
     </div>
   );
 }
 
-function Buttons() {
+function Forest() {
   return (
-    <div className="grid w-full max-w-[500px] grid-cols-1 gap-3 sm:w-fit sm:grid-cols-2">
-      <Link
-        href="/docs"
-        className={cn(
-          buttonVariants({ color: "ghost", size: "lg" }),
-          styles["rainbow-border"],
-        )}
-        style={{
-          boxShadow: `
-          inset 2px 2px 0 var(--color-green-400),
-          inset -2px -2px 0 var(--color-cyan-500),
-          5px 5px 25px color-mix(in oklab, var(--color-green-400) 50%, transparent),
-          -5px -5px 25px color-mix(in oklab, var(--color-cyan-500) 50%, transparent)`,
-        }}
-      >
-        使用教學
-      </Link>
-      <Link
-        href="/invite"
-        className={cn(
-          buttonVariants({
-            color: "secondary",
-            size: "lg",
-          }),
-        )}
-      >
-        邀請機器人
-      </Link>
-    </div>
-  );
-}
-
-function Servers({ secondary }: { secondary?: boolean }) {
-  return (
-    <div
-      className={clsx(
-        "inline-flex flex-row justify-center",
-        "md:max-w-[64rem] md:flex-wrap",
-        secondary && "md:hidden",
-      )}
-    >
-      <Server img="/home/customers/apex-tw.png" name="APEX Taiwan" />
-      <Server img="/home/customers/valorant-tw.png" name="VALORANT Taiwan" />
-      <Server img="/home/customers/avery.png" name="Avery" transparent />
-      <Server img="/home/customers/zeitfrei.png" name="ZeitFrei" transparent />
-      <Server
-        img="/home/customers/daptor.png"
-        name="有感筆電軍團 - Daptor Army"
+    <div className="absolute inset-x-0 top-0">
+      <Plant src="treePine" height={150} className="-top-29.5 left-[4%]" />
+      <Plant
+        src="bush1"
+        height={44}
+        className="-top-3.5 left-[11%] [animation-delay:-1.5s]"
       />
-      <Server img="/home/customers/empressival.png" name="Empressival" />
-      <Server
-        img="/home/customers/daidai.png"
-        name="老查呆呆の迷因調查局總部"
+      <Plant
+        src="treeSmall_green1"
+        height={52}
+        className="-top-5.5 left-[17%] [animation-delay:-3s] max-sm:hidden"
+      />
+      <Plant
+        src="tree"
+        height={110}
+        className="-top-20 right-[24%] [animation-delay:-2s] max-md:hidden"
+      />
+      <Plant
+        src="bush2"
+        height={40}
+        className="-top-2.5 right-[20%] [animation-delay:-4s]"
+      />
+      <Plant
+        src="treeSmall_green2"
+        height={48}
+        className="-top-4 right-[3%] [animation-delay:-2.6s]"
       />
     </div>
   );
 }
 
-function Server({
-  img,
-  name,
-  transparent,
-}: {
-  img: string;
-  name: string;
-  transparent?: boolean;
-}) {
+function ServerProof() {
   return (
-    <div className="mx-4 my-1 flex flex-shrink-0 flex-row items-center gap-3">
-      <img
-        alt={name}
-        src={img}
-        width="45"
-        height="45"
-        className={clsx(
-          "rounded-full grayscale",
-          transparent && "brightness-[0%] dark:brightness-100",
-        )}
-      />
-      <p className="text-lg sm:text-xl">{name}</p>
+    <div className="flex flex-col items-center justify-center gap-3 px-4 pt-5 pb-8 sm:flex-row sm:gap-5">
+      <div className="-space-x-3 flex shrink-0 items-center">
+        {SERVERS.map((server) => (
+          <img
+            key={server.name}
+            alt={server.name}
+            title={server.name}
+            src={server.img}
+            width="40"
+            height="40"
+            className="size-10 rounded-full border-2 border-white/70 shadow-sm"
+          />
+        ))}
+      </div>
+      <p className="text-center font-medium leading-snug max-sm:text-sm">
+        APEX Taiwan、VALORANT Taiwan 等
+        <span className="mx-1 font-bold text-primary">350,000+</span>
+        個伺服器都在用
+      </p>
     </div>
   );
 }

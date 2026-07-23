@@ -1,0 +1,65 @@
+---
+title: 找吃的
+icon: Utensils
+description: 陪 Yee 出门觅食、把食材煮成一桌菜、喂它养感情。全按钮操作的放置型小游戏，不用背任何命令。
+---
+
+<Cmd name="find-food" /> 是机器龙内置的放置型小游戏：带 Yee 出门觅食，把捡到的食材煮成料理，再喂它养感情。只有一个命令，之后全部用按钮和菜单操作。
+
+<CommandHeader anywhere />
+
+<SlashCommand name="find-food" description="陪 Yee 出门找吃的、煮一桌、喂它" />
+
+执行后会出现你的小店卡片，下面的按钮就是全部的玩法：
+
+<DiscordChat>
+  <DiscordMessage>
+    <DiscordEmbed title="🍳 Yee 的小店" color="var(--color-discord-gold)">
+      <p>你的小店状态会画成一张卡片：袋子的累积进度、铜板、和 Yee 的感情。</p>
+    </DiscordEmbed>
+    <p>
+      <DiscordButton variant="primary">带它去找吃的</DiscordButton>{" "}
+      <DiscordButton variant="success">开煮</DiscordButton>{" "}
+      <DiscordButton>菜谱</DiscordButton>{" "}
+      <DiscordButton>喂它</DiscordButton>
+    </p>
+  </DiscordMessage>
+</DiscordChat>
+
+## 觅食
+
+选一个地点带 Yee 出门。袋子会随时间慢慢装满，装满大约要一天半到两天，收成时揭晓这趟捡到什么。
+
+- 食材有普通、稀有、传说三种稀有度
+- 每个地点每天轮换情报，提示今天容易捡到什么
+- 有保底机制：连续几次没遇到新食材，之后几次内必定遇到
+- 偶尔会捡到惊喜，也会看到其他玩家最近的收获足迹
+- 路上会碰到小事件，选不同的分支有不同结果
+
+## 烹饪
+
+从背包挑几样食材下锅，Yee 会评分：
+
+| 评级 | 说明 |
+| ---- | ---- |
+| 普通 | 能吃 |
+| 好吃 | 食材搭配得不错 |
+| 绝品 | 完美组合 |
+
+搭配得太离谱会煮出 **黑暗料理** — 但别急着难过，黑暗料理有自己的隐藏菜谱可以收集。
+
+每天有一个「今日想吃」的风味提示，只给方向不给答案，照着方向煮容易拿高分。
+
+## 菜谱与喂养
+
+- **菜谱** 记录你煮出过的所有料理，收集控的天堂
+- **喂它** 把料理喂给 Yee 培养感情，感情越好互动越多
+- **分享成绩** 生成一张成绩卡片跟朋友炫耀
+
+## 铜板
+
+觅食和烹饪会赚到铜板，是找吃的世界里的货币。跟旧 RPG 不同，铜板只在游戏内流通，没有玩家间交易。
+
+<Callout>
+  旧版的职业、商店、合成 RPG 系统已经退役，「找吃的」是接替它的新游戏。
+</Callout>
