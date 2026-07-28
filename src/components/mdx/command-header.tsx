@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import type { Locale } from "~/i18n";
 import { commandNames } from "./cmd";
 
-const labels: Record<Locale, Record<string, string>> = {
+const labels = {
   "zh-tw": {
     you: "誰能用",
     bot: "機器龍需要",
@@ -55,7 +55,7 @@ function Row({ icon, label, items }: { icon: ReactNode; label: string; items: st
 }
 
 export function createCommandHeader(locale: Locale, slug?: string) {
-  const t = labels[locale];
+  const t = locale in labels ? labels[locale as keyof typeof labels] : labels["zh-tw"];
 
   return function CommandHeader({
     name = slug,

@@ -1,16 +1,10 @@
 import Link from "fumadocs-core/link";
 import { type Locale, staticPath } from "~/i18n";
-import type { HomeCopy } from "./copy";
+import { translator } from "~/i18n/translate";
 import { Cloud, GroundBand, Plant } from "./scene";
 
-export function Community({
-  copy,
-  locale,
-}: {
-  copy: HomeCopy;
-  locale: Locale;
-}) {
-  const c = copy.community;
+export function Community({ locale }: { locale: Locale }) {
+  const t = translator(locale);
 
   return (
     <div className="relative z-2 mt-24 sm:mt-40">
@@ -36,21 +30,21 @@ export function Community({
           />
         </div>
         <h2 className="text-balance font-bold text-3xl tracking-tight sm:text-5xl">
-          {c.heading}
+          {t("把機器龍帶回家")}
         </h2>
         <p className="max-w-lg text-balance text-base text-muted-foreground sm:text-lg">
-          {c.subheading}
+          {t("安裝免費，設定五分鐘。卡關了就來 Discord 社群喊一聲，我們都在。")}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 pb-10 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap">
           <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">
-            {c.install}
+            {t("安裝機器人")}
           </Link>
           <Link
             href="https://discord.gg/yeecord"
             target="_blank"
             className="btn-chunky-secondary"
           >
-            {c.discord}
+            {t("加入 Discord 社群")}
           </Link>
         </div>
       </div>

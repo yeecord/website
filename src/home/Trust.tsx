@@ -2,12 +2,31 @@
 
 import { type MotionValue, motion, useTransform } from "framer-motion";
 import { DiscordChat, DiscordMessage } from "~/components/mdx/discord";
+import type { Locale } from "~/i18n";
+import { type Phrase, translator } from "~/i18n/translate";
 import formatter from "~/utils/formatter";
-import type { HomeCopy } from "./copy";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 
-export function Trust({ copy }: { copy: HomeCopy }) {
-  const c = copy.trust;
+const quotes: { author: string; color: string; text: Phrase }[] = [
+  {
+    author: "SJay",
+    color: "#5865f2",
+    text: "複雜的大型伺服器架設，有了機器龍讓繁雜的操作變得簡單，大大減輕了管理難度",
+  },
+  {
+    author: "Money",
+    color: "#e8a33d",
+    text: "即使我不懂英語，無需繁雜的理解及操作，我仍然可以輕鬆使用",
+  },
+  {
+    author: "Nathan",
+    color: "#23a55a",
+    text: "牠簡化了管理流程，大大提高了人員管理的效率",
+  },
+];
+
+export function Trust({ locale }: { locale: Locale }) {
+  const t = translator(locale);
   const { count, start } = useAnimatedCounter(
     350_000,
     Math.max(350_000 - 10000, 0),
@@ -31,19 +50,21 @@ export function Trust({ copy }: { copy: HomeCopy }) {
         <span className="text-primary">
           <ServerCount count={count} />
         </span>
-        {c.headingSuffix}
+        {t("個伺服器的日常")}
       </h2>
-      <p className="text-lg text-muted-foreground sm:text-xl">{c.subheading}</p>
+      <p className="text-lg text-muted-foreground sm:text-xl">
+        {t("群主們怎麼說機器龍")}
+      </p>
       <div className="mx-auto w-full max-w-[44rem] text-start">
         <DiscordChat>
-          {c.quotes.map((quote) => (
+          {quotes.map((quote) => (
             <DiscordMessage
               key={quote.author}
               author={quote.author}
               bot={false}
               color={quote.color}
             >
-              <p>{quote.text}</p>
+              <p>{t(quote.text)}</p>
             </DiscordMessage>
           ))}
         </DiscordChat>

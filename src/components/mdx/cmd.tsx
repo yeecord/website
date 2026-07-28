@@ -7,7 +7,7 @@ import {
 } from "~/components/ui/tooltip";
 
 // 顯示名稱同步自 yeecord repo src/infrastructure/i18n/{zh-TW,zh-CN}.json 的 slash.*.name
-export const commandNames: Record<string, Record<Locale, string>> = {
+export const commandNames: Record<string, Partial<Record<Locale, string>>> = {
   "1a2b": { "zh-tw": "1a2b", "zh-cn": "1a2b" },
   "afk-channel": { "zh-tw": "閒置頻道", "zh-cn": "挂机频道" },
   "auto-channels": { "zh-tw": "動態語音頻道", "zh-cn": "動態語音頻道" },
@@ -38,7 +38,8 @@ export const commandNames: Record<string, Record<Locale, string>> = {
 
 export function createCmd(locale: Locale) {
   return function Cmd({ name }: { name: string }) {
-    const display = commandNames[name.split(" ")[0]]?.[locale];
+    const names = commandNames[name.split(" ")[0]];
+    const display = names?.[locale] ?? names?.["zh-tw"];
 
     if (!display) return <code>/{name}</code>;
 

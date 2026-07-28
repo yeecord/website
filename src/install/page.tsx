@@ -4,19 +4,21 @@ import { InstallPicker } from "~/components/install/picker";
 import { footer } from "~/config";
 import { Cloud, GroundBand, Plant } from "~/home/scene";
 import type { Locale } from "~/i18n";
+import { translator } from "~/i18n/translate";
 import { localizedLayout, LocalizedMeta } from "~/localized-page";
-import { installCopy } from "./copy";
 
 export function InstallPage({ locale }: { locale: Locale }) {
-  const copy = installCopy[locale];
+  const t = translator(locale);
 
   return (
     <HomeLayout {...localizedLayout(locale, "/install")}>
       <LocalizedMeta
         locale={locale}
         path="/install"
-        title={copy.meta.title}
-        description={copy.meta.description}
+        title={t("安裝 YEE 式機器龍")}
+        description={t(
+          "權限自己勾，勾多少拿多少。也可以裝到自己的帳號上，私訊和任何伺服器都能用。",
+        )}
       />
       <main className="overflow-x-clip">
         <div className="relative mx-auto w-full max-w-4xl px-4 pt-20 pb-24">
@@ -29,7 +31,7 @@ export function InstallPage({ locale }: { locale: Locale }) {
           <div className="mb-6 flex items-center justify-center gap-4">
             <img
               src="/img/logo.svg"
-              alt={copy.mascotAlt}
+              alt={t("YEE 式機器龍")}
               width={64}
               height={64}
               className="animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg motion-reduce:animate-none"
@@ -49,14 +51,14 @@ export function InstallPage({ locale }: { locale: Locale }) {
             </span>
           </div>
           <h1 className="text-center font-bold text-4xl tracking-tight sm:text-5xl">
-            {copy.headingPrefix}
-            <span className="text-primary">{copy.headingHighlight}</span>
-            {copy.headingSuffix}
+            {t("快來把我")}
+            <span className="text-primary">{t("帶回家")}</span>
+            {t("！")}
           </h1>
           <p className="mx-auto mt-4 mb-10 max-w-md text-center text-fd-muted-foreground text-lg">
-            {copy.subtitle}
+            {t("權限自己勾，勾多少拿多少。不放心的先不給，之後隨時能補。")}
           </p>
-          <InstallPicker copy={copy.picker} />
+          <InstallPicker locale={locale} />
         </div>
         <GroundBand className="h-28">
           <Plant
@@ -71,7 +73,7 @@ export function InstallPage({ locale }: { locale: Locale }) {
           />
         </GroundBand>
       </main>
-      <Footer categories={footer(locale)} brand={copy.mascotAlt} />
+      <Footer categories={footer(locale)} brand={t("YEE 式機器龍")} />
     </HomeLayout>
   );
 }

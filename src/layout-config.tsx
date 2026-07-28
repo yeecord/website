@@ -1,6 +1,7 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { BookIcon, LayoutListIcon } from "lucide-react";
 import { contentPath, type Locale } from "~/i18n";
+import { translator } from "~/i18n/translate";
 
 const discordIcon = (
   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -9,13 +10,8 @@ const discordIcon = (
   </svg>
 );
 
-const navText: Record<Locale, { docs: string; blog: string }> = {
-  "zh-tw": { docs: "使用教學", blog: "部落格" },
-  "zh-cn": { docs: "使用教程", blog: "博客" },
-};
-
 export function baseOptions(locale: Locale) {
-  const text = navText[locale];
+  const t = translator(locale);
 
   return {
     githubUrl: "https://github.com/yeecord",
@@ -32,13 +28,13 @@ export function baseOptions(locale: Locale) {
       {
         url: contentPath(locale, "/docs"),
         icon: <BookIcon />,
-        text: text.docs,
+        text: t("使用教學"),
         active: "nested-url",
       },
       {
         url: contentPath(locale, "/blog"),
         icon: <LayoutListIcon />,
-        text: text.blog,
+        text: t("部落格"),
         active: "nested-url",
       },
       {

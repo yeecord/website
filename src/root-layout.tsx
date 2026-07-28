@@ -1,10 +1,10 @@
 import { createRootLayout } from "fumapress/layouts/root";
 import type { ReactNode } from "react";
 import SearchDialog from "~/components/search-dialog";
-import { i18n, locales, localeCodes } from "~/i18n";
+import { i18n, localeCodes, uiPresets } from "~/i18n";
 
 export const translations = localeCodes.reduce(
-  (builder, locale) => builder.preset(locale, locales[locale].ui()),
+  (builder, locale) => builder.preset(locale, uiPresets[locale]()),
   i18n.translations(),
 );
 
