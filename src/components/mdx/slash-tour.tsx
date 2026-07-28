@@ -35,12 +35,20 @@ const FILTERED: Suggestion[] = [
 
 const APP = "YEE 式機器龍";
 
+/// The fields `/poll create` actually opens, labels and all.
+const MODAL_FIELDS = [
+  { label: "投票標題", value: "晚餐吃什麼" },
+  { label: "選項", hint: "一行一個選項(2-18 個)", value: "滷肉飯\n牛肉麵" },
+  { label: "多久後結束(選填)", hint: "例如 30m、2h、3d", value: "2h" },
+];
+
 interface Frame {
   /// What sits in the input: plain text while typing, a command pill once picked.
   typed: string;
   picked?: boolean;
   query?: string;
   suggestions?: Suggestion[];
+  modal?: boolean;
   sent?: boolean;
   caption: string;
   hold: number;
@@ -65,14 +73,19 @@ const SCRIPT: Frame[] = [
   {
     typed: "/poll create",
     picked: true,
-    caption: "選好指令，接著一個一個填選項",
-    hold: 2800,
+    caption: "選好按 Enter",
+    hold: 1800,
   },
   {
-    typed: "/poll create",
-    picked: true,
+    typed: "",
+    modal: true,
+    caption: "跳出視窗填內容，不用把參數擠在一行",
+    hold: 4000,
+  },
+  {
+    typed: "",
     sent: true,
-    caption: "按 Enter 送出，機器龍就回覆了",
+    caption: "送出，機器龍就回覆了",
     hold: 3600,
   },
 ];
@@ -133,8 +146,22 @@ export function SlashCommandTour() {
 
   return (
     <div className="not-prose my-6">
-      <DiscordSurface channel="一般" topic="隨便聊聊的地方" className="p-0 text-sm">
+      <DiscordSurface
+        channel="一般"
+        topic="隨便聊聊的地方"
+        className="relative p-0 text-sm"
+      >
         <div className="flex min-h-64 flex-col justify-end gap-3 px-4 py-4">
+          <div className="flex gap-3 opacity-60">
+            <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-discord-secondary font-semibold text-white">
+              阿
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="font-medium text-white">阿明</div>
+              <div className="mt-0.5">今天晚上吃什麼啊</div>
+            </div>
+          </div>
+
           <AnimatePresence>
             {frame.sent ? (
               <motion.div
@@ -174,13 +201,11 @@ export function SlashCommandTour() {
         </div>
 
         <div className="relative px-4 pb-4">
-          <AnimatePresence>
-            {frame.suggestions ? (
+          {frame.suggestions ? (
               <motion.div
                 key="matching"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 6 }}
                 transition={{ duration: 0.14, ease: "easeOut" }}
                 className="absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg bg-discord-embed shadow-xl"
               >
@@ -217,7 +242,6 @@ export function SlashCommandTour() {
                 key="picked"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 6 }}
                 transition={{ duration: 0.14, ease: "easeOut" }}
                 className="absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg bg-discord-embed shadow-xl"
               >
@@ -240,7 +264,6 @@ export function SlashCommandTour() {
                 </div>
               </motion.div>
             ) : null}
-          </AnimatePresence>
 
           <div className="flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5">
             <Plus className="size-6 shrink-0 rounded-full bg-discord-icon p-1 text-discord-input" />
@@ -292,6 +315,39 @@ export function SlashCommandTour() {
             </div>
           </div>
         </div>
+        {frame.modal ? (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 px-4">
+              <div className="w-full max-w-sm overflow-hidden rounded-md bg-discord-bg shadow-2xl">
+                <div className="flex items-center justify-between px-4 pt-4 pb-3">
+                  <span className="font-semibold text-white">建立投票</span>
+                  <X className="size-4 text-discord-muted" />
+                </div>
+                <div className="flex flex-col gap-3 px-4 pb-4">
+                  {MODAL_FIELDS.map((field) => (
+                    <div key={field.label}>
+                      <div className="text-xs font-bold text-discord-icon">
+                        {field.label}
+                        {field.hint ? (
+                          <span className="ml-1 font-normal text-discord-muted">
+                            {field.hint}
+                          </span>
+                        ) : null}
+                      </div>
+                      <div className="mt-1 whitespace-pre-line rounded-sm bg-discord-option px-2.5 py-1.5 text-discord-text">
+                        {field.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-end gap-4 bg-discord-embed px-4 py-3">
+                  <span className="text-discord-text">取消</span>
+                  <span className="rounded-sm bg-discord-blurple px-4 py-1.5 font-medium text-white">
+                    送出
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : null}
       </DiscordSurface>
 
       <div className="mt-3 flex items-center gap-3">
