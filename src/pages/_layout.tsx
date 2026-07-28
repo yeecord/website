@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { RootLayout } from "@/root-layout";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  return <RootLayout>{children}</RootLayout>;
+  return <RootLayout lang="zh-tw">{children}</RootLayout>;
 }
 
 export function getConfig() {

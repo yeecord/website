@@ -16,8 +16,8 @@ export const translations = i18n
   .preset("zh-cn", zhCN());
 
 // i18n 模式下 fumapress 只把 root layout 掛在 /[lang] 下，
-// autoI18n: false 的頁面（首頁、404）要透過 src/pages/_layout.tsx 掛同一個。
-// 不自己設 i18n，讓 fumapress 用每頁正確的 lang 自動填入（onLocaleChange 由 localeSwitchPlugin 注入）。
+// autoI18n: false 的頁面（/install、404）透過 src/pages/_layout.tsx 掛同一個，
+// /zh-cn 底下的則由 src/zh-cn-plugin.tsx 自己掛，才拿得到正確的 lang。
 const BaseRootLayout = createRootLayout({
   providerProps: {
     search: {

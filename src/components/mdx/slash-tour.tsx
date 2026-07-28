@@ -12,35 +12,99 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DiscordSurface } from "@/components/mdx/discord";
+import type { MdxLocale } from "@/components/mdx/locale";
 import { cn } from "@/utils/cn";
 
 interface Suggestion {
   command: string;
   description: string;
-  app?: string;
 }
 
-const ALL: Suggestion[] = [
-  { command: "/poll create", description: "建立投票" },
-  { command: "/giveaway create", description: "建立抽獎活動" },
-  { command: "/form create", description: "建立表單" },
-  { command: "/find-food", description: "帶 Yee 去找吃的" },
-];
-
-const FILTERED: Suggestion[] = [
-  { command: "/poll create", description: "建立投票" },
-  { command: "/poll edit", description: "改投票的設定" },
-  { command: "/poll end", description: "結束投票並公布結果" },
-];
-
-const APP = "YEE 式機器龍";
-
-/// The fields `/poll create` actually opens, labels and all.
-const MODAL_FIELDS = [
-  { label: "投票標題", value: "晚餐吃什麼" },
-  { label: "選項", hint: "一行一個選項(2-18 個)", value: "滷肉飯\n牛肉麵" },
-  { label: "多久後結束(選填)", hint: "例如 30m、2h、3d", value: "2h" },
-];
+const T = {
+  tw: {
+    app: "YEE 式機器龍",
+    channel: "一般",
+    topic: "隨便聊聊的地方",
+    asker: "阿明",
+    question: "今天晚上吃什麼啊",
+    placeholder: "傳送訊息到 #一般",
+    matching: "的指令",
+    all: [
+      { command: "/poll create", description: "建立投票" },
+      { command: "/giveaway create", description: "建立抽獎活動" },
+      { command: "/form create", description: "建立表單" },
+      { command: "/find-food", description: "帶 Yee 去找吃的" },
+    ] as Suggestion[],
+    filtered: [
+      { command: "/poll create", description: "建立投票" },
+      { command: "/poll edit", description: "改投票的設定" },
+      { command: "/poll end", description: "結束投票並公布結果" },
+    ] as Suggestion[],
+    pollTitle: "晚餐吃什麼",
+    optionLabel: "問題",
+    optionsLabel: "選項",
+    options: ["滷肉飯", "牛肉麵"],
+    pollOptionsLine: "滷肉飯 · 牛肉麵 · 隨便都好",
+    // the fields `/poll create` actually opens, labels and all
+    modalTitle: "建立投票",
+    modalFields: [
+      { label: "投票標題", value: "晚餐吃什麼" },
+      { label: "選項", hint: "一行一個選項(2-18 個)", value: "滷肉飯\n牛肉麵" },
+      { label: "多久後結束(選填)", hint: "例如 30m、2h、3d", value: "2h" },
+    ],
+    cancel: "取消",
+    submit: "送出",
+    captions: [
+      "點一下最下面的輸入框",
+      "打一個斜線，指令清單就跳出來了",
+      "繼續打字會即時篩選，不用背指令名稱",
+      "選好按 Enter",
+      "跳出視窗填內容，不用把參數擠在一行",
+      "送出，機器龍就回覆了",
+    ],
+  },
+  cn: {
+    app: "YEE 式機器龍",
+    channel: "综合",
+    topic: "随便聊聊的地方",
+    asker: "阿明",
+    question: "今天晚上吃什么啊",
+    placeholder: "发送消息到 #综合",
+    matching: "的命令",
+    all: [
+      { command: "/poll create", description: "创建投票" },
+      { command: "/giveaway create", description: "创建抽奖活动" },
+      { command: "/form create", description: "创建表单" },
+      { command: "/find-food", description: "带 Yee 去找吃的" },
+    ] as Suggestion[],
+    filtered: [
+      { command: "/poll create", description: "创建投票" },
+      { command: "/poll edit", description: "改投票的设置" },
+      { command: "/poll end", description: "结束投票并公布结果" },
+    ] as Suggestion[],
+    pollTitle: "晚餐吃什么",
+    optionLabel: "问题",
+    optionsLabel: "选项",
+    options: ["卤肉饭", "牛肉面"],
+    pollOptionsLine: "卤肉饭 · 牛肉面 · 随便都好",
+    modalTitle: "创建投票",
+    modalFields: [
+      { label: "投票标题", value: "晚餐吃什么" },
+      { label: "选项", hint: "一行一个选项(2-18 个)", value: "卤肉饭\n牛肉面" },
+      { label: "多久后结束(选填)", hint: "例如 30m、2h、3d", value: "2h" },
+    ],
+    cancel: "取消",
+    submit: "提交",
+    captions: [
+      "点一下最下面的输入框",
+      "打一个斜杠，命令列表就跳出来了",
+      "继续打字会实时筛选，不用背命令名称",
+      "选好按 Enter",
+      "跳出窗口填内容，不用把参数挤在一行",
+      "提交，机器龙就回复了",
+    ],
+  },
+} satisfies Record<MdxLocale, unknown>;
 
 interface Frame {
   /// What sits in the input: plain text while typing, a command pill once picked.
@@ -50,47 +114,19 @@ interface Frame {
   suggestions?: Suggestion[];
   modal?: boolean;
   sent?: boolean;
-  caption: string;
   hold: number;
 }
 
-const SCRIPT: Frame[] = [
-  { typed: "", caption: "點一下最下面的輸入框", hold: 1600 },
-  {
-    typed: "/",
-    query: "/",
-    suggestions: ALL,
-    caption: "打一個斜線，指令清單就跳出來了",
-    hold: 2600,
-  },
-  {
-    typed: "/poll",
-    query: "/poll",
-    suggestions: FILTERED,
-    caption: "繼續打字會即時篩選，不用背指令名稱",
-    hold: 2600,
-  },
-  {
-    typed: "/poll create",
-    picked: true,
-    caption: "選好按 Enter",
-    hold: 1800,
-  },
-  {
-    typed: "",
-    modal: true,
-    caption: "跳出視窗填內容，不用把參數擠在一行",
-    hold: 4000,
-  },
-  {
-    typed: "",
-    sent: true,
-    caption: "送出，機器龍就回覆了",
-    hold: 3600,
-  },
-];
-
-const LAST = SCRIPT.length - 1;
+function script(t: (typeof T)[MdxLocale]): Frame[] {
+  return [
+    { typed: "", hold: 1600 },
+    { typed: "/", query: "/", suggestions: t.all, hold: 2600 },
+    { typed: "/poll", query: "/poll", suggestions: t.filtered, hold: 2600 },
+    { typed: "/poll create", picked: true, hold: 1800 },
+    { typed: "", modal: true, hold: 4000 },
+    { typed: "", sent: true, hold: 3600 },
+  ];
+}
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -121,44 +157,46 @@ function Avatar({ className }: { className?: string }) {
   );
 }
 
-export function SlashCommandTour() {
+export function SlashCommandTour({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale];
+  const frames = script(t);
   const reduced = usePrefersReducedMotion();
   const [step, setStep] = useState(0);
 
   useEffect(() => {
     if (reduced) {
-      setStep(LAST);
+      setStep(frames.length - 1);
 
       return;
     }
 
     const timer = setTimeout(
-      () => setStep((current) => (current + 1) % SCRIPT.length),
-      SCRIPT[step]?.hold ?? 2000,
+      () => setStep((current) => (current + 1) % frames.length),
+      frames[step]?.hold ?? 2000,
     );
 
     return () => clearTimeout(timer);
-  }, [reduced, step]);
+  }, [reduced, step, frames]);
 
-  const frame = SCRIPT[step] ?? SCRIPT[0];
+  const frame = frames[step] ?? frames[0];
 
   if (!frame) return null;
 
   return (
     <div className="not-prose my-6">
       <DiscordSurface
-        channel="一般"
-        topic="隨便聊聊的地方"
+        channel={t.channel}
+        topic={t.topic}
         className="relative p-0 text-sm"
       >
         <div className="flex min-h-64 flex-col justify-end gap-3 px-4 py-4">
           <div className="flex gap-3 opacity-60">
             <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-discord-secondary font-semibold text-white">
-              阿
+              {t.asker.slice(1, 2)}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="font-medium text-white">阿明</div>
-              <div className="mt-0.5">今天晚上吃什麼啊</div>
+              <div className="font-medium text-white">{t.asker}</div>
+              <div className="mt-0.5">{t.question}</div>
             </div>
           </div>
 
@@ -175,24 +213,28 @@ export function SlashCommandTour() {
                 <Avatar className="size-9" />
                 <div className="min-w-0 flex-1 text-sm text-discord-text">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-medium text-white">{APP}</span>
+                    <span className="font-medium text-white">{t.app}</span>
                     <span className="rounded bg-discord-blurple px-1 py-px text-[10px] font-semibold uppercase text-white">
                       App
                     </span>
                   </div>
                   <div className="mt-1 max-w-sm rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                    <p className="m-0 font-semibold text-white">晚餐吃什麼</p>
+                    <p className="m-0 font-semibold text-white">
+                      {t.pollTitle}
+                    </p>
                     <p className="m-0 mt-1 text-discord-muted">
-                      滷肉飯 · 牛肉麵 · 隨便都好
+                      {t.pollOptionsLine}
                     </p>
                   </div>
                   <div className="mt-2 flex gap-2">
-                    <span className="rounded bg-discord-secondary px-3 py-1.5 text-xs font-medium text-white">
-                      滷肉飯
-                    </span>
-                    <span className="rounded bg-discord-secondary px-3 py-1.5 text-xs font-medium text-white">
-                      牛肉麵
-                    </span>
+                    {t.options.map((option) => (
+                      <span
+                        key={option}
+                        className="rounded bg-discord-secondary px-3 py-1.5 text-xs font-medium text-white"
+                      >
+                        {option}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -210,7 +252,7 @@ export function SlashCommandTour() {
                 className="absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg bg-discord-embed shadow-xl"
               >
                 <div className="px-3 py-2 text-xs font-semibold tracking-wide text-discord-muted">
-                  符合 {frame.query} 的指令
+                  符合 {frame.query} {t.matching}
                 </div>
                 {frame.suggestions.map((suggestion, index) => (
                   <div
@@ -230,7 +272,7 @@ export function SlashCommandTour() {
                       </div>
                     </div>
                     <span className="hidden shrink-0 text-xs text-discord-muted sm:block">
-                      {APP}
+                      {t.app}
                     </span>
                   </div>
                 ))}
@@ -248,7 +290,7 @@ export function SlashCommandTour() {
                 <div className="flex items-center gap-2 px-3 py-2">
                   <span className="font-semibold text-white">/poll create</span>
                   <span className="truncate text-xs text-discord-muted">
-                    建立投票
+                    {t.modalTitle}
                   </span>
                   <X className="ml-auto size-4 shrink-0 text-discord-muted" />
                 </div>
@@ -257,9 +299,11 @@ export function SlashCommandTour() {
                   <span className="shrink-0 font-semibold text-white">
                     /poll create
                   </span>
-                  <span className="text-sm text-discord-muted">問題</span>
+                  <span className="text-sm text-discord-muted">
+                    {t.optionLabel}
+                  </span>
                   <span className="truncate rounded bg-discord-option px-1.5 py-0.5 text-sm text-discord-text">
-                    晚餐吃什麼
+                    {t.pollTitle}
                   </span>
                 </div>
               </motion.div>
@@ -274,13 +318,17 @@ export function SlashCommandTour() {
                     <span className="rounded bg-discord-pill px-1.5 py-0.5 font-medium text-discord-pill-foreground">
                       {frame.typed}
                     </span>
-                    <span className="text-sm text-discord-muted">問題:</span>
-                    <span className="text-sm text-discord-text">晚餐吃什麼</span>
+                    <span className="text-sm text-discord-muted">
+                      {t.optionLabel}:
+                    </span>
+                    <span className="text-sm text-discord-text">
+                      {t.pollTitle}
+                    </span>
                     <span className="hidden text-sm text-discord-muted sm:inline">
-                      選項:
+                      {t.optionsLabel}:
                     </span>
                     <span className="hidden text-sm text-discord-text sm:inline">
-                      滷肉飯, 牛肉麵
+                      {t.options.join(", ")}
                     </span>
                   </>
                 ) : (
@@ -288,7 +336,7 @@ export function SlashCommandTour() {
                 )
               ) : (
                 <span className="pointer-events-none absolute text-discord-placeholder">
-                  傳送訊息到 #一般
+                  {t.placeholder}
                 </span>
               )}
               {!frame.sent && !reduced ? (
@@ -319,11 +367,13 @@ export function SlashCommandTour() {
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 px-4">
               <div className="w-full max-w-sm overflow-hidden rounded-md bg-discord-bg shadow-2xl">
                 <div className="flex items-center justify-between px-4 pt-4 pb-3">
-                  <span className="font-semibold text-white">建立投票</span>
+                  <span className="font-semibold text-white">
+                    {t.modalTitle}
+                  </span>
                   <X className="size-4 text-discord-muted" />
                 </div>
                 <div className="flex flex-col gap-3 px-4 pb-4">
-                  {MODAL_FIELDS.map((field) => (
+                  {t.modalFields.map((field) => (
                     <div key={field.label}>
                       <div className="text-xs font-bold text-discord-icon">
                         {field.label}
@@ -340,9 +390,9 @@ export function SlashCommandTour() {
                   ))}
                 </div>
                 <div className="flex items-center justify-end gap-4 bg-discord-embed px-4 py-3">
-                  <span className="text-discord-text">取消</span>
+                  <span className="text-discord-text">{t.cancel}</span>
                   <span className="rounded-sm bg-discord-blurple px-4 py-1.5 font-medium text-white">
-                    送出
+                    {t.submit}
                   </span>
                 </div>
               </div>
@@ -352,9 +402,9 @@ export function SlashCommandTour() {
 
       <div className="mt-3 flex items-center gap-3">
         <div className="flex gap-1.5">
-          {SCRIPT.map((entry, index) => (
+          {t.captions.map((caption, index) => (
             <span
-              key={entry.caption}
+              key={caption}
               className={cn(
                 "size-1.5 rounded-full transition-colors",
                 index === step ? "bg-discord-blurple" : "bg-discord-secondary",
@@ -367,7 +417,7 @@ export function SlashCommandTour() {
           className="m-0 flex items-center gap-1 text-sm text-fd-muted-foreground"
         >
           <ChevronRight className="size-4 shrink-0" />
-          {frame.caption}
+          {t.captions[step]}
         </p>
       </div>
     </div>

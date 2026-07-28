@@ -20,7 +20,7 @@ import {
   BlogTagPage,
   BlogTags,
 } from "./src/blog/layouts";
-import { mdxComponents } from "./src/components/mdx";
+import { localeMdxComponents, mdxComponents } from "./src/components/mdx";
 import { createCmd } from "./src/components/mdx/cmd";
 import { createCommandHeader } from "./src/components/mdx/command-header";
 import { i18n, RootLayout, translations } from "./src/root-layout";
@@ -29,6 +29,7 @@ import { LegalPage } from "./src/legal-layout";
 import { OgImage } from "./src/og-image";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
+import { zhCnPagesPlugin } from "./src/zh-cn-plugin";
 
 // 側欄頁面對應的斜線指令，slug 即指令名；一頁多指令的（utility）不標
 const sidebarCommands = new Set([
@@ -153,15 +154,14 @@ const config = defineConfig({
     fumadocsMdx({
       async getMdxComponents(page) {
         const source = await this.getLoader();
+        const locale = page.locale === "zh-cn" ? "cn" : "tw";
 
         return {
           ...defaultMdxComponents,
           ...mdxComponents,
-          Cmd: createCmd(page.locale === "zh-cn" ? "cn" : "tw"),
-          CommandHeader: createCommandHeader(
-            page.locale === "zh-cn" ? "cn" : "tw",
-            page.slugs.at(-1),
-          ),
+          ...localeMdxComponents(locale),
+          Cmd: createCmd(locale),
+          CommandHeader: createCommandHeader(locale, page.slugs.at(-1)),
           a: createRelativeLink(source, page),
         };
       },
@@ -201,6 +201,7 @@ export type PressContext = typeof config.$context;
 
 export default config
   .plugins(
+    zhCnPagesPlugin(),
     rssPlugin(),
     blogPlugin({
       layouts: {

@@ -1,4 +1,5 @@
 import Link from "fumadocs-core/link";
+import type { HomeCopy } from "./copy";
 import { DinoMascot } from "./DinoMascot";
 import { Cloud, GroundBand, HillsLayer, Plant } from "./scene";
 
@@ -12,7 +13,9 @@ const SERVERS = [
   { img: "/home/customers/daidai.png", name: "老查呆呆の迷因調查局總部" },
 ];
 
-export function Hero() {
+export function Hero({ copy }: { copy: HomeCopy }) {
+  const c = copy.hero;
+
   return (
     <div className="relative z-2 w-full">
       <div className="relative flex flex-col items-center gap-6 px-4 pt-16 pb-52 text-center sm:gap-7 sm:pt-20 sm:pb-72 md:pt-28">
@@ -33,27 +36,31 @@ export function Hero() {
           className="top-[46%] right-[19%] opacity-70 [animation-delay:-3s] max-sm:hidden"
         />
         <h1 className="text-balance font-bold text-[2.6rem] leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
-          一隻恐龍
+          {c.titleTop}
           <br />
-          搞定整個<span className="text-primary">伺服器</span>
+          {c.titleBottom}
+          <span className="text-primary">{c.titleHighlight}</span>
         </h1>
         <p className="max-w-136 text-base text-muted-foreground text-pretty sm:text-lg md:text-xl">
-          抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。
+          {c.subtitle}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
-          <Link href="/install/" className="btn-chunky">
-            安裝機器人
+          <Link href={copy.installHref} className="btn-chunky">
+            {c.install}
           </Link>
-          <Link href="/zh-tw/docs" className="btn-chunky-secondary">
-            看使用教學
+          <Link href={copy.docsHref} className="btn-chunky-secondary">
+            {c.docs}
           </Link>
         </div>
         <HillsLayer className="bottom-16 h-40" />
-        <DinoMascot className="absolute bottom-10 right-[5%] sm:bottom-12 sm:right-[12%]" />
+        <DinoMascot
+          alt={c.mascotAlt}
+          className="absolute bottom-10 right-[5%] sm:bottom-12 sm:right-[12%]"
+        />
       </div>
       <GroundBand className="-mt-24">
         <Forest />
-        <ServerProof />
+        <ServerProof copy={c} />
       </GroundBand>
     </div>
   );
@@ -92,7 +99,7 @@ function Forest() {
   );
 }
 
-function ServerProof() {
+function ServerProof({ copy }: { copy: HomeCopy["hero"] }) {
   return (
     <div className="flex flex-col items-center justify-center gap-3 px-4 pt-5 pb-8 sm:flex-row sm:gap-5">
       <div className="-space-x-3 flex shrink-0 items-center">
@@ -109,9 +116,9 @@ function ServerProof() {
         ))}
       </div>
       <p className="text-balance text-center font-medium leading-snug max-sm:text-sm">
-        APEX Taiwan、VALORANT Taiwan 等
+        {copy.proofPrefix}
         <span className="mx-1 font-bold text-primary">350,000+</span>
-        個伺服器都在用
+        {copy.proofSuffix}
       </p>
     </div>
   );
