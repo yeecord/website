@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Hash, Lock } from "lucide-react";
+import { DiscordSurface } from "@/components/mdx/discord";
 import { cn } from "@/utils/cn";
 import { ClickHint, Scene, StepDots, useLoop } from "@/components/mdx/flow";
 
@@ -42,7 +43,7 @@ export function FormFlowDemo() {
   const [step, setStep] = useLoop(memberSteps.length);
 
   return (
-    <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
+    <DiscordSurface className="text-sm">
       <StepDots labels={memberSteps} step={step} onPick={setStep} />
       <div className="min-h-52">
         <AnimatePresence mode="wait">
@@ -120,7 +121,7 @@ export function FormFlowDemo() {
       <p className="mt-3 text-xs text-discord-muted">
         成員只要按按鈕、填完送出，剩下的機器龍包辦
       </p>
-    </div>
+    </DiscordSurface>
   );
 }
 
@@ -136,7 +137,7 @@ export function FormBuilderDemo() {
   const [step, setStep] = useLoop(builderSteps.length);
 
   return (
-    <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
+    <DiscordSurface className="text-sm">
       <StepDots labels={builderSteps} step={step} onPick={setStep} />
       <div className="rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
         <p className="font-semibold text-white">📋 檢舉玩家 (#3)</p>
@@ -195,6 +196,6 @@ export function FormBuilderDemo() {
       <p className="mt-3 text-xs text-discord-muted">
         整個過程都在同一張管理卡上，卡片原地更新
       </p>
-    </div>
+    </DiscordSurface>
   );
 }

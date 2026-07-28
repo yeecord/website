@@ -1,6 +1,37 @@
-import { Gift, SmilePlus } from "lucide-react";
+import { Gift, Hash, SmilePlus } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
+
+// Discord's panels carry no hairline border; they separate by sitting darker than what
+// is behind them. Every demo shares this shell so none of them drifts back to a card.
+export function DiscordSurface({
+  channel,
+  topic,
+  className,
+  children,
+}: {
+  channel?: string;
+  topic?: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="not-prose my-4 overflow-hidden rounded-xl border border-black/40 bg-discord-bg text-discord-text shadow-lg">
+      {channel ? (
+        <div className="flex items-center gap-2 border-b border-black/30 px-4 py-2.5 text-sm">
+          <Hash className="size-4 shrink-0 text-discord-muted" />
+          <span className="font-semibold text-white">{channel}</span>
+          {topic ? (
+            <span className="ml-2 hidden truncate border-l border-discord-secondary pl-3 text-xs text-discord-muted sm:inline">
+              {topic}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+      <div className={cn("p-4", className)}>{children}</div>
+    </div>
+  );
+}
 
 export interface CommandOption {
   name: string;
@@ -57,9 +88,9 @@ export function SlashCommand({
 
 export function DiscordChat({ children }: { children: ReactNode }) {
   return (
-    <div className="not-prose my-4 flex flex-col gap-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
+    <DiscordSurface className="flex flex-col gap-4 text-sm">
       {children}
-    </div>
+    </DiscordSurface>
   );
 }
 

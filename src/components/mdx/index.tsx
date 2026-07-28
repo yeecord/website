@@ -22,6 +22,7 @@ import {
 } from "@/components/mdx/feature-flows";
 import { FormBuilderDemo, FormFlowDemo } from "@/components/mdx/form-flow";
 import { LinkButton } from "@/components/mdx/LinkButton";
+import { SlashCommandTour } from "@/components/mdx/slash-tour";
 
 export * from "./Adsense";
 export * from "./discord";
@@ -46,4 +47,5 @@ export const mdxComponents = {
   img: ImageZoom as FC<ImgHTMLAttributes<HTMLImageElement>>,
   RoleOrderDemo,
   SlashCommand,
+  SlashCommandTour,
 };
