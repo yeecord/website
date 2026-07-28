@@ -1,0 +1,151 @@
+---
+title: 哪裡不一樣了
+icon: Sparkles
+description: 機器龍重寫過，大部分功能改用斜線指令，網頁控制面板收起來了。這頁列出還在的、收掉的，還有舊資料的去向。
+---
+
+機器龍重寫過一遍。
+
+<Callout title="三句話講完">
+大部分功能改用斜線指令。前綴指令沒有拿掉。舊的設定會搬過去，錢跟道具不會。
+</Callout>
+
+## 斜線指令怎麼用
+
+打一個 `/`，清單就跳出來。
+
+<SlashCommandTour />
+
+好處：
+
+- 不用背指令名稱，打幾個字就篩出來
+- 每個選項有名字，不會填錯位置
+- 選錯的參數 Discord 會直接擋掉
+
+## 逐個指令設權限
+
+這是前綴指令做不到的事。
+
+**伺服器設定 → 整合 → YEE 式機器龍**，每個指令旁邊都能單獨設定：
+
+| 覆寫類型 | 效果 |
+| --- | --- |
+| 身分組 | 只有這些身分組能用這個指令 |
+| 成員 | 指名某個人能用或不能用 |
+| 頻道 | 這個指令只在特定頻道能用 |
+
+常見用法：
+
+- `/clear` 只開給管理員
+- `/find-food` 只開在遊戲頻道，避免洗版
+- `/poll create` 開給幹部，一般成員只能投票
+
+設定存在 Discord 那邊，機器龍改版也不會掉。
+
+## 前綴指令還在
+
+`&` 開頭照樣能打：
+
+<div className="not-prose my-4 flex flex-wrap gap-2 font-mono text-sm">
+  {["&status", "&b", "&guild", "&avatar", "&banner", "&pick", "&quote", "&1a2b", "&help", "&find-food"].map((command) => (
+    <span key={command} className="rounded bg-fd-secondary px-2 py-1 text-fd-secondary-foreground">{command}</span>
+  ))}
+</div>
+
+@ 機器龍也可以，像 `@YEE 式機器龍 status`。
+
+### 哪些只能用斜線
+
+| 類型 | 例子 | 原因 |
+| --- | --- | --- |
+| 有子指令 | `/poll create`、`/lol player` | 前綴語法沒地方放子指令名稱 |
+| 要管理權限 | `/giveaway`、`/form`、`/clear` | 權限檢查交給 Discord，沒人繞得過 |
+
+## 指令對照表
+
+| 以前 | 現在 |
+| --- | --- |
+| `&poll` | `/poll create`、`/poll edit`、`/poll end` |
+| 網頁面板的抽獎 | `/giveaway create`、`/giveaway end` |
+| `&dvc`、`&temp` | `/auto-channels setup` |
+| `&jm` | `/member-notification`、`/auto-role` |
+| `&role` | `/role-menu` |
+| `&lock` | `/lock-channel setup` |
+| `&clear` | `/clear add` |
+| `&guildinfo` | `/guild` |
+| `&botinfo`、`&ping` | `/status`，`&status` 和 `&b` 也還在 |
+| `&minecraft` | `/minecraft player`、`/minecraft server` |
+| `&random` | `/random number`、`/random voice-channel` |
+| `&lol` | `/lol link`、`/lol player`、`/lol matches`、`/lol live`、`/lol rotation` |
+| `&1a2b`、`&pick`、`&avatar`、`&banner` | 同名的斜線指令，前綴也還能打 |
+
+## 收掉的功能
+
+### 音樂
+
+YouTube 這幾年一直擋機器人，撐到最後每天都在壞。`&play`、`&queue`、`&skip` 和歌單都不在了。
+
+### 經濟和 RPG
+
+舊系統有很難修的競態問題，同時操作會讓錢憑空多出來或消失。那些數字早就沒有意義。
+
+接手的是 [`/find-food`](/docs/find-food)，帶 Yee 找食材、煮飯、餵它。跟舊系統完全分開算。
+
+### 私人頻道
+
+改用 [`/form`](/docs/commands/form)。開一張表單發佈，成員按按鈕就會開一條私人討論串。
+
+表單不加題目也行，按鈕直接開討論串，跟以前的私人頻道一樣。
+
+### 跨群聊天
+
+把不同伺服器的頻道串成同一個聊天室的功能。維護成本高、濫用檢舉多，這次沒有跟著搬過來。
+
+### 網頁控制面板
+
+`app.yeecord.com` 收起來了。設定全部回到 Discord 裡面做。
+
+當初搬到網頁是因為填表比打指令好用。後來 Discord 自己把斜線指令和表單做得夠好，多開一個網頁反而多一道手續。
+
+
+## 舊資料的去向
+
+| 項目 | 會怎樣 |
+| --- | --- |
+| 歡迎訊息、動態語音、身分組選單的設定 | 原封不動搬過去 |
+| 舊訊息上的按鈕 | 照樣有反應 |
+| 進行中的投票和抽獎 | 一起帶過去，時間到照常公布 |
+| 錢、道具、寵物 | 不轉移，換成紀念徽章 |
+
+<Callout type="warn" title="為什麼錢不轉移">
+舊經濟的數字被競態 bug 汙染過，照搬只會把問題一起搬過來。取而代之的是「老朋友」紀念徽章，依照以前玩的深度分級，純紀念性質，不影響新遊戲平衡。
+</Callout>
+
+## 新增的功能
+
+<Cards>
+  <Card title="/form" href="/docs/commands/form" description="表單系統，收報名、意見、申請，回覆開成私人討論串" />
+  <Card title="/find-food" href="/docs/find-food" description="帶 Yee 找食材、煮飯、餵它，會記得你煮過什麼" />
+  <Card title="/bot-fight" href="/docs/commands/bot-fight" description="機器人防禦，擋洗版廣告帳號" />
+  <Card title="/auto-channels" href="/docs/commands/auto-channels" description="動態語音頻道，一個伺服器可以開多組" />
+</Cards>
+
+## 常見問題
+
+### 為什麼打了指令沒反應
+
+先確認機器龍有沒有被踢出伺服器。還在的話，到 **伺服器設定 → 整合** 看看該指令有沒有被權限覆寫擋掉。
+
+### 舊的投票訊息還能按嗎
+
+能。舊格式的按鈕有專門的相容路徑，不用重發。
+
+### 我的錢真的沒了嗎
+
+沒有消失，只是不換成新遊戲的貨幣。舊數字保留在紀念徽章的紀錄裡。
+
+### 前綴可以改嗎
+
+目前固定 `&`。@ 機器龍是另一個選擇。
+
+還有問題就到 [支援伺服器](https://discord.gg/yeecord) 問。

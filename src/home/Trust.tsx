@@ -23,9 +23,9 @@ export function Trust() {
         hidden: { y: 20, opacity: 0 },
       }}
       transition={{ duration: 0.5 }}
-      className="z-[2] mt-40 flex flex-col items-center gap-6 text-center"
+      className="z-[2] mt-24 flex flex-col items-center gap-6 text-center sm:mt-40"
     >
-      <h2 className="font-bold text-4xl tracking-tight sm:text-5xl">
+      <h2 className="text-balance font-bold text-3xl tracking-tight sm:text-5xl">
         <span className="text-primary">
           <ServerCount count={count} />
         </span>

@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { MousePointer2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { DiscordSurface } from "@/components/mdx/discord";
 import { cn } from "@/utils/cn";
 
 export function useLoop(steps: number, interval = 3200) {
@@ -94,10 +95,10 @@ export function FlowFrame({
   minHeightClass?: string;
 }) {
   return (
-    <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
+    <DiscordSurface className="text-sm">
       <StepDots labels={labels} step={step} onPick={onPick} />
       <div className={minHeightClass}>{children}</div>
       <p className="mt-3 text-xs text-discord-muted">{caption}</p>
-    </div>
+    </DiscordSurface>
   );
 }
