@@ -2,8 +2,8 @@
 
 import { Check, Server, User } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import type { InstallCopy } from "@/install/copy";
-import { cn } from "@/utils/cn";
+import type { InstallCopy } from "~/install/copy";
+import { cn } from "~/utils/cn";
 
 const CLIENT_ID = "584213384409382953";
 

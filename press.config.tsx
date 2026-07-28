@@ -1,4 +1,4 @@
-import { canonicalUrl, domain } from "@config";
+import { canonicalUrl, domain } from "~/config";
 import type { ReactNode } from "react";
 import { lucideIconsPlugin } from "fumadocs-core/source/plugins/lucide-icons";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
@@ -23,13 +23,14 @@ import {
 import { localeMdxComponents, mdxComponents } from "./src/components/mdx";
 import { createCmd } from "./src/components/mdx/cmd";
 import { createCommandHeader } from "./src/components/mdx/command-header";
-import { i18n, RootLayout, translations } from "./src/root-layout";
-import { baseOptions, cnBaseOptions } from "./src/layout-config";
+import { i18n, toLocale } from "./src/i18n";
+import { RootLayout, translations } from "./src/root-layout";
+import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
 import { OgImage } from "./src/og-image";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
-import { zhCnPagesPlugin } from "./src/zh-cn-plugin";
+import { localizedPagesPlugin } from "./src/localized-pages-plugin";
 
 // 側欄頁面對應的斜線指令，slug 即指令名；一頁多指令的（utility）不標
 const sidebarCommands = new Set([
@@ -154,7 +155,7 @@ const config = defineConfig({
     fumadocsMdx({
       async getMdxComponents(page) {
         const source = await this.getLoader();
-        const locale = page.locale === "zh-cn" ? "cn" : "tw";
+        const locale = toLocale(page.locale);
 
         return {
           ...defaultMdxComponents,
@@ -201,7 +202,7 @@ export type PressContext = typeof config.$context;
 
 export default config
   .plugins(
-    zhCnPagesPlugin(),
+    localizedPagesPlugin(),
     rssPlugin(),
     blogPlugin({
       layouts: {
@@ -216,7 +217,7 @@ export default config
   .layouts({
     root: RootLayout,
     defaultProps({ lang }) {
-      return lang === "zh-cn" ? cnBaseOptions : baseOptions;
+      return baseOptions(toLocale(lang));
     },
     page: createLayoutSwitchAuto({
       docs: createDocsLayoutPage({

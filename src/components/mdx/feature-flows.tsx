@@ -2,12 +2,12 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Lock, Volume2, X } from "lucide-react";
-import { cn } from "@/utils/cn";
-import { ClickHint, FlowFrame, Scene, useLoop } from "@/components/mdx/flow";
-import type { MdxLocale } from "@/components/mdx/locale";
+import { cn } from "~/utils/cn";
+import { ClickHint, FlowFrame, Scene, useLoop } from "~/components/mdx/flow";
+import type { Locale } from "~/i18n";
 
 const T = {
-  tw: {
+  "zh-tw": {
     autoChannels: {
       steps: ["加入入口頻道", "生出專屬頻道", "沒人就回收"],
       caption: "入口只有一個，頻道用多少生多少，不用手動清",
@@ -56,7 +56,7 @@ const T = {
       vote: "投票",
     },
   },
-  cn: {
+  "zh-cn": {
     autoChannels: {
       steps: ["加入入口频道", "生出专属频道", "没人就回收"],
       caption: "入口只有一个，频道用多少生多少，不用手动清",
@@ -105,7 +105,7 @@ const T = {
       vote: "投票",
     },
   },
-} satisfies Record<MdxLocale, unknown>;
+} satisfies Record<Locale, unknown>;
 
 function VoiceChannel({
   name,
@@ -149,7 +149,7 @@ function VoiceChannel({
   );
 }
 
-export function AutoChannelsDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function AutoChannelsDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale].autoChannels;
   const [step, setStep] = useLoop(t.steps.length);
 
@@ -195,7 +195,7 @@ export function AutoChannelsDemo({ locale = "tw" }: { locale?: MdxLocale }) {
   );
 }
 
-export function LockChannelDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function LockChannelDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale].lockChannel;
   const [step, setStep] = useLoop(t.steps.length);
 
@@ -257,7 +257,7 @@ export function LockChannelDemo({ locale = "tw" }: { locale?: MdxLocale }) {
   );
 }
 
-export function RoleMenuDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function RoleMenuDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale].roleMenu;
   const [step, setStep] = useLoop(t.steps.length, 2600);
 
@@ -305,7 +305,7 @@ export function RoleMenuDemo({ locale = "tw" }: { locale?: MdxLocale }) {
   );
 }
 
-export function GiveawayFlowDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function GiveawayFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale].giveaway;
   const [step, setStep] = useLoop(t.steps.length);
 
@@ -367,7 +367,7 @@ const pollValues = [
   { before: 28, after: 14 },
 ];
 
-export function PollFlowDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function PollFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale].poll;
   const [step, setStep] = useLoop(t.steps.length);
 

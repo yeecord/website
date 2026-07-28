@@ -1,4 +1,5 @@
-import type { FooterCategory, FooterItem } from "@/components/Footer";
+import type { FooterCategory, FooterItem } from "~/components/Footer";
+import { contentPath, type Locale, staticPath } from "~/i18n";
 
 // CF Pages 的 preview build（非 master）部署在 next.yeecord.com，
 // og:image / canonical 這些絕對網址要跟著指過去，不然會指到 yeecord.com 上不存在的路徑
@@ -35,91 +36,75 @@ const supportItems: FooterItem[] = [
   },
 ];
 
-export const footer: FooterCategory[] = [
+const footerText: Record<
+  Locale,
   {
-    title: "連結",
-    items: [
-      {
-        label: "部落格",
-        href: "/zh-tw/blog/",
-      },
-      {
-        label: "隱私權聲明",
-        href: "/zh-tw/privacy/",
-      },
-      {
-        label: "使用條款",
-        href: "/zh-tw/terms/",
-      },
-    ],
+    links: string;
+    blog: string;
+    privacy: string;
+    terms: string;
+    support: string;
+    other: string;
+    install: string;
+    status: string;
+  }
+> = {
+  "zh-tw": {
+    links: "連結",
+    blog: "部落格",
+    privacy: "隱私權聲明",
+    terms: "使用條款",
+    support: "支持我們",
+    other: "其他",
+    install: "安裝機器人",
+    status: "服務狀態",
   },
-  {
-    title: "支持我們",
-    items: supportItems,
+  "zh-cn": {
+    links: "链接",
+    blog: "博客",
+    privacy: "隐私权声明",
+    terms: "使用条款",
+    support: "支持我们",
+    other: "其他",
+    install: "安装机器人",
+    status: "服务状态",
   },
-  {
-    title: "其他",
-    items: [
-      {
-        label: "安裝機器人",
-        href: "/install",
-      },
-      {
-        label: "Discord",
-        href: "https://discord.gg/yeecord",
-        newWindow: true,
-      },
-      {
-        label: "服務狀態",
-        href: "https://status.yeecord.com/",
-        newWindow: true,
-      },
-    ],
-  },
-];
+};
 
-export const footerCn: FooterCategory[] = [
-  {
-    title: "链接",
-    items: [
-      {
-        label: "博客",
-        href: "/zh-cn/blog/",
-      },
-      {
-        label: "隐私权声明",
-        href: "/zh-cn/privacy/",
-      },
-      {
-        label: "使用条款",
-        href: "/zh-cn/terms/",
-      },
-    ],
-  },
-  {
-    title: "支持我们",
-    items: supportItems,
-  },
-  {
-    title: "其他",
-    items: [
-      {
-        label: "安装机器人",
-        href: "/zh-cn/install",
-      },
-      {
-        label: "Discord",
-        href: "https://discord.gg/yeecord",
-        newWindow: true,
-      },
-      {
-        label: "服务状态",
-        href: "https://status.yeecord.com/",
-        newWindow: true,
-      },
-    ],
-  },
-];
+export function footer(locale: Locale): FooterCategory[] {
+  const text = footerText[locale];
+
+  return [
+    {
+      title: text.links,
+      items: [
+        { label: text.blog, href: contentPath(locale, "/blog/") },
+        { label: text.privacy, href: contentPath(locale, "/privacy/") },
+        { label: text.terms, href: contentPath(locale, "/terms/") },
+      ],
+    },
+    {
+      title: text.support,
+      items: supportItems,
+    },
+    {
+      title: text.other,
+      items: [
+        { label: text.install, href: staticPath(locale, "/install") },
+        {
+          label: "Discord",
+          href: "https://discord.gg/yeecord",
+          newWindow: true,
+        },
+        {
+          label: text.status,
+          href: "https://status.yeecord.com/",
+          newWindow: true,
+        },
+      ],
+    },
+  ];
+}
 
 export const blogAuthors: Record<string, AuthorData> = {
   kane: {

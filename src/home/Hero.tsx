@@ -1,4 +1,5 @@
 import Link from "fumadocs-core/link";
+import { contentPath, type Locale, staticPath } from "~/i18n";
 import type { HomeCopy } from "./copy";
 import { DinoMascot } from "./DinoMascot";
 import { Cloud, GroundBand, HillsLayer, Plant } from "./scene";
@@ -13,7 +14,7 @@ const SERVERS = [
   { img: "/home/customers/daidai.png", name: "老查呆呆の迷因調查局總部" },
 ];
 
-export function Hero({ copy }: { copy: HomeCopy }) {
+export function Hero({ copy, locale }: { copy: HomeCopy; locale: Locale }) {
   const c = copy.hero;
 
   return (
@@ -45,10 +46,13 @@ export function Hero({ copy }: { copy: HomeCopy }) {
           {c.subtitle}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
-          <Link href={copy.installHref} className="btn-chunky">
+          <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">
             {c.install}
           </Link>
-          <Link href={copy.docsHref} className="btn-chunky-secondary">
+          <Link
+            href={contentPath(locale, "/docs")}
+            className="btn-chunky-secondary"
+          >
             {c.docs}
           </Link>
         </div>

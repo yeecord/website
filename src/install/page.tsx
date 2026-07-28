@@ -1,57 +1,23 @@
-import { canonicalUrl, domain, footer, footerCn } from "@config";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
-import { LanguagesIcon } from "lucide-react";
-import Footer from "@/components/Footer";
-import { InstallPicker } from "@/components/install/picker";
-import { Cloud, GroundBand, Plant } from "@/home/scene";
-import { baseOptions, cnBaseOptions } from "@/layout-config";
+import Footer from "~/components/Footer";
+import { InstallPicker } from "~/components/install/picker";
+import { footer } from "~/config";
+import { Cloud, GroundBand, Plant } from "~/home/scene";
+import type { Locale } from "~/i18n";
+import { localizedLayout, LocalizedMeta } from "~/localized-page";
 import { installCopy } from "./copy";
 
-export function InstallPage({ locale }: { locale: keyof typeof installCopy }) {
-  const cn = locale === "zh-cn";
+export function InstallPage({ locale }: { locale: Locale }) {
   const copy = installCopy[locale];
-  const options = cn ? cnBaseOptions : baseOptions;
 
   return (
-    <HomeLayout
-      {...options}
-      // the built-in switch only prepends a locale prefix, which sends /install
-      // to a nonexistent /zh-tw/install
-      slots={{ languageSelect: false }}
-      links={[
-        ...options.links,
-        {
-          type: "icon",
-          url: cn ? "/install/" : "/zh-cn/install/",
-          text: cn ? "繁體中文" : "简体中文",
-          icon: <LanguagesIcon />,
-        },
-      ]}
-    >
-      <title>{copy.meta.title}</title>
-      <meta name="description" content={copy.meta.description} />
-      <link
-        rel="canonical"
-        href={canonicalUrl(cn ? "/zh-cn/install" : "/install")}
+    <HomeLayout {...localizedLayout(locale, "/install")}>
+      <LocalizedMeta
+        locale={locale}
+        path="/install"
+        title={copy.meta.title}
+        description={copy.meta.description}
       />
-      <link
-        rel="alternate"
-        hrefLang="zh-Hant"
-        href={canonicalUrl("/install")}
-      />
-      <link
-        rel="alternate"
-        hrefLang="zh-Hans"
-        href={canonicalUrl("/zh-cn/install")}
-      />
-      <link
-        rel="alternate"
-        hrefLang="x-default"
-        href={canonicalUrl("/install")}
-      />
-      <meta property="og:title" content={copy.meta.title} />
-      <meta property="og:description" content={copy.meta.description} />
-      <meta property="og:image" content={`${domain}/opengraph-image.png`} />
       <main className="overflow-x-clip">
         <div className="relative mx-auto w-full max-w-4xl px-4 pt-20 pb-24">
           <Cloud n={1} width={150} className="top-6 left-[1%] max-sm:w-20" />
@@ -105,7 +71,7 @@ export function InstallPage({ locale }: { locale: keyof typeof installCopy }) {
           />
         </GroundBand>
       </main>
-      <Footer categories={cn ? footerCn : footer} brand={copy.mascotAlt} />
+      <Footer categories={footer(locale)} brand={copy.mascotAlt} />
     </HomeLayout>
   );
 }

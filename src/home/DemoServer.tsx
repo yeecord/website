@@ -8,7 +8,7 @@ import {
   DiscordEmbed,
   DiscordMessage,
   SlashCommand,
-} from "@/components/mdx/discord";
+} from "~/components/mdx/discord";
 import { type HomeCopy, homeCopy } from "./copy";
 
 type DemoCopy = HomeCopy["demo"];

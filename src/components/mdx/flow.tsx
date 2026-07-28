@@ -3,8 +3,8 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { MousePointer2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { DiscordSurface } from "@/components/mdx/discord";
-import { cn } from "@/utils/cn";
+import { DiscordSurface } from "~/components/mdx/discord";
+import { cn } from "~/utils/cn";
 
 export function useLoop(steps: number, interval = 3200) {
   const [step, setStep] = useState(0);

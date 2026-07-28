@@ -1,6 +1,6 @@
 import { Gift, Hash, SmilePlus } from "lucide-react";
 import type { ReactNode } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "~/utils/cn";
 
 // Discord's panels carry no hairline border; they separate by sitting darker than what
 // is behind them. Every demo shares this shell so none of them drifts back to a card.

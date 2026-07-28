@@ -1,7 +1,7 @@
-import { blogAuthors } from "@config";
+import { blogAuthors } from "~/config";
 import Link from "fumadocs-core/link";
 import type { PressContext } from "../../../press.config";
-import { cn } from "@/utils/cn";
+import { cn } from "~/utils/cn";
 
 export type BlogPost = Extract<PressContext["page"], { type: "blog" }>;
 

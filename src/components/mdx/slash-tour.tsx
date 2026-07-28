@@ -11,9 +11,9 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { DiscordSurface } from "@/components/mdx/discord";
-import type { MdxLocale } from "@/components/mdx/locale";
-import { cn } from "@/utils/cn";
+import { DiscordSurface } from "~/components/mdx/discord";
+import type { Locale } from "~/i18n";
+import { cn } from "~/utils/cn";
 
 interface Suggestion {
   command: string;
@@ -21,7 +21,7 @@ interface Suggestion {
 }
 
 const T = {
-  tw: {
+  "zh-tw": {
     app: "YEE 式機器龍",
     channel: "一般",
     topic: "隨便聊聊的地方",
@@ -63,7 +63,7 @@ const T = {
       "送出，機器龍就回覆了",
     ],
   },
-  cn: {
+  "zh-cn": {
     app: "YEE 式機器龍",
     channel: "综合",
     topic: "随便聊聊的地方",
@@ -104,7 +104,7 @@ const T = {
       "提交，机器龙就回复了",
     ],
   },
-} satisfies Record<MdxLocale, unknown>;
+} satisfies Record<Locale, unknown>;
 
 interface Frame {
   /// What sits in the input: plain text while typing, a command pill once picked.
@@ -117,7 +117,7 @@ interface Frame {
   hold: number;
 }
 
-function script(t: (typeof T)[MdxLocale]): Frame[] {
+function script(t: (typeof T)[Locale]): Frame[] {
   return [
     { typed: "", hold: 1600 },
     { typed: "/", query: "/", suggestions: t.all, hold: 2600 },
@@ -157,7 +157,7 @@ function Avatar({ className }: { className?: string }) {
   );
 }
 
-export function SlashCommandTour({ locale = "tw" }: { locale?: MdxLocale }) {
+export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale];
   const frames = script(t);
   const reduced = usePrefersReducedMotion();

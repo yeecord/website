@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import { useEffect, useRef } from "react";
-import { useAdsScript } from "@/components/adsense";
+import { useAdsScript } from "~/components/adsense";
 import { Callout } from "fumadocs-ui/components/callout";
 
 /**

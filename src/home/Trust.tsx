@@ -1,8 +1,8 @@
 "use client";
 
 import { type MotionValue, motion, useTransform } from "framer-motion";
-import { DiscordChat, DiscordMessage } from "@/components/mdx/discord";
-import formatter from "@/utils/formatter";
+import { DiscordChat, DiscordMessage } from "~/components/mdx/discord";
+import formatter from "~/utils/formatter";
 import type { HomeCopy } from "./copy";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 

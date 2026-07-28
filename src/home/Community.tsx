@@ -1,8 +1,15 @@
 import Link from "fumadocs-core/link";
+import { type Locale, staticPath } from "~/i18n";
 import type { HomeCopy } from "./copy";
 import { Cloud, GroundBand, Plant } from "./scene";
 
-export function Community({ copy }: { copy: HomeCopy }) {
+export function Community({
+  copy,
+  locale,
+}: {
+  copy: HomeCopy;
+  locale: Locale;
+}) {
   const c = copy.community;
 
   return (
@@ -35,7 +42,7 @@ export function Community({ copy }: { copy: HomeCopy }) {
           {c.subheading}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 pb-10 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap">
-          <Link href={copy.installHref} className="btn-chunky">
+          <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">
             {c.install}
           </Link>
           <Link
