@@ -3,17 +3,99 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Hash, Lock } from "lucide-react";
 import { DiscordSurface } from "@/components/mdx/discord";
+import type { MdxLocale } from "@/components/mdx/locale";
 import { cn } from "@/utils/cn";
 import { ClickHint, Scene, StepDots, useLoop } from "@/components/mdx/flow";
+
+const T = {
+  tw: {
+    placeholder: "在這裡輸入",
+    flow: {
+      steps: ["按下按鈕", "填寫表單", "私人討論串"],
+      channel: "檢舉區",
+      panelTitle: "📋 檢舉玩家",
+      panelNote: "濫用、外掛檢舉專用",
+      cta: "我要檢舉",
+      modalTitle: "檢舉玩家",
+      who: "被檢舉人是誰？",
+      what: "發生什麼事？",
+      story: "在語音頻道開外掛還嗆人……",
+      where: "事發頻道",
+      whereValue: "語音",
+      submit: "送出",
+      thread: "#0042 阿貓",
+      threadTag: "私人討論串",
+      member: "@阿貓",
+      staff: "@管理組",
+      ticketTitle: "📋 檢舉玩家 #0042",
+      close: "結案",
+      caption: "成員只要按按鈕、填完送出，剩下的機器龍包辦",
+    },
+    builder: {
+      steps: ["建立表單", "加題目", "發佈面板"],
+      title: "📋 檢舉玩家 (#3)",
+      empty: "（還沒有題目）",
+      questions: [
+        "1. 被檢舉人是誰？（短答、必填）",
+        "2. 發生什麼事？（段落、必填）",
+      ],
+      published: "🟢 已發佈到 #檢舉區",
+      unpublished: "⚪ 未發佈",
+      notify: "通知：@管理組",
+      buttons: ["新增問題", "刪除問題", "發佈面板", "停用"],
+      caption: "整個過程都在同一張管理卡上，卡片原地更新",
+    },
+  },
+  cn: {
+    placeholder: "在这里输入",
+    flow: {
+      steps: ["按下按钮", "填写表单", "私密子区"],
+      channel: "举报区",
+      panelTitle: "📋 举报玩家",
+      panelNote: "滥用、外挂举报专用",
+      cta: "我要举报",
+      modalTitle: "举报玩家",
+      who: "被举报人是谁？",
+      what: "发生什么事？",
+      story: "在语音频道开外挂还骂人……",
+      where: "事发频道",
+      whereValue: "语音",
+      submit: "提交",
+      thread: "#0042 阿猫",
+      threadTag: "私密子区",
+      member: "@阿猫",
+      staff: "@管理组",
+      ticketTitle: "📋 举报玩家 #0042",
+      close: "结案",
+      caption: "成员只要按按钮、填完提交，剩下的机器龙包办",
+    },
+    builder: {
+      steps: ["创建表单", "加题目", "发布面板"],
+      title: "📋 举报玩家 (#3)",
+      empty: "（还没有题目）",
+      questions: [
+        "1. 被举报人是谁？（短答、必填）",
+        "2. 发生什么事？（段落、必填）",
+      ],
+      published: "🟢 已发布到 #举报区",
+      unpublished: "⚪ 未发布",
+      notify: "通知：@管理组",
+      buttons: ["新增问题", "删除问题", "发布面板", "停用"],
+      caption: "整个过程都在同一张管理卡上，卡片原地更新",
+    },
+  },
+} satisfies Record<MdxLocale, unknown>;
 
 function ModalField({
   label,
   value,
+  placeholder,
   select,
   multiline,
 }: {
   label: string;
   value?: string;
+  placeholder: string;
   select?: boolean;
   multiline?: boolean;
 }) {
@@ -29,7 +111,7 @@ function ModalField({
         )}
       >
         <span className={value ? "text-discord-text" : "text-discord-placeholder"}>
-          {value ?? "在這裡輸入"}
+          {value ?? placeholder}
         </span>
         {select ? <ChevronDown className="size-4 text-discord-muted" /> : null}
       </div>
@@ -37,29 +119,28 @@ function ModalField({
   );
 }
 
-const memberSteps = ["按下按鈕", "填寫表單", "私人討論串"];
-
-export function FormFlowDemo() {
-  const [step, setStep] = useLoop(memberSteps.length);
+export function FormFlowDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale].flow;
+  const [step, setStep] = useLoop(t.steps.length);
 
   return (
     <DiscordSurface className="text-sm">
-      <StepDots labels={memberSteps} step={step} onPick={setStep} />
+      <StepDots labels={t.steps} step={step} onPick={setStep} />
       <div className="min-h-52">
         <AnimatePresence mode="wait">
           {step === 0 && (
             <Scene id={0}>
               <p className="mb-2 flex items-center gap-1 text-discord-muted">
                 <Hash className="size-4" />
-                檢舉區
+                {t.channel}
               </p>
               <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                <p className="font-semibold text-white">📋 檢舉玩家</p>
-                <p className="mt-1 text-discord-muted">濫用、外掛檢舉專用</p>
+                <p className="font-semibold text-white">{t.panelTitle}</p>
+                <p className="mt-1 text-discord-muted">{t.panelNote}</p>
               </div>
               <span className="relative mt-2 inline-flex">
                 <span className="rounded bg-discord-blurple px-3 py-1.5 font-medium text-white">
-                  我要檢舉
+                  {t.cta}
                 </span>
                 <ClickHint className="-right-1 -bottom-1" />
               </span>
@@ -68,19 +149,29 @@ export function FormFlowDemo() {
           {step === 1 && (
             <Scene id={1}>
               <div className="mx-auto max-w-sm rounded-lg bg-discord-embed p-4 shadow-lg">
-                <p className="mb-3 font-semibold text-white">檢舉玩家</p>
+                <p className="mb-3 font-semibold text-white">{t.modalTitle}</p>
                 <div className="space-y-2.5">
-                  <ModalField label="被檢舉人是誰？" value="BadGuy#1234" />
                   <ModalField
-                    label="發生什麼事？"
-                    value="在語音頻道開外掛還嗆人……"
+                    label={t.who}
+                    value="BadGuy#1234"
+                    placeholder={T[locale].placeholder}
+                  />
+                  <ModalField
+                    label={t.what}
+                    value={t.story}
+                    placeholder={T[locale].placeholder}
                     multiline
                   />
-                  <ModalField label="事發頻道" value="語音" select />
+                  <ModalField
+                    label={t.where}
+                    value={t.whereValue}
+                    placeholder={T[locale].placeholder}
+                    select
+                  />
                 </div>
                 <span className="relative mt-3 inline-flex">
                   <span className="rounded bg-discord-blurple px-4 py-1.5 font-medium text-white">
-                    送出
+                    {t.submit}
                   </span>
                   <ClickHint className="-right-1 -bottom-1" />
                 </span>
@@ -91,56 +182,48 @@ export function FormFlowDemo() {
             <Scene id={2}>
               <p className="mb-2 flex items-center gap-1 text-discord-muted">
                 <Lock className="size-4" />
-                #0042 阿貓
+                {t.thread}
                 <span className="ml-1 rounded bg-discord-input px-1.5 py-px text-[10px]">
-                  私人討論串
+                  {t.threadTag}
                 </span>
               </p>
               <p className="mb-2">
                 <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                  @阿貓
+                  {t.member}
                 </span>{" "}
                 <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                  @管理組
+                  {t.staff}
                 </span>
               </p>
               <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                <p className="font-semibold text-white">📋 檢舉玩家 #0042</p>
-                <p className="mt-1.5 font-semibold text-white">被檢舉人是誰？</p>
+                <p className="font-semibold text-white">{t.ticketTitle}</p>
+                <p className="mt-1.5 font-semibold text-white">{t.who}</p>
                 <p className="text-discord-muted">BadGuy#1234</p>
-                <p className="mt-1.5 font-semibold text-white">發生什麼事？</p>
-                <p className="text-discord-muted">在語音頻道開外掛還嗆人……</p>
+                <p className="mt-1.5 font-semibold text-white">{t.what}</p>
+                <p className="text-discord-muted">{t.story}</p>
               </div>
               <span className="mt-2 inline-flex rounded bg-discord-danger px-3 py-1.5 font-medium text-white">
-                結案
+                {t.close}
               </span>
             </Scene>
           )}
         </AnimatePresence>
       </div>
-      <p className="mt-3 text-xs text-discord-muted">
-        成員只要按按鈕、填完送出，剩下的機器龍包辦
-      </p>
+      <p className="mt-3 text-xs text-discord-muted">{t.caption}</p>
     </DiscordSurface>
   );
 }
 
-const builderSteps = ["建立表單", "加題目", "發佈面板"];
-
-const builderQuestions = [
-  ["（還沒有題目）"],
-  ["1. 被檢舉人是誰？（短答、必填）", "2. 發生什麼事？（段落、必填）"],
-  ["1. 被檢舉人是誰？（短答、必填）", "2. 發生什麼事？（段落、必填）"],
-];
-
-export function FormBuilderDemo() {
-  const [step, setStep] = useLoop(builderSteps.length);
+export function FormBuilderDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale].builder;
+  const [step, setStep] = useLoop(t.steps.length);
+  const questions = step === 0 ? [t.empty] : t.questions;
 
   return (
     <DiscordSurface className="text-sm">
-      <StepDots labels={builderSteps} step={step} onPick={setStep} />
+      <StepDots labels={t.steps} step={step} onPick={setStep} />
       <div className="rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-        <p className="font-semibold text-white">📋 檢舉玩家 (#3)</p>
+        <p className="font-semibold text-white">{t.title}</p>
         <motion.p
           layout
           className={cn(
@@ -148,12 +231,12 @@ export function FormBuilderDemo() {
             step === 2 ? "text-discord-green" : "text-discord-muted",
           )}
         >
-          {step === 2 ? "🟢 已發佈到 #檢舉區" : "⚪ 未發佈"}
+          {step === 2 ? t.published : t.unpublished}
         </motion.p>
-        <p className="text-discord-muted">通知：@管理組</p>
+        <p className="text-discord-muted">{t.notify}</p>
         <div className="mt-2 space-y-1">
           <AnimatePresence initial={false}>
-            {builderQuestions[step]?.map((line) => (
+            {questions.map((line) => (
               <motion.p
                 key={line}
                 layout
@@ -173,7 +256,7 @@ export function FormBuilderDemo() {
           </AnimatePresence>
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5">
-          {["新增問題", "刪除問題", "發佈面板", "停用"].map((btn, index) => (
+          {t.buttons.map((btn, index) => (
             <span
               key={btn}
               className={cn(
@@ -193,9 +276,7 @@ export function FormBuilderDemo() {
           ))}
         </div>
       </div>
-      <p className="mt-3 text-xs text-discord-muted">
-        整個過程都在同一張管理卡上，卡片原地更新
-      </p>
+      <p className="mt-3 text-xs text-discord-muted">{t.caption}</p>
     </DiscordSurface>
   );
 }

@@ -4,7 +4,43 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, GripVertical, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DiscordSurface } from "@/components/mdx/discord";
+import type { MdxLocale } from "@/components/mdx/locale";
 import { cn } from "@/utils/cn";
+
+const T = {
+  tw: {
+    roles: ["管理員", "幹部", "活動通知", "遊戲玩家"],
+    bot: "YEE式機器龍",
+    rolesTitle: "伺服器設定 → 身分組",
+    dragHint: "把我拖到要給的身分組上面",
+    dragDone: "這樣就對了！",
+    rolesCaption: "機器龍只能給予排在自己「下面」的身分組",
+    permissionTitle: "頻道設定 → 權限 → @everyone",
+    permissions: [
+      { name: "檢視頻道", enabled: true },
+      { name: "發送訊息", enabled: false },
+    ],
+    permissionCaption:
+      "「檢視頻道」開、「發送訊息」關，就是一個大家看得到但只有管理員能發言的頻道",
+  },
+  cn: {
+    roles: ["管理员", "干部", "活动通知", "游戏玩家"],
+    bot: "YEE式機器龍",
+    rolesTitle: "服务器设置 → 身份组",
+    dragHint: "把我拖到要给的身份组上面",
+    dragDone: "这样就对了！",
+    rolesCaption: "机器龙只能给予排在自己「下面」的身份组",
+    permissionTitle: "频道设置 → 权限 → @everyone",
+    permissions: [
+      { name: "查看频道", enabled: true },
+      { name: "发送消息", enabled: false },
+    ],
+    permissionCaption:
+      "「查看频道」开、「发送消息」关，就是一个大家看得到但只有管理员能发言的频道",
+  },
+} satisfies Record<MdxLocale, unknown>;
+
+const roleColors = ["#e67e22", "#3498db", "#2ecc71", "#9b59b6"];
 
 function useLoop(steps: number, interval = 1600) {
   const [step, setStep] = useState(0);
@@ -20,22 +56,19 @@ function useLoop(steps: number, interval = 1600) {
   return step;
 }
 
-const roles = [
-  { name: "管理員", color: "#e67e22" },
-  { name: "幹部", color: "#3498db" },
-  { name: "活動通知", color: "#2ecc71" },
-  { name: "遊戲玩家", color: "#9b59b6" },
-];
-
-const botRole = { name: "YEE式機器龍", color: "var(--color-discord-blurple)" };
-
-export function RoleOrderDemo() {
+export function RoleOrderDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale];
   const step = useLoop(2, 2200);
-  const list = step === 0 ? [...roles, botRole] : [...roles.slice(0, 2), botRole, ...roles.slice(2)];
+  const roles = t.roles.map((name, i) => ({ name, color: roleColors[i] }));
+  const botRole = { name: t.bot, color: "var(--color-discord-blurple)" };
+  const list =
+    step === 0
+      ? [...roles, botRole]
+      : [...roles.slice(0, 2), botRole, ...roles.slice(2)];
 
   return (
     <DiscordSurface className="text-sm">
-      <p className="mb-3 font-semibold text-white">伺服器設定 → 身分組</p>
+      <p className="mb-3 font-semibold text-white">{t.rolesTitle}</p>
       <div className="flex flex-col gap-1.5">
         {list.map((role) => (
           <motion.div
@@ -64,29 +97,24 @@ export function RoleOrderDemo() {
                   step === 0 ? "text-discord-muted" : "text-discord-green",
                 )}
               >
-                {step === 0 ? "把我拖到要給的身分組上面" : "這樣就對了！"}
+                {step === 0 ? t.dragHint : t.dragDone}
               </span>
             )}
           </motion.div>
         ))}
       </div>
-      <p className="mt-3 text-xs text-discord-muted">
-        機器龍只能給予排在自己「下面」的身分組
-      </p>
+      <p className="mt-3 text-xs text-discord-muted">{t.rolesCaption}</p>
     </DiscordSurface>
   );
 }
 
-const defaultPermissions = [
-  { name: "檢視頻道", enabled: true },
-  { name: "發送訊息", enabled: false },
-];
-
 export function ChannelPermissionDemo({
-  title = "頻道設定 → 權限 → @everyone",
-  permissions = defaultPermissions,
-  caption = "「檢視頻道」開、「發送訊息」關，就是一個大家看得到但只有管理員能發言的頻道",
+  locale = "tw",
+  title = T[locale].permissionTitle,
+  permissions = T[locale].permissions,
+  caption = T[locale].permissionCaption,
 }: {
+  locale?: MdxLocale;
   title?: string;
   permissions?: { name: string; enabled: boolean }[];
   caption?: string;

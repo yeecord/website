@@ -4,6 +4,108 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, Lock, Volume2, X } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { ClickHint, FlowFrame, Scene, useLoop } from "@/components/mdx/flow";
+import type { MdxLocale } from "@/components/mdx/locale";
+
+const T = {
+  tw: {
+    autoChannels: {
+      steps: ["加入入口頻道", "生出專屬頻道", "沒人就回收"],
+      caption: "入口只有一個，頻道用多少生多少，不用手動清",
+      entry: "創建頻道",
+      member: "阿貓",
+      channel: "阿貓的頻道",
+      recycling: "阿貓離開了，頻道即將自動刪除……",
+    },
+    lockChannel: {
+      steps: ["上鎖", "沒密碼進不去", "輸入密碼加入"],
+      caption: "密碼對了才拿得到進入權限，不用一個個設定成員權限",
+      channel: "幹部頻道",
+      leader: "團長",
+      member: "阿貓",
+      denied: "阿貓想加入，但沒有進入權限",
+      allowed: "密碼正確，阿貓可以進來了",
+    },
+    roleMenu: {
+      steps: ["點按鈕領取", "再點一次取消"],
+      caption: "成員自己領、自己退，管理員不用再手動發身分組",
+      prompt: "點下面的按鈕領取你的身分組！",
+      role: "🔔 活動通知",
+      member: "阿貓",
+    },
+    giveaway: {
+      steps: ["點按鈕參加", "確認參加成功", "時間到自動開獎"],
+      caption: "參加只要一顆按鈕，開獎時間到機器龍自己來",
+      title: "🎉 Nitro 抽獎",
+      ended: "已結束",
+      pending: "7 天後抽出 3 位得獎者",
+      join: "點我參加",
+      joined: "成功參加「Nitro 抽獎」，只有你看得到這則訊息",
+      congrats: "🎉 恭喜",
+      winners: ["@阿貓", "@小龍", "@路過的"],
+      prize: "獲得 Nitro！",
+    },
+    poll: {
+      steps: ["填表單發起", "成員投票", "圖片即時更新"],
+      caption: "每一票都會重畫結果圖片，不用等結束才知道戰況",
+      formTitle: "發起投票",
+      titleLabel: "標題",
+      question: "晚餐吃什麼？",
+      optionsLabel: "選項（一行一個）",
+      options: ["火鍋", "燒肉", "拉麵"],
+      submit: "送出",
+      vote: "投票",
+    },
+  },
+  cn: {
+    autoChannels: {
+      steps: ["加入入口频道", "生出专属频道", "没人就回收"],
+      caption: "入口只有一个，频道用多少生多少，不用手动清",
+      entry: "创建频道",
+      member: "阿猫",
+      channel: "阿猫的频道",
+      recycling: "阿猫离开了，频道即将自动删除……",
+    },
+    lockChannel: {
+      steps: ["上锁", "没密码进不去", "输入密码加入"],
+      caption: "密码对了才拿得到进入权限，不用一个个设置成员权限",
+      channel: "干部频道",
+      leader: "团长",
+      member: "阿猫",
+      denied: "阿猫想加入，但没有进入权限",
+      allowed: "密码正确，阿猫可以进来了",
+    },
+    roleMenu: {
+      steps: ["点按钮领取", "再点一次取消"],
+      caption: "成员自己领、自己退，管理员不用再手动发身份组",
+      prompt: "点下面的按钮领取你的身份组！",
+      role: "🔔 活动通知",
+      member: "阿猫",
+    },
+    giveaway: {
+      steps: ["点按钮参加", "确认参加成功", "时间到自动开奖"],
+      caption: "参加只要一颗按钮，开奖时间到机器龙自己来",
+      title: "🎉 Nitro 抽奖",
+      ended: "已结束",
+      pending: "7 天后抽出 3 位中奖者",
+      join: "点我参加",
+      joined: "成功参加「Nitro 抽奖」，只有你看得到这条消息",
+      congrats: "🎉 恭喜",
+      winners: ["@阿猫", "@小龙", "@路过的"],
+      prize: "获得 Nitro！",
+    },
+    poll: {
+      steps: ["填表单发起", "成员投票", "图片实时更新"],
+      caption: "每一票都会重画结果图片，不用等结束才知道战况",
+      formTitle: "发起投票",
+      titleLabel: "标题",
+      question: "晚餐吃什么？",
+      optionsLabel: "选项（一行一个）",
+      options: ["火锅", "烧肉", "拉面"],
+      submit: "提交",
+      vote: "投票",
+    },
+  },
+} satisfies Record<MdxLocale, unknown>;
 
 function VoiceChannel({
   name,
@@ -47,20 +149,22 @@ function VoiceChannel({
   );
 }
 
-const autoChannelSteps = ["加入入口頻道", "生出專屬頻道", "沒人就回收"];
-
-export function AutoChannelsDemo() {
-  const [step, setStep] = useLoop(autoChannelSteps.length);
+export function AutoChannelsDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale].autoChannels;
+  const [step, setStep] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
-      labels={autoChannelSteps}
+      labels={t.steps}
       step={step}
       onPick={setStep}
-      caption="入口只有一個，頻道用多少生多少，不用手動清"
+      caption={t.caption}
     >
       <div className="space-y-2">
-        <VoiceChannel name="創建頻道" members={step === 0 ? ["阿貓"] : []} />
+        <VoiceChannel
+          name={t.entry}
+          members={step === 0 ? [t.member] : []}
+        />
         <AnimatePresence>
           {step > 0 && (
             <motion.div
@@ -70,8 +174,8 @@ export function AutoChannelsDemo() {
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <VoiceChannel
-                name="阿貓的頻道"
-                members={step === 1 ? ["阿貓"] : []}
+                name={t.channel}
+                members={step === 1 ? [t.member] : []}
                 dimmed={step === 2}
               />
             </motion.div>
@@ -83,7 +187,7 @@ export function AutoChannelsDemo() {
             animate={{ opacity: 1 }}
             className="text-xs text-discord-muted"
           >
-            阿貓離開了，頻道即將自動刪除……
+            {t.recycling}
           </motion.p>
         )}
       </div>
@@ -91,17 +195,16 @@ export function AutoChannelsDemo() {
   );
 }
 
-const lockSteps = ["上鎖", "沒密碼進不去", "輸入密碼加入"];
-
-export function LockChannelDemo() {
-  const [step, setStep] = useLoop(lockSteps.length);
+export function LockChannelDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale].lockChannel;
+  const [step, setStep] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
-      labels={lockSteps}
+      labels={t.steps}
       step={step}
       onPick={setStep}
-      caption="密碼對了才拿得到進入權限，不用一個個設定成員權限"
+      caption={t.caption}
     >
       <AnimatePresence mode="wait">
         {step === 0 && (
@@ -109,21 +212,21 @@ export function LockChannelDemo() {
             <div className="mb-2 rounded bg-discord-input px-3 py-2 text-discord-text">
               <span className="font-semibold text-white">/lock-channel setup</span>{" "}
               <span className="rounded border border-discord-option-border/60 bg-discord-option px-1.5">
-                #幹部頻道
+                #{t.channel}
               </span>{" "}
               <span className="rounded border border-discord-option-border/60 bg-discord-option px-1.5">
                 ••••••
               </span>
             </div>
-            <VoiceChannel name="幹部頻道" locked members={["團長"]} />
+            <VoiceChannel name={t.channel} locked members={[t.leader]} />
           </Scene>
         )}
         {step === 1 && (
           <Scene id={1}>
-            <VoiceChannel name="幹部頻道" locked members={["團長"]} />
+            <VoiceChannel name={t.channel} locked members={[t.leader]} />
             <p className="mt-2 flex items-center gap-1.5 text-discord-danger">
               <X className="size-4" />
-              阿貓想加入，但沒有進入權限
+              {t.denied}
             </p>
           </Scene>
         )}
@@ -132,16 +235,20 @@ export function LockChannelDemo() {
             <div className="mb-2 rounded bg-discord-input px-3 py-2 text-discord-text">
               <span className="font-semibold text-white">/lock-channel join</span>{" "}
               <span className="rounded border border-discord-option-border/60 bg-discord-option px-1.5">
-                #幹部頻道
+                #{t.channel}
               </span>{" "}
               <span className="rounded border border-discord-option-border/60 bg-discord-option px-1.5">
                 ••••••
               </span>
             </div>
-            <VoiceChannel name="幹部頻道" locked members={["團長", "阿貓"]} />
+            <VoiceChannel
+              name={t.channel}
+              locked
+              members={[t.leader, t.member]}
+            />
             <p className="mt-2 flex items-center gap-1.5 text-discord-green">
               <Check className="size-4" />
-              密碼正確，阿貓可以進來了
+              {t.allowed}
             </p>
           </Scene>
         )}
@@ -150,21 +257,20 @@ export function LockChannelDemo() {
   );
 }
 
-const roleMenuSteps = ["點按鈕領取", "再點一次取消"];
-
-export function RoleMenuDemo() {
-  const [step, setStep] = useLoop(roleMenuSteps.length, 2600);
+export function RoleMenuDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale].roleMenu;
+  const [step, setStep] = useLoop(t.steps.length, 2600);
 
   return (
     <FlowFrame
-      labels={roleMenuSteps}
+      labels={t.steps}
       step={step}
       onPick={setStep}
-      caption="成員自己領、自己退，管理員不用再手動發身分組"
+      caption={t.caption}
       minHeightClass="min-h-32"
     >
       <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-        <p className="text-discord-text">點下面的按鈕領取你的身分組！</p>
+        <p className="text-discord-text">{t.prompt}</p>
         <span className="relative mt-2 inline-flex">
           <span
             className={cn(
@@ -172,16 +278,16 @@ export function RoleMenuDemo() {
               step === 0 ? "bg-discord-secondary" : "bg-discord-blurple",
             )}
           >
-            🔔 活動通知
+            {t.role}
           </span>
           <ClickHint className="-right-1 -bottom-1" />
         </span>
       </div>
       <p className="mt-2 flex items-center gap-1.5">
         <span className="flex size-5 items-center justify-center rounded-full bg-discord-avatar text-[10px] font-semibold text-discord-bg">
-          貓
+          {t.member.slice(-1)}
         </span>
-        阿貓
+        {t.member}
         <AnimatePresence>
           {step === 1 && (
             <motion.span
@@ -190,7 +296,7 @@ export function RoleMenuDemo() {
               exit={{ opacity: 0, scale: 0.8 }}
               className="rounded bg-discord-pill px-1.5 py-px text-xs text-discord-pill-foreground"
             >
-              🔔 活動通知
+              {t.role}
             </motion.span>
           )}
         </AnimatePresence>
@@ -199,22 +305,21 @@ export function RoleMenuDemo() {
   );
 }
 
-const giveawaySteps = ["點按鈕參加", "確認參加成功", "時間到自動開獎"];
-
-export function GiveawayFlowDemo() {
-  const [step, setStep] = useLoop(giveawaySteps.length);
+export function GiveawayFlowDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale].giveaway;
+  const [step, setStep] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
-      labels={giveawaySteps}
+      labels={t.steps}
       step={step}
       onPick={setStep}
-      caption="參加只要一顆按鈕，開獎時間到機器龍自己來"
+      caption={t.caption}
     >
       <div className="max-w-md rounded border-l-4 border-discord-fuchsia bg-discord-embed p-3">
-        <p className="font-semibold text-white">🎉 Nitro 抽獎</p>
+        <p className="font-semibold text-white">{t.title}</p>
         <p className="mt-1 text-discord-muted">
-          {step === 2 ? "已結束" : "7 天後抽出 3 位得獎者"}
+          {step === 2 ? t.ended : t.pending}
         </p>
       </div>
       <AnimatePresence mode="wait">
@@ -222,7 +327,7 @@ export function GiveawayFlowDemo() {
           <Scene id={0}>
             <span className="relative mt-2 inline-flex">
               <span className="rounded bg-discord-blurple px-3 py-1.5 font-medium text-white">
-                點我參加
+                {t.join}
               </span>
               <ClickHint className="-right-1 -bottom-1" />
             </span>
@@ -232,24 +337,22 @@ export function GiveawayFlowDemo() {
           <Scene id={1}>
             <p className="mt-2 flex items-center gap-1.5 text-discord-green">
               <Check className="size-4" />
-              成功參加「Nitro 抽獎」，只有你看得到這則訊息
+              {t.joined}
             </p>
           </Scene>
         )}
         {step === 2 && (
           <Scene id={2}>
             <p className="mt-2 text-discord-text">
-              🎉 恭喜{" "}
-              <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                @阿貓
-              </span>{" "}
-              <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                @小龍
-              </span>{" "}
-              <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                @路過的
-              </span>{" "}
-              獲得 Nitro！
+              {t.congrats}{" "}
+              {t.winners.map((winner) => (
+                <span key={winner}>
+                  <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
+                    {winner}
+                  </span>{" "}
+                </span>
+              ))}
+              {t.prize}
             </p>
           </Scene>
         )}
@@ -258,48 +361,48 @@ export function GiveawayFlowDemo() {
   );
 }
 
-const pollSteps = ["填表單發起", "成員投票", "圖片即時更新"];
-
-const pollBars = [
-  { name: "火鍋", before: 38, after: 52 },
-  { name: "燒肉", before: 34, after: 34 },
-  { name: "拉麵", before: 28, after: 14 },
+const pollValues = [
+  { before: 38, after: 52 },
+  { before: 34, after: 34 },
+  { before: 28, after: 14 },
 ];
 
-export function PollFlowDemo() {
-  const [step, setStep] = useLoop(pollSteps.length);
+export function PollFlowDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+  const t = T[locale].poll;
+  const [step, setStep] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
-      labels={pollSteps}
+      labels={t.steps}
       step={step}
       onPick={setStep}
-      caption="每一票都會重畫結果圖片，不用等結束才知道戰況"
+      caption={t.caption}
     >
       <AnimatePresence mode="wait">
         {step === 0 && (
           <Scene id={0}>
             <div className="mx-auto max-w-sm rounded-lg bg-discord-embed p-4 shadow-lg">
-              <p className="mb-3 font-semibold text-white">發起投票</p>
+              <p className="mb-3 font-semibold text-white">{t.formTitle}</p>
               <p className="mb-1 text-xs font-semibold uppercase text-discord-muted">
-                標題
+                {t.titleLabel}
               </p>
               <div className="mb-2.5 rounded bg-discord-input px-2.5 py-1.5">
-                晚餐吃什麼？
+                {t.question}
               </div>
               <p className="mb-1 text-xs font-semibold uppercase text-discord-muted">
-                選項（一行一個）
+                {t.optionsLabel}
               </p>
               <div className="rounded bg-discord-input px-2.5 py-1.5">
-                火鍋
-                <br />
-                燒肉
-                <br />
-                拉麵
+                {t.options.map((option) => (
+                  <span key={option}>
+                    {option}
+                    <br />
+                  </span>
+                ))}
               </div>
               <span className="relative mt-3 inline-flex">
                 <span className="rounded bg-discord-blurple px-4 py-1.5 font-medium text-white">
-                  送出
+                  {t.submit}
                 </span>
                 <ClickHint className="-right-1 -bottom-1" />
               </span>
@@ -309,14 +412,15 @@ export function PollFlowDemo() {
         {step !== 0 && (
           <Scene id={1}>
             <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-              <p className="mb-2 font-semibold text-white">🗳️ 晚餐吃什麼？</p>
+              <p className="mb-2 font-semibold text-white">🗳️ {t.question}</p>
               <div className="space-y-1.5">
-                {pollBars.map((bar) => {
+                {t.options.map((option, i) => {
+                  const bar = pollValues[i];
                   const value = step === 1 ? bar.before : bar.after;
 
                   return (
-                    <div key={bar.name} className="flex items-center gap-2">
-                      <span className="w-10 shrink-0">{bar.name}</span>
+                    <div key={option} className="flex items-center gap-2">
+                      <span className="w-10 shrink-0">{option}</span>
                       <span className="h-4 flex-1 overflow-hidden rounded-sm bg-discord-input">
                         <motion.span
                           className="block h-full rounded-sm bg-discord-blurple"
@@ -334,7 +438,7 @@ export function PollFlowDemo() {
             </div>
             <span className="relative mt-2 inline-flex">
               <span className="rounded bg-discord-blurple px-3 py-1.5 font-medium text-white">
-                投票
+                {t.vote}
               </span>
               {step === 1 ? <ClickHint className="-right-1 -bottom-1" /> : null}
             </span>

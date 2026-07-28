@@ -1,4 +1,4 @@
-import type { FooterCategory } from "@/components/Footer";
+import type { FooterCategory, FooterItem } from "@/components/Footer";
 
 // CF Pages 的 preview build（非 master）部署在 next.yeecord.com，
 // og:image / canonical 這些絕對網址要跟著指過去，不然會指到 yeecord.com 上不存在的路徑
@@ -11,6 +11,29 @@ export const domain =
 export function canonicalUrl(path: string) {
   return `${domain}${path.endsWith("/") ? path : `${path}/`}`;
 }
+
+const supportItems: FooterItem[] = [
+  {
+    label: "GitHub",
+    href: "https://github.com/yeecord",
+    newWindow: true,
+  },
+  {
+    label: "Patreon",
+    href: "https://www.patreon.com/yeecord",
+    newWindow: true,
+  },
+  {
+    label: "Twitter",
+    href: "https://twitter.com/yeecord",
+    newWindow: true,
+  },
+  {
+    label: "top.gg",
+    href: "https://top.gg/bot/584213384409382953",
+    newWindow: true,
+  },
+];
 
 export const footer: FooterCategory[] = [
   {
@@ -32,28 +55,7 @@ export const footer: FooterCategory[] = [
   },
   {
     title: "支持我們",
-    items: [
-      {
-        label: "GitHub",
-        href: "https://github.com/yeecord",
-        newWindow: true,
-      },
-      {
-        label: "Patreon",
-        href: "https://www.patreon.com/yeecord",
-        newWindow: true,
-      },
-      {
-        label: "Twitter",
-        href: "https://twitter.com/yeecord",
-        newWindow: true,
-      },
-      {
-        label: "top.gg",
-        href: "https://top.gg/bot/584213384409382953",
-        newWindow: true,
-      },
-    ],
+    items: supportItems,
   },
   {
     title: "其他",
@@ -69,6 +71,49 @@ export const footer: FooterCategory[] = [
       },
       {
         label: "服務狀態",
+        href: "https://status.yeecord.com/",
+        newWindow: true,
+      },
+    ],
+  },
+];
+
+export const footerCn: FooterCategory[] = [
+  {
+    title: "链接",
+    items: [
+      {
+        label: "博客",
+        href: "/zh-cn/blog/",
+      },
+      {
+        label: "隐私权声明",
+        href: "/zh-cn/privacy/",
+      },
+      {
+        label: "使用条款",
+        href: "/zh-cn/terms/",
+      },
+    ],
+  },
+  {
+    title: "支持我们",
+    items: supportItems,
+  },
+  {
+    title: "其他",
+    items: [
+      {
+        label: "安装机器人",
+        href: "/zh-cn/install",
+      },
+      {
+        label: "Discord",
+        href: "https://discord.gg/yeecord",
+        newWindow: true,
+      },
+      {
+        label: "服务状态",
         href: "https://status.yeecord.com/",
         newWindow: true,
       },

@@ -1,7 +1,10 @@
 import Link from "fumadocs-core/link";
+import type { HomeCopy } from "./copy";
 import { Cloud, GroundBand, Plant } from "./scene";
 
-export function Community() {
+export function Community({ copy }: { copy: HomeCopy }) {
+  const c = copy.community;
+
   return (
     <div className="relative z-2 mt-24 sm:mt-40">
       <div className="relative flex flex-col items-center gap-6 px-4 pt-16 text-center">
@@ -26,21 +29,21 @@ export function Community() {
           />
         </div>
         <h2 className="text-balance font-bold text-3xl tracking-tight sm:text-5xl">
-          把機器龍帶回家
+          {c.heading}
         </h2>
         <p className="max-w-lg text-balance text-base text-muted-foreground sm:text-lg">
-          安裝免費，設定五分鐘。卡關了就來 Discord 社群喊一聲，我們都在。
+          {c.subheading}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 pb-10 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap">
-          <Link href="/install/" className="btn-chunky">
-            安裝機器人
+          <Link href={copy.installHref} className="btn-chunky">
+            {c.install}
           </Link>
           <Link
             href="https://discord.gg/yeecord"
             target="_blank"
             className="btn-chunky-secondary"
           >
-            加入 Discord 社群
+            {c.discord}
           </Link>
         </div>
       </div>

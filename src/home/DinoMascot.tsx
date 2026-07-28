@@ -3,7 +3,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
-export function DinoMascot({ className }: { className?: string }) {
+export function DinoMascot({
+  alt,
+  className,
+}: {
+  alt: string;
+  className?: string;
+}) {
   const [yells, setYells] = useState<number[]>([]);
 
   function yell() {
@@ -41,7 +47,7 @@ export function DinoMascot({ className }: { className?: string }) {
           className="cursor-pointer"
         >
           <img
-            alt="YEE 式機器龍"
+            alt={alt}
             src="/img/logo.svg"
             className="h-28 animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg motion-reduce:animate-none sm:h-52 lg:h-64"
             draggable={false}

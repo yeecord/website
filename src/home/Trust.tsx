@@ -3,9 +3,11 @@
 import { type MotionValue, motion, useTransform } from "framer-motion";
 import { DiscordChat, DiscordMessage } from "@/components/mdx/discord";
 import formatter from "@/utils/formatter";
+import type { HomeCopy } from "./copy";
 import { useAnimatedCounter } from "./utils/use-animated-counter";
 
-export function Trust() {
+export function Trust({ copy }: { copy: HomeCopy }) {
+  const c = copy.trust;
   const { count, start } = useAnimatedCounter(
     350_000,
     Math.max(350_000 - 10000, 0),
@@ -29,24 +31,21 @@ export function Trust() {
         <span className="text-primary">
           <ServerCount count={count} />
         </span>
-        個伺服器的日常
+        {c.headingSuffix}
       </h2>
-      <p className="text-lg text-muted-foreground sm:text-xl">
-        群主們怎麼說機器龍
-      </p>
+      <p className="text-lg text-muted-foreground sm:text-xl">{c.subheading}</p>
       <div className="mx-auto w-full max-w-[44rem] text-start">
         <DiscordChat>
-          <DiscordMessage author="SJay" bot={false} color="#5865f2">
-            <p>
-              複雜的大型伺服器架設，有了機器龍讓繁雜的操作變得簡單，大大減輕了管理難度
-            </p>
-          </DiscordMessage>
-          <DiscordMessage author="Money" bot={false} color="#e8a33d">
-            <p>即使我不懂英語，無需繁雜的理解及操作，我仍然可以輕鬆使用</p>
-          </DiscordMessage>
-          <DiscordMessage author="Nathan" bot={false} color="#23a55a">
-            <p>牠簡化了管理流程，大大提高了人員管理的效率</p>
-          </DiscordMessage>
+          {c.quotes.map((quote) => (
+            <DiscordMessage
+              key={quote.author}
+              author={quote.author}
+              bot={false}
+              color={quote.color}
+            >
+              <p>{quote.text}</p>
+            </DiscordMessage>
+          ))}
         </DiscordChat>
       </div>
     </motion.div>

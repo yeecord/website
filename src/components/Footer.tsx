@@ -6,7 +6,7 @@ export type FooterCategory = {
   items: FooterItem[];
 };
 
-type FooterItem = {
+export type FooterItem = {
   label: string;
   href: string;
   newWindow?: boolean;
@@ -14,13 +14,15 @@ type FooterItem = {
 
 export default function Footer({
   categories,
+  brand = "YEE 式機器龍",
 }: {
   categories: FooterCategory[];
+  brand?: string;
 }) {
   return (
     <div className="container mx-auto mt-auto border-t p-8 pb-20">
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row">
-        <Info />
+        <Info brand={brand} />
         {categories.map((category, i) => (
           <Category key={`${category.title}-${i}`} category={category} />
         ))}
@@ -29,7 +31,7 @@ export default function Footer({
   );
 }
 
-function Info() {
+function Info({ brand }: { brand: string }) {
   return (
     <div className="hidden flex-col gap-2 sm:flex">
       <div className="flex flex-row items-center gap-2">
@@ -43,7 +45,7 @@ function Info() {
         <p className="font-bold text-xl">Yeecord</p>
       </div>
       <p className="mt-2 text-muted-foreground text-xs">
-        YEE 式機器龍 © 2019 ~ {new Date(Date.now()).getFullYear()}
+        {brand} © 2019 ~ {new Date(Date.now()).getFullYear()}
       </p>
     </div>
   );

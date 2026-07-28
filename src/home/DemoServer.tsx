@@ -3,25 +3,30 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { HashIcon, PlusCircleIcon, Volume2Icon } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 import {
   DiscordEmbed,
   DiscordMessage,
   SlashCommand,
 } from "@/components/mdx/discord";
+import { type HomeCopy, homeCopy } from "./copy";
 
-type ChannelId = "welcome" | "lottery" | "shop";
+type DemoCopy = HomeCopy["demo"];
+type ChannelId = keyof DemoCopy["channels"];
 
-const CHANNELS: { id: ChannelId; name: string; topic: string }[] = [
-  { id: "welcome", name: "新人報到", topic: "機器龍自動接待新成員" },
-  { id: "lottery", name: "抽獎區", topic: "辦抽獎，一條指令的事" },
-  { id: "shop", name: "yee-的小店", topic: "掛機的人都在這裡餵恐龍" },
-];
+const CHANNEL_IDS: ChannelId[] = ["welcome", "lottery", "shop"];
 
-export function DemoServer() {
+const CopyContext = createContext<DemoCopy>(homeCopy["zh-tw"].demo);
+
+function useCopy() {
+  return useContext(CopyContext);
+}
+
+export function DemoServer({ copy }: { copy: HomeCopy }) {
+  const c = copy.demo;
   const [active, setActive] = useState<ChannelId>("welcome");
   const [seen, setSeen] = useState<ChannelId[]>(["welcome"]);
-  const channel = CHANNELS.find((c) => c.id === active)!;
+  const channel = c.channels[active];
 
   function open(id: ChannelId) {
     setActive(id);
@@ -29,49 +34,47 @@ export function DemoServer() {
   }
 
   return (
-    <div className="z-[2] mt-24 flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
-          進來參觀一下
-        </h2>
-        <p className="text-lg text-muted-foreground">
-          點左邊的頻道逛逛，按鈕都是真的能按。
-        </p>
-      </div>
-      <motion.div
-        whileInView={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: 24 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.4 }}
-        className="grid overflow-hidden rounded-xl border bg-discord-bg shadow-xl md:grid-cols-[15rem_1fr]"
-      >
-        <Sidebar active={active} seen={seen} onOpen={open} />
-        <div className="flex min-w-0 flex-col">
-          <div className="flex items-center gap-2 border-white/8 border-b px-4 py-3 text-discord-text">
-            <HashIcon className="size-5 text-discord-muted" />
-            <span className="font-semibold text-white">{channel.name}</span>
-            <span className="text-discord-muted text-sm max-sm:hidden">
-              {channel.topic}
-            </span>
-          </div>
-          <ChannelTabs active={active} onOpen={open} />
-          <div className="flex min-h-[21rem] flex-col p-4 text-discord-text text-sm">
-            <div key={active} className="flex flex-col gap-4">
-              {active === "welcome" && <WelcomeScene />}
-              {active === "lottery" && <LotteryScene />}
-              {active === "shop" && <ShopScene />}
-            </div>
-            <div className="mt-auto flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 pt-2.5 text-discord-placeholder">
-              <PlusCircleIcon className="size-5 shrink-0" />
-              跟大家說點什麼…
-            </div>
-          </div>
+    <CopyContext.Provider value={c}>
+      <div className="z-[2] mt-24 flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
+            {c.heading}
+          </h2>
+          <p className="text-lg text-muted-foreground">{c.subheading}</p>
         </div>
-      </motion.div>
-      <p className="text-muted-foreground">
-        歡迎訊息、身分組、抽獎這些設定，一句指令叫出來，剩下用選的、用填的，不用記落落長的參數。
-      </p>
-    </div>
+        <motion.div
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.4 }}
+          className="grid overflow-hidden rounded-xl border bg-discord-bg shadow-xl md:grid-cols-[15rem_1fr]"
+        >
+          <Sidebar active={active} seen={seen} onOpen={open} />
+          <div className="flex min-w-0 flex-col">
+            <div className="flex items-center gap-2 border-white/8 border-b px-4 py-3 text-discord-text">
+              <HashIcon className="size-5 text-discord-muted" />
+              <span className="font-semibold text-white">{channel.name}</span>
+              <span className="text-discord-muted text-sm max-sm:hidden">
+                {channel.topic}
+              </span>
+            </div>
+            <ChannelTabs active={active} onOpen={open} />
+            <div className="flex min-h-[21rem] flex-col p-4 text-discord-text text-sm">
+              <div key={active} className="flex flex-col gap-4">
+                {active === "welcome" && <WelcomeScene />}
+                {active === "lottery" && <LotteryScene />}
+                {active === "shop" && <ShopScene />}
+              </div>
+              <div className="mt-auto flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 pt-2.5 text-discord-placeholder">
+                <PlusCircleIcon className="size-5 shrink-0" />
+                {c.inputPlaceholder}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+        <p className="text-muted-foreground">{c.note}</p>
+      </div>
+    </CopyContext.Provider>
   );
 }
 
@@ -93,20 +96,18 @@ function Msg({ delay, children }: { delay: number; children: ReactNode }) {
 }
 
 function WelcomeScene() {
+  const copy = useCopy();
+  const c = copy.welcome;
+
   return (
     <>
       <Msg delay={0}>
-        <p className="text-discord-muted text-xs">
-          阿龍的粉絲 剛剛加入伺服器 👋
-        </p>
+        <p className="text-discord-muted text-xs">{c.joined}</p>
       </Msg>
       <Msg delay={0.25}>
-        <DiscordMessage>
-          <DiscordEmbed
-            title="👋 歡迎 阿龍的粉絲！"
-            color="var(--color-primary)"
-          >
-            <p>歡迎來到伺服器，先挑個身分組，讓大家認識你。</p>
+        <DiscordMessage author={copy.sidebar.botName} bot>
+          <DiscordEmbed title={c.embedTitle} color="var(--color-primary)">
+            <p>{c.embedBody}</p>
           </DiscordEmbed>
           <RolePicker />
         </DiscordMessage>
@@ -116,22 +117,28 @@ function WelcomeScene() {
 }
 
 function LotteryScene() {
+  const copy = useCopy();
+  const c = copy.lottery;
+
   return (
     <>
       <Msg delay={0}>
         <SlashCommand
           name="lottery"
-          description="舉辦抽獎"
+          description={c.command}
           options={[
-            { name: "獎品", value: "Nitro 一個月" },
-            { name: "得獎人數", value: "3" },
+            { name: c.prizeLabel, value: c.prize },
+            { name: c.winnersLabel, value: "3" },
           ]}
         />
       </Msg>
       <Msg delay={0.25}>
-        <DiscordMessage>
-          <DiscordEmbed title="🎉 抽獎開始" color="var(--color-discord-fuchsia)">
-            <p>獎品：Nitro 一個月，按下面的按鈕參加！</p>
+        <DiscordMessage author={copy.sidebar.botName} bot>
+          <DiscordEmbed
+            title={c.embedTitle}
+            color="var(--color-discord-fuchsia)"
+          >
+            <p>{c.embedBody}</p>
           </DiscordEmbed>
           <Lottery />
         </DiscordMessage>
@@ -141,17 +148,20 @@ function LotteryScene() {
 }
 
 function ShopScene() {
+  const copy = useCopy();
+  const c = copy.shop;
+
   return (
     <>
       <Msg delay={0}>
-        <DiscordMessage author="阿龍的粉絲" bot={false} color="#e8a33d">
+        <DiscordMessage author={c.user} bot={false} color="#e8a33d">
           <p>/find-food</p>
         </DiscordMessage>
       </Msg>
       <Msg delay={0.25}>
-        <DiscordMessage>
-          <DiscordEmbed title="🍳 Yee 的小店" color="var(--color-discord-gold)">
-            <p>Yee 剛從河邊回來，袋子裝了七成滿，看起來心情不錯。</p>
+        <DiscordMessage author={copy.sidebar.botName} bot>
+          <DiscordEmbed title={c.embedTitle} color="var(--color-discord-gold)">
+            <p>{c.embedBody}</p>
           </DiscordEmbed>
           <FindFoodButtons />
         </DiscordMessage>
@@ -189,12 +199,12 @@ function ChatButton({
 }
 
 function RolePicker() {
+  const c = useCopy().welcome;
   const [picked, setPicked] = useState<string>();
-  const roles = ["🎮 遊戲仔", "🌙 夜貓子", "🎨 創作者"];
 
   return (
     <div className="flex flex-wrap gap-1.5">
-      {roles.map((role) => (
+      {c.roles.map((role) => (
         <ChatButton
           key={role}
           variant={picked === role ? "primary" : "secondary"}
@@ -212,7 +222,7 @@ function RolePicker() {
             exit={{ opacity: 0 }}
             className="self-center text-discord-muted text-xs"
           >
-            已領取 {picked}
+            {c.claimed} {picked}
           </motion.span>
         )}
       </AnimatePresence>
@@ -221,6 +231,7 @@ function RolePicker() {
 }
 
 function Lottery() {
+  const c = useCopy().lottery;
   const [joined, setJoined] = useState(false);
   const [count, setCount] = useState(42);
   const [burst, setBurst] = useState(0);
@@ -236,10 +247,10 @@ function Lottery() {
   return (
     <div className="relative flex flex-wrap gap-1.5">
       <ChatButton variant="primary" onClick={join}>
-        {joined ? "已參加 ✅" : "參加抽獎"}
+        {joined ? c.joined : c.join}
       </ChatButton>
       <ChatButton>
-        目前{" "}
+        {c.countPrefix}{" "}
         <motion.span
           key={count}
           initial={{ scale: 1.5 }}
@@ -248,7 +259,7 @@ function Lottery() {
         >
           {count}
         </motion.span>{" "}
-        人
+        {c.countSuffix}
       </ChatButton>
       <AnimatePresence>
         {burst > 0 && (
@@ -268,25 +279,18 @@ function Lottery() {
 }
 
 function FindFoodButtons() {
+  const c = useCopy().shop;
   const [status, setStatus] = useState<string>();
 
   return (
     <div className="flex flex-wrap gap-1.5">
-      <ChatButton
-        variant="primary"
-        onClick={() => setStatus("Yee 揹起袋子出門了，明天回來收成！")}
-      >
-        帶牠去找吃的
+      <ChatButton variant="primary" onClick={() => setStatus(c.huntStatus)}>
+        {c.hunt}
       </ChatButton>
-      <ChatButton
-        variant="success"
-        onClick={() => setStatus("下鍋！煮出了「河鮮味噌鍋」，Yee 眼睛都亮了。")}
-      >
-        開煮
+      <ChatButton variant="success" onClick={() => setStatus(c.cookStatus)}>
+        {c.cook}
       </ChatButton>
-      <ChatButton onClick={() => setStatus("Yee 吃得很開心，感情 +1 ❤️")}>
-        餵牠
-      </ChatButton>
+      <ChatButton onClick={() => setStatus(c.feedStatus)}>{c.feed}</ChatButton>
       <AnimatePresence mode="wait">
         {status && (
           <motion.p
@@ -311,21 +315,23 @@ function ChannelTabs({
   active: ChannelId;
   onOpen: (id: ChannelId) => void;
 }) {
+  const channels = useCopy().channels;
+
   return (
     <div className="flex gap-1.5 border-white/8 border-b px-4 py-2 md:hidden">
-      {CHANNELS.map((c) => (
+      {CHANNEL_IDS.map((id) => (
         <button
-          key={c.id}
+          key={id}
           type="button"
-          onClick={() => onOpen(c.id)}
+          onClick={() => onOpen(id)}
           className={clsx(
             "rounded-full px-3 py-1 text-sm transition-colors",
-            c.id === active
+            id === active
               ? "bg-white/15 font-medium text-white"
               : "text-discord-muted",
           )}
         >
-          #{c.name}
+          #{channels[id].name}
         </button>
       ))}
     </div>
@@ -341,48 +347,51 @@ function Sidebar({
   seen: ChannelId[];
   onOpen: (id: ChannelId) => void;
 }) {
+  const copy = useCopy();
+  const c = copy.sidebar;
+
   return (
     <div className="flex flex-col border-white/8 border-r bg-discord-embed p-3 text-discord-text max-md:hidden">
       <p className="border-white/8 border-b px-2 pb-3 font-semibold text-white">
-        Yeecord 示範伺服器
+        {c.server}
       </p>
       <p className="mt-2 mb-1 px-2 font-semibold text-discord-muted text-xs uppercase">
-        文字頻道
+        {c.textChannels}
       </p>
       <div className="flex flex-col gap-0.5">
-        {CHANNELS.map((c) => (
+        {CHANNEL_IDS.map((id) => (
           <button
-            key={c.id}
+            key={id}
             type="button"
-            onClick={() => onOpen(c.id)}
+            onClick={() => onOpen(id)}
             className={clsx(
               "group relative flex cursor-pointer items-center gap-1.5 rounded px-2 py-1.5 text-start transition-colors",
-              c.id === active
+              id === active
                 ? "bg-white/10 font-medium text-white"
                 : "text-discord-muted hover:bg-white/5 hover:text-discord-text",
             )}
           >
-            {!seen.includes(c.id) && (
+            {!seen.includes(id) && (
               <span className="-left-2 absolute h-2 w-1 rounded-r-full bg-white" />
             )}
             <HashIcon className="size-4 shrink-0" />
-            <span className="truncate">{c.name}</span>
-            {!seen.includes(c.id) && (
+            <span className="truncate">{copy.channels[id].name}</span>
+            {!seen.includes(id) && (
               <span className="ms-auto size-2 rounded-full bg-discord-danger" />
             )}
           </button>
         ))}
       </div>
       <p className="mt-4 mb-1 px-2 font-semibold text-discord-muted text-xs uppercase">
-        語音頻道
+        {c.voiceChannels}
       </p>
       <div className="flex items-center gap-1.5 px-2 py-1 text-discord-muted">
         <Volume2Icon className="size-4 shrink-0" />
-        建立語音頻道
+        {c.createVoice}
       </div>
       <div className="flex items-center gap-2 px-2 py-1 pl-7 text-discord-muted text-sm">
         <span className="size-2 rounded-full bg-discord-green" />
-        阿龍的頻道 · 3 人在聊
+        {c.voiceRoom}
       </div>
       <div className="mt-auto flex items-center gap-2.5 rounded-lg bg-black/25 p-2">
         <img
@@ -391,8 +400,8 @@ function Sidebar({
           className="size-8 rounded-full bg-discord-avatar p-0.5"
         />
         <div className="min-w-0 leading-tight">
-          <p className="truncate font-medium text-sm text-white">YEE式機器龍</p>
-          <p className="text-discord-muted text-xs">陪 350,000 個伺服器玩耍中</p>
+          <p className="truncate font-medium text-sm text-white">{c.botName}</p>
+          <p className="text-discord-muted text-xs">{c.botStatus}</p>
         </div>
       </div>
     </div>
