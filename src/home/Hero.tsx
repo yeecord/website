@@ -1,6 +1,6 @@
 import Link from "fumadocs-core/link";
 import { contentPath, type Locale, staticPath } from "~/i18n";
-import type { HomeCopy } from "./copy";
+import { type Translate, translator } from "~/i18n/translate";
 import { DinoMascot } from "./DinoMascot";
 import { Cloud, GroundBand, HillsLayer, Plant } from "./scene";
 
@@ -14,8 +14,8 @@ const SERVERS = [
   { img: "/home/customers/daidai.png", name: "老查呆呆の迷因調查局總部" },
 ];
 
-export function Hero({ copy, locale }: { copy: HomeCopy; locale: Locale }) {
-  const c = copy.hero;
+export function Hero({ locale }: { locale: Locale }) {
+  const t = translator(locale);
 
   return (
     <div className="relative z-2 w-full">
@@ -37,34 +37,34 @@ export function Hero({ copy, locale }: { copy: HomeCopy; locale: Locale }) {
           className="top-[46%] right-[19%] opacity-70 [animation-delay:-3s] max-sm:hidden"
         />
         <h1 className="text-balance font-bold text-[2.6rem] leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
-          {c.titleTop}
+          {t("一隻恐龍")}
           <br />
-          {c.titleBottom}
-          <span className="text-primary">{c.titleHighlight}</span>
+          {t("搞定整個")}
+          <span className="text-primary">{t("伺服器")}</span>
         </h1>
         <p className="max-w-136 text-base text-muted-foreground text-pretty sm:text-lg md:text-xl">
-          {c.subtitle}
+          {t("抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。")}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
           <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">
-            {c.install}
+            {t("安裝機器人")}
           </Link>
           <Link
             href={contentPath(locale, "/docs")}
             className="btn-chunky-secondary"
           >
-            {c.docs}
+            {t("看使用教學")}
           </Link>
         </div>
         <HillsLayer className="bottom-16 h-40" />
         <DinoMascot
-          alt={c.mascotAlt}
+          alt={t("YEE 式機器龍")}
           className="absolute bottom-10 right-[5%] sm:bottom-12 sm:right-[12%]"
         />
       </div>
       <GroundBand className="-mt-24">
         <Forest />
-        <ServerProof copy={c} />
+        <ServerProof t={t} />
       </GroundBand>
     </div>
   );
@@ -103,7 +103,7 @@ function Forest() {
   );
 }
 
-function ServerProof({ copy }: { copy: HomeCopy["hero"] }) {
+function ServerProof({ t }: { t: Translate }) {
   return (
     <div className="flex flex-col items-center justify-center gap-3 px-4 pt-5 pb-8 sm:flex-row sm:gap-5">
       <div className="-space-x-3 flex shrink-0 items-center">
@@ -120,9 +120,9 @@ function ServerProof({ copy }: { copy: HomeCopy["hero"] }) {
         ))}
       </div>
       <p className="text-balance text-center font-medium leading-snug max-sm:text-sm">
-        {copy.proofPrefix}
+        {t("APEX Taiwan、VALORANT Taiwan 等")}
         <span className="mx-1 font-bold text-primary">350,000+</span>
-        {copy.proofSuffix}
+        {t("個伺服器都在用")}
       </p>
     </div>
   );

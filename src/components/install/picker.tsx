@@ -2,7 +2,8 @@
 
 import { Check, Server, User } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import type { InstallCopy } from "~/install/copy";
+import type { Locale } from "~/i18n";
+import { type Phrase, translator } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
 
 const CLIENT_ID = "584213384409382953";
@@ -15,16 +16,68 @@ const requiredBits =
   (1n << 16n) | // READ_MESSAGE_HISTORY, prefix commands answer as a reply
   (1n << 18n); // USE_EXTERNAL_EMOJIS
 
-type FeatureId = keyof InstallCopy["picker"]["features"];
+const requiredPermissions: Phrase[] = [
+  "檢視頻道",
+  "傳送訊息",
+  "閱讀歷史訊息",
+  "附加檔案",
+  "使用外部表情符號",
+];
 
-// bits line up with the permission names of the same feature in copy.ts
-const features: { id: FeatureId; bits: bigint[] }[] = [
-  { id: "voice", bits: [1n << 4n, 1n << 20n, 1n << 24n] },
-  { id: "roles", bits: [1n << 28n] },
-  { id: "messages", bits: [1n << 13n] },
-  { id: "ticket", bits: [1n << 36n, 1n << 38n, 1n << 34n] },
-  { id: "defense", bits: [1n << 2n, 1n << 40n, 1n << 13n] },
-  { id: "mention", bits: [1n << 17n] },
+const features: {
+  id: string;
+  title: Phrase;
+  description: Phrase;
+  permissions: [Phrase, bigint][];
+}[] = [
+  {
+    id: "voice",
+    title: "動態語音頻道",
+    description: "有人進語音就開一間專屬房間，人走了自動收。",
+    permissions: [
+      ["管理頻道", 1n << 4n],
+      ["連接", 1n << 20n],
+      ["移動成員", 1n << 24n],
+    ],
+  },
+  {
+    id: "roles",
+    title: "身分組",
+    description: "新成員進來自動發，或讓成員自己按按鈕領。",
+    permissions: [["管理身分組", 1n << 28n]],
+  },
+  {
+    id: "messages",
+    title: "訊息管理",
+    description: "洗版訊息一次清掉，最多一千則。",
+    permissions: [["管理訊息", 1n << 13n]],
+  },
+  {
+    id: "ticket",
+    title: "私人頻道",
+    description: "成員按一顆按鈕，就能私下找管理員，結案後自動封存。",
+    permissions: [
+      ["建立私人討論串", 1n << 36n],
+      ["在討論串中傳送訊息", 1n << 38n],
+      ["管理討論串", 1n << 34n],
+    ],
+  },
+  {
+    id: "defense",
+    title: "機器人防禦",
+    description: "廣告機器人一發言就封鎖，詐騙圖片自動攔下。",
+    permissions: [
+      ["封鎖成員", 1n << 2n],
+      ["禁言成員", 1n << 40n],
+      ["管理訊息", 1n << 13n],
+    ],
+  },
+  {
+    id: "mention",
+    title: "通知身分組",
+    description: "抽獎、投票開始時順便 tag 一個身分組或全體成員。",
+    permissions: [["提及所有人", 1n << 17n]],
+  },
 ];
 
 function installUrl(mode: "guild" | "user", selected: Set<string>) {
@@ -36,7 +89,7 @@ function installUrl(mode: "guild" | "user", selected: Set<string>) {
   for (const feature of features) {
     if (!selected.has(feature.id)) continue;
 
-    for (const bit of feature.bits) bits |= bit;
+    for (const [, bit] of feature.permissions) bits |= bit;
   }
 
   return `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=bot+applications.commands&permissions=${bits}`;
@@ -79,13 +132,14 @@ function Checkbox({ checked }: { checked: boolean }) {
   );
 }
 
-export function InstallPicker({ copy }: { copy: InstallCopy["picker"] }) {
+export function InstallPicker({ locale }: { locale: Locale }) {
+  const t = translator(locale);
   const [mode, setMode] = useState<"guild" | "user">("guild");
   const [selected, setSelected] = useState(
     () => new Set(features.map((feature) => feature.id)),
   );
 
-  function toggle(id: FeatureId) {
+  function toggle(id: string) {
     setSelected((current) => {
       const next = new Set(current);
 
@@ -101,8 +155,8 @@ export function InstallPicker({ copy }: { copy: InstallCopy["picker"] }) {
       <div className="mx-auto flex rounded-lg border bg-fd-muted/50 p-1 font-medium text-sm">
         {(
           [
-            ["guild", <Server key="i" className="size-4" />, copy.guildTab],
-            ["user", <User key="i" className="size-4" />, copy.userTab],
+            ["guild", <Server key="i" className="size-4" />, t("裝進伺服器")],
+            ["user", <User key="i" className="size-4" />, t("裝到我的帳號")],
           ] as const
         ).map(([value, icon, label]) => (
           <button
@@ -126,17 +180,17 @@ export function InstallPicker({ copy }: { copy: InstallCopy["picker"] }) {
         <>
           <div className="rounded-2xl border bg-fd-card p-5">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="font-semibold">{copy.requiredTitle}</h2>
+              <h2 className="font-semibold">{t("必要權限")}</h2>
               <span className="text-fd-muted-foreground text-xs">
-                {copy.requiredBadge}
+                {t("一定要帶")}
               </span>
             </div>
             <p className="mt-1 text-fd-muted-foreground text-sm">
-              {copy.requiredNote}
+              {t("看得到頻道、說得了話。少了這些，機器龍進來也只能當雕像。")}
             </p>
             <div className="mt-3 flex flex-wrap gap-1.5">
-              {copy.requiredPermissions.map((permission) => (
-                <Chip key={permission}>{permission}</Chip>
+              {requiredPermissions.map((permission) => (
+                <Chip key={permission}>{t(permission)}</Chip>
               ))}
             </div>
           </div>
@@ -144,7 +198,6 @@ export function InstallPicker({ copy }: { copy: InstallCopy["picker"] }) {
           <div className="grid gap-3 sm:grid-cols-2">
             {features.map((feature) => {
               const checked = selected.has(feature.id);
-              const text = copy.features[feature.id];
 
               return (
                 <button
@@ -166,17 +219,17 @@ export function InstallPicker({ copy }: { copy: InstallCopy["picker"] }) {
                         !checked && "text-fd-muted-foreground",
                       )}
                     >
-                      {text.title}
+                      {t(feature.title)}
                     </h2>
                     <Checkbox checked={checked} />
                   </div>
                   <p className="mt-1 text-fd-muted-foreground text-sm">
-                    {text.description}
+                    {t(feature.description)}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-1.5">
-                    {text.permissions.map((permission) => (
+                    {feature.permissions.map(([permission]) => (
                       <Chip key={permission} muted={!checked}>
-                        {permission}
+                        {t(permission)}
                       </Chip>
                     ))}
                   </div>
@@ -187,12 +240,14 @@ export function InstallPicker({ copy }: { copy: InstallCopy["picker"] }) {
         </>
       ) : (
         <div className="rounded-2xl border bg-fd-card p-6">
-          <h2 className="font-semibold">{copy.userTitle}</h2>
+          <h2 className="font-semibold">{t("跟著你走，不用進伺服器")}</h2>
           <p className="mt-2 text-fd-muted-foreground text-sm">
-            {copy.userBody}
+            {t(
+              "裝在自己的 Discord 帳號上，私訊、群組、任何伺服器都能叫出機器龍。發起投票、查個人卡片、玩找吃的，走到哪用到哪。",
+            )}
           </p>
           <p className="mt-2 text-fd-muted-foreground text-sm">
-            {copy.userNote}
+            {t("這個模式碰不到伺服器設定，所以一個權限都不用給。")}
           </p>
           <div className="mt-4 flex flex-wrap gap-1.5">
             {["/poll", "/find-food", "/pick", "/bullshit"].map(
@@ -212,7 +267,7 @@ export function InstallPicker({ copy }: { copy: InstallCopy["picker"] }) {
         rel="noreferrer"
         className="btn-chunky mx-auto px-10"
       >
-        {mode === "guild" ? copy.guildCta : copy.userCta}
+        {mode === "guild" ? t("帶我回家") : t("安裝到我的帳號")}
       </a>
     </div>
   );

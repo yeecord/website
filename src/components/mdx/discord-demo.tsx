@@ -5,6 +5,7 @@ import { Check, GripVertical, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DiscordSurface } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
+import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
 
 const T = {
@@ -38,7 +39,7 @@ const T = {
     permissionCaption:
       "「查看频道」开、「发送消息」关，就是一个大家看得到但只有管理员能发言的频道",
   },
-} satisfies Record<Locale, unknown>;
+} satisfies Partial<Record<Locale, unknown>>;
 
 const roleColors = ["#e67e22", "#3498db", "#2ecc71", "#9b59b6"];
 
@@ -57,7 +58,7 @@ function useLoop(steps: number, interval = 1600) {
 }
 
 export function RoleOrderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
-  const t = T[locale];
+  const t = localized(T, locale);
   const step = useLoop(2, 2200);
   const roles = t.roles.map((name, i) => ({ name, color: roleColors[i] }));
   const botRole = { name: t.bot, color: "var(--color-discord-blurple)" };
@@ -110,22 +111,24 @@ export function RoleOrderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
 
 export function ChannelPermissionDemo({
   locale = "zh-tw",
-  title = T[locale].permissionTitle,
-  permissions = T[locale].permissions,
-  caption = T[locale].permissionCaption,
+  title,
+  permissions,
+  caption,
 }: {
   locale?: Locale;
   title?: string;
   permissions?: { name: string; enabled: boolean }[];
   caption?: string;
 }) {
-  const step = useLoop(permissions.length + 1, 1800);
+  const t = localized(T, locale);
+  const rows = permissions ?? t.permissions;
+  const step = useLoop(rows.length + 1, 1800);
 
   return (
     <DiscordSurface className="text-sm">
-      <p className="mb-3 font-semibold text-white">{title}</p>
+      <p className="mb-3 font-semibold text-white">{title ?? t.permissionTitle}</p>
       <div className="flex flex-col gap-2">
-        {permissions.map((permission, index) => {
+        {rows.map((permission, index) => {
           const done = step > index;
 
           return (
@@ -157,7 +160,9 @@ export function ChannelPermissionDemo({
           );
         })}
       </div>
-      <p className="mt-3 text-xs text-discord-muted">{caption}</p>
+      <p className="mt-3 text-xs text-discord-muted">
+        {caption ?? t.permissionCaption}
+      </p>
     </DiscordSurface>
   );
 }

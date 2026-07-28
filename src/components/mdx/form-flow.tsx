@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Hash, Lock } from "lucide-react";
 import { DiscordSurface } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
+import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
 import { ClickHint, Scene, StepDots, useLoop } from "~/components/mdx/flow";
 
@@ -84,7 +85,7 @@ const T = {
       caption: "整个过程都在同一张管理卡上，卡片原地更新",
     },
   },
-} satisfies Record<Locale, unknown>;
+} satisfies Partial<Record<Locale, unknown>>;
 
 function ModalField({
   label,
@@ -120,7 +121,7 @@ function ModalField({
 }
 
 export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
-  const t = T[locale].flow;
+  const t = localized(T, locale).flow;
   const [step, setStep] = useLoop(t.steps.length);
 
   return (
@@ -154,18 +155,18 @@ export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
                   <ModalField
                     label={t.who}
                     value="BadGuy#1234"
-                    placeholder={T[locale].placeholder}
+                    placeholder={localized(T, locale).placeholder}
                   />
                   <ModalField
                     label={t.what}
                     value={t.story}
-                    placeholder={T[locale].placeholder}
+                    placeholder={localized(T, locale).placeholder}
                     multiline
                   />
                   <ModalField
                     label={t.where}
                     value={t.whereValue}
-                    placeholder={T[locale].placeholder}
+                    placeholder={localized(T, locale).placeholder}
                     select
                   />
                 </div>
@@ -215,7 +216,7 @@ export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
 }
 
 export function FormBuilderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
-  const t = T[locale].builder;
+  const t = localized(T, locale).builder;
   const [step, setStep] = useLoop(t.steps.length);
   const questions = step === 0 ? [t.empty] : t.questions;
 

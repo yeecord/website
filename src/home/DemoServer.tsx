@@ -9,24 +9,32 @@ import {
   DiscordMessage,
   SlashCommand,
 } from "~/components/mdx/discord";
-import { type HomeCopy, homeCopy } from "./copy";
+import { defaultLocale, type Locale } from "~/i18n";
+import { type Phrase, type Translate, translator } from "~/i18n/translate";
 
-type DemoCopy = HomeCopy["demo"];
-type ChannelId = keyof DemoCopy["channels"];
+type ChannelId = "welcome" | "lottery" | "shop";
+
+const channels: Record<ChannelId, { name: Phrase; topic: Phrase }> = {
+  welcome: { name: "新人報到", topic: "機器龍自動接待新成員" },
+  lottery: { name: "抽獎區", topic: "辦抽獎，一條指令的事" },
+  shop: { name: "yee-的小店", topic: "掛機的人都在這裡餵恐龍" },
+};
 
 const CHANNEL_IDS: ChannelId[] = ["welcome", "lottery", "shop"];
 
-const CopyContext = createContext<DemoCopy>(homeCopy["zh-tw"].demo);
+const BOT_NAME: Phrase = "YEE式機器龍";
 
-function useCopy() {
-  return useContext(CopyContext);
+const TranslateContext = createContext<Translate>(translator(defaultLocale));
+
+function useT() {
+  return useContext(TranslateContext);
 }
 
-export function DemoServer({ copy }: { copy: HomeCopy }) {
-  const c = copy.demo;
+export function DemoServer({ locale }: { locale: Locale }) {
+  const t = translator(locale);
   const [active, setActive] = useState<ChannelId>("welcome");
   const [seen, setSeen] = useState<ChannelId[]>(["welcome"]);
-  const channel = c.channels[active];
+  const channel = channels[active];
 
   function open(id: ChannelId) {
     setActive(id);
@@ -34,13 +42,15 @@ export function DemoServer({ copy }: { copy: HomeCopy }) {
   }
 
   return (
-    <CopyContext.Provider value={c}>
+    <TranslateContext.Provider value={t}>
       <div className="z-[2] mt-24 flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
-            {c.heading}
+            {t("進來參觀一下")}
           </h2>
-          <p className="text-lg text-muted-foreground">{c.subheading}</p>
+          <p className="text-lg text-muted-foreground">
+            {t("點左邊的頻道逛逛，按鈕都是真的能按。")}
+          </p>
         </div>
         <motion.div
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,9 +63,9 @@ export function DemoServer({ copy }: { copy: HomeCopy }) {
           <div className="flex min-w-0 flex-col">
             <div className="flex items-center gap-2 border-white/8 border-b px-4 py-3 text-discord-text">
               <HashIcon className="size-5 text-discord-muted" />
-              <span className="font-semibold text-white">{channel.name}</span>
+              <span className="font-semibold text-white">{t(channel.name)}</span>
               <span className="text-discord-muted text-sm max-sm:hidden">
-                {channel.topic}
+                {t(channel.topic)}
               </span>
             </div>
             <ChannelTabs active={active} onOpen={open} />
@@ -67,14 +77,18 @@ export function DemoServer({ copy }: { copy: HomeCopy }) {
               </div>
               <div className="mt-auto flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 pt-2.5 text-discord-placeholder">
                 <PlusCircleIcon className="size-5 shrink-0" />
-                {c.inputPlaceholder}
+                {t("跟大家說點什麼…")}
               </div>
             </div>
           </div>
         </motion.div>
-        <p className="text-muted-foreground">{c.note}</p>
+        <p className="text-muted-foreground">
+          {t(
+            "歡迎訊息、身分組、抽獎這些設定，一句指令叫出來，剩下用選的、用填的，不用記落落長的參數。",
+          )}
+        </p>
       </div>
-    </CopyContext.Provider>
+    </TranslateContext.Provider>
   );
 }
 
@@ -96,18 +110,19 @@ function Msg({ delay, children }: { delay: number; children: ReactNode }) {
 }
 
 function WelcomeScene() {
-  const copy = useCopy();
-  const c = copy.welcome;
+  const t = useT();
 
   return (
     <>
       <Msg delay={0}>
-        <p className="text-discord-muted text-xs">{c.joined}</p>
+        <p className="text-discord-muted text-xs">
+          {t("阿龍的粉絲 剛剛加入伺服器 👋")}
+        </p>
       </Msg>
       <Msg delay={0.25}>
-        <DiscordMessage author={copy.sidebar.botName} bot>
-          <DiscordEmbed title={c.embedTitle} color="var(--color-primary)">
-            <p>{c.embedBody}</p>
+        <DiscordMessage author={t(BOT_NAME)} bot>
+          <DiscordEmbed title={t("👋 歡迎 阿龍的粉絲！")} color="var(--color-primary)">
+            <p>{t("歡迎來到伺服器，先挑個身分組，讓大家認識你。")}</p>
           </DiscordEmbed>
           <RolePicker />
         </DiscordMessage>
@@ -117,28 +132,27 @@ function WelcomeScene() {
 }
 
 function LotteryScene() {
-  const copy = useCopy();
-  const c = copy.lottery;
+  const t = useT();
 
   return (
     <>
       <Msg delay={0}>
         <SlashCommand
           name="lottery"
-          description={c.command}
+          description={t("舉辦抽獎")}
           options={[
-            { name: c.prizeLabel, value: c.prize },
-            { name: c.winnersLabel, value: "3" },
+            { name: t("獎品"), value: t("Nitro 一個月") },
+            { name: t("得獎人數"), value: "3" },
           ]}
         />
       </Msg>
       <Msg delay={0.25}>
-        <DiscordMessage author={copy.sidebar.botName} bot>
+        <DiscordMessage author={t(BOT_NAME)} bot>
           <DiscordEmbed
-            title={c.embedTitle}
+            title={t("🎉 抽獎開始")}
             color="var(--color-discord-fuchsia)"
           >
-            <p>{c.embedBody}</p>
+            <p>{t("獎品：Nitro 一個月，按下面的按鈕參加！")}</p>
           </DiscordEmbed>
           <Lottery />
         </DiscordMessage>
@@ -148,20 +162,19 @@ function LotteryScene() {
 }
 
 function ShopScene() {
-  const copy = useCopy();
-  const c = copy.shop;
+  const t = useT();
 
   return (
     <>
       <Msg delay={0}>
-        <DiscordMessage author={c.user} bot={false} color="#e8a33d">
+        <DiscordMessage author={t("阿龍的粉絲")} bot={false} color="#e8a33d">
           <p>/find-food</p>
         </DiscordMessage>
       </Msg>
       <Msg delay={0.25}>
-        <DiscordMessage author={copy.sidebar.botName} bot>
-          <DiscordEmbed title={c.embedTitle} color="var(--color-discord-gold)">
-            <p>{c.embedBody}</p>
+        <DiscordMessage author={t(BOT_NAME)} bot>
+          <DiscordEmbed title={t("🍳 Yee 的小店")} color="var(--color-discord-gold)">
+            <p>{t("Yee 剛從河邊回來，袋子裝了七成滿，看起來心情不錯。")}</p>
           </DiscordEmbed>
           <FindFoodButtons />
         </DiscordMessage>
@@ -198,20 +211,22 @@ function ChatButton({
   );
 }
 
+const roles: Phrase[] = ["🎮 遊戲仔", "🌙 夜貓子", "🎨 創作者"];
+
 function RolePicker() {
-  const c = useCopy().welcome;
-  const [picked, setPicked] = useState<string>();
+  const t = useT();
+  const [picked, setPicked] = useState<Phrase>();
 
   return (
     <div className="flex flex-wrap gap-1.5">
-      {c.roles.map((role) => (
+      {roles.map((role) => (
         <ChatButton
           key={role}
           variant={picked === role ? "primary" : "secondary"}
           selected={picked === role}
           onClick={() => setPicked(role)}
         >
-          {role}
+          {t(role)}
         </ChatButton>
       ))}
       <AnimatePresence>
@@ -222,7 +237,7 @@ function RolePicker() {
             exit={{ opacity: 0 }}
             className="self-center text-discord-muted text-xs"
           >
-            {c.claimed} {picked}
+            {t("已領取")} {picked && t(picked)}
           </motion.span>
         )}
       </AnimatePresence>
@@ -231,7 +246,7 @@ function RolePicker() {
 }
 
 function Lottery() {
-  const c = useCopy().lottery;
+  const t = useT();
   const [joined, setJoined] = useState(false);
   const [count, setCount] = useState(42);
   const [burst, setBurst] = useState(0);
@@ -247,10 +262,10 @@ function Lottery() {
   return (
     <div className="relative flex flex-wrap gap-1.5">
       <ChatButton variant="primary" onClick={join}>
-        {joined ? c.joined : c.join}
+        {joined ? t("已參加 ✅") : t("參加抽獎")}
       </ChatButton>
       <ChatButton>
-        {c.countPrefix}{" "}
+        {t("目前")}{" "}
         <motion.span
           key={count}
           initial={{ scale: 1.5 }}
@@ -259,7 +274,7 @@ function Lottery() {
         >
           {count}
         </motion.span>{" "}
-        {c.countSuffix}
+        {t("人")}
       </ChatButton>
       <AnimatePresence>
         {burst > 0 && (
@@ -279,18 +294,20 @@ function Lottery() {
 }
 
 function FindFoodButtons() {
-  const c = useCopy().shop;
-  const [status, setStatus] = useState<string>();
+  const t = useT();
+  const [status, setStatus] = useState<Phrase>();
 
   return (
     <div className="flex flex-wrap gap-1.5">
-      <ChatButton variant="primary" onClick={() => setStatus(c.huntStatus)}>
-        {c.hunt}
+      <ChatButton variant="primary" onClick={() => setStatus("Yee 揹起袋子出門了，明天回來收成！")}>
+        {t("帶牠去找吃的")}
       </ChatButton>
-      <ChatButton variant="success" onClick={() => setStatus(c.cookStatus)}>
-        {c.cook}
+      <ChatButton variant="success" onClick={() => setStatus("下鍋！煮出了「河鮮味噌鍋」，Yee 眼睛都亮了。")}>
+        {t("開煮")}
       </ChatButton>
-      <ChatButton onClick={() => setStatus(c.feedStatus)}>{c.feed}</ChatButton>
+      <ChatButton onClick={() => setStatus("Yee 吃得很開心，感情 +1 ❤️")}>
+        {t("餵牠")}
+      </ChatButton>
       <AnimatePresence mode="wait">
         {status && (
           <motion.p
@@ -300,7 +317,7 @@ function FindFoodButtons() {
             exit={{ opacity: 0 }}
             className="w-full text-discord-muted text-xs"
           >
-            {status}
+            {t(status)}
           </motion.p>
         )}
       </AnimatePresence>
@@ -315,7 +332,7 @@ function ChannelTabs({
   active: ChannelId;
   onOpen: (id: ChannelId) => void;
 }) {
-  const channels = useCopy().channels;
+  const t = useT();
 
   return (
     <div className="flex gap-1.5 border-white/8 border-b px-4 py-2 md:hidden">
@@ -331,7 +348,7 @@ function ChannelTabs({
               : "text-discord-muted",
           )}
         >
-          #{channels[id].name}
+          #{t(channels[id].name)}
         </button>
       ))}
     </div>
@@ -347,16 +364,15 @@ function Sidebar({
   seen: ChannelId[];
   onOpen: (id: ChannelId) => void;
 }) {
-  const copy = useCopy();
-  const c = copy.sidebar;
+  const t = useT();
 
   return (
     <div className="flex flex-col border-white/8 border-r bg-discord-embed p-3 text-discord-text max-md:hidden">
       <p className="border-white/8 border-b px-2 pb-3 font-semibold text-white">
-        {c.server}
+        {t("Yeecord 示範伺服器")}
       </p>
       <p className="mt-2 mb-1 px-2 font-semibold text-discord-muted text-xs uppercase">
-        {c.textChannels}
+        {t("文字頻道")}
       </p>
       <div className="flex flex-col gap-0.5">
         {CHANNEL_IDS.map((id) => (
@@ -375,7 +391,7 @@ function Sidebar({
               <span className="-left-2 absolute h-2 w-1 rounded-r-full bg-white" />
             )}
             <HashIcon className="size-4 shrink-0" />
-            <span className="truncate">{copy.channels[id].name}</span>
+            <span className="truncate">{t(channels[id].name)}</span>
             {!seen.includes(id) && (
               <span className="ms-auto size-2 rounded-full bg-discord-danger" />
             )}
@@ -383,15 +399,15 @@ function Sidebar({
         ))}
       </div>
       <p className="mt-4 mb-1 px-2 font-semibold text-discord-muted text-xs uppercase">
-        {c.voiceChannels}
+        {t("語音頻道")}
       </p>
       <div className="flex items-center gap-1.5 px-2 py-1 text-discord-muted">
         <Volume2Icon className="size-4 shrink-0" />
-        {c.createVoice}
+        {t("建立語音頻道")}
       </div>
       <div className="flex items-center gap-2 px-2 py-1 pl-7 text-discord-muted text-sm">
         <span className="size-2 rounded-full bg-discord-green" />
-        {c.voiceRoom}
+        {t("阿龍的頻道 · 3 人在聊")}
       </div>
       <div className="mt-auto flex items-center gap-2.5 rounded-lg bg-black/25 p-2">
         <img
@@ -400,8 +416,10 @@ function Sidebar({
           className="size-8 rounded-full bg-discord-avatar p-0.5"
         />
         <div className="min-w-0 leading-tight">
-          <p className="truncate font-medium text-sm text-white">{c.botName}</p>
-          <p className="text-discord-muted text-xs">{c.botStatus}</p>
+          <p className="truncate font-medium text-sm text-white">{t(BOT_NAME)}</p>
+          <p className="text-discord-muted text-xs">
+            {t("陪 350,000 個伺服器玩耍中")}
+          </p>
         </div>
       </div>
     </div>

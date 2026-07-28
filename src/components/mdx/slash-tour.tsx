@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { DiscordSurface } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
+import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
 
 interface Suggestion {
@@ -104,7 +105,11 @@ const T = {
       "提交，机器龙就回复了",
     ],
   },
-} satisfies Record<Locale, unknown>;
+} satisfies Partial<Record<Locale, unknown>>;
+
+function tour(locale: Locale) {
+  return localized(T, locale);
+}
 
 interface Frame {
   /// What sits in the input: plain text while typing, a command pill once picked.
@@ -117,7 +122,7 @@ interface Frame {
   hold: number;
 }
 
-function script(t: (typeof T)[Locale]): Frame[] {
+function script(t: ReturnType<typeof tour>): Frame[] {
   return [
     { typed: "", hold: 1600 },
     { typed: "/", query: "/", suggestions: t.all, hold: 2600 },
@@ -158,7 +163,7 @@ function Avatar({ className }: { className?: string }) {
 }
 
 export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
-  const t = T[locale];
+  const t = tour(locale);
   const frames = script(t);
   const reduced = usePrefersReducedMotion();
   const [step, setStep] = useState(0);

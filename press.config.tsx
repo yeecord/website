@@ -23,7 +23,7 @@ import {
 import { localeMdxComponents, mdxComponents } from "./src/components/mdx";
 import { createCmd } from "./src/components/mdx/cmd";
 import { createCommandHeader } from "./src/components/mdx/command-header";
-import { i18n, toLocale } from "./src/i18n";
+import { defaultLocale, i18n, localeCodes, locales, toLocale } from "./src/i18n";
 import { RootLayout, translations } from "./src/root-layout";
 import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
@@ -122,28 +122,31 @@ const config = defineConfig({
       );
     },
     page(page) {
-      const slugs = page.url.replace(/^\/(zh-tw|zh-cn)(?=\/|$)/, "");
+      const slugs = page.url.replace(/^\/[a-z-]+(?=\/|$)/, "");
 
       return (
         <>
           <link rel="canonical" href={canonicalUrl(page.url)} />
+          {/* the docs, blog and legal pages have no English version yet, so /en
+              falls back to chinese content and must stay out of the index */}
+          {page.locale === "en" && <meta name="robots" content="noindex" />}
           {page.data.description && (
             <meta name="description" content={page.data.description} />
           )}
-          <link
-            rel="alternate"
-            hrefLang="zh-Hant"
-            href={canonicalUrl(`/zh-tw${slugs}`)}
-          />
-          <link
-            rel="alternate"
-            hrefLang="zh-Hans"
-            href={canonicalUrl(`/zh-cn${slugs}`)}
-          />
+          {localeCodes
+            .filter((locale) => locale !== "en")
+            .map((locale) => (
+              <link
+                key={locale}
+                rel="alternate"
+                hrefLang={locales[locale].hreflang}
+                href={canonicalUrl(`/${locale}${slugs}`)}
+              />
+            ))}
           <link
             rel="alternate"
             hrefLang="x-default"
-            href={canonicalUrl(`/zh-tw${slugs}`)}
+            href={canonicalUrl(`/${defaultLocale}${slugs}`)}
           />
         </>
       );
