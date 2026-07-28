@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, GripVertical, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { DiscordSurface } from "@/components/mdx/discord";
 import { cn } from "@/utils/cn";
 
 function useLoop(steps: number, interval = 1600) {
@@ -33,7 +34,7 @@ export function RoleOrderDemo() {
   const list = step === 0 ? [...roles, botRole] : [...roles.slice(0, 2), botRole, ...roles.slice(2)];
 
   return (
-    <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
+    <DiscordSurface className="text-sm">
       <p className="mb-3 font-semibold text-white">伺服器設定 → 身分組</p>
       <div className="flex flex-col gap-1.5">
         {list.map((role) => (
@@ -72,7 +73,7 @@ export function RoleOrderDemo() {
       <p className="mt-3 text-xs text-discord-muted">
         機器龍只能給予排在自己「下面」的身分組
       </p>
-    </div>
+    </DiscordSurface>
   );
 }
 
@@ -93,7 +94,7 @@ export function ChannelPermissionDemo({
   const step = useLoop(permissions.length + 1, 1800);
 
   return (
-    <div className="not-prose my-4 rounded-lg border bg-discord-bg p-4 text-sm text-discord-text">
+    <DiscordSurface className="text-sm">
       <p className="mb-3 font-semibold text-white">{title}</p>
       <div className="flex flex-col gap-2">
         {permissions.map((permission, index) => {
@@ -129,7 +130,7 @@ export function ChannelPermissionDemo({
         })}
       </div>
       <p className="mt-3 text-xs text-discord-muted">{caption}</p>
-    </div>
+    </DiscordSurface>
   );
 }
 

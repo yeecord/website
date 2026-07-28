@@ -1,0 +1,81 @@
+---
+title: 哪里不一样了
+icon: Sparkles
+description: 机器龙整个重写过，大部分功能改用斜杠命令，网页控制面板收起来了。这页讲清楚哪些东西还在、哪些收掉了，还有你以前的数据会怎么样。
+---
+
+机器龙整个重写过一遍
+
+大部分功能改用斜杠命令操作，设置也不用再开网页控制面板，全部回到 Discord 里面做
+
+## 斜杠命令怎么用
+
+打一个 `/` 就会跳出清单，选一个、填一填、发送，就这样
+
+<SlashCommandTour />
+
+比前缀命令好的地方是不用背名字，也不会打错参数 —— Discord 会直接告诉你这个命令要填什么
+
+## 前缀命令没有被拿掉
+
+单纯的命令照样可以用 `&` 开头打，跟以前一样：
+
+<div className="not-prose my-4 flex flex-wrap gap-2 font-mono text-sm">
+  {["&status", "&b", "&guild", "&avatar", "&banner", "&pick", "&quote", "&1a2b", "&help", "&find-food"].map((command) => (
+    <span key={command} className="rounded bg-fd-secondary px-2 py-1 text-fd-secondary-foreground">{command}</span>
+  ))}
+</div>
+
+也可以直接 @ 机器龙代替前缀，像 `@YEE 式机器龙 status`
+
+有两种命令只能走斜杠：**分成子命令的**（像 `/poll create`、`/lol player`、`/auto-channels setup`）跟**需要管理权限的**（像 `/giveaway`、`/form`、`/clear`）
+
+前者是因为前缀的写法没有地方放子命令的名字，后者是因为权限检查要靠 Discord 自己做，才不会有人绕过去
+
+## 你原本的命令换成什么
+
+| 以前 | 现在 |
+| --- | --- |
+| `&poll` | `/poll create`、`/poll edit`、`/poll end` |
+| 网页面板的抽奖 | `/giveaway create`、`/giveaway end` |
+| `&dvc`、`&temp` | `/auto-channels setup` |
+| `&jm` 加入消息 | `/member-notification`（消息）、`/auto-role`（自动身份组） |
+| `&role` | `/role-menu` |
+| `&lock` | `/lock-channel setup` |
+| `&clear` | `/clear add` |
+| `&guildinfo` | `/guild` |
+| `&botinfo`、`&ping` | `/status`，前缀 `&status`、`&b` 也还在 |
+| `&minecraft` | `/minecraft player`、`/minecraft server` |
+| `&random` | `/random number`、`/random voice-channel` |
+| `&lol` | `/lol link`、`/lol player`、`/lol matches`、`/lol live`、`/lol rotation` |
+| `&1a2b`、`&pick`、`&avatar`、`&banner` | 同名的斜杠命令，前缀也还能打 |
+
+## 收掉的功能
+
+**音乐系统**：YouTube 这几年一直在挡机器人，撑到后来每天都在坏，与其让大家点了没反应，不如收干净。`&play`、`&queue`、`&skip`、歌单那些命令都不在了
+
+**经济跟 RPG**：旧的经济系统有个很难修的竞态问题 —— 同时操作会让钱凭空多出来或消失，数字早就没有意义了。现在换成 `/find-food`，带 Yee 去找食材、做饭、喂它，跟旧的完全分开算
+
+**私人频道（Ticket）**：改用表单。`/form create` 开一张表单，发布之后成员按按钮就会开一条私密子区。如果你不想问问题，表单留空不加题目也行，按钮就直接开子区，跟以前的私人频道一样
+
+**网页控制面板**：app.yeecord.com 收起来了。当初搬到网页是觉得填表比打命令好用，但后来 Discord 自己把斜杠命令跟表单做得够好，多开一个网页反而多一道手续
+
+## 你以前的数据
+
+**服务器设置会搬过来**：欢迎消息、动态语音、身份组菜单、投票、抽奖的设置都在，不用重设
+
+**旧消息上的按钮还能按**：以前发出去的投票、抽奖、身份组菜单消息还躺在频道里，那些按钮照样有反应
+
+**进行中的投票跟抽奖不会中断**：搬家的时候还没结束的活动会一起带过去，时间到一样会公布结果
+
+**钱跟道具不会转过来**：如同上面说的，那些数字已经被 bug 污染了，照搬过来只会把问题一起搬过来。取而代之的是一个「老朋友」纪念徽章，依照你以前玩的深度分级，纯纪念性质，不影响新游戏的平衡
+
+## 顺便多了这些
+
+- `/form` 表单系统，可以收报名、意见、申请，回复会开成私密子区
+- `/find-food` 带 Yee 去找吃的，找食材、做饭、喂它，会记得你做过什么
+- `/bot-fight` 机器人防御，挡刷屏广告账号
+- `/afk-channel` 设置闲置频道
+- `/auto-channels` 支持一个服务器开多组动态语音，也会在权限不足的时候主动说一声
+
+有问题可以到 [支持服务器](https://discord.gg/yeecord) 问，或看 [常见问题](/docs/faq)
