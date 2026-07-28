@@ -19,10 +19,8 @@ const zhTW = {
       "檢視頻道",
       "傳送訊息",
       "閱讀歷史訊息",
-      "嵌入連結",
       "附加檔案",
       "使用外部表情符號",
-      "新增反應",
     ],
     features: {
       voice: {
@@ -42,13 +40,18 @@ const zhTW = {
       },
       ticket: {
         title: "私人頻道",
-        description: "成員按一顆按鈕，就能私下找管理員。",
-        permissions: ["管理討論串", "建立私人討論串", "在討論串中傳送訊息"],
+        description: "成員按一顆按鈕，就能私下找管理員，結案後自動封存。",
+        permissions: ["建立私人討論串", "在討論串中傳送訊息", "管理討論串"],
       },
       defense: {
         title: "機器人防禦",
         description: "廣告機器人一發言就封鎖，詐騙圖片自動攔下。",
-        permissions: ["封鎖成員", "禁言成員"],
+        permissions: ["封鎖成員", "禁言成員", "管理訊息"],
+      },
+      mention: {
+        title: "通知身分組",
+        description: "抽獎、投票開始時順便 tag 一個身分組或全體成員。",
+        permissions: ["提及所有人"],
       },
     },
     userTitle: "跟著你走，不用進伺服器",
@@ -83,10 +86,8 @@ const zhCN: InstallCopy = {
       "查看频道",
       "发送消息",
       "阅读历史消息",
-      "嵌入链接",
       "附加文件",
       "使用外部表情",
-      "添加反应",
     ],
     features: {
       voice: {
@@ -106,13 +107,18 @@ const zhCN: InstallCopy = {
       },
       ticket: {
         title: "私密频道",
-        description: "成员按一颗按钮，就能私下找管理员。",
-        permissions: ["管理子区", "创建私密子区", "在子区发送消息"],
+        description: "成员按一颗按钮，就能私下找管理员，结案后自动存档。",
+        permissions: ["创建私密子区", "在子区发送消息", "管理子区"],
       },
       defense: {
         title: "机器人防御",
         description: "广告机器人一发言就封禁，诈骗图片自动拦下。",
-        permissions: ["封禁成员", "禁言成员"],
+        permissions: ["封禁成员", "禁言成员", "管理消息"],
+      },
+      mention: {
+        title: "通知身份组",
+        description: "抽奖、投票开始时顺便 tag 一个身份组或全体成员。",
+        permissions: ["提及所有人"],
       },
     },
     userTitle: "跟着你走，不用进服务器",

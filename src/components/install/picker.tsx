@@ -9,12 +9,10 @@ const CLIENT_ID = "584213384409382953";
 
 // https://discord.com/developers/docs/topics/permissions
 const requiredBits =
-  (1n << 6n) | // ADD_REACTIONS
   (1n << 10n) | // VIEW_CHANNEL
   (1n << 11n) | // SEND_MESSAGES
-  (1n << 14n) | // EMBED_LINKS
-  (1n << 15n) | // ATTACH_FILES
-  (1n << 16n) | // READ_MESSAGE_HISTORY
+  (1n << 15n) | // ATTACH_FILES, the rendered cards are uploaded as images
+  (1n << 16n) | // READ_MESSAGE_HISTORY, prefix commands answer as a reply
   (1n << 18n); // USE_EXTERNAL_EMOJIS
 
 type FeatureId = keyof InstallCopy["picker"]["features"];
@@ -24,8 +22,9 @@ const features: { id: FeatureId; bits: bigint[] }[] = [
   { id: "voice", bits: [1n << 4n, 1n << 20n, 1n << 24n] },
   { id: "roles", bits: [1n << 28n] },
   { id: "messages", bits: [1n << 13n] },
-  { id: "ticket", bits: [1n << 34n, 1n << 36n, 1n << 38n] },
-  { id: "defense", bits: [1n << 2n, 1n << 40n] },
+  { id: "ticket", bits: [1n << 36n, 1n << 38n, 1n << 34n] },
+  { id: "defense", bits: [1n << 2n, 1n << 40n, 1n << 13n] },
+  { id: "mention", bits: [1n << 17n] },
 ];
 
 function installUrl(mode: "guild" | "user", selected: Set<string>) {
