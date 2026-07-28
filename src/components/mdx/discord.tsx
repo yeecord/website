@@ -18,11 +18,11 @@ export function DiscordSurface({
   return (
     <div className="not-prose my-4 overflow-hidden rounded-xl border border-black/40 bg-discord-bg text-discord-text shadow-lg">
       {channel ? (
-        <div className="flex items-center gap-2 border-b border-black/30 px-4 py-3">
-          <Hash className="size-5 shrink-0 text-discord-muted" />
+        <div className="flex items-center gap-2 border-b border-black/30 px-4 py-2.5 text-sm">
+          <Hash className="size-4 shrink-0 text-discord-muted" />
           <span className="font-semibold text-white">{channel}</span>
           {topic ? (
-            <span className="ml-2 hidden truncate border-l border-discord-secondary pl-3 text-sm text-discord-muted sm:inline">
+            <span className="ml-2 hidden truncate border-l border-discord-secondary pl-3 text-xs text-discord-muted sm:inline">
               {topic}
             </span>
           ) : null}
