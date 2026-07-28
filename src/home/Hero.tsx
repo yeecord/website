@@ -15,7 +15,7 @@ const SERVERS = [
 export function Hero() {
   return (
     <div className="relative z-2 w-full">
-      <div className="relative flex flex-col items-center gap-7 px-4 pt-20 pb-56 text-center sm:pb-72 md:pt-28">
+      <div className="relative flex flex-col items-center gap-6 px-4 pt-16 pb-52 text-center sm:gap-7 sm:pt-20 sm:pb-72 md:pt-28">
         <Cloud n={1} width={190} className="top-[4%] left-[6%] max-sm:w-24" />
         <Cloud
           n={2}
@@ -32,15 +32,15 @@ export function Hero() {
           width={110}
           className="top-[46%] right-[19%] opacity-70 [animation-delay:-3s] max-sm:hidden"
         />
-        <h1 className="font-bold text-5xl leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
+        <h1 className="text-balance font-bold text-[2.6rem] leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
           一隻恐龍
           <br />
           搞定整個<span className="text-primary">伺服器</span>
         </h1>
-        <p className="max-w-136 text-lg text-muted-foreground text-pretty sm:text-xl">
+        <p className="max-w-136 text-base text-muted-foreground text-pretty sm:text-lg md:text-xl">
           抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。
         </p>
-        <div className="flex flex-col justify-center gap-3 sm:flex-row">
+        <div className="flex w-full max-w-xs flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
           <Link href="/install/" className="btn-chunky">
             安裝機器人
           </Link>
@@ -108,7 +108,7 @@ function ServerProof() {
           />
         ))}
       </div>
-      <p className="text-center font-medium leading-snug max-sm:text-sm">
+      <p className="text-balance text-center font-medium leading-snug max-sm:text-sm">
         APEX Taiwan、VALORANT Taiwan 等
         <span className="mx-1 font-bold text-primary">350,000+</span>
         個伺服器都在用
