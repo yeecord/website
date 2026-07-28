@@ -16,8 +16,8 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "paths": {
-      "@config": ["./config.ts"],
-      "@/*": ["./src/*"]
+      "~/config": ["./config.ts"],
+      "~/*": ["./src/*"]
     }
   }
 }

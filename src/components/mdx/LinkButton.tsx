@@ -1,8 +1,8 @@
 import Link, { type LinkProps } from "fumadocs-core/link";
 import { ChevronRightIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
+import { buttonVariants } from "~/components/ui/button";
+import { cn } from "~/utils/cn";
 
 /**
  * For safe, Won't accept all props from Link

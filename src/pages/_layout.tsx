@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { RootLayout } from "@/root-layout";
+import { RootLayout } from "~/root-layout";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return <RootLayout lang="zh-tw">{children}</RootLayout>;

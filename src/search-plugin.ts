@@ -1,5 +1,6 @@
 import { createTokenizer } from "@orama/tokenizers/mandarin";
 import type { ServerPlugin } from "fumapress";
+import { localeCodes, locales } from "~/i18n";
 import type { PressContext } from "../press.config";
 
 // fumapress 的 oramaSearchPlugin 沒開放 localeMap，zh-tw/cn 會被 Orama 當成不支援的語言，
@@ -21,10 +22,13 @@ export function searchPlugin(): ServerPlugin<PressContext> {
         components: { tokenizer: createTokenizer() },
       };
       const server = createFromSource(() => this.getLoader(), {
-        localeMap: {
-          "zh-tw": mandarin,
-          "zh-cn": mandarin,
-        },
+        // only the CJK languages need the mandarin tokenizer, Orama handles the
+        // rest with its own defaults
+        localeMap: Object.fromEntries(
+          localeCodes
+            .filter((locale) => locales[locale].cjk)
+            .map((locale) => [locale, mandarin]),
+        ),
         buildIndex: async (page) => {
           for (const adapter of this.adapters) {
             const structuredData = await adapter[

@@ -1,7 +1,7 @@
-import { domain, blogAuthors } from "@config";
+import { domain, blogAuthors } from "~/config";
 import type { ServerPlugin } from "fumapress";
 import RSS from "rss";
-import type { BlogPost } from "@/components/blog/BlogItem";
+import type { BlogPost } from "~/components/blog/BlogItem";
 import type { PressContext } from "../press.config";
 
 export function rssPlugin(): ServerPlugin<PressContext> {

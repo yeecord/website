@@ -3,12 +3,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, GripVertical, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { DiscordSurface } from "@/components/mdx/discord";
-import type { MdxLocale } from "@/components/mdx/locale";
-import { cn } from "@/utils/cn";
+import { DiscordSurface } from "~/components/mdx/discord";
+import type { Locale } from "~/i18n";
+import { cn } from "~/utils/cn";
 
 const T = {
-  tw: {
+  "zh-tw": {
     roles: ["管理員", "幹部", "活動通知", "遊戲玩家"],
     bot: "YEE式機器龍",
     rolesTitle: "伺服器設定 → 身分組",
@@ -23,7 +23,7 @@ const T = {
     permissionCaption:
       "「檢視頻道」開、「發送訊息」關，就是一個大家看得到但只有管理員能發言的頻道",
   },
-  cn: {
+  "zh-cn": {
     roles: ["管理员", "干部", "活动通知", "游戏玩家"],
     bot: "YEE式機器龍",
     rolesTitle: "服务器设置 → 身份组",
@@ -38,7 +38,7 @@ const T = {
     permissionCaption:
       "「查看频道」开、「发送消息」关，就是一个大家看得到但只有管理员能发言的频道",
   },
-} satisfies Record<MdxLocale, unknown>;
+} satisfies Record<Locale, unknown>;
 
 const roleColors = ["#e67e22", "#3498db", "#2ecc71", "#9b59b6"];
 
@@ -56,7 +56,7 @@ function useLoop(steps: number, interval = 1600) {
   return step;
 }
 
-export function RoleOrderDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function RoleOrderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale];
   const step = useLoop(2, 2200);
   const roles = t.roles.map((name, i) => ({ name, color: roleColors[i] }));
@@ -109,12 +109,12 @@ export function RoleOrderDemo({ locale = "tw" }: { locale?: MdxLocale }) {
 }
 
 export function ChannelPermissionDemo({
-  locale = "tw",
+  locale = "zh-tw",
   title = T[locale].permissionTitle,
   permissions = T[locale].permissions,
   caption = T[locale].permissionCaption,
 }: {
-  locale?: MdxLocale;
+  locale?: Locale;
   title?: string;
   permissions?: { name: string; enabled: boolean }[];
   caption?: string;

@@ -4,7 +4,7 @@ import {
   domain,
   footer,
   type AuthorData,
-} from "@config";
+} from "~/config";
 import Link from "fumadocs-core/link";
 import { DocsBody } from "fumadocs-ui/page";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
@@ -18,12 +18,13 @@ import type {
 } from "fumapress/plugins/blog";
 import { EyeIcon } from "lucide-react";
 import { Fragment, type ReactNode } from "react";
-import Footer from "@/components/Footer";
-import { BlogItem, type BlogPost } from "@/components/blog/BlogItem";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
-import { getTagHref } from "@/utils/tags";
-import { baseOptions } from "@/layout-config";
+import Footer from "~/components/Footer";
+import { BlogItem, type BlogPost } from "~/components/blog/BlogItem";
+import { buttonVariants } from "~/components/ui/button";
+import { cn } from "~/utils/cn";
+import { getTagHref } from "~/utils/tags";
+import { toLocale } from "~/i18n";
+import { baseOptions } from "~/layout-config";
 import type { PressContext } from "../../press.config";
 
 async function getBlogPages() {
@@ -73,13 +74,15 @@ function Meta({
   );
 }
 
-export const BlogSiteLayout: BlogLayout<PressContext> = ({ children }) => {
+export const BlogSiteLayout: BlogLayout<PressContext> = ({ lang, children }) => {
+  const locale = toLocale(lang);
+
   return (
-    <HomeLayout {...baseOptions}>
+    <HomeLayout {...baseOptions(locale)}>
       <div className="container mx-auto flex max-w-[1400px] flex-1 flex-col px-4">
         {children}
       </div>
-      <Footer categories={footer} />
+      <Footer categories={footer(locale)} />
     </HomeLayout>
   );
 };

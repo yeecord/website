@@ -1,10 +1,11 @@
 import Link from "fumadocs-core/link";
 import { Bot, MapPin, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
+import type { Locale } from "~/i18n";
 import { commandNames } from "./cmd";
 
-const labels = {
-  tw: {
+const labels: Record<Locale, Record<string, string>> = {
+  "zh-tw": {
     you: "誰能用",
     bot: "機器龍需要",
     where: "可以用在",
@@ -17,7 +18,7 @@ const labels = {
     hintLink: "權限說明",
     basicsUrl: "/zh-tw/docs/basics/#機器龍的權限怎麼改",
   },
-  cn: {
+  "zh-cn": {
     you: "谁能用",
     bot: "机器龙需要",
     where: "可以用在",
@@ -53,7 +54,7 @@ function Row({ icon, label, items }: { icon: ReactNode; label: string; items: st
   );
 }
 
-export function createCommandHeader(locale: "tw" | "cn", slug?: string) {
+export function createCommandHeader(locale: Locale, slug?: string) {
   const t = labels[locale];
 
   return function CommandHeader({

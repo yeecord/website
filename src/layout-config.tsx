@@ -1,5 +1,6 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { BookIcon, LayoutListIcon } from "lucide-react";
+import { contentPath, type Locale } from "~/i18n";
 
 const discordIcon = (
   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -8,61 +9,45 @@ const discordIcon = (
   </svg>
 );
 
-export const baseOptions = {
-  githubUrl: "https://github.com/yeecord",
-  nav: {
-    url: "/",
-    title: (
-      <>
-        <img src="/img/logo.svg" alt="Yeecord" width={18} height={24} />
-        <span className="font-bold text-lg">Yeecord</span>
-      </>
-    ),
-  },
-  links: [
-    {
-      url: "/zh-tw/docs",
-      icon: <BookIcon />,
-      text: "使用教學",
-      active: "nested-url",
-    },
-    {
-      url: "/zh-tw/blog",
-      icon: <LayoutListIcon />,
-      text: "部落格",
-      active: "nested-url",
-    },
-    {
-      type: "icon",
-      url: "https://discord.gg/yeecord",
-      text: "Discord",
-      icon: discordIcon,
-      external: true,
-    },
-  ],
-} satisfies BaseLayoutProps;
+const navText: Record<Locale, { docs: string; blog: string }> = {
+  "zh-tw": { docs: "使用教學", blog: "部落格" },
+  "zh-cn": { docs: "使用教程", blog: "博客" },
+};
 
-export const cnBaseOptions = {
-  ...baseOptions,
-  links: [
-    {
-      url: "/zh-cn/docs",
-      icon: <BookIcon />,
-      text: "使用教程",
-      active: "nested-url",
+export function baseOptions(locale: Locale) {
+  const text = navText[locale];
+
+  return {
+    githubUrl: "https://github.com/yeecord",
+    nav: {
+      url: "/",
+      title: (
+        <>
+          <img src="/img/logo.svg" alt="Yeecord" width={18} height={24} />
+          <span className="font-bold text-lg">Yeecord</span>
+        </>
+      ),
     },
-    {
-      url: "/zh-cn/blog",
-      icon: <LayoutListIcon />,
-      text: "博客",
-      active: "nested-url",
-    },
-    {
-      type: "icon",
-      url: "https://discord.gg/yeecord",
-      text: "Discord",
-      icon: discordIcon,
-      external: true,
-    },
-  ],
-} satisfies BaseLayoutProps;
+    links: [
+      {
+        url: contentPath(locale, "/docs"),
+        icon: <BookIcon />,
+        text: text.docs,
+        active: "nested-url",
+      },
+      {
+        url: contentPath(locale, "/blog"),
+        icon: <LayoutListIcon />,
+        text: text.blog,
+        active: "nested-url",
+      },
+      {
+        type: "icon",
+        url: "https://discord.gg/yeecord",
+        text: "Discord",
+        icon: discordIcon,
+        external: true,
+      },
+    ],
+  } satisfies BaseLayoutProps;
+}

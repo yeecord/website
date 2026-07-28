@@ -1,6 +1,4 @@
 const zhTW = {
-  docsHref: "/zh-tw/docs",
-  installHref: "/install/",
   meta: {
     title: "Yeecord - 萬中選一的 Discord 機器人",
     description:
@@ -99,8 +97,6 @@ const zhTW = {
 export type HomeCopy = typeof zhTW;
 
 const zhCN: HomeCopy = {
-  docsHref: "/zh-cn/docs",
-  installHref: "/zh-cn/install/",
   meta: {
     title: "Yeecord - 万中选一的 Discord 机器人",
     description:

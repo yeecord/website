@@ -2,13 +2,13 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Hash, Lock } from "lucide-react";
-import { DiscordSurface } from "@/components/mdx/discord";
-import type { MdxLocale } from "@/components/mdx/locale";
-import { cn } from "@/utils/cn";
-import { ClickHint, Scene, StepDots, useLoop } from "@/components/mdx/flow";
+import { DiscordSurface } from "~/components/mdx/discord";
+import type { Locale } from "~/i18n";
+import { cn } from "~/utils/cn";
+import { ClickHint, Scene, StepDots, useLoop } from "~/components/mdx/flow";
 
 const T = {
-  tw: {
+  "zh-tw": {
     placeholder: "在這裡輸入",
     flow: {
       steps: ["按下按鈕", "填寫表單", "私人討論串"],
@@ -46,7 +46,7 @@ const T = {
       caption: "整個過程都在同一張管理卡上，卡片原地更新",
     },
   },
-  cn: {
+  "zh-cn": {
     placeholder: "在这里输入",
     flow: {
       steps: ["按下按钮", "填写表单", "私密子区"],
@@ -84,7 +84,7 @@ const T = {
       caption: "整个过程都在同一张管理卡上，卡片原地更新",
     },
   },
-} satisfies Record<MdxLocale, unknown>;
+} satisfies Record<Locale, unknown>;
 
 function ModalField({
   label,
@@ -119,7 +119,7 @@ function ModalField({
   );
 }
 
-export function FormFlowDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale].flow;
   const [step, setStep] = useLoop(t.steps.length);
 
@@ -214,7 +214,7 @@ export function FormFlowDemo({ locale = "tw" }: { locale?: MdxLocale }) {
   );
 }
 
-export function FormBuilderDemo({ locale = "tw" }: { locale?: MdxLocale }) {
+export function FormBuilderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = T[locale].builder;
   const [step, setStep] = useLoop(t.steps.length);
   const questions = step === 0 ? [t.empty] : t.questions;

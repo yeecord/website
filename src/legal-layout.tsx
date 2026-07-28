@@ -1,18 +1,20 @@
-import { canonicalUrl, domain, footer } from "@config";
+import { canonicalUrl, domain, footer } from "~/config";
 import { DocsBody } from "fumadocs-ui/page";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { getPressContext } from "fumapress";
 import type { FC, ReactNode } from "react";
-import Footer from "@/components/Footer";
-import { baseOptions } from "@/layout-config";
+import Footer from "~/components/Footer";
+import { toLocale } from "~/i18n";
+import { baseOptions } from "~/layout-config";
 import type { PressContext } from "../press.config";
 
 export const LegalPage: FC<{
   lang?: string;
   slugs: string[];
   page: PressContext["page"];
-}> = async ({ page }) => {
+}> = async ({ lang, page }) => {
   const ctx = getPressContext<PressContext>();
+  const locale = toLocale(lang);
 
   let body: ReactNode;
   for (const adapter of ctx.adapters) {
@@ -21,7 +23,7 @@ export const LegalPage: FC<{
   }
 
   return (
-    <HomeLayout {...baseOptions}>
+    <HomeLayout {...baseOptions(locale)}>
       <title>{`${page.data.title} - Yeecord`}</title>
       <link rel="canonical" href={canonicalUrl(page.url)} />
       <meta property="og:title" content={`${page.data.title} - Yeecord`} />
@@ -35,7 +37,7 @@ export const LegalPage: FC<{
       <main className="container mx-auto px-4 py-10 sm:py-16">
         <DocsBody className="mx-auto max-w-[800px]">{body}</DocsBody>
       </main>
-      <Footer categories={footer} />
+      <Footer categories={footer(locale)} />
     </HomeLayout>
   );
 };
