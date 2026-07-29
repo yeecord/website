@@ -78,6 +78,18 @@ function withCommandBadges<T extends { type: string }>(items: T[]): T[] {
   });
 }
 
+// One request for the whole build instead of one per og image: takumi's helper
+// re-downloads every subset on each call and gives up after 5s, which is what
+// times out on Cloudflare once the page count grows.
+const ogFonts = googleFonts({
+  families: [
+    { name: "Manrope", weight: [500, 800] },
+    { name: "Noto Sans TC", weight: [400, 500, 800] },
+    { name: "Noto Sans SC", weight: [400, 500, 800] },
+  ],
+  timeout: 30_000,
+});
+
 const config = defineConfig({
   mode: "static",
   i18n,
@@ -189,11 +201,7 @@ const config = defineConfig({
             />
           ),
           options: {
-            fonts: googleFonts([
-              { name: "Manrope", weight: [500, 800] },
-              { name: "Noto Sans TC", weight: [400, 500, 800] },
-              { name: "Noto Sans SC", weight: [400, 500, 800] },
-            ]),
+            fonts: ogFonts,
             module: wasmModule,
           },
         };
