@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "portless run --name yeecord --app-port 3000 waku dev",
+    "dev": "portless run --name yeecord waku dev",
     "build": "waku build",
     "start": "waku start",
     "typecheck": "fumadocs-mdx && tsc --noEmit"
