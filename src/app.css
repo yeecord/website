@@ -61,8 +61,9 @@
 }
 
 :root {
-  /* Manrope 先接拉丁字母，中日韓字掉到 Noto Sans TC，跟 og 圖同一套 */
-  --default-font-family: "Manrope", "Noto Sans TC", sans-serif;
+  /* Noto Sans 就是 Discord 網頁版在沒有 gg sans 時的替補，OFL 授權可自由嵌入，
+     拉丁字母跟 Discord 同調；中日韓字掉到 Noto Sans TC，跟 og 圖同一套 */
+  --default-font-family: "Noto Sans", "Noto Sans TC", sans-serif;
 
   /* 主題綠對齊新版恐龍 logo 的主體色 #6bb369 */
   --color-fd-primary: oklch(0.701 0.128 143.5);

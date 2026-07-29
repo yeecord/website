@@ -110,7 +110,7 @@ export function OgImage({
         color: "white",
         overflow: "hidden",
         position: "relative",
-        fontFamily: "Manrope, 'Noto Sans TC', 'Noto Sans SC'",
+        fontFamily: "Noto Sans, 'Noto Sans TC', 'Noto Sans SC'",
       }}
     >
       <div

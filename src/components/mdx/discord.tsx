@@ -49,7 +49,7 @@ export function SlashCommand({
   description?: string;
 }) {
   return (
-    <div className="not-prose my-4 overflow-hidden rounded-lg bg-discord-embed text-sm">
+    <div className="not-prose my-4 overflow-hidden rounded-lg bg-discord-embed font-discord text-sm">
       <div className="flex items-baseline gap-2.5 px-4 py-2">
         <span className="font-semibold text-white">{name.split(" ")[0]}</span>
         {description ? (

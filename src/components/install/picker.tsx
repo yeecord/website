@@ -206,7 +206,8 @@ export function InstallPicker({ locale }: { locale: Locale }) {
                   onClick={() => toggle(feature.id)}
                   aria-pressed={checked}
                   className={cn(
-                    "rounded-2xl border p-5 text-left transition-colors",
+                    // button 的 UA 樣式會把內容垂直置中，同一列的卡片被拉高就對不齊
+                    "flex flex-col rounded-2xl border p-5 text-left transition-colors",
                     checked
                       ? "border-primary/50 bg-fd-card"
                       : "bg-fd-card/50 hover:bg-fd-card",
