@@ -140,7 +140,6 @@
   align-items: center;
   justify-content: center;
   gap: --spacing(2);
-  border: 2px solid transparent;
   border-radius: var(--radius-2xl);
   padding: --spacing(3) --spacing(6);
   font-weight: var(--font-weight-bold);
@@ -153,12 +152,16 @@
   box-shadow: 0 4px 0 color-mix(in oklab, var(--color-fd-primary) 55%, black);
 }
 
-/* 次要按鈕在深色下跟背景幾乎同色，實心版本會連陰影一起消失，改成描邊 */
+/* fd-secondary 在深色下幾乎等於背景色，連硬陰影都看不見，改成從前景色調出來的實色 */
 .btn-chunky-secondary {
-  background-color: var(--color-fd-card);
+  background-color: color-mix(
+    in oklab,
+    var(--color-fd-foreground) 12%,
+    var(--color-fd-background)
+  );
   color: var(--color-fd-foreground);
-  border-color: var(--color-fd-border);
-  box-shadow: 0 4px 0 var(--color-fd-border);
+  box-shadow: 0 4px 0
+    color-mix(in oklab, var(--color-fd-foreground) 28%, var(--color-fd-background));
 }
 
 .btn-chunky:active,
