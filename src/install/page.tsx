@@ -11,7 +11,7 @@ export function InstallPage({ locale }: { locale: Locale }) {
   const t = translator(locale);
 
   return (
-    <HomeLayout {...localizedLayout(locale, "/install")}>
+    <HomeLayout {...localizedLayout(locale)}>
       <LocalizedMeta
         locale={locale}
         path="/install"

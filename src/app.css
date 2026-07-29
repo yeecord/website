@@ -56,7 +56,8 @@
 }
 
 :root {
-  --default-font-family: "Noto Sans TC", sans-serif;
+  /* Manrope 先接拉丁字母，中日韓字掉到 Noto Sans TC，跟 og 圖同一套 */
+  --default-font-family: "Manrope", "Noto Sans TC", sans-serif;
 
   /* 主題綠對齊新版恐龍 logo 的主體色 #6bb369 */
   --color-fd-primary: oklch(0.701 0.128 143.5);
