@@ -83,7 +83,7 @@ function withCommandBadges<T extends { type: string }>(items: T[]): T[] {
 // times out on Cloudflare once the page count grows.
 const ogFonts = googleFonts({
   families: [
-    { name: "Noto Sans", weight: [500, 800] },
+    { name: "Geist", weight: [500, 800] },
     { name: "Noto Sans TC", weight: [400, 500, 800] },
     { name: "Noto Sans SC", weight: [400, 500, 800] },
   ],
@@ -128,7 +128,7 @@ const config = defineConfig({
           />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400..800&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Noto+Sans+TC:wght@400;500;700&display=swap"
           />
         </>
       );
