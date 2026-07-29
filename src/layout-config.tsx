@@ -20,7 +20,7 @@ export function baseOptions(locale: Locale) {
       title: (
         <>
           <img src="/img/logo.svg" alt="Yeecord" width={18} height={24} />
-          <span className="font-bold text-lg">Yeecord</span>
+          <span className="font-semibold text-lg">Yeecord</span>
         </>
       ),
     },

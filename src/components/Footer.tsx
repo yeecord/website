@@ -42,7 +42,7 @@ function Info({ brand }: { brand: string }) {
           height={40}
           className="rounded-full"
         />
-        <p className="font-bold text-xl">Yeecord</p>
+        <p className="font-semibold text-xl">Yeecord</p>
       </div>
       <p className="mt-2 text-muted-foreground text-xs">
         {brand} © 2019 ~ {new Date(Date.now()).getFullYear()}
