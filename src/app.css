@@ -34,6 +34,11 @@
 
 /* Discord 深色版官方色，給文件的聊天視覺模擬元件用 */
 @theme {
+  /* Discord 網頁版自己的 fallback 鏈。gg sans 是他們的私有字型，裝了
+     Discord 桌面版的人會吃到，其他人拿到跟 Discord 使用者一樣的替補 */
+  --font-discord:
+    "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, "Noto Sans TC",
+    sans-serif;
   --color-discord-bg: #313338;
   --color-discord-embed: #2b2d31;
   --color-discord-input: #383a40;

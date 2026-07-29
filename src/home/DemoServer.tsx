@@ -57,7 +57,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
           initial={{ opacity: 0, y: 24 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.4 }}
-          className="grid overflow-hidden rounded-xl border bg-discord-bg shadow-xl md:grid-cols-[15rem_1fr]"
+          className="grid overflow-hidden rounded-xl border bg-discord-bg font-discord shadow-xl md:grid-cols-[15rem_1fr]"
         >
           <Sidebar active={active} seen={seen} onOpen={open} />
           <div className="flex min-w-0 flex-col">
