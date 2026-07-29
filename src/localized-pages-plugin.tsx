@@ -1,7 +1,7 @@
 import type { ServerPlugin } from "fumapress";
 import type { FC, ReactNode } from "react";
 import { HomePage } from "~/home/page";
-import { defaultLocale, type Locale, localeCodes } from "~/i18n";
+import { type Locale, localeCodes } from "~/i18n";
 import { InstallPage } from "~/install/page";
 import { RootLayout } from "~/root-layout";
 import type { PressContext } from "../press.config";
@@ -20,15 +20,16 @@ const pages = [
 }[];
 
 // src/pages shares a single root layout across every autoI18n: false page, and
-// that layout cannot tell which path it renders for. Registering the other
-// languages outside it gives each one its own <html lang>.
+// that layout cannot tell which path it renders for. Registering the prefixed
+// routes here gives each language its own <html lang>. The default language is
+// served from src/pages at the bare path and keeps a prefixed copy so the
+// built-in language switch, which only swaps the first segment, lands on a real
+// route; _redirects sends hard requests for it back to the bare path.
 export function localizedPagesPlugin(): ServerPlugin<PressContext> {
   return {
     name: "localized-pages",
     createPages({ createPage, createLayout }) {
       for (const locale of localeCodes) {
-        if (locale === defaultLocale) continue;
-
         createLayout({
           render: "static",
           path: `/${locale}`,

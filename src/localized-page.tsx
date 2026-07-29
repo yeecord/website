@@ -1,4 +1,3 @@
-import { LanguagesIcon } from "lucide-react";
 import { canonicalUrl, domain } from "~/config";
 import {
   defaultLocale,
@@ -9,29 +8,8 @@ import {
 } from "~/i18n";
 import { baseOptions } from "~/layout-config";
 
-/**
- * Layout props for a static page that exists in every language. The built-in
- * language switch only prepends a locale prefix, which would send the
- * prefix-less default language to a nonexistent /zh-tw, so it is replaced by
- * plain links to the same page in the other languages.
- */
-export function localizedLayout(locale: Locale, path = "") {
-  const options = baseOptions(locale);
-
-  return {
-    ...options,
-    slots: { languageSelect: false as const },
-    links: [
-      ...options.links,
-      ...localeCodes
-        .filter((code) => code !== locale)
-        .map((code) => ({
-          url: `${staticPath(code, path)}/`.replace(/\/\/$/, "/"),
-          text: locales[code].label,
-          icon: <LanguagesIcon />,
-        })),
-    ],
-  };
+export function localizedLayout(locale: Locale) {
+  return baseOptions(locale);
 }
 
 export function LocalizedMeta({
