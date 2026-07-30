@@ -128,6 +128,10 @@ export const en = {
     "My English is not good, but nothing here needs figuring out. I can just use it",
   "牠簡化了管理流程，大大提高了人員管理的效率":
     "It cut our moderation process down and made handling people much faster",
+  來玩一場: "Play a round",
+  得分: "Score",
+  再來一次: "Play again",
+  跳: "Jump",
   把機器龍帶回家: "Take the dinosaur home",
   "安裝免費，設定五分鐘。卡關了就來 Discord 社群喊一聲，我們都在。":
     "Free to install, five minutes to set up. Stuck on something? Shout in the Discord community, we are around.",

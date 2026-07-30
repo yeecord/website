@@ -1,14 +1,16 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
 export function DinoMascot({
   alt,
   className,
+  playing,
 }: {
   alt: string;
   className?: string;
+  playing?: boolean;
 }) {
   const [yells, setYells] = useState<number[]>([]);
 
@@ -44,12 +46,16 @@ export function DinoMascot({
           onClick={yell}
           whileTap={{ scale: 0.92, rotate: -3 }}
           whileHover={{ y: -6 }}
-          className="cursor-pointer"
+          className={playing ? "pointer-events-none" : "cursor-pointer"}
         >
           <img
             alt={alt}
             src="/img/logo.svg"
-            className="h-28 animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg motion-reduce:animate-none sm:h-52 lg:h-64"
+            className={
+              playing
+                ? "h-28 drop-shadow-lg sm:h-52 lg:h-64"
+                : "h-28 animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg motion-reduce:animate-none sm:h-52 lg:h-64"
+            }
             draggable={false}
           />
         </motion.button>

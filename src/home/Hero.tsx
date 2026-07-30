@@ -1,7 +1,7 @@
 import Link from "fumadocs-core/link";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { type Translate, translator } from "~/i18n/translate";
-import { DinoMascot } from "./DinoMascot";
+import { DinoGame } from "./DinoGame";
 import { Cloud, GroundBand, HillsLayer, Plant } from "./scene";
 
 const SERVERS = [
@@ -57,10 +57,7 @@ export function Hero({ locale }: { locale: Locale }) {
           </Link>
         </div>
         <HillsLayer className="bottom-16 h-40" />
-        <DinoMascot
-          alt={t("YEE 式機器龍")}
-          className="absolute bottom-10 right-[5%] sm:bottom-12 sm:right-[12%]"
-        />
+        <DinoGame locale={locale} alt={t("YEE 式機器龍")} />
       </div>
       <GroundBand className="-mt-24">
         <Forest />
