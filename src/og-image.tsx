@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { googleFonts } from "takumi-js/helpers";
 import logoSvg from "../public/img/logo.svg?raw";
 
@@ -233,8 +234,14 @@ function Ground({ height = 84 }: { height?: number }) {
   );
 }
 
-/** 站台總 banner：首頁 hero 的夜景搬進 og 圖，取代以前的靜態 branding 圖 */
-export function SiteBanner() {
+/** 首頁 hero 的夜景：雲、地面、站在地上的大恐龍，內容疊在左半邊 */
+function Scene({
+  badge,
+  children,
+}: {
+  badge?: string;
+  children: ReactNode;
+}) {
   return (
     <div
       style={{
@@ -286,215 +293,133 @@ export function SiteBanner() {
           <p style={{ fontSize: "34px", fontWeight: 800, margin: 0 }}>
             Yeecord
           </p>
+          {badge && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "48px",
+                borderRadius: "9999px",
+                backgroundColor: "rgba(130, 201, 128, 0.16)",
+                color: "#82c980",
+                padding: "0 18px",
+                fontSize: "26px",
+                fontWeight: 800,
+                lineHeight: 1,
+              }}
+            >
+              {badge}
+            </div>
+          )}
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "64px",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "88px",
-              fontWeight: 800,
-              lineHeight: 1.22,
-              letterSpacing: "-2px",
-              margin: 0,
-            }}
-          >
-            一隻恐龍
-          </p>
-          <p
-            style={{
-              fontSize: "88px",
-              fontWeight: 800,
-              lineHeight: 1.22,
-              letterSpacing: "-2px",
-              margin: 0,
-            }}
-          >
-            搞定整個<span style={{ color: "#82c980" }}>伺服器</span>
-          </p>
-          <p
-            style={{
-              fontSize: "32px",
-              fontWeight: 500,
-              color: "#96a398",
-              margin: 0,
-              marginTop: "28px",
-            }}
-          >
-            350,000+ 個伺服器都在用
-          </p>
-        </div>
+        {children}
       </div>
     </div>
   );
 }
 
-/** blog 文章專用：夜景地面 + 日期、作者、標籤，跟 docs 的聊天泡泡版區隔 */
-export function BlogOgImage({
-  title,
-  description,
-  date,
-  authors,
-  tags,
-}: {
-  title: string;
-  description?: string;
-  date: Date;
-  authors: string[];
-  tags: string[];
-}) {
+/** 站台總 banner：取代以前的靜態 branding 圖 */
+export function SiteBanner() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#0e120e",
-        color: "white",
-        overflow: "hidden",
-        position: "relative",
-        fontFamily: "Geist, 'Noto Sans TC', 'Noto Sans SC'",
-      }}
-    >
-      <Cloud top={52} left={700} width={150} opacity={0.7} />
-      <Cloud top={150} left={990} width={110} opacity={0.5} />
-      <Ground height={64} />
-
-      <div
-        style={{
-          display: "flex",
-          position: "absolute",
-          right: "64px",
-          bottom: "34px",
-        }}
-      >
-        <Logo size={150} />
-      </div>
-
+    <Scene>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          flexGrow: 1,
-          padding: "52px 72px 0",
+          marginTop: "64px",
         }}
       >
-        <div
+        <p
           style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "18px",
+            fontSize: "88px",
+            fontWeight: 800,
+            lineHeight: 1.22,
+            letterSpacing: "-2px",
+            margin: 0,
           }}
         >
-          <Logo size={48} />
-          <p style={{ fontSize: "34px", fontWeight: 800, margin: 0 }}>
-            Yeecord
-          </p>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              borderRadius: "9999px",
-              backgroundColor: "rgba(130, 201, 128, 0.16)",
-              color: "#82c980",
-              padding: "4px 18px",
-              fontSize: "26px",
-              fontWeight: 800,
-            }}
-          >
-            Blog
-          </div>
-        </div>
-
-        <div
+          一隻恐龍
+        </p>
+        <p
           style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "auto",
-            marginBottom: "auto",
-            paddingRight: "40px",
+            fontSize: "88px",
+            fontWeight: 800,
+            lineHeight: 1.22,
+            letterSpacing: "-2px",
+            margin: 0,
           }}
         >
-          <p
-            style={{
-              fontSize: "62px",
-              fontWeight: 800,
-              lineHeight: 1.3,
-              letterSpacing: "-1.5px",
-              margin: 0,
-              lineClamp: 2,
-              textOverflow: "ellipsis",
-            }}
-          >
-            {title}
-          </p>
-          {description && (
-            <p
-              style={{
-                fontSize: "34px",
-                fontWeight: 500,
-                lineHeight: 1.6,
-                color: "#96a398",
-                margin: 0,
-                marginTop: "22px",
-                lineClamp: 2,
-                textOverflow: "ellipsis",
-              }}
-            >
-              {description}
-            </p>
-          )}
-        </div>
-
-        <div
+          搞定整個<span style={{ color: "#82c980" }}>伺服器</span>
+        </p>
+        <p
           style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "14px",
-            marginBottom: "104px",
-            paddingRight: "220px",
-            fontSize: "27px",
+            fontSize: "32px",
             fontWeight: 500,
             color: "#96a398",
+            margin: 0,
+            marginTop: "28px",
           }}
         >
-          <p style={{ margin: 0 }}>
-            {[
-              authors.join("、"),
-              date.toLocaleDateString("zh-TW", { dateStyle: "long" }),
-            ]
-              .filter(Boolean)
-              .join(" · ")}
-          </p>
-          {tags.slice(0, 3).map((tag) => (
-            <div
-              key={tag}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                height: "44px",
-                borderRadius: "8px",
-                backgroundColor: "rgba(130, 201, 128, 0.14)",
-                color: "#82c980",
-                padding: "0 14px",
-                fontSize: "24px",
-                lineHeight: 1,
-              }}
-            >
-              # {tag}
-            </div>
-          ))}
-        </div>
+          350,000+ 個伺服器都在用
+        </p>
       </div>
-    </div>
+    </Scene>
+  );
+}
+
+/** blog 文章專用：跟站台 banner 同一張夜景，標題換文章、副標換作者和日期 */
+export function BlogOgImage({
+  title,
+  date,
+  authors,
+}: {
+  title: string;
+  date: Date;
+  authors: string[];
+}) {
+  return (
+    <Scene badge="Blog">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginTop: "auto",
+          marginBottom: "auto",
+          paddingBottom: "40px",
+          paddingRight: "330px",
+        }}
+      >
+        <p
+          style={{
+            fontSize: "60px",
+            fontWeight: 800,
+            lineHeight: 1.32,
+            letterSpacing: "-1.5px",
+            margin: 0,
+            lineClamp: 3,
+            textOverflow: "ellipsis",
+          }}
+        >
+          {title}
+        </p>
+        <p
+          style={{
+            fontSize: "30px",
+            fontWeight: 500,
+            color: "#96a398",
+            margin: 0,
+            marginTop: "26px",
+          }}
+        >
+          {[
+            authors.join("、"),
+            date.toLocaleDateString("zh-TW", { dateStyle: "long" }),
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+      </div>
+    </Scene>
   );
 }
 

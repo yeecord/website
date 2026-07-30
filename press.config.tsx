@@ -185,12 +185,10 @@ const config = defineConfig({
           page.type === "blog" ? (
             <BlogOgImage
               title={page.data.title}
-              description={page.data.description}
               date={page.data.date}
               authors={page.data.authors.map(
                 (author) => blogAuthors[author]?.name ?? author,
               )}
-              tags={page.data.tags}
             />
           ) : (
             <OgImage
