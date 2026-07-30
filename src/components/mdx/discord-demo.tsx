@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Check, GripVertical, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DiscordSurface } from "~/components/mdx/discord";

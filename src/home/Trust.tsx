@@ -1,6 +1,6 @@
 "use client";
 
-import { type MotionValue, motion, useTransform } from "framer-motion";
+import { type MotionValue, motion, useTransform } from "motion/react";
 import { DiscordChat, DiscordMessage } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
 import { type Phrase, translator } from "~/i18n/translate";

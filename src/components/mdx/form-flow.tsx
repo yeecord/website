@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Hash, Lock } from "lucide-react";
 import { DiscordSurface } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";

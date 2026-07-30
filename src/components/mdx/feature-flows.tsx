@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Check, Lock, Volume2, X } from "lucide-react";
 import { cn } from "~/utils/cn";
 import { ClickHint, FlowFrame, Scene, useLoop } from "~/components/mdx/flow";

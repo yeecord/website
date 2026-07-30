@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { HashIcon, PlusCircleIcon, Volume2Icon } from "lucide-react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 import {

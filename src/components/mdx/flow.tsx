@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { MousePointer2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DiscordSurface } from "~/components/mdx/discord";
