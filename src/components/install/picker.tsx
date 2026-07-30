@@ -262,15 +262,17 @@ export function InstallPicker({ locale }: { locale: Locale }) {
         </div>
       )}
 
-      <div className="pointer-events-none sticky bottom-5 z-10 flex justify-center">
-        <a
-          href={installUrl(mode, selected)}
-          target="_blank"
-          rel="noreferrer"
-          className="btn-chunky pointer-events-auto px-10"
-        >
-          {mode === "guild" ? t("帶我回家") : t("安裝到我的帳號")}
-        </a>
+      <div className="-mx-4 pointer-events-none sticky bottom-0 z-10">
+        <div className="flex justify-center bg-gradient-to-t from-60% from-fd-background to-transparent px-4 pt-10 pb-[max(--spacing(5),env(safe-area-inset-bottom))]">
+          <a
+            href={installUrl(mode, selected)}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-chunky pointer-events-auto w-full max-w-sm sm:w-auto sm:px-10"
+          >
+            {mode === "guild" ? t("帶我回家") : t("安裝到我的帳號")}
+          </a>
+        </div>
       </div>
     </div>
   );

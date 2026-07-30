@@ -28,18 +28,18 @@ export function InstallPage({ locale }: { locale: Locale }) {
             width={190}
             className="top-2 right-[1%] [animation-delay:-9s] max-sm:w-24"
           />
-          <div className="mb-6 flex items-center justify-center gap-4">
+          <div className="mb-5 flex items-center justify-center gap-4">
             <img
               src="/img/logo.svg"
               alt={t("YEE 式機器龍")}
               width={64}
               height={64}
-              className="animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg motion-reduce:animate-none"
+              className="animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg motion-reduce:animate-none max-sm:size-14"
             />
             <span className="text-2xl text-fd-muted-foreground tracking-[0.4em]">
               ⋯
             </span>
-            <span className="flex size-16 items-center justify-center rounded-full bg-discord-blurple">
+            <span className="flex size-16 items-center justify-center rounded-full bg-discord-blurple max-sm:size-14">
               <svg
                 viewBox="0 0 24 24"
                 fill="white"
@@ -50,12 +50,12 @@ export function InstallPage({ locale }: { locale: Locale }) {
               </svg>
             </span>
           </div>
-          <h1 className="text-center font-bold text-4xl tracking-tight sm:text-5xl">
+          <h1 className="text-center font-bold text-3xl tracking-tight sm:text-5xl">
             {t("快來把我")}
             <span className="text-primary">{t("帶回家")}</span>
             {t("！")}
           </h1>
-          <p className="mx-auto mt-4 mb-10 max-w-md text-center text-fd-muted-foreground text-lg">
+          <p className="mx-auto mt-3 mb-8 max-w-md text-center text-base text-fd-muted-foreground sm:text-lg">
             {t("權限自己勾，勾多少拿多少。不放心的先不給，之後隨時能補。")}
           </p>
           <InstallPicker locale={locale} />
