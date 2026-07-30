@@ -1,4 +1,4 @@
-import { canonicalUrl, domain } from "~/config";
+import { blogAuthors, canonicalUrl, domain } from "~/config";
 import type { ReactNode } from "react";
 import { lucideIconsPlugin } from "fumadocs-core/source/plugins/lucide-icons";
 import defaultMdxComponents, { createRelativeLink } from "fumadocs-ui/mdx";
@@ -26,7 +26,7 @@ import { defaultLocale, i18n, localeCodes, locales, toLocale } from "./src/i18n"
 import { RootLayout, translations } from "./src/root-layout";
 import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
-import { OgImage, ogFonts } from "./src/og-image";
+import { BlogOgImage, OgImage, ogFonts } from "./src/og-image";
 import { ogPlugin } from "./src/og-plugin";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
@@ -181,13 +181,26 @@ const config = defineConfig({
     llmsPlugin(),
     takumiPlugin({
       generate(page) {
-        return {
-          node: (
+        const node =
+          page.type === "blog" ? (
+            <BlogOgImage
+              title={page.data.title}
+              description={page.data.description}
+              date={page.data.date}
+              authors={page.data.authors.map(
+                (author) => blogAuthors[author]?.name ?? author,
+              )}
+              tags={page.data.tags}
+            />
+          ) : (
             <OgImage
               title={page.data.title}
               description={page.data.description}
             />
-          ),
+          );
+
+        return {
+          node,
           options: {
             fonts: ogFonts,
             module: wasmModule,
