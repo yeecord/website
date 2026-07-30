@@ -159,89 +159,8 @@ function Cloud({
   );
 }
 
-function Bush({
-  bottom,
-  left,
-  size,
-  bg,
-}: {
-  bottom: number;
-  left: number;
-  size: number;
-  bg: string;
-}) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        position: "absolute",
-        bottom: `${bottom}px`,
-        left: `${left}px`,
-        width: `${size}px`,
-        height: `${size * 0.62}px`,
-        borderRadius: `${size * 0.31}px`,
-        backgroundImage: bg,
-      }}
-    />
-  );
-}
-
-/** 遠丘、近丘、地面三層，跟首頁 GroundBand 同一套綠 */
-function Ground({ height = 84 }: { height?: number }) {
-  return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          position: "absolute",
-          left: "-260px",
-          bottom: `${height - 514}px`,
-          width: "1100px",
-          height: "560px",
-          borderRadius: "9999px",
-          backgroundImage: DIM,
-          opacity: 0.55,
-        }}
-      />
-      <div
-        style={{
-          display: "flex",
-          position: "absolute",
-          right: "-300px",
-          bottom: `${height - 554}px`,
-          width: "1250px",
-          height: "600px",
-          borderRadius: "9999px",
-          backgroundImage: DIM,
-          opacity: 0.75,
-        }}
-      />
-      <div
-        style={{
-          display: "flex",
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: `${height}px`,
-          backgroundImage: DEEP,
-        }}
-      />
-      <Bush bottom={height - 14} left={120} size={64} bg={BRIGHT} />
-      <Bush bottom={height - 20} left={330} size={44} bg={DIM} />
-      <Bush bottom={height - 12} left={700} size={52} bg={BRIGHT} />
-    </>
-  );
-}
-
-/** 首頁 hero 的夜景：雲、地面、站在地上的大恐龍，內容疊在左半邊 */
-function Scene({
-  badge,
-  children,
-}: {
-  badge?: string;
-  children: ReactNode;
-}) {
+/** 首頁 hero 的夜空：雲和貼著下緣的大恐龍，內容疊在左半邊 */
+function Scene({ children }: { children: ReactNode }) {
   return (
     <div
       style={{
@@ -259,18 +178,16 @@ function Scene({
       <Cloud top={64} left={560} width={130} opacity={0.55} />
       <Cloud top={40} left={860} width={230} />
       <Cloud top={200} left={1010} width={120} opacity={0.6} />
-      <Ground />
 
-      {/* 恐龍站在地面上 */}
       <div
         style={{
           display: "flex",
           position: "absolute",
           right: "84px",
-          bottom: "58px",
+          bottom: "-26px",
         }}
       >
-        <Logo size={295} />
+        <Logo size={300} />
       </div>
 
       <div
@@ -293,24 +210,6 @@ function Scene({
           <p style={{ fontSize: "34px", fontWeight: 800, margin: 0 }}>
             Yeecord
           </p>
-          {badge && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                height: "48px",
-                borderRadius: "9999px",
-                backgroundColor: "rgba(130, 201, 128, 0.16)",
-                color: "#82c980",
-                padding: "0 18px",
-                fontSize: "26px",
-                fontWeight: 800,
-                lineHeight: 1,
-              }}
-            >
-              {badge}
-            </div>
-          )}
         </div>
         {children}
       </div>
@@ -378,7 +277,7 @@ export function BlogOgImage({
   authors: string[];
 }) {
   return (
-    <Scene badge="Blog">
+    <Scene>
       <div
         style={{
           display: "flex",
