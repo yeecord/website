@@ -262,14 +262,16 @@ export function InstallPicker({ locale }: { locale: Locale }) {
         </div>
       )}
 
-      <a
-        href={installUrl(mode, selected)}
-        target="_blank"
-        rel="noreferrer"
-        className="btn-chunky mx-auto px-10"
-      >
-        {mode === "guild" ? t("帶我回家") : t("安裝到我的帳號")}
-      </a>
+      <div className="pointer-events-none sticky bottom-5 z-10 flex justify-center">
+        <a
+          href={installUrl(mode, selected)}
+          target="_blank"
+          rel="noreferrer"
+          className="btn-chunky pointer-events-auto px-10"
+        >
+          {mode === "guild" ? t("帶我回家") : t("安裝到我的帳號")}
+        </a>
+      </div>
     </div>
   );
 }

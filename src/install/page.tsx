@@ -21,7 +21,7 @@ export function InstallPage({ locale }: { locale: Locale }) {
         )}
       />
       <main className="overflow-x-clip">
-        <div className="relative mx-auto w-full max-w-4xl px-4 pt-20 pb-24">
+        <div className="relative mx-auto w-full max-w-4xl px-4 pt-12 pb-24">
           <Cloud n={1} width={150} className="top-6 left-[1%] max-sm:w-20" />
           <Cloud
             n={3}
