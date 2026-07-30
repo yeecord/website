@@ -10,7 +10,6 @@ import { blogPlugin } from "fumapress/plugins/blog";
 import { llmsPlugin } from "fumapress/plugins/llms.txt";
 import { sitemapPlugin } from "fumapress/plugins/sitemap";
 import { takumiPlugin } from "fumapress/plugins/takumi";
-import { googleFonts } from "takumi-js/helpers";
 import wasmModule from "takumi-js/wasm";
 import { blog, docs, legal } from "./.source/server";
 import {
@@ -27,7 +26,8 @@ import { defaultLocale, i18n, localeCodes, locales, toLocale } from "./src/i18n"
 import { RootLayout, translations } from "./src/root-layout";
 import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
-import { OgImage } from "./src/og-image";
+import { OgImage, ogFonts } from "./src/og-image";
+import { ogPlugin } from "./src/og-plugin";
 import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
 import { localizedPagesPlugin } from "./src/localized-pages-plugin";
@@ -77,18 +77,6 @@ function withCommandBadges<T extends { type: string }>(items: T[]): T[] {
     return item;
   });
 }
-
-// One request for the whole build instead of one per og image: takumi's helper
-// re-downloads every subset on each call and gives up after 5s, which is what
-// times out on Cloudflare once the page count grows.
-const ogFonts = googleFonts({
-  families: [
-    { name: "Geist", weight: [500, 800] },
-    { name: "Noto Sans TC", weight: [400, 500, 800] },
-    { name: "Noto Sans SC", weight: [400, 500, 800] },
-  ],
-  timeout: 30_000,
-});
 
 const config = defineConfig({
   mode: "static",
@@ -214,6 +202,7 @@ export type PressContext = typeof config.$context;
 export default config
   .plugins(
     localizedPagesPlugin(),
+    ogPlugin(),
     rssPlugin(),
     blogPlugin({
       layouts: {

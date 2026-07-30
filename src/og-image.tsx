@@ -1,4 +1,17 @@
+import { googleFonts } from "takumi-js/helpers";
 import logoSvg from "../public/img/logo.svg?raw";
+
+// One request for the whole build instead of one per og image: takumi's helper
+// re-downloads every subset on each call and gives up after 5s, which is what
+// times out on Cloudflare once the page count grows.
+export const ogFonts = googleFonts({
+  families: [
+    { name: "Geist", weight: [500, 800] },
+    { name: "Noto Sans TC", weight: [400, 500, 800] },
+    { name: "Noto Sans SC", weight: [400, 500, 800] },
+  ],
+  timeout: 30_000,
+});
 
 const GREEN = "#6bb369";
 const BLURPLE = "#5865f2";
@@ -88,6 +101,228 @@ function ChatStrip() {
           ))}
         </div>
       ))}
+    </div>
+  );
+}
+
+function Cloud({
+  top,
+  left,
+  width,
+  opacity = 1,
+}: {
+  top: number;
+  left: number;
+  width: number;
+  opacity?: number;
+}) {
+  const h = width * 0.34;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        position: "absolute",
+        top: `${top}px`,
+        left: `${left}px`,
+        width: `${width}px`,
+        height: `${h}px`,
+        opacity,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: `${width}px`,
+          height: `${h * 0.62}px`,
+          borderRadius: `${h * 0.31}px`,
+          backgroundColor: "#252b25",
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          top: 0,
+          left: `${width * 0.22}px`,
+          width: `${width * 0.44}px`,
+          height: `${width * 0.44}px`,
+          borderRadius: "9999px",
+          backgroundColor: "#252b25",
+        }}
+      />
+    </div>
+  );
+}
+
+function Bush({
+  bottom,
+  left,
+  size,
+  bg,
+}: {
+  bottom: number;
+  left: number;
+  size: number;
+  bg: string;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        position: "absolute",
+        bottom: `${bottom}px`,
+        left: `${left}px`,
+        width: `${size}px`,
+        height: `${size * 0.62}px`,
+        borderRadius: `${size * 0.31}px`,
+        backgroundImage: bg,
+      }}
+    />
+  );
+}
+
+/** 站台總 banner：首頁 hero 的夜景搬進 og 圖，取代以前的靜態 branding 圖 */
+export function SiteBanner() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#0e120e",
+        color: "white",
+        overflow: "hidden",
+        position: "relative",
+        fontFamily: "Geist, 'Noto Sans TC', 'Noto Sans SC'",
+      }}
+    >
+      <Cloud top={64} left={560} width={130} opacity={0.55} />
+      <Cloud top={40} left={860} width={230} />
+      <Cloud top={200} left={1010} width={120} opacity={0.6} />
+
+      {/* 遠丘、近丘、地面三層，跟首頁 GroundBand 同一套綠 */}
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          left: "-260px",
+          bottom: "-430px",
+          width: "1100px",
+          height: "560px",
+          borderRadius: "9999px",
+          backgroundImage: DIM,
+          opacity: 0.55,
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          right: "-300px",
+          bottom: "-470px",
+          width: "1250px",
+          height: "600px",
+          borderRadius: "9999px",
+          backgroundImage: DIM,
+          opacity: 0.75,
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: "84px",
+          backgroundImage: DEEP,
+        }}
+      />
+      <Bush bottom={70} left={120} size={64} bg={BRIGHT} />
+      <Bush bottom={64} left={330} size={44} bg={DIM} />
+      <Bush bottom={72} left={700} size={52} bg={BRIGHT} />
+
+      {/* 恐龍站在地面上 */}
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          right: "84px",
+          bottom: "58px",
+        }}
+      >
+        <Logo size={295} />
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          padding: "52px 72px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "18px",
+          }}
+        >
+          <Logo size={48} />
+          <p style={{ fontSize: "34px", fontWeight: 800, margin: 0 }}>
+            Yeecord
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "64px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "88px",
+              fontWeight: 800,
+              lineHeight: 1.22,
+              letterSpacing: "-2px",
+              margin: 0,
+            }}
+          >
+            一隻恐龍
+          </p>
+          <p
+            style={{
+              fontSize: "88px",
+              fontWeight: 800,
+              lineHeight: 1.22,
+              letterSpacing: "-2px",
+              margin: 0,
+            }}
+          >
+            搞定整個<span style={{ color: "#82c980" }}>伺服器</span>
+          </p>
+          <p
+            style={{
+              fontSize: "32px",
+              fontWeight: 500,
+              color: "#96a398",
+              margin: 0,
+              marginTop: "28px",
+            }}
+          >
+            350,000+ 個伺服器都在用
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
