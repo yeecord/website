@@ -59,13 +59,13 @@ export const en = {
   安裝到我的帳號: "Add to my account",
   "Yeecord - 萬中選一的 Discord 機器人":
     "Yeecord - the one Discord bot you keep",
-  "YEE 式機器龍是全中文的 Discord 機器人：抽獎、身分組、動態語音、找吃的小遊戲通通都有，35 萬個伺服器都在用":
-    "Yeecord does giveaways, roles, dynamic voice channels and a food-hunting game, in a fully localized interface that 350,000 servers already use",
+  "YEE 式機器龍用全中文介面提供抽獎、身分組、動態語音和找吃的小遊戲，已有 35 萬個伺服器安裝。":
+    "Yeecord offers giveaways, roles, dynamic voice channels and a small food-hunting game in a fully localized interface. More than 350,000 servers have installed it.",
   一隻恐龍: "One dinosaur",
   搞定整個: "runs your whole ",
   伺服器: "server",
-  "抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。":
-    "Giveaways, roles, dynamic voice channels and a food-hunting game. All free.",
+  "抽獎、身分組、動態語音，還有找吃的小遊戲。介面全中文，免費使用。":
+    "Giveaways, roles, dynamic voice channels, plus a small food-hunting game. The interface is fully localized and free to use.",
   安裝機器人: "Install the bot",
   看使用教學: "Read the docs",
   "APEX Taiwan、VALORANT Taiwan 等": "APEX Taiwan, VALORANT Taiwan and",
@@ -73,8 +73,8 @@ export const en = {
   進來參觀一下: "Come have a look",
   "點左邊的頻道逛逛，按鈕都是真的能按。":
     "Browse the channels on the left. Every button here really works.",
-  "歡迎訊息、身分組、抽獎這些設定，一句指令叫出來，剩下用選的、用填的，不用記落落長的參數。":
-    "Welcome messages, roles, giveaways: one command brings up a form, and you pick and fill from there. No parameters to memorize.",
+  "用指令打開歡迎訊息、身分組或抽獎的設定卡，再選項目、填資料，不用記一串參數。":
+    "Open the settings card for welcome messages, roles or giveaways with a command. Then choose the options and fill in the details, without memorizing a long parameter list.",
   "跟大家說點什麼…": "Message #general",
   新人報到: "welcome",
   機器龍自動接待新成員: "New members get greeted automatically",
@@ -133,8 +133,8 @@ export const en = {
   再來一次: "Play again",
   跳: "Jump",
   把機器龍帶回家: "Take the dinosaur home",
-  "安裝免費，設定五分鐘。卡關了就來 Discord 社群喊一聲，我們都在。":
-    "Free to install, five minutes to set up. Stuck on something? Shout in the Discord community, we are around.",
+  "安裝免費。設定時遇到問題，到 Discord 社群問。":
+    "Installation is free. If setup gets stuck, ask in the Discord community.",
   "加入 Discord 社群": "Join the Discord",
   使用教學: "Docs",
   部落格: "Blog",

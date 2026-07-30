@@ -43,7 +43,7 @@ export function Hero({ locale }: { locale: Locale }) {
           <span className="text-primary">{t("伺服器")}</span>
         </h1>
         <p className="max-w-136 text-base text-muted-foreground text-pretty sm:text-lg md:text-xl">
-          {t("抽獎、身分組、動態語音、找吃的小遊戲，全中文介面，通通免費。")}
+          {t("抽獎、身分組、動態語音，還有找吃的小遊戲。介面全中文，免費使用。")}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
           <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">
