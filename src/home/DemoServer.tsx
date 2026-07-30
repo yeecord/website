@@ -84,7 +84,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
         </motion.div>
         <p className="text-muted-foreground">
           {t(
-            "用指令打開歡迎訊息、身分組或抽獎的設定卡，再選項目、填資料，不用記一串參數。",
+            "用指令打開歡迎訊息、身分組或抽獎的設定卡，再選項目、填資料，不用記一串參數",
           )}
         </p>
       </div>

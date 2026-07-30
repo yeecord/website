@@ -33,7 +33,7 @@ export function Community({ locale }: { locale: Locale }) {
           {t("把機器龍帶回家")}
         </h2>
         <p className="max-w-lg text-balance text-base text-muted-foreground sm:text-lg">
-          {t("安裝免費。設定時遇到問題，到 Discord 社群問。")}
+          {t("安裝免費，設定時遇到問題，到 Discord 社群問")}
         </p>
         <div className="flex w-full max-w-xs flex-col justify-center gap-3 pb-10 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap">
           <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">

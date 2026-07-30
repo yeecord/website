@@ -18,7 +18,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         locale={locale}
         title={t("Yeecord - 萬中選一的 Discord 機器人")}
         description={t(
-          "YEE 式機器龍用全中文介面提供抽獎、身分組、動態語音和找吃的小遊戲，已有 35 萬個伺服器安裝。",
+          "YEE 式機器龍用全中文介面提供抽獎、身分組、動態語音和找吃的小遊戲，已有 35 萬個伺服器安裝",
         )}
       />
       <main className="overflow-x-clip">
