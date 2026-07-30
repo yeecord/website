@@ -1,6 +1,16 @@
 import type { ReactNode } from "react";
 import { googleFonts } from "takumi-js/helpers";
+import cloud1 from "../public/home/scene/cloud1.png?inline";
+import cloud2 from "../public/home/scene/cloud2.png?inline";
+import cloud3 from "../public/home/scene/cloud3.png?inline";
 import logoSvg from "../public/img/logo.svg?raw";
+
+// 跟首頁同一批 Kenney 雲，比例取自原始檔尺寸
+const clouds = [
+  { src: cloud1, ratio: 242 / 406 },
+  { src: cloud2, ratio: 312 / 392 },
+  { src: cloud3, ratio: 278 / 432 },
+];
 
 // One request for the whole build instead of one per og image: takumi's helper
 // re-downloads every subset on each call and gives up after 5s, which is what
@@ -107,55 +117,32 @@ function ChatStrip() {
 }
 
 function Cloud({
+  n,
   top,
   left,
   width,
-  opacity = 1,
+  opacity = 0.25,
 }: {
+  n: 1 | 2 | 3;
   top: number;
   left: number;
   width: number;
   opacity?: number;
 }) {
-  const h = width * 0.34;
+  const cloud = clouds[n - 1];
 
   return (
-    <div
+    <img
+      src={cloud.src}
+      width={width}
+      height={width * cloud.ratio}
       style={{
-        display: "flex",
         position: "absolute",
         top: `${top}px`,
         left: `${left}px`,
-        width: `${width}px`,
-        height: `${h}px`,
         opacity,
       }}
-    >
-      <div
-        style={{
-          display: "flex",
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: `${width}px`,
-          height: `${h * 0.62}px`,
-          borderRadius: `${h * 0.31}px`,
-          backgroundColor: "#252b25",
-        }}
-      />
-      <div
-        style={{
-          display: "flex",
-          position: "absolute",
-          top: 0,
-          left: `${width * 0.22}px`,
-          width: `${width * 0.44}px`,
-          height: `${width * 0.44}px`,
-          borderRadius: "9999px",
-          backgroundColor: "#252b25",
-        }}
-      />
-    </div>
+    />
   );
 }
 
@@ -175,9 +162,9 @@ function Scene({ children }: { children: ReactNode }) {
         fontFamily: "Geist, 'Noto Sans TC', 'Noto Sans SC'",
       }}
     >
-      <Cloud top={64} left={560} width={130} opacity={0.55} />
-      <Cloud top={40} left={860} width={230} />
-      <Cloud top={200} left={1010} width={120} opacity={0.6} />
+      <Cloud n={1} top={64} left={560} width={130} opacity={0.16} />
+      <Cloud n={3} top={40} left={860} width={230} />
+      <Cloud n={2} top={200} left={1010} width={120} opacity={0.18} />
 
       <div
         style={{
