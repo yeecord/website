@@ -1,38 +1,42 @@
-<h1 align="center">
-    <img src="https://yeecord.com/img/logo-transparent.png" alt="Yeecord" width="48" height="48">
-    YEE式機器龍
-</h1>
-<p align="center">一隻全中文的機器人，並結合了找吃的小遊戲、動態語音頻道、跨群聊天等功能，讓 Discord 不再只是聊天軟體</p>
+# Yeecord website
 
-## ❓ 這是哪
+The source for [yeecord.com](https://yeecord.com), built with Fumadocs and Waku
 
-這是 YEE 式機器龍的文檔原始碼，若您想要翻閱如何使用機器人，請前往 [入門](https://yeecord.com/docs/) 頁面，若想要進行協作，我們很歡迎你，可以開始閱讀 [文檔貢獻指南](https://yeecord.com/docs/contribute/)！
+The bot source lives in the sibling `yeecord` repository. This repository owns the website, docs, blog posts, static assets, and search index.
 
-## ⚠️ 請注意
+## Run locally
 
-### Bun
+Install [Bun](https://bun.com), then run:
 
-若要在本地進行測試，請使用 [Bun](https://bun.com/)（`bun install` 安裝套件）。
+```sh
+bun install
+bun dev
+```
 
-### 執行
+The development site runs through Portless. Use the URL it prints rather than assuming a port.
 
-使用 `bun dev` 開始執行，並會在 `http://localhost:3000` 可以進行預覽
+## Verify changes
 
-## 📝 授權
+```sh
+bun run typecheck
+bun run build
+```
 
-### 文章
+`typecheck` validates MDX and TypeScript. Run `build` before changing routes, locale paths, or static-page behaviour.
 
-在 `content` 資料夾下的文件接受到 CC BY 4.0 之保護。只有在以下情況使用才符合要求。
+## Content layout
 
-1. 在文章 <head> 標籤內標明原始文章來源： `<link rel="canonical" href="https://yeecord.com/blog/how-to-invite-bot" />`
-2. 並在文章開頭和結尾標註： `文章來源： <a href="https://yeecord.com/">YEE式機器龍</a>`
+- `content/docs/` contains product documentation
+- `content/blog/` contains blog posts
+- `content/legal/` contains legal pages
+- `src/` contains pages, MDX components, and site UI
 
-### 圖像
+Documentation uses Traditional Chinese as the source locale. A Simplified Chinese version adds the `.zh-cn.mdx` suffix. Add a page to its directory's `meta.json` and `meta.zh-cn.json` to show it in the sidebar.
 
-在頁面中使用之圖像授權，可在 [版權所有](https://yeecord.com/docs/copyright/) 頁面查詢
+## Contributing
 
-### 其他文件
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. It covers page structure, localized links, copy conventions, and checks.
 
-上述未及提到之文件皆以 MIT 許可授權
+## License
 
-> 詳細之授權請參照 [LICENSE](LICENSE) 及 [LICENSE-CODE](LICENSE-CODE) 文件
+Documentation and blog content are available under [CC BY 4.0](LICENSE). Other source files are available under the [MIT License](LICENSE-CODE).
