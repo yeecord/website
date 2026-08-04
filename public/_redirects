@@ -34,6 +34,10 @@
 /docs/commands/list /zh-tw/docs/commands 301
 /docs/rpg /zh-tw/docs/find-food 301
 /docs /zh-tw/docs 301
+/zh-tw/docs/contribute https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
+/zh-tw/docs/contribute/* https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
+/zh-cn/docs/contribute https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
+/zh-cn/docs/contribute/* https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
 
 # 條款頁
 /tos /zh-tw/terms 301
