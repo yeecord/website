@@ -21,3 +21,4 @@
 .idea
 .vscode
 public/og/*
+.wrangler/
