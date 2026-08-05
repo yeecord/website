@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "yeecord-website",
+  "compatibility_date": "2025-11-17",
+  "routes": [{ "pattern": "yeecord.com", "custom_domain": true }],
+  "assets": {
+    "directory": "./dist/public",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
