@@ -2,16 +2,22 @@ import type { FooterCategory, FooterItem } from "~/components/Footer";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
-// CF Pages 的 preview build（非 master）部署在 next.yeecord.com，
+// preview build（非 master）部署在 next.yeecord.com，
 // og:image / canonical 這些絕對網址要跟著指過去，不然會指到 yeecord.com 上不存在的路徑
+const branch = process.env.CF_PAGES_BRANCH || process.env.WORKERS_CI_BRANCH;
+
 export const domain =
-  process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== "master"
+  branch && branch !== "master"
     ? "https://next.yeecord.com"
     : "https://yeecord.com";
 
-// Cloudflare Pages 對目錄頁一律 308 到帶斜線網址，canonical 必須指向最終網址
+// Workers static assets 設 drop-trailing-slash，帶斜線網址一律 308 到無斜線，
+// canonical 必須指向最終網址
 export function canonicalUrl(path: string) {
-  return `${domain}${path.endsWith("/") ? path : `${path}/`}`;
+  const clean =
+    path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+
+  return `${domain}${clean}`;
 }
 
 const supportItems: FooterItem[] = [
