@@ -2,14 +2,9 @@ import type { FooterCategory, FooterItem } from "~/components/Footer";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
-// preview build（非 master）部署在 next.yeecord.com，
-// og:image / canonical 這些絕對網址要跟著指過去，不然會指到 yeecord.com 上不存在的路徑
-const branch = process.env.CF_PAGES_BRANCH || process.env.WORKERS_CI_BRANCH;
-
-export const domain =
-  branch && branch !== "master"
-    ? "https://next.yeecord.com"
-    : "https://yeecord.com";
+// master 目前部署在 next.yeecord.com（legacy branch 佔著 yeecord.com），
+// 正式切換主站時把這裡改回 https://yeecord.com
+export const domain = "https://next.yeecord.com";
 
 // Workers static assets 設 drop-trailing-slash，帶斜線網址一律 308 到無斜線，
 // canonical 必須指向最終網址

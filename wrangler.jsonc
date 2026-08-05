@@ -1,22 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "yeecord-website",
+  "name": "yeecord",
   "compatibility_date": "2025-11-17",
-  "routes": [{ "pattern": "yeecord.com", "custom_domain": true }],
+  "routes": [{ "pattern": "next.yeecord.com", "custom_domain": true }],
   "assets": {
     "directory": "./dist/public",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"
-  },
-  "env": {
-    "next": {
-      "name": "yeecord-website-next",
-      "routes": [{ "pattern": "next.yeecord.com", "custom_domain": true }],
-      "assets": {
-        "directory": "./dist/public",
-        "html_handling": "drop-trailing-slash",
-        "not_found_handling": "404-page"
-      }
-    }
   }
 }
