@@ -55,6 +55,7 @@ export default defineConfig({
   mdxOptions: {
     remarkImageOptions: {
       useImport: false,
+      external: false,
     },
   },
 });
