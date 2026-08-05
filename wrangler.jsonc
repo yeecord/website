@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "yeecord-website",
+  "name": "yeecord-legacy",
   "compatibility_date": "2025-11-17",
   "routes": [{ "pattern": "yeecord.com", "custom_domain": true }],
   "assets": {
