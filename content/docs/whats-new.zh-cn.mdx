@@ -4,31 +4,62 @@ icon: Sparkles
 description: 机器龙重写过，大部分功能改用斜杠命令，网页控制面板收起来了。这页列出还在的、收掉的，还有旧数据的去向。
 ---
 
-机器龙重写过一遍。
+机器龙重写过一遍。命令的打法、设置的地方、还有一部分功能，都跟以前不一样。
 
 <Callout title="三句话讲完">
-大部分功能改用斜杠命令。前缀命令没有拿掉。旧的设置会搬过去，钱跟道具不会。
+大部分功能改用斜杠命令。前缀命令没有拿掉，但带不了参数。旧的设置会搬过去，钱跟道具不会。
 </Callout>
 
 ## 斜杠命令怎么用
 
-打一个 `/`，清单就跳出来。
+在消息框打一个 `/`，清单就跳出来。
 
 <SlashCommandTour />
 
-好处：
+跟前缀命令比起来：
 
-- 不用背命令名称，打几个字就筛出来
-- 每个选项有名字，不会填错位置
-- 选错的参数 Discord 会直接挡掉
+- **不用背命令名称**。打几个字就筛得出来
+- **每个参数有名字**。不用记顺序，也不会填到隔壁格
+- **选错 Discord 会挡**。身份组、频道、成员这些参数只能从清单挑
+
+## 前缀命令还在
+
+`&` 开头照样能打，像这些：
+
+<div className="not-prose my-4 flex flex-wrap gap-2 font-mono text-sm">
+  {["&status", "&b", "&guild", "&avatar", "&banner", "&pick", "&1a2b", "&help", "&find-food"].map((command) => (
+    <span key={command} className="rounded bg-fd-secondary px-2 py-1 text-fd-secondary-foreground">{command}</span>
+  ))}
+</div>
+
+@ 机器龙也可以，像 `@YEE 式机器龙 status`。
+
+前缀这条路有三个限制：
+
+| 限制 | 说明 |
+| --- | --- |
+| 只读命令名称 | `&avatar @某人` 的 `@某人` 会被忽略，出来的是你自己的头像 |
+| 只在服务器里 | 私信和群组私信只吃斜杠命令 |
+| 只有简单命令 | 有子命令、或需要管理权限的命令走不了这条路 |
+
+需要选人、选频道、填数字的命令，因此都只能用斜杠。
+
+### 打了只能用斜杠的命令会怎样
+
+机器龙不会回一句「没有这个命令」，而是回一张卡片，列出这个命令现在的斜杠用法。
+
+| 类型 | 例子 | 原因 |
+| --- | --- | --- |
+| 有子命令 | `/poll create`、`/lol player` | 前缀语法没地方放子命令名称 |
+| 要管理权限 | `/giveaway`、`/form`、`/clear` | 权限检查交给 Discord，没人绕得过 |
 
 ## 逐个命令设权限
 
-这是前缀命令做不到的事。
+这是前缀命令做不到的事。前缀命令对 Discord 来说就是一条普通消息，挡不掉。
 
 **服务器设置 → 整合 → YEE 式机器龙**，每个命令旁边都能单独设置：
 
-| 覆盖类型 | 效果 |
+| 覆写类型 | 效果 |
 | --- | --- |
 | 身份组 | 只有这些身份组能用这个命令 |
 | 成员 | 指名某个人能用或不能用 |
@@ -38,34 +69,15 @@ description: 机器龙重写过，大部分功能改用斜杠命令，网页控�
 
 - `/clear` 只开给管理员
 - `/find-food` 只开在游戏频道，避免刷屏
-- `/poll create` 开给干部，普通成员只能投票
+- `/giveaway` 只开给干部
 
-设置存在 Discord 那边，机器龙改版也不会掉。
-
-## 前缀命令还在
-
-`&` 开头照样能打：
-
-<div className="not-prose my-4 flex flex-wrap gap-2 font-mono text-sm">
-  {["&status", "&b", "&guild", "&avatar", "&banner", "&pick", "&quote", "&1a2b", "&help", "&find-food"].map((command) => (
-    <span key={command} className="rounded bg-fd-secondary px-2 py-1 text-fd-secondary-foreground">{command}</span>
-  ))}
-</div>
-
-@ 机器龙也可以，像 `@YEE 式机器龙 status`。
-
-### 哪些只能用斜杠
-
-| 类型 | 例子 | 原因 |
-| --- | --- | --- |
-| 有子命令 | `/poll create`、`/lol player` | 前缀语法没地方放子命令名称 |
-| 要管理权限 | `/giveaway`、`/form`、`/clear` | 权限检查交给 Discord，没人绕得过 |
+设置存在 Discord 那边。机器龙改版、重新邀请，这些覆写都不会掉。
 
 ## 命令对照表
 
 | 以前 | 现在 |
 | --- | --- |
-| `&poll` | `/poll create`、`/poll edit`、`/poll end` |
+| `&poll` | <Cmd name="poll create" />，另外多了六个管理用的子命令 |
 | 网页面板的抽奖 | `/giveaway create`、`/giveaway end` |
 | `&dvc`、`&temp` | `/auto-channels setup` |
 | `&jm` | `/member-notification`、`/auto-role` |
@@ -78,6 +90,37 @@ description: 机器龙重写过，大部分功能改用斜杠命令，网页控�
 | `&random` | `/random number`、`/random voice-channel` |
 | `&lol` | `/lol link`、`/lol player`、`/lol matches`、`/lol live`、`/lol rotation` |
 | `&1a2b`、`&pick`、`&avatar`、`&banner` | 同名的斜杠命令，前缀也还能打 |
+| `&quote` | `/quote`，要选人所以前缀打不了 |
+
+## 投票整个换掉了
+
+`&poll` 以前就是丢一行字出去，大家按表情。现在 <Cmd name="poll create" /> 发出后会跳一张表单，填完才发布。
+
+表单里的字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| 标题 | 最多 100 字 |
+| 选项 | 一行一个，2 到 18 个，每个 80 字以内，不能重复 |
+| 描述 | 选填 |
+| 结束时间 | 选填，像 `30m`、`2h`、`3d`。留空就手动结束 |
+
+还有一个进阶菜单可以复选：**匿名投票**、**投票后不能改票**、**开票前保密**。
+
+<PollFlowDemo />
+
+票数会实时画成一张图片，每有人投一次就重画。管理面多了六个子命令：
+
+| 命令 | 用途 |
+| --- | --- |
+| <Cmd name="poll edit" /> | 改标题、描述、结束时间、图片，或补开匿名 |
+| <Cmd name="poll end" /> | 提前结束 |
+| <Cmd name="poll resend" /> | 被刷屏了，重发一次投票消息 |
+| <Cmd name="poll remove-vote" /> | 移掉某个人的票 |
+| <Cmd name="poll role-weight" /> | 让某个身份组一票抵多票 |
+| <Cmd name="poll export" /> | 导出一份 CSV，只有你看得到 |
+
+细节在[投票](/zh-cn/docs/commands/poll)那页。
 
 ## 收掉的功能
 
@@ -93,7 +136,7 @@ YouTube 这几年一直挡机器人，撑到最后每天都在坏。`&play`、`&
 
 ### 私人频道
 
-改用 [`/form`](/zh-cn/docs/commands/form)。开一张表单发布，成员按按钮就会开一条私密子区。
+改用 [`/form`](/zh-cn/docs/commands/form)。开一张表单发布，成员按按钮就会开一条私人子区。
 
 表单不加题目也行，按钮直接开子区，跟以前的私人频道一样。
 
@@ -107,14 +150,13 @@ YouTube 这几年一直挡机器人，撑到最后每天都在坏。`&play`、`&
 
 当初搬到网页是因为填表比打命令好用。后来 Discord 自己把斜杠命令和表单做得够好，多开一个网页反而多一道手续。
 
-
 ## 旧数据的去向
 
 | 项目 | 会怎样 |
 | --- | --- |
 | 欢迎消息、动态语音、身份组菜单的设置 | 原封不动搬过去 |
 | 旧消息上的按钮 | 照样有反应 |
-| 进行中的投票和抽奖 | 一起带过去，时间到照常公布 |
+| 进行中的投票和抽奖 | 一起带过去，设好的时间到就自动公布 |
 | 钱、道具、宠物 | 不转移，换成纪念徽章 |
 
 <Callout type="warn" title="为什么钱不转移">
@@ -124,7 +166,7 @@ YouTube 这几年一直挡机器人，撑到最后每天都在坏。`&play`、`&
 ## 新增的功能
 
 <Cards>
-  <Card title="/form" href="/zh-cn/docs/commands/form" description="表单系统，收报名、意见、申请，回复开成私密子区" />
+  <Card title="/form" href="/zh-cn/docs/commands/form" description="表单系统，收报名、意见、申请，回复开成私人子区" />
   <Card title="/find-food" href="/zh-cn/docs/find-food" description="带 Yee 找食材、做饭、喂它，会记得你做过什么" />
   <Card title="/bot-fight" href="/zh-cn/docs/commands/bot-fight" description="机器人防御，挡刷屏广告账号" />
   <Card title="/auto-channels" href="/zh-cn/docs/commands/auto-channels" description="动态语音频道，一个服务器可以开多组" />
@@ -134,11 +176,23 @@ YouTube 这几年一直挡机器人，撑到最后每天都在坏。`&play`、`&
 
 ### 为什么打了命令没反应
 
-先确认机器龙有没有被踢出服务器。还在的话，到 **服务器设置 → 整合** 看看该命令有没有被权限覆盖挡掉。
+先确认机器龙还在不在服务器里。还在的话，到 **服务器设置 → 整合** 看看这个命令有没有被权限覆写挡掉。
+
+斜杠清单里完全找不到某个命令，通常是机器龙是旧的授权方式加进来的。重新邀请一次就会出现。
+
+### 前缀命令带参数为什么没用
+
+前缀这条路只读得到命令名称，后面的字一律忽略。`&avatar @某人` 会给你自己的头像，`&quote` 因为一定要选人，干脆连跑都跑不起来。要带参数就用斜杠命令。
 
 ### 旧的投票消息还能按吗
 
-能。旧格式的按钮有专门的兼容路径，不用重发。
+能。旧格式的按钮有专门的兼容路径，票会算进同一份结果，不用重发。
+
+只是旧消息上就只有原本那几颗按钮：没有单独的收回票按钮，票数也不会画成图片。想换成新版卡片，发起人打 <Cmd name="poll resend" /> 重发一次就好。
+
+### 投票时间到了，卡片还显示进行中
+
+服务器频道里的投票会自己更新。群组私信是例外，机器龙改不动那里的消息，要等下一个人按下去，卡片才会重画成已结束。票数不受影响。
 
 ### 我的钱真的没了吗
 
