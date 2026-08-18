@@ -29,8 +29,7 @@ type Sim = {
   y: number;
   vy: number;
   buffered: number;
-  hitboxLeft: number;
-  hitboxRight: number;
+  jumps: number;
   fieldWidth: number;
   items: { id: number; sprite: number; x: number }[];
   nextId: number;
@@ -83,8 +82,15 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     const current = sim.current;
 
     if (!current) return;
-    if (current.y === 0) current.vy = JUMP_VELOCITY;
-    else current.buffered = JUMP_BUFFER;
+    if (current.y === 0) {
+      current.vy = JUMP_VELOCITY;
+      current.jumps = 1;
+    } else if (current.jumps < 2) {
+      current.vy = JUMP_VELOCITY * 0.92;
+      current.jumps = 2;
+    } else {
+      current.buffered = JUMP_BUFFER;
+    }
   }
 
   function endJump() {
@@ -104,7 +110,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     const dt = Math.min((now - current.last) / 1000, 0.04);
 
     current.last = now;
-    current.speed += dt * 8;
+    current.speed += dt * 7;
     current.score += dt * 10;
     current.buffered -= dt;
 
@@ -113,13 +119,22 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       current.y = Math.max(0, current.y + current.vy * dt);
       if (current.y === 0) {
         current.vy = 0;
+        current.jumps = 0;
         if (current.buffered > 0) {
           current.vy = JUMP_VELOCITY;
+          current.jumps = 1;
           current.buffered = 0;
         }
       }
     }
     dino.style.transform = `translateY(${-current.y}px)`;
+
+    /* 每幀重量:開場縮小動畫進行中也拿得到正確的碰撞框。
+       translateY 不影響 left/width,跳躍中量也安全 */
+    const fieldLeft = field.getBoundingClientRect().left;
+    const dinoRect = dino.getBoundingClientRect();
+    const hitboxLeft = dinoRect.left - fieldLeft + dinoRect.width * 0.35;
+    const hitboxRight = dinoRect.left - fieldLeft + dinoRect.width * 0.75;
 
     current.spawnIn -= dt;
     if (current.spawnIn <= 0) {
@@ -127,7 +142,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       const sprite = Math.floor(Math.random() * SPRITES.length);
 
       current.items.push({ id, sprite, x: 0 });
-      current.spawnIn = 0.9 + Math.random() * 1.1;
+      current.spawnIn = 1.0 + Math.random() * 1.15;
       setObstacles((list) => [...list, { id, sprite }]);
     }
 
@@ -144,9 +159,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       if (el) el.style.transform = `translateX(${item.x}px)`;
 
       const hit =
-        item.x - width * 0.2 > current.hitboxLeft &&
-        item.x - width * 0.8 < current.hitboxRight &&
-        current.y < height - 6;
+        item.x - width * 0.25 > hitboxLeft &&
+        item.x - width * 0.75 < hitboxRight &&
+        current.y < height - 10;
 
       if (hit) {
         die();
@@ -181,22 +196,18 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
     if (!field || !dino) return;
 
-    const fieldRect = field.getBoundingClientRect();
-    const dinoRect = dino.getBoundingClientRect();
-
     sim.current = {
       raf: 0,
       last: performance.now(),
       y: 0,
       vy: 0,
       buffered: 0,
-      hitboxLeft: dinoRect.left - fieldRect.left + dinoRect.width * 0.3,
-      hitboxRight: dinoRect.left - fieldRect.left + dinoRect.width * 0.8,
-      fieldWidth: fieldRect.width,
+      jumps: 0,
+      fieldWidth: field.getBoundingClientRect().width,
       items: [],
       nextId: 1,
-      spawnIn: 1.2,
-      speed: 320,
+      spawnIn: 1.4,
+      speed: 300,
       score: 0,
     };
     setObstacles([]);
