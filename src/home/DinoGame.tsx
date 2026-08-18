@@ -15,6 +15,10 @@ const SPRITES = [
 
 const GRAVITY = 2000;
 const JUMP_VELOCITY = 620;
+/* 提早放開時把上升速度砍到這個值：仍足以越過最高的障礙物 (56px) */
+const SHORT_JUMP_VELOCITY = 490;
+const JUMP_BUFFER = 0.12;
+const BEST_KEY = "dino-best";
 
 type Mode = "idle" | "playing" | "over";
 type Obstacle = { id: number; sprite: number };
@@ -24,6 +28,7 @@ type Sim = {
   last: number;
   y: number;
   vy: number;
+  buffered: number;
   hitboxLeft: number;
   hitboxRight: number;
   fieldWidth: number;
@@ -39,12 +44,17 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   const [mode, setMode] = useState<Mode>("idle");
   const [obstacles, setObstacles] = useState<Obstacle[]>([]);
   const [finalScore, setFinalScore] = useState(0);
+  const [best, setBest] = useState(0);
 
   const fieldRef = useRef<HTMLDivElement>(null);
   const dinoRef = useRef<HTMLDivElement>(null);
   const scoreRef = useRef<HTMLSpanElement>(null);
   const obstacleEls = useRef(new Map<number, HTMLImageElement>());
   const sim = useRef<Sim | null>(null);
+
+  useEffect(() => {
+    setBest(Number(localStorage.getItem(BEST_KEY)) || 0);
+  }, []);
 
   function stopLoop() {
     if (sim.current) cancelAnimationFrame(sim.current.raf);
@@ -58,17 +68,30 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   }
 
   function die() {
-    const current = sim.current;
+    const score = Math.floor(sim.current?.score ?? 0);
 
     stopLoop();
-    setFinalScore(Math.floor(current?.score ?? 0));
+    setFinalScore(score);
+    if (score > best) {
+      setBest(score);
+      localStorage.setItem(BEST_KEY, String(score));
+    }
     setMode("over");
   }
 
   function jump() {
     const current = sim.current;
 
-    if (current && current.y === 0) current.vy = JUMP_VELOCITY;
+    if (!current) return;
+    if (current.y === 0) current.vy = JUMP_VELOCITY;
+    else current.buffered = JUMP_BUFFER;
+  }
+
+  function endJump() {
+    const current = sim.current;
+
+    if (current && current.vy > SHORT_JUMP_VELOCITY)
+      current.vy = SHORT_JUMP_VELOCITY;
   }
 
   function frame(now: number) {
@@ -83,11 +106,18 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     current.last = now;
     current.speed += dt * 8;
     current.score += dt * 10;
+    current.buffered -= dt;
 
     if (current.y > 0 || current.vy > 0) {
       current.vy -= GRAVITY * dt;
       current.y = Math.max(0, current.y + current.vy * dt);
-      if (current.y === 0) current.vy = 0;
+      if (current.y === 0) {
+        current.vy = 0;
+        if (current.buffered > 0) {
+          current.vy = JUMP_VELOCITY;
+          current.buffered = 0;
+        }
+      }
     }
     dino.style.transform = `translateY(${-current.y}px)`;
 
@@ -159,6 +189,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       last: performance.now(),
       y: 0,
       vy: 0,
+      buffered: 0,
       hitboxLeft: dinoRect.left - fieldRect.left + dinoRect.width * 0.3,
       hitboxRight: dinoRect.left - fieldRect.left + dinoRect.width * 0.8,
       fieldWidth: fieldRect.width,
@@ -176,9 +207,10 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   useEffect(() => {
     if (mode === "idle") return;
 
-    function onKey(event: KeyboardEvent) {
-      if (event.code === "Space") {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.code === "Space" || event.code === "ArrowUp") {
         event.preventDefault();
+        if (event.repeat) return;
         if (mode === "playing") jump();
         else start();
       } else if (event.key === "Escape") {
@@ -186,12 +218,38 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       }
     }
 
-    window.addEventListener("keydown", onKey);
+    function onKeyUp(event: KeyboardEvent) {
+      if (event.code === "Space" || event.code === "ArrowUp") endJump();
+    }
 
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
   });
 
+  /* 玩到一半捲出畫面就結束，不然全頁的跳躍層會一直吃掉點擊 */
+  useEffect(() => {
+    const field = fieldRef.current;
+
+    if (mode !== "playing" || !field) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) quit();
+    });
+
+    observer.observe(field);
+
+    return () => observer.disconnect();
+  }, [mode]);
+
   useEffect(() => stopLoop, []);
+
+  const scorePill =
+    "flex items-baseline gap-2 rounded-full border bg-fd-background/80 px-3 py-1 font-bold font-mono text-sm shadow-sm backdrop-blur";
 
   return (
     <>
@@ -216,32 +274,58 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               className={cn(
                 "absolute bottom-0 select-none will-change-transform",
                 plantDim,
+                mode === "over" && "opacity-60",
               )}
             />
           );
         })}
-        <div className="pointer-events-auto absolute bottom-0 right-[5%] sm:right-[12%]">
-          <div ref={dinoRef} className="will-change-transform">
+        <div className="pointer-events-auto absolute right-[5%] bottom-0 sm:right-[12%]">
+          <div
+            ref={dinoRef}
+            className={cn(
+              "will-change-transform",
+              mode === "over" && "animate-[dino-hit_.45s_ease]",
+            )}
+          >
             <DinoMascot alt={alt} playing={mode === "playing"} />
           </div>
-          {mode === "playing" ? (
-            <span
-              ref={scoreRef}
-              className="-top-10 -translate-x-1/2 absolute left-1/2 font-bold font-mono text-muted-foreground text-sm"
-            >
-              0
-            </span>
-          ) : (
-            <button
-              type="button"
-              onClick={start}
-              className="-top-10 -translate-x-1/2 absolute left-1/2 whitespace-nowrap rounded-full border bg-fd-background/80 px-3 py-1 font-medium text-sm shadow-sm backdrop-blur transition-colors hover:bg-fd-background motion-reduce:hidden"
-            >
-              {mode === "idle"
-                ? t("來玩一場")
-                : `${t("得分")} ${finalScore} · ${t("再來一次")}`}
-            </button>
-          )}
+          <div className="-translate-x-1/2 absolute bottom-full left-1/2 mb-2 flex flex-col items-center gap-1.5 whitespace-nowrap">
+            {mode === "playing" ? (
+              <>
+                <span className={scorePill}>
+                  <span ref={scoreRef}>0</span>
+                  {best > 0 && (
+                    <span className="font-medium text-muted-foreground text-xs">
+                      HI {best}
+                    </span>
+                  )}
+                </span>
+                <span className="animate-[hint-fade_3s_ease_forwards] text-muted-foreground text-xs">
+                  {t("空白鍵或點擊跳躍")}
+                </span>
+              </>
+            ) : (
+              <>
+                {mode === "over" && (
+                  <span className={scorePill}>
+                    <span>
+                      {t("得分")} {finalScore}
+                    </span>
+                    <span className="font-medium text-muted-foreground text-xs">
+                      HI {best}
+                    </span>
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={start}
+                  className="rounded-full border bg-fd-background/80 px-3 py-1 font-medium text-sm shadow-sm backdrop-blur transition-colors hover:bg-fd-background motion-reduce:hidden"
+                >
+                  {mode === "idle" ? t("來玩一場") : t("再來一次")}
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
       {mode === "playing" && (
@@ -249,6 +333,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
           type="button"
           aria-label={t("跳")}
           onPointerDown={jump}
+          onPointerUp={endJump}
           className="fixed inset-0 z-40 cursor-pointer"
         />
       )}
