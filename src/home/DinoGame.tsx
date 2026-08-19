@@ -260,7 +260,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   useEffect(() => stopLoop, []);
 
   const scorePill =
-    "flex items-baseline gap-2 rounded-full border bg-fd-background/80 px-3 py-1 font-bold font-mono text-sm shadow-sm backdrop-blur";
+    "flex items-baseline gap-2 rounded-full border bg-fd-background/80 px-3 py-1 font-bold font-mono text-sm shadow-sm backdrop-blur animate-in fade-in slide-in-from-bottom-1 duration-200 ease-out motion-reduce:animate-none";
 
   return (
     <>
@@ -283,7 +283,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               draggable={false}
               style={{ height: sprite.height, left: -sprite.height * sprite.ratio }}
               className={cn(
-                "absolute bottom-0 select-none will-change-transform",
+                "absolute bottom-0 select-none transition-opacity duration-200 will-change-transform",
                 plantDim,
                 mode === "over" && "opacity-60",
               )}
@@ -330,7 +330,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
                 <button
                   type="button"
                   onClick={start}
-                  className="rounded-full border bg-fd-background/80 px-3 py-1 font-medium text-sm shadow-sm backdrop-blur transition-colors hover:bg-fd-background motion-reduce:hidden"
+                  className="animate-in fade-in slide-in-from-bottom-1 rounded-full border bg-fd-background/80 px-3 py-1 font-medium text-sm shadow-sm backdrop-blur transition-[background-color,transform] duration-150 ease-out hover:bg-fd-background active:scale-[.97] motion-reduce:hidden"
                 >
                   {mode === "idle" ? t("來玩一場") : t("再來一次")}
                 </button>

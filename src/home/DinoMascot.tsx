@@ -53,8 +53,8 @@ export function DinoMascot({
             src="/img/logo.svg"
             className={
               playing
-                ? "h-16 drop-shadow-lg transition-[height] duration-300 sm:h-24 lg:h-28"
-                : "h-28 animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg transition-[height] duration-300 motion-reduce:animate-none sm:h-52 lg:h-64"
+                ? "h-16 drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:transition-none sm:h-24 lg:h-28"
+                : "h-28 animate-[bob_5s_ease-in-out_infinite] drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none sm:h-52 lg:h-64"
             }
             draggable={false}
           />
