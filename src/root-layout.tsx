@@ -16,6 +16,9 @@ const BaseRootLayout = createRootLayout({
     search: {
       SearchDialog,
     },
+    theme: {
+      hotKey: false,
+    },
   },
 });
 
