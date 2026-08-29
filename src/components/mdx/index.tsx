@@ -9,6 +9,7 @@ import {
   DiscordMessage,
   SlashCommand,
 } from "~/components/mdx/discord";
+import { CommandPermissionsDemo } from "~/components/mdx/command-permissions-flow";
 import {
   ChannelPermissionDemo,
   RoleOrderDemo,
@@ -34,6 +35,7 @@ export const mdxComponents = {
   Adsense,
   AutoChannelsDemo,
   ChannelPermissionDemo,
+  CommandPermissionsDemo,
   DiscordButton,
   DiscordChat,
   DiscordEmbed,
@@ -58,6 +60,7 @@ export function localeMdxComponents(locale: Locale) {
     ChannelPermissionDemo: (
       props: ComponentProps<typeof ChannelPermissionDemo>,
     ) => <ChannelPermissionDemo locale={locale} {...props} />,
+    CommandPermissionsDemo: () => <CommandPermissionsDemo locale={locale} />,
     FormBuilderDemo: () => <FormBuilderDemo locale={locale} />,
     FormFlowDemo: () => <FormFlowDemo locale={locale} />,
     GiveawayFlowDemo: () => <GiveawayFlowDemo locale={locale} />,
