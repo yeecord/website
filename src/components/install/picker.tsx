@@ -70,12 +70,6 @@ const features: {
       ["管理訊息", 1n << 13n],
     ],
   },
-  {
-    id: "mention",
-    title: "通知身分組",
-    description: "抽獎、投票開始時順便 tag 一個身分組或全體成員。",
-    permissions: [["提及所有人", 1n << 17n]],
-  },
 ];
 
 function installUrl(mode: "guild" | "user", selected: Set<string>) {
