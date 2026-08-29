@@ -20,7 +20,6 @@ export const en = {
   傳送訊息: "Send Messages",
   閱讀歷史訊息: "Read Message History",
   附加檔案: "Attach Files",
-  使用外部表情符號: "Use External Emoji",
   動態語音頻道: "Dynamic voice channels",
   "有人進語音就開一間專屬房間，人走了自動收。":
     "Joining the lobby opens a room of their own, and it disappears once everyone leaves.",
