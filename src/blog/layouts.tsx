@@ -98,7 +98,7 @@ export const BlogIndex: BlogIndexPage<PressContext> = async ({ lang }) => {
       <Meta
         title="Yeecord Blog"
         description="YEE 式機器龍各種用肝和 ❤️ 製作的部落格"
-        path="/blog"
+        path={contentPath(locale, "/blog")}
       />
       <div
         className="py-16"
@@ -200,7 +200,7 @@ export const BlogPage: BlogLayoutPage<PressContext> = async ({
         <p className="text-muted-foreground text-sm">
           <span className="mr-1">•</span>
           <span itemProp="datePublished">
-            {page.data.date.toLocaleDateString("zh", { dateStyle: "long" })}
+            {page.data.date.toLocaleDateString(locale, { dateStyle: "long" })}
           </span>
         </p>
       </div>
@@ -366,7 +366,10 @@ export const BlogTags: BlogTagsPage<PressContext> = async ({ lang }) => {
 
   return (
     <main className="my-16 flex w-full flex-col gap-3">
-      <Meta title="所有標籤 - Yeecord Blog" path="/blog/tags" />
+      <Meta
+        title="所有標籤 - Yeecord Blog"
+        path={contentPath(locale, "/blog/tags")}
+      />
       <div className="mb-3 flex flex-col items-center gap-3 text-center">
         <h1 className="mb-4 font-bold text-5xl">{t("所有標籤")}</h1>
         <Link
@@ -407,7 +410,10 @@ export const BlogTagPage: BlogTagPageType<PressContext> = async ({
 
   return (
     <main className="my-16 flex w-full flex-1 flex-col gap-5">
-      <Meta title={`${heading} - Yeecord Blog`} path={`/blog/tags/${tag}`} />
+      <Meta
+        title={`${heading} - Yeecord Blog`}
+        path={contentPath(locale, `/blog/tags/${tag}`)}
+      />
       <div className="mb-5 flex flex-col items-center gap-5 text-center">
         <h1 className="mb-4 font-bold text-3xl">{heading}</h1>
 
