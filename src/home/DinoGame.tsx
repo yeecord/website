@@ -330,7 +330,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
                 <button
                   type="button"
                   onClick={start}
-                  className="animate-in fade-in slide-in-from-bottom-1 rounded-full border bg-fd-background/80 px-3 py-1 font-medium text-sm shadow-sm backdrop-blur transition-[background-color,transform] duration-150 ease-out hover:bg-fd-background active:scale-[.97] motion-reduce:hidden"
+                  className="animate-in fade-in slide-in-from-bottom-1 rounded-full border bg-fd-background/80 px-3 py-1 font-medium text-sm shadow-sm backdrop-blur transition-[background-color,transform] duration-150 ease-out hover:bg-fd-background active:scale-[.97] motion-reduce:animate-none"
                 >
                   {mode === "idle" ? t("來玩一場") : t("再來一次")}
                 </button>

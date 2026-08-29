@@ -16,10 +16,10 @@ export function Community({ locale }: { locale: Locale }) {
           className="top-[22%] right-[9%] opacity-80 [animation-delay:-8s]"
         />
         <div className="relative">
-          <span className="-right-6 -top-2 absolute animate-pulse font-bold text-muted-foreground/70 text-xl">
+          <span className="-right-6 -top-2 absolute animate-pulse motion-reduce:animate-none font-bold text-muted-foreground/70 text-xl">
             z
           </span>
-          <span className="-right-11 -top-7 absolute animate-pulse font-bold text-lg text-muted-foreground/50 [animation-delay:.4s]">
+          <span className="-right-11 -top-7 absolute animate-pulse motion-reduce:animate-none font-bold text-lg text-muted-foreground/50 [animation-delay:.4s]">
             z
           </span>
           <img

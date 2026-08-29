@@ -33,10 +33,10 @@ export default function Footer({
 
 function Info({ brand }: { brand: string }) {
   return (
-    <div className="hidden flex-col gap-2 sm:flex">
+    <div className="flex flex-col gap-2">
       <div className="flex flex-row items-center gap-2">
         <img
-          alt="logo"
+          alt=""
           src="/img/logo.svg"
           width={40}
           height={40}
@@ -45,7 +45,7 @@ function Info({ brand }: { brand: string }) {
         <p className="font-semibold text-xl">Yeecord</p>
       </div>
       <p className="mt-2 text-muted-foreground text-xs">
-        {brand} © 2019 ~ {new Date(Date.now()).getFullYear()}
+        {brand} © 2019 ~ {new Date().getFullYear()}
       </p>
     </div>
   );
@@ -54,7 +54,7 @@ function Info({ brand }: { brand: string }) {
 function Category({ category }: { category: FooterCategory }) {
   return (
     <div className="flex flex-col">
-      <p className="mb-2 font-medium max-sm:cursor-pointer">{category.title}</p>
+      <p className="mb-2 font-medium">{category.title}</p>
       <div className="flex flex-col gap-1 text-sm">
         {category.items.map((item, i) => (
           <Link
