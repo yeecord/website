@@ -45,10 +45,6 @@ export const en = {
     "Advertising bots are banned the moment they post, and scam images are caught on the way in.",
   封鎖成員: "Ban Members",
   禁言成員: "Timeout Members",
-  通知身分組: "Role pings",
-  "抽獎、投票開始時順便 tag 一個身分組或全體成員。":
-    "Ping a role or everyone when a giveaway or poll starts.",
-  提及所有人: "Mention Everyone",
   "跟著你走，不用進伺服器": "It follows you, no server needed",
   "裝在自己的 Discord 帳號上，私訊、群組、任何伺服器都能叫出機器龍。發起投票、查個人卡片、玩找吃的，走到哪用到哪。":
     "Install it on your own Discord account and call it up in DMs, group chats and any server. Start a poll, pull up a profile card, go hunting for food, wherever you happen to be.",
