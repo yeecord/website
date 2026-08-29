@@ -13,15 +13,13 @@ const requiredBits =
   (1n << 10n) | // VIEW_CHANNEL
   (1n << 11n) | // SEND_MESSAGES
   (1n << 15n) | // ATTACH_FILES, the rendered cards are uploaded as images
-  (1n << 16n) | // READ_MESSAGE_HISTORY, prefix commands answer as a reply
-  (1n << 18n); // USE_EXTERNAL_EMOJIS
+  (1n << 16n); // READ_MESSAGE_HISTORY, prefix commands answer as a reply
 
 const requiredPermissions: Phrase[] = [
   "檢視頻道",
   "傳送訊息",
   "閱讀歷史訊息",
   "附加檔案",
-  "使用外部表情符號",
 ];
 
 const features: {
