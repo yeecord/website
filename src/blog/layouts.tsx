@@ -23,16 +23,17 @@ import { BlogItem, type BlogPost } from "~/components/blog/BlogItem";
 import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/utils/cn";
 import { getTagHref } from "~/utils/tags";
-import { toLocale } from "~/i18n";
+import { contentPath, toLocale, type Locale } from "~/i18n";
+import { translator } from "~/i18n/translate";
 import { baseOptions } from "~/layout-config";
 import type { PressContext } from "../../press.config";
 
-async function getBlogPages() {
+async function getBlogPages(lang?: string) {
   const ctx = getPressContext<PressContext>();
   const source = await ctx.getLoader();
 
   return source
-    .getPages()
+    .getPages(lang)
     .filter((page): page is BlogPost => page.type === "blog")
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
@@ -87,8 +88,10 @@ export const BlogSiteLayout: BlogLayout<PressContext> = ({ lang, children }) => 
   );
 };
 
-export const BlogIndex: BlogIndexPage<PressContext> = async () => {
-  const pages = await getBlogPages();
+export const BlogIndex: BlogIndexPage<PressContext> = async ({ lang }) => {
+  const locale = toLocale(lang);
+  const t = translator(locale);
+  const pages = await getBlogPages(lang);
 
   return (
     <main className="flex flex-1 flex-col pb-20">
@@ -107,15 +110,15 @@ export const BlogIndex: BlogIndexPage<PressContext> = async () => {
         }}
       >
         <h1 className="mb-8 text-center font-bold text-4xl md:text-5xl">
-          我們的部落格
+          {t("我們的部落格")}
         </h1>
         <div className="flex flex-row justify-center gap-2.5 max-sm:flex-col max-sm:items-stretch">
           <Link
-            href="/zh-tw/blog/tags"
+            href={contentPath(locale, "/blog/tags")}
             className={cn(buttonVariants({ color: "primary" }))}
           >
             <EyeIcon className="size-4" />
-            查看所有標籤
+            {t("查看所有標籤")}
           </Link>
           <a
             href="https://github.com/yeecord/website"
@@ -123,7 +126,7 @@ export const BlogIndex: BlogIndexPage<PressContext> = async () => {
             rel="noreferrer noopener"
             className={cn(buttonVariants({ color: "secondary" }))}
           >
-            加入我們
+            {t("加入我們")}
           </a>
         </div>
       </div>
@@ -134,8 +137,10 @@ export const BlogIndex: BlogIndexPage<PressContext> = async () => {
       </div>
       <div className="mt-8 flex flex-row items-end gap-2 rounded-xl border bg-card p-4 shadow-lg">
         <div>
-          <h2 className="mb-1 font-semibold">關注我們的新貼文</h2>
-          <p className="text-muted-foreground text-sm">立即訂閱我們的部落格</p>
+          <h2 className="mb-1 font-semibold">{t("關注我們的新貼文")}</h2>
+          <p className="text-muted-foreground text-sm">
+            {t("立即訂閱我們的部落格")}
+          </p>
         </div>
         <a
           href="/rss.xml"
@@ -152,10 +157,18 @@ export const BlogIndex: BlogIndexPage<PressContext> = async () => {
   );
 };
 
-export const BlogPage: BlogLayoutPage<PressContext> = async ({ page }) => {
+export const BlogPage: BlogLayoutPage<PressContext> = async ({
+  page,
+  lang,
+}) => {
   if (page.type !== "blog") throw new Error("not a blog page");
 
+  const locale = toLocale(lang);
   const body = await renderBody(page);
+  const pages = await getBlogPages(lang);
+  const index = pages.findIndex((entry) => entry.url === page.url);
+  const newer = index > 0 ? pages[index - 1] : undefined;
+  const older = index >= 0 ? pages[index + 1] : undefined;
 
   return (
     <main
@@ -192,43 +205,112 @@ export const BlogPage: BlogLayoutPage<PressContext> = async ({ page }) => {
         </p>
       </div>
       <DocsBody>{body}</DocsBody>
-      <PostFooter page={page} />
+      <PostFooter page={page} locale={locale} />
+      <AdjacentPosts locale={locale} newer={newer} older={older} />
     </main>
   );
 };
 
-function SmallAuthor({ author }: { author: AuthorData }) {
+function AdjacentPosts({
+  locale,
+  newer,
+  older,
+}: {
+  locale: Locale;
+  newer?: BlogPost;
+  older?: BlogPost;
+}) {
+  const t = translator(locale);
+
+  if (!newer && !older) return null;
+
+  return (
+    <nav className="mt-6 grid gap-3 sm:grid-cols-2">
+      {[
+        [newer, t("上一篇")] as const,
+        [older, t("下一篇")] as const,
+      ].map(([target, label]) =>
+        target ? (
+          <Link
+            key={label}
+            href={target.url}
+            className="flex flex-col gap-1 rounded-xl border bg-card p-4 text-card-foreground transition-colors last:text-right hover:bg-accent"
+          >
+            <span className="text-muted-foreground text-xs">{label}</span>
+            <span className="font-medium">{target.data.title}</span>
+          </Link>
+        ) : (
+          <span key={label} />
+        ),
+      )}
+    </nav>
+  );
+}
+
+function AuthorLink({
+  author,
+  className,
+  itemProp,
+  children,
+}: {
+  author: AuthorData;
+  className: string;
+  itemProp?: string;
+  children: ReactNode;
+}) {
+  if (author.url == null)
+    return (
+      <span className={className} itemProp={itemProp}>
+        {children}
+      </span>
+    );
+
   return (
     <a
-      className="flex flex-row items-center gap-1.5 text-foreground"
-      href={author.url ?? "#"}
+      className={className}
+      href={author.url}
       rel="nofollow noreferrer"
       target="_blank"
-      itemProp="author"
+      itemProp={itemProp}
     >
-      {author.image_url != null && (
-        <img
-          alt="avatar"
-          src={author.image_url}
-          width={25}
-          height={25}
-          className="h-full rounded-full"
-        />
-      )}
-      {author.name}
+      {children}
     </a>
   );
 }
 
-function PostFooter({ page }: { page: BlogPost }) {
+function SmallAuthor({ author }: { author: AuthorData }) {
+  return (
+    <AuthorLink
+      author={author}
+      className="flex flex-row items-center gap-1.5 text-foreground"
+      itemProp="author"
+    >
+      {author.image_url != null && (
+        <img
+          alt={author.name}
+          src={author.image_url}
+          width={25}
+          height={25}
+          loading="lazy"
+          className="h-full rounded-full"
+        />
+      )}
+      {author.name}
+    </AuthorLink>
+  );
+}
+
+function PostFooter({ page, locale }: { page: BlogPost; locale: Locale }) {
+  const t = translator(locale);
+
   return (
     <div className="mt-20 flex flex-col gap-6">
       <div className="flex flex-row flex-wrap gap-2 text-base">
-        <p>標籤</p>
+        <p>{t("標籤")}</p>
         {page.data.tags.map((tag) => (
           <Link
             key={tag}
-            href={getTagHref(tag)}
+            href={getTagHref(locale, tag)}
             className="rounded-md bg-primary/10 px-1 py-0.5 text-primary text-sm"
           >
             # {tag}
@@ -238,20 +320,19 @@ function PostFooter({ page }: { page: BlogPost }) {
       {page.data.authors
         .flatMap((author) => blogAuthors[author] ?? [])
         .map((author) => (
-          <a
+          <AuthorLink
             key={author.name}
+            author={author}
             className="flex flex-row gap-2 rounded-xl bg-card p-4 text-card-foreground"
-            href={author.url ?? "#"}
-            target="_blank"
-            rel="nofollow noreferrer"
           >
             {author.image_url != null && (
               <img
                 itemProp="image"
-                alt="avatar"
+                alt={author.name}
                 src={author.image_url}
                 width={40}
                 height={40}
+                loading="lazy"
                 className="h-full rounded-full"
               />
             )}
@@ -263,14 +344,16 @@ function PostFooter({ page }: { page: BlogPost }) {
                 {author.title}
               </p>
             </div>
-          </a>
+          </AuthorLink>
         ))}
     </div>
   );
 }
 
-export const BlogTags: BlogTagsPage<PressContext> = async () => {
-  const pages = await getBlogPages();
+export const BlogTags: BlogTagsPage<PressContext> = async ({ lang }) => {
+  const locale = toLocale(lang);
+  const t = translator(locale);
+  const pages = await getBlogPages(lang);
   const tags = new Map<string, number>();
 
   for (const page of pages) {
@@ -285,9 +368,12 @@ export const BlogTags: BlogTagsPage<PressContext> = async () => {
     <main className="my-16 flex w-full flex-col gap-3">
       <Meta title="所有標籤 - Yeecord Blog" path="/blog/tags" />
       <div className="mb-3 flex flex-col items-center gap-3 text-center">
-        <h1 className="mb-4 font-bold text-5xl">所有標籤</h1>
-        <Link href="/zh-tw/blog" className={cn(buttonVariants({ color: "primary" }))}>
-          查看文章
+        <h1 className="mb-4 font-bold text-5xl">{t("所有標籤")}</h1>
+        <Link
+          href={contentPath(locale, "/blog")}
+          className={cn(buttonVariants({ color: "primary" }))}
+        >
+          {t("查看文章")}
         </Link>
       </div>
 
@@ -295,7 +381,7 @@ export const BlogTags: BlogTagsPage<PressContext> = async () => {
         {sorted.map(([tag, count]) => (
           <Link
             key={tag}
-            href={getTagHref(tag)}
+            href={getTagHref(locale, tag)}
             className="flex flex-row justify-between gap-3 rounded-md border bg-card p-2 text-card-foreground"
           >
             <span className="font-medium">{tag}</span>
@@ -307,26 +393,29 @@ export const BlogTags: BlogTagsPage<PressContext> = async () => {
   );
 };
 
-export const BlogTagPage: BlogTagPageType<PressContext> = async ({ tag }) => {
+export const BlogTagPage: BlogTagPageType<PressContext> = async ({
+  tag,
+  lang,
+}) => {
+  const locale = toLocale(lang);
+  const t = translator(locale);
   const decodedTag = decodeURIComponent(tag);
-  const pages = (await getBlogPages()).filter((page) =>
-    page.data.tags.some((t) => t.toLowerCase() === decodedTag),
+  const pages = (await getBlogPages(lang)).filter((page) =>
+    page.data.tags.some((entry) => entry.toLowerCase() === decodedTag),
   );
+  const heading = t("帶有「{tag}」標籤的文章").replace("{tag}", decodedTag);
 
   return (
     <main className="my-16 flex w-full flex-1 flex-col gap-5">
-      <Meta
-        title={`帶有「${decodedTag}」標籤的文章 - Yeecord Blog`}
-        path={`/blog/tags/${tag}`}
-      />
+      <Meta title={`${heading} - Yeecord Blog`} path={`/blog/tags/${tag}`} />
       <div className="mb-5 flex flex-col items-center gap-5 text-center">
-        <h1 className="mb-4 font-bold text-3xl">{`帶有「${decodedTag}」標籤的文章`}</h1>
+        <h1 className="mb-4 font-bold text-3xl">{heading}</h1>
 
         <Link
-          href="/zh-tw/blog/tags"
+          href={contentPath(locale, "/blog/tags")}
           className={cn(buttonVariants({ color: "primary" }))}
         >
-          所有標籤
+          {t("所有標籤")}
         </Link>
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">

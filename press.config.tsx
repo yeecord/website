@@ -42,7 +42,6 @@ const sidebarCommands = new Set([
   "auto-channels",
   "lock-channel",
   "member-notification",
-  "ticket",
   "clear",
   "bot-fight",
   "lol",
@@ -107,6 +106,12 @@ const config = defineConfig({
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="og:site_name" content="Yeecord" />
           <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="Yeecord Blog"
+            href="/rss.xml"
+          />
           <link rel="apple-touch-icon" href="/apple-icon.png" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link

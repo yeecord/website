@@ -14,14 +14,16 @@ export function BlogItem({ page }: { page: BlogPost }) {
       <div className="relative aspect-video h-auto w-full">
         {page.data.image != null ? (
           <img
-            alt="image"
+            alt=""
             src={page.data.image}
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
           <div className="flex h-full flex-1 flex-col bg-green-400">
             <img
-              alt="logo"
+              alt=""
               src="/img/logo.svg"
               className="m-auto h-20 w-20 rounded-full"
               width={128}
@@ -49,6 +51,7 @@ export function BlogItem({ page }: { page: BlogPost }) {
                 alt={info.name}
                 width={30}
                 height={30}
+                loading="lazy"
                 className={cn(
                   "rounded-full border-4 border-background",
                   i !== 0 && "-ml-4",

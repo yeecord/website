@@ -1,6 +1,6 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { BookIcon, LayoutListIcon } from "lucide-react";
-import { contentPath, type Locale } from "~/i18n";
+import { BookIcon, DownloadIcon, LayoutListIcon } from "lucide-react";
+import { contentPath, staticPath, type Locale } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
 const discordIcon = (
@@ -36,6 +36,12 @@ export function baseOptions(locale: Locale) {
         icon: <LayoutListIcon />,
         text: t("部落格"),
         active: "nested-url",
+      },
+      {
+        url: staticPath(locale, "/install"),
+        icon: <DownloadIcon />,
+        text: t("安裝機器人"),
+        active: "url",
       },
       {
         type: "icon",

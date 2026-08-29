@@ -120,6 +120,7 @@ function Chip({
 function Checkbox({ checked }: { checked: boolean }) {
   return (
     <span
+      aria-hidden
       className={cn(
         "flex size-5 shrink-0 items-center justify-center rounded-md border transition-colors",
         checked
@@ -152,7 +153,11 @@ export function InstallPicker({ locale }: { locale: Locale }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="mx-auto flex rounded-lg border bg-fd-muted/50 p-1 font-medium text-sm">
+      <div
+        role="radiogroup"
+        aria-label={t("安裝 YEE 式機器龍")}
+        className="mx-auto flex rounded-lg border bg-fd-muted/50 p-1 font-medium text-sm"
+      >
         {(
           [
             ["guild", <Server key="i" className="size-4" />, t("裝進伺服器")],
@@ -162,6 +167,8 @@ export function InstallPicker({ locale }: { locale: Locale }) {
           <button
             key={value}
             type="button"
+            role="radio"
+            aria-checked={mode === value}
             onClick={() => setMode(value)}
             className={cn(
               "flex items-center gap-2 rounded-md px-5 py-2 transition-colors",
