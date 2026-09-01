@@ -23,13 +23,20 @@ description: 成员加入或退出服务器时，在指定频道发送自定义�
 | 发送频道 | 通知要发到哪个文字频道 |
 | 消息内容 | 最多 2000 字，支持 Markdown |
 
-消息内容里可以放 `{user}`，发送时会换成新成员的提及：
+消息内容里可以放变量：
+
+| 变量 | 发送时换成 |
+| ---- | ---- |
+| `{user}` | 成员名称，纯文本 |
+| `{mention}` | 标注成员，对方会收到通知 |
 
 <DiscordChat>
   <DiscordMessage>
     <p>欢迎 <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">@新成员</span> 加入服务器！先到规则频道看看吧 🎉</p>
   </DiscordMessage>
 </DiscordChat>
+
+保存并启用后，机器龙会用你本人代入变量，回一条只有你看得到的预览，不用等真的有人进来才能确认。
 
 加入和退出的消息分开设置，各跑一次命令就好。
 
