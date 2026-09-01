@@ -48,3 +48,22 @@ description: 自动对付进服务器乱发消息的广告机器人：防御模�
 />
 
 需要额外的 **禁言成员** 权限。
+
+## 记录频道
+
+<SlashCommand
+  name="bot-fight log-channel"
+  options={[{ name: "channel", value: "#防御记录" }]}
+  description="每次封禁或禁言都在这里留一条"
+/>
+
+记录写明是谁、在哪个频道、被做了什么处置。不带频道参数再跑一次就关掉。
+
+## 豁免身份组
+
+<SlashCommand
+  name="bot-fight exempt-roles"
+  description="弹出身份组多选，设置不受处置的身份组"
+/>
+
+有这些身份组的成员不会被陷阱频道封禁，也不会被诈骗过滤禁言。当前的名单会预先勾好，提交后以整份为准，全部取消勾选就清空。
