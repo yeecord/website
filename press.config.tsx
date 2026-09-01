@@ -225,9 +225,6 @@ export default config
           description: page.data.description,
           link: `${domain}${page.url}`,
           pubDate: page.data.date,
-          author: page.data.authors
-            .map((author) => blogAuthors[author]?.name ?? author)
-            .join(", "),
           categories: page.data.tags,
         };
       },
