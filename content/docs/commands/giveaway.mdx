@@ -38,3 +38,7 @@ description: 在伺服器舉辦抽獎活動，可以限制參加資格、設定�
 ## 重新傳送
 
 抽獎訊息被洗版時，用 <Cmd name="giveaway resend" /> 把它重新傳到最下面，`giveaway` 參數有自動補全。
+
+## 重抽得獎者
+
+得獎者棄權或資格不符時，用 <Cmd name="giveaway reroll" /> 從還沒中獎的參加者裡再抽一次，結果會公告在原本的抽獎頻道。`amount_of_winners` 留空只補抽 1 位。只能重抽自己建立、已經結束的抽獎。
