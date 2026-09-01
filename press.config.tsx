@@ -8,6 +8,7 @@ import { createDocsLayoutPage } from "fumapress/layouts/docs";
 import { createLayoutSwitchAuto } from "fumapress/layouts/switch";
 import { blogPlugin } from "fumapress/plugins/blog";
 import { llmsPlugin } from "fumapress/plugins/llms.txt";
+import { rssPlugin } from "fumapress/plugins/rss";
 import { sitemapPlugin } from "fumapress/plugins/sitemap";
 import { takumiPlugin } from "fumapress/plugins/takumi";
 import wasmModule from "takumi-js/wasm";
@@ -28,7 +29,6 @@ import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
 import { BlogOgImage, OgImage, ogFonts } from "./src/og-image";
 import { ogPlugin } from "./src/og-plugin";
-import { rssPlugin } from "./src/rss-plugin";
 import { searchPlugin } from "./src/search-plugin";
 import { localizedPagesPlugin } from "./src/localized-pages-plugin";
 
@@ -106,12 +106,6 @@ const config = defineConfig({
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="og:site_name" content="Yeecord" />
           <link rel="icon" href="/favicon.ico" sizes="any" />
-          <link
-            rel="alternate"
-            type="application/rss+xml"
-            title="Yeecord Blog"
-            href="/rss.xml"
-          />
           <link rel="apple-touch-icon" href="/apple-icon.png" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
@@ -219,7 +213,22 @@ export default config
   .plugins(
     localizedPagesPlugin(),
     ogPlugin(),
-    rssPlugin(),
+    rssPlugin({
+      title: "Yeecord Blog",
+      description: "Welcome to Yeecord Blog",
+      language: defaultLocale,
+      getItem(page) {
+        if (page.type !== "blog" || page.locale !== defaultLocale) return;
+
+        return {
+          title: page.data.title,
+          description: page.data.description,
+          link: `${domain}${page.url}`,
+          pubDate: page.data.date,
+          categories: page.data.tags,
+        };
+      },
+    }),
     blogPlugin({
       layouts: {
         layout: BlogSiteLayout,
