@@ -11,7 +11,13 @@ description: 匿名投票、鎖票、開票前保密、身分組權重，投票�
 
 ## 發起投票
 
-<SlashCommand name="poll create" description="發起投票，會跳出表單讓你填內容" />
+<SlashCommand
+  name="poll create"
+  options={[{ name: "max_votes", value: "3" }]}
+  description="發起一場每人最多投 3 個選項的投票，會跳出表單讓你填內容"
+/>
+
+`max_votes` 選填，是每人最多可投的選項數，預設 1（單選）。設了之後投票卡會標出上限，事後也能用 <Cmd name="poll edit" /> 調整。
 
 送出指令後會跳出表單：
 
@@ -38,7 +44,7 @@ description: 匿名投票、鎖票、開票前保密、身分組權重，投票�
 
 | 指令 | 說明 |
 | ---- | ---- |
-| <Cmd name="poll edit" /> | 修改標題、描述、結束時間、圖片，或補開匿名等設定 |
+| <Cmd name="poll edit" /> | 修改標題、描述、結束時間、圖片、每人可投數，或補開匿名等設定 |
 | <Cmd name="poll end" /> | 結束投票 |
 | <Cmd name="poll resend" /> | 重新傳送投票訊息（原本的訊息被洗版時很好用） |
 | <Cmd name="poll remove-vote" /> | 移除某位成員的票 |
