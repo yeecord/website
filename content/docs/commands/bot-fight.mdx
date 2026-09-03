@@ -48,3 +48,31 @@ description: 自動對付進伺服器亂發訊息的廣告機器人：防禦模�
 />
 
 需要額外的 **禁言成員** 權限。
+
+## 紀錄頻道
+
+<SlashCommand
+  name="bot-fight log-channel"
+  options={[{ name: "channel", value: "#防禦紀錄" }]}
+  description="每次封鎖或禁言都在這裡留一筆"
+/>
+
+紀錄寫明是誰、在哪個頻道、被做了什麼處置。不帶頻道參數再跑一次就關掉。
+
+## 審核日誌
+
+<SlashCommand
+  name="bot-fight audit-log"
+  description="私下列出最近 10 筆封鎖或禁言"
+/>
+
+不用設紀錄頻道也能查。每筆帶相對時間，內容和紀錄頻道那句一樣。
+
+## 豁免身分組
+
+<SlashCommand
+  name="bot-fight exempt-roles"
+  description="跳出身分組多選，設定不受處置的身分組"
+/>
+
+有這些身分組的成員不會被陷阱頻道封鎖，也不會被詐騙過濾禁言。目前的名單會預先勾好，送出後以整份為準，全部取消勾選就清空。
