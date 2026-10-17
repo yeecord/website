@@ -46,8 +46,8 @@ const T = {
       prize: "獲得 Nitro！",
     },
     poll: {
-      steps: ["填表單發起", "成員投票", "圖片即時更新"],
-      caption: "每一票都會重畫結果圖片，不用等結束才知道戰況",
+      steps: ["填表單發起", "成員投票", "票數即時更新"],
+      caption: "每一票都會更新選項旁的長條，不用等結束才知道戰況",
       formTitle: "發起投票",
       titleLabel: "標題",
       question: "晚餐吃什麼？",
@@ -95,8 +95,8 @@ const T = {
       prize: "获得 Nitro！",
     },
     poll: {
-      steps: ["填表单发起", "成员投票", "图片实时更新"],
-      caption: "每一票都会重画结果图片，不用等结束才知道战况",
+      steps: ["填表单发起", "成员投票", "票数实时更新"],
+      caption: "每一票都会更新选项旁的票数条，不用等结束才知道战况",
       formTitle: "发起投票",
       titleLabel: "标题",
       question: "晚餐吃什么？",
@@ -432,17 +432,19 @@ export function PollFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
                       <span className="w-10 shrink-0 text-right text-discord-muted">
                         {value}%
                       </span>
+                      <span className="relative inline-flex shrink-0">
+                        <span className="rounded bg-discord-input px-2 py-0.5 text-xs font-medium text-white">
+                          {t.vote}
+                        </span>
+                        {step === 1 && i === 0 ? (
+                          <ClickHint className="-right-1 -bottom-1" />
+                        ) : null}
+                      </span>
                     </div>
                   );
                 })}
               </div>
             </div>
-            <span className="relative mt-2 inline-flex">
-              <span className="rounded bg-discord-blurple px-3 py-1.5 font-medium text-white">
-                {t.vote}
-              </span>
-              {step === 1 ? <ClickHint className="-right-1 -bottom-1" /> : null}
-            </span>
           </Scene>
         )}
       </AnimatePresence>
