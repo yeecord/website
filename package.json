@@ -30,7 +30,7 @@
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3",
     "takumi-js": "^2.10.0",
-    "waku": "1.0.0-rc.0",
+    "waku": "1.0.0-rc.3",
     "zod": "^4.4.3"
   },
   "devDependencies": {
