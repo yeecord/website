@@ -32,14 +32,62 @@
   --color-destructive-foreground: oklch(0.985 0 0);
 }
 
+/* Yeecord Sans 是調過字重與字距的 Hanken Grotesk（SIL OFL 1.1），寬度對齊 gg sans，
+   只有 Discord 示範元件用到 */
+@font-face {
+  font-family: "Yeecord Sans";
+  src: url("/fonts/yeecord-sans/yeecord-sans-latin-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Yeecord Sans";
+  src: url("/fonts/yeecord-sans/yeecord-sans-latin-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Yeecord Sans";
+  src: url("/fonts/yeecord-sans/yeecord-sans-latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Yeecord Sans";
+  src: url("/fonts/yeecord-sans/yeecord-sans-latin-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* Discord 設定裡的「深色」主題（CSS 叫 darker）的色票，數值量自 Discord 網頁版，
    給文件與首頁的聊天模擬元件用 */
 @theme {
-  /* Discord 網頁版自己的 fallback 鏈。gg sans 是他們的私有字型，裝了
-     Discord 桌面版的人會吃到；中文在 Windows 落到微軟正黑體，Mac 落到蘋方 */
   --font-discord:
-    "gg sans", "Noto Sans", "Microsoft JhengHei", "微軟正黑體", "PingFang TC",
-    "Noto Sans TC", "Helvetica Neue", Arial, sans-serif;
+    "Yeecord Sans", "PingFang TC", "Microsoft JhengHei", "微軟正黑體",
+    "Noto Sans TC", "Noto Sans CJK TC", "Helvetica Neue", Arial, sans-serif;
   --font-discord-mono:
     "gg mono", "Source Code Pro", Consolas, Menlo, Monaco, "Courier New", monospace;
   --color-discord-bg: #1a1a1e;
@@ -83,6 +131,11 @@
   --color-discord-gold: #f0b232;
   --color-discord-fuchsia: #eb459e;
   --ease-discord-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Discord 全站都用 optimizeLegibility，字體平滑與 OpenType 特性維持瀏覽器預設 */
+.font-discord {
+  text-rendering: optimizeLegibility;
 }
 
 /* 訊息裡的按鈕：舊版按鈕的小尺寸，高 32px、8px 圓角，各樣式的一般、hover、按下底色 */
@@ -277,12 +330,11 @@ button.discord-button:active:not([aria-disabled="true"]),
   display: block;
   color: var(--color-discord-subtle);
   font-size: 14px;
-  line-height: 19.25px;
+  line-height: 1.375;
 }
 
 .discord-container .discord-markdown small {
   font-size: 12px;
-  line-height: 16.5px;
 }
 
 .discord-markdown blockquote {
