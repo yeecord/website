@@ -1,6 +1,13 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 import {
   CheckboxMark,
   ChevronIcon,
@@ -13,7 +20,7 @@ import { cn } from "~/utils/cn";
 export interface SelectOption {
   value: string;
   label: string;
-  description?: string;
+  description?: ReactNode;
   /** A string select option's emoji. */
   emoji?: ReactNode;
   /** A user, role or channel option's 24px avatar or icon. */
@@ -61,6 +68,8 @@ export function DiscordSelect({
   );
   const [toggled, setToggled] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+  const menu = useRef<HTMLDivElement>(null);
+  const [anchor, setAnchor] = useState<DOMRect>();
   const picked = value ?? own;
   const expanded = open ?? toggled;
   const interactive = open === undefined && !disabled && !loading;
@@ -78,7 +87,8 @@ export function DiscordSelect({
         event instanceof KeyboardEvent
           ? event.key === "Escape"
           : event.target instanceof Node &&
-            !root.current?.contains(event.target)
+            !root.current?.contains(event.target) &&
+            !menu.current?.contains(event.target)
       ) {
         setToggled(false);
       }
@@ -92,6 +102,26 @@ export function DiscordSelect({
       document.removeEventListener("keydown", close);
     };
   }, [toggled]);
+
+  // The menu is portalled so a container's clipping cannot cut it, and follows the field
+  useLayoutEffect(() => {
+    if (!expanded) {
+      return;
+    }
+
+    function place() {
+      setAnchor(root.current?.getBoundingClientRect());
+    }
+
+    place();
+    window.addEventListener("scroll", place, true);
+    window.addEventListener("resize", place);
+
+    return () => {
+      window.removeEventListener("scroll", place, true);
+      window.removeEventListener("resize", place);
+    };
+  }, [expanded]);
 
   function pick(option: SelectOption) {
     const has = picked.includes(option.value);
@@ -134,7 +164,9 @@ export function DiscordSelect({
         aria-expanded={expanded}
         aria-disabled={disabled || undefined}
         tabIndex={interactive ? 0 : undefined}
-        onClick={interactive ? () => setToggled((current) => !current) : undefined}
+        onClick={
+          interactive ? () => setToggled((current) => !current) : undefined
+        }
         onKeyDown={
           interactive
             ? (event) => {
@@ -183,84 +215,94 @@ export function DiscordSelect({
           )}
         </span>
       </div>
-      {expanded ? (
-        <div
-          role="listbox"
-          aria-multiselectable={multiple || undefined}
-          className="absolute inset-x-0 top-full z-30 mt-2 overflow-y-auto rounded-lg border border-discord-hairline bg-discord-popover [scrollbar-width:thin]"
-          style={{ maxHeight: menuHeight }}
-        >
-          {options.map((option) => {
-            const selected = picked.includes(option.value);
-            const blocked = full && !selected;
+      {expanded && anchor
+        ? createPortal(
+            <div
+              ref={menu}
+              role="listbox"
+              aria-multiselectable={multiple || undefined}
+              className="fixed z-50 overflow-y-auto rounded-lg border border-discord-hairline bg-discord-popover font-discord text-discord-text [scrollbar-width:thin]"
+              style={{
+                top: anchor.bottom + 8,
+                left: anchor.left,
+                width: anchor.width,
+                maxHeight: menuHeight,
+              }}
+            >
+              {options.map((option) => {
+                const selected = picked.includes(option.value);
+                const blocked = full && !selected;
 
-            return (
-              <div
-                key={option.value}
-                role="option"
-                aria-selected={selected}
-                aria-disabled={blocked || undefined}
-                onClick={interactive ? () => pick(option) : undefined}
-                className={cn(
-                  "group flex items-center gap-2",
-                  kind === "string" ? "p-2" : "p-3",
-                  selected && !checkboxes
-                    ? "bg-discord-selected"
-                    : "hover:bg-discord-hover",
-                  interactive && !blocked && "cursor-pointer",
-                  blocked && (kind === "string" ? "opacity-60" : "opacity-50"),
-                )}
-              >
-                {kind === "string" ? (
-                  <>
-                    {anyEmoji ? (
-                      <Emoji size={22}>{option.emoji}</Emoji>
-                    ) : null}
-                    <span className="min-w-0 flex-1 text-sm leading-[18px]">
-                      <span className="block truncate font-bold text-discord-strong">
-                        {option.label}
-                      </span>
-                      {option.description ? (
-                        <span className="mt-1 block truncate text-discord-subtle">
-                          {option.description}
+                return (
+                  <div
+                    key={option.value}
+                    role="option"
+                    aria-selected={selected}
+                    aria-disabled={blocked || undefined}
+                    onClick={interactive ? () => pick(option) : undefined}
+                    className={cn(
+                      "group flex items-center gap-2",
+                      kind === "string" ? "p-2" : "p-3",
+                      selected && !checkboxes
+                        ? "bg-discord-selected"
+                        : "hover:bg-discord-hover",
+                      interactive && !blocked && "cursor-pointer",
+                      blocked &&
+                        (kind === "string" ? "opacity-60" : "opacity-50"),
+                    )}
+                  >
+                    {kind === "string" ? (
+                      <>
+                        {anyEmoji ? (
+                          <Emoji size={22}>{option.emoji}</Emoji>
+                        ) : null}
+                        <span className="min-w-0 flex-1 text-sm leading-[18px]">
+                          <span className="block truncate font-bold text-discord-strong">
+                            {option.label}
+                          </span>
+                          {option.description ? (
+                            <span className="mt-1 block truncate text-discord-subtle">
+                              {option.description}
+                            </span>
+                          ) : null}
                         </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="flex size-6 shrink-0 items-center justify-center">
+                          {option.icon}
+                        </span>
+                        <span
+                          className={cn(
+                            "flex min-w-0 flex-1 items-center gap-1 text-base leading-5",
+                            selected
+                              ? "font-medium text-discord-strong"
+                              : "text-discord-subtle group-hover:text-discord-strong",
+                          )}
+                        >
+                          <span className="truncate">{option.label}</span>
+                          {option.meta ? (
+                            <span className="flex shrink-0 items-center gap-1 font-normal text-discord-muted">
+                              {option.meta}
+                            </span>
+                          ) : null}
+                        </span>
+                      </>
+                    )}
+                    <span className="flex size-5 shrink-0 items-center justify-center">
+                      {checkboxes ? (
+                        <CheckboxMark checked={selected} />
+                      ) : selected ? (
+                        <SelectedIcon className="size-5" />
                       ) : null}
                     </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="flex size-6 shrink-0 items-center justify-center">
-                      {option.icon}
-                    </span>
-                    <span
-                      className={cn(
-                        "flex min-w-0 flex-1 items-center gap-1 text-base leading-5",
-                        selected
-                          ? "font-medium text-discord-strong"
-                          : "text-discord-subtle group-hover:text-discord-strong",
-                      )}
-                    >
-                      <span className="truncate">{option.label}</span>
-                      {option.meta ? (
-                        <span className="flex shrink-0 items-center gap-1 font-normal text-discord-muted">
-                          {option.meta}
-                        </span>
-                      ) : null}
-                    </span>
-                  </>
-                )}
-                <span className="flex size-5 shrink-0 items-center justify-center">
-                  {checkboxes ? (
-                    <CheckboxMark checked={selected} />
-                  ) : selected ? (
-                    <SelectedIcon className="size-5" />
-                  ) : null}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      ) : null}
+                  </div>
+                );
+              })}
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
