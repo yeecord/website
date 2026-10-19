@@ -5,9 +5,11 @@ import Adsense from "~/components/mdx/Adsense";
 import {
   DiscordButton,
   DiscordChat,
+  DiscordContainer,
   DiscordGallery,
   DiscordMessage,
   DiscordRow,
+  DiscordText,
   Mention,
   SlashCommand,
 } from "~/components/mdx/discord";
@@ -40,9 +42,11 @@ export const mdxComponents = {
   CommandPermissionsDemo,
   DiscordButton,
   DiscordChat,
+  DiscordContainer,
   DiscordGallery,
   DiscordMessage,
   DiscordRow,
+  DiscordText,
   FormBuilderDemo,
   FormFlowDemo,
   GiveawayFlowDemo,

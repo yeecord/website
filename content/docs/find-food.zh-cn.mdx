@@ -16,7 +16,17 @@ description: 用一个命令开始觅食，收集食材、料理，再喂 Yee。
 
 <DiscordChat>
   <DiscordMessage>
-    <DiscordGallery items={[{ src: "/img/discord/feast-home.webp", description: "小店卡片：Yee 今天想吃咸、脆，铜板 1,234" }]} />
+    <DiscordContainer>
+      <DiscordText>
+        <h2>大快朵Yee</h2>
+        <p>Yee 吃饱了吗？</p>
+        <p>Yee 今天想吃：咸 · 脆</p>
+        <small>铜板 1,234 · 感情 40% · 觅食袋 80%</small>
+      </DiscordText>
+      <DiscordText>
+        <p>食材够了 · 开煮给它吃</p>
+      </DiscordText>
+    </DiscordContainer>
     <DiscordRow>
       <DiscordButton>带它去找吃的</DiscordButton>
       <DiscordButton variant="primary">开煮</DiscordButton>
