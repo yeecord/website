@@ -365,11 +365,11 @@ function MediaTile({
   className?: string;
 }) {
   const tile = (
-    <div className={cn("group relative overflow-hidden", className)}>
+    <div className={cn("group relative w-full overflow-hidden", className)}>
       <img
         src={item.src}
         alt={item.description ?? ""}
-        className="size-full object-cover"
+        className="absolute inset-0 size-full object-cover"
       />
       {item.description ? <AltBadge /> : null}
     </div>
