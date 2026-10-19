@@ -276,13 +276,12 @@ button.discord-button:active:not([aria-disabled="true"]),
 .discord-markdown small {
   display: block;
   color: var(--color-discord-subtle);
-  font-size: 14px;
-  line-height: 19.25px;
+  font-size: 13px;
+  line-height: 1.375;
 }
 
 .discord-container .discord-markdown small {
   font-size: 12px;
-  line-height: 16.5px;
 }
 
 .discord-markdown blockquote {
