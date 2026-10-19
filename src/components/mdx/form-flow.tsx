@@ -2,11 +2,10 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Hash, Lock } from "lucide-react";
-import { DiscordSurface } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
-import { ClickHint, Scene, StepDots, useLoop } from "~/components/mdx/flow";
+import { ClickHint, FlowFrame, Scene, useLoop } from "~/components/mdx/flow";
 
 const T = {
   "zh-tw": {
@@ -125,93 +124,95 @@ export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const [step, setStep] = useLoop(t.steps.length);
 
   return (
-    <DiscordSurface className="text-sm">
-      <StepDots labels={t.steps} step={step} onPick={setStep} />
-      <div className="min-h-52">
-        <AnimatePresence mode="wait">
-          {step === 0 && (
-            <Scene id={0}>
-              <p className="mb-2 flex items-center gap-1 text-discord-muted">
-                <Hash className="size-4" />
-                {t.channel}
-              </p>
-              <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                <p className="font-semibold text-white">{t.panelTitle}</p>
-                <p className="mt-1 text-discord-muted">{t.panelNote}</p>
+    <FlowFrame
+      labels={t.steps}
+      step={step}
+      onPick={setStep}
+      caption={t.caption}
+      minHeightClass="min-h-52"
+    >
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <Scene id={0}>
+            <p className="mb-2 flex items-center gap-1 text-discord-muted">
+              <Hash className="size-4" />
+              {t.channel}
+            </p>
+            <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
+              <p className="font-semibold text-white">{t.panelTitle}</p>
+              <p className="mt-1 text-discord-muted">{t.panelNote}</p>
+            </div>
+            <span className="relative mt-2 inline-flex">
+              <span className="rounded bg-discord-blurple px-3 py-1.5 font-medium text-white">
+                {t.cta}
+              </span>
+              <ClickHint className="-right-1 -bottom-1" />
+            </span>
+          </Scene>
+        )}
+        {step === 1 && (
+          <Scene id={1}>
+            <div className="mx-auto max-w-sm rounded-lg bg-discord-embed p-4 shadow-lg">
+              <p className="mb-3 font-semibold text-white">{t.modalTitle}</p>
+              <div className="space-y-2.5">
+                <ModalField
+                  label={t.who}
+                  value="BadGuy#1234"
+                  placeholder={localized(T, locale).placeholder}
+                />
+                <ModalField
+                  label={t.what}
+                  value={t.story}
+                  placeholder={localized(T, locale).placeholder}
+                  multiline
+                />
+                <ModalField
+                  label={t.where}
+                  value={t.whereValue}
+                  placeholder={localized(T, locale).placeholder}
+                  select
+                />
               </div>
-              <span className="relative mt-2 inline-flex">
-                <span className="rounded bg-discord-blurple px-3 py-1.5 font-medium text-white">
-                  {t.cta}
+              <span className="relative mt-3 inline-flex">
+                <span className="rounded bg-discord-blurple px-4 py-1.5 font-medium text-white">
+                  {t.submit}
                 </span>
                 <ClickHint className="-right-1 -bottom-1" />
               </span>
-            </Scene>
-          )}
-          {step === 1 && (
-            <Scene id={1}>
-              <div className="mx-auto max-w-sm rounded-lg bg-discord-embed p-4 shadow-lg">
-                <p className="mb-3 font-semibold text-white">{t.modalTitle}</p>
-                <div className="space-y-2.5">
-                  <ModalField
-                    label={t.who}
-                    value="BadGuy#1234"
-                    placeholder={localized(T, locale).placeholder}
-                  />
-                  <ModalField
-                    label={t.what}
-                    value={t.story}
-                    placeholder={localized(T, locale).placeholder}
-                    multiline
-                  />
-                  <ModalField
-                    label={t.where}
-                    value={t.whereValue}
-                    placeholder={localized(T, locale).placeholder}
-                    select
-                  />
-                </div>
-                <span className="relative mt-3 inline-flex">
-                  <span className="rounded bg-discord-blurple px-4 py-1.5 font-medium text-white">
-                    {t.submit}
-                  </span>
-                  <ClickHint className="-right-1 -bottom-1" />
-                </span>
-              </div>
-            </Scene>
-          )}
-          {step === 2 && (
-            <Scene id={2}>
-              <p className="mb-2 flex items-center gap-1 text-discord-muted">
-                <Lock className="size-4" />
-                {t.thread}
-                <span className="ml-1 rounded bg-discord-input px-1.5 py-px text-[10px]">
-                  {t.threadTag}
-                </span>
-              </p>
-              <p className="mb-2">
-                <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                  {t.member}
-                </span>{" "}
-                <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                  {t.staff}
-                </span>
-              </p>
-              <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                <p className="font-semibold text-white">{t.ticketTitle}</p>
-                <p className="mt-1.5 font-semibold text-white">{t.who}</p>
-                <p className="text-discord-muted">BadGuy#1234</p>
-                <p className="mt-1.5 font-semibold text-white">{t.what}</p>
-                <p className="text-discord-muted">{t.story}</p>
-              </div>
-              <span className="mt-2 inline-flex rounded bg-discord-danger px-3 py-1.5 font-medium text-white">
-                {t.close}
+            </div>
+          </Scene>
+        )}
+        {step === 2 && (
+          <Scene id={2}>
+            <p className="mb-2 flex items-center gap-1 text-discord-muted">
+              <Lock className="size-4" />
+              {t.thread}
+              <span className="ml-1 rounded bg-discord-input px-1.5 py-px text-[10px]">
+                {t.threadTag}
               </span>
-            </Scene>
-          )}
-        </AnimatePresence>
-      </div>
-      <p className="mt-3 text-xs text-discord-muted">{t.caption}</p>
-    </DiscordSurface>
+            </p>
+            <p className="mb-2">
+              <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
+                {t.member}
+              </span>{" "}
+              <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
+                {t.staff}
+              </span>
+            </p>
+            <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
+              <p className="font-semibold text-white">{t.ticketTitle}</p>
+              <p className="mt-1.5 font-semibold text-white">{t.who}</p>
+              <p className="text-discord-muted">BadGuy#1234</p>
+              <p className="mt-1.5 font-semibold text-white">{t.what}</p>
+              <p className="text-discord-muted">{t.story}</p>
+            </div>
+            <span className="mt-2 inline-flex rounded bg-discord-danger px-3 py-1.5 font-medium text-white">
+              {t.close}
+            </span>
+          </Scene>
+        )}
+      </AnimatePresence>
+    </FlowFrame>
   );
 }
 
@@ -221,8 +222,13 @@ export function FormBuilderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const questions = step === 0 ? [t.empty] : t.questions;
 
   return (
-    <DiscordSurface className="text-sm">
-      <StepDots labels={t.steps} step={step} onPick={setStep} />
+    <FlowFrame
+      labels={t.steps}
+      step={step}
+      onPick={setStep}
+      caption={t.caption}
+      minHeightClass=""
+    >
       <div className="rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
         <p className="font-semibold text-white">{t.title}</p>
         <motion.p
@@ -277,7 +283,6 @@ export function FormBuilderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
           ))}
         </div>
       </div>
-      <p className="mt-3 text-xs text-discord-muted">{t.caption}</p>
-    </DiscordSurface>
+    </FlowFrame>
   );
 }

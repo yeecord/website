@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ChevronRight,
   Gift,
@@ -133,21 +133,6 @@ function script(t: ReturnType<typeof tour>): Frame[] {
   ];
 }
 
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(query.matches);
-
-    sync();
-    query.addEventListener("change", sync);
-
-    return () => query.removeEventListener("change", sync);
-  }, []);
-
-  return reduced;
-}
 
 function Avatar({ className }: { className?: string }) {
   return (
@@ -165,7 +150,7 @@ function Avatar({ className }: { className?: string }) {
 export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = tour(locale);
   const frames = script(t);
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion() ?? false;
   const [step, setStep] = useState(0);
 
   useEffect(() => {
