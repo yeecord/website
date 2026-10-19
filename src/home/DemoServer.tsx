@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { HashIcon, PlusCircleIcon, Volume2Icon } from "lucide-react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 import {
+  DiscordButton,
   DiscordEmbed,
   DiscordMessage,
   SlashCommand,
@@ -183,33 +184,6 @@ function ShopScene() {
   );
 }
 
-function ChatButton({
-  variant = "secondary",
-  selected,
-  onClick,
-  children,
-}: {
-  variant?: "primary" | "secondary" | "success";
-  selected?: boolean;
-  onClick?: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={clsx(
-        "inline-flex cursor-pointer items-center gap-1 rounded px-3 py-1.5 font-medium text-sm text-white transition-all active:translate-y-px",
-        variant === "primary" && "bg-discord-blurple hover:brightness-110",
-        variant === "secondary" && "bg-discord-secondary hover:brightness-110",
-        variant === "success" && "bg-discord-success hover:brightness-110",
-        selected && "ring-2 ring-white/70",
-      )}
-    >
-      {children}
-    </button>
-  );
-}
 
 const roles: Phrase[] = ["🎮 遊戲仔", "🌙 夜貓子", "🎨 創作者"];
 
@@ -218,16 +192,15 @@ function RolePicker() {
   const [picked, setPicked] = useState<Phrase>();
 
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className="flex flex-wrap gap-2">
       {roles.map((role) => (
-        <ChatButton
+        <DiscordButton
           key={role}
           variant={picked === role ? "primary" : "secondary"}
-          selected={picked === role}
           onClick={() => setPicked(role)}
         >
           {t(role)}
-        </ChatButton>
+        </DiscordButton>
       ))}
       <AnimatePresence>
         {picked && (
@@ -260,11 +233,11 @@ function Lottery() {
   }
 
   return (
-    <div className="relative flex flex-wrap gap-1.5">
-      <ChatButton variant="primary" onClick={join}>
+    <div className="relative flex flex-wrap gap-2">
+      <DiscordButton variant="primary" onClick={join}>
         {joined ? t("已參加 ✅") : t("參加抽獎")}
-      </ChatButton>
-      <ChatButton>
+      </DiscordButton>
+      <DiscordButton>
         {t("目前")}{" "}
         <motion.span
           key={count}
@@ -275,7 +248,7 @@ function Lottery() {
           {count}
         </motion.span>{" "}
         {t("人")}
-      </ChatButton>
+      </DiscordButton>
       <AnimatePresence>
         {burst > 0 && (
           <motion.span
@@ -298,16 +271,16 @@ function FindFoodButtons() {
   const [status, setStatus] = useState<Phrase>();
 
   return (
-    <div className="flex flex-wrap gap-1.5">
-      <ChatButton variant="primary" onClick={() => setStatus("Yee 揹起袋子出門了，明天回來收成！")}>
+    <div className="flex flex-wrap gap-2">
+      <DiscordButton variant="primary" onClick={() => setStatus("Yee 揹起袋子出門了，明天回來收成！")}>
         {t("帶牠去找吃的")}
-      </ChatButton>
-      <ChatButton variant="success" onClick={() => setStatus("下鍋！煮出了「河鮮味噌鍋」，Yee 眼睛都亮了。")}>
+      </DiscordButton>
+      <DiscordButton variant="success" onClick={() => setStatus("下鍋！煮出了「河鮮味噌鍋」，Yee 眼睛都亮了。")}>
         {t("開煮")}
-      </ChatButton>
-      <ChatButton onClick={() => setStatus("Yee 吃得很開心，感情 +1 ❤️")}>
+      </DiscordButton>
+      <DiscordButton onClick={() => setStatus("Yee 吃得很開心，感情 +1 ❤️")}>
         {t("餵牠")}
-      </ChatButton>
+      </DiscordButton>
       <AnimatePresence mode="wait">
         {status && (
           <motion.p
