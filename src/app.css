@@ -273,16 +273,16 @@ button.discord-button:active:not([aria-disabled="true"]),
   text-decoration: underline;
 }
 
+/* -# 量自官方截圖是 13px（規格寫 14px，但同一行文字的寬度只對得上 13px） */
 .discord-markdown small {
   display: block;
   color: var(--color-discord-subtle);
-  font-size: 14px;
-  line-height: 19.25px;
+  font-size: 13px;
+  line-height: 1.375;
 }
 
 .discord-container .discord-markdown small {
   font-size: 12px;
-  line-height: 16.5px;
 }
 
 .discord-markdown blockquote {

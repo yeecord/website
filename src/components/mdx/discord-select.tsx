@@ -143,7 +143,7 @@ export function DiscordSelect({
   }
 
   const optionHeight = (option: SelectOption) =>
-    kind === "string" ? (option.description ? 56 : 38) : 48;
+    kind === "string" ? (option.description ? 56 : 38) : 44;
   const menuHeight =
     options
       .slice(0, VISIBLE_OPTIONS)
@@ -178,7 +178,7 @@ export function DiscordSelect({
             : undefined
         }
         className={cn(
-          "flex min-h-10 w-full items-center gap-2 rounded-lg border bg-discord-field py-2 pr-2 pl-3 outline-none",
+          "flex min-h-11 w-full items-center gap-2 rounded-lg border bg-discord-field py-2 pr-2 pl-3 outline-none",
           expanded
             ? "border-discord-blurple shadow-[inset_0_0_0_1px_var(--color-discord-blurple)]"
             : "border-discord-border",
@@ -242,7 +242,7 @@ export function DiscordSelect({
                     onClick={interactive ? () => pick(option) : undefined}
                     className={cn(
                       "group flex items-center gap-2",
-                      kind === "string" ? "p-2" : "p-3",
+                      kind === "string" ? "p-2" : "px-3 py-2.5",
                       selected && !checkboxes
                         ? "bg-discord-selected"
                         : "hover:bg-discord-hover",
