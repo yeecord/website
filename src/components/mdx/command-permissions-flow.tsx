@@ -77,13 +77,14 @@ function OverrideRow({
 
 export function CommandPermissionsDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale);
-  const [step, setStep] = useLoop(t.steps.length);
+  const [step, setStep, pressing] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
       minHeightClass="min-h-52"
     >

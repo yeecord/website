@@ -10,6 +10,7 @@ import {
   DiscordMessage,
   SlashCommand,
 } from "~/components/mdx/discord";
+import { EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import { defaultLocale, type Locale } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
 
@@ -57,7 +58,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 24 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.4, ease: EASE_OUT }}
           className="grid overflow-hidden rounded-xl border bg-discord-bg font-discord shadow-xl md:grid-cols-[15rem_1fr]"
         >
           <Sidebar active={active} seen={seen} onOpen={open} />
@@ -93,20 +94,11 @@ export function DemoServer({ locale }: { locale: Locale }) {
   );
 }
 
-const msgIn = {
-  initial: { opacity: 0, y: 10 },
-  animate: { opacity: 1, y: 0 },
-};
-
 function Msg({ delay, children }: { delay: number; children: ReactNode }) {
   return (
-    <motion.div
-      {...msgIn}
-      transition={{ duration: 0.3, delay }}
-      className="flex flex-col gap-4"
-    >
+    <MessageEnter delay={delay} className="flex flex-col gap-4">
       {children}
-    </motion.div>
+    </MessageEnter>
   );
 }
 
@@ -222,14 +214,12 @@ function Lottery() {
   const t = useT();
   const [joined, setJoined] = useState(false);
   const [count, setCount] = useState(42);
-  const [burst, setBurst] = useState(0);
 
   function join() {
     if (joined) return;
 
     setJoined(true);
     setCount((c) => c + 1);
-    setBurst(Date.now());
   }
 
   return (
@@ -238,30 +228,8 @@ function Lottery() {
         {joined ? t("已參加 ✅") : t("參加抽獎")}
       </DiscordButton>
       <DiscordButton>
-        {t("目前")}{" "}
-        <motion.span
-          key={count}
-          initial={{ scale: 1.5 }}
-          animate={{ scale: 1 }}
-          className="inline-block font-semibold"
-        >
-          {count}
-        </motion.span>{" "}
-        {t("人")}
+        {t("目前")} <span className="font-semibold">{count}</span> {t("人")}
       </DiscordButton>
-      <AnimatePresence>
-        {burst > 0 && (
-          <motion.span
-            key={burst}
-            initial={{ opacity: 1, y: 0, scale: 0.6 }}
-            animate={{ opacity: 0, y: -34, scale: 1.4 }}
-            transition={{ duration: 0.8 }}
-            className="pointer-events-none absolute left-6 select-none"
-          >
-            🎉
-          </motion.span>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

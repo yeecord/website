@@ -121,13 +121,14 @@ function ModalField({
 
 export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).flow;
-  const [step, setStep] = useLoop(t.steps.length);
+  const [step, setStep, pressing] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
       minHeightClass="min-h-52"
     >
@@ -218,7 +219,7 @@ export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
 
 export function FormBuilderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).builder;
-  const [step, setStep] = useLoop(t.steps.length);
+  const [step, setStep, pressing] = useLoop(t.steps.length);
   const questions = step === 0 ? [t.empty] : t.questions;
 
   return (
@@ -226,6 +227,7 @@ export function FormBuilderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
       minHeightClass=""
     >

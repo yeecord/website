@@ -152,13 +152,14 @@ function VoiceChannel({
 
 export function AutoChannelsDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).autoChannels;
-  const [step, setStep] = useLoop(t.steps.length);
+  const [step, setStep, pressing] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
     >
       <div className="space-y-2">
@@ -198,13 +199,14 @@ export function AutoChannelsDemo({ locale = "zh-tw" }: { locale?: Locale }) {
 
 export function LockChannelDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).lockChannel;
-  const [step, setStep] = useLoop(t.steps.length);
+  const [step, setStep, pressing] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
     >
       <AnimatePresence mode="wait">
@@ -260,13 +262,14 @@ export function LockChannelDemo({ locale = "zh-tw" }: { locale?: Locale }) {
 
 export function RoleMenuDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).roleMenu;
-  const [step, setStep] = useLoop(t.steps.length, 2600);
+  const [step, setStep, pressing] = useLoop(t.steps.length, 2600);
 
   return (
     <FlowFrame
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
       minHeightClass="min-h-32"
     >
@@ -308,13 +311,14 @@ export function RoleMenuDemo({ locale = "zh-tw" }: { locale?: Locale }) {
 
 export function GiveawayFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).giveaway;
-  const [step, setStep] = useLoop(t.steps.length);
+  const [step, setStep, pressing] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
     >
       <div className="max-w-md rounded border-l-4 border-discord-fuchsia bg-discord-embed p-3">
@@ -370,13 +374,14 @@ const pollValues = [
 
 export function PollFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).poll;
-  const [step, setStep] = useLoop(t.steps.length);
+  const [step, setStep, pressing] = useLoop(t.steps.length);
 
   return (
     <FlowFrame
       labels={t.steps}
       step={step}
       onPick={setStep}
+      pressing={pressing}
       caption={t.caption}
     >
       <AnimatePresence mode="wait">

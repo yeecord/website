@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DiscordSurface } from "~/components/mdx/discord";
+import { EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
@@ -119,17 +120,32 @@ interface Frame {
   suggestions?: Suggestion[];
   modal?: boolean;
   sent?: boolean;
+  /// Index into the captions, which several typing frames share.
+  caption: number;
   hold: number;
 }
 
+/** Discord filters the list on every keystroke, so the query is typed a letter at a time. */
+const KEYSTROKE = 120;
+
 function script(t: ReturnType<typeof tour>): Frame[] {
+  const typing = ["/p", "/po", "/pol", "/poll"].map(
+    (typed, index, all): Frame => ({
+      typed,
+      query: typed,
+      suggestions: t.filtered,
+      caption: 2,
+      hold: index === all.length - 1 ? 2400 : KEYSTROKE,
+    }),
+  );
+
   return [
-    { typed: "", hold: 1600 },
-    { typed: "/", query: "/", suggestions: t.all, hold: 2600 },
-    { typed: "/poll", query: "/poll", suggestions: t.filtered, hold: 2600 },
-    { typed: "/poll create", picked: true, hold: 1800 },
-    { typed: "", modal: true, hold: 4000 },
-    { typed: "", sent: true, hold: 3600 },
+    { typed: "", caption: 0, hold: 1600 },
+    { typed: "/", query: "/", suggestions: t.all, caption: 1, hold: 2400 },
+    ...typing,
+    { typed: "/poll create", picked: true, caption: 3, hold: 1800 },
+    { typed: "", modal: true, caption: 4, hold: 4000 },
+    { typed: "", sent: true, caption: 5, hold: 3600 },
   ];
 }
 
@@ -190,16 +206,8 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
             </div>
           </div>
 
-          <AnimatePresence>
-            {frame.sent ? (
-              <motion.div
-                key="reply"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.28, ease: "easeOut" }}
-                className="flex gap-3"
-              >
+          {frame.sent ? (
+              <MessageEnter className="flex gap-3">
                 <Avatar className="size-9" />
                 <div className="min-w-0 flex-1 text-sm text-discord-text">
                   <div className="flex items-center gap-1.5">
@@ -227,18 +235,13 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </MessageEnter>
             ) : null}
-          </AnimatePresence>
         </div>
 
         <div className="relative px-4 pb-4">
           {frame.suggestions ? (
-              <motion.div
-                key="matching"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.14, ease: "easeOut" }}
+              <div
                 className="absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg bg-discord-embed shadow-xl"
               >
                 <div className="px-3 py-2 text-xs font-semibold tracking-wide text-discord-muted">
@@ -266,15 +269,11 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
                     </span>
                   </div>
                 ))}
-              </motion.div>
+              </div>
             ) : null}
 
             {frame.picked ? (
-              <motion.div
-                key="picked"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.14, ease: "easeOut" }}
+              <div
                 className="absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg bg-discord-embed shadow-xl"
               >
                 <div className="flex items-center gap-2 px-3 py-2">
@@ -296,7 +295,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
                     {t.pollTitle}
                   </span>
                 </div>
-              </motion.div>
+              </div>
             ) : null}
 
           <div className="flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5">
@@ -353,9 +352,21 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
             </div>
           </div>
         </div>
-        {frame.modal ? (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 px-4">
-              <div className="w-full max-w-sm overflow-hidden rounded-md bg-discord-bg shadow-2xl">
+        <AnimatePresence>
+          {frame.modal ? (
+            <motion.div
+              key="modal"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 0.2, ease: "easeOut" } }}
+              exit={{ opacity: 0, transition: { duration: 0.12, ease: "easeOut" } }}
+              className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 px-4"
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: reduced ? 1 : 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2, ease: EASE_OUT }}
+                className="w-full max-w-sm overflow-hidden rounded-md bg-discord-bg shadow-2xl"
+              >
                 <div className="flex items-center justify-between px-4 pt-4 pb-3">
                   <span className="font-semibold text-white">
                     {t.modalTitle}
@@ -385,9 +396,10 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
                     {t.submit}
                   </span>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ) : null}
+        </AnimatePresence>
       </DiscordSurface>
 
       <div className="mt-3 flex items-center gap-3">
@@ -397,7 +409,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
               key={caption}
               className={cn(
                 "size-1.5 rounded-full transition-colors",
-                index === step ? "bg-discord-blurple" : "bg-discord-secondary",
+                index === frame.caption ? "bg-discord-blurple" : "bg-discord-secondary",
               )}
             />
           ))}
@@ -407,7 +419,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
           className="m-0 flex items-center gap-1 text-sm text-fd-muted-foreground"
         >
           <ChevronRight className="size-4 shrink-0" />
-          {t.captions[step]}
+          {t.captions[frame.caption]}
         </p>
       </div>
     </div>
