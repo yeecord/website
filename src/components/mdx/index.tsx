@@ -6,12 +6,20 @@ import {
   DiscordButton,
   DiscordChat,
   DiscordContainer,
+  DiscordFile,
   DiscordGallery,
+  DiscordInteractionStatus,
   DiscordMessage,
   DiscordRow,
+  DiscordSection,
+  DiscordSelect,
+  DiscordSeparator,
   DiscordText,
+  DiscordThumbnail,
   Mention,
   SlashCommand,
+  Spoiler,
+  Timestamp,
 } from "~/components/mdx/discord";
 import { CommandPermissionsDemo } from "~/components/mdx/command-permissions-flow";
 import {
@@ -32,6 +40,7 @@ import { SlashCommandTour } from "~/components/mdx/slash-tour";
 
 export * from "./Adsense";
 export * from "./discord";
+export * from "./discord-modal";
 export * from "./LinkButton";
 
 export const mdxComponents = {
@@ -43,10 +52,16 @@ export const mdxComponents = {
   DiscordButton,
   DiscordChat,
   DiscordContainer,
+  DiscordFile,
   DiscordGallery,
+  DiscordInteractionStatus,
   DiscordMessage,
   DiscordRow,
+  DiscordSection,
+  DiscordSelect,
+  DiscordSeparator,
   DiscordText,
+  DiscordThumbnail,
   FormBuilderDemo,
   FormFlowDemo,
   GiveawayFlowDemo,
@@ -59,6 +74,8 @@ export const mdxComponents = {
   RoleOrderDemo,
   SlashCommand,
   SlashCommandTour,
+  Spoiler,
+  Timestamp,
 };
 
 // the demos carry their own copy, so bind the page locale where they are rendered

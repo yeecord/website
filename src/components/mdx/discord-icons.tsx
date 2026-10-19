@@ -126,14 +126,6 @@ export function UploadIcon(props: IconProps) {
   );
 }
 
-export function TrashIcon(props: IconProps) {
-  return (
-    <Icon {...props}>
-      <path d="M3 6h18M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14" />
-    </Icon>
-  );
-}
-
 /** A solid disc with an exclamation mark cut out, for a failed interaction. */
 export function AlertCircleIcon(props: IconProps) {
   return (
@@ -167,16 +159,6 @@ export function ShopIcon(props: IconProps) {
       <path d="M4 8h16l-1 12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 8Z" />
       <path d="M8.5 11V6.5a3.5 3.5 0 0 1 7 0V11" />
     </Icon>
-  );
-}
-
-/** A role option's member count mark: a head over shoulders. */
-export function PersonIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
-      <circle cx="12" cy="7.5" r="4.5" />
-      <path d="M3 21a9 7 0 0 1 18 0Z" />
-    </svg>
   );
 }
 

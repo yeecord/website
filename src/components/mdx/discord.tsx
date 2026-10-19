@@ -137,7 +137,7 @@ export interface EphemeralNote {
 }
 
 /// The APP tag after a bot's name, in Discord's chat-scaled size.
-export function AppTag() {
+function AppTag() {
   return (
     <span className="inline-flex h-[15px] shrink-0 items-center self-center rounded bg-discord-blurple px-[4.4px] text-[12.8px] leading-[15px] font-semibold text-white uppercase">
       App
