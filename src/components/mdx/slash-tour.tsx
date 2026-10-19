@@ -15,9 +15,12 @@ import {
   BOT_NAME,
   BotAvatar,
   DiscordMessage,
-  DiscordModal,
   DiscordSurface,
 } from "~/components/mdx/discord";
+import {
+  DiscordModal,
+  DiscordTextFields,
+} from "~/components/mdx/discord-modal";
 import { chatCopy, EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import { PollCard } from "~/components/mdx/poll-card";
 import type { Locale } from "~/i18n";
@@ -58,11 +61,13 @@ const T = {
     modal: {
       title: "建立投票",
       fields: [
-        { label: "投票標題", value: "晚餐吃什麼" },
+        { label: "投票標題", value: "晚餐吃什麼", required: true },
         {
           label: "選項",
           description: "一行一個選項（2-18 個）",
           value: "滷肉飯\n牛肉麵",
+          paragraph: true,
+          required: true,
         },
         {
           label: "多久後結束（選填）",
@@ -115,11 +120,13 @@ const T = {
     modal: {
       title: "创建投票",
       fields: [
-        { label: "投票标题", value: "晚餐吃什么" },
+        { label: "投票标题", value: "晚餐吃什么", required: true },
         {
           label: "选项",
           description: "一行一个选项（2-18 个）",
           value: "卤肉饭\n牛肉面",
+          paragraph: true,
+          required: true,
         },
         {
           label: "多久后结束（选填）",
@@ -222,7 +229,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
         topic={t.topic}
         className="relative p-0 text-sm"
       >
-        <div className="flex min-h-[30rem] flex-col justify-end gap-4 px-4 py-4">
+        <div className="flex min-h-[40rem] flex-col justify-end gap-4 px-4 py-4">
           <DiscordMessage author={t.asker} color="#4e5058" time={chat.time}>
             <p>{t.question}</p>
           </DiscordMessage>
@@ -359,9 +366,16 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
                 initial={{ opacity: 0, scale: reduced ? 1 : 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.2, ease: EASE_OUT }}
-                className="w-full max-w-md"
+                className="w-full max-w-[480px]"
               >
-                <DiscordModal {...t.modal} />
+                <DiscordModal
+                  title={t.modal.title}
+                  warning={chat.modalWarning}
+                  cancel={t.modal.cancel}
+                  submit={t.modal.submit}
+                >
+                  <DiscordTextFields fields={t.modal.fields} />
+                </DiscordModal>
               </motion.div>
             </motion.div>
           ) : null}

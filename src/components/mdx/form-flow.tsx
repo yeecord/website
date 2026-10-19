@@ -6,7 +6,6 @@ import {
   DiscordButton,
   DiscordContainer,
   DiscordMessage,
-  DiscordModal,
   DiscordRow,
   DiscordSeparator,
   DiscordStatus,
@@ -14,6 +13,10 @@ import {
   Interpolate,
   Mention,
 } from "~/components/mdx/discord";
+import {
+  DiscordModal,
+  DiscordTextFields,
+} from "~/components/mdx/discord-modal";
 import {
   ClickHint,
   chatCopy,
@@ -164,17 +167,22 @@ export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
           <Scene id={1}>
             <DiscordModal
               title={t.modalTitle}
-              fields={t.answers.map(({ question, answer }, index) => ({
-                label: question,
-                value: answer,
-                multiline: index > 0,
-              }))}
+              warning={chat.modalWarning}
               cancel={t.cancel}
               submit={t.submit}
               className="mx-auto"
               submitPressed={pressing}
               submitHint={<ClickHint className="-right-1 -bottom-1" />}
-            />
+            >
+              <DiscordTextFields
+                fields={t.answers.map(({ question, answer }, index) => ({
+                  label: question,
+                  value: answer,
+                  paragraph: index > 0,
+                  required: true,
+                }))}
+              />
+            </DiscordModal>
           </Scene>
         )}
         {step === 2 && (

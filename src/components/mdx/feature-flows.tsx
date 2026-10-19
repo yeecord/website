@@ -7,7 +7,6 @@ import {
   DiscordButton,
   DiscordContainer,
   DiscordMessage,
-  DiscordModal,
   DiscordRow,
   DiscordStatus,
   DiscordText,
@@ -16,6 +15,10 @@ import {
   Spoiler,
   Timestamp,
 } from "~/components/mdx/discord";
+import {
+  DiscordModal,
+  DiscordTextFields,
+} from "~/components/mdx/discord-modal";
 import {
   ClickHint,
   chatCopy,
@@ -102,11 +105,13 @@ const T = {
       modal: {
         title: "建立投票",
         fields: [
-          { label: "投票標題", value: "晚餐吃什麼？" },
+          { label: "投票標題", value: "晚餐吃什麼？", required: true },
           {
             label: "選項",
             description: "一行一個選項（2-18 個）",
             value: "火鍋\n燒肉\n拉麵",
+            paragraph: true,
+            required: true,
           },
           {
             label: "多久後結束（選填）",
@@ -195,11 +200,13 @@ const T = {
       modal: {
         title: "创建投票",
         fields: [
-          { label: "投票标题", value: "晚餐吃什么？" },
+          { label: "投票标题", value: "晚餐吃什么？", required: true },
           {
             label: "选项",
             description: "一行一个选项（2-18 个）",
             value: "火锅\n烧肉\n拉面",
+            paragraph: true,
+            required: true,
           },
           {
             label: "多久后结束（选填）",
@@ -613,17 +620,22 @@ export function PollFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
       onPick={setStep}
       pressing={pressing}
       caption={t.caption}
-      minHeightClass="min-h-[34rem]"
+      minHeightClass="min-h-[40rem]"
     >
       <AnimatePresence mode="wait">
         {step === 0 && (
           <Scene id={0}>
             <DiscordModal
-              {...t.modal}
+              title={t.modal.title}
+              warning={chat.modalWarning}
+              cancel={t.modal.cancel}
+              submit={t.modal.submit}
               className="mx-auto"
               submitPressed={pressing}
               submitHint={<ClickHint className="-right-1 -bottom-1" />}
-            />
+            >
+              <DiscordTextFields fields={t.modal.fields} />
+            </DiscordModal>
           </Scene>
         )}
         {step !== 0 && (

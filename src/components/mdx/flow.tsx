@@ -10,9 +10,11 @@ import {
   useState,
 } from "react";
 import {
+  BOT_NAME,
   DiscordButton,
   type DiscordButtonVariant,
   DiscordSurface,
+  Interpolate,
 } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
@@ -25,21 +27,30 @@ const CHAT = {
     time: "今天 21:30",
     used: "使用了",
     ephemeral: { note: "只有你看得到這則訊息", dismiss: "關閉訊息" },
+    modalWarning: "這份表單會送給 {app}，請不要分享密碼或其他敏感資訊。",
   },
   "zh-cn": {
     time: "今天 21:30",
     used: "使用了",
     ephemeral: { note: "只有你能看到这条消息", dismiss: "关闭消息" },
+    modalWarning: "这份表单会提交给 {app}，请不要分享密码或其他敏感信息。",
   },
 } satisfies Partial<Record<Locale, unknown>>;
 
-/// The chat chrome every demo message shares: its time, the reply line and the ephemeral note.
+/// The chat chrome every demo message shares: its time, the reply line, the ephemeral note
+/// and the modal's submit warning.
 export function chatCopy(locale: Locale) {
   const chat = localized(CHAT, locale);
 
   return {
     ...chat,
     command: (user: string, name: string) => ({ user, name, used: chat.used }),
+    modalWarning: (
+      <Interpolate
+        text={chat.modalWarning}
+        values={{ app: <strong>{BOT_NAME}</strong> }}
+      />
+    ),
   };
 }
 
