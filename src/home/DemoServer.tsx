@@ -154,7 +154,7 @@ function WelcomeScene() {
   return (
     <>
       <Msg delay={0}>
-        <DiscordMessage author={t(BOT_NAME)} time={chrome.time}>
+        <DiscordMessage author={t(BOT_NAME)} bot time={chrome.time}>
           <DiscordContainer accent>
             <DiscordText>
               <p>{t("歡迎來到 Yeecord 示範伺服器！")}</p>
@@ -180,7 +180,7 @@ function WelcomeScene() {
         </p>
       </Msg>
       <Msg delay={0.4}>
-        <DiscordMessage author={t(BOT_NAME)} time={chrome.time}>
+        <DiscordMessage author={t(BOT_NAME)} bot time={chrome.time}>
           <DiscordText>
             <p>
               <Interpolate
@@ -195,6 +195,7 @@ function WelcomeScene() {
         <MessageEnter key={`${reply.role}-${reply.added}`}>
           <DiscordMessage
             author={t(BOT_NAME)}
+            bot
             time={chrome.time}
             ephemeral={chrome.ephemeral}
           >
@@ -277,6 +278,7 @@ function LotteryScene() {
       <Msg delay={0}>
         <DiscordMessage
           author={t(BOT_NAME)}
+          bot
           time={chrome.time}
           command={chrome.command("阿龍", "giveaway create")}
         >
@@ -317,6 +319,7 @@ function LotteryScene() {
         <MessageEnter key={reply}>
           <DiscordMessage
             author={t(BOT_NAME)}
+            bot
             time={chrome.time}
             ephemeral={chrome.ephemeral}
           >
@@ -357,6 +360,7 @@ function ShopScene() {
     <Msg delay={0}>
       <DiscordMessage
         author={t(BOT_NAME)}
+        bot
         time={chrome.time}
         command={chrome.command("阿龍的粉絲", "find-food")}
       >
