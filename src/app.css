@@ -329,7 +329,7 @@ button.discord-button:active:not([aria-disabled="true"]),
 .discord-markdown small {
   display: block;
   color: var(--color-discord-subtle);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.375;
 }
 

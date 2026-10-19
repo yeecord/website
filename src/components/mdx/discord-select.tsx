@@ -178,7 +178,7 @@ export function DiscordSelect({
             : undefined
         }
         className={cn(
-          "flex min-h-11 w-full items-center gap-2 rounded-lg border bg-discord-field py-2 pr-2 pl-3 outline-none",
+          "flex min-h-10 w-full items-center gap-2 rounded-lg border bg-discord-field py-2 pr-2 pl-3 outline-none",
           expanded
             ? "border-discord-blurple shadow-[inset_0_0_0_1px_var(--color-discord-blurple)]"
             : "border-discord-border",
@@ -188,7 +188,7 @@ export function DiscordSelect({
       >
         <span className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
           {chosen.length === 0 ? (
-            <span className="truncate text-base leading-5 text-discord-subtle">
+            <span className="truncate text-base leading-5 font-medium text-discord-subtle">
               {placeholder}
             </span>
           ) : multiple ? (
@@ -242,7 +242,7 @@ export function DiscordSelect({
                     onClick={interactive ? () => pick(option) : undefined}
                     className={cn(
                       "group flex items-center gap-2",
-                      kind === "string" ? "p-2" : "px-3 py-2.5",
+                      kind === "string" ? "p-2" : "h-11 px-3",
                       selected && !checkboxes
                         ? "bg-discord-selected"
                         : "hover:bg-discord-hover",
@@ -256,7 +256,7 @@ export function DiscordSelect({
                         {anyEmoji ? (
                           <Emoji size={22}>{option.emoji}</Emoji>
                         ) : null}
-                        <span className="min-w-0 flex-1 self-start text-sm leading-[18px]">
+                        <span className="min-w-0 flex-1 text-sm leading-[18px]">
                           <span className="block truncate font-bold text-discord-strong">
                             {option.label}
                           </span>
