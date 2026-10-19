@@ -22,6 +22,7 @@ import {
   Mention,
   Timestamp,
 } from "~/components/mdx/discord";
+import { commandName } from "~/components/mdx/command-name";
 import { EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import { defaultLocale, type Locale } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
@@ -38,10 +39,13 @@ const CHANNEL_IDS: ChannelId[] = ["welcome", "lottery", "shop"];
 
 const BOT_NAME: Phrase = "YEE式機器龍";
 
-const TranslateContext = createContext<Translate>(translator(defaultLocale));
+const LocaleContext = createContext<{ locale: Locale; t: Translate }>({
+  locale: defaultLocale,
+  t: translator(defaultLocale),
+});
 
 function useT() {
-  return useContext(TranslateContext);
+  return useContext(LocaleContext).t;
 }
 
 export function DemoServer({ locale }: { locale: Locale }) {
@@ -56,7 +60,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
   }
 
   return (
-    <TranslateContext.Provider value={t}>
+    <LocaleContext.Provider value={{ locale, t }}>
       <div className="z-[2] mt-24 flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
@@ -102,7 +106,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
           )}
         </p>
       </div>
-    </TranslateContext.Provider>
+    </LocaleContext.Provider>
   );
 }
 
@@ -115,14 +119,14 @@ function Msg({ delay, children }: { delay: number; children: ReactNode }) {
 }
 
 function useChrome() {
-  const t = useT();
+  const { locale, t } = useContext(LocaleContext);
 
   return {
     time: t("今天 21:30"),
     ephemeral: { note: t("只有你看得到這則訊息"), dismiss: t("關閉訊息") },
-    command: (user: Phrase, name: string) => ({
+    command: (user: Phrase, path: string) => ({
       user: t(user),
-      name,
+      name: commandName(path, locale),
       used: t("使用了"),
     }),
   };

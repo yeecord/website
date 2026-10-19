@@ -16,6 +16,7 @@ import {
   DiscordSurface,
   Interpolate,
 } from "~/components/mdx/discord";
+import { commandName } from "~/components/mdx/command-name";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
@@ -44,7 +45,11 @@ export function chatCopy(locale: Locale) {
 
   return {
     ...chat,
-    command: (user: string, name: string) => ({ user, name, used: chat.used }),
+    command: (user: string, path: string) => ({
+      user,
+      name: commandName(path, locale),
+      used: chat.used,
+    }),
     modalWarning: (
       <Interpolate
         text={chat.modalWarning}

@@ -9,7 +9,9 @@ import {
   ShopIcon,
   ThinkingDots,
 } from "~/components/mdx/discord-icons";
+import { commandName, optionName } from "~/components/mdx/command-name";
 import { SpoilerCover } from "~/components/mdx/discord-spoiler";
+import type { Locale } from "~/i18n";
 import { cn } from "~/utils/cn";
 
 export { Spoiler, SpoilerCover } from "~/components/mdx/discord-spoiler";
@@ -59,16 +61,18 @@ export function SlashCommand({
   name,
   options = [],
   description,
+  locale = "zh-tw",
 }: {
   name: string;
   options?: CommandOption[];
   description?: string;
+  locale?: Locale;
 }) {
   return (
     <div className="not-prose my-4 overflow-hidden rounded-lg border border-discord-hairline bg-discord-popover font-discord text-sm">
       <div className="flex items-baseline gap-2.5 px-4 py-2">
         <span className="font-semibold text-discord-strong">
-          {name.split(" ")[0]}
+          {commandName(name.split(" ")[0] ?? name, locale)}
         </span>
         {description ? (
           <span className="text-discord-muted">{description}</span>
@@ -77,7 +81,9 @@ export function SlashCommand({
       <div className="flex items-center gap-2.5 bg-discord-input px-4 py-2.5 text-discord-text">
         <BotAvatar className="size-6" />
         <span className="flex min-w-0 flex-wrap items-center gap-1.5">
-          <span className="font-semibold text-discord-strong">/{name}</span>
+          <span className="font-semibold text-discord-strong">
+            /{commandName(name, locale)}
+          </span>
           {options.map((option) => (
             <span
               key={option.name}
@@ -87,7 +93,8 @@ export function SlashCommand({
                   : "text-discord-placeholder",
               )}
             >
-              {option.value ?? `${option.name}${option.required ? "" : "?"}`}
+              {option.value ??
+                `${optionName(name, option.name, locale)}${option.required ? "" : "?"}`}
             </span>
           ))}
         </span>

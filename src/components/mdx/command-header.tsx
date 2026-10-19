@@ -2,7 +2,7 @@ import Link from "fumadocs-core/link";
 import { Bot, MapPin, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Locale } from "~/i18n";
-import { commandNames } from "./cmd";
+import { commandName } from "./command-name";
 
 const labels = {
   "zh-tw": {
@@ -68,11 +68,11 @@ export function createCommandHeader(locale: Locale, slug?: string) {
     bot?: string[];
     anywhere?: boolean;
   }) {
-    const display = name ? commandNames[name]?.[locale] : undefined;
+    const display = name ? commandName(name, locale) : undefined;
 
     return (
       <div className="not-prose my-4 divide-y rounded-xl border bg-fd-card text-sm">
-        {display ? (
+        {name && display !== name ? (
           <div className="flex items-baseline gap-2.5 px-4 py-3">
             <code className="font-semibold text-base text-fd-foreground">
               /{name}

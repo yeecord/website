@@ -21,6 +21,7 @@ import {
   DiscordModal,
   DiscordTextFields,
 } from "~/components/mdx/discord-modal";
+import { commandName, optionName } from "~/components/mdx/command-name";
 import { chatCopy, EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import { PollCard } from "~/components/mdx/poll-card";
 import type { Locale } from "~/i18n";
@@ -41,18 +42,18 @@ const T = {
     placeholder: "傳送訊息到 #一般",
     matching: "的指令",
     all: [
-      { command: "/poll create", description: "發起投票" },
-      { command: "/giveaway create", description: "建立一個抽獎活動" },
-      { command: "/form create", description: "建立一張新表單" },
-      { command: "/find-food", description: "陪 Yee 出門找吃的、煮一桌、餵牠" },
+      { command: "poll create", description: "發起投票" },
+      { command: "giveaway create", description: "建立一個抽獎活動" },
+      { command: "form create", description: "建立一張新表單" },
+      { command: "find-food", description: "陪 Yee 出門找吃的、煮一桌、餵牠" },
     ] as Suggestion[],
     filtered: [
-      { command: "/poll create", description: "發起投票" },
-      { command: "/poll edit", description: "編輯投票內容" },
-      { command: "/poll end", description: "結束一場投票" },
+      { command: "poll create", description: "發起投票" },
+      { command: "poll edit", description: "編輯投票內容" },
+      { command: "poll end", description: "結束一場投票" },
     ] as Suggestion[],
     picked: {
-      command: "/poll create",
+      command: "poll create",
       description: "發起投票",
       option: "max_votes",
       optionDescription: "每人最多可投幾個選項，預設 1",
@@ -101,18 +102,18 @@ const T = {
     placeholder: "发送消息到 #综合",
     matching: "的命令",
     all: [
-      { command: "/poll create", description: "发起投票" },
-      { command: "/giveaway create", description: "创建一个抽奖活动" },
-      { command: "/form create", description: "创建一张新表单" },
-      { command: "/find-food", description: "陪 Yee 出门找吃的、煮一桌、喂它" },
+      { command: "poll create", description: "发起投票" },
+      { command: "giveaway create", description: "创建一个抽奖活动" },
+      { command: "form create", description: "创建一张新表单" },
+      { command: "find-food", description: "陪 Yee 出门找吃的、煮一桌、喂它" },
     ] as Suggestion[],
     filtered: [
-      { command: "/poll create", description: "发起投票" },
-      { command: "/poll edit", description: "编辑投票内容" },
-      { command: "/poll end", description: "结束一场投票" },
+      { command: "poll create", description: "发起投票" },
+      { command: "poll edit", description: "编辑投票内容" },
+      { command: "poll end", description: "结束一场投票" },
     ] as Suggestion[],
     picked: {
-      command: "/poll create",
+      command: "poll create",
       description: "发起投票",
       option: "max_votes",
       optionDescription: "每人最多可投几个选项，默认 1",
@@ -172,22 +173,32 @@ interface Frame {
 /** Discord filters the list on every keystroke, so the query is typed a letter at a time. */
 const KEYSTROKE = 120;
 
-function script(t: Tour): Frame[] {
-  const typing = ["/p", "/po", "/pol", "/poll"].map(
-    (typed, index, all): Frame => ({
+function script(t: Tour, locale: Locale): Frame[] {
+  const root = Array.from(
+    commandName(t.picked.command.split(" ")[0] ?? "", locale),
+  );
+  const typing = root.map((_, index): Frame => {
+    const typed = `/${root.slice(0, index + 1).join("")}`;
+
+    return {
       typed,
       query: typed,
       suggestions: t.filtered,
       caption: 2,
-      hold: index === all.length - 1 ? 2400 : KEYSTROKE,
-    }),
-  );
+      hold: index === root.length - 1 ? 2400 : KEYSTROKE,
+    };
+  });
 
   return [
     { typed: "", caption: 0, hold: 1600 },
     { typed: "/", query: "/", suggestions: t.all, caption: 1, hold: 2400 },
     ...typing,
-    { typed: t.picked.command, picked: true, caption: 3, hold: 1800 },
+    {
+      typed: `/${commandName(t.picked.command, locale)}`,
+      picked: true,
+      caption: 3,
+      hold: 1800,
+    },
     { typed: "", modal: true, caption: 4, hold: 4000 },
     { typed: "", sent: true, caption: 5, hold: 3600 },
   ];
@@ -199,7 +210,7 @@ const popupClass =
 export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale);
   const chat = chatCopy(locale);
-  const frames = script(t);
+  const frames = script(t, locale);
   const reduced = useReducedMotion() ?? false;
   const [step, setStep] = useState(0);
 
@@ -238,7 +249,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
             <MessageEnter>
               <DiscordMessage
                 time={chat.time}
-                command={chat.command(t.asker, t.picked.command.slice(1))}
+                command={chat.command(t.asker, t.picked.command)}
               >
                 <PollCard
                   locale={locale}
@@ -270,7 +281,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
                   <BotAvatar className="size-7" />
                   <div className="min-w-0 flex-1 leading-tight">
                     <div className="truncate font-semibold text-white">
-                      {suggestion.command}
+                      /{commandName(suggestion.command, locale)}
                     </div>
                     <div className="truncate text-xs text-discord-muted">
                       {suggestion.description}
@@ -289,7 +300,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
               <div className="flex items-center gap-2 px-3 py-2">
                 <BotAvatar className="size-5" />
                 <span className="font-semibold text-white">
-                  {t.picked.command}
+                  /{commandName(t.picked.command, locale)}
                 </span>
                 <span className="truncate text-xs text-discord-muted">
                   {t.picked.description}
@@ -298,7 +309,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
               </div>
               <div className="flex items-baseline gap-3 bg-discord-hover px-3 py-2">
                 <span className="shrink-0 font-semibold text-white">
-                  {t.picked.option}
+                  {optionName(t.picked.command, t.picked.option, locale)}
                 </span>
                 <span className="truncate text-discord-muted">
                   {t.picked.optionDescription}

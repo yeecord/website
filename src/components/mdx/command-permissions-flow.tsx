@@ -5,6 +5,7 @@ import { Check, Hash, Puzzle, Settings, X } from "lucide-react";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
+import { commandName } from "~/components/mdx/command-name";
 import { ClickHint, FlowFrame, Scene, useLoop } from "~/components/mdx/flow";
 
 const T = {
@@ -16,8 +17,8 @@ const T = {
     manage: "管理",
     commandsTitle: "指令",
     commandsNote: "點一個指令來調整誰能用、在哪裡能用",
-    commands: ["/clear", "/poll", "/giveaway"],
-    overridesTitle: "/clear 的權限",
+    commands: ["clear", "poll", "giveaway"],
+    overridesTitle: "{command} 的權限",
     everyone: "@everyone",
     staff: "@管理組",
     channel: "機器人區",
@@ -33,8 +34,8 @@ const T = {
     manage: "管理",
     commandsTitle: "命令",
     commandsNote: "点一个命令来调整谁能用、在哪里能用",
-    commands: ["/clear", "/poll", "/giveaway"],
-    overridesTitle: "/clear 的权限",
+    commands: ["clear", "poll", "giveaway"],
+    overridesTitle: "{command} 的权限",
     everyone: "@everyone",
     staff: "@管理组",
     channel: "机器人区",
@@ -139,7 +140,9 @@ export function CommandPermissionsDemo({ locale = "zh-tw" }: { locale?: Locale }
                   key={command}
                   className="flex items-center justify-between rounded bg-discord-embed px-2.5 py-1.5"
                 >
-                  <span className="font-mono text-discord-text">{command}</span>
+                  <span className="font-mono text-discord-text">
+                    /{commandName(command, locale)}
+                  </span>
                   {index === 0 && (
                     <span className="relative inline-flex size-4">
                       <ClickHint className="top-0 right-0" />
@@ -152,7 +155,12 @@ export function CommandPermissionsDemo({ locale = "zh-tw" }: { locale?: Locale }
         )}
         {step === 2 && (
           <Scene id={2}>
-            <p className="mb-2 font-semibold text-white">{t.overridesTitle}</p>
+            <p className="mb-2 font-semibold text-white">
+              {t.overridesTitle.replace(
+                "{command}",
+                `/${commandName(t.commands[0] ?? "", locale)}`,
+              )}
+            </p>
             <div className="max-w-md space-y-3">
               <div>
                 <p className="mb-1 text-xs font-semibold uppercase text-discord-muted">

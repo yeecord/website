@@ -72,6 +72,9 @@ export function localeMdxComponents(locale: Locale) {
     PollFlowDemo: () => <PollFlowDemo locale={locale} />,
     RoleMenuDemo: () => <RoleMenuDemo locale={locale} />,
     RoleOrderDemo: () => <RoleOrderDemo locale={locale} />,
+    SlashCommand: (props: ComponentProps<typeof SlashCommand>) => (
+      <SlashCommand locale={locale} {...props} />
+    ),
     SlashCommandTour: () => <SlashCommandTour locale={locale} />,
   };
 }
