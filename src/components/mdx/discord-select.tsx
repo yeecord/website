@@ -188,7 +188,7 @@ export function DiscordSelect({
       >
         <span className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
           {chosen.length === 0 ? (
-            <span className="truncate text-base leading-5 font-medium text-discord-subtle">
+            <span className="truncate text-base leading-5 text-discord-subtle">
               {placeholder}
             </span>
           ) : multiple ? (
@@ -256,7 +256,7 @@ export function DiscordSelect({
                         {anyEmoji ? (
                           <Emoji size={22}>{option.emoji}</Emoji>
                         ) : null}
-                        <span className="min-w-0 flex-1 text-sm leading-[18px]">
+                        <span className="min-w-0 flex-1 self-start text-sm leading-[18px]">
                           <span className="block truncate font-bold text-discord-strong">
                             {option.label}
                           </span>
