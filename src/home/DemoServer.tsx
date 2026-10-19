@@ -379,8 +379,12 @@ function ShopScene() {
         ) : (
           <>
             <DiscordGallery
-              src="/img/discord/feast-home.webp"
-              alt={t("Yee 吃飽了嗎？銅板 1,234，Yee 今天想吃：鹹 · 脆")}
+              items={[
+                {
+                  src: "/img/discord/feast-home.webp",
+                  description: t("Yee 吃飽了嗎？銅板 1,234，Yee 今天想吃：鹹 · 脆"),
+                },
+              ]}
             />
             <DiscordRow>
               <DiscordButton disabled>
