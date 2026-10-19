@@ -1,14 +1,26 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion } from "motion/react";
-import { HashIcon, PlusCircleIcon, Volume2Icon } from "lucide-react";
+import { motion } from "motion/react";
+import {
+  ArrowRightIcon,
+  HashIcon,
+  PlusCircleIcon,
+  Volume2Icon,
+} from "lucide-react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 import {
   DiscordButton,
-  DiscordEmbed,
+  DiscordContainer,
+  DiscordGallery,
   DiscordMessage,
-  SlashCommand,
+  DiscordRow,
+  DiscordSelect,
+  DiscordStatus,
+  DiscordText,
+  Interpolate,
+  Mention,
+  Timestamp,
 } from "~/components/mdx/discord";
 import { EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import { defaultLocale, type Locale } from "~/i18n";
@@ -71,7 +83,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
               </span>
             </div>
             <ChannelTabs active={active} onOpen={open} />
-            <div className="flex min-h-[21rem] flex-col p-4 text-discord-text text-sm">
+            <div className="flex min-h-[21rem] flex-col gap-4 p-4 text-discord-text text-sm">
               <div key={active} className="flex flex-col gap-4">
                 {active === "welcome" && <WelcomeScene />}
                 {active === "lottery" && <LotteryScene />}
@@ -102,167 +114,282 @@ function Msg({ delay, children }: { delay: number; children: ReactNode }) {
   );
 }
 
+function useChrome() {
+  const t = useT();
+
+  return {
+    time: t("今天 21:30"),
+    ephemeral: { note: t("只有你看得到這則訊息"), dismiss: t("關閉訊息") },
+    command: (user: Phrase, name: string) => ({
+      user: t(user),
+      name,
+      used: t("使用了"),
+    }),
+  };
+}
+
+const roles: Phrase[] = ["🎮 遊戲仔", "🌙 夜貓子", "🎨 創作者"];
+
+const roleColors: Record<string, string> = {
+  "🎮 遊戲仔": "#5ab4f0",
+  "🌙 夜貓子": "#c79bf2",
+  "🎨 創作者": "#f0a35a",
+};
+
 function WelcomeScene() {
   const t = useT();
+  const chrome = useChrome();
+  const [held, setHeld] = useState<Phrase[]>([]);
+  const [reply, setReply] = useState<{ role: Phrase; added: boolean }>();
+
+  function press(role: Phrase) {
+    const added = !held.includes(role);
+
+    setHeld((current) =>
+      added ? [...current, role] : current.filter((r) => r !== role),
+    );
+    setReply({ role, added });
+  }
 
   return (
     <>
       <Msg delay={0}>
-        <p className="text-discord-muted text-xs">
+        <DiscordMessage author={t(BOT_NAME)} time={chrome.time}>
+          <DiscordContainer accent>
+            <DiscordText>
+              <p>{t("歡迎來到 Yeecord 示範伺服器！")}</p>
+              <p>{t("點下方選項獲得身分組")}</p>
+            </DiscordText>
+            <DiscordText>
+              <small>{t("再按一次可以移除")}</small>
+            </DiscordText>
+            <DiscordRow>
+              {roles.map((role) => (
+                <DiscordButton key={role} onClick={() => press(role)}>
+                  {t(role)}
+                </DiscordButton>
+              ))}
+            </DiscordRow>
+          </DiscordContainer>
+        </DiscordMessage>
+      </Msg>
+      <Msg delay={0.2}>
+        <p className="flex items-center gap-4 text-discord-muted">
+          <ArrowRightIcon className="mx-3 size-4 text-discord-green" />
           {t("阿龍的粉絲 剛剛加入伺服器 👋")}
         </p>
       </Msg>
-      <Msg delay={0.25}>
-        <DiscordMessage author={t(BOT_NAME)} bot>
-          <DiscordEmbed title={t("👋 歡迎 阿龍的粉絲！")} color="var(--color-primary)">
-            <p>{t("歡迎來到伺服器，先挑個身分組，讓大家認識你。")}</p>
-          </DiscordEmbed>
-          <RolePicker />
+      <Msg delay={0.4}>
+        <DiscordMessage author={t(BOT_NAME)} time={chrome.time}>
+          <DiscordText>
+            <p>
+              <Interpolate
+                text={t("歡迎 {member} 加入伺服器！先在上面挑個身分組，讓大家認識你 🎉")}
+                values={{ member: <Mention>@{t("阿龍的粉絲")}</Mention> }}
+              />
+            </p>
+          </DiscordText>
         </DiscordMessage>
       </Msg>
+      {reply ? (
+        <MessageEnter key={`${reply.role}-${reply.added}`}>
+          <DiscordMessage
+            author={t(BOT_NAME)}
+            time={chrome.time}
+            ephemeral={chrome.ephemeral}
+          >
+            <DiscordStatus
+              emoji="check"
+              title={
+                <>
+                  {t(reply.added ? "已取得" : "已移除")}{" "}
+                  <Mention color={roleColors[reply.role]}>@{t(reply.role)}</Mention>
+                </>
+              }
+              notes={[
+                <Interpolate
+                  key="note"
+                  text={t(
+                    reply.added
+                      ? "再按一次「{name}」可以移除"
+                      : "再按一次「{name}」可以取回",
+                  )}
+                  values={{ name: t(reply.role) }}
+                />,
+              ]}
+            />
+            <DiscordRow>
+              <DiscordButton onClick={() => press(reply.role)}>
+                {t("復原")}
+              </DiscordButton>
+            </DiscordRow>
+          </DiscordMessage>
+        </MessageEnter>
+      ) : null}
     </>
   );
 }
 
+const TITLE: Phrase = "Nitro 一個月";
+
 function LotteryScene() {
   const t = useT();
+  const chrome = useChrome();
+  const [joined, setJoined] = useState(false);
+  const [reply, setReply] = useState<"joined" | "already" | "left">();
+  const count = joined ? 43 : 42;
+  const channel = <Mention>#{t("抽獎區")}</Mention>;
+  const inSevenDays = <Timestamp>{t("7 天後")}</Timestamp>;
+
+  function join() {
+    setReply(joined ? "already" : "joined");
+    setJoined(true);
+  }
+
+  function leave() {
+    setJoined(false);
+    setReply("left");
+  }
+
+  const replies = {
+    joined: {
+      emoji: "check",
+      title: "已參加「{title}」",
+      note: "目前 {count} 人參加，{time}抽出 3 位得獎者，結果會公布在 {channel}",
+    },
+    already: {
+      emoji: "info",
+      title: "你已經參加「{title}」了",
+      note: "{time}抽獎，目前 {count} 人參加",
+    },
+    left: {
+      emoji: "check",
+      title: "已退出「{title}」",
+      note: "抽獎結束前，按「點我參加」就能重新加入",
+    },
+  } as const satisfies Record<
+    string,
+    { emoji: "check" | "info"; title: Phrase; note: Phrase }
+  >;
 
   return (
     <>
       <Msg delay={0}>
-        <SlashCommand
-          name="giveaway create"
-          description={t("舉辦抽獎")}
-          options={[
-            { name: t("獎品"), value: t("Nitro 一個月") },
-            { name: t("得獎人數"), value: "3" },
-          ]}
-        />
-      </Msg>
-      <Msg delay={0.25}>
-        <DiscordMessage author={t(BOT_NAME)} bot>
-          <DiscordEmbed
-            title={t("🎉 抽獎開始")}
-            color="var(--color-discord-fuchsia)"
-          >
-            <p>{t("獎品：Nitro 一個月，按下面的按鈕參加！")}</p>
-          </DiscordEmbed>
-          <Lottery />
+        <DiscordMessage
+          author={t(BOT_NAME)}
+          time={chrome.time}
+          command={chrome.command("阿龍", "giveaway create")}
+        >
+          <DiscordContainer accent>
+            <DiscordText>
+              <h2>{t(TITLE)}</h2>
+            </DiscordText>
+            <DiscordText>
+              <small>
+                {t("抽出 3 位得獎者")} ·{" "}
+                <Interpolate
+                  text={t("抽獎會在 {date} ({time}) 結束")}
+                  values={{
+                    date: <Timestamp>{t("2026年10月26日 星期一 21:30")}</Timestamp>,
+                    time: inSevenDays,
+                  }}
+                />
+              </small>
+            </DiscordText>
+            <DiscordText>
+              <small>
+                <Interpolate
+                  text={t("目前 {count} 人參加")}
+                  values={{ count }}
+                />
+              </small>
+            </DiscordText>
+            <DiscordRow>
+              <DiscordButton variant="primary" emoji="party_popper" onClick={join}>
+                {t("點我參加")}
+              </DiscordButton>
+              <DiscordButton variant="danger">{t("終止抽獎")}</DiscordButton>
+            </DiscordRow>
+          </DiscordContainer>
         </DiscordMessage>
       </Msg>
+      {reply ? (
+        <MessageEnter key={reply}>
+          <DiscordMessage
+            author={t(BOT_NAME)}
+            time={chrome.time}
+            ephemeral={chrome.ephemeral}
+          >
+            <DiscordStatus
+              emoji={replies[reply].emoji}
+              title={
+                <Interpolate
+                  text={t(replies[reply].title)}
+                  values={{ title: t(TITLE) }}
+                />
+              }
+              notes={[
+                <Interpolate
+                  key="note"
+                  text={t(replies[reply].note)}
+                  values={{ count, time: inSevenDays, channel }}
+                />,
+              ]}
+            />
+            {reply === "left" ? null : (
+              <DiscordRow>
+                <DiscordButton onClick={leave}>{t("退出抽獎")}</DiscordButton>
+              </DiscordRow>
+            )}
+          </DiscordMessage>
+        </MessageEnter>
+      ) : null}
     </>
   );
 }
 
 function ShopScene() {
   const t = useT();
+  const chrome = useChrome();
+  const [cooking, setCooking] = useState(false);
 
   return (
-    <>
-      <Msg delay={0}>
-        <DiscordMessage author={t("阿龍的粉絲")} bot={false} color="#e8a33d">
-          <p>/find-food</p>
-        </DiscordMessage>
-      </Msg>
-      <Msg delay={0.25}>
-        <DiscordMessage author={t(BOT_NAME)} bot>
-          <DiscordEmbed title={t("🍳 Yee 的小店")} color="var(--color-discord-gold)">
-            <p>{t("Yee 剛從河邊回來，袋子裝了七成滿，看起來心情不錯。")}</p>
-          </DiscordEmbed>
-          <FindFoodButtons />
-        </DiscordMessage>
-      </Msg>
-    </>
-  );
-}
-
-
-const roles: Phrase[] = ["🎮 遊戲仔", "🌙 夜貓子", "🎨 創作者"];
-
-function RolePicker() {
-  const t = useT();
-  const [picked, setPicked] = useState<Phrase>();
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      {roles.map((role) => (
-        <DiscordButton
-          key={role}
-          variant={picked === role ? "primary" : "secondary"}
-          onClick={() => setPicked(role)}
-        >
-          {t(role)}
-        </DiscordButton>
-      ))}
-      <AnimatePresence>
-        {picked && (
-          <motion.span
-            initial={{ opacity: 0, x: -6 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0 }}
-            className="self-center text-discord-muted text-xs"
-          >
-            {t("已領取")} {picked && t(picked)}
-          </motion.span>
+    <Msg delay={0}>
+      <DiscordMessage
+        author={t(BOT_NAME)}
+        time={chrome.time}
+        command={chrome.command("阿龍的粉絲", "find-food")}
+      >
+        {cooking ? (
+          <>
+            <DiscordText>
+              <p>{t("要下鍋的自己挑。Yee 在旁邊看。")}</p>
+            </DiscordText>
+            <DiscordSelect placeholder={t("挑食材")} />
+            <DiscordRow>
+              <DiscordButton onClick={() => setCooking(false)}>
+                {t("回店裡")}
+              </DiscordButton>
+            </DiscordRow>
+          </>
+        ) : (
+          <>
+            <DiscordGallery
+              src="/img/discord/feast-home.webp"
+              alt={t("Yee 吃飽了嗎？銅板 1,234，Yee 今天想吃：鹹 · 脆")}
+            />
+            <DiscordRow>
+              <DiscordButton disabled>
+                {t("帶牠去找吃的")}
+              </DiscordButton>
+              <DiscordButton variant="primary" onClick={() => setCooking(true)}>
+                {t("開煮")}
+              </DiscordButton>
+            </DiscordRow>
+          </>
         )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-function Lottery() {
-  const t = useT();
-  const [joined, setJoined] = useState(false);
-  const [count, setCount] = useState(42);
-
-  function join() {
-    if (joined) return;
-
-    setJoined(true);
-    setCount((c) => c + 1);
-  }
-
-  return (
-    <div className="relative flex flex-wrap gap-2">
-      <DiscordButton variant="primary" onClick={join}>
-        {joined ? t("已參加 ✅") : t("參加抽獎")}
-      </DiscordButton>
-      <DiscordButton>
-        {t("目前")} <span className="font-semibold">{count}</span> {t("人")}
-      </DiscordButton>
-    </div>
-  );
-}
-
-function FindFoodButtons() {
-  const t = useT();
-  const [status, setStatus] = useState<Phrase>();
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      <DiscordButton variant="primary" onClick={() => setStatus("Yee 揹起袋子出門了，明天回來收成！")}>
-        {t("帶牠去找吃的")}
-      </DiscordButton>
-      <DiscordButton variant="success" onClick={() => setStatus("下鍋！煮出了「河鮮味噌鍋」，Yee 眼睛都亮了。")}>
-        {t("開煮")}
-      </DiscordButton>
-      <DiscordButton onClick={() => setStatus("Yee 吃得很開心，感情 +1 ❤️")}>
-        {t("餵牠")}
-      </DiscordButton>
-      <AnimatePresence mode="wait">
-        {status && (
-          <motion.p
-            key={status}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="w-full text-discord-muted text-xs"
-          >
-            {t(status)}
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </div>
+      </DiscordMessage>
+    </Msg>
   );
 }
 

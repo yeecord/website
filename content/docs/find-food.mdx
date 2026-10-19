@@ -16,15 +16,13 @@ description: 用一個指令開始覓食，收集食材、料理，再餵 Yee。
 
 <DiscordChat>
   <DiscordMessage>
-    <DiscordEmbed title="🍳 Yee 的小店" color="var(--color-discord-gold)">
-      <p>卡片會顯示袋子進度、銅板和你與 Yee 的感情。</p>
-    </DiscordEmbed>
-    <p>
-      <DiscordButton variant="primary">帶牠去找吃的</DiscordButton>{" "}
-      <DiscordButton variant="success">開煮</DiscordButton>{" "}
-      <DiscordButton>菜譜</DiscordButton>{" "}
+    <DiscordGallery src="/img/discord/feast-home.webp" alt="小店卡片：Yee 今天想吃鹹、脆，銅板 1,234" />
+    <DiscordRow>
+      <DiscordButton>帶牠去找吃的</DiscordButton>
+      <DiscordButton variant="primary">開煮</DiscordButton>
+      <DiscordButton>食譜本</DiscordButton>
       <DiscordButton>餵牠</DiscordButton>
-    </p>
+    </DiscordRow>
   </DiscordMessage>
 </DiscordChat>
 

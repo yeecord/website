@@ -5,8 +5,10 @@ import Adsense from "~/components/mdx/Adsense";
 import {
   DiscordButton,
   DiscordChat,
-  DiscordEmbed,
+  DiscordGallery,
   DiscordMessage,
+  DiscordRow,
+  Mention,
   SlashCommand,
 } from "~/components/mdx/discord";
 import { CommandPermissionsDemo } from "~/components/mdx/command-permissions-flow";
@@ -38,8 +40,9 @@ export const mdxComponents = {
   CommandPermissionsDemo,
   DiscordButton,
   DiscordChat,
-  DiscordEmbed,
+  DiscordGallery,
   DiscordMessage,
+  DiscordRow,
   FormBuilderDemo,
   FormFlowDemo,
   GiveawayFlowDemo,
@@ -47,6 +50,7 @@ export const mdxComponents = {
   PollFlowDemo,
   RoleMenuDemo,
   LinkButton,
+  Mention,
   img: ImageZoom as FC<ImgHTMLAttributes<HTMLImageElement>>,
   RoleOrderDemo,
   SlashCommand,

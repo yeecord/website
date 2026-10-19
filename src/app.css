@@ -41,7 +41,7 @@
     "gg sans", "Noto Sans", "Microsoft JhengHei", "微軟正黑體", "PingFang TC",
     "Noto Sans TC", "Helvetica Neue", Arial, sans-serif;
   --font-discord-mono:
-    "gg mono", "Source Code Pro", Consolas, Monaco, "Courier New", monospace;
+    "gg mono", "Source Code Pro", Consolas, Menlo, Monaco, "Courier New", monospace;
   --color-discord-bg: #323339;
   --color-discord-embed: #2c2d32;
   --color-discord-card: #393a41;

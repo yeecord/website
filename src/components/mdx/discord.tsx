@@ -1,12 +1,13 @@
 import {
   ChevronDown,
   Eye,
+  X,
   Gift,
   Hash,
   SmilePlus,
   SquareArrowOutUpRight,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { cn } from "~/utils/cn";
 
 // Discord's panels carry no hairline border; they separate by sitting darker than what
@@ -411,6 +412,14 @@ export function Mention({
   );
 }
 
+export function Spoiler({ children }: { children: ReactNode }) {
+  return (
+    <span className="rounded bg-[#7d7e87] text-transparent select-none">
+      {children}
+    </span>
+  );
+}
+
 export function Timestamp({ children }: { children: ReactNode }) {
   return (
     <span className="rounded-[3px] bg-[rgb(151_151_159/0.161)] px-0.5">
@@ -443,21 +452,102 @@ export function DiscordStatus({
   );
 }
 
-export function DiscordEmbed({
-  title,
-  color = "var(--color-discord-blurple)",
-  children,
+
+/// Bot copy with `{name}` placeholders, each replaced by its value, which may be a mention.
+export function Interpolate({
+  text,
+  values,
 }: {
-  title?: string;
-  color?: string;
-  children?: ReactNode;
+  text: string;
+  values: Record<string, ReactNode>;
+}) {
+  return text
+    .split(/\{(\w+)\}/)
+    .map((part, index) => (
+      <Fragment key={index}>{index % 2 ? values[part] : part}</Fragment>
+    ));
+}
+
+export interface ModalField {
+  label: string;
+  description?: string;
+  value?: string;
+  placeholder?: string;
+  multiline?: boolean;
+  select?: boolean;
+}
+
+/// A modal the bot opens: its fields, then a footer to cancel or submit.
+export function DiscordModal({
+  title,
+  fields,
+  cancel,
+  submit,
+  submitPressed,
+  submitHint,
+  className,
+}: {
+  title: string;
+  fields: ModalField[];
+  cancel: string;
+  submit: string;
+  submitPressed?: boolean;
+  /** Drawn over the submit button, such as the cursor of a demo. */
+  submitHint?: ReactNode;
+  className?: string;
 }) {
   return (
-    <DiscordContainer accent={color}>
-      <DiscordText>
-        {title ? <h2>{title}</h2> : null}
-        {children}
-      </DiscordText>
-    </DiscordContainer>
+    <div
+      className={cn(
+        "w-full max-w-md overflow-hidden rounded-xl border border-discord-hairline bg-discord-bg text-sm text-discord-text shadow-2xl",
+        className,
+      )}
+    >
+      <div className="flex items-center gap-2.5 px-5 pt-5 pb-1">
+        <BotAvatar className="size-6" />
+        <span className="text-xl font-semibold text-white">{title}</span>
+        <X className="ms-auto size-5 text-discord-muted" />
+      </div>
+      <div className="flex flex-col gap-4 px-5 pt-4 pb-5">
+        {fields.map((field) => (
+          <div key={field.label} className="flex flex-col gap-2">
+            <div>
+              <p className="m-0 text-base font-semibold text-white">
+                {field.label}
+              </p>
+              {field.description ? (
+                <p className="m-0 text-discord-muted">{field.description}</p>
+              ) : null}
+            </div>
+            <div
+              className={cn(
+                "flex justify-between gap-2 rounded-lg border border-discord-border bg-discord-option px-3 py-2.5 text-base whitespace-pre-line",
+                field.multiline && "min-h-20",
+              )}
+            >
+              <span
+                className={
+                  field.value ? "text-discord-text" : "text-discord-placeholder"
+                }
+              >
+                {field.value ?? field.placeholder}
+              </span>
+              {field.select ? (
+                <ChevronDown className="size-5 shrink-0 text-discord-muted" />
+              ) : null}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center justify-end gap-2 bg-discord-embed px-5 py-4">
+        <span className="px-4 font-medium">{cancel}</span>
+        <span className="relative inline-flex">
+          <DiscordButton variant="primary" pressed={submitPressed}>
+            {submit}
+          </DiscordButton>
+          {submitHint}
+        </span>
+      </div>
+    </div>
   );
 }
