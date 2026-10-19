@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ChevronRight,
   Gift,
@@ -11,7 +11,19 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { DiscordSurface } from "~/components/mdx/discord";
+import {
+  BOT_NAME,
+  BotAvatar,
+  DiscordMessage,
+  DiscordSurface,
+} from "~/components/mdx/discord";
+import {
+  DiscordModal,
+  DiscordTextFields,
+} from "~/components/mdx/discord-modal";
+import { commandName, optionName } from "~/components/mdx/command-name";
+import { chatCopy, EASE_OUT, MessageEnter } from "~/components/mdx/flow";
+import { PollCard } from "~/components/mdx/poll-card";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
@@ -23,7 +35,6 @@ interface Suggestion {
 
 const T = {
   "zh-tw": {
-    app: "YEE 式機器龍",
     channel: "一般",
     topic: "隨便聊聊的地方",
     asker: "阿明",
@@ -31,30 +42,49 @@ const T = {
     placeholder: "傳送訊息到 #一般",
     matching: "的指令",
     all: [
-      { command: "/poll create", description: "建立投票" },
-      { command: "/giveaway create", description: "建立抽獎活動" },
-      { command: "/form create", description: "建立表單" },
-      { command: "/find-food", description: "帶 Yee 去找吃的" },
+      { command: "poll create", description: "發起投票" },
+      { command: "giveaway create", description: "建立一個抽獎活動" },
+      { command: "form create", description: "建立一張新表單" },
+      { command: "find-food", description: "陪 Yee 出門找吃的、煮一桌、餵牠" },
     ] as Suggestion[],
     filtered: [
-      { command: "/poll create", description: "建立投票" },
-      { command: "/poll edit", description: "改投票的設定" },
-      { command: "/poll end", description: "結束投票並公布結果" },
+      { command: "poll create", description: "發起投票" },
+      { command: "poll edit", description: "編輯投票內容" },
+      { command: "poll end", description: "結束一場投票" },
     ] as Suggestion[],
-    pollTitle: "晚餐吃什麼",
-    optionLabel: "問題",
-    optionsLabel: "選項",
-    options: ["滷肉飯", "牛肉麵"],
-    pollOptionsLine: "滷肉飯 · 牛肉麵 · 隨便都好",
+    picked: {
+      command: "poll create",
+      description: "發起投票",
+      option: "max_votes",
+      optionDescription: "每人最多可投幾個選項，預設 1",
+    },
     // the fields `/poll create` actually opens, labels and all
-    modalTitle: "建立投票",
-    modalFields: [
-      { label: "投票標題", value: "晚餐吃什麼" },
-      { label: "選項", hint: "一行一個選項(2-18 個)", value: "滷肉飯\n牛肉麵" },
-      { label: "多久後結束(選填)", hint: "例如 30m、2h、3d", value: "2h" },
-    ],
-    cancel: "取消",
-    submit: "送出",
+    modal: {
+      title: "建立投票",
+      fields: [
+        { label: "投票標題", value: "晚餐吃什麼", required: true },
+        {
+          label: "選項",
+          description: "一行一個選項（2-18 個）",
+          value: "滷肉飯\n牛肉麵",
+          paragraph: true,
+          required: true,
+        },
+        {
+          label: "多久後結束（選填）",
+          description: "例如 30m、2h、3d，留空 = 手動結束",
+          value: "2h",
+        },
+      ],
+      cancel: "取消",
+      submit: "送出",
+    },
+    poll: {
+      title: "晚餐吃什麼",
+      options: ["滷肉飯", "牛肉麵"],
+      startedAgo: "幾秒前",
+      endsIn: "2 小時後",
+    },
     captions: [
       "點一下最下面的輸入框",
       "打一個斜線，指令清單就跳出來了",
@@ -65,7 +95,6 @@ const T = {
     ],
   },
   "zh-cn": {
-    app: "YEE 式機器龍",
     channel: "综合",
     topic: "随便聊聊的地方",
     asker: "阿明",
@@ -73,29 +102,48 @@ const T = {
     placeholder: "发送消息到 #综合",
     matching: "的命令",
     all: [
-      { command: "/poll create", description: "创建投票" },
-      { command: "/giveaway create", description: "创建抽奖活动" },
-      { command: "/form create", description: "创建表单" },
-      { command: "/find-food", description: "带 Yee 去找吃的" },
+      { command: "poll create", description: "发起投票" },
+      { command: "giveaway create", description: "创建一个抽奖活动" },
+      { command: "form create", description: "创建一张新表单" },
+      { command: "find-food", description: "陪 Yee 出门找吃的、煮一桌、喂它" },
     ] as Suggestion[],
     filtered: [
-      { command: "/poll create", description: "创建投票" },
-      { command: "/poll edit", description: "改投票的设置" },
-      { command: "/poll end", description: "结束投票并公布结果" },
+      { command: "poll create", description: "发起投票" },
+      { command: "poll edit", description: "编辑投票内容" },
+      { command: "poll end", description: "结束一场投票" },
     ] as Suggestion[],
-    pollTitle: "晚餐吃什么",
-    optionLabel: "问题",
-    optionsLabel: "选项",
-    options: ["卤肉饭", "牛肉面"],
-    pollOptionsLine: "卤肉饭 · 牛肉面 · 随便都好",
-    modalTitle: "创建投票",
-    modalFields: [
-      { label: "投票标题", value: "晚餐吃什么" },
-      { label: "选项", hint: "一行一个选项(2-18 个)", value: "卤肉饭\n牛肉面" },
-      { label: "多久后结束(选填)", hint: "例如 30m、2h、3d", value: "2h" },
-    ],
-    cancel: "取消",
-    submit: "提交",
+    picked: {
+      command: "poll create",
+      description: "发起投票",
+      option: "max_votes",
+      optionDescription: "每人最多可投几个选项，默认 1",
+    },
+    modal: {
+      title: "创建投票",
+      fields: [
+        { label: "投票标题", value: "晚餐吃什么", required: true },
+        {
+          label: "选项",
+          description: "一行一个选项（2-18 个）",
+          value: "卤肉饭\n牛肉面",
+          paragraph: true,
+          required: true,
+        },
+        {
+          label: "多久后结束（选填）",
+          description: "例如 30m、2h、3d，留空 = 手动结束",
+          value: "2h",
+        },
+      ],
+      cancel: "取消",
+      submit: "提交",
+    },
+    poll: {
+      title: "晚餐吃什么",
+      options: ["卤肉饭", "牛肉面"],
+      startedAgo: "几秒前",
+      endsIn: "2 小时后",
+    },
     captions: [
       "点一下最下面的输入框",
       "打一个斜杠，命令列表就跳出来了",
@@ -107,9 +155,7 @@ const T = {
   },
 } satisfies Partial<Record<Locale, unknown>>;
 
-function tour(locale: Locale) {
-  return localized(T, locale);
-}
+type Tour = (typeof T)["zh-tw"];
 
 interface Frame {
   /// What sits in the input: plain text while typing, a command pill once picked.
@@ -119,53 +165,53 @@ interface Frame {
   suggestions?: Suggestion[];
   modal?: boolean;
   sent?: boolean;
+  /// Index into the captions, which several typing frames share.
+  caption: number;
   hold: number;
 }
 
-function script(t: ReturnType<typeof tour>): Frame[] {
+/** Discord filters the list on every keystroke, so the query is typed a letter at a time. */
+const KEYSTROKE = 120;
+
+function script(t: Tour, locale: Locale): Frame[] {
+  const root = Array.from(
+    commandName(t.picked.command.split(" ")[0] ?? "", locale),
+  );
+  const typing = root.map((_, index): Frame => {
+    const typed = `/${root.slice(0, index + 1).join("")}`;
+
+    return {
+      typed,
+      query: typed,
+      suggestions: t.filtered,
+      caption: 2,
+      hold: index === root.length - 1 ? 2400 : KEYSTROKE,
+    };
+  });
+
   return [
-    { typed: "", hold: 1600 },
-    { typed: "/", query: "/", suggestions: t.all, hold: 2600 },
-    { typed: "/poll", query: "/poll", suggestions: t.filtered, hold: 2600 },
-    { typed: "/poll create", picked: true, hold: 1800 },
-    { typed: "", modal: true, hold: 4000 },
-    { typed: "", sent: true, hold: 3600 },
+    { typed: "", caption: 0, hold: 1600 },
+    { typed: "/", query: "/", suggestions: t.all, caption: 1, hold: 2400 },
+    ...typing,
+    {
+      typed: `/${commandName(t.picked.command, locale)}`,
+      picked: true,
+      caption: 3,
+      hold: 1800,
+    },
+    { typed: "", modal: true, caption: 4, hold: 4000 },
+    { typed: "", sent: true, caption: 5, hold: 3600 },
   ];
 }
 
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(query.matches);
-
-    sync();
-    query.addEventListener("change", sync);
-
-    return () => query.removeEventListener("change", sync);
-  }, []);
-
-  return reduced;
-}
-
-function Avatar({ className }: { className?: string }) {
-  return (
-    <img
-      src="/img/logo.svg"
-      alt=""
-      className={cn(
-        "shrink-0 rounded-full bg-discord-avatar p-0.5",
-        className ?? "size-8",
-      )}
-    />
-  );
-}
+const popupClass =
+  "absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg border border-discord-hairline bg-discord-embed shadow-xl";
 
 export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
-  const t = tour(locale);
-  const frames = script(t);
-  const reduced = usePrefersReducedMotion();
+  const t = localized(T, locale);
+  const chat = chatCopy(locale);
+  const frames = script(t, locale);
+  const reduced = useReducedMotion() ?? false;
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -194,148 +240,92 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
         topic={t.topic}
         className="relative p-0 text-sm"
       >
-        <div className="flex min-h-64 flex-col justify-end gap-3 px-4 py-4">
-          <div className="flex gap-3 opacity-60">
-            <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-discord-secondary font-semibold text-white">
-              {t.asker.slice(1, 2)}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="font-medium text-white">{t.asker}</div>
-              <div className="mt-0.5">{t.question}</div>
-            </div>
-          </div>
+        <div className="flex min-h-[40rem] flex-col justify-end gap-4 px-4 py-4">
+          <DiscordMessage author={t.asker} color="#4e5058" time={chat.time}>
+            <p>{t.question}</p>
+          </DiscordMessage>
 
-          <AnimatePresence>
-            {frame.sent ? (
-              <motion.div
-                key="reply"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.28, ease: "easeOut" }}
-                className="flex gap-3"
+          {frame.sent ? (
+            <MessageEnter>
+              <DiscordMessage
+                time={chat.time}
+                command={chat.command(t.asker, t.picked.command)}
               >
-                <Avatar className="size-9" />
-                <div className="min-w-0 flex-1 text-sm text-discord-text">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-medium text-white">{t.app}</span>
-                    <span className="rounded bg-discord-blurple px-1 py-px text-[10px] font-semibold uppercase text-white">
-                      App
-                    </span>
-                  </div>
-                  <div className="mt-1 max-w-sm rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                    <p className="m-0 font-semibold text-white">
-                      {t.pollTitle}
-                    </p>
-                    <p className="m-0 mt-1 text-discord-muted">
-                      {t.pollOptionsLine}
-                    </p>
-                  </div>
-                  <div className="mt-2 flex gap-2">
-                    {t.options.map((option) => (
-                      <span
-                        key={option}
-                        className="rounded bg-discord-secondary px-3 py-1.5 text-xs font-medium text-white"
-                      >
-                        {option}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
+                <PollCard
+                  locale={locale}
+                  title={t.poll.title}
+                  creator={t.asker}
+                  startedAgo={t.poll.startedAgo}
+                  endsIn={t.poll.endsIn}
+                  options={t.poll.options.map((name) => ({ name, votes: 0 }))}
+                />
+              </DiscordMessage>
+            </MessageEnter>
+          ) : null}
         </div>
 
         <div className="relative px-4 pb-4">
           {frame.suggestions ? (
-              <motion.div
-                key="matching"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.14, ease: "easeOut" }}
-                className="absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg bg-discord-embed shadow-xl"
-              >
-                <div className="px-3 py-2 text-xs font-semibold tracking-wide text-discord-muted">
-                  符合 {frame.query} {t.matching}
-                </div>
-                {frame.suggestions.map((suggestion, index) => (
-                  <div
-                    key={suggestion.command}
-                    className={cn(
-                      "flex items-center gap-3 px-3 py-1.5",
-                      index === 0 && "bg-white/5",
-                    )}
-                  >
-                    <Avatar className="size-7" />
-                    <div className="min-w-0 flex-1 leading-tight">
-                      <div className="truncate font-semibold text-white">
-                        {suggestion.command}
-                      </div>
-                      <div className="truncate text-xs text-discord-muted">
-                        {suggestion.description}
-                      </div>
+            <div className={popupClass}>
+              <div className="px-3 py-2 text-xs font-semibold tracking-wide text-discord-muted">
+                符合 {frame.query} {t.matching}
+              </div>
+              {frame.suggestions.map((suggestion, index) => (
+                <div
+                  key={suggestion.command}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-1.5",
+                    index === 0 && "bg-discord-hover",
+                  )}
+                >
+                  <BotAvatar className="size-7" />
+                  <div className="min-w-0 flex-1 leading-tight">
+                    <div className="truncate font-semibold text-white">
+                      /{commandName(suggestion.command, locale)}
                     </div>
-                    <span className="hidden shrink-0 text-xs text-discord-muted sm:block">
-                      {t.app}
-                    </span>
+                    <div className="truncate text-xs text-discord-muted">
+                      {suggestion.description}
+                    </div>
                   </div>
-                ))}
-              </motion.div>
-            ) : null}
+                  <span className="hidden shrink-0 text-xs text-discord-muted sm:block">
+                    {BOT_NAME}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : null}
 
-            {frame.picked ? (
-              <motion.div
-                key="picked"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.14, ease: "easeOut" }}
-                className="absolute inset-x-4 bottom-full mb-2 overflow-hidden rounded-lg bg-discord-embed shadow-xl"
-              >
-                <div className="flex items-center gap-2 px-3 py-2">
-                  <span className="font-semibold text-white">/poll create</span>
-                  <span className="truncate text-xs text-discord-muted">
-                    {t.modalTitle}
-                  </span>
-                  <X className="ml-auto size-4 shrink-0 text-discord-muted" />
-                </div>
-                <div className="flex items-center gap-3 bg-white/5 px-3 py-2">
-                  <Avatar className="size-7" />
-                  <span className="shrink-0 font-semibold text-white">
-                    /poll create
-                  </span>
-                  <span className="text-sm text-discord-muted">
-                    {t.optionLabel}
-                  </span>
-                  <span className="truncate rounded bg-discord-option px-1.5 py-0.5 text-sm text-discord-text">
-                    {t.pollTitle}
-                  </span>
-                </div>
-              </motion.div>
-            ) : null}
+          {frame.picked ? (
+            <div className={popupClass}>
+              <div className="flex items-center gap-2 px-3 py-2">
+                <BotAvatar className="size-5" />
+                <span className="font-semibold text-white">
+                  /{commandName(t.picked.command, locale)}
+                </span>
+                <span className="truncate text-xs text-discord-muted">
+                  {t.picked.description}
+                </span>
+                <X className="ml-auto size-4 shrink-0 text-discord-muted" />
+              </div>
+              <div className="flex items-baseline gap-3 bg-discord-hover px-3 py-2">
+                <span className="shrink-0 font-semibold text-white">
+                  {optionName(t.picked.command, t.picked.option, locale)}
+                </span>
+                <span className="truncate text-discord-muted">
+                  {t.picked.optionDescription}
+                </span>
+              </div>
+            </div>
+          ) : null}
 
           <div className="flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5">
             <Plus className="size-6 shrink-0 rounded-full bg-discord-icon p-1 text-discord-input" />
             <div className="relative flex min-w-0 flex-1 flex-wrap items-center gap-1.5 py-0.5">
               {frame.typed ? (
                 frame.picked ? (
-                  <>
-                    <span className="rounded bg-discord-pill px-1.5 py-0.5 font-medium text-discord-pill-foreground">
-                      {frame.typed}
-                    </span>
-                    <span className="text-sm text-discord-muted">
-                      {t.optionLabel}:
-                    </span>
-                    <span className="text-sm text-discord-text">
-                      {t.pollTitle}
-                    </span>
-                    <span className="hidden text-sm text-discord-muted sm:inline">
-                      {t.optionsLabel}:
-                    </span>
-                    <span className="hidden text-sm text-discord-text sm:inline">
-                      {t.options.join(", ")}
-                    </span>
-                  </>
+                  <span className="rounded bg-discord-pill px-1.5 py-0.5 font-medium text-discord-pill-foreground">
+                    {frame.typed}
+                  </span>
                 ) : (
                   <span className="text-discord-text">{frame.typed}</span>
                 )
@@ -368,41 +358,39 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
             </div>
           </div>
         </div>
-        {frame.modal ? (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 px-4">
-              <div className="w-full max-w-sm overflow-hidden rounded-md bg-discord-bg shadow-2xl">
-                <div className="flex items-center justify-between px-4 pt-4 pb-3">
-                  <span className="font-semibold text-white">
-                    {t.modalTitle}
-                  </span>
-                  <X className="size-4 text-discord-muted" />
-                </div>
-                <div className="flex flex-col gap-3 px-4 pb-4">
-                  {t.modalFields.map((field) => (
-                    <div key={field.label}>
-                      <div className="text-xs font-bold text-discord-icon">
-                        {field.label}
-                        {field.hint ? (
-                          <span className="ml-1 font-normal text-discord-muted">
-                            {field.hint}
-                          </span>
-                        ) : null}
-                      </div>
-                      <div className="mt-1 whitespace-pre-line rounded-sm bg-discord-option px-2.5 py-1.5 text-discord-text">
-                        {field.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex items-center justify-end gap-4 bg-discord-embed px-4 py-3">
-                  <span className="text-discord-text">{t.cancel}</span>
-                  <span className="rounded-sm bg-discord-blurple px-4 py-1.5 font-medium text-white">
-                    {t.submit}
-                  </span>
-                </div>
-              </div>
-            </div>
+        <AnimatePresence>
+          {frame.modal ? (
+            <motion.div
+              key="modal"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { duration: 0.2, ease: "easeOut" },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.12, ease: "easeOut" },
+              }}
+              className="absolute inset-0 z-20 flex items-center justify-center bg-black/70 px-4"
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: reduced ? 1 : 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2, ease: EASE_OUT }}
+                className="w-full max-w-[480px]"
+              >
+                <DiscordModal
+                  title={t.modal.title}
+                  warning={chat.modalWarning}
+                  cancel={t.modal.cancel}
+                  submit={t.modal.submit}
+                >
+                  <DiscordTextFields fields={t.modal.fields} />
+                </DiscordModal>
+              </motion.div>
+            </motion.div>
           ) : null}
+        </AnimatePresence>
       </DiscordSurface>
 
       <div className="mt-3 flex items-center gap-3">
@@ -412,7 +400,9 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
               key={caption}
               className={cn(
                 "size-1.5 rounded-full transition-colors",
-                index === step ? "bg-discord-blurple" : "bg-discord-secondary",
+                index === frame.caption
+                  ? "bg-discord-blurple"
+                  : "bg-discord-secondary",
               )}
             />
           ))}
@@ -422,7 +412,7 @@ export function SlashCommandTour({ locale = "zh-tw" }: { locale?: Locale }) {
           className="m-0 flex items-center gap-1 text-sm text-fd-muted-foreground"
         >
           <ChevronRight className="size-4 shrink-0" />
-          {t.captions[step]}
+          {t.captions[frame.caption]}
         </p>
       </div>
     </div>

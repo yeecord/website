@@ -32,32 +32,311 @@
   --color-destructive-foreground: oklch(0.985 0 0);
 }
 
-/* Discord 深色版官方色，給文件的聊天視覺模擬元件用 */
+/* Discord 設定裡的「深色」主題（CSS 叫 darker）的色票，數值量自 Discord 網頁版，
+   給文件與首頁的聊天模擬元件用 */
 @theme {
   /* Discord 網頁版自己的 fallback 鏈。gg sans 是他們的私有字型，裝了
-     Discord 桌面版的人會吃到，其他人拿到跟 Discord 使用者一樣的替補 */
+     Discord 桌面版的人會吃到；中文在 Windows 落到微軟正黑體，Mac 落到蘋方 */
   --font-discord:
-    "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, "Noto Sans TC",
-    sans-serif;
-  --color-discord-bg: #313338;
-  --color-discord-embed: #2b2d31;
-  --color-discord-input: #383a40;
-  --color-discord-pill: #3c4270;
-  --color-discord-pill-foreground: #c9cdfb;
-  --color-discord-text: #dbdee1;
-  --color-discord-icon: #b5bac1;
-  --color-discord-placeholder: #6d6f78;
-  --color-discord-option: #1e1f22;
-  --color-discord-option-border: #7984f5;
+    "gg sans", "Noto Sans", "Microsoft JhengHei", "微軟正黑體", "PingFang TC",
+    "Noto Sans TC", "Helvetica Neue", Arial, sans-serif;
+  --font-discord-mono:
+    "gg mono", "Source Code Pro", Consolas, Menlo, Monaco, "Courier New", monospace;
+  --color-discord-bg: #1a1a1e;
+  --color-discord-embed: #121214;
+  --color-discord-chip: #202024;
+  --color-discord-card: #242429;
+  --color-discord-popover: #28282d;
+  --color-discord-highest: #2c2d32;
+  /* 聊天輸入框沒有量到，取低一層底色 */
+  --color-discord-input: #202024;
+  --color-discord-field: rgb(0 0 0 / 0.122);
+  --color-discord-pill: rgb(88 101 242 / 0.239);
+  --color-discord-pill-foreground: #a9bbff;
+  --color-discord-text: #efeff1;
+  --color-discord-strong: #fbfbfb;
+  --color-discord-subtle: #abacb2;
+  --color-discord-icon: #abacb2;
+  --color-discord-placeholder: #8f9097;
   --color-discord-avatar: #f0e6d2;
-  --color-discord-muted: #80848e;
+  --color-discord-muted: #96979e;
+  --color-discord-time: #81828a;
+  --color-discord-link: #4d96ee;
+  --color-discord-hairline: rgb(151 151 159 / 0.122);
+  --color-discord-border: rgb(151 151 159 / 0.2);
+  --color-discord-faint: rgb(151 151 159 / 0.039);
+  --color-discord-hover: rgb(151 151 159 / 0.122);
+  --color-discord-selected: rgb(151 151 159 / 0.2);
+  --color-discord-control: rgb(151 151 159 / 0.639);
+  --color-discord-control-hover: rgb(151 151 159 / 0.8);
+  --color-discord-spine: #474851;
+  --color-discord-spoiler: #666770;
+  --color-discord-spoiler-hover: #84858d;
   --color-discord-blurple: #5865f2;
+  --color-discord-blurple-hover: #4452bb;
   --color-discord-secondary: #4e5058;
-  --color-discord-success: #248046;
+  --color-discord-success: #008545;
   --color-discord-green: #23a55a;
-  --color-discord-danger: #da373c;
+  --color-discord-danger: #d22d39;
+  --color-discord-danger-text: #f87e7a;
+  --color-discord-warning: #ea9800;
   --color-discord-gold: #f0b232;
   --color-discord-fuchsia: #eb459e;
+  --ease-discord-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* 訊息裡的按鈕：舊版按鈕的小尺寸，高 32px、8px 圓角，各樣式的一般、hover、按下底色 */
+.discord-button {
+  --fill: rgb(151 151 159 / 0.122);
+  --fill-hover: rgb(151 151 159 / 0.161);
+  --fill-press: rgb(151 151 159 / 0.2);
+  --edge: rgb(151 151 159 / 0.039);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  max-width: 100%;
+  min-height: 32px;
+  padding: 3px 11px;
+  border: 1px solid var(--edge);
+  border-radius: 8px;
+  background-color: var(--fill);
+  color: var(--color-discord-strong);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  transition: background-color 200ms ease;
+}
+
+.discord-button:is([data-variant="primary"], [data-variant="premium"]) {
+  --fill: #5865f2;
+  --fill-hover: #4452bb;
+  --fill-press: #3a48a3;
+  --edge: rgb(255 255 255 / 0.078);
+  color: #fff;
+}
+
+.discord-button[data-variant="success"] {
+  --fill: #008545;
+  --fill-hover: #006c37;
+  --fill-press: #005f30;
+  --edge: rgb(255 255 255 / 0.078);
+  color: #fff;
+}
+
+.discord-button[data-variant="danger"] {
+  --fill: #d22d39;
+  --fill-hover: #a9232e;
+  --fill-press: #971d28;
+  --edge: rgb(255 255 255 / 0.078);
+  color: #fff;
+}
+
+/* modal 底部的新版按鈕：中尺寸，高 40px，hover 進場 150ms、離場 50ms */
+.discord-button[data-size="md"] {
+  min-width: 100px;
+  min-height: 40px;
+  padding: 7px 15px;
+  font-size: 16px;
+  line-height: 20px;
+  transition: background-color 50ms ease-in;
+}
+
+.discord-button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.discord-button:focus-visible {
+  outline: 2px solid #00b0f4;
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.discord-button:hover:not([aria-disabled="true"]) {
+    background-color: var(--fill-hover);
+  }
+
+  button.discord-button[data-size="md"]:hover:not([aria-disabled="true"]) {
+    transition: background-color 150ms ease-out;
+  }
+}
+
+button.discord-button:active:not([aria-disabled="true"]),
+.discord-button[data-pressed] {
+  background-color: var(--fill-press);
+}
+
+.discord-button[data-loading] > :not(.discord-dots) {
+  visibility: hidden;
+}
+
+.discord-button[data-loading] > .discord-dots {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+/* 「正在思考…」和 loading 的三個點：週期 2.4 秒，依序從 80% 大小、30% 不透明度亮起 */
+.discord-dots {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 1.75px;
+  width: 24.5px;
+  height: 7px;
+}
+
+.discord-dots > i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: discord-dot 2.4s ease-in-out infinite;
+}
+
+.discord-dots > i:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.discord-dots > i:nth-child(3) {
+  animation-delay: 1.2s;
+}
+
+@keyframes discord-dot {
+  0%,
+  50%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+
+  25% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discord-dots > i {
+    animation: none;
+  }
+}
+
+/* Text Display 裡的 markdown。container 會把內文縮成 14px、-# 縮成 12px，標題不受影響 */
+.discord-markdown {
+  overflow-wrap: anywhere;
+}
+
+.discord-container .discord-markdown {
+  font-size: 14px;
+  line-height: 19.25px;
+}
+
+.discord-markdown :is(h1, h2, h3) {
+  margin: 16px 0 8px;
+  color: var(--color-discord-strong);
+  font-weight: 700;
+  line-height: 1.375;
+}
+
+.discord-markdown h1 {
+  font-size: 24px;
+}
+
+.discord-markdown h2 {
+  font-size: 20px;
+}
+
+.discord-markdown h3 {
+  font-size: 16px;
+}
+
+.discord-markdown > :first-child {
+  margin-top: 0;
+}
+
+.discord-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.discord-markdown strong {
+  font-weight: 700;
+}
+
+.discord-markdown a {
+  color: var(--color-discord-link);
+}
+
+.discord-markdown a:hover {
+  text-decoration: underline;
+}
+
+.discord-markdown small {
+  display: block;
+  color: var(--color-discord-subtle);
+  font-size: 14px;
+  line-height: 19.25px;
+}
+
+.discord-container .discord-markdown small {
+  font-size: 12px;
+  line-height: 16.5px;
+}
+
+.discord-markdown blockquote {
+  position: relative;
+  margin: 4px 0;
+  padding-left: 16px;
+  color: var(--color-discord-subtle);
+}
+
+.discord-markdown blockquote::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--color-discord-spine);
+}
+
+.discord-markdown ul {
+  margin: 4px 0 0;
+  padding-left: 16px;
+  list-style: disc;
+}
+
+.discord-markdown li {
+  margin-bottom: 4px;
+}
+
+.discord-markdown code {
+  margin: -0.2em 0;
+  padding: 0 0.2em;
+  border: 1px solid var(--color-discord-border);
+  border-radius: 4px;
+  background: rgb(88 101 242 / 0.078);
+  font: 85% / 18px var(--font-discord-mono);
+}
+
+.discord-markdown pre {
+  margin-top: 6px;
+  padding: 0.5em;
+  overflow-x: auto;
+  border: 1px solid var(--color-discord-border);
+  border-radius: 4px;
+  background: rgb(88 101 242 / 0.078);
+  color: #e4e4e6;
+  font: 14px / 18px var(--font-discord-mono);
+}
+
+.discord-markdown pre code {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
 }
 
 :root {

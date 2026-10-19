@@ -1,16 +1,36 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
-import { ChevronDown, Hash, Lock } from "lucide-react";
-import { DiscordSurface } from "~/components/mdx/discord";
+import { AnimatePresence } from "motion/react";
+import { Hash, Lock } from "lucide-react";
+import {
+  DiscordButton,
+  DiscordContainer,
+  DiscordMessage,
+  DiscordRow,
+  DiscordSeparator,
+  DiscordStatus,
+  DiscordText,
+  Interpolate,
+  Mention,
+} from "~/components/mdx/discord";
+import {
+  DiscordModal,
+  DiscordTextFields,
+} from "~/components/mdx/discord-modal";
+import {
+  ClickHint,
+  chatCopy,
+  FlowFrame,
+  HintedButton,
+  MessageEnter,
+  Scene,
+  useLoop,
+} from "~/components/mdx/flow";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
-import { cn } from "~/utils/cn";
-import { ClickHint, Scene, StepDots, useLoop } from "~/components/mdx/flow";
 
 const T = {
   "zh-tw": {
-    placeholder: "在這裡輸入",
     flow: {
       steps: ["按下按鈕", "填寫表單", "私人討論串"],
       channel: "檢舉區",
@@ -18,37 +38,48 @@ const T = {
       panelNote: "濫用、外掛檢舉專用",
       cta: "我要檢舉",
       modalTitle: "檢舉玩家",
-      who: "被檢舉人是誰？",
-      what: "發生什麼事？",
-      story: "在語音頻道開外掛還嗆人……",
-      where: "事發頻道",
-      whereValue: "語音",
+      answers: [
+        { question: "被檢舉人是誰？", answer: "BadGuy#1234" },
+        { question: "發生什麼事？", answer: "在語音頻道開外掛還嗆人……" },
+      ],
+      cancel: "取消",
       submit: "送出",
       thread: "#0042 阿貓",
       threadTag: "私人討論串",
       member: "@阿貓",
       staff: "@管理組",
       ticketTitle: "📋 檢舉玩家 #0042",
+      claim: "接手",
       close: "結案",
+      submitted: "已送出",
+      submittedNote: "後續回覆會出現在 {channel}",
       caption: "成員只要按按鈕、填完送出，剩下的機器龍包辦",
     },
     builder: {
       steps: ["建立表單", "加題目", "發佈面板"],
-      title: "📋 檢舉玩家 (#3)",
-      empty: "（還沒有題目）",
+      title: "檢舉玩家",
+      unpublished: "還沒發佈",
+      published: "已發佈到 {channel}",
+      channel: "檢舉區",
+      notified: "新申請會通知 {roles}",
+      staff: "@管理組",
+      empty: "還沒有題目",
+      emptyNote: "沒有題目時，按鈕會直接開私人討論串",
       questions: [
-        "1. 被檢舉人是誰？（短答、必填）",
-        "2. 發生什麼事？（段落、必填）",
+        "1. 被檢舉人是誰？（短答，必填）",
+        "2. 發生什麼事？（段落，必填）",
       ],
-      published: "🟢 已發佈到 #檢舉區",
-      unpublished: "⚪ 未發佈",
-      notify: "通知：@管理組",
-      buttons: ["新增問題", "刪除問題", "發佈面板", "停用"],
+      room: "還能加 3 題",
+      publish: "發佈",
+      add: "新增題目",
+      adjust: "調整題目",
+      remove: "刪除題目",
+      settings: "設定",
+      disable: "停用",
       caption: "整個過程都在同一張管理卡上，卡片原地更新",
     },
   },
   "zh-cn": {
-    placeholder: "在这里输入",
     flow: {
       steps: ["按下按钮", "填写表单", "私密子区"],
       channel: "举报区",
@@ -56,228 +87,267 @@ const T = {
       panelNote: "滥用、外挂举报专用",
       cta: "我要举报",
       modalTitle: "举报玩家",
-      who: "被举报人是谁？",
-      what: "发生什么事？",
-      story: "在语音频道开外挂还骂人……",
-      where: "事发频道",
-      whereValue: "语音",
+      answers: [
+        { question: "被举报人是谁？", answer: "BadGuy#1234" },
+        { question: "发生什么事？", answer: "在语音频道开外挂还骂人……" },
+      ],
+      cancel: "取消",
       submit: "提交",
       thread: "#0042 阿猫",
       threadTag: "私密子区",
       member: "@阿猫",
       staff: "@管理组",
       ticketTitle: "📋 举报玩家 #0042",
+      claim: "接手",
       close: "结案",
+      submitted: "已提交",
+      submittedNote: "后续回复会出现在 {channel}",
       caption: "成员只要按按钮、填完提交，剩下的机器龙包办",
     },
     builder: {
       steps: ["创建表单", "加题目", "发布面板"],
-      title: "📋 举报玩家 (#3)",
-      empty: "（还没有题目）",
+      title: "举报玩家",
+      unpublished: "还没发布",
+      published: "已发布到 {channel}",
+      channel: "举报区",
+      notified: "新申请会通知 {roles}",
+      staff: "@管理组",
+      empty: "还没有题目",
+      emptyNote: "没有题目时，按钮会直接打开私人讨论串",
       questions: [
-        "1. 被举报人是谁？（短答、必填）",
-        "2. 发生什么事？（段落、必填）",
+        "1. 被举报人是谁？（短答，必填）",
+        "2. 发生什么事？（段落，必填）",
       ],
-      published: "🟢 已发布到 #举报区",
-      unpublished: "⚪ 未发布",
-      notify: "通知：@管理组",
-      buttons: ["新增问题", "删除问题", "发布面板", "停用"],
+      room: "还能加 3 题",
+      publish: "发布",
+      add: "新增题目",
+      adjust: "调整题目",
+      remove: "删除题目",
+      settings: "设置",
+      disable: "停用",
       caption: "整个过程都在同一张管理卡上，卡片原地更新",
     },
   },
 } satisfies Partial<Record<Locale, unknown>>;
 
-function ModalField({
-  label,
-  value,
-  placeholder,
-  select,
-  multiline,
-}: {
-  label: string;
-  value?: string;
-  placeholder: string;
-  select?: boolean;
-  multiline?: boolean;
-}) {
-  return (
-    <div>
-      <p className="mb-1 text-xs font-semibold uppercase text-discord-muted">
-        {label}
-      </p>
-      <div
-        className={cn(
-          "flex items-center justify-between rounded bg-discord-input px-2.5 py-1.5",
-          multiline && "h-14 items-start",
-        )}
-      >
-        <span className={value ? "text-discord-text" : "text-discord-placeholder"}>
-          {value ?? placeholder}
-        </span>
-        {select ? <ChevronDown className="size-4 text-discord-muted" /> : null}
-      </div>
-    </div>
-  );
-}
-
 export function FormFlowDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).flow;
-  const [step, setStep] = useLoop(t.steps.length);
+  const chat = chatCopy(locale);
+  const [step, setStep, pressing] = useLoop(t.steps.length, 3600);
+  const thread = <Mention>{t.thread}</Mention>;
 
   return (
-    <DiscordSurface className="text-sm">
-      <StepDots labels={t.steps} step={step} onPick={setStep} />
-      <div className="min-h-52">
-        <AnimatePresence mode="wait">
-          {step === 0 && (
-            <Scene id={0}>
-              <p className="mb-2 flex items-center gap-1 text-discord-muted">
-                <Hash className="size-4" />
-                {t.channel}
-              </p>
-              <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                <p className="font-semibold text-white">{t.panelTitle}</p>
-                <p className="mt-1 text-discord-muted">{t.panelNote}</p>
-              </div>
-              <span className="relative mt-2 inline-flex">
-                <span className="rounded bg-discord-blurple px-3 py-1.5 font-medium text-white">
-                  {t.cta}
-                </span>
-                <ClickHint className="-right-1 -bottom-1" />
+    <FlowFrame
+      labels={t.steps}
+      step={step}
+      onPick={setStep}
+      pressing={pressing}
+      caption={t.caption}
+      minHeightClass="min-h-[30rem]"
+    >
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <Scene id={0}>
+            <p className="mb-3 flex items-center gap-1 text-discord-muted">
+              <Hash className="size-4" />
+              {t.channel}
+            </p>
+            <DiscordMessage time={chat.time}>
+              <DiscordText>
+                <h2>{t.panelTitle}</h2>
+                <p>{t.panelNote}</p>
+              </DiscordText>
+              <DiscordRow>
+                <HintedButton variant="primary">{t.cta}</HintedButton>
+              </DiscordRow>
+            </DiscordMessage>
+          </Scene>
+        )}
+        {step === 1 && (
+          <Scene id={1}>
+            <DiscordModal
+              title={t.modalTitle}
+              warning={chat.modalWarning}
+              cancel={t.cancel}
+              submit={t.submit}
+              className="mx-auto"
+              submitPressed={pressing}
+              submitHint={<ClickHint className="-right-1 -bottom-1" />}
+            >
+              <DiscordTextFields
+                fields={t.answers.map(({ question, answer }, index) => ({
+                  label: question,
+                  value: answer,
+                  paragraph: index > 0,
+                  required: true,
+                }))}
+              />
+            </DiscordModal>
+          </Scene>
+        )}
+        {step === 2 && (
+          <Scene id={2}>
+            <p className="mb-3 flex items-center gap-1 text-discord-muted">
+              <Lock className="size-4" />
+              {t.thread}
+              <span className="ml-1 rounded bg-discord-input px-1.5 py-px text-[10px]">
+                {t.threadTag}
               </span>
-            </Scene>
-          )}
-          {step === 1 && (
-            <Scene id={1}>
-              <div className="mx-auto max-w-sm rounded-lg bg-discord-embed p-4 shadow-lg">
-                <p className="mb-3 font-semibold text-white">{t.modalTitle}</p>
-                <div className="space-y-2.5">
-                  <ModalField
-                    label={t.who}
-                    value="BadGuy#1234"
-                    placeholder={localized(T, locale).placeholder}
-                  />
-                  <ModalField
-                    label={t.what}
-                    value={t.story}
-                    placeholder={localized(T, locale).placeholder}
-                    multiline
-                  />
-                  <ModalField
-                    label={t.where}
-                    value={t.whereValue}
-                    placeholder={localized(T, locale).placeholder}
-                    select
-                  />
+            </p>
+            <DiscordMessage time={chat.time}>
+              <DiscordText>
+                <p>
+                  <Mention>{t.member}</Mention> <Mention>{t.staff}</Mention>
+                </p>
+              </DiscordText>
+              <DiscordText>
+                <h2>{t.ticketTitle}</h2>
+              </DiscordText>
+              {t.answers.map(({ question, answer }) => (
+                <div key={question} className="grid gap-2">
+                  <DiscordText>
+                    <p>
+                      <strong>{question}</strong>
+                    </p>
+                  </DiscordText>
+                  <DiscordText>
+                    <blockquote>{answer}</blockquote>
+                  </DiscordText>
                 </div>
-                <span className="relative mt-3 inline-flex">
-                  <span className="rounded bg-discord-blurple px-4 py-1.5 font-medium text-white">
-                    {t.submit}
-                  </span>
-                  <ClickHint className="-right-1 -bottom-1" />
-                </span>
-              </div>
-            </Scene>
-          )}
-          {step === 2 && (
-            <Scene id={2}>
-              <p className="mb-2 flex items-center gap-1 text-discord-muted">
-                <Lock className="size-4" />
-                {t.thread}
-                <span className="ml-1 rounded bg-discord-input px-1.5 py-px text-[10px]">
-                  {t.threadTag}
-                </span>
-              </p>
-              <p className="mb-2">
-                <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                  {t.member}
-                </span>{" "}
-                <span className="rounded bg-discord-pill px-1 text-discord-pill-foreground">
-                  {t.staff}
-                </span>
-              </p>
-              <div className="max-w-md rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-                <p className="font-semibold text-white">{t.ticketTitle}</p>
-                <p className="mt-1.5 font-semibold text-white">{t.who}</p>
-                <p className="text-discord-muted">BadGuy#1234</p>
-                <p className="mt-1.5 font-semibold text-white">{t.what}</p>
-                <p className="text-discord-muted">{t.story}</p>
-              </div>
-              <span className="mt-2 inline-flex rounded bg-discord-danger px-3 py-1.5 font-medium text-white">
-                {t.close}
-              </span>
-            </Scene>
-          )}
-        </AnimatePresence>
-      </div>
-      <p className="mt-3 text-xs text-discord-muted">{t.caption}</p>
-    </DiscordSurface>
+              ))}
+              <DiscordSeparator />
+              <DiscordRow>
+                <DiscordButton variant="primary">{t.claim}</DiscordButton>
+                <DiscordButton>{t.close}</DiscordButton>
+              </DiscordRow>
+            </DiscordMessage>
+            <MessageEnter delay={0.2} className="mt-4">
+              <DiscordMessage time={chat.time} ephemeral={chat.ephemeral}>
+                <DiscordStatus
+                  emoji="check"
+                  title={t.submitted}
+                  notes={[
+                    <Interpolate
+                      key="note"
+                      text={t.submittedNote}
+                      values={{ channel: thread }}
+                    />,
+                  ]}
+                />
+              </DiscordMessage>
+            </MessageEnter>
+          </Scene>
+        )}
+      </AnimatePresence>
+    </FlowFrame>
   );
 }
 
 export function FormBuilderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale).builder;
-  const [step, setStep] = useLoop(t.steps.length);
-  const questions = step === 0 ? [t.empty] : t.questions;
+  const chat = chatCopy(locale);
+  const [step, setStep, pressing] = useLoop(t.steps.length, 3600);
 
   return (
-    <DiscordSurface className="text-sm">
-      <StepDots labels={t.steps} step={step} onPick={setStep} />
-      <div className="rounded border-l-4 border-discord-blurple bg-discord-embed p-3">
-        <p className="font-semibold text-white">{t.title}</p>
-        <motion.p
-          layout
-          className={cn(
-            "mt-0.5 transition-colors duration-300",
-            step === 2 ? "text-discord-green" : "text-discord-muted",
+    <FlowFrame
+      labels={t.steps}
+      step={step}
+      onPick={setStep}
+      pressing={pressing}
+      caption={t.caption}
+      minHeightClass=""
+    >
+      <DiscordMessage time={chat.time} ephemeral={chat.ephemeral}>
+        <ManageCard step={step} copy={t} />
+      </DiscordMessage>
+    </FlowFrame>
+  );
+}
+
+/// The form's manage card at each step of the builder: empty, with questions, then published.
+function ManageCard({
+  step,
+  copy: t,
+}: {
+  step: number;
+  copy: (typeof T)["zh-tw"]["builder"];
+}) {
+  const empty = step === 0;
+  const published = step === 2;
+  const hinted = (index: number) =>
+    (step === 0 && index === 1) || (step === 1 && index === 0);
+  const buttons = [
+    { label: t.publish, primary: step === 1 },
+    { label: t.add, primary: empty },
+    { label: t.adjust, disabled: empty },
+    { label: t.remove, disabled: empty },
+    { label: t.settings },
+  ];
+
+  return (
+    <DiscordContainer accent>
+      <DiscordText>
+        <h2>{t.title}</h2>
+      </DiscordText>
+      <DiscordText>
+        <p>
+          {published ? (
+            <Interpolate
+              text={t.published}
+              values={{ channel: <Mention>#{t.channel}</Mention> }}
+            />
+          ) : (
+            t.unpublished
           )}
-        >
-          {step === 2 ? t.published : t.unpublished}
-        </motion.p>
-        <p className="text-discord-muted">{t.notify}</p>
-        <div className="mt-2 space-y-1">
-          <AnimatePresence initial={false}>
-            {questions.map((line) => (
-              <motion.p
-                key={line}
-                layout
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className={cn(
-                  line.startsWith("（")
-                    ? "text-discord-placeholder"
-                    : "text-discord-text",
-                )}
-              >
-                {line}
-              </motion.p>
+        </p>
+      </DiscordText>
+      <DiscordText>
+        <small>
+          <Interpolate
+            text={t.notified}
+            values={{ roles: <Mention color="#3ba55c">{t.staff}</Mention> }}
+          />
+        </small>
+      </DiscordText>
+      <DiscordSeparator divider={false} />
+      <DiscordText>
+        {empty ? (
+          <>
+            <p>{t.empty}</p>
+            <small>{t.emptyNote}</small>
+          </>
+        ) : (
+          <>
+            {t.questions.map((line) => (
+              <p key={line}>{line}</p>
             ))}
-          </AnimatePresence>
-        </div>
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {t.buttons.map((btn, index) => (
-            <span
-              key={btn}
-              className={cn(
-                "relative rounded px-2.5 py-1 text-xs font-medium text-white transition-opacity duration-300",
-                index === 2 ? "bg-discord-success" : "bg-discord-secondary",
-                step === 0 && index !== 0 && "opacity-40",
-              )}
+            <small>{t.room}</small>
+          </>
+        )}
+      </DiscordText>
+      <DiscordSeparator divider={false} />
+      <DiscordRow>
+        {buttons.map((button, index) => {
+          const variant = button.primary ? "primary" : "secondary";
+
+          return hinted(index) ? (
+            <HintedButton key={button.label} variant={variant}>
+              {button.label}
+            </HintedButton>
+          ) : (
+            <DiscordButton
+              key={button.label}
+              variant={variant}
+              disabled={button.disabled}
             >
-              {btn}
-              {step === 0 && index === 0 ? (
-                <ClickHint className="-right-1 -bottom-1" />
-              ) : null}
-              {step === 1 && index === 2 ? (
-                <ClickHint className="-right-1 -bottom-1" />
-              ) : null}
-            </span>
-          ))}
-        </div>
-      </div>
-      <p className="mt-3 text-xs text-discord-muted">{t.caption}</p>
-    </DiscordSurface>
+              {button.label}
+            </DiscordButton>
+          );
+        })}
+      </DiscordRow>
+      <DiscordRow>
+        <DiscordButton>{t.disable}</DiscordButton>
+      </DiscordRow>
+    </DiscordContainer>
   );
 }

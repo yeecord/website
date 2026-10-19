@@ -1,14 +1,31 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion } from "motion/react";
-import { HashIcon, PlusCircleIcon, Volume2Icon } from "lucide-react";
+import { motion } from "motion/react";
+import {
+  ArrowRightIcon,
+  HashIcon,
+  PlusCircleIcon,
+  Volume2Icon,
+} from "lucide-react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 import {
-  DiscordEmbed,
+  AppEmoji,
+  DiscordButton,
+  DiscordContainer,
   DiscordMessage,
-  SlashCommand,
+  DiscordRow,
+  DiscordSection,
+  DiscordSelect,
+  DiscordSeparator,
+  DiscordStatus,
+  DiscordText,
+  Interpolate,
+  Mention,
+  Timestamp,
 } from "~/components/mdx/discord";
+import { commandName } from "~/components/mdx/command-name";
+import { EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import { defaultLocale, type Locale } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
 
@@ -17,17 +34,20 @@ type ChannelId = "welcome" | "lottery" | "shop";
 const channels: Record<ChannelId, { name: Phrase; topic: Phrase }> = {
   welcome: { name: "新人報到", topic: "機器龍自動接待新成員" },
   lottery: { name: "抽獎區", topic: "辦抽獎，一條指令的事" },
-  shop: { name: "yee-的小店", topic: "掛機的人都在這裡餵恐龍" },
+  shop: { name: "夜市攤位", topic: "夜市攤位版即將推出，先來試玩" },
 };
 
 const CHANNEL_IDS: ChannelId[] = ["welcome", "lottery", "shop"];
 
 const BOT_NAME: Phrase = "YEE式機器龍";
 
-const TranslateContext = createContext<Translate>(translator(defaultLocale));
+const LocaleContext = createContext<{ locale: Locale; t: Translate }>({
+  locale: defaultLocale,
+  t: translator(defaultLocale),
+});
 
 function useT() {
-  return useContext(TranslateContext);
+  return useContext(LocaleContext).t;
 }
 
 export function DemoServer({ locale }: { locale: Locale }) {
@@ -42,7 +62,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
   }
 
   return (
-    <TranslateContext.Provider value={t}>
+    <LocaleContext.Provider value={{ locale, t }}>
       <div className="z-[2] mt-24 flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
@@ -56,24 +76,26 @@ export function DemoServer({ locale }: { locale: Locale }) {
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 24 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.4, ease: EASE_OUT }}
           className="grid overflow-hidden rounded-xl border bg-discord-bg font-discord shadow-xl md:grid-cols-[15rem_1fr]"
         >
           <Sidebar active={active} seen={seen} onOpen={open} />
           <div className="flex min-w-0 flex-col">
             <div className="flex items-center gap-2 border-white/8 border-b px-4 py-3 text-discord-text">
               <HashIcon className="size-5 text-discord-muted" />
-              <span className="font-semibold text-white">{t(channel.name)}</span>
+              <span className="font-semibold text-white">
+                {t(channel.name)}
+              </span>
               <span className="text-discord-muted text-sm max-sm:hidden">
                 {t(channel.topic)}
               </span>
             </div>
             <ChannelTabs active={active} onOpen={open} />
-            <div className="flex min-h-[21rem] flex-col p-4 text-discord-text text-sm">
+            <div className="flex min-h-[21rem] flex-col gap-4 p-4 text-discord-text text-sm">
               <div key={active} className="flex flex-col gap-4">
                 {active === "welcome" && <WelcomeScene />}
                 {active === "lottery" && <LotteryScene />}
-                {active === "shop" && <ShopScene />}
+                {active === "shop" && <StallScene />}
               </div>
               <div className="mt-auto flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 pt-2.5 text-discord-placeholder">
                 <PlusCircleIcon className="size-5 shrink-0" />
@@ -88,240 +110,547 @@ export function DemoServer({ locale }: { locale: Locale }) {
           )}
         </p>
       </div>
-    </TranslateContext.Provider>
+    </LocaleContext.Provider>
   );
 }
-
-const msgIn = {
-  initial: { opacity: 0, y: 10 },
-  animate: { opacity: 1, y: 0 },
-};
 
 function Msg({ delay, children }: { delay: number; children: ReactNode }) {
   return (
-    <motion.div
-      {...msgIn}
-      transition={{ duration: 0.3, delay }}
-      className="flex flex-col gap-4"
-    >
+    <MessageEnter delay={delay} className="flex flex-col gap-4">
       {children}
-    </motion.div>
+    </MessageEnter>
   );
 }
 
-function WelcomeScene() {
-  const t = useT();
+function useChrome() {
+  const { locale, t } = useContext(LocaleContext);
 
-  return (
-    <>
-      <Msg delay={0}>
-        <p className="text-discord-muted text-xs">
-          {t("阿龍的粉絲 剛剛加入伺服器 👋")}
-        </p>
-      </Msg>
-      <Msg delay={0.25}>
-        <DiscordMessage author={t(BOT_NAME)} bot>
-          <DiscordEmbed title={t("👋 歡迎 阿龍的粉絲！")} color="var(--color-primary)">
-            <p>{t("歡迎來到伺服器，先挑個身分組，讓大家認識你。")}</p>
-          </DiscordEmbed>
-          <RolePicker />
-        </DiscordMessage>
-      </Msg>
-    </>
-  );
-}
-
-function LotteryScene() {
-  const t = useT();
-
-  return (
-    <>
-      <Msg delay={0}>
-        <SlashCommand
-          name="giveaway create"
-          description={t("舉辦抽獎")}
-          options={[
-            { name: t("獎品"), value: t("Nitro 一個月") },
-            { name: t("得獎人數"), value: "3" },
-          ]}
-        />
-      </Msg>
-      <Msg delay={0.25}>
-        <DiscordMessage author={t(BOT_NAME)} bot>
-          <DiscordEmbed
-            title={t("🎉 抽獎開始")}
-            color="var(--color-discord-fuchsia)"
-          >
-            <p>{t("獎品：Nitro 一個月，按下面的按鈕參加！")}</p>
-          </DiscordEmbed>
-          <Lottery />
-        </DiscordMessage>
-      </Msg>
-    </>
-  );
-}
-
-function ShopScene() {
-  const t = useT();
-
-  return (
-    <>
-      <Msg delay={0}>
-        <DiscordMessage author={t("阿龍的粉絲")} bot={false} color="#e8a33d">
-          <p>/find-food</p>
-        </DiscordMessage>
-      </Msg>
-      <Msg delay={0.25}>
-        <DiscordMessage author={t(BOT_NAME)} bot>
-          <DiscordEmbed title={t("🍳 Yee 的小店")} color="var(--color-discord-gold)">
-            <p>{t("Yee 剛從河邊回來，袋子裝了七成滿，看起來心情不錯。")}</p>
-          </DiscordEmbed>
-          <FindFoodButtons />
-        </DiscordMessage>
-      </Msg>
-    </>
-  );
-}
-
-function ChatButton({
-  variant = "secondary",
-  selected,
-  onClick,
-  children,
-}: {
-  variant?: "primary" | "secondary" | "success";
-  selected?: boolean;
-  onClick?: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={clsx(
-        "inline-flex cursor-pointer items-center gap-1 rounded px-3 py-1.5 font-medium text-sm text-white transition-all active:translate-y-px",
-        variant === "primary" && "bg-discord-blurple hover:brightness-110",
-        variant === "secondary" && "bg-discord-secondary hover:brightness-110",
-        variant === "success" && "bg-discord-success hover:brightness-110",
-        selected && "ring-2 ring-white/70",
-      )}
-    >
-      {children}
-    </button>
-  );
+  return {
+    time: t("今天 21:30"),
+    ephemeral: { note: t("只有你看得到這則訊息"), dismiss: t("關閉訊息") },
+    command: (user: Phrase, path: string) => ({
+      user: t(user),
+      name: commandName(path, locale),
+      used: t("使用了"),
+    }),
+  };
 }
 
 const roles: Phrase[] = ["🎮 遊戲仔", "🌙 夜貓子", "🎨 創作者"];
 
-function RolePicker() {
+const roleColors: Record<string, string> = {
+  "🎮 遊戲仔": "#5ab4f0",
+  "🌙 夜貓子": "#c79bf2",
+  "🎨 創作者": "#f0a35a",
+};
+
+function WelcomeScene() {
   const t = useT();
-  const [picked, setPicked] = useState<Phrase>();
+  const chrome = useChrome();
+  const [held, setHeld] = useState<Phrase[]>([]);
+  const [reply, setReply] = useState<{ role: Phrase; added: boolean }>();
 
-  return (
-    <div className="flex flex-wrap gap-1.5">
-      {roles.map((role) => (
-        <ChatButton
-          key={role}
-          variant={picked === role ? "primary" : "secondary"}
-          selected={picked === role}
-          onClick={() => setPicked(role)}
-        >
-          {t(role)}
-        </ChatButton>
-      ))}
-      <AnimatePresence>
-        {picked && (
-          <motion.span
-            initial={{ opacity: 0, x: -6 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0 }}
-            className="self-center text-discord-muted text-xs"
-          >
-            {t("已領取")} {picked && t(picked)}
-          </motion.span>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+  function press(role: Phrase) {
+    const added = !held.includes(role);
 
-function Lottery() {
-  const t = useT();
-  const [joined, setJoined] = useState(false);
-  const [count, setCount] = useState(42);
-  const [burst, setBurst] = useState(0);
-
-  function join() {
-    if (joined) return;
-
-    setJoined(true);
-    setCount((c) => c + 1);
-    setBurst(Date.now());
+    setHeld((current) =>
+      added ? [...current, role] : current.filter((r) => r !== role),
+    );
+    setReply({ role, added });
   }
 
   return (
-    <div className="relative flex flex-wrap gap-1.5">
-      <ChatButton variant="primary" onClick={join}>
-        {joined ? t("已參加 ✅") : t("參加抽獎")}
-      </ChatButton>
-      <ChatButton>
-        {t("目前")}{" "}
-        <motion.span
-          key={count}
-          initial={{ scale: 1.5 }}
-          animate={{ scale: 1 }}
-          className="inline-block font-semibold"
-        >
-          {count}
-        </motion.span>{" "}
-        {t("人")}
-      </ChatButton>
-      <AnimatePresence>
-        {burst > 0 && (
-          <motion.span
-            key={burst}
-            initial={{ opacity: 1, y: 0, scale: 0.6 }}
-            animate={{ opacity: 0, y: -34, scale: 1.4 }}
-            transition={{ duration: 0.8 }}
-            className="pointer-events-none absolute left-6 select-none"
+    <>
+      <Msg delay={0}>
+        <DiscordMessage author={t(BOT_NAME)} bot time={chrome.time}>
+          <DiscordContainer accent>
+            <DiscordText>
+              <p>{t("歡迎來到 Yeecord 示範伺服器！")}</p>
+              <p>{t("點下方選項獲得身分組")}</p>
+            </DiscordText>
+            <DiscordText>
+              <small>{t("再按一次可以移除")}</small>
+            </DiscordText>
+            <DiscordRow>
+              {roles.map((role) => (
+                <DiscordButton key={role} onClick={() => press(role)}>
+                  {t(role)}
+                </DiscordButton>
+              ))}
+            </DiscordRow>
+          </DiscordContainer>
+        </DiscordMessage>
+      </Msg>
+      <Msg delay={0.2}>
+        <p className="flex items-center gap-4 text-discord-muted">
+          <ArrowRightIcon className="mx-3 size-4 text-discord-green" />
+          {t("阿龍的粉絲 剛剛加入伺服器 👋")}
+        </p>
+      </Msg>
+      <Msg delay={0.4}>
+        <DiscordMessage author={t(BOT_NAME)} bot time={chrome.time}>
+          <DiscordText>
+            <p>
+              <Interpolate
+                text={t(
+                  "歡迎 {member} 加入伺服器！先在上面挑個身分組，讓大家認識你 🎉",
+                )}
+                values={{ member: <Mention>@{t("阿龍的粉絲")}</Mention> }}
+              />
+            </p>
+          </DiscordText>
+        </DiscordMessage>
+      </Msg>
+      {reply ? (
+        <MessageEnter key={`${reply.role}-${reply.added}`}>
+          <DiscordMessage
+            author={t(BOT_NAME)}
+            bot
+            time={chrome.time}
+            ephemeral={chrome.ephemeral}
           >
-            🎉
-          </motion.span>
-        )}
-      </AnimatePresence>
-    </div>
+            <DiscordStatus
+              emoji="check"
+              title={
+                <>
+                  {t(reply.added ? "已取得" : "已移除")}{" "}
+                  <Mention color={roleColors[reply.role]}>
+                    @{t(reply.role)}
+                  </Mention>
+                </>
+              }
+              notes={[
+                <Interpolate
+                  key="note"
+                  text={t(
+                    reply.added
+                      ? "再按一次「{name}」可以移除"
+                      : "再按一次「{name}」可以取回",
+                  )}
+                  values={{ name: t(reply.role) }}
+                />,
+              ]}
+            />
+            <DiscordRow>
+              <DiscordButton onClick={() => press(reply.role)}>
+                {t("復原")}
+              </DiscordButton>
+            </DiscordRow>
+          </DiscordMessage>
+        </MessageEnter>
+      ) : null}
+    </>
   );
 }
 
-function FindFoodButtons() {
+const TITLE: Phrase = "Nitro 一個月";
+
+function LotteryScene() {
   const t = useT();
-  const [status, setStatus] = useState<Phrase>();
+  const chrome = useChrome();
+  const [joined, setJoined] = useState(false);
+  const [reply, setReply] = useState<"joined" | "already" | "left">();
+  const count = joined ? 43 : 42;
+  const channel = <Mention>#{t("抽獎區")}</Mention>;
+  const inSevenDays = <Timestamp>{t("7 天後")}</Timestamp>;
+
+  function join() {
+    setReply(joined ? "already" : "joined");
+    setJoined(true);
+  }
+
+  function leave() {
+    setJoined(false);
+    setReply("left");
+  }
+
+  const replies = {
+    joined: {
+      emoji: "check",
+      title: "已參加「{title}」",
+      note: "目前 {count} 人參加，{time}抽出 3 位得獎者，結果會公布在 {channel}",
+    },
+    already: {
+      emoji: "info",
+      title: "你已經參加「{title}」了",
+      note: "{time}抽獎，目前 {count} 人參加",
+    },
+    left: {
+      emoji: "check",
+      title: "已退出「{title}」",
+      note: "抽獎結束前，按「點我參加」就能重新加入",
+    },
+  } as const satisfies Record<
+    string,
+    { emoji: "check" | "info"; title: Phrase; note: Phrase }
+  >;
 
   return (
-    <div className="flex flex-wrap gap-1.5">
-      <ChatButton variant="primary" onClick={() => setStatus("Yee 揹起袋子出門了，明天回來收成！")}>
-        {t("帶牠去找吃的")}
-      </ChatButton>
-      <ChatButton variant="success" onClick={() => setStatus("下鍋！煮出了「河鮮味噌鍋」，Yee 眼睛都亮了。")}>
-        {t("開煮")}
-      </ChatButton>
-      <ChatButton onClick={() => setStatus("Yee 吃得很開心，感情 +1 ❤️")}>
-        {t("餵牠")}
-      </ChatButton>
-      <AnimatePresence mode="wait">
-        {status && (
-          <motion.p
-            key={status}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="w-full text-discord-muted text-xs"
+    <>
+      <Msg delay={0}>
+        <DiscordMessage
+          author={t(BOT_NAME)}
+          bot
+          time={chrome.time}
+          command={chrome.command("阿龍", "giveaway create")}
+        >
+          <DiscordContainer accent>
+            <DiscordText>
+              <h2>{t(TITLE)}</h2>
+            </DiscordText>
+            <DiscordText>
+              <small>
+                {t("抽出 3 位得獎者")} ·{" "}
+                <Interpolate
+                  text={t("抽獎會在 {date} ({time}) 結束")}
+                  values={{
+                    date: (
+                      <Timestamp>{t("2026年10月26日 星期一 21:30")}</Timestamp>
+                    ),
+                    time: inSevenDays,
+                  }}
+                />
+              </small>
+            </DiscordText>
+            <DiscordText>
+              <small>
+                <Interpolate
+                  text={t("目前 {count} 人參加")}
+                  values={{ count }}
+                />
+              </small>
+            </DiscordText>
+            <DiscordRow>
+              <DiscordButton
+                variant="primary"
+                emoji="party_popper"
+                onClick={join}
+              >
+                {t("點我參加")}
+              </DiscordButton>
+              <DiscordButton variant="danger">{t("終止抽獎")}</DiscordButton>
+            </DiscordRow>
+          </DiscordContainer>
+        </DiscordMessage>
+      </Msg>
+      {reply ? (
+        <MessageEnter key={reply}>
+          <DiscordMessage
+            author={t(BOT_NAME)}
+            bot
+            time={chrome.time}
+            ephemeral={chrome.ephemeral}
           >
-            {t(status)}
-          </motion.p>
+            <DiscordStatus
+              emoji={replies[reply].emoji}
+              title={
+                <Interpolate
+                  text={t(replies[reply].title)}
+                  values={{ title: t(TITLE) }}
+                />
+              }
+              notes={[
+                <Interpolate
+                  key="note"
+                  text={t(replies[reply].note)}
+                  values={{ count, time: inSevenDays, channel }}
+                />,
+              ]}
+            />
+            {reply === "left" ? null : (
+              <DiscordRow>
+                <DiscordButton onClick={leave}>{t("退出抽獎")}</DiscordButton>
+              </DiscordRow>
+            )}
+          </DiscordMessage>
+        </MessageEnter>
+      ) : null}
+    </>
+  );
+}
+
+// The night-market stall is the upcoming game; the docs still describe /find-food until it ships.
+const STALL: Phrase = "阿凱的滷味攤";
+
+const PLACES = [
+  {
+    value: "market",
+    label: "市場",
+    description: "常見食材比較多",
+    went: "Yee 去市場了",
+  },
+  {
+    value: "sea",
+    label: "海邊",
+    description: "可能撿到不常見的海產",
+    went: "Yee 去海邊了",
+  },
+  {
+    value: "mountain",
+    label: "山上",
+    description: "煮出一道用海邊食材的菜就會開放",
+    went: "Yee 上山了",
+  },
+] as const satisfies {
+  value: string;
+  label: Phrase;
+  description: Phrase;
+  went: Phrase;
+}[];
+
+const TRIPS = [
+  { value: "2", label: "2 小時", count: 1, back: "今晚 11:04" },
+  { value: "6", label: "6 小時", count: 3, back: "明早 3:04" },
+  { value: "12", label: "12 小時", count: 6, back: "明早 9:04" },
+  { value: "24", label: "24 小時", count: 13, back: "明晚 9:04" },
+] as const satisfies {
+  value: string;
+  label: Phrase;
+  count: number;
+  back: Phrase;
+}[];
+
+const INGREDIENTS = [
+  { value: "sweet-chili", label: "甜辣醬", description: "甜・辣" },
+  { value: "chili", label: "辣椒醬", description: "辣・鹹" },
+  { value: "peanut", label: "花生粉", description: "甜・香" },
+  { value: "soy-paste", label: "醬油膏", description: "鹹・甜" },
+  { value: "rice-blood", label: "豬血糕", description: "Q・鹹" },
+] as const satisfies { value: string; label: Phrase; description: Phrase }[];
+
+/** Guesses the board calls close to an ingredient of the answer without being one. */
+const NEAR_MISSES: string[] = ["chili", "soy-paste"];
+
+type StallScreen = "home" | "tried" | "trip" | "gone" | "board";
+
+function StallScene() {
+  const t = useT();
+  const chrome = useChrome();
+  const [screen, setScreen] = useState<StallScreen>("home");
+  const [place, setPlace] = useState("market");
+  const [trip, setTrip] = useState("12");
+  const [guess, setGuess] = useState<string>();
+  const home = (
+    <DiscordButton onClick={() => setScreen("home")}>
+      {t("回攤位")}
+    </DiscordButton>
+  );
+  const chosenTrip = TRIPS.find((option) => option.value === trip) ?? TRIPS[2];
+  const chosenPlace =
+    PLACES.find((option) => option.value === place) ?? PLACES[0];
+
+  return (
+    <Msg delay={0}>
+      <DiscordMessage
+        author={t(BOT_NAME)}
+        bot
+        time={chrome.time}
+        command={chrome.command("阿凱", "stall")}
+        ephemeral={chrome.ephemeral}
+      >
+        {screen === "home" ? (
+          <DiscordContainer>
+            <DiscordText>
+              <h2>{t(STALL)}</h2>
+              <p>{t("開張第 3 天，累計賣出 7 份")}</p>
+              <small>{t("你不在時賣了 2 份，收入 118，買的人是上班族")}</small>
+            </DiscordText>
+            <DiscordText>
+              <p>{t("Yee 從海邊回來了，帶回豆腐和台式泡菜")}</p>
+            </DiscordText>
+            <DiscordRow>
+              <DiscordButton
+                variant="primary"
+                onClick={() => setScreen("tried")}
+              >
+                {t("試做新菜（買胡椒鹽 32，一定成功）")}
+              </DiscordButton>
+              <DiscordButton onClick={() => setScreen("trip")}>
+                {t("派 Yee 出門")}
+              </DiscordButton>
+              <DiscordButton>{t("做菜")}</DiscordButton>
+            </DiscordRow>
+            <DiscordSeparator divider={false} />
+            <DiscordSection
+              accessory={
+                <DiscordButton onClick={() => setScreen("board")}>
+                  {t("去猜")}
+                </DiscordButton>
+              }
+            >
+              <DiscordText>
+                <h3>{t("研究板")}</h3>
+                <p>{t("全伺服器在猜一道「甜・辣・Q」的菜，已確定 2／3 樣")}</p>
+                <small>
+                  {t("🟩 答案裡有　🟨 答案裡沒有，但很像其中一樣　⬛ 不像")}
+                </small>
+              </DiscordText>
+            </DiscordSection>
+            <DiscordSeparator divider={false} />
+            <DiscordRow>
+              <DiscordButton>{t("背包")}</DiscordButton>
+              <DiscordButton>{t("食譜")}</DiscordButton>
+              <DiscordButton>{t("今日市場")}</DiscordButton>
+              <DiscordButton>{t("逛夜市")}</DiscordButton>
+            </DiscordRow>
+            <DiscordText>
+              <small>{t("體力 240／240，另外存了 210　金幣 902")}</small>
+            </DiscordText>
+          </DiscordContainer>
+        ) : null}
+        {screen === "tried" ? (
+          <DiscordContainer>
+            <DiscordText>
+              <h3>
+                <AppEmoji name="party_popper" /> {t("學會新菜「胡椒鹽豆腐」")}
+              </h3>
+              <p>{t("煮了 4 份，每份 58，已經上架")}</p>
+              <small>{t("買了胡椒鹽，花 32 金幣、20 體力")}</small>
+            </DiscordText>
+            <DiscordRow>
+              <DiscordButton
+                variant="primary"
+                onClick={() => setScreen("home")}
+              >
+                {t("回攤位")}
+              </DiscordButton>
+            </DiscordRow>
+          </DiscordContainer>
+        ) : null}
+        {screen === "trip" ? (
+          <DiscordContainer>
+            <DiscordText>
+              <h2>{t("派 Yee 出門")}</h2>
+              <small>{t("東西會一直等你，晚點回來也不會壞")}</small>
+            </DiscordText>
+            <DiscordSelect
+              placeholder={t("去哪裡")}
+              value={[place]}
+              onChange={([value]) => setPlace(value ?? place)}
+              options={PLACES.map((option) => ({
+                value: option.value,
+                label: t(option.label),
+                description: t(option.description),
+              }))}
+            />
+            <DiscordSelect
+              placeholder={t("去多久")}
+              value={[trip]}
+              onChange={([value]) => setTrip(value ?? trip)}
+              options={TRIPS.map((option) => ({
+                value: option.value,
+                label: t(option.label),
+                description: (
+                  <Interpolate
+                    text={t("約 {count} 樣，{back} 回來")}
+                    values={{
+                      count: option.count,
+                      back: t(option.back),
+                    }}
+                  />
+                ),
+              }))}
+            />
+            <DiscordRow>
+              <DiscordButton
+                variant="primary"
+                onClick={() => setScreen("gone")}
+              >
+                {t("出門")}
+              </DiscordButton>
+              {home}
+            </DiscordRow>
+          </DiscordContainer>
+        ) : null}
+        {screen === "gone" ? (
+          <>
+            <DiscordStatus
+              emoji="check"
+              title={t(chosenPlace.went)}
+              notes={[
+                <Interpolate
+                  text={t("{back} 回來，大約帶回 {count} 樣")}
+                  values={{
+                    back: t(chosenTrip.back),
+                    count: chosenTrip.count,
+                  }}
+                />,
+              ]}
+            />
+            <DiscordRow>{home}</DiscordRow>
+          </>
+        ) : null}
+        {screen === "board" ? (
+          <DiscordContainer>
+            <DiscordText>
+              <h2>{t("研究板")}</h2>
+              <p>{t("這道菜嚐起來「甜・辣・Q」，一共 3 樣食材")}</p>
+              <p>{t("已確定魚漿和白蘿蔔")}</p>
+            </DiscordText>
+            <DiscordText>
+              <h3>{t("昨天的嘗試")}</h3>
+              <p>{t("🟩🟩🟨 魚漿、白蘿蔔、辣椒醬")}</p>
+              <small>{t("小美")}</small>
+              <p>{t("🟩⬛⬛ 魚漿、豬血糕、花生粉")}</p>
+              <small>{t("阿明")}</small>
+            </DiscordText>
+            {guess ? (
+              <>
+                <DiscordSeparator divider={false} />
+                <BoardResult guess={guess} />
+              </>
+            ) : null}
+            {guess === "sweet-chili" ? null : (
+              <DiscordSelect
+                placeholder={t("選第三樣，免費試味道（今天還能猜 3 次）")}
+                value={guess ? [guess] : []}
+                onChange={([value]) => setGuess(value)}
+                options={INGREDIENTS.map((option) => ({
+                  value: option.value,
+                  label: t(option.label),
+                  description: t(option.description),
+                }))}
+              />
+            )}
+            <DiscordRow>{home}</DiscordRow>
+          </DiscordContainer>
+        ) : null}
+      </DiscordMessage>
+    </Msg>
+  );
+}
+
+function BoardResult({ guess }: { guess: string }) {
+  const t = useT();
+  const ingredient = INGREDIENTS.find((option) => option.value === guess);
+
+  if (guess === "sweet-chili") {
+    return (
+      <DiscordText>
+        <p>
+          <AppEmoji name="party_popper" /> {t("🟩🟩🟩 猜中了，是「甜不辣」")}
+        </p>
+        <p>{t("你和小美、阿明都學會了這道菜")}</p>
+      </DiscordText>
+    );
+  }
+
+  return (
+    <DiscordText>
+      <p>
+        {ingredient && NEAR_MISSES.includes(guess) ? (
+          <Interpolate
+            text={t("🟩🟩🟨 {name}很像其中一樣，但不是它")}
+            values={{
+              name: t(ingredient.label),
+            }}
+          />
+        ) : (
+          t("🟩🟩⬛ 不像答案裡的任何一樣")
         )}
-      </AnimatePresence>
-    </div>
+      </p>
+      <small>{t("今天還能猜 2 次")}</small>
+    </DiscordText>
   );
 }
 
@@ -416,7 +745,9 @@ function Sidebar({
           className="size-8 rounded-full bg-discord-avatar p-0.5"
         />
         <div className="min-w-0 leading-tight">
-          <p className="truncate font-medium text-sm text-white">{t(BOT_NAME)}</p>
+          <p className="truncate font-medium text-sm text-white">
+            {t(BOT_NAME)}
+          </p>
           <p className="text-discord-muted text-xs">
             {t("陪 350,000 個伺服器玩耍中")}
           </p>

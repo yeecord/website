@@ -2,23 +2,97 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { MousePointer2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { DiscordSurface } from "~/components/mdx/discord";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import {
+  BOT_NAME,
+  DiscordButton,
+  type DiscordButtonVariant,
+  DiscordSurface,
+  Interpolate,
+} from "~/components/mdx/discord";
+import { commandName } from "~/components/mdx/command-name";
+import type { Locale } from "~/i18n";
+import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
 
+export const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+
+const CHAT = {
+  "zh-tw": {
+    time: "今天 21:30",
+    used: "使用了",
+    ephemeral: { note: "只有你看得到這則訊息", dismiss: "關閉訊息" },
+    modalWarning: "這份表單會送給 {app}，請不要分享密碼或其他敏感資訊。",
+  },
+  "zh-cn": {
+    time: "今天 21:30",
+    used: "使用了",
+    ephemeral: { note: "只有你能看到这条消息", dismiss: "关闭消息" },
+    modalWarning: "这份表单会提交给 {app}，请不要分享密码或其他敏感信息。",
+  },
+} satisfies Partial<Record<Locale, unknown>>;
+
+/// The chat chrome every demo message shares: its time, the reply line, the ephemeral note
+/// and the modal's submit warning.
+export function chatCopy(locale: Locale) {
+  const chat = localized(CHAT, locale);
+
+  return {
+    ...chat,
+    command: (user: string, path: string) => ({
+      user,
+      name: commandName(path, locale),
+      used: chat.used,
+    }),
+    modalWarning: (
+      <Interpolate
+        text={chat.modalWarning}
+        values={{ app: <strong>{BOT_NAME}</strong> }}
+      />
+    ),
+  };
+}
+
+/** How long before a step ends the hinted button shows as pressed. */
+const PRESS_LEAD = 360;
+
+/// Cycles `steps` every `interval` ms; `pressing` turns on just before each advance.
 export function useLoop(steps: number, interval = 3200) {
   const [step, setStep] = useState(0);
+  const [pressing, setPressing] = useState(false);
 
   // setTimeout keyed on step so picking a dot restarts the full interval
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setPressing(false);
+
+    const press = setTimeout(
+      () => setPressing(true),
+      Math.max(interval - PRESS_LEAD, 0),
+    );
+    const advance = setTimeout(() => {
       setStep((current) => (current + 1) % steps);
     }, interval);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(press);
+      clearTimeout(advance);
+    };
   }, [step, steps, interval]);
 
-  return [step, setStep] as const;
+  return [step, setStep, pressing] as const;
+}
+
+const PressingContext = createContext(false);
+
+/// Whether the flow around this component is about to press its hinted button.
+export function usePressing() {
+  return useContext(PressingContext);
 }
 
 export function StepDots({
@@ -38,7 +112,7 @@ export function StepDots({
           type="button"
           onClick={() => onPick(index)}
           className={cn(
-            "rounded-full px-2.5 py-1 text-xs transition-colors duration-300",
+            "rounded-full px-2.5 py-1 text-xs transition-colors duration-200",
             index === step
               ? "bg-discord-blurple text-white"
               : "bg-discord-embed text-discord-muted hover:text-discord-text",
@@ -51,16 +125,44 @@ export function StepDots({
   );
 }
 
-export function Scene({ children, id }: { children: React.ReactNode; id: number }) {
+/// One screen of a flow, for a step that swaps the whole view rather than adding a message.
+export function Scene({ children, id }: { children: ReactNode; id: number }) {
   const reduce = useReducedMotion();
 
   return (
     <motion.div
       key={id}
-      initial={{ opacity: 0, y: reduce ? 0 : 10 }}
+      initial={{ opacity: 0, y: reduce ? 0 : 8 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.24, ease: EASE_OUT },
+      }}
+      exit={{ opacity: 0, transition: { duration: 0.12, ease: "easeOut" } }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/// A message arriving in the chat: a short rise and fade, never a scale.
+export function MessageEnter({
+  delay = 0,
+  className,
+  children,
+}: {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+}) {
+  const reduce = useReducedMotion();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: reduce ? 0 : 8 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: reduce ? 0 : -10 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      transition={{ duration: 0.24, ease: EASE_OUT, delay }}
+      className={className}
     >
       {children}
     </motion.div>
@@ -68,14 +170,40 @@ export function Scene({ children, id }: { children: React.ReactNode; id: number 
 }
 
 export function ClickHint({ className }: { className?: string }) {
+  const pressing = usePressing();
+  const reduce = useReducedMotion();
+
   return (
     <motion.span
       className={cn("pointer-events-none absolute text-white", className)}
-      animate={{ scale: [1, 0.82, 1] }}
-      transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, scale: pressing && !reduce ? 0.85 : 1 }}
+      transition={{ duration: 0.12, ease: "easeOut" }}
     >
       <MousePointer2 className="size-4 drop-shadow" />
     </motion.span>
+  );
+}
+
+/// A button with the demo cursor on it, pressed on the flow's beat.
+export function HintedButton({
+  variant,
+  emoji,
+  children,
+}: {
+  variant?: DiscordButtonVariant;
+  emoji?: string;
+  children: ReactNode;
+}) {
+  const pressing = usePressing();
+
+  return (
+    <span className="relative inline-flex">
+      <DiscordButton variant={variant} emoji={emoji} pressed={pressing}>
+        {children}
+      </DiscordButton>
+      <ClickHint className="-right-1 -bottom-1" />
+    </span>
   );
 }
 
@@ -83,6 +211,7 @@ export function FlowFrame({
   labels,
   step,
   onPick,
+  pressing = false,
   caption,
   children,
   minHeightClass = "min-h-44",
@@ -90,14 +219,17 @@ export function FlowFrame({
   labels: string[];
   step: number;
   onPick: (index: number) => void;
+  pressing?: boolean;
   caption: string;
-  children: React.ReactNode;
+  children: ReactNode;
   minHeightClass?: string;
 }) {
   return (
     <DiscordSurface className="text-sm">
       <StepDots labels={labels} step={step} onPick={onPick} />
-      <div className={minHeightClass}>{children}</div>
+      <PressingContext.Provider value={pressing}>
+        <div className={minHeightClass}>{children}</div>
+      </PressingContext.Provider>
       <p className="mt-3 text-xs text-discord-muted">{caption}</p>
     </DiscordSurface>
   );

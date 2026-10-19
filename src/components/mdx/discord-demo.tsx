@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { Check, GripVertical, X } from "lucide-react";
-import { useEffect, useState } from "react";
 import { DiscordSurface } from "~/components/mdx/discord";
+import { useLoop } from "~/components/mdx/flow";
 import type { Locale } from "~/i18n";
 import { localized } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
@@ -43,23 +43,10 @@ const T = {
 
 const roleColors = ["#e67e22", "#3498db", "#2ecc71", "#9b59b6"];
 
-function useLoop(steps: number, interval = 1600) {
-  const [step, setStep] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setStep((current) => (current + 1) % steps);
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, [steps, interval]);
-
-  return step;
-}
 
 export function RoleOrderDemo({ locale = "zh-tw" }: { locale?: Locale }) {
   const t = localized(T, locale);
-  const step = useLoop(2, 2200);
+  const [step] = useLoop(2, 2200);
   const roles = t.roles.map((name, i) => ({ name, color: roleColors[i] }));
   const botRole = { name: t.bot, color: "var(--color-discord-blurple)" };
   const list =
@@ -122,7 +109,7 @@ export function ChannelPermissionDemo({
 }) {
   const t = localized(T, locale);
   const rows = permissions ?? t.permissions;
-  const step = useLoop(rows.length + 1, 1800);
+  const [step] = useLoop(rows.length + 1, 1800);
 
   return (
     <DiscordSurface className="text-sm">
