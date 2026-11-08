@@ -143,7 +143,7 @@ export function DiscordSelect({
   }
 
   const optionHeight = (option: SelectOption) =>
-    kind === "string" ? (option.description ? 56 : 38) : 48;
+    kind === "string" ? (option.description ? 56 : 38) : 44;
   const menuHeight =
     options
       .slice(0, VISIBLE_OPTIONS)
@@ -242,7 +242,7 @@ export function DiscordSelect({
                     onClick={interactive ? () => pick(option) : undefined}
                     className={cn(
                       "group flex items-center gap-2",
-                      kind === "string" ? "p-2" : "p-3",
+                      kind === "string" ? "p-2" : "h-11 px-3",
                       selected && !checkboxes
                         ? "bg-discord-selected"
                         : "hover:bg-discord-hover",
