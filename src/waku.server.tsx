@@ -9,6 +9,8 @@ const modules = import.meta.glob("./pages/**/*.{ts,tsx,js,jsx}", {
 });
 
 const router = await createRouter(pressConfig);
+import.meta.hot?.dispose(router.dispose);
+
 const pages = router.createPages(fsRouterFn(modules));
 const middlewareFns = router.createMiddlewares();
 const adapter = router.patchAdapter(_adapter);

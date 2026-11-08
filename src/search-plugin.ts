@@ -1,27 +1,24 @@
 import { createTokenizer } from "@orama/tokenizers/mandarin";
-import type { ServerPlugin } from "fumapress";
+import { createFromSource } from "fumadocs-core/search/server";
+import type { LoaderConfig } from "fumadocs-core/source";
+import type { AppShape, Plugin } from "fumapress";
+import SearchDialog from "~/components/search-dialog";
 import { localeCodes, locales } from "~/i18n";
-import type { PressContext } from "../press.config";
+import { searchIndexPath } from "~/search-index";
 
-// fumapress 的 oramaSearchPlugin 沒開放 localeMap，zh-tw/cn 會被 Orama 當成不支援的語言，
-// 這裡自己註冊 search API 並掛上 mandarin tokenizer
-export function searchPlugin(): ServerPlugin<PressContext> {
+// fumapress 的 oramaSearchPlugin 沒開放 localeMap，zh-tw/cn 會被當成不支援的語言，
+// 這裡自己匯出 search index 並掛上 mandarin tokenizer
+export function searchPlugin<C extends AppShape>(): Plugin<C> {
   return {
-    name: "core:orama-search",
-    init() {
-      (this.data["core:provider"] ??= []).push((props) => {
-        props.search ??= { enabled: true };
-
-        return props;
-      });
+    name: "search",
+    providerProps() {
+      return { search: { SearchDialog } };
     },
-    async createPages({ createApiIsomorphic }) {
-      const { createFromSource } = await import("fumadocs-core/search/server");
-
+    routes({ createApi }) {
       const mandarin = {
         components: { tokenizer: createTokenizer() },
       };
-      const server = createFromSource(() => this.getLoader(), {
+      const server = createFromSource<LoaderConfig>(() => this.getLoader(), {
         // only the CJK languages need the mandarin tokenizer, Orama handles the
         // rest with its own defaults
         localeMap: Object.fromEntries(
@@ -30,29 +27,25 @@ export function searchPlugin(): ServerPlugin<PressContext> {
             .map((locale) => [locale, mandarin]),
         ),
         buildIndex: async (page) => {
-          for (const adapter of this.adapters) {
-            const structuredData = await adapter[
-              "core:get-structured-data"
-            ]?.call(this, page);
+          const [{ title, description }, structuredData] = await Promise.all([
+            this.getPageData(page),
+            this.getPageStructuredData(page),
+          ]);
 
-            if (structuredData !== undefined)
-              return {
-                id: page.url,
-                title: page.data.title ?? page.path,
-                description: page.data.description,
-                url: page.url,
-                structuredData,
-              };
-          }
-
-          throw new Error(`No structured data for ${page.url}`);
+          return {
+            id: page.url,
+            title,
+            description,
+            url: page.url,
+            structuredData: structuredData ?? { headings: [], contents: [] },
+          };
         },
       });
 
-      createApiIsomorphic({
+      createApi({
         render: "static",
-        path: "/api/search",
-        handler: server.staticGET,
+        path: searchIndexPath,
+        GET: () => server.staticGET(),
       });
     },
   };

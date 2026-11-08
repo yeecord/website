@@ -1,11 +1,12 @@
 import { blogAuthors } from "~/config";
 import Link from "fumadocs-core/link";
-import type { PressContext } from "../../../press.config";
+import type { RenderPageProps } from "fumapress";
+import type { app } from "../../../press.config";
 import { cn } from "~/utils/cn";
 
-export type BlogPost = Extract<PressContext["page"], { type: "blog" }>;
+export type BlogPage = RenderPageProps<typeof app, "blog">["page"];
 
-export function BlogItem({ page }: { page: BlogPost }) {
+export function BlogItem({ page }: { page: BlogPage }) {
   return (
     <Link
       href={page.url}

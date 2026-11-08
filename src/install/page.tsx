@@ -13,8 +13,6 @@ export function InstallPage({ locale }: { locale: Locale }) {
   return (
     <HomeLayout {...localizedLayout(locale)}>
       <LocalizedMeta
-        locale={locale}
-        path="/install"
         title={t("安裝 YEE 式機器龍")}
         description={t(
           "權限自己勾，勾多少拿多少。也可以裝到自己的帳號上，私訊和任何伺服器都能用。",

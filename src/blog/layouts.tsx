@@ -1,83 +1,39 @@
-import {
-  blogAuthors,
-  canonicalUrl,
-  domain,
-  footer,
-  type AuthorData,
-} from "~/config";
+import type { BlogPost, TagInfo } from "@fumapress/blog";
+import { blogAuthors, domain, footer, type AuthorData } from "~/config";
 import Link from "fumadocs-core/link";
 import { DocsBody } from "fumadocs-ui/page";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
-import { getPressContext } from "fumapress";
-import type {
-  BlogIndexPage,
-  BlogLayout,
-  BlogLayoutPage,
-  BlogTagPage as BlogTagPageType,
-  BlogTagsPage,
-} from "fumapress/plugins/blog";
 import { EyeIcon } from "lucide-react";
 import { Fragment, type ReactNode } from "react";
 import Footer from "~/components/Footer";
-import { BlogItem, type BlogPost } from "~/components/blog/BlogItem";
+import { BlogItem, type BlogPage } from "~/components/blog/BlogItem";
 import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/utils/cn";
-import { getTagHref } from "~/utils/tags";
-import { contentPath, toLocale, type Locale } from "~/i18n";
+import { contentPath, type Locale } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { baseOptions } from "~/layout-config";
-import type { PressContext } from "../../press.config";
 
-async function getBlogPages(lang?: string) {
-  const ctx = getPressContext<PressContext>();
-  const source = await ctx.getLoader();
+type Post = BlogPost<BlogPage>;
 
-  return source
-    .getPages(lang)
-    .filter((page): page is BlogPost => page.type === "blog")
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-}
-
-async function renderBody(page: BlogPost): Promise<ReactNode> {
-  const ctx = getPressContext<PressContext>();
-
-  for (const adapter of ctx.adapters) {
-    const body = await adapter["core:render-body"]?.call(ctx, page);
-    if (body !== undefined) return body;
-  }
-
-  throw new Error(`[blog] no adapter can render ${page.url}`);
-}
-
-function Meta({
-  title,
-  description,
-  path,
-  image,
-}: {
-  title: string;
-  description?: string;
-  path: string;
-  image?: string;
-}) {
+function Meta({ title, description }: { title: string; description?: string }) {
   return (
     <>
       <title>{title}</title>
-      <link rel="canonical" href={canonicalUrl(path)} />
       <meta property="og:title" content={title} />
       {description && <meta name="description" content={description} />}
       {description && <meta property="og:description" content={description} />}
-      <meta
-        property="og:image"
-        content={image ?? `${domain}/opengraph-image.png`}
-      />
+      <meta property="og:image" content={`${domain}/opengraph-image.png`} />
     </>
   );
 }
 
-export const BlogSiteLayout: BlogLayout<PressContext> = ({ lang, children }) => {
-  const locale = toLocale(lang);
-
+export function BlogShell({
+  locale,
+  children,
+}: {
+  locale: Locale;
+  children: ReactNode;
+}) {
   return (
     <HomeLayout {...baseOptions(locale)}>
       <div className="container mx-auto flex max-w-[1400px] flex-1 flex-col px-4">
@@ -86,19 +42,22 @@ export const BlogSiteLayout: BlogLayout<PressContext> = ({ lang, children }) => 
       <Footer categories={footer(locale)} />
     </HomeLayout>
   );
-};
+}
 
-export const BlogIndex: BlogIndexPage<PressContext> = async ({ lang }) => {
-  const locale = toLocale(lang);
+export function BlogIndex({
+  locale,
+  posts,
+}: {
+  locale: Locale;
+  posts: Post[];
+}) {
   const t = translator(locale);
-  const pages = await getBlogPages(lang);
 
   return (
     <main className="flex flex-1 flex-col pb-20">
       <Meta
         title="Yeecord Blog"
         description="YEE 式機器龍各種用肝和 ❤️ 製作的部落格"
-        path={contentPath(locale, "/blog")}
       />
       <div
         className="py-16"
@@ -131,7 +90,7 @@ export const BlogIndex: BlogIndexPage<PressContext> = async ({ lang }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {pages.map((page) => (
+        {posts.map(({ page }) => (
           <BlogItem key={page.url} page={page} />
         ))}
       </div>
@@ -155,33 +114,27 @@ export const BlogIndex: BlogIndexPage<PressContext> = async ({ lang }) => {
       </div>
     </main>
   );
-};
+}
 
-export const BlogPage: BlogLayoutPage<PressContext> = async ({
-  page,
-  lang,
-}) => {
-  if (page.type !== "blog") throw new Error("not a blog page");
-
-  const locale = toLocale(lang);
-  const body = await renderBody(page);
-  const pages = await getBlogPages(lang);
-  const index = pages.findIndex((entry) => entry.url === page.url);
-  const newer = index > 0 ? pages[index - 1] : undefined;
-  const older = index >= 0 ? pages[index + 1] : undefined;
-
+export function BlogPostPage({
+  locale,
+  post: { page, tags },
+  newer,
+  older,
+  body,
+}: {
+  locale: Locale;
+  post: Post;
+  newer?: Post;
+  older?: Post;
+  body: ReactNode;
+}) {
   return (
     <main
       className="mx-auto w-full max-w-[800px] py-10 sm:py-20"
       itemType="http://schema.org/Article"
       itemScope
     >
-      <Meta
-        title={`${page.data.title} - Yeecord Blog`}
-        description={page.data.description}
-        path={page.url}
-        image={`${domain}${page.url.replace(/\/$/, "")}.webp`}
-      />
       <h1 className="mb-2 font-bold text-3xl leading-normal" itemProp="name">
         {page.data.title}
       </h1>
@@ -205,11 +158,11 @@ export const BlogPage: BlogLayoutPage<PressContext> = async ({
         </p>
       </div>
       <DocsBody>{body}</DocsBody>
-      <PostFooter page={page} locale={locale} />
-      <AdjacentPosts locale={locale} newer={newer} older={older} />
+      <PostFooter page={page} tags={tags} locale={locale} />
+      <AdjacentPosts locale={locale} newer={newer?.page} older={older?.page} />
     </main>
   );
-};
+}
 
 function AdjacentPosts({
   locale,
@@ -217,8 +170,8 @@ function AdjacentPosts({
   older,
 }: {
   locale: Locale;
-  newer?: BlogPost;
-  older?: BlogPost;
+  newer?: BlogPage;
+  older?: BlogPage;
 }) {
   const t = translator(locale);
 
@@ -300,17 +253,25 @@ function SmallAuthor({ author }: { author: AuthorData }) {
   );
 }
 
-function PostFooter({ page, locale }: { page: BlogPost; locale: Locale }) {
+function PostFooter({
+  page,
+  tags,
+  locale,
+}: {
+  page: BlogPage;
+  tags: TagInfo[];
+  locale: Locale;
+}) {
   const t = translator(locale);
 
   return (
     <div className="mt-20 flex flex-col gap-6">
       <div className="flex flex-row flex-wrap gap-2 text-base">
         <p>{t("標籤")}</p>
-        {page.data.tags.map((tag) => (
+        {tags.map(({ tag, url }) => (
           <Link
             key={tag}
-            href={getTagHref(locale, tag)}
+            href={url}
             className="rounded-md bg-primary/10 px-1 py-0.5 text-primary text-sm"
           >
             # {tag}
@@ -350,26 +311,18 @@ function PostFooter({ page, locale }: { page: BlogPost; locale: Locale }) {
   );
 }
 
-export const BlogTags: BlogTagsPage<PressContext> = async ({ lang }) => {
-  const locale = toLocale(lang);
+export function BlogTags({
+  locale,
+  tags,
+}: {
+  locale: Locale;
+  tags: TagInfo[];
+}) {
   const t = translator(locale);
-  const pages = await getBlogPages(lang);
-  const tags = new Map<string, number>();
-
-  for (const page of pages) {
-    for (const tag of page.data.tags) {
-      tags.set(tag, (tags.get(tag) ?? 0) + 1);
-    }
-  }
-
-  const sorted = [...tags.entries()].sort((a, b) => b[1] - a[1]);
 
   return (
     <main className="my-16 flex w-full flex-col gap-3">
-      <Meta
-        title="所有標籤 - Yeecord Blog"
-        path={contentPath(locale, "/blog/tags")}
-      />
+      <Meta title="所有標籤 - Yeecord Blog" />
       <div className="mb-3 flex flex-col items-center gap-3 text-center">
         <h1 className="mb-4 font-bold text-5xl">{t("所有標籤")}</h1>
         <Link
@@ -381,10 +334,10 @@ export const BlogTags: BlogTagsPage<PressContext> = async ({ lang }) => {
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {sorted.map(([tag, count]) => (
+        {tags.map(({ tag, count, url }) => (
           <Link
             key={tag}
-            href={getTagHref(locale, tag)}
+            href={url}
             className="flex flex-row justify-between gap-3 rounded-md border bg-card p-2 text-card-foreground"
           >
             <span className="font-medium">{tag}</span>
@@ -394,26 +347,23 @@ export const BlogTags: BlogTagsPage<PressContext> = async ({ lang }) => {
       </div>
     </main>
   );
-};
+}
 
-export const BlogTagPage: BlogTagPageType<PressContext> = async ({
+export function BlogTagPage({
+  locale,
   tag,
-  lang,
-}) => {
-  const locale = toLocale(lang);
+  posts,
+}: {
+  locale: Locale;
+  tag: TagInfo;
+  posts: Post[];
+}) {
   const t = translator(locale);
-  const decodedTag = decodeURIComponent(tag);
-  const pages = (await getBlogPages(lang)).filter((page) =>
-    page.data.tags.some((entry) => entry.toLowerCase() === decodedTag),
-  );
-  const heading = t("帶有「{tag}」標籤的文章").replace("{tag}", decodedTag);
+  const heading = t("帶有「{tag}」標籤的文章").replace("{tag}", tag.tag);
 
   return (
     <main className="my-16 flex w-full flex-1 flex-col gap-5">
-      <Meta
-        title={`${heading} - Yeecord Blog`}
-        path={contentPath(locale, `/blog/tags/${tag}`)}
-      />
+      <Meta title={`${heading} - Yeecord Blog`} />
       <div className="mb-5 flex flex-col items-center gap-5 text-center">
         <h1 className="mb-4 font-bold text-3xl">{heading}</h1>
 
@@ -425,10 +375,10 @@ export const BlogTagPage: BlogTagPageType<PressContext> = async ({
         </Link>
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {pages.map((page) => (
+        {posts.map(({ page }) => (
           <BlogItem key={page.url} page={page} />
         ))}
       </div>
     </main>
   );
-};
+}
