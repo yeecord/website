@@ -17,3 +17,8 @@ export const i18n = defineI18n({
   languages: localeCodes,
   defaultLanguage: defaultLocale,
 });
+
+export const translations = localeCodes.reduce(
+  (builder, locale) => builder.preset(locale, uiPresets[locale]()),
+  i18n.translations(),
+);

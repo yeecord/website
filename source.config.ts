@@ -1,10 +1,6 @@
 import { defineConfig, defineDocs } from "fumadocs-mdx/config";
-import {
-  blogMetaSchema,
-  blogPageSchema,
-  metaSchema,
-  pageSchema,
-} from "fumapress/adapters/mdx/schema";
+import { blogMetaSchema, blogPageSchema } from "@fumapress/blog/schema";
+import { metaSchema, pageSchema } from "fumapress/schema";
 import { z } from "zod";
 
 export const docs = defineDocs({
