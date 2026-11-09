@@ -54,13 +54,12 @@ export const en = {
   安裝到我的帳號: "Add to my account",
   "Yeecord - 萬中選一的 Discord 機器人":
     "Yeecord - the one Discord bot you keep",
-  "YEE 式機器龍用全中文介面提供抽獎、身分組、動態語音和找吃的小遊戲，已有 35 萬個伺服器安裝":
-    "Yeecord offers giveaways, roles, dynamic voice channels and a small food-hunting game in a fully localized interface. More than 350,000 servers have installed it.",
-  一隻恐龍: "One dinosaur",
-  搞定整個: "runs your whole ",
-  伺服器: "server",
-  "抽獎、身分組、動態語音，還有找吃的小遊戲，介面全中文，免費使用":
-    "Giveaways, roles, dynamic voice channels, plus a small food-hunting game. The interface is fully localized and free to use.",
+  "YEE 式機器龍用全中文介面提供抽獎、身分組和動態語音，已有 35 萬個伺服器安裝":
+    "Yeecord offers giveaways, roles and dynamic voice channels in a fully localized interface. More than 350,000 servers have installed it.",
+  "伺服器的雜事，": "Server chores? ",
+  "恐龍包了": "The dinosaur has them",
+  "發身分組、辦抽獎、開語音房，介面全中文，免費使用":
+    "It hands out roles, runs giveaways and opens voice rooms. Fully localized and free to use.",
   安裝機器人: "Install the bot",
   看使用教學: "Read the docs",
   "APEX Taiwan、VALORANT Taiwan 等": "APEX Taiwan, VALORANT Taiwan and",
@@ -124,11 +123,6 @@ export const en = {
     "My English is not good, but nothing here needs figuring out. I can just use it",
   "牠簡化了管理流程，大大提高了人員管理的效率":
     "It cut our moderation process down and made handling people much faster",
-  來玩一場: "Play a round",
-  得分: "Score",
-  再來一次: "Play again",
-  空白鍵或點擊跳躍: "Space or tap to jump",
-  跳: "Jump",
   把機器龍帶回家: "Take the dinosaur home",
   "安裝免費，設定時遇到問題，到 Discord 社群問":
     "Installation is free. If setup gets stuck, ask in the Discord community.",

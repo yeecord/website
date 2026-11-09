@@ -62,7 +62,7 @@ const siteHead: HeadTag[] = [
     tag: "link",
     attrs: {
       rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Noto+Sans+TC:wght@400;500;700&display=swap",
+      href: "https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Noto+Sans+TC:wght@400;500;700&family=Chiron+GoRound+TC:wght@500;800&display=swap",
     },
   },
 ];
