@@ -6,7 +6,7 @@ description: 成員通知的內文和動態語音的房間名稱都能放變數�
 成員通知的內文和[動態語音](./commands/auto-channels.mdx)的房間名稱都是範本。範本裡用大括號寫變數，機器龍發送時會換成實際的值。例如這段加入通知：
 
 ```txt
-歡迎 {user.mention} 加入 {server.name}，你是第 {server.member_count:ordinal} 位成員！
+歡迎 {user.mention} 加入 {server.name}，你是{server.member_count:ordinal} 位成員！
 ```
 
 有人加入時會變成：

@@ -6,7 +6,7 @@ description: 成员通知的内容和动态语音的房间名称都能放变量�
 成员通知的内容和[动态语音](./commands/auto-channels.mdx)的房间名称都是模板。模板里用大括号写变量，机器龙发送时会换成实际的值。例如这段加入通知：
 
 ```txt
-欢迎 {user.mention} 加入 {server.name}，你是第 {server.member_count:ordinal} 位成员！
+欢迎 {user.mention} 加入 {server.name}，你是{server.member_count:ordinal} 位成员！
 ```
 
 有人加入时会变成：
