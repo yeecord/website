@@ -70,7 +70,6 @@
 
 /zh-tw / 301
 /zh-tw/install /install 301
-/zh-tw/install/custom /install/custom 301
 /index / 301
 
 # splat 規則放最後，靜態規則才能走快速路徑

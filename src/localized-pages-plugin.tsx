@@ -2,14 +2,12 @@ import type { WakuAppShape, WakuPlugin } from "fumapress";
 import type { FC } from "react";
 import { HomePage } from "~/home/page";
 import { type Locale, localeCodes } from "~/i18n";
-import { InstallCustomPage } from "~/install/custom";
 import { InstallPage } from "~/install/page";
 
 /** Static pages that exist in every language. The default language is served from src/pages, the rest are generated here. */
 const pages = [
   { path: "/", component: HomePage },
   { path: "/install", component: InstallPage },
-  { path: "/install/custom", component: InstallCustomPage },
 ] as const satisfies readonly {
   path: string;
   component: FC<{ locale: Locale }>;

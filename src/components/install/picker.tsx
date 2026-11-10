@@ -1,51 +1,38 @@
 "use client";
 
 import Link from "fumadocs-core/link";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { FeatureIcon } from "~/feature-icons";
 import {
   CATEGORIES,
   CATEGORY_ORDER,
-  type Feature,
   FEATURES,
   guildInstallUrl,
   PERMISSIONS,
   permissionsFor,
   PRESETS,
 } from "~/features";
-import { FeatureIcon } from "~/feature-icons";
 import { contentPath, type Locale, locales } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
 const DEFAULT_PRESET = "community";
 
-function presetFeatures(id: string | null): string[] {
+function matches(selected: Set<string>, features: string[]) {
   return (
-    PRESETS.find((preset) => preset.id === id) ??
-    PRESETS.find((preset) => preset.id === DEFAULT_PRESET)
-  )?.features ?? [];
+    selected.size === features.length &&
+    features.every((id) => selected.has(id))
+  );
 }
 
+/** 上面選一組預設，下面同一張表可以再一項一項調，底部固定顯示權限總數和安裝按鈕 */
 export function InstallPicker({ locale }: { locale: Locale }) {
   const t = translator(locale);
   const [selected, setSelected] = useState(
-    () => new Set(presetFeatures(null)),
+    () =>
+      new Set(PRESETS.find((preset) => preset.id === DEFAULT_PRESET)?.features),
   );
   const permissions = permissionsFor(selected);
-  const href = guildInstallUrl(selected);
   const separator = locales[locale].cjk ? "、" : ", ";
-  const total = t("共 {count} 項權限").replace(
-    "{count}",
-    String(permissions.length),
-  );
-
-  useEffect(() => {
-    const preset = new URLSearchParams(location.search).get("preset");
-
-    if (preset) {
-      setSelected(new Set(presetFeatures(preset)));
-    }
-  }, []);
 
   function toggle(id: string) {
     const next = new Set(selected);
@@ -57,94 +44,101 @@ export function InstallPicker({ locale }: { locale: Locale }) {
     setSelected(next);
   }
 
-  function row(feature: Feature) {
-    const builtIn = feature.permissions.length === 0;
-    const checked = builtIn || selected.has(feature.id);
-
-    return (
-      <li key={feature.id} data-checked={checked}>
-        <label>
-          <input
-            type="checkbox"
-            checked={checked}
-            disabled={builtIn}
-            onChange={() => toggle(feature.id)}
-          />
-          <FeatureIcon id={feature.id} />
-          <span>
-            <strong>{t(feature.title)}</strong>
-            <span>{t(feature.pitch)}</span>
-          </span>
-        </label>
-        <p>
-          <span>
-            {builtIn
-              ? t("不用多給權限")
-              : `${t("需要")} ${feature.permissions
-                  .map((permission) => t(PERMISSIONS[permission].label))
-                  .join(separator)}`}
-          </span>
-          <Link href={contentPath(locale, `/docs/commands/${feature.docs}`)}>
-            {t("教學")}
-          </Link>
-        </p>
-      </li>
-    );
-  }
-
   return (
     <div className="picker">
-      <div className="picker-list">
-        {CATEGORY_ORDER.map((category) => (
-          <section key={category}>
-            <h2>{t(CATEGORIES[category])}</h2>
-            <ul>
-              {FEATURES.filter((feature) => feature.category === category).map(
-                row,
-              )}
-            </ul>
-          </section>
+      <div role="radiogroup" className="picker-presets">
+        {PRESETS.map((preset) => (
+          <button
+            key={preset.id}
+            type="button"
+            role="radio"
+            aria-checked={matches(selected, preset.features)}
+            onClick={() => setSelected(new Set(preset.features))}
+          >
+            <FeatureIcon id={preset.id} />
+            <strong>{t(preset.title)}</strong>
+            <span>{t(preset.story)}</span>
+          </button>
         ))}
       </div>
 
-      <aside className="picker-receipt">
-        <h2>{t("機器龍會要的權限")}</h2>
-        <ul>
-          <AnimatePresence initial={false}>
-            {permissions.map(({ permission, features }) => (
-              <motion.li
-                key={permission}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-              >
-                <span>
-                  <strong>{t(PERMISSIONS[permission].label)}</strong>
-                  <small>
-                    {features.length > 0
-                      ? features
-                          .map((feature) => t(feature.title))
-                          .join(separator)
-                      : t("必要")}
-                  </small>
-                </span>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-        <p className="picker-total">{total}</p>
-        <p className="picker-hint">
-          {t("少勾的之後可以補。缺了哪些，機器龍會在 /help 的設定頁提醒你")}
-        </p>
-        <a href={href} target="_blank" rel="noreferrer" className="btn-chunky">
-          {t("帶我回家")}
-        </a>
-      </aside>
+      <table className="picker-table">
+        {CATEGORY_ORDER.map((category) => (
+          <tbody key={category}>
+            <tr>
+              <th colSpan={3} scope="rowgroup">
+                {t(CATEGORIES[category])}
+              </th>
+            </tr>
+            {FEATURES.filter((feature) => feature.category === category).map(
+              (feature) => {
+                const builtIn = feature.permissions.length === 0;
+                const checked = builtIn || selected.has(feature.id);
+
+                return (
+                  <tr key={feature.id} data-checked={checked}>
+                    <td>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          disabled={builtIn}
+                          onChange={() => toggle(feature.id)}
+                        />
+                        <FeatureIcon id={feature.id} />
+                        <span>
+                          <strong>{t(feature.title)}</strong>
+                          <span>{t(feature.pitch)}</span>
+                        </span>
+                      </label>
+                    </td>
+                    <td>
+                      {builtIn
+                        ? t("不用多給權限")
+                        : feature.permissions
+                            .map((permission) =>
+                              t(PERMISSIONS[permission].label),
+                            )
+                            .join(separator)}
+                    </td>
+                    <td>
+                      <Link
+                        href={contentPath(
+                          locale,
+                          `/docs/commands/${feature.docs}`,
+                        )}
+                      >
+                        {t("教學")}
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              },
+            )}
+          </tbody>
+        ))}
+      </table>
 
       <div className="picker-bar">
-        <span>{total}</span>
-        <a href={href} target="_blank" rel="noreferrer" className="btn-chunky">
+        <details>
+          <summary>
+            {t("共 {count} 項權限").replace(
+              "{count}",
+              String(permissions.length),
+            )}
+          </summary>
+          <p>
+            {permissions
+              .map((row) => t(PERMISSIONS[row.permission].label))
+              .join(separator)}
+          </p>
+        </details>
+        <a
+          href={guildInstallUrl(selected)}
+          target="_blank"
+          rel="noreferrer"
+          className="btn-chunky"
+        >
           {t("帶我回家")}
         </a>
       </div>
