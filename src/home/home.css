@@ -27,11 +27,23 @@
 
 .home-menu a {
   display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
+  gap: 0.875rem;
   padding: 0.75rem;
   border-radius: 0.625rem;
   transition: background-color 160ms ease;
+}
+
+.home-menu a > .feature-icon {
+  width: 1.375rem;
+  height: 1.375rem;
+  margin-top: 0.1875rem;
+  color: var(--color-fd-primary);
+}
+
+.home-menu a > span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
 }
 
 .home-menu a strong {
@@ -39,7 +51,7 @@
   font-weight: 700;
 }
 
-.home-menu a span {
+.home-menu a span span {
   color: var(--color-fd-muted-foreground);
 }
 

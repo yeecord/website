@@ -1,4 +1,5 @@
 import Link from "fumadocs-core/link";
+import { FeatureIcon } from "~/feature-icons";
 import { FEATURES } from "~/features";
 import { contentPath, type Locale } from "~/i18n";
 import { translator } from "~/i18n/translate";
@@ -14,8 +15,11 @@ export function Features({ locale }: { locale: Locale }) {
         {FEATURES.map((feature) => (
           <li key={feature.id}>
             <Link href={contentPath(locale, `/docs/commands/${feature.docs}`)}>
-              <strong>{t(feature.title)}</strong>
-              <span>{t(feature.pitch)}</span>
+              <FeatureIcon id={feature.id} />
+              <span>
+                <strong>{t(feature.title)}</strong>
+                <span>{t(feature.pitch)}</span>
+              </span>
             </Link>
           </li>
         ))}

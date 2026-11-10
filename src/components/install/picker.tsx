@@ -13,6 +13,7 @@ import {
   permissionsFor,
   PRESETS,
 } from "~/features";
+import { FeatureIcon } from "~/feature-icons";
 import { contentPath, type Locale, locales } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
@@ -70,6 +71,7 @@ export function InstallPicker({ locale }: { locale: Locale }) {
             disabled={builtIn}
             onChange={() => toggle(feature.id)}
           />
+          <FeatureIcon id={feature.id} />
           <span>
             <strong>{t(feature.title)}</strong>
             <span>{t(feature.pitch)}</span>

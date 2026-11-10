@@ -233,7 +233,6 @@ export const en = {
   "先裝基本的": "Just the basics",
   "挑一組最像你伺服器的": "Pick the set closest to your server",
   "每一組只跟 Discord 要它用得到的權限。裝好之後想加功能，隨時能補。": "Each set asks Discord only for the permissions it uses. You can add more features any time after installing.",
-  "會開的功能": "What you get",
   "用這一組安裝": "Install this set",
   "自己調整": "Adjust it",
   "自己挑機器龍的功能": "Choose what the dinosaur does",

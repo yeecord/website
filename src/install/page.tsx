@@ -2,6 +2,7 @@ import Link from "fumadocs-core/link";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import Footer from "~/components/Footer";
 import { footer } from "~/config";
+import { FeatureIcon } from "~/feature-icons";
 import {
   BUILT_IN_FEATURES,
   FEATURES,
@@ -45,32 +46,32 @@ export function InstallPage({ locale }: { locale: Locale }) {
 
             return (
               <li key={preset.id}>
-                <h2>{t(preset.title)}</h2>
+                <h2>
+                  <FeatureIcon id={preset.id} />
+                  {t(preset.title)}
+                </h2>
                 <p>{t(preset.story)}</p>
-                <dl>
-                  <dt>{t("會開的功能")}</dt>
-                  <dd>
-                    <ul>
-                      {[...included, ...BUILT_IN_FEATURES].map((feature) => (
-                        <li key={feature.id}>
-                          <strong>{t(feature.title)}</strong>
-                          <span>{t(feature.pitch)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </dd>
-                  <dt>
+                <ul>
+                  {[...included, ...BUILT_IN_FEATURES].map((feature) => (
+                    <li key={feature.id}>
+                      <FeatureIcon id={feature.id} />
+                      {t(feature.title)}
+                    </li>
+                  ))}
+                </ul>
+                <details>
+                  <summary>
                     {t("共 {count} 項權限").replace(
                       "{count}",
                       String(permissions.length),
                     )}
-                  </dt>
-                  <dd>
+                  </summary>
+                  <p>
                     {permissions
                       .map((row) => t(PERMISSIONS[row.permission].label))
                       .join(separator)}
-                  </dd>
-                </dl>
+                  </p>
+                </details>
                 <div className="install-actions">
                   <a
                     href={guildInstallUrl(preset.features)}
