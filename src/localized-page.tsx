@@ -10,7 +10,7 @@ import {
 import { baseOptions } from "~/layout-config";
 
 /** Paths of the pages every language serves, without the language prefix. */
-const staticPaths = new Set(["/", "/install"]);
+const staticPaths = new Set(["/", "/install", "/install/custom"]);
 
 export function localizedLayout(locale: Locale) {
   return baseOptions(locale);

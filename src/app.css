@@ -3,12 +3,11 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumapress/css/preset.css";
-@import "./night.css";
+@import "./components/install/install.css";
+@import "./home/home.css";
 
 @theme {
   --color-discord-blurple: #5865f2;
-  /* 機器人圖卡用源泉圓體，Chiron GoRound 是 Google Fonts 上同一系的圓體 */
-  --font-round: "Chiron GoRound TC", "Noto Sans TC", sans-serif;
 }
 
 /* shadcn (base-nova) 的 token 全部對映到 fumadocs 的 fd 變數，

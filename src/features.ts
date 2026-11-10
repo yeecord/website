@@ -131,3 +131,83 @@ export const FEATURES: Feature[] = [
     permissions: ["banMembers", "timeoutMembers", "manageMessages"],
   },
 ];
+
+export const OPTIONAL_FEATURES = FEATURES.filter(
+  (feature) => feature.permissions.length > 0,
+);
+
+export const BUILT_IN_FEATURES = FEATURES.filter(
+  (feature) => feature.permissions.length === 0,
+);
+
+export type Preset = {
+  id: string;
+  title: Phrase;
+  /** 這一組適合誰、為什麼這樣配 */
+  story: Phrase;
+  features: string[];
+};
+
+export const PRESETS: Preset[] = [
+  {
+    id: "friends",
+    title: "朋友小群",
+    story:
+      "幾個熟人聊天、開語音。用不到管理工具，只要語音房夠用、身分組自己領。",
+    features: ["voice", "lock", "role-menu"],
+  },
+  {
+    id: "community",
+    title: "遊戲或興趣社群",
+    story:
+      "常有新成員進來。進來先發身分組，語音房讓大家自己開，廣告機器人擋在門口。",
+    features: ["voice", "auto-role", "role-menu", "defense"],
+  },
+  {
+    id: "public",
+    title: "公開大群",
+    story:
+      "人多、訊息也多。除了社群那一組，再加上清洗版訊息、鎖語音房和收檢舉的表單。",
+    features: OPTIONAL_FEATURES.map((feature) => feature.id),
+  },
+  {
+    id: "basic",
+    title: "先裝基本的",
+    story:
+      "還不確定要用什麼。先給最少的權限，抽獎、投票和成員通知照樣能用，其他的之後再補。",
+    features: [],
+  },
+];
+
+const CLIENT_ID = "584213384409382953";
+
+export const USER_INSTALL_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&integration_type=1&scope=applications.commands`;
+
+/** 必要權限在前，後面接這些功能要的權限，每項附上是哪些功能要的 */
+export function permissionsFor(featureIds: Iterable<string>) {
+  const ids = new Set(featureIds);
+  const chosen = OPTIONAL_FEATURES.filter((feature) => ids.has(feature.id));
+  const extra = chosen
+    .flatMap((feature) => feature.permissions)
+    .filter(
+      (permission, index, all) =>
+        all.indexOf(permission) === index &&
+        !REQUIRED_PERMISSIONS.includes(permission),
+    );
+
+  return [...REQUIRED_PERMISSIONS, ...extra].map((permission) => ({
+    permission,
+    features: chosen.filter((feature) =>
+      feature.permissions.includes(permission),
+    ),
+  }));
+}
+
+export function guildInstallUrl(featureIds: Iterable<string>) {
+  const bits = permissionsFor(featureIds).reduce(
+    (sum, row) => sum | PERMISSIONS[row.permission].bit,
+    0n,
+  );
+
+  return `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=bot+applications.commands&permissions=${bits}`;
+}

@@ -6,10 +6,10 @@ export function Community({ locale }: { locale: Locale }) {
   const t = translator(locale);
 
   return (
-    <div className="closing">
-      <img alt="" src="/img/logo.svg" draggable={false} />
-      <h2 className="night-heading">{t("把機器龍帶回家")}</h2>
-      <p className="night-lead">
+    <div className="flex flex-col items-center gap-3 px-4 pt-36 pb-28 text-center">
+      <img alt="" src="/img/logo.svg" className="mb-2 h-22" draggable={false} />
+      <h2 className="home-heading">{t("把機器龍帶回家")}</h2>
+      <p className="home-lead">
         {t("安裝免費，設定時遇到問題，到 Discord 社群問")}
       </p>
       <div className="flex w-full max-w-xs flex-col gap-3 pt-4 sm:w-auto sm:max-w-none sm:flex-row">

@@ -1,8 +1,7 @@
+import Link from "fumadocs-core/link";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
-import { NeonTitle } from "./NeonTitle";
-import { Sky } from "./stall/Sky";
-import { type Customer, Street } from "./stall/Street";
+import { Booth, type Customer } from "./stall/Booth";
 
 const SERVERS: Customer[] = [
   { img: "/home/customers/apex-tw.png", name: "APEX Taiwan" },
@@ -18,21 +17,32 @@ export function Hero({ locale }: { locale: Locale }) {
   const t = translator(locale);
 
   return (
-    <div className="night">
-      <Sky />
-      <div className="relative flex flex-col items-center gap-3 px-4 pt-16 text-center">
-        <NeonTitle lines={[t("伺服器的雜事，"), t("恐龍包了")]} />
-        <p className="max-w-136 text-pretty text-[#e7dbbe] text-base sm:text-lg">
-          {t("發身分組、辦抽獎、開語音房，介面全中文，免費使用")}
-        </p>
+    <div className="flex flex-col gap-8 pt-12 sm:pt-16">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-3">
+          <h1 className="font-extrabold text-[2.5rem] leading-[1.15] tracking-tight sm:text-6xl">
+            {t("伺服器的雜事，")}
+            <br />
+            {t("恐龍包了")}
+          </h1>
+          <p className="max-w-136 text-pretty text-lg text-muted-foreground">
+            {t("發身分組、辦抽獎、開語音房，介面全中文，免費使用")}
+          </p>
+        </div>
+        <div className="flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row">
+          <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">
+            {t("安裝機器人")}
+          </Link>
+          <Link
+            href={contentPath(locale, "/docs")}
+            className="btn-chunky-secondary"
+          >
+            {t("看使用教學")}
+          </Link>
+        </div>
       </div>
-      <Street
+      <Booth
         locale={locale}
-        install={{
-          href: `${staticPath(locale, "/install")}/`,
-          label: t("安裝機器人"),
-        }}
-        docs={{ href: contentPath(locale, "/docs"), label: t("看使用教學") }}
         customers={SERVERS}
         proof={
           <>

@@ -2,10 +2,9 @@
 
 import type Confetti from "canvas-confetti";
 import type { gsap as Gsap } from "gsap";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { type Locale, locales } from "~/i18n";
-import { Bag, Flame, Plate, Postcard, Sprite, SURPRISE_SPRITE, Wok } from "./art";
+import type { Locale } from "~/i18n";
 import {
   COPY,
   type Copy,
@@ -17,6 +16,16 @@ import {
   type Recipe,
 } from "./content";
 import { Counter, type Spawn } from "./counter";
+import { Pixelated } from "./Pixelated";
+import {
+  BAG,
+  Bitmap,
+  FLAMES,
+  PLATE,
+  Sprite,
+  SURPRISE_SPRITE,
+  WOK,
+} from "./pixels";
 import {
   cook,
   type Dish,
@@ -37,6 +46,8 @@ const SAVE_KEY = "stall";
 const CONFETTI_COLORS = ["#ab4329", "#cc9a33", "#2e5e55", "#f4ead0", "#5e8c4e"];
 /** 盤子往櫃台外拖這麼遠再放開就算賣掉 */
 const SELL_DISTANCE = 70;
+const TYPE_MS = 28;
+const STEPS = "steps(6)";
 
 /** 介面文字，台詞和食材名稱在 content.ts */
 const WEB = {
@@ -182,25 +193,17 @@ export function Stall({
   const [bookOpen, setBookOpen] = useState(false);
   const [counter, setCounter] = useState<Counter | null>(null);
 
-  const stallRef = useRef<HTMLElement>(null);
   const playRef = useRef<HTMLDivElement>(null);
   const wokRef = useRef<HTMLDivElement>(null);
   const wokArtRef = useRef<HTMLDivElement>(null);
   const flameRef = useRef<HTMLDivElement>(null);
   const floatersRef = useRef<HTMLDivElement>(null);
-  const yeeRef = useRef<HTMLImageElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const miniRef = useRef<HTMLImageElement>(null);
+  const yeeRef = useRef<HTMLDivElement>(null);
   const bagRef = useRef<HTMLDivElement>(null);
   const plateRef = useRef<HTMLDivElement>(null);
   const libraries = useRef<Libraries | null>(null);
   const spawns = useRef(new Map<string, Spawn>());
   const intoPot = useRef<(key: string) => boolean>(() => false);
-
-  const pointerX = useMotionValue(0);
-  const lean = useSpring(pointerX, { stiffness: 120, damping: 14 });
-  const yeeRotate = useTransform(lean, [-1, 1], [-5, 5]);
-  const yeeShift = useTransform(lean, [-1, 1], [-6, 6]);
 
   const owned = INGREDIENTS.filter((item) => save.pantry[item.id] !== undefined);
   const found = RECIPES.filter((recipe) => save.book[recipe.id] !== undefined);
@@ -267,8 +270,6 @@ export function Stall({
     const { harvest, next } = stage;
     const gsap = libraries.current?.gsap;
     const yee = yeeRef.current;
-    const card = cardRef.current;
-    const mini = miniRef.current;
     const bag = bagRef.current;
 
     function unpack() {
@@ -309,54 +310,31 @@ export function Stall({
       setStage({ name: "idle" });
     }
 
-    if (!gsap || !yee || !card || !mini || !bag || reducedMotion()) {
+    if (!gsap || !yee || !bag || reducedMotion()) {
       const timer = setTimeout(unpack, 400);
 
       return () => clearTimeout(timer);
     }
 
+    const away = -(yee.offsetLeft + yee.offsetWidth + 16);
     const timeline = gsap.timeline({ onComplete: unpack });
 
     timeline
-      .set(yee, { transformOrigin: "50% 100%" })
-      .to(yee, { scaleX: 1.1, scaleY: 0.84, duration: 0.12, ease: "power2.out" })
-      .to(yee, { scaleX: 0.94, scaleY: 1.08, duration: 0.1 })
-      .to(yee, { x: -260, duration: 0.5, ease: "power1.in" }, "<")
-      .to(yee, { y: -70, duration: 0.25, ease: "power2.out" }, "<")
-      .to(yee, { y: 10, autoAlpha: 0, duration: 0.25, ease: "power2.in" }, ">")
-      .fromTo(
-        card,
-        { autoAlpha: 0, y: 12, scale: 0.94 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: 0.28, ease: "power3.out" },
-        "<-0.1",
-      )
-      .fromTo(
-        mini,
-        { x: -40 },
-        { x: card.clientWidth + 8, duration: 1.3, ease: "none" },
-        "<",
-      )
-      .to(
-        mini,
-        { y: -14, duration: 0.16, repeat: 7, yoyo: true, ease: "sine.out" },
-        "<",
-      )
-      .to(card, { autoAlpha: 0, y: -8, duration: 0.2, ease: "power2.in" })
-      .set(yee, { scaleX: 1, scaleY: 1, y: 10 })
-      .to(yee, { x: 0, autoAlpha: 1, duration: 0.5, ease: "power1.out" })
-      .to(yee, { y: -70, duration: 0.25, ease: "power2.out" }, "<")
-      .to(yee, { y: 0, duration: 0.25, ease: "power2.in" }, ">")
-      .to(yee, { scaleX: 1.1, scaleY: 0.86, duration: 0.09 })
-      .to(yee, { scaleX: 1, scaleY: 1, duration: 0.3, ease: "elastic.out(1.2, 0.4)" })
-      .set(bag, { autoAlpha: 1, x: 0, y: 0, rotate: 0, scale: 1 }, "<")
-      .to(bag, { x: 150, rotate: 220, duration: 0.5, ease: "none" }, "<")
-      .to(bag, { y: -110, duration: 0.25, ease: "power2.out" }, "<")
-      .to(bag, { y: 30, duration: 0.25, ease: "power2.in" }, ">")
-      .to(bag, { scale: 1.7, autoAlpha: 0, duration: 0.16, ease: "power2.out" });
+      .to(yee, { y: -24, duration: 0.14, ease: STEPS })
+      .to(yee, { y: 0, duration: 0.14, ease: STEPS })
+      .to(yee, { x: away, duration: 0.55, ease: "steps(10)" })
+      .to(yee, { y: -12, duration: 0.11, repeat: 4, yoyo: true, ease: "steps(2)" }, "<")
+      .to(yee, { x: 0, duration: 0.55, ease: "steps(10)" }, "+=0.7")
+      .to(yee, { y: -12, duration: 0.11, repeat: 4, yoyo: true, ease: "steps(2)" }, "<")
+      .set(bag, { autoAlpha: 1, x: 0, y: 0 })
+      .to(bag, { x: 144, duration: 0.45, ease: "steps(9)" })
+      .to(bag, { y: -96, duration: 0.22, ease: "steps(4)" }, "<")
+      .to(bag, { y: 24, duration: 0.23, ease: "steps(4)" }, ">")
+      .set(bag, { autoAlpha: 0 });
 
     return () => {
       timeline.kill();
-      gsap.set([yee, bag, card], { clearProps: "all" });
+      gsap.set([yee, bag], { clearProps: "all" });
     };
   }, [stage]);
 
@@ -404,35 +382,21 @@ export function Stall({
     const timeline = gsap.timeline({ onComplete: serve });
 
     timeline
-      .set(wok, { transformOrigin: "50% 100%" })
-      .to(flame, { scaleY: 1.9, scaleX: 1.3, duration: 0.18, ease: "power2.out" })
-      .to(
-        wok,
-        { rotate: -8, y: -10, duration: 0.1, repeat: 7, yoyo: true, ease: "sine.inOut" },
-        "<",
-      )
+      .to(flame, { scale: 2, duration: 0.12, ease: "steps(2)" })
+      .to(wok, { y: -12, duration: 0.09, repeat: 7, yoyo: true, ease: "steps(2)" }, "<")
       .to(
         floaters.children,
-        {
-          y: "random(-150, -90)",
-          x: "random(-40, 40)",
-          rotate: "random(-360, 360)",
-          duration: 0.45,
-          stagger: 0.06,
-          ease: "power2.out",
-        },
+        { y: -96, duration: 0.3, stagger: 0.07, ease: STEPS },
         "<0.1",
       )
       .to(floaters.children, {
         y: 0,
-        x: 0,
-        scale: 0.2,
         autoAlpha: 0,
-        duration: 0.3,
-        stagger: 0.04,
-        ease: "power2.in",
+        duration: 0.25,
+        stagger: 0.05,
+        ease: STEPS,
       })
-      .to(flame, { scaleY: 1, scaleX: 1, duration: 0.2 }, "<");
+      .to(flame, { scale: 1, duration: 0.1, ease: "steps(2)" }, "<");
 
     return () => {
       timeline.kill();
@@ -475,6 +439,7 @@ export function Stall({
       startVelocity: 38,
       angle: 105,
       shapes: ["square"],
+      flat: true,
       scalar: 0.9,
       colors: CONFETTI_COLORS,
       origin: {
@@ -559,7 +524,8 @@ export function Stall({
       spread: 50,
       startVelocity: 22,
       gravity: 1.6,
-      shapes: ["circle"],
+      shapes: ["square"],
+      flat: true,
       scalar: 0.8,
       colors: ["#cc9a33", "#e3c877"],
       origin: {
@@ -569,21 +535,11 @@ export function Stall({
     });
     gsap
       .timeline()
-      .to(plate, { y: 150, scale: 1.5, autoAlpha: 0, duration: 0.36, ease: "power2.in" })
+      .to(plate, { y: 120, duration: 0.3, ease: STEPS })
+      .set(plate, { autoAlpha: 0 })
       .call(settle)
-      .set(yee, { transformOrigin: "50% 100%" })
-      .to(yee, { y: -26, duration: 0.16, ease: "power2.out" })
-      .to(yee, { y: 0, duration: 0.16, ease: "power2.in" })
-      .to(yee, { scaleX: 1.1, scaleY: 0.88, duration: 0.08 })
-      .to(yee, { scaleX: 1, scaleY: 1, duration: 0.4, ease: "elastic.out(1.1, 0.4)" });
-  }
-
-  function watch(event: React.PointerEvent) {
-    const rect = stallRef.current?.getBoundingClientRect();
-
-    if (rect) {
-      pointerX.set(((event.clientX - rect.left) / rect.width) * 2 - 1);
-    }
+      .to(yee, { y: -24, duration: 0.14, ease: "steps(3)" })
+      .to(yee, { y: 0, duration: 0.14, ease: "steps(3)" });
   }
 
   function shownLine(): string {
@@ -611,29 +567,29 @@ export function Stall({
 
   const dish = stage.name === "served" ? stage.dish : null;
   const text = shownLine();
+  const potLabel =
+    pot.length > 0
+      ? fill(web.pot, { count: pot.length, max: POT_SIZE })
+      : owned.length > 0
+        ? web.empty
+        : web.start;
 
   return (
     <section
-      ref={stallRef}
-      className="stall"
+      className="px"
+      data-locale={locale}
       aria-label={copy.text.home_shop}
-      onPointerMove={watch}
     >
-      <div className="stall-awning" aria-hidden />
-      <div className="stall-back">
-        <div className="stall-sign">
-          <h2>{copy.text.home_shop}</h2>
-          <button
-            type="button"
-            className="stall-menu"
-            aria-pressed={bookOpen}
-            onClick={() => setBookOpen(!bookOpen)}
-          >
-            {copy.text.button_cookBook} {found.length}/{RECIPES.length}
-          </button>
-        </div>
-        <div className="stall-lanterns" data-cjk={locales[locale].cjk}>
-          {ORIGINS.map((origin, index) => {
+      <div ref={playRef} className="px-scene">
+        <i className="px-star" style={{ left: "8%", top: "14%" }} />
+        <i className="px-star" style={{ left: "31%", top: "30%" }} />
+        <i className="px-star" style={{ left: "47%", top: "12%" }} />
+        <i className="px-star" style={{ left: "64%", top: "34%" }} />
+        <i className="px-star" style={{ left: "88%", top: "44%" }} />
+        <div className="px-awning" aria-hidden />
+        <h2 className="px-sign">{copy.text.home_shop}</h2>
+        <div className="px-places">
+          {ORIGINS.map((origin) => {
             const showIntel = () =>
               setIntel(
                 day === null
@@ -645,8 +601,6 @@ export function Stall({
               <button
                 key={origin}
                 type="button"
-                className="stall-lantern"
-                style={{ animationDelay: `${index * -1.3}s` }}
                 disabled={busy}
                 onClick={() => leave(origin)}
                 onPointerEnter={showIntel}
@@ -654,206 +608,213 @@ export function Stall({
                 onFocus={showIntel}
                 onBlur={() => setIntel(null)}
               >
-                <span>{place(origin)}</span>
+                {place(origin)}
               </button>
             );
           })}
         </div>
-        <motion.div
-          className="stall-yee"
-          style={{ rotate: yeeRotate, x: yeeShift }}
-        >
-          <img
-            ref={yeeRef}
-            src="/img/logo.svg"
-            alt="Yee"
-            draggable={false}
-          />
-        </motion.div>
-        <div ref={bagRef} className="stall-bag">
-          <Bag />
+        <div ref={yeeRef} className="px-yee">
+          <Pixelated src="/img/logo.svg" columns={27} rows={32} label="Yee" />
         </div>
-        <div ref={cardRef} className="stall-card">
-          {stage.name === "away" ? (
-            <Postcard origin={stage.harvest.origin} />
-          ) : null}
-          <img ref={miniRef} src="/img/logo.svg" alt="" draggable={false} />
+        <div ref={bagRef} className="px-bag">
+          <Bitmap rows={BAG} />
         </div>
-        <p
-          className="stall-line"
-          aria-live="polite"
-          data-hidden={stage.name === "away"}
-        >
-          <span key={text}>{text}</span>
-        </p>
-        <div ref={playRef} className="stall-play">
-          {counter
-            ? [
-                ...owned
-                  .filter((item) => !pot.includes(item.id))
-                  .map((item) => (
-                    <Token
-                      key={item.id}
-                      counter={counter}
-                      tokenKey={item.id}
-                      spawn={() => spawns.current.get(item.id) ?? rain()}
-                      sprite={ingredientIndex(item.id)}
-                      name={copy.ingredient[item.id]}
-                      detail={flavors(item.id, copy)}
-                      tag={
-                        [
-                          fresh.includes(item.id)
-                            ? item.rarity === "common"
-                              ? web.fresh
-                              : copy.rarity[item.rarity]
-                            : null,
-                          save.pantry[item.id] === 2 ? "★★" : null,
-                        ]
-                          .filter(Boolean)
-                          .join(" ") || null
-                      }
-                      rare={item.rarity !== "common"}
-                    />
-                  )),
-                ...trinkets.map((trinket) => (
+        {counter
+          ? [
+              ...owned
+                .filter((item) => !pot.includes(item.id))
+                .map((item) => (
                   <Token
-                    key={trinket.key}
+                    key={item.id}
                     counter={counter}
-                    tokenKey={trinket.key}
-                    spawn={() => spawns.current.get(trinket.key) ?? rain()}
-                    sprite={SURPRISE_SPRITE}
-                    name={trinket.name}
-                    detail={copy.text.report_surprise}
-                    tag={null}
-                    rare={false}
+                    tokenKey={item.id}
+                    spawn={() => spawns.current.get(item.id) ?? rain()}
+                    sprite={ingredientIndex(item.id)}
+                    name={copy.ingredient[item.id]}
+                    detail={flavors(item.id, copy)}
+                    tag={
+                      [
+                        fresh.includes(item.id)
+                          ? item.rarity === "common"
+                            ? web.fresh
+                            : copy.rarity[item.rarity]
+                          : null,
+                        save.pantry[item.id] === 2 ? "★★" : null,
+                      ]
+                        .filter(Boolean)
+                        .join(" ") || null
+                    }
+                    rare={item.rarity !== "common"}
                   />
                 )),
-              ]
-            : null}
-          <div ref={wokRef} className="stall-wok" data-lit={pot.length > 0}>
-            <div ref={flameRef} className="stall-flame">
-              <Flame />
+              ...trinkets.map((trinket) => (
+                <Token
+                  key={trinket.key}
+                  counter={counter}
+                  tokenKey={trinket.key}
+                  spawn={() => spawns.current.get(trinket.key) ?? rain()}
+                  sprite={SURPRISE_SPRITE}
+                  name={trinket.name}
+                  detail={copy.text.report_surprise}
+                  tag={null}
+                  rare={false}
+                />
+              )),
+            ]
+          : null}
+        <div ref={wokRef} className="px-wok" data-lit={pot.length > 0}>
+          <div ref={flameRef} className="px-flame">
+            <Bitmap rows={FLAMES[0] ?? []} />
+            <Bitmap rows={FLAMES[1] ?? []} />
+          </div>
+          <div ref={wokArtRef} className="px-wok-art">
+            <Bitmap rows={WOK} />
+            <div ref={floatersRef} className="px-floaters">
+              {pot.map((id) => (
+                <Sprite key={id} index={ingredientIndex(id)} />
+              ))}
             </div>
-            <div ref={wokArtRef} className="stall-wok-art">
-              <Wok />
-              <div ref={floatersRef} className="stall-floaters">
-                {pot.map((id) => (
-                  <span key={id}>
-                    <Sprite index={ingredientIndex(id)} size={30} />
-                  </span>
+          </div>
+          <i className="px-steam" />
+          <i className="px-steam" />
+        </div>
+        {dish ? (
+          <div className="px-served">
+            <motion.div
+              ref={plateRef}
+              className="px-plate"
+              data-flop={dish.recipe === null}
+              drag={dish.recipe !== null}
+              dragSnapToOrigin
+              dragElastic={0}
+              dragMomentum={false}
+              onDragEnd={(_, info) => {
+                if (info.offset.y > SELL_DISTANCE) {
+                  sell();
+                }
+              }}
+            >
+              <div className="px-food">
+                {dish.pot.map((id) => (
+                  <Sprite key={id} index={ingredientIndex(id)} />
                 ))}
               </div>
-            </div>
-            <i className="stall-steam" />
-            <i className="stall-steam" />
-            <i className="stall-steam" />
-          </div>
-          {dish ? (
-            <div className="stall-served">
-              <motion.div
-                ref={plateRef}
-                className="stall-plate"
-                data-flop={dish.recipe === null}
-                initial={{ scale: 0.3, y: 30, opacity: 0 }}
-                animate={{ scale: 1, y: 0, opacity: 1 }}
-                transition={{ type: "spring", duration: 0.6, bounce: 0.45 }}
-                drag={dish.recipe !== null}
-                dragSnapToOrigin
-                whileDrag={{ scale: 1.08, rotate: -4 }}
-                onDragEnd={(_, info) => {
-                  if (info.offset.y > SELL_DISTANCE) {
-                    sell();
-                  }
-                }}
-              >
-                <div className="stall-food">
-                  {dish.pot.map((id) => (
-                    <Sprite key={id} index={ingredientIndex(id)} size={34} />
-                  ))}
-                </div>
-                <Plate />
-              </motion.div>
-            </div>
-          ) : null}
-        </div>
-        {bookOpen ? (
-          <div className="stall-book">
-            <h3>{copy.text.cookBook_title}</h3>
-            <ul>
-              {RECIPES.map((recipe) => (
-                <BookRow
-                  key={recipe.id}
-                  recipe={recipe}
-                  save={save}
-                  copy={copy}
-                  web={web}
-                />
-              ))}
-            </ul>
-            <button
-              type="button"
-              className="stall-btn-quiet"
-              onClick={() => setBookOpen(false)}
-            >
-              {copy.text.button_back}
-            </button>
+              <Bitmap rows={PLATE} />
+            </motion.div>
           </div>
         ) : null}
       </div>
-      <div className="stall-top" aria-hidden />
-      <div className="stall-front">
-        <div className="stall-order">
-          <p className="stall-soft">
-            {pot.length > 0
-              ? fill(web.pot, { count: pot.length, max: POT_SIZE })
-              : owned.length > 0
-                ? web.empty
-                : web.start}
-          </p>
-          <div className="stall-chips">
-            {pot.map((id) => (
-              <button
-                key={id}
-                type="button"
-                className="stall-chip"
-                aria-label={fill(web.takeOut, { name: copy.ingredient[id] })}
-                disabled={busy}
-                onClick={() => takeOut(id)}
-              >
-                <Sprite index={ingredientIndex(id)} size={20} />
-                <span>
-                  <strong>{copy.ingredient[id]}</strong>
-                  <small>{flavors(id, copy)}</small>
-                </span>
-              </button>
-            ))}
+      <div className="px-counter" aria-hidden />
+      <div className="px-panel">
+        <div className="px-talk">
+          <Dialog text={text} />
+          {dish && !bookOpen ? (
+            <Receipt
+              key={`${dish.pot.join()}-${dish.line}`}
+              dish={dish}
+              copy={copy}
+              web={web}
+              onSell={sell}
+            />
+          ) : null}
+        </div>
+        <div className="px-controls">
+          <div className="px-slots" aria-label={potLabel}>
+            {Array.from({ length: POT_SIZE }, (_, index) => {
+              const id = pot[index];
+
+              return id ? (
+                <button
+                  key={id}
+                  type="button"
+                  aria-label={fill(web.takeOut, { name: copy.ingredient[id] })}
+                  title={`${copy.ingredient[id]} ${flavors(id, copy)}`}
+                  disabled={busy}
+                  onClick={() => takeOut(id)}
+                >
+                  <Sprite index={ingredientIndex(id)} />
+                </button>
+              ) : (
+                <span key={index} />
+              );
+            })}
           </div>
           <button
             type="button"
-            className="stall-btn"
+            className="px-btn"
             disabled={busy || pot.length === 0}
             onClick={startCooking}
           >
             {copy.text.button_cook}
           </button>
+          <button
+            type="button"
+            className="px-btn px-btn-quiet"
+            aria-pressed={bookOpen}
+            onClick={() => setBookOpen(!bookOpen)}
+          >
+            {copy.text.button_cookBook} {found.length}/{RECIPES.length}
+          </button>
           {save.coins ? (
-            <p className="stall-soft">
+            <span className="px-coins">
               {fill(web.earned, { coins: save.coins })}
-            </p>
+            </span>
           ) : null}
         </div>
-        {dish ? (
-          <Receipt
-            key={`${dish.pot.join()}-${dish.line}`}
-            dish={dish}
-            copy={copy}
-            web={web}
-            onSell={sell}
-          />
+        {bookOpen ? (
+          <ul className="px-book">
+            {RECIPES.map((recipe) => (
+              <BookRow
+                key={recipe.id}
+                recipe={recipe}
+                save={save}
+                copy={copy}
+                web={web}
+              />
+            ))}
+          </ul>
         ) : null}
+        <p className="px-note">{web.note}</p>
       </div>
-      <p className="stall-note">{web.note}</p>
     </section>
+  );
+}
+
+/** 對話框的字一個一個打出來，報讀軟體直接讀到整句 */
+function Dialog({ text }: { text: string }) {
+  const [shown, setShown] = useState(text.length);
+
+  useEffect(() => {
+    if (reducedMotion()) {
+      setShown(text.length);
+
+      return;
+    }
+
+    setShown(0);
+
+    const timer = setInterval(
+      () =>
+        setShown((count) => {
+          if (count >= text.length) {
+            clearInterval(timer);
+          }
+
+          return count + 1;
+        }),
+      TYPE_MS,
+    );
+
+    return () => clearInterval(timer);
+  }, [text]);
+
+  return (
+    <p className="px-dialog">
+      <span className="sr-only" aria-live="polite">
+        {text}
+      </span>
+      <span aria-hidden>{text.slice(0, shown)}</span>
+    </p>
   );
 }
 
@@ -904,15 +865,13 @@ function Token({
     <button
       ref={ref}
       type="button"
-      className="stall-token"
+      className="px-token"
       aria-label={`${name} ${detail}`}
       data-rare={rare}
     >
-      <span className="stall-disc" data-disc>
-        <Sprite index={sprite} size={30} />
-      </span>
-      {tag ? <span className="stall-tag">{tag}</span> : null}
-      <span className="stall-tip" aria-hidden>
+      <Sprite index={sprite} />
+      {tag ? <span className="px-tag">{tag}</span> : null}
+      <span className="px-tip" aria-hidden>
         <strong>{name}</strong>
         <small>{detail}</small>
       </span>
@@ -951,29 +910,24 @@ function Receipt({
   const { recipe } = dish;
 
   return (
-    <div className="stall-receipt">
-      <h3>{recipe ? copy.recipe[recipe.id].name : copy.text.cook_flop_title}</h3>
-      {recipe ? (
-        <span
-          className="stall-stamp"
-          data-grade={recipe.dark ? "dark" : dish.grade}
-        >
-          {recipe.dark ? copy.text.cook_dark_stamp : copy.grade[dish.grade]}
-        </span>
-      ) : null}
+    <div className="px-receipt">
+      <h3>
+        {recipe ? copy.recipe[recipe.id].name : copy.text.cook_flop_title}
+        {recipe ? (
+          <span className="px-tag" data-grade={recipe.dark ? "dark" : dish.grade}>
+            {recipe.dark ? copy.text.cook_dark_stamp : copy.grade[dish.grade]}
+          </span>
+        ) : null}
+      </h3>
       {dish.hint ? <p>{hintText(dish.hint, copy, web)}</p> : null}
-      {dish.fresh ? <p className="stall-soft">{web.learned}</p> : null}
+      {dish.fresh ? <p>{web.learned}</p> : null}
       {recipe ? (
-        <div className="stall-total">
+        <div>
           <p>
             {web.price} {dish.total}
-            {dish.synergy ? (
-              <small>
-                {copy.text.cook_synergy} ×1.5
-              </small>
-            ) : null}
+            {dish.synergy ? ` (${copy.text.cook_synergy} ×1.5)` : null}
           </p>
-          <button type="button" className="stall-btn" onClick={onSell}>
+          <button type="button" className="px-btn" onClick={onSell}>
             {web.sell}
           </button>
         </div>

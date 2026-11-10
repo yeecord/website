@@ -21,9 +21,9 @@ export function HomePage({ locale }: { locale: Locale }) {
           "YEE 式機器龍用全中文介面提供抽獎、身分組和動態語音，已有 35 萬個伺服器安裝",
         )}
       />
-      <main className="dark night-page overflow-x-clip">
-        <Hero locale={locale} />
+      <main className="overflow-x-clip">
         <div className="mx-auto flex max-w-[1100px] flex-col px-3 md:px-6">
+          <Hero locale={locale} />
           <DemoServer locale={locale} />
           <Features locale={locale} />
           <Trust locale={locale} />

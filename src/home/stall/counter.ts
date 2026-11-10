@@ -22,7 +22,6 @@ type Token = {
   body: Matter.Body;
   radius: number;
   element: HTMLElement;
-  disc: HTMLElement | null;
   held: Matter.Constraint | null;
   release: () => void;
 };
@@ -33,7 +32,7 @@ type Events = {
   onTap: (key: string) => void;
 };
 
-/** 檯面上的物理世界：食材是會滾的圓，鍋子是擋路的方塊，鍋口上方是感應區 */
+/** 檯面上的物理世界：食材當成圓來算碰撞，鍋子是擋路的方塊，鍋口上方是感應區 */
 export class Counter {
   private readonly engine: Matter.Engine;
   private readonly tokens = new Map<string, Token>();
@@ -41,6 +40,8 @@ export class Counter {
   private frame = 0;
   private width = 0;
   private height = 0;
+  /** 一格像素的邊長，食材的位置對齊到這個格子上 */
+  private unit = 4;
   private potRect = { left: 0, right: 0, top: 0 };
   private visible = true;
   private readonly observer: IntersectionObserver;
@@ -103,7 +104,6 @@ export class Counter {
       body,
       radius,
       element,
-      disc: element.querySelector<HTMLElement>("[data-disc]"),
       held: null,
       release: () => {},
     };
@@ -133,6 +133,9 @@ export class Counter {
 
     this.width = rootRect.width;
     this.height = rootRect.height;
+    this.unit =
+      Number.parseFloat(getComputedStyle(this.root).getPropertyValue("--u")) ||
+      this.unit;
     this.potRect = {
       left: potRect.left - rootRect.left,
       right: potRect.right - rootRect.left,
@@ -255,13 +258,11 @@ export class Counter {
   }
 
   private paint(token: Token) {
+    const snap = (value: number) =>
+      Math.round((value - token.radius) / this.unit) * this.unit;
     const { x, y } = token.body.position;
 
-    token.element.style.transform = `translate(${x - token.radius}px, ${y - token.radius}px)`;
-
-    if (token.disc) {
-      token.disc.style.transform = `rotate(${token.body.angle}rad)`;
-    }
+    token.element.style.transform = `translate(${snap(x)}px, ${snap(y)}px)`;
   }
 
   private readonly step = () => {

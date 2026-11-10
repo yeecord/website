@@ -7,9 +7,9 @@ export function Features({ locale }: { locale: Locale }) {
   const t = translator(locale);
 
   return (
-    <section className="menu">
-      <h2 className="night-heading">{t("機器龍會做的事")}</h2>
-      <p className="night-lead">{t("點一項，看怎麼設定")}</p>
+    <section className="home-menu mt-28 flex flex-col gap-2">
+      <h2 className="home-heading">{t("機器龍會做的事")}</h2>
+      <p className="home-lead">{t("點一項，看怎麼設定")}</p>
       <ul>
         {FEATURES.map((feature) => (
           <li key={feature.id}>

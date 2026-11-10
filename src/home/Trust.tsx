@@ -46,11 +46,11 @@ export function Trust({ locale }: { locale: Locale }) {
       transition={{ duration: 0.5 }}
       className="z-[2] mt-28 flex flex-col gap-2 sm:mt-36"
     >
-      <h2 className="night-heading">
+      <h2 className="home-heading">
         <ServerCount count={count} />
         {t("個伺服器的日常")}
       </h2>
-      <p className="night-lead">{t("群主們怎麼說機器龍")}</p>
+      <p className="home-lead">{t("群主們怎麼說機器龍")}</p>
       <div className="mt-6 w-full max-w-[44rem]">
         <DiscordChat>
           {quotes.map((quote) => (

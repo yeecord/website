@@ -65,8 +65,8 @@ export function DemoServer({ locale }: { locale: Locale }) {
     <LocaleContext.Provider value={{ locale, t }}>
       <div className="z-[2] mt-24 flex flex-col gap-8 sm:mt-32">
         <div className="flex flex-col gap-2">
-          <h2 className="night-heading">{t("進來參觀一下")}</h2>
-          <p className="night-lead">
+          <h2 className="home-heading">{t("進來參觀一下")}</h2>
+          <p className="home-lead">
             {t("點左邊的頻道逛逛，按鈕都是真的能按。")}
           </p>
         </div>
