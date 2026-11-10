@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import {
   CATEGORIES,
-  type Category,
+  CATEGORY_ORDER,
   type Feature,
   FEATURES,
   guildInstallUrl,
@@ -17,7 +17,6 @@ import { FeatureIcon } from "~/feature-icons";
 import { contentPath, type Locale, locales } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
-const CATEGORY_ORDER: Category[] = ["welcome", "voice", "moderation", "events"];
 const DEFAULT_PRESET = "community";
 
 function presetFeatures(id: string | null): string[] {

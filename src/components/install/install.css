@@ -30,88 +30,177 @@
   text-underline-offset: 3px;
 }
 
-.install-presets {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
-  gap: 1rem;
+.install-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
-.install-presets > li,
+.install-matrix :is(th, td) {
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.install-matrix :is(th, td):first-child {
+  width: 13rem;
+  padding-inline-start: 0;
+  text-align: start;
+}
+
+.install-matrix thead th {
+  padding-bottom: 1.25rem;
+  font-weight: 400;
+  vertical-align: top;
+}
+
+.install-matrix thead .feature-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 0 auto 0.5rem;
+  color: var(--color-fd-primary);
+}
+
+.install-matrix thead strong {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.install-matrix thead span {
+  display: block;
+  padding-top: 0.25rem;
+  min-height: 3lh;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.875rem;
+  text-wrap: pretty;
+}
+
+.install-matrix tbody tr:first-child th {
+  padding-top: 1.5rem;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.install-matrix tbody th[scope="row"] {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-weight: 500;
+}
+
+.install-matrix tbody td svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-inline: auto;
+}
+
+.install-matrix tbody td svg.lucide-check {
+  color: var(--color-fd-primary);
+  stroke-width: 3;
+}
+
+.install-matrix tbody td svg.lucide-minus {
+  color: var(--color-fd-border);
+}
+
+.install-matrix tfoot :is(th, td) {
+  padding-top: 2rem;
+  font-weight: 600;
+}
+
+.install-matrix thead .install-actions {
+  padding-top: 1rem;
+}
+
+.install-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.install-actions .btn-chunky {
+  width: 100%;
+  max-width: 11rem;
+}
+
+.install-actions a:not(.btn-chunky) {
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.install-stack {
+  display: none;
+}
+
+@media (max-width: 859px) {
+  .install-matrix {
+    display: none;
+  }
+
+  .install-stack {
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  .install-stack li {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .install-stack h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .install-stack h2 .feature-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-fd-primary);
+  }
+
+  .install-stack p {
+    color: var(--color-fd-muted-foreground);
+  }
+
+  .install-stack p:nth-of-type(2) {
+    color: var(--color-fd-foreground);
+  }
+
+  .install-stack p:nth-of-type(3) {
+    font-size: 0.875rem;
+  }
+
+  .install-stack .install-actions {
+    flex-direction: row;
+    gap: 1.25rem;
+    padding-top: 0.5rem;
+  }
+}
+
 .install-user {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 1.5rem;
-  border: 1px solid var(--color-fd-border);
-  border-radius: 1rem;
-  background: var(--color-fd-card);
+  align-items: flex-start;
+  max-width: 40rem;
+  margin-top: 5rem;
 }
 
-.install-presets h2,
 .install-user h2 {
   font-size: 1.25rem;
   font-weight: 700;
 }
 
-.install-presets > li > p,
 .install-user p {
   color: var(--color-fd-muted-foreground);
-}
-
-.install-presets h2 {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-}
-
-.install-presets h2 .feature-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-fd-primary);
-}
-
-.install-presets > li > ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.install-presets > li > ul li {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 0.5rem;
-  background: var(--color-fd-muted);
-  font-size: 0.875rem;
-}
-
-.install-presets details {
-  color: var(--color-fd-muted-foreground);
-  font-size: 0.875rem;
-}
-
-.install-presets summary {
-  width: fit-content;
-  cursor: pointer;
-}
-
-.install-presets details p {
-  padding-top: 0.375rem;
-}
-
-.install-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: auto;
-  padding-top: 0.75rem;
-}
-
-.install-user {
-  align-items: flex-start;
-  max-width: 40rem;
-  margin-top: 3rem;
 }
 
 .picker {

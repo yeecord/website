@@ -1,14 +1,17 @@
 import Link from "fumadocs-core/link";
+import { Check, Minus } from "lucide-react";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import Footer from "~/components/Footer";
 import { footer } from "~/config";
 import { FeatureIcon } from "~/feature-icons";
 import {
-  BUILT_IN_FEATURES,
+  CATEGORIES,
+  CATEGORY_ORDER,
+  type Feature,
   FEATURES,
   guildInstallUrl,
-  PERMISSIONS,
   permissionsFor,
+  type Preset,
   PRESETS,
   USER_INSTALL_URL,
 } from "~/features";
@@ -18,9 +21,35 @@ import { localizedLayout, LocalizedMeta } from "~/localized-page";
 
 const USER_COMMANDS = ["/poll", "/pick", "/bullshit"];
 
+/** 內建的功能每一組都有 */
+function has(preset: Preset, feature: Feature) {
+  return (
+    feature.permissions.length === 0 || preset.features.includes(feature.id)
+  );
+}
+
 export function InstallPage({ locale }: { locale: Locale }) {
   const t = translator(locale);
   const separator = locales[locale].cjk ? "、" : ", ";
+  const count = (permissions: number) =>
+    t("共 {count} 項權限").replace("{count}", String(permissions));
+  const actions = (preset: Preset) => (
+    <div className="install-actions">
+      <a
+        href={guildInstallUrl(preset.features)}
+        target="_blank"
+        rel="noreferrer"
+        className="btn-chunky"
+      >
+        {t("安裝")}
+      </a>
+      <Link
+        href={`${staticPath(locale, "/install/custom")}/?preset=${preset.id}`}
+      >
+        {t("自己調整")}
+      </Link>
+    </div>
+  );
 
   return (
     <HomeLayout {...localizedLayout(locale)}>
@@ -37,60 +66,76 @@ export function InstallPage({ locale }: { locale: Locale }) {
             "每一組只跟 Discord 要它用得到的權限。裝好之後想加功能，隨時能補。",
           )}
         </p>
-        <ul className="install-presets">
-          {PRESETS.map((preset) => {
-            const included = FEATURES.filter((feature) =>
-              preset.features.includes(feature.id),
-            );
-            const permissions = permissionsFor(preset.features);
-
-            return (
-              <li key={preset.id}>
-                <h2>
+        <table className="install-matrix">
+          <thead>
+            <tr>
+              <td />
+              {PRESETS.map((preset) => (
+                <th key={preset.id} scope="col">
                   <FeatureIcon id={preset.id} />
-                  {t(preset.title)}
-                </h2>
-                <p>{t(preset.story)}</p>
-                <ul>
-                  {[...included, ...BUILT_IN_FEATURES].map((feature) => (
-                    <li key={feature.id}>
+                  <strong>{t(preset.title)}</strong>
+                  <span>{t(preset.story)}</span>
+                  {actions(preset)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          {CATEGORY_ORDER.map((category) => (
+            <tbody key={category}>
+              <tr>
+                <th colSpan={PRESETS.length + 1} scope="rowgroup">
+                  {t(CATEGORIES[category])}
+                </th>
+              </tr>
+              {FEATURES.filter((feature) => feature.category === category).map(
+                (feature) => (
+                  <tr key={feature.id}>
+                    <th scope="row">
                       <FeatureIcon id={feature.id} />
                       {t(feature.title)}
-                    </li>
-                  ))}
-                </ul>
-                <details>
-                  <summary>
-                    {t("共 {count} 項權限").replace(
-                      "{count}",
-                      String(permissions.length),
-                    )}
-                  </summary>
-                  <p>
-                    {permissions
-                      .map((row) => t(PERMISSIONS[row.permission].label))
-                      .join(separator)}
-                  </p>
-                </details>
-                <div className="install-actions">
-                  <a
-                    href={guildInstallUrl(preset.features)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-chunky"
-                  >
-                    {t("用這一組安裝")}
-                  </a>
-                  <Link
-                    href={`${staticPath(locale, "/install/custom")}/?preset=${preset.id}`}
-                    className="btn-chunky-secondary"
-                  >
-                    {t("自己調整")}
-                  </Link>
-                </div>
-              </li>
-            );
-          })}
+                    </th>
+                    {PRESETS.map((preset) => (
+                      <td key={preset.id}>
+                        {has(preset, feature) ? (
+                          <Check aria-label={t("有")} />
+                        ) : (
+                          <Minus aria-label={t("沒有")} />
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ),
+              )}
+            </tbody>
+          ))}
+          <tfoot>
+            <tr>
+              <th scope="row">{t("要給的權限")}</th>
+              {PRESETS.map((preset) => (
+                <td key={preset.id}>
+                  {count(permissionsFor(preset.features).length)}
+                </td>
+              ))}
+            </tr>
+          </tfoot>
+        </table>
+        <ul className="install-stack">
+          {PRESETS.map((preset) => (
+            <li key={preset.id}>
+              <h2>
+                <FeatureIcon id={preset.id} />
+                {t(preset.title)}
+              </h2>
+              <p>{t(preset.story)}</p>
+              <p>
+                {FEATURES.filter((feature) => has(preset, feature))
+                  .map((feature) => t(feature.title))
+                  .join(separator)}
+              </p>
+              <p>{count(permissionsFor(preset.features).length)}</p>
+              {actions(preset)}
+            </li>
+          ))}
         </ul>
         <section className="install-user">
           <h2>{t("跟著你走，不用進伺服器")}</h2>

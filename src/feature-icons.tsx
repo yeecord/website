@@ -3,10 +3,9 @@ import {
   ChartColumn,
   ClipboardList,
   Eraser,
-  Gamepad2,
   Gift,
-  Globe,
   Lock,
+  Megaphone,
   type LucideIcon,
   ShieldCheck,
   Sprout,
@@ -29,8 +28,7 @@ const ICONS: Record<string, LucideIcon> = {
   form: ClipboardList,
   defense: ShieldCheck,
   friends: Users,
-  community: Gamepad2,
-  public: Globe,
+  community: Megaphone,
   basic: Sprout,
 };
 

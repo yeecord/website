@@ -38,6 +38,13 @@ export const CATEGORIES = {
 
 export type Category = keyof typeof CATEGORIES;
 
+export const CATEGORY_ORDER: Category[] = [
+  "welcome",
+  "voice",
+  "moderation",
+  "events",
+];
+
 export type Feature = {
   id: string;
   category: Category;
@@ -136,10 +143,6 @@ export const OPTIONAL_FEATURES = FEATURES.filter(
   (feature) => feature.permissions.length > 0,
 );
 
-export const BUILT_IN_FEATURES = FEATURES.filter(
-  (feature) => feature.permissions.length === 0,
-);
-
 export type Preset = {
   id: string;
   title: Phrase;
@@ -158,16 +161,8 @@ export const PRESETS: Preset[] = [
   },
   {
     id: "community",
-    title: "遊戲或興趣社群",
-    story:
-      "常有新成員進來。進來先發身分組，語音房讓大家自己開，廣告機器人擋在門口。",
-    features: ["voice", "auto-role", "role-menu", "defense"],
-  },
-  {
-    id: "public",
-    title: "公開大群",
-    story:
-      "人多、訊息也多。除了社群那一組，再加上清洗版訊息、鎖語音房和收檢舉的表單。",
+    title: "公開社群",
+    story: "常有新成員、訊息也多。身分組、語音房、擋廣告和管理工具全部打開。",
     features: OPTIONAL_FEATURES.map((feature) => feature.id),
   },
   {
