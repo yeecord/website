@@ -4,6 +4,8 @@ import Link from "fumadocs-core/link";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import {
+  CATEGORIES,
+  type Category,
   type Feature,
   FEATURES,
   type Permission,
@@ -11,12 +13,41 @@ import {
   REQUIRED_PERMISSIONS,
 } from "~/features";
 import { contentPath, type Locale, locales } from "~/i18n";
-import { translator } from "~/i18n/translate";
+import { type Phrase, translator } from "~/i18n/translate";
 
 const CLIENT_ID = "584213384409382953";
-const BUILT_IN = FEATURES.filter((feature) => feature.permissions.length === 0);
 const OPTIONAL = FEATURES.filter((feature) => feature.permissions.length > 0);
 const USER_COMMANDS = ["/poll", "/pick", "/bullshit"];
+const CATEGORY_ORDER: Category[] = ["welcome", "voice", "moderation", "events"];
+
+/** 依伺服器的樣子先幫忙勾好，之後還能一項一項調 */
+const PRESETS: { id: string; title: Phrase; hint: Phrase; features: string[] }[] =
+  [
+    {
+      id: "friends",
+      title: "朋友小群",
+      hint: "幾個熟人聊天、開語音",
+      features: ["voice", "lock", "role-menu"],
+    },
+    {
+      id: "community",
+      title: "遊戲或興趣社群",
+      hint: "常有新成員，要分身分組、擋廣告",
+      features: ["voice", "auto-role", "role-menu", "defense"],
+    },
+    {
+      id: "public",
+      title: "公開大群",
+      hint: "人多，管理和防護都要",
+      features: OPTIONAL.map((feature) => feature.id),
+    },
+    {
+      id: "basic",
+      title: "先裝基本的",
+      hint: "只用抽獎、投票和成員通知",
+      features: [],
+    },
+  ];
 
 type Mode = "guild" | "user";
 
@@ -52,20 +83,30 @@ function asked(selected: Set<string>) {
   }));
 }
 
+function matches(selected: Set<string>, features: string[]) {
+  return (
+    selected.size === features.length &&
+    features.every((id) => selected.has(id))
+  );
+}
+
 export function InstallPicker({ locale }: { locale: Locale }) {
   const t = translator(locale);
   const [mode, setMode] = useState<Mode>("guild");
   const [selected, setSelected] = useState(
-    () => new Set(OPTIONAL.map((feature) => feature.id)),
+    () => new Set(PRESETS[1]?.features),
   );
   const permissions = asked(selected);
-  const everything = selected.size === OPTIONAL.length;
   const href = installUrl(
     mode,
     permissions.map((row) => row.permission),
   );
   const go = mode === "guild" ? t("帶我回家") : t("安裝到我的帳號");
   const separator = locales[locale].cjk ? "、" : ", ";
+  const total = t("共 {count} 項權限").replace(
+    "{count}",
+    String(permissions.length),
+  );
 
   function toggle(id: string) {
     const next = new Set(selected);
@@ -77,33 +118,32 @@ export function InstallPicker({ locale }: { locale: Locale }) {
     setSelected(next);
   }
 
-  function row(feature: Feature, checked: boolean | null) {
+  function row(feature: Feature) {
+    const builtIn = feature.permissions.length === 0;
+    const checked = builtIn || selected.has(feature.id);
+
     return (
-      <li key={feature.id} className="order-row" data-checked={checked ?? true}>
+      <li key={feature.id} className="order-row" data-checked={checked}>
         <label>
-          {checked === null ? (
-            <span className="order-stamp" role="img" aria-label={t("內建")} />
-          ) : (
-            <input
-              type="checkbox"
-              checked={checked}
-              onChange={() => toggle(feature.id)}
-            />
-          )}
+          <input
+            type="checkbox"
+            checked={checked}
+            disabled={builtIn}
+            onChange={() => toggle(feature.id)}
+          />
           <span className="order-name">
             <strong>{t(feature.title)}</strong>
             <span>{t(feature.pitch)}</span>
           </span>
         </label>
         <p className="order-meta">
-          {feature.permissions.length > 0 ? (
-            <span>
-              {t("需要")}{" "}
-              {feature.permissions
-                .map((permission) => t(PERMISSIONS[permission].label))
-                .join(separator)}
-            </span>
-          ) : null}
+          <span>
+            {builtIn
+              ? t("不用多給權限")
+              : `${t("需要")} ${feature.permissions
+                  .map((permission) => t(PERMISSIONS[permission].label))
+                  .join(separator)}`}
+          </span>
           <Link href={contentPath(locale, `/docs/commands/${feature.docs}`)}>
             {t("教學")}
           </Link>
@@ -137,51 +177,60 @@ export function InstallPicker({ locale }: { locale: Locale }) {
         ))}
       </div>
 
-      <div className="order-sheet">
-        {mode === "guild" ? (
-          <>
-            <div className="order-head">
-              <h2>{t("要多給權限的功能")}</h2>
-              <button
-                type="button"
-                onClick={() =>
-                  setSelected(
-                    new Set(
-                      everything ? [] : OPTIONAL.map((feature) => feature.id),
-                    ),
-                  )
-                }
-              >
-                {everything ? t("全部取消") : t("全部勾選")}
-              </button>
+      {mode === "guild" ? (
+        <ol className="order-steps">
+          <li>
+            <h2>{t("你的伺服器比較像哪一種")}</h2>
+            <div role="radiogroup" className="order-presets">
+              {PRESETS.map((preset) => (
+                <button
+                  key={preset.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={matches(selected, preset.features)}
+                  onClick={() => setSelected(new Set(preset.features))}
+                >
+                  <strong>{t(preset.title)}</strong>
+                  <span>{t(preset.hint)}</span>
+                </button>
+              ))}
             </div>
-            <ul>
-              {OPTIONAL.map((feature) => row(feature, selected.has(feature.id)))}
-            </ul>
-            <div className="order-head">
-              <h2>{t("內建的功能")}</h2>
-              <span>{t("不用多給權限")}</span>
+          </li>
+          <li>
+            <h2>{t("照自己的需要調整")}</h2>
+            <div className="order-sheet">
+              {CATEGORY_ORDER.map((category) => (
+                <section key={category}>
+                  <h3>{t(CATEGORIES[category])}</h3>
+                  <ul>
+                    {FEATURES.filter(
+                      (feature) => feature.category === category,
+                    ).map(row)}
+                  </ul>
+                </section>
+              ))}
             </div>
-            <ul>{BUILT_IN.map((feature) => row(feature, null))}</ul>
-          </>
-        ) : (
-          <>
-            <div className="order-head">
-              <h2>{t("跟著你走，不用進伺服器")}</h2>
-            </div>
+          </li>
+        </ol>
+      ) : (
+        <div className="order-sheet">
+          <section>
+            <h3>{t("跟著你走，不用進伺服器")}</h3>
             <p>
               {t(
                 "裝在自己的 Discord 帳號上，私訊、群組、任何伺服器都能叫出機器龍。發起投票、查個人卡片，走到哪用到哪。",
               )}
             </p>
             <p>{t("這個模式碰不到伺服器設定，所以一個權限都不用給。")}</p>
-            <p className="order-meta font-mono">{USER_COMMANDS.join("　")}</p>
-          </>
-        )}
-      </div>
+            <p className="font-mono text-sm">{USER_COMMANDS.join("　")}</p>
+          </section>
+        </div>
+      )}
 
       <aside className="order-receipt">
-        <h2>{t("機器龍會要的權限")}</h2>
+        <h2>
+          {mode === "guild" ? t("確認權限，然後安裝") : t("不需要任何權限")}
+        </h2>
         {mode === "guild" ? (
           <>
             <ul>
@@ -208,32 +257,21 @@ export function InstallPicker({ locale }: { locale: Locale }) {
                 ))}
               </AnimatePresence>
             </ul>
-            <p className="order-total">
-              {t("共 {count} 項權限").replace(
-                "{count}",
-                String(permissions.length),
-              )}
-            </p>
+            <p className="order-total">{total}</p>
             <p className="order-hint">
               {t(
                 "少勾的之後可以補。缺了哪些，機器龍會在 /help 的設定頁提醒你",
               )}
             </p>
           </>
-        ) : (
-          <p className="order-total">{t("不需要任何權限")}</p>
-        )}
+        ) : null}
         <a href={href} target="_blank" rel="noreferrer" className="order-go">
           {go}
         </a>
       </aside>
 
       <div className="order-bar">
-        {mode === "guild" ? (
-          <span>
-            {t("共 {count} 項權限").replace("{count}", String(permissions.length))}
-          </span>
-        ) : null}
+        {mode === "guild" ? <span>{total}</span> : null}
         <a href={href} target="_blank" rel="noreferrer" className="order-go">
           {go}
         </a>

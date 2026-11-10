@@ -28,8 +28,19 @@ export const REQUIRED_PERMISSIONS: Permission[] = [
   "attachFiles",
 ];
 
+/** 跟機器人 /help 的分類同一套 */
+export const CATEGORIES = {
+  welcome: "迎新與身分組",
+  voice: "語音頻道",
+  moderation: "管理與防護",
+  events: "活動",
+} satisfies Record<string, Phrase>;
+
+export type Category = keyof typeof CATEGORIES;
+
 export type Feature = {
   id: string;
+  category: Category;
   title: Phrase;
   pitch: Phrase;
   /** 文件在 /docs/commands 底下的頁面名稱 */
@@ -41,6 +52,7 @@ export type Feature = {
 export const FEATURES: Feature[] = [
   {
     id: "giveaway",
+    category: "events",
     title: "抽獎",
     pitch: "辦一場抽獎，時間到自動開獎。",
     docs: "giveaway",
@@ -48,6 +60,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "poll",
+    category: "events",
     title: "投票",
     pitch: "匿名、鎖票、開票前保密，結束時畫成結果圖。",
     docs: "poll",
@@ -55,6 +68,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "notification",
+    category: "welcome",
     title: "成員通知",
     pitch: "有人加入或離開，在指定頻道發一則訊息。",
     docs: "member-notification",
@@ -62,6 +76,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "voice",
+    category: "voice",
     title: "動態語音頻道",
     pitch: "有人進語音就開一間專屬房間，人走了自動收。",
     docs: "auto-channels",
@@ -69,6 +84,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "auto-role",
+    category: "welcome",
     title: "新成員身分組",
     pitch: "新成員一進來，自動發指定的身分組。",
     docs: "auto-role",
@@ -76,6 +92,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "role-menu",
+    category: "welcome",
     title: "身分組選單",
     pitch: "發一則訊息，成員自己按按鈕領身分組。",
     docs: "role-menu",
@@ -83,6 +100,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "lock",
+    category: "voice",
     title: "鎖定語音頻道",
     pitch: "幫語音頻道上密碼，輸入正確才進得去。",
     docs: "lock-channel",
@@ -90,6 +108,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "clear",
+    category: "moderation",
     title: "大量刪除訊息",
     pitch: "洗版訊息一次清掉，最多一千則。",
     docs: "clear",
@@ -97,6 +116,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "form",
+    category: "moderation",
     title: "表單",
     pitch: "收檢舉、申請或客服單，每一份開一個私人討論串。",
     docs: "form",
@@ -104,6 +124,7 @@ export const FEATURES: Feature[] = [
   },
   {
     id: "defense",
+    category: "moderation",
     title: "機器人防禦",
     pitch: "廣告機器人一發言就封鎖，詐騙圖片自動攔下。",
     docs: "bot-fight",

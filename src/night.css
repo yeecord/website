@@ -495,6 +495,7 @@
   display: grid;
   gap: 22px;
   color: var(--ink);
+  counter-reset: step;
 }
 
 .order :is(a, button, input):focus-visible {
@@ -532,50 +533,101 @@
   color: var(--ink);
 }
 
-.order-sheet {
+.order-steps {
+  display: grid;
+  gap: 34px;
+}
+
+.order-steps > li {
+  display: grid;
+  gap: 14px;
+}
+
+.order-steps > li > h2,
+.order-receipt h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-fd-foreground);
+  font-family: var(--font-round);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.order-steps > li > h2::before,
+.order-receipt h2::before {
+  content: counter(step);
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 15px;
+  counter-increment: step;
+}
+
+.order-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 10px;
+}
+
+.order-presets button {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.07);
+  color: var(--color-fd-foreground);
+  text-align: start;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 140ms var(--ease-out);
+}
+
+.order-presets button:active {
+  transform: scale(0.98);
+}
+
+.order-presets strong {
+  font-weight: 700;
+}
+
+.order-presets span {
+  color: var(--color-fd-muted-foreground);
+  font-size: 14px;
+}
+
+.order-presets button[aria-checked="true"] {
+  border-color: var(--cream);
+  background: rgb(244 234 208 / 0.14);
+}
+
+.order-sheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 26px 32px;
   padding: 24px;
   border-radius: 16px;
   background: var(--paper-hi);
 }
 
-.order-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px 14px;
-  padding-bottom: 6px;
-}
-
-.order-head:not(:first-child) {
-  padding-top: 26px;
-}
-
-.order-head h2 {
+.order-sheet h3 {
+  padding-bottom: 4px;
   font-family: var(--font-round);
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 800;
 }
 
-.order-head span {
-  color: var(--ink-soft);
-  font-size: 14px;
-}
-
-.order-head button {
-  min-height: 32px;
-  color: #8a3320;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.order-sheet > p {
+.order-sheet section > p {
   max-width: 34rem;
+  padding-top: 6px;
 }
 
 .order-row {
@@ -594,17 +646,13 @@
   cursor: pointer;
 }
 
-.order-row input,
-.order-stamp {
+.order-row input {
   flex: none;
   width: 24px;
   height: 24px;
   margin-top: 1px;
-  border-radius: 7px;
-}
-
-.order-row input {
   border: 2px solid var(--ink);
+  border-radius: 7px;
   background: var(--cream);
   appearance: none;
   cursor: pointer;
@@ -613,20 +661,21 @@
     transform 160ms var(--ease-out);
 }
 
-.order-row input:active {
+.order-row input:active:not(:disabled) {
   transform: scale(0.9);
 }
 
-.order-row input:checked,
-.order-stamp {
+.order-row input:checked {
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4ead0' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")
       center / 16px no-repeat,
     var(--brick);
 }
 
-.order-stamp {
+.order-row input:disabled {
+  border-color: var(--teal);
   background-color: var(--teal);
+  cursor: default;
 }
 
 .order-name {
@@ -652,12 +701,6 @@
   font-size: 13px;
 }
 
-.order-sheet > .order-meta {
-  padding: 8px 0 0;
-  color: var(--ink);
-  font-size: 14px;
-}
-
 .order-meta a {
   color: #8a3320;
   font-weight: 600;
@@ -677,9 +720,13 @@
 }
 
 .order-receipt h2 {
-  font-family: var(--font-round);
+  color: var(--ink);
   font-size: 17px;
-  font-weight: 800;
+}
+
+.order-receipt h2::before {
+  background: var(--ink);
+  color: var(--cream);
 }
 
 .order-receipt li {
