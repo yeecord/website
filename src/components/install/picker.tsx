@@ -1,277 +1,240 @@
 "use client";
 
-import { Check, Server, User } from "lucide-react";
-import { useState, type ReactNode } from "react";
-import type { Locale } from "~/i18n";
-import { type Phrase, translator } from "~/i18n/translate";
-import { cn } from "~/utils/cn";
+import Link from "fumadocs-core/link";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+import {
+  type Feature,
+  FEATURES,
+  type Permission,
+  PERMISSIONS,
+  REQUIRED_PERMISSIONS,
+} from "~/features";
+import { contentPath, type Locale } from "~/i18n";
+import { translator } from "~/i18n/translate";
 
 const CLIENT_ID = "584213384409382953";
+const BUILT_IN = FEATURES.filter((feature) => feature.permissions.length === 0);
+const OPTIONAL = FEATURES.filter((feature) => feature.permissions.length > 0);
+const USER_COMMANDS = ["/poll", "/pick", "/bullshit"];
 
-// https://discord.com/developers/docs/topics/permissions
-const requiredBits =
-  (1n << 10n) | // VIEW_CHANNEL
-  (1n << 11n) | // SEND_MESSAGES
-  (1n << 15n) | // ATTACH_FILES, the rendered cards are uploaded as images
-  (1n << 16n); // READ_MESSAGE_HISTORY, prefix commands answer as a reply
+type Mode = "guild" | "user";
 
-const requiredPermissions: Phrase[] = [
-  "檢視頻道",
-  "傳送訊息",
-  "閱讀歷史訊息",
-  "附加檔案",
-];
-
-const features: {
-  id: string;
-  title: Phrase;
-  description: Phrase;
-  permissions: [Phrase, bigint][];
-}[] = [
-  {
-    id: "voice",
-    title: "動態語音頻道",
-    description: "有人進語音就開一間專屬房間，人走了自動收。",
-    permissions: [
-      ["管理頻道", 1n << 4n],
-      ["連接", 1n << 20n],
-      ["移動成員", 1n << 24n],
-    ],
-  },
-  {
-    id: "roles",
-    title: "身分組",
-    description: "新成員進來自動發，或讓成員自己按按鈕領。",
-    permissions: [["管理身分組", 1n << 28n]],
-  },
-  {
-    id: "messages",
-    title: "訊息管理",
-    description: "洗版訊息一次清掉，最多一千則。",
-    permissions: [["管理訊息", 1n << 13n]],
-  },
-  {
-    id: "ticket",
-    title: "私人頻道",
-    description: "成員按一顆按鈕，就能私下找管理員，結案後自動封存。",
-    permissions: [
-      ["建立私人討論串", 1n << 36n],
-      ["在討論串中傳送訊息", 1n << 38n],
-      ["管理討論串", 1n << 34n],
-    ],
-  },
-  {
-    id: "defense",
-    title: "機器人防禦",
-    description: "廣告機器人一發言就封鎖，詐騙圖片自動攔下。",
-    permissions: [
-      ["封鎖成員", 1n << 2n],
-      ["禁言成員", 1n << 40n],
-      ["管理訊息", 1n << 13n],
-    ],
-  },
-];
-
-function installUrl(mode: "guild" | "user", selected: Set<string>) {
-  if (mode === "user")
+function installUrl(mode: Mode, permissions: Permission[]) {
+  if (mode === "user") {
     return `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&integration_type=1&scope=applications.commands`;
-
-  let bits = requiredBits;
-
-  for (const feature of features) {
-    if (!selected.has(feature.id)) continue;
-
-    for (const [, bit] of feature.permissions) bits |= bit;
   }
+
+  const bits = permissions.reduce(
+    (sum, permission) => sum | PERMISSIONS[permission].bit,
+    0n,
+  );
 
   return `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=bot+applications.commands&permissions=${bits}`;
 }
 
-function Chip({
-  muted,
-  className,
-  children,
-}: {
-  muted?: boolean;
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <span
-      className={cn(
-        "rounded-md bg-fd-muted px-2 py-0.5 text-fd-muted-foreground text-xs transition-colors",
-        muted && "opacity-50",
-        className,
-      )}
-    >
-      {children}
-    </span>
-  );
-}
+/** 必要權限在前，後面接勾選的功能要的權限，每項附上是哪些功能要的 */
+function asked(selected: Set<string>) {
+  const chosen = OPTIONAL.filter((feature) => selected.has(feature.id));
+  const extra = chosen
+    .flatMap((feature) => feature.permissions)
+    .filter(
+      (permission, index, all) =>
+        all.indexOf(permission) === index &&
+        !REQUIRED_PERMISSIONS.includes(permission),
+    );
 
-function Checkbox({ checked }: { checked: boolean }) {
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        "flex size-5 shrink-0 items-center justify-center rounded-md border transition-colors",
-        checked
-          ? "border-primary bg-primary text-primary-foreground"
-          : "border-fd-border bg-fd-background",
-      )}
-    >
-      {checked && <Check className="size-3.5" strokeWidth={3} />}
-    </span>
-  );
+  return [...REQUIRED_PERMISSIONS, ...extra].map((permission) => ({
+    permission,
+    features: chosen.filter((feature) =>
+      feature.permissions.includes(permission),
+    ),
+  }));
 }
 
 export function InstallPicker({ locale }: { locale: Locale }) {
   const t = translator(locale);
-  const [mode, setMode] = useState<"guild" | "user">("guild");
+  const [mode, setMode] = useState<Mode>("guild");
   const [selected, setSelected] = useState(
-    () => new Set(features.map((feature) => feature.id)),
+    () => new Set(OPTIONAL.map((feature) => feature.id)),
   );
+  const permissions = asked(selected);
+  const everything = selected.size === OPTIONAL.length;
+  const href = installUrl(
+    mode,
+    permissions.map((row) => row.permission),
+  );
+  const go = mode === "guild" ? t("帶我回家") : t("安裝到我的帳號");
 
   function toggle(id: string) {
-    setSelected((current) => {
-      const next = new Set(current);
+    const next = new Set(selected);
 
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
+    if (!next.delete(id)) {
+      next.add(id);
+    }
 
-      return next;
-    });
+    setSelected(next);
+  }
+
+  function row(feature: Feature, checked: boolean | null) {
+    return (
+      <li key={feature.id} className="order-row" data-checked={checked ?? true}>
+        <label>
+          {checked === null ? (
+            <span className="order-stamp">{t("內建")}</span>
+          ) : (
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={() => toggle(feature.id)}
+            />
+          )}
+          <span className="order-name">
+            <strong>{t(feature.title)}</strong>
+            <span>{t(feature.pitch)}</span>
+          </span>
+        </label>
+        <div className="order-meta">
+          {feature.permissions.map((permission) => (
+            <span key={permission} className="order-chip">
+              {t(PERMISSIONS[permission].label)}
+            </span>
+          ))}
+          <Link href={contentPath(locale, `/docs/commands/${feature.docs}`)}>
+            {t("看教學")}
+          </Link>
+        </div>
+      </li>
+    );
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="order">
       <div
         role="radiogroup"
         aria-label={t("安裝 YEE 式機器龍")}
-        className="mx-auto flex rounded-lg border bg-fd-muted/50 p-1 font-medium text-sm"
+        className="order-mode"
       >
         {(
           [
-            ["guild", <Server key="i" className="size-4" />, t("裝進伺服器")],
-            ["user", <User key="i" className="size-4" />, t("裝到我的帳號")],
+            ["guild", t("裝進伺服器")],
+            ["user", t("裝到我的帳號")],
           ] as const
-        ).map(([value, icon, label]) => (
+        ).map(([value, label]) => (
           <button
             key={value}
             type="button"
             role="radio"
             aria-checked={mode === value}
             onClick={() => setMode(value)}
-            className={cn(
-              "flex items-center gap-2 rounded-md px-5 py-2 transition-colors",
-              mode === value
-                ? "bg-fd-background text-fd-foreground shadow-sm"
-                : "text-fd-muted-foreground hover:text-fd-foreground",
-            )}
           >
-            {icon}
             {label}
           </button>
         ))}
       </div>
 
-      {mode === "guild" ? (
-        <>
-          <div className="rounded-2xl border bg-fd-card p-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <h2 className="font-semibold">{t("必要權限")}</h2>
-              <span className="text-fd-muted-foreground text-xs">
-                {t("一定要帶")}
-              </span>
+      <div className="order-sheet">
+        {mode === "guild" ? (
+          <>
+            <div className="order-head">
+              <h2>{t("要多給權限的功能")}</h2>
+              <button
+                type="button"
+                onClick={() =>
+                  setSelected(
+                    new Set(
+                      everything ? [] : OPTIONAL.map((feature) => feature.id),
+                    ),
+                  )
+                }
+              >
+                {everything ? t("全部取消") : t("全部勾選")}
+              </button>
             </div>
-            <p className="mt-1 text-fd-muted-foreground text-sm">
-              {t("看得到頻道、說得了話。少了這些，機器龍進來也只能當雕像。")}
+            <ul>
+              {OPTIONAL.map((feature) => row(feature, selected.has(feature.id)))}
+            </ul>
+            <div className="order-head">
+              <h2>{t("內建的功能")}</h2>
+              <span>{t("不用多給權限")}</span>
+            </div>
+            <ul>{BUILT_IN.map((feature) => row(feature, null))}</ul>
+          </>
+        ) : (
+          <>
+            <div className="order-head">
+              <h2>{t("跟著你走，不用進伺服器")}</h2>
+            </div>
+            <p>
+              {t(
+                "裝在自己的 Discord 帳號上，私訊、群組、任何伺服器都能叫出機器龍。發起投票、查個人卡片，走到哪用到哪。",
+              )}
             </p>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {requiredPermissions.map((permission) => (
-                <Chip key={permission}>{t(permission)}</Chip>
+            <p>{t("這個模式碰不到伺服器設定，所以一個權限都不用給。")}</p>
+            <div className="order-meta">
+              {USER_COMMANDS.map((command) => (
+                <span key={command} className="order-chip font-mono">
+                  {command}
+                </span>
               ))}
             </div>
-          </div>
+          </>
+        )}
+      </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            {features.map((feature) => {
-              const checked = selected.has(feature.id);
-
-              return (
-                <button
-                  key={feature.id}
-                  type="button"
-                  onClick={() => toggle(feature.id)}
-                  aria-pressed={checked}
-                  className={cn(
-                    // button 的 UA 樣式會把內容垂直置中，同一列的卡片被拉高就對不齊
-                    "flex flex-col rounded-2xl border p-5 text-left transition-colors",
-                    checked
-                      ? "border-primary/50 bg-fd-card"
-                      : "bg-fd-card/50 hover:bg-fd-card",
-                  )}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <h2
-                      className={cn(
-                        "font-semibold transition-colors",
-                        !checked && "text-fd-muted-foreground",
-                      )}
-                    >
-                      {t(feature.title)}
-                    </h2>
-                    <Checkbox checked={checked} />
-                  </div>
-                  <p className="mt-1 text-fd-muted-foreground text-sm">
-                    {t(feature.description)}
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {feature.permissions.map(([permission]) => (
-                      <Chip key={permission} muted={!checked}>
-                        {t(permission)}
-                      </Chip>
-                    ))}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </>
-      ) : (
-        <div className="rounded-2xl border bg-fd-card p-6">
-          <h2 className="font-semibold">{t("跟著你走，不用進伺服器")}</h2>
-          <p className="mt-2 text-fd-muted-foreground text-sm">
-            {t(
-              "裝在自己的 Discord 帳號上，私訊、群組、任何伺服器都能叫出機器龍。發起投票、查個人卡片、玩找吃的，走到哪用到哪。",
-            )}
-          </p>
-          <p className="mt-2 text-fd-muted-foreground text-sm">
-            {t("這個模式碰不到伺服器設定，所以一個權限都不用給。")}
-          </p>
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {["/poll", "/find-food", "/pick", "/bullshit"].map(
-              (command) => (
-                <Chip key={command} className="font-mono">
-                  {command}
-                </Chip>
-              ),
-            )}
-          </div>
+      <aside className="order-side">
+        <img src="/img/logo.svg" alt="" width="72" height="86" />
+        <div className="order-receipt">
+        <h2>{t("機器龍會要的權限")}</h2>
+        {mode === "guild" ? (
+          <>
+            <ul>
+              <AnimatePresence initial={false}>
+                {permissions.map(({ permission, features }) => (
+                  <motion.li
+                    key={permission}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                  >
+                    <span>
+                      <strong>{t(PERMISSIONS[permission].label)}</strong>
+                      <small>
+                        {features.length > 0
+                          ? features.map((feature) => t(feature.title)).join(" ")
+                          : t("必要")}
+                      </small>
+                    </span>
+                  </motion.li>
+                ))}
+              </AnimatePresence>
+            </ul>
+            <p className="order-total">
+              {t("共 {count} 項權限").replace(
+                "{count}",
+                String(permissions.length),
+              )}
+            </p>
+            <p className="order-hint">
+              {t(
+                "少勾的之後可以補。缺了哪些，機器龍會在 /help 的設定頁提醒你",
+              )}
+            </p>
+          </>
+        ) : (
+          <p className="order-total">{t("不需要任何權限")}</p>
+        )}
+        <a href={href} target="_blank" rel="noreferrer" className="order-go">
+          {go}
+        </a>
         </div>
-      )}
+      </aside>
 
-      <div className="-mx-4 pointer-events-none sticky bottom-0 z-10">
-        <div className="flex justify-center bg-gradient-to-t from-60% from-fd-background to-transparent px-4 pt-10 pb-[max(--spacing(5),env(safe-area-inset-bottom))]">
-          <a
-            href={installUrl(mode, selected)}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-chunky pointer-events-auto w-full max-w-sm sm:w-auto sm:px-10"
-          >
-            {mode === "guild" ? t("帶我回家") : t("安裝到我的帳號")}
-          </a>
-        </div>
+      <div className="order-bar">
+        <a href={href} target="_blank" rel="noreferrer" className="order-go">
+          {go}
+        </a>
       </div>
     </div>
   );

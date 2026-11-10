@@ -1,5 +1,6 @@
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
+import { NeonTitle } from "./NeonTitle";
 import { Sky } from "./stall/Sky";
 import { type Customer, Street } from "./stall/Street";
 
@@ -15,26 +16,12 @@ const SERVERS: Customer[] = [
 
 export function Hero({ locale }: { locale: Locale }) {
   const t = translator(locale);
-  const lines = [t("伺服器的雜事，"), t("恐龍包了")];
 
   return (
     <div className="night">
       <Sky />
       <div className="relative flex flex-col items-center gap-3 px-4 pt-16 text-center">
-        <h1 className="night-title" aria-label={lines.join("")}>
-          {lines.map((line, row) => (
-            <span key={line} aria-hidden>
-              {[...line].map((character, column) => (
-                <i
-                  key={column}
-                  style={{ animationDelay: `${(row * 7 + column) * 55}ms` }}
-                >
-                  {character}
-                </i>
-              ))}
-            </span>
-          ))}
-        </h1>
+        <NeonTitle lines={[t("伺服器的雜事，"), t("恐龍包了")]} />
         <p className="max-w-136 text-pretty text-[#e7dbbe] text-base sm:text-lg">
           {t("發身分組、辦抽獎、開語音房，介面全中文，免費使用")}
         </p>

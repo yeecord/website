@@ -3,6 +3,7 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumapress/css/preset.css";
+@import "./night.css";
 
 @theme {
   --color-discord-blurple: #5865f2;
@@ -434,36 +435,6 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
     to {
       background-position-x: 200%;
-    }
-  }
-
-  @keyframes drift {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(26px);
-    }
-  }
-
-  @keyframes sway {
-    0%,
-    100% {
-      transform: rotate(-1.2deg);
-    }
-    50% {
-      transform: rotate(1.4deg);
-    }
-  }
-
-  @keyframes bob {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-6px);
     }
   }
 

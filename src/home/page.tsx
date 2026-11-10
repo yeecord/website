@@ -3,6 +3,7 @@ import Footer from "~/components/Footer";
 import { footer } from "~/config";
 import { Community } from "~/home/Community";
 import { DemoServer } from "~/home/DemoServer";
+import { FeatureStalls } from "~/home/FeatureStalls";
 import { Hero } from "~/home/Hero";
 import { Trust } from "~/home/Trust";
 import type { Locale } from "~/i18n";
@@ -20,10 +21,11 @@ export function HomePage({ locale }: { locale: Locale }) {
           "YEE 式機器龍用全中文介面提供抽獎、身分組和動態語音，已有 35 萬個伺服器安裝",
         )}
       />
-      <main className="overflow-x-clip">
+      <main className="dark night-page overflow-x-clip">
         <Hero locale={locale} />
         <div className="mx-auto flex max-w-[1100px] flex-col px-3 md:px-6">
           <DemoServer locale={locale} />
+          <FeatureStalls locale={locale} />
           <Trust locale={locale} />
         </div>
         <Community locale={locale} />
