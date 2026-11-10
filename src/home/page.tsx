@@ -3,7 +3,7 @@ import Footer from "~/components/Footer";
 import { footer } from "~/config";
 import { Community } from "~/home/Community";
 import { DemoServer } from "~/home/DemoServer";
-import { FeatureStalls } from "~/home/FeatureStalls";
+import { Features } from "~/home/Features";
 import { Hero } from "~/home/Hero";
 import { Trust } from "~/home/Trust";
 import type { Locale } from "~/i18n";
@@ -25,7 +25,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         <Hero locale={locale} />
         <div className="mx-auto flex max-w-[1100px] flex-col px-3 md:px-6">
           <DemoServer locale={locale} />
-          <FeatureStalls locale={locale} />
+          <Features locale={locale} />
           <Trust locale={locale} />
         </div>
         <Community locale={locale} />

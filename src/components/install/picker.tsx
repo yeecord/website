@@ -10,7 +10,7 @@ import {
   PERMISSIONS,
   REQUIRED_PERMISSIONS,
 } from "~/features";
-import { contentPath, type Locale } from "~/i18n";
+import { contentPath, type Locale, locales } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
 const CLIENT_ID = "584213384409382953";
@@ -65,6 +65,7 @@ export function InstallPicker({ locale }: { locale: Locale }) {
     permissions.map((row) => row.permission),
   );
   const go = mode === "guild" ? t("帶我回家") : t("安裝到我的帳號");
+  const separator = locales[locale].cjk ? "、" : ", ";
 
   function toggle(id: string) {
     const next = new Set(selected);
@@ -81,7 +82,7 @@ export function InstallPicker({ locale }: { locale: Locale }) {
       <li key={feature.id} className="order-row" data-checked={checked ?? true}>
         <label>
           {checked === null ? (
-            <span className="order-stamp">{t("內建")}</span>
+            <span className="order-stamp" role="img" aria-label={t("內建")} />
           ) : (
             <input
               type="checkbox"
@@ -94,16 +95,19 @@ export function InstallPicker({ locale }: { locale: Locale }) {
             <span>{t(feature.pitch)}</span>
           </span>
         </label>
-        <div className="order-meta">
-          {feature.permissions.map((permission) => (
-            <span key={permission} className="order-chip">
-              {t(PERMISSIONS[permission].label)}
+        <p className="order-meta">
+          {feature.permissions.length > 0 ? (
+            <span>
+              {t("需要")}{" "}
+              {feature.permissions
+                .map((permission) => t(PERMISSIONS[permission].label))
+                .join(separator)}
             </span>
-          ))}
+          ) : null}
           <Link href={contentPath(locale, `/docs/commands/${feature.docs}`)}>
-            {t("看教學")}
+            {t("教學")}
           </Link>
-        </div>
+        </p>
       </li>
     );
   }
@@ -171,20 +175,12 @@ export function InstallPicker({ locale }: { locale: Locale }) {
               )}
             </p>
             <p>{t("這個模式碰不到伺服器設定，所以一個權限都不用給。")}</p>
-            <div className="order-meta">
-              {USER_COMMANDS.map((command) => (
-                <span key={command} className="order-chip font-mono">
-                  {command}
-                </span>
-              ))}
-            </div>
+            <p className="order-meta font-mono">{USER_COMMANDS.join("　")}</p>
           </>
         )}
       </div>
 
-      <aside className="order-side">
-        <img src="/img/logo.svg" alt="" width="72" height="86" />
-        <div className="order-receipt">
+      <aside className="order-receipt">
         <h2>{t("機器龍會要的權限")}</h2>
         {mode === "guild" ? (
           <>
@@ -202,7 +198,9 @@ export function InstallPicker({ locale }: { locale: Locale }) {
                       <strong>{t(PERMISSIONS[permission].label)}</strong>
                       <small>
                         {features.length > 0
-                          ? features.map((feature) => t(feature.title)).join(" ")
+                          ? features
+                              .map((feature) => t(feature.title))
+                              .join(separator)
                           : t("必要")}
                       </small>
                     </span>
@@ -228,10 +226,14 @@ export function InstallPicker({ locale }: { locale: Locale }) {
         <a href={href} target="_blank" rel="noreferrer" className="order-go">
           {go}
         </a>
-        </div>
       </aside>
 
       <div className="order-bar">
+        {mode === "guild" ? (
+          <span>
+            {t("共 {count} 項權限").replace("{count}", String(permissions.length))}
+          </span>
+        ) : null}
         <a href={href} target="_blank" rel="noreferrer" className="order-go">
           {go}
         </a>
