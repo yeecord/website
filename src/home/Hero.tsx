@@ -18,25 +18,26 @@ export function Hero({ locale }: { locale: Locale }) {
 
   return (
     <div className="flex flex-col gap-8 pt-12 sm:pt-16">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="flex flex-col gap-3">
-          <h1 className="font-extrabold text-[2.5rem] leading-[1.15] tracking-tight sm:text-6xl">
+          <h1 className="home-title">
             {t("伺服器的雜事，")}
             <br />
             {t("恐龍包了")}
           </h1>
-          <p className="max-w-136 text-pretty text-lg text-muted-foreground">
+          <p className="home-lead max-w-136 text-pretty">
             {t("發身分組、辦抽獎、開語音房，介面全中文，免費使用")}
           </p>
         </div>
-        <div className="flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row">
-          <Link href={`${staticPath(locale, "/install")}/`} className="btn-chunky">
+        <div className="home-actions">
+          <Link
+            href={`${staticPath(locale, "/install")}/`}
+            className="home-btn"
+            data-kind="primary"
+          >
             {t("安裝機器人")}
           </Link>
-          <Link
-            href={contentPath(locale, "/docs")}
-            className="btn-chunky-secondary"
-          >
+          <Link href={contentPath(locale, "/docs")} className="home-btn">
             {t("看使用教學")}
           </Link>
         </div>

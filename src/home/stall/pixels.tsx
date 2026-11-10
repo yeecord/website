@@ -13,6 +13,7 @@ const ART_PALETTE: Record<string, string> = {
   p: "#d8c9a2",
   t: "#2e5e55",
   n: "#33291b",
+  e: "#5e8c4e",
 };
 
 /** 一格一個方塊的點陣圖，寬高照格數乘上 --u 排版 */

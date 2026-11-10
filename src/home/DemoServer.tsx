@@ -63,7 +63,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
 
   return (
     <LocaleContext.Provider value={{ locale, t }}>
-      <div className="z-[2] mt-24 flex flex-col gap-8 sm:mt-32">
+      <div className="home-section z-[2]">
         <div className="flex flex-col gap-2">
           <h2 className="home-heading">{t("進來參觀一下")}</h2>
           <p className="home-lead">
@@ -75,7 +75,7 @@ export function DemoServer({ locale }: { locale: Locale }) {
           initial={{ opacity: 0, y: 24 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.4, ease: EASE_OUT }}
-          className="grid overflow-hidden rounded-xl border bg-discord-bg font-discord shadow-xl md:grid-cols-[15rem_1fr]"
+          className="home-frame mt-5 grid overflow-hidden bg-discord-bg font-discord md:grid-cols-[15rem_1fr]"
         >
           <Sidebar active={active} seen={seen} onOpen={open} />
           <div className="flex min-w-0 flex-col">

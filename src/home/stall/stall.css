@@ -1,6 +1,4 @@
-/* 整個遊戲畫面是像素圖：純色、硬邊、沒有漸層和陰影模糊。
-   --u 是一格像素的邊長，尺寸和位移都用它的倍數。
-   色票跟機器人圖卡的像素道具同一套 */
+/* 遊戲畫面。--u、色票和像素字型定義在 home.css 的 .home 上 */
 @font-face {
   font-family: "Yeecord Pixel TC";
   src: url("/fonts/yeecord-pixel/yeecord-pixel-tc.woff2") format("woff2");
@@ -14,31 +12,15 @@
 }
 
 .px {
-  --u: 4px;
-  --ink: #12101f;
-  --night: #24213f;
-  --cream: #f4ead0;
-  --paper: #d8c9a2;
-  --brick: #ab4329;
-  --brick-deep: #7a2a1c;
-  --mustard: #cc9a33;
-  --teal: #2e5e55;
-  --wood: #6e4d2e;
-  --wood-deep: #553a20;
-
   width: 100%;
   border: var(--u) solid var(--ink);
   background: var(--ink);
   color: var(--cream);
-  font-family: "Yeecord Pixel TC", "Yeecord Pixel SC", "Noto Sans TC", monospace;
+  font-family: var(--font-pixel);
   font-size: 12px;
   line-height: 1.5;
   text-align: start;
   -webkit-font-smoothing: none;
-}
-
-.px[data-locale="zh-cn"] {
-  font-family: "Yeecord Pixel SC", "Yeecord Pixel TC", "Noto Sans SC", monospace;
 }
 
 .px :is(button, a):focus-visible {

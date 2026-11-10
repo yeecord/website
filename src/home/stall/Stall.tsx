@@ -575,11 +575,7 @@ export function Stall({
         : web.start;
 
   return (
-    <section
-      className="px"
-      data-locale={locale}
-      aria-label={copy.text.home_shop}
-    >
+    <section className="px" aria-label={copy.text.home_shop}>
       <div ref={playRef} className="px-scene">
         <i className="px-star" style={{ left: "8%", top: "14%" }} />
         <i className="px-star" style={{ left: "31%", top: "30%" }} />
