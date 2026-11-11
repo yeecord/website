@@ -159,5 +159,6 @@ export const SLASH_NAMES: Record<string, { "zh-tw": string; "zh-cn": string }> =
   "reply-feedback user": { "zh-tw": "使用者", "zh-cn": "用户" },
   "role-menu": { "zh-tw": "建立身分組選單", "zh-cn": "创建身份组菜单" },
   "role-select": { "zh-tw": "建立身分組選單", "zh-cn": "创建身份组菜单" },
+  "settings": { "zh-tw": "伺服器設定", "zh-cn": "服务器设置" },
   "status": { "zh-tw": "機器人狀態", "zh-cn": "机器人状态" },
 };
