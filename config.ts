@@ -6,6 +6,11 @@ import { translator } from "~/i18n/translate";
 // 正式切換主站時把這裡改回 https://yeecord.com
 export const domain = "https://next.yeecord.com";
 
+// 機器龍 http role 的網址，dashboard 的登入和資料都從這裡來（yeecord/yeecord#384）。
+// 網域還沒定，定了再改。本機開發用 VITE_DASHBOARD_API 指到自己跑的機器龍
+export const dashboardApi: string =
+  import.meta.env.VITE_DASHBOARD_API ?? "https://api.yeecord.com";
+
 // Workers static assets 設 drop-trailing-slash，帶斜線網址一律 308 到無斜線，
 // canonical 必須指向最終網址
 export function canonicalUrl(path: string) {
