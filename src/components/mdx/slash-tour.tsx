@@ -45,7 +45,6 @@ const T = {
       { command: "poll create", description: "發起投票" },
       { command: "giveaway create", description: "建立一個抽獎活動" },
       { command: "form create", description: "建立一張新表單" },
-      { command: "find-food", description: "陪 Yee 出門找吃的、煮一桌、餵牠" },
     ] as Suggestion[],
     filtered: [
       { command: "poll create", description: "發起投票" },
@@ -105,7 +104,6 @@ const T = {
       { command: "poll create", description: "发起投票" },
       { command: "giveaway create", description: "创建一个抽奖活动" },
       { command: "form create", description: "创建一张新表单" },
-      { command: "find-food", description: "陪 Yee 出门找吃的、煮一桌、喂它" },
     ] as Suggestion[],
     filtered: [
       { command: "poll create", description: "发起投票" },

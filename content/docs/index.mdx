@@ -1,10 +1,10 @@
 ---
 title: 快速入門
 icon: Rocket
-description: 用全中文介面管理投票、抽獎和動態語音，也能隨時玩找吃的小遊戲。
+description: 用全中文介面管理投票、抽獎和動態語音。
 ---
 
-import { Gamepad2, Vote, AudioLines } from "lucide-react";
+import { Vote, AudioLines } from "lucide-react";
 
 YEE 式機器龍的指令、設定和錯誤訊息都用中文
 
@@ -25,7 +25,7 @@ YEE 式機器龍的指令、設定和錯誤訊息都用中文
 
 Discord 會在安裝時讓你選擇，兩種方式可以同時使用
 
-安裝到帳號後，<Cmd name="poll" />、<Cmd name="find-food" /> 等支援的指令也能在沒有安裝機器龍的地方使用
+安裝到帳號後，<Cmd name="poll" />、<Cmd name="pick" /> 等支援的指令也能在沒有安裝機器龍的地方使用
 
 ## 功能一覽
 
@@ -41,12 +41,6 @@ Discord 會在安裝時讓你選擇，兩種方式可以同時使用
     href="/zh-tw/docs/commands/auto-channels/"
     icon={<AudioLines />}
     description="加入大廳後，自動建立專屬語音頻道"
-  />
-  <Card
-    title="找吃的"
-    href="/zh-tw/docs/find-food/"
-    icon={<Gamepad2 />}
-    description="覓食、料理，然後餵 Yee"
   />
 </Cards>
 

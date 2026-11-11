@@ -67,7 +67,6 @@ export const SLASH_NAMES: Record<string, { "zh-tw": string; "zh-cn": string }> =
   "fake text": { "zh-tw": "內容", "zh-cn": "内容" },
   "fake user": { "zh-tw": "當事人", "zh-cn": "当事人" },
   "feedback": { "zh-tw": "回報", "zh-cn": "反馈" },
-  "find-food": { "zh-tw": "找吃的", "zh-cn": "找吃的" },
   "form": { "zh-tw": "表單", "zh-cn": "表单" },
   "form ban": { "zh-tw": "封鎖", "zh-cn": "封锁" },
   "form bans": { "zh-tw": "封鎖名單", "zh-cn": "封锁名单" },

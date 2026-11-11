@@ -4,11 +4,6 @@ import { SLASH_NAMES } from "./slash-names";
 // The docs page for /auto-roles has the slug auto-role
 const ALIASES: Record<string, string> = { "auto-role": "auto-roles" };
 
-// The night-market game has not shipped, so the generated table does not have it yet
-const UPCOMING: typeof SLASH_NAMES = {
-  stall: { "zh-tw": "攤位", "zh-cn": "摊位" },
-};
-
 function lookup(path: string, locale: Locale) {
   if (locale === "en") {
     return undefined;
@@ -16,7 +11,7 @@ function lookup(path: string, locale: Locale) {
 
   const key = ALIASES[path] ?? path;
 
-  return (SLASH_NAMES[key] ?? UPCOMING[key])?.[locale];
+  return SLASH_NAMES[key]?.[locale];
 }
 
 /** How Discord shows a command in `locale`: "poll create" is "投票 發起投票" in zh-tw. */
