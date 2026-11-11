@@ -201,4 +201,7 @@ export const en = {
   "看看機器龍在你的伺服器做了什麼": "See what Yeecord is doing in your servers",
   "只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。": "It only reads your Discord name and server list, never your messages.",
   "要處理": "To fix",
+  "陷阱頻道": "Trap channel",
+  "詐騙過濾": "Scam filter",
+  "抽獎": "Giveaways",
 } satisfies Record<keyof typeof zhCn, string>;

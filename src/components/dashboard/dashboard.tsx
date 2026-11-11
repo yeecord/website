@@ -2,55 +2,25 @@
 
 import { CircleAlert, CircleCheck, CircleDashed, LogOut, RotateCw } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import { dashboardApi } from "~/config";
 import { type Locale, staticPath } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
-
-type Ref = { id: string; name: string | null };
-type NotificationType = "join" | "leave";
-type Failure = "forbidden" | "missing";
-
-type Running =
-  | { kind: "notification"; type: NotificationType; channel: Ref }
-  | { kind: "roles"; roles: Ref[] }
-  | { kind: "lobbies"; channels: Ref[] }
-  | { kind: "trap"; channel: Ref }
-  | { kind: "scam_filter" }
-  | { kind: "standby"; channel: Ref };
-
-type Stopped =
-  | {
-      kind: "notification";
-      type: NotificationType;
-      failure: Failure;
-      since: string;
-      channel: Ref;
-    }
-  | { kind: "roles"; roles: Ref[]; since: string }
-  | { kind: "lobbies"; permissions: string[] }
-  | {
-      kind: "fight";
-      offence: "trap" | "scam";
-      user: Ref;
-      permissions: string[];
-      since: string;
-    }
-  | { kind: "giveaway"; failure: Failure; channel: Ref; since: string };
-
-type Unset =
-  | { kind: "notification"; type: NotificationType; command: string }
-  | {
-      kind: "roles" | "lobbies" | "fight" | "standby";
-      command: string;
-    };
-
-type Overview = { running: Running[]; stopped: Stopped[]; unset: Unset[] };
-type Guild = { id: string; name: string; icon: string | null };
+import {
+  type ErrorCode,
+  type Failure,
+  type FeatureStatus,
+  type Guild,
+  type GuildFeature,
+  get,
+  type List,
+  loginUrl,
+  logout as endSession,
+  type Named,
+} from "./api";
 
 type Panel =
   | { state: "loading" }
-  | { state: "ready"; overview: Overview }
-  | { state: "refused"; status: number };
+  | { state: "ready"; features: GuildFeature[] }
+  | { state: "refused"; code: ErrorCode };
 
 type View =
   | { state: "loading" }
@@ -59,29 +29,26 @@ type View =
   | { state: "empty" }
   | { state: "signed-in"; guilds: Guild[]; guild: Guild; panel: Panel };
 
-const notificationLabels: Record<NotificationType, Phrase> = {
-  join: "加入通知",
-  leave: "離開通知",
-};
-
-const unsetLabels: Record<Unset["kind"], Phrase> = {
-  notification: "加入通知",
-  roles: "新成員身分組",
-  lobbies: "動態語音頻道",
-  fight: "機器人防禦",
-  standby: "掛機頻道",
+const featureLabels: Record<GuildFeature["type"], Phrase> = {
+  member_notification: "加入通知",
+  auto_role: "新成員身分組",
+  auto_channels: "動態語音頻道",
+  trap_channel: "陷阱頻道",
+  scam_filter: "詐騙過濾",
+  afk_channel: "掛機頻道",
+  giveaway: "抽獎",
 };
 
 // https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags
 const permissionLabels: Record<string, Phrase> = {
-  VIEW_CHANNEL: "檢視頻道",
-  SEND_MESSAGES: "傳送訊息",
-  MANAGE_CHANNELS: "管理頻道",
-  MANAGE_ROLES: "管理身分組",
-  CONNECT: "連接",
-  MOVE_MEMBERS: "移動成員",
-  BAN_MEMBERS: "封鎖成員",
-  MODERATE_MEMBERS: "禁言成員",
+  view_channel: "檢視頻道",
+  send_messages: "傳送訊息",
+  manage_channels: "管理頻道",
+  manage_roles: "管理身分組",
+  connect: "連接",
+  move_members: "移動成員",
+  ban_members: "封鎖成員",
+  moderate_members: "禁言成員",
 };
 
 const intlLocales: Record<Locale, string> = {
@@ -89,17 +56,6 @@ const intlLocales: Record<Locale, string> = {
   "zh-cn": "zh-CN",
   en: "en",
 };
-
-async function request<T>(path: string) {
-  const response = await fetch(`${dashboardApi}${path}`, {
-    credentials: "include",
-  });
-
-  return {
-    status: response.status,
-    body: response.ok ? ((await response.json()) as T) : undefined,
-  };
-}
 
 function selectedGuild() {
   return new URLSearchParams(window.location.search).get("guild");
@@ -124,19 +80,16 @@ export function Dashboard({ locale }: { locale: Locale }) {
 
   const load = useCallback(async () => {
     try {
-      const listed = await request<{ guilds: Guild[] }>("/api/guilds");
+      const listed = await get<List<Guild>>("/v1/guilds");
 
-      if (listed.status === 401) {
-        setView({ state: "signed-out" });
+      if (!listed.ok) {
+        setView({
+          state: listed.code === "session_missing" ? "signed-out" : "unreachable",
+        });
         return;
       }
 
-      if (!listed.body) {
-        setView({ state: "unreachable" });
-        return;
-      }
-
-      const { guilds } = listed.body;
+      const guilds = listed.body.data;
       const id = selectedGuild();
       const guild = guilds.find((guild) => guild.id === id) ?? guilds[0];
 
@@ -147,15 +100,20 @@ export function Dashboard({ locale }: { locale: Locale }) {
 
       setView({ state: "signed-in", guilds, guild, panel: { state: "loading" } });
 
-      const read = await request<Overview>(`/api/guilds/${guild.id}/overview`);
+      const read = await get<List<GuildFeature>>(`/v1/guilds/${guild.id}/features`);
+
+      if (!read.ok && read.code === "session_missing") {
+        setView({ state: "signed-out" });
+        return;
+      }
 
       setView({
         state: "signed-in",
         guilds,
         guild,
-        panel: read.body
-          ? { state: "ready", overview: read.body }
-          : { state: "refused", status: read.status },
+        panel: read.ok
+          ? { state: "ready", features: read.body.data }
+          : { state: "refused", code: read.code },
       });
     } catch {
       setView({ state: "unreachable" });
@@ -178,10 +136,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
   };
 
   const logout = async () => {
-    await fetch(`${dashboardApi}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
+    await endSession();
     setView({ state: "signed-out" });
   };
 
@@ -223,10 +178,13 @@ export function Dashboard({ locale }: { locale: Locale }) {
           <section aria-live="polite" className="min-w-0">
             <GuildHeading guild={view.guild} />
             {view.panel.state === "loading" && <LedgerSkeleton />}
-            {view.panel.state === "refused" && (
+            {view.panel.state === "refused" && view.panel.code === "internal_error" && (
+              <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")} />
+            )}
+            {view.panel.state === "refused" && view.panel.code !== "internal_error" && (
               <Notice
                 title={
-                  view.panel.status === 403
+                  view.panel.code === "missing_manage_guild"
                     ? t("你已經不能管理這個伺服器")
                     : t("清單裡沒有這個伺服器")
                 }
@@ -236,7 +194,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
               />
             )}
             {view.panel.state === "ready" && (
-              <Ledger t={t} locale={locale} overview={view.panel.overview} />
+              <Ledger t={t} locale={locale} features={view.panel.features} />
             )}
           </section>
         </div>
@@ -250,8 +208,7 @@ const primary = `inline-flex h-10 items-center gap-2 rounded-lg bg-discord-blurp
 const quiet = `inline-flex h-10 items-center gap-2 rounded-lg px-3 text-fd-muted-foreground transition-colors duration-150 hover:bg-fd-accent hover:text-fd-accent-foreground ${focus}`;
 
 function SignIn({ t }: { t: Translate }) {
-  const back = `${window.location.pathname}${window.location.search}`;
-  const login = `${dashboardApi}/auth/login?${new URLSearchParams({ back })}`;
+  const login = loginUrl(`${window.location.pathname}${window.location.search}`);
 
   return (
     <Notice
@@ -347,7 +304,7 @@ function GuildHeading({ guild }: { guild: Guild }) {
 }
 
 type Row = {
-  status: "problem" | "running" | "unset";
+  status: FeatureStatus;
   title: ReactNode;
   detail?: ReactNode;
   command?: string;
@@ -356,191 +313,164 @@ type Row = {
 function Ledger({
   t,
   locale,
-  overview,
+  features,
 }: {
   t: Translate;
   locale: Locale;
-  overview: Overview;
+  features: GuildFeature[];
 }) {
   const relative = new Intl.RelativeTimeFormat(intlLocales[locale], {
     numeric: "auto",
   });
-  const since = (iso: string) => {
-    const hours = Math.round((Date.parse(iso) - Date.now()) / 3_600_000);
+  const since = (seconds: number | null) => {
+    if (seconds === null) {
+      return "";
+    }
+
+    const hours = Math.round((seconds * 1000 - Date.now()) / 3_600_000);
 
     return Math.abs(hours) < 24
       ? relative.format(hours, "hour")
       : relative.format(Math.round(hours / 24), "day");
   };
-  const channel = (ref: Ref) => (
-    <Chip>{ref.name ? `#${ref.name}` : t("已刪除的頻道")}</Chip>
+  const name = (named: Named | null | undefined, prefix: string, gone: Phrase) => (
+    <Chip key={named?.id}>{named?.name ? `${prefix}${named.name}` : t(gone)}</Chip>
   );
-  const roles = (refs: Ref[]) =>
-    refs.map((ref) => (
-      <Chip key={ref.id}>{ref.name ? `@${ref.name}` : t("已刪除的身分組")}</Chip>
-    ));
-  const channels = (refs: Ref[]) =>
-    refs.map((ref) => <span key={ref.id}>{channel(ref)}</span>);
-  const permissions = (names: string[]) =>
-    names.map((name) => {
-      const label = permissionLabels[name];
+  const channel = (named: Named | null | undefined) => name(named, "#", "已刪除的頻道");
+  const roles = (list: Named[] = []) =>
+    list.map((role) => name(role, "@", "已刪除的身分組"));
+  const permissions = (names: string[] = []) =>
+    names.map((flag) => {
+      const label = permissionLabels[flag];
 
-      return <Chip key={name}>{label ? t(label) : name}</Chip>;
+      return <Chip key={flag}>{label ? t(label) : flag}</Chip>;
     });
+  const label = (feature: GuildFeature) =>
+    feature.type === "member_notification" &&
+    feature.member_notification.event === "leave"
+      ? t("離開通知")
+      : featureLabels[feature.type]
+        ? t(featureLabels[feature.type])
+        : feature.type;
 
-  const running = (item: Running): Row => {
-    switch (item.kind) {
-      case "notification":
-        return {
-          status: "running",
-          title: fill(t("{type}，發到 {channel}"), {
-            type: t(notificationLabels[item.type]),
-            channel: channel(item.channel),
-          }),
-        };
-      case "roles":
-        return {
-          status: "running",
-          title: fill(t("新成員身分組，給 {roles}"), { roles: roles(item.roles) }),
-        };
-      case "lobbies":
-        return {
-          status: "running",
-          title: fill(t("動態語音頻道，大廳是 {channels}"), {
-            channels: channels(item.channels),
-          }),
-        };
-      case "trap":
-        return {
-          status: "running",
-          title: fill(t("機器人防禦，陷阱頻道是 {channel}"), {
-            channel: channel(item.channel),
-          }),
-        };
+  const enabled = (feature: GuildFeature): ReactNode => {
+    switch (feature.type) {
+      case "member_notification":
+        return fill(t("{type}，發到 {channel}"), {
+          type: label(feature),
+          channel: channel(feature.member_notification.channel),
+        });
+      case "auto_role":
+        return fill(t("新成員身分組，給 {roles}"), {
+          roles: roles(feature.auto_role.roles),
+        });
+      case "auto_channels":
+        return fill(t("動態語音頻道，大廳是 {channels}"), {
+          channels: feature.auto_channels.lobbies.map((lobby) => channel(lobby)),
+        });
+      case "trap_channel":
+        return fill(t("機器人防禦，陷阱頻道是 {channel}"), {
+          channel: channel(feature.trap_channel.channel),
+        });
       case "scam_filter":
-        return { status: "running", title: t("詐騙過濾已啟用") };
-      case "standby":
+        return t("詐騙過濾已啟用");
+      case "afk_channel":
+        return fill(t("掛機頻道，機器龍待在 {channel}"), {
+          channel: channel(feature.afk_channel.channel),
+        });
+      default:
+        return label(feature);
+    }
+  };
+
+  const failing = (feature: GuildFeature, failure: Failure): Row => {
+    const values = {
+      since: since(failure.failed_at),
+      channel: channel(failure.channel),
+      roles: roles(failure.roles),
+      user: <Chip>{failure.member?.name ? `@${failure.member.name}` : failure.member?.id}</Chip>,
+      permissions: permissions(failure.missing_permissions),
+      command: <Command name={feature.command} />,
+    };
+    const row = (title: ReactNode, detail: Phrase): Row => ({
+      status: "failing",
+      title,
+      detail: fill(t(detail), values),
+    });
+    const giveaway = feature.type === "giveaway";
+
+    switch (failure.code) {
+      case "channel_forbidden":
+        return giveaway
+          ? row(
+              t("抽獎結果沒有公布"),
+              "{since}開獎時無法在 {channel} 發訊息，開啟機器龍的 {permissions} 權限後，下次開獎就會恢復",
+            )
+          : row(
+              fill(t("{type}已自動停用"), { type: label(feature) }),
+              "{since}起無法在 {channel} 發訊息，用 {command} 重新啟用",
+            );
+      case "channel_missing":
+        return giveaway
+          ? row(
+              t("抽獎結果沒有公布"),
+              "{since}開獎時找不到 {channel}，之後的抽獎請辦在其他頻道",
+            )
+          : row(
+              fill(t("{type}已自動停用"), { type: label(feature) }),
+              "{since}起找不到 {channel}，用 {command} 改選頻道",
+            );
+      case "roles_unassignable":
+        return row(
+          t("新成員身分組發不出去"),
+          "{since}起無法發出 {roles}，用 {command} 重新設定",
+        );
+      case "missing_permissions":
+        return row(t("大廳缺少權限"), "機器龍需要 {permissions}，用 {command} 查看大廳");
+      case "ban_failed":
+        return row(
+          t("陷阱頻道沒能封鎖成員"),
+          "{since}沒能封鎖 {user}，請確認機器龍有 {permissions} 權限，而且身分組比對方高",
+        );
+      case "timeout_failed":
+        return row(
+          t("詐騙過濾沒能禁言成員"),
+          "{since}沒能禁言 {user}，請確認機器龍有 {permissions} 權限，而且身分組比對方高",
+        );
+      default:
         return {
-          status: "running",
-          title: fill(t("掛機頻道，機器龍待在 {channel}"), {
-            channel: channel(item.channel),
-          }),
+          status: "failing",
+          title: label(feature),
+          command: feature.command,
         };
     }
   };
 
-  const problem = (item: Stopped): Row => {
-    switch (item.kind) {
-      case "notification":
-        return {
-          status: "problem",
-          title: fill(t("{type}已自動停用"), {
-            type: t(notificationLabels[item.type]),
-          }),
-          detail: fill(
-            item.failure === "forbidden"
-              ? t("{since}起無法在 {channel} 發訊息，用 {command} 重新啟用")
-              : t("{since}起找不到 {channel}，用 {command} 改選頻道"),
-            {
-              since: since(item.since),
-              channel: channel(item.channel),
-              command: <Command name="member-notification" />,
-            },
-          ),
-        };
-      case "roles":
-        return {
-          status: "problem",
-          title: t("新成員身分組發不出去"),
-          detail: fill(t("{since}起無法發出 {roles}，用 {command} 重新設定"), {
-            since: since(item.since),
-            roles: roles(item.roles),
-            command: <Command name="auto-role" />,
-          }),
-        };
-      case "lobbies":
-        return {
-          status: "problem",
-          title: t("大廳缺少權限"),
-          detail: fill(t("機器龍需要 {permissions}，用 {command} 查看大廳"), {
-            permissions: permissions(item.permissions),
-            command: <Command name="auto-channels list" />,
-          }),
-        };
-      case "giveaway":
-        return {
-          status: "problem",
-          title: t("抽獎結果沒有公布"),
-          detail: fill(
-            item.failure === "forbidden"
-              ? t(
-                  "{since}開獎時無法在 {channel} 發訊息，開啟機器龍的 {permissions} 權限後，下次開獎就會恢復",
-                )
-              : t("{since}開獎時找不到 {channel}，之後的抽獎請辦在其他頻道"),
-            {
-              since: since(item.since),
-              channel: channel(item.channel),
-              permissions: permissions(["VIEW_CHANNEL", "SEND_MESSAGES"]),
-            },
-          ),
-        };
-      case "fight":
-        return {
-          status: "problem",
-          title:
-            item.offence === "trap"
-              ? t("陷阱頻道沒能封鎖成員")
-              : t("詐騙過濾沒能禁言成員"),
-          detail: fill(
-            item.offence === "trap"
-              ? t(
-                  "{since}沒能封鎖 {user}，請確認機器龍有 {permissions} 權限，而且身分組比對方高",
-                )
-              : t(
-                  "{since}沒能禁言 {user}，請確認機器龍有 {permissions} 權限，而且身分組比對方高",
-                ),
-            {
-              since: since(item.since),
-              user: <Chip>{item.user.name ? `@${item.user.name}` : item.user.id}</Chip>,
-              permissions: permissions(item.permissions),
-            },
-          ),
-        };
+  const rows: Row[] = features.map((feature) => {
+    if (feature.status === "failing" && feature.last_failure) {
+      return failing(feature, feature.last_failure);
     }
-  };
 
-  const unset = (item: Unset): Row => ({
-    status: "unset",
-    title: t(
-      item.kind === "notification"
-        ? notificationLabels[item.type]
-        : unsetLabels[item.kind],
-    ),
-    command: item.command,
+    return feature.status === "enabled"
+      ? { status: "enabled", title: enabled(feature) }
+      : { status: "not_configured", title: label(feature), command: feature.command };
   });
-
-  const rows = [
-    ...overview.stopped.map(problem),
-    ...overview.running.map(running),
-    ...overview.unset.map(unset),
+  const counts: [FeatureStatus, Phrase][] = [
+    ["failing", "要處理"],
+    ["enabled", "運作中"],
+    ["not_configured", "還沒設定"],
   ];
-  const counts: [Row["status"], Phrase][] = [
-    ["problem", "要處理"],
-    ["running", "運作中"],
-    ["unset", "還沒設定"],
-  ];
+  const failingCount = rows.filter((row) => row.status === "failing").length;
 
   return (
     <>
       <dl className="mb-6 grid grid-cols-3 gap-3">
-        {counts.map(([status, label]) => (
+        {counts.map(([status, title]) => (
           <div key={status} className="rounded-lg bg-fd-secondary/60 px-4 py-3">
-            <dt className="text-fd-muted-foreground text-sm">{t(label)}</dt>
+            <dt className="text-fd-muted-foreground text-sm">{t(title)}</dt>
             <dd
               className={`font-semibold text-2xl tabular-nums ${
-                status === "problem" && overview.stopped.length > 0
-                  ? "text-destructive"
-                  : ""
+                status === "failing" && failingCount > 0 ? "text-destructive" : ""
               }`}
             >
               {rows.filter((row) => row.status === status).length}
@@ -554,17 +484,15 @@ function Ledger({
             <li
               key={index}
               className={`flex gap-3 px-4 py-3.5 ${
-                row.status === "problem" ? "bg-destructive/[0.06]" : ""
+                row.status === "failing" ? "bg-destructive/[0.06]" : ""
               } ${index > 0 ? "border-t border-fd-border/60" : ""}`}
             >
               <StatusIcon status={row.status} t={t} />
               <div className="min-w-0 flex-1 leading-relaxed">
-                <p className={row.status === "unset" ? "text-fd-muted-foreground" : ""}>
+                <p className={row.status === "not_configured" ? "text-fd-muted-foreground" : ""}>
                   {row.title}
                 </p>
-                {row.detail && (
-                  <p className="mt-1 text-fd-muted-foreground">{row.detail}</p>
-                )}
+                {row.detail && <p className="mt-1 text-fd-muted-foreground">{row.detail}</p>}
               </div>
               {row.command && <Command name={row.command} />}
             </li>
@@ -582,11 +510,11 @@ function StatusIcon({ status, t }: { status: Row["status"]; t: Translate }) {
   const className = "mt-0.5 size-5 shrink-0";
 
   switch (status) {
-    case "problem":
+    case "failing":
       return <CircleAlert className={`${className} text-destructive`} aria-label={t("要處理")} />;
-    case "running":
+    case "enabled":
       return <CircleCheck className={`${className} text-fd-primary`} aria-label={t("運作中")} />;
-    case "unset":
+    default:
       return (
         <CircleDashed
           className={`${className} text-fd-muted-foreground`}
