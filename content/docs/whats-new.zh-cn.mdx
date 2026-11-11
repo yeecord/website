@@ -27,7 +27,7 @@ description: 机器龙重写过，大部分功能改用斜杠命令，网页控�
 `&` 开头照样能打，像这些：
 
 <div className="not-prose my-4 flex flex-wrap gap-2 font-mono text-sm">
-  {["&status", "&b", "&guild", "&avatar", "&banner", "&pick", "&1a2b", "&help", "&find-food"].map((command) => (
+  {["&status", "&b", "&guild", "&avatar", "&banner", "&pick", "&1a2b", "&help"].map((command) => (
     <span key={command} className="rounded bg-fd-secondary px-2 py-1 text-fd-secondary-foreground">{command}</span>
   ))}
 </div>
@@ -76,7 +76,6 @@ description: 机器龙重写过，大部分功能改用斜杠命令，网页控�
 常见用法：
 
 - `/clear` 只开给管理员
-- `/find-food` 只开在游戏频道，避免刷屏
 - `/giveaway` 只开给干部
 
 设置存在 Discord 那边。机器龙改版、重新安装，这些覆写都不会掉。
@@ -140,8 +139,6 @@ YouTube 这几年一直挡机器人，撑到最后每天都在坏，2024 年 8 �
 
 旧系统有很难修的竞态问题，同时操作会让钱凭空多出来或消失。那些数字早就没有意义。
 
-接手的是 [`/find-food`](/zh-cn/docs/find-food)，带 Yee 找食材、做饭、喂它。跟旧系统完全分开算。
-
 ### 私人频道
 
 改用 [`/form`](/zh-cn/docs/commands/form)。开一张表单发布，成员按按钮就会开一条私人子区。
@@ -169,21 +166,20 @@ YouTube 这几年一直挡机器人，撑到最后每天都在坏，2024 年 8 �
 | 限定多个身份组的抽奖 | 只认第一个身份组 |
 | 投票的默认身份组权重 | 不搬，之后的投票要用 <Cmd name="poll role-weight" /> 逐一设置 |
 | 没有密码的上锁语音频道 | 换成随机密码，所有者可以用 <Cmd name="lock-channel change" /> 改掉 |
-| 钱、道具、宠物 | 不转移，换成纪念徽章 |
+| 钱、道具、宠物 | 不转移 |
 
 切换后第一位输入斜杠命令的管理员，会私下收到一张这个服务器的迁移记录，写出哪些照常运行、哪些和以前不一样、哪些没有迁移过来。其他管理员第一次输入命令时，只会看到一行提示说设置已经迁移好。管理员之后都能从 <Cmd name="help" /> 的“这个服务器的设置”重新打开这张记录。
 
 旧版的邀请链接没有要求“封禁成员”、“管理成员禁言”和子区权限。如果服务器用到的功能缺这些权限，迁移记录会列出来，点“重新授权”就能一次补齐。
 
 <Callout type="warn" title="为什么钱不转移">
-旧经济的数字被竞态 bug 污染过，照搬只会把问题一起搬过来。取而代之的是「老朋友」纪念徽章，依照以前玩的深度分级，纯纪念性质，不影响新游戏平衡。
+旧经济的数字被竞态 bug 污染过，照搬只会把问题一起搬过来。
 </Callout>
 
 ## 新增的功能
 
 <Cards>
   <Card title="/form" href="/zh-cn/docs/commands/form" description="表单系统，收报名、意见、申请，回复开成私人子区" />
-  <Card title="/find-food" href="/zh-cn/docs/find-food" description="带 Yee 找食材、做饭、喂它，会记得你做过什么" />
   <Card title="/bot-fight" href="/zh-cn/docs/commands/bot-fight" description="机器人防御，挡刷屏广告账号" />
   <Card title="/auto-channels" href="/zh-cn/docs/commands/auto-channels" description="动态语音频道，一个服务器可以开多组" />
 </Cards>
@@ -209,10 +205,6 @@ YouTube 这几年一直挡机器人，撑到最后每天都在坏，2024 年 8 �
 ### 投票时间到了，卡片还显示进行中
 
 服务器频道里的投票会自己更新。群组私信是例外，机器龙改不动那里的消息，要等下一个人按下去，卡片才会重画成已结束。票数不受影响。
-
-### 我的钱真的没了吗
-
-没有消失，只是不换成新游戏的货币。旧数字保留在纪念徽章的记录里。
 
 ### 前缀可以改吗
 
