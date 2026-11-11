@@ -13,7 +13,6 @@ const sidebarCommands = new Set([
   "clear",
   "bot-fight",
   "lol",
-  "find-food",
 ]);
 
 export function sidebarCommandsPlugin(): LoaderPlugin {
