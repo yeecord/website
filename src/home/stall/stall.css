@@ -1,0 +1,561 @@
+/* 遊戲畫面。--u、色票和像素字型定義在 home.css 的 .home 上 */
+@font-face {
+  font-family: "Yeecord Pixel TC";
+  src: url("/fonts/yeecord-pixel/yeecord-pixel-tc.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Yeecord Pixel SC";
+  src: url("/fonts/yeecord-pixel/yeecord-pixel-sc.woff2") format("woff2");
+  font-display: swap;
+}
+
+.px {
+  width: 100%;
+  border: var(--u) solid var(--ink);
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: start;
+  -webkit-font-smoothing: none;
+}
+
+.px :is(button, a):focus-visible {
+  outline: var(--u) solid var(--mustard);
+  outline-offset: 0;
+}
+
+.px-bitmap {
+  display: block;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.px-scene {
+  position: relative;
+  height: calc(68 * var(--u));
+  overflow: hidden;
+  background: var(--night);
+}
+
+.px-star {
+  position: absolute;
+  width: var(--u);
+  height: var(--u);
+  background: var(--cream);
+  animation: px-blink 2.4s steps(1) infinite;
+}
+
+.px-star:nth-of-type(2n) {
+  animation-delay: -1.2s;
+}
+
+.px-awning {
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(7 * var(--u));
+  border-bottom: var(--u) solid var(--ink);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--brick) 0 calc(8 * var(--u)),
+    var(--cream) calc(8 * var(--u)) calc(16 * var(--u))
+  );
+}
+
+.px-sign {
+  position: absolute;
+  top: calc(11 * var(--u));
+  left: calc(4 * var(--u));
+  z-index: 3;
+  padding: var(--u) calc(2 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--mustard);
+  color: var(--ink);
+  white-space: pre;
+}
+
+.px-places {
+  position: absolute;
+  top: calc(8 * var(--u));
+  right: calc(4 * var(--u));
+  z-index: 3;
+  display: flex;
+  gap: calc(2 * var(--u));
+}
+
+.px-places button {
+  position: relative;
+  min-width: calc(14 * var(--u));
+  min-height: calc(11 * var(--u));
+  margin-top: calc(3 * var(--u));
+  padding: var(--u) calc(2 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--brick);
+  color: var(--cream);
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.px-places button::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + var(--u));
+  left: calc(50% - var(--u) / 2);
+  width: var(--u);
+  height: calc(3 * var(--u));
+  background: var(--ink);
+}
+
+.px-places button:active:not(:disabled) {
+  translate: 0 var(--u);
+}
+
+.px-places button:disabled {
+  background: var(--brick-deep);
+  color: var(--paper);
+  cursor: default;
+}
+
+.px-yee {
+  position: absolute;
+  bottom: 0;
+  left: calc(6 * var(--u));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.px-yee canvas {
+  animation: px-bob 1.2s steps(1) infinite;
+}
+
+.px-bag {
+  position: absolute;
+  bottom: calc(6 * var(--u));
+  left: calc(30 * var(--u));
+  z-index: 3;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.px-token {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: calc(11 * var(--u));
+  height: calc(11 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--cream);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.px-token[data-rare="true"] {
+  background: var(--mustard);
+}
+
+.px-token[data-held] {
+  z-index: 4;
+  cursor: grabbing;
+}
+
+.px-tag {
+  padding: 0 var(--u);
+  border: calc(var(--u) / 2) solid var(--ink);
+  background: var(--brick);
+  color: var(--cream);
+  font-size: 12px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+
+.px-tag[data-grade="gold"] {
+  background: var(--teal);
+}
+
+.px-token .px-tag {
+  position: absolute;
+  top: calc(-3 * var(--u));
+  right: calc(-3 * var(--u));
+}
+
+.px-tip {
+  position: absolute;
+  bottom: calc(100% + 2 * var(--u));
+  left: 50%;
+  display: none;
+  flex-direction: column;
+  padding: var(--u) calc(2 * var(--u));
+  border: calc(var(--u) / 2) solid var(--cream);
+  background: var(--ink);
+  color: var(--cream);
+  white-space: nowrap;
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+.px-tip strong {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.px-token:is(:focus-visible, [data-held]) .px-tip {
+  display: flex;
+}
+
+.px-wok {
+  position: absolute;
+  right: calc(6 * var(--u));
+  bottom: 0;
+}
+
+.px-wok-art {
+  position: relative;
+}
+
+.px-flame {
+  position: absolute;
+  bottom: calc(2 * var(--u));
+  left: calc(50% - 3.5 * var(--u));
+  visibility: hidden;
+  transform-origin: 50% 100%;
+}
+
+.px-wok[data-lit="true"] .px-flame {
+  visibility: visible;
+}
+
+.px-flame svg + svg {
+  position: absolute;
+  inset: 0;
+  animation: px-flip 0.36s steps(1) infinite;
+}
+
+.px-floaters {
+  position: absolute;
+  inset: auto 0 calc(9 * var(--u));
+  display: flex;
+  justify-content: center;
+  gap: var(--u);
+  pointer-events: none;
+}
+
+.px-floaters svg:nth-child(2n) {
+  translate: 0 calc(-2 * var(--u));
+}
+
+.px-steam {
+  position: absolute;
+  bottom: calc(18 * var(--u));
+  left: 40%;
+  width: calc(2 * var(--u));
+  height: calc(2 * var(--u));
+  background: var(--paper);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.px-steam + .px-steam {
+  left: 58%;
+}
+
+.px-wok[data-lit="true"] .px-steam {
+  visibility: visible;
+  animation: px-steam 1.6s steps(6) infinite;
+}
+
+.px-wok[data-lit="true"] .px-steam + .px-steam {
+  animation-delay: -0.8s;
+}
+
+.px-served {
+  position: absolute;
+  bottom: calc(2 * var(--u));
+  left: calc(50% - 12 * var(--u));
+  z-index: 5;
+}
+
+.px-plate {
+  position: relative;
+  cursor: grab;
+  touch-action: none;
+  animation: px-land 0.24s steps(4) backwards;
+}
+
+.px-plate[data-flop="true"] {
+  cursor: default;
+}
+
+.px-food {
+  position: absolute;
+  inset: auto 0 calc(3 * var(--u));
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.px-plate[data-flop="true"] .px-food {
+  filter: brightness(0.25);
+}
+
+.px-counter {
+  height: calc(4 * var(--u));
+  border-block: var(--u) solid var(--ink);
+  background: var(--wood);
+}
+
+.px-panel {
+  display: grid;
+  gap: calc(3 * var(--u));
+  padding: calc(3 * var(--u));
+  background: var(--wood-deep);
+}
+
+.px-talk {
+  display: grid;
+  gap: calc(3 * var(--u));
+}
+
+@media (min-width: 900px) {
+  .px-talk:has(.px-receipt) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.px-dialog {
+  min-height: calc(22 * var(--u));
+  padding: calc(2 * var(--u)) calc(3 * var(--u));
+  border: var(--u) solid var(--cream);
+  background: var(--ink);
+  font-size: 24px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.px-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(3 * var(--u));
+}
+
+.px-slots {
+  display: flex;
+  gap: var(--u);
+}
+
+.px-slots > * {
+  display: grid;
+  place-items: center;
+  width: calc(11 * var(--u));
+  height: calc(11 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--wood);
+}
+
+.px-slots button {
+  background: var(--cream);
+}
+
+.px-slots button:active:not(:disabled) {
+  translate: 0 var(--u);
+}
+
+.px-btn {
+  min-height: calc(11 * var(--u));
+  padding: 0 calc(4 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--brick);
+  box-shadow: 0 var(--u) 0 var(--ink);
+  color: var(--cream);
+  font-size: 24px;
+}
+
+.px-btn-quiet {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.px-btn-quiet[aria-pressed="true"] {
+  background: var(--mustard);
+}
+
+.px-btn:active:not(:disabled) {
+  box-shadow: none;
+  translate: 0 var(--u);
+}
+
+.px-btn:disabled {
+  background: var(--wood);
+  box-shadow: none;
+  color: var(--paper);
+  cursor: not-allowed;
+}
+
+.px-coins {
+  margin-inline-start: auto;
+  color: var(--mustard);
+  font-size: 24px;
+}
+
+.px-receipt,
+.px-book {
+  display: grid;
+  gap: var(--u);
+  padding: calc(3 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.px-receipt {
+  animation: px-land 0.24s steps(4) backwards;
+}
+
+.px-receipt h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(3 * var(--u));
+  font-weight: 400;
+}
+
+.px-receipt div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(2 * var(--u));
+}
+
+.px-book {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: var(--u) calc(6 * var(--u));
+}
+
+.px-book li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(3 * var(--u));
+}
+
+.px-book li[data-found="false"] {
+  opacity: 0.55;
+}
+
+.px-book li span:last-child:not(:first-child) {
+  font-size: 12px;
+}
+
+.px-note {
+  color: var(--paper);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .px-token:hover {
+    z-index: 4;
+  }
+
+  .px-token:hover .px-tip {
+    display: flex;
+  }
+
+  .px-places button:hover:not(:disabled) {
+    background: #c2543f;
+  }
+}
+
+@media (max-width: 560px) {
+  .px-scene {
+    height: calc(84 * var(--u));
+  }
+
+  .px-places {
+    top: calc(22 * var(--u));
+    right: calc(3 * var(--u));
+    left: calc(3 * var(--u));
+    justify-content: flex-end;
+  }
+
+  .px-places button {
+    min-width: 0;
+    font-size: 12px;
+    line-height: 2;
+  }
+
+  .px-yee {
+    left: var(--u);
+  }
+
+  .px-wok {
+    right: var(--u);
+  }
+
+  .px-dialog,
+  .px-btn,
+  .px-receipt,
+  .px-book,
+  .px-coins {
+    font-size: 12px;
+    line-height: 2;
+  }
+
+  .px-dialog {
+    min-height: calc(20 * var(--u));
+  }
+
+  .px-tip strong {
+    font-size: 12px;
+  }
+}
+
+@keyframes px-blink {
+  50% {
+    visibility: hidden;
+  }
+}
+
+@keyframes px-bob {
+  50% {
+    translate: 0 calc(-1 * var(--u));
+  }
+}
+
+@keyframes px-flip {
+  50% {
+    visibility: hidden;
+  }
+}
+
+@keyframes px-steam {
+  to {
+    translate: 0 calc(-18 * var(--u));
+  }
+}
+
+@keyframes px-land {
+  from {
+    translate: 0 calc(-6 * var(--u));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px-star,
+  .px-yee canvas,
+  .px-flame svg + svg,
+  .px-wok[data-lit="true"] .px-steam,
+  .px-plate,
+  .px-receipt {
+    animation: none;
+  }
+}

@@ -3,6 +3,8 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumapress/css/preset.css";
+@import "./components/install/install.css";
+@import "./home/home.css";
 
 @theme {
   --color-discord-blurple: #5865f2;
@@ -432,62 +434,6 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
     to {
       background-position-x: 200%;
-    }
-  }
-
-  @keyframes drift {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(26px);
-    }
-  }
-
-  @keyframes sway {
-    0%,
-    100% {
-      transform: rotate(-1.2deg);
-    }
-    50% {
-      transform: rotate(1.4deg);
-    }
-  }
-
-  @keyframes bob {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-6px);
-    }
-  }
-
-  @keyframes dino-hit {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    20% {
-      transform: translateX(-7px) rotate(-4deg);
-    }
-    50% {
-      transform: translateX(5px) rotate(3deg);
-    }
-    80% {
-      transform: translateX(-3px);
-    }
-  }
-
-  @keyframes hint-fade {
-    0%,
-    60% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
     }
   }
 

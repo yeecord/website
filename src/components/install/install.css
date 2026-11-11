@@ -1,0 +1,295 @@
+.install {
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: 3.5rem 1rem 6rem;
+}
+
+.install h1 {
+  font-size: clamp(1.9rem, 4.4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.install-lead {
+  max-width: 36rem;
+  margin: 0.5rem 0 2rem;
+  color: var(--color-fd-muted-foreground);
+  font-size: 1.125rem;
+  text-wrap: pretty;
+}
+
+.install-user {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  max-width: 40rem;
+  margin-top: 5rem;
+}
+
+.install-user h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.install-user p {
+  color: var(--color-fd-muted-foreground);
+}
+
+.picker {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.picker-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  overflow: hidden;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 1rem;
+}
+
+.picker-presets button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.125rem 0.75rem;
+  align-content: start;
+  padding: 1rem 1.25rem;
+  text-align: start;
+  transition: background-color 160ms ease;
+}
+
+.picker-presets .feature-icon {
+  grid-row: span 2;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.125rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+.picker-presets strong {
+  font-weight: 700;
+}
+
+.picker-presets span {
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.875rem;
+}
+
+.picker-presets button[aria-checked="true"] {
+  background: color-mix(in oklab, var(--color-fd-primary) 16%, transparent);
+}
+
+.picker-presets button[aria-checked="true"] .feature-icon {
+  color: var(--color-fd-primary);
+}
+
+.picker-presets button:focus-visible {
+  outline: 2px solid var(--color-fd-primary);
+  outline-offset: -2px;
+}
+
+.picker-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.picker-table th {
+  padding: 1.5rem 0 0.375rem;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: start;
+}
+
+.picker-table tbody:first-child th {
+  padding-top: 0;
+}
+
+.picker-table td {
+  padding-block: 0.625rem;
+  vertical-align: top;
+  transition: opacity 160ms ease;
+}
+
+.picker-table tr[data-checked="false"] td {
+  opacity: 0.55;
+}
+
+.picker-table td:nth-child(2) {
+  width: 34%;
+  padding-inline: 1rem;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.875rem;
+}
+
+.picker-table td:nth-child(3) {
+  width: 1%;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.picker-table a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.picker-table label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.picker-table input {
+  display: grid;
+  flex: none;
+  place-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.1875rem;
+  border: 1.5px solid
+    color-mix(in oklab, var(--color-fd-foreground) 35%, transparent);
+  border-radius: 0.375rem;
+  appearance: none;
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.picker-table input::after {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--color-fd-primary-foreground);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 12.5l5 5L19.5 7'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  opacity: 0;
+  scale: 0.6;
+  transition:
+    opacity 120ms ease,
+    scale 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.picker-table input:checked {
+  border-color: var(--color-fd-primary);
+  background: var(--color-fd-primary);
+}
+
+.picker-table input:checked::after {
+  opacity: 1;
+  scale: 1;
+}
+
+.picker-table input:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.picker-table input:focus-visible {
+  outline: 2px solid var(--color-fd-primary);
+  outline-offset: 2px;
+}
+
+.picker-table input:disabled {
+  border-color: transparent;
+  background: color-mix(in oklab, var(--color-fd-foreground) 14%, transparent);
+  cursor: default;
+}
+
+.picker-table input:disabled::after {
+  background: var(--color-fd-muted-foreground);
+}
+
+.picker-table label > .feature-icon {
+  margin-top: 0.1875rem;
+}
+
+.picker-table label > span {
+  display: flex;
+  flex-direction: column;
+}
+
+.picker-table label strong {
+  font-weight: 600;
+}
+
+.picker-table label span span {
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.9375rem;
+}
+
+.picker-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-inline: -1rem;
+  padding: 0.75rem 1rem max(0.875rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-fd-border);
+  background: var(--color-fd-background);
+}
+
+.picker-bar summary {
+  width: fit-content;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.picker-bar details p {
+  padding-top: 0.25rem;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.picker-bar .btn-chunky {
+  flex: none;
+  min-width: 10rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .picker-presets button:not([aria-checked="true"]):hover {
+    background: var(--color-fd-accent);
+  }
+}
+
+@media (max-width: 699px) {
+  .picker-table tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .picker-table tbody tr:first-child {
+    display: block;
+  }
+
+  .picker-table td:first-child {
+    grid-column: 1 / -1;
+    padding-bottom: 0.125rem;
+  }
+
+  .picker-table td:nth-child(2) {
+    width: auto;
+    padding: 0 0.75rem 0.625rem 4rem;
+    font-size: 0.8125rem;
+  }
+
+  .picker-table td:nth-child(3) {
+    width: auto;
+    padding-top: 0;
+    font-size: 0.8125rem;
+  }
+}
+
+.feature-icon {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+}

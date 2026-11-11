@@ -1,0 +1,255 @@
+/* 首頁整頁共用一套像素語言：純色、硬邊、沒有圓角、漸層和模糊陰影。
+   --u 是一格像素的邊長，尺寸和位移都用它的倍數。
+   色票跟機器人圖卡的像素道具同一套 */
+.home {
+  --u: 4px;
+  --ink: #12101f;
+  --night: #24213f;
+  --cream: #f4ead0;
+  --paper: #d8c9a2;
+  --brick: #ab4329;
+  --brick-deep: #7a2a1c;
+  --mustard: #cc9a33;
+  --teal: #2e5e55;
+  --wood: #6e4d2e;
+  --wood-deep: #553a20;
+  --grass: #7fcf70;
+  --font-pixel: "Yeecord Pixel TC", "Yeecord Pixel SC", "Noto Sans TC", monospace;
+}
+
+.home[data-locale="zh-cn"] {
+  --font-pixel: "Yeecord Pixel SC", "Yeecord Pixel TC", "Noto Sans SC", monospace;
+}
+
+.home-title,
+.home-heading {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  line-height: 1.25;
+  -webkit-font-smoothing: none;
+}
+
+.home-title {
+  font-size: 60px;
+}
+
+.home-heading {
+  font-size: 36px;
+}
+
+.home-heading strong {
+  margin-inline-end: 0.3em;
+  color: var(--color-fd-primary);
+  font-weight: 400;
+}
+
+.home-lead {
+  color: var(--color-fd-muted-foreground);
+  font-size: 1.125rem;
+}
+
+.home-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 8rem;
+}
+
+.home-btn {
+  display: inline-grid;
+  place-items: center;
+  min-height: calc(13 * var(--u));
+  padding: 0 calc(6 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--cream);
+  box-shadow: 0 var(--u) 0 var(--ink);
+  color: var(--ink);
+  font-family: var(--font-pixel);
+  font-size: 24px;
+  -webkit-font-smoothing: none;
+}
+
+.home-btn[data-kind="primary"] {
+  background: var(--grass);
+}
+
+.home-btn:active {
+  box-shadow: none;
+  translate: 0 var(--u);
+}
+
+.home-btn:focus-visible {
+  outline: var(--u) solid var(--mustard);
+}
+
+.home-frame {
+  border: var(--u) solid var(--ink);
+}
+
+.home-menu ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: 0.5rem 2.5rem;
+  padding-top: 1.25rem;
+}
+
+.home-menu a {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-block: 0.625rem;
+}
+
+.home-menu a > i {
+  --u: 3px;
+
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(13 * var(--u));
+  height: calc(13 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--cream);
+}
+
+.home-menu a > span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.home-menu a strong {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.home-menu a span span {
+  color: var(--color-fd-muted-foreground);
+}
+
+.home-menu a:focus-visible {
+  outline: var(--u) solid var(--mustard);
+  outline-offset: var(--u);
+}
+
+.home-says {
+  display: grid;
+  gap: calc(8 * var(--u));
+  padding-top: calc(8 * var(--u));
+}
+
+.home-says li {
+  position: relative;
+  max-width: 46rem;
+  min-height: calc(26 * var(--u));
+  padding: calc(5 * var(--u)) calc(4 * var(--u)) calc(3 * var(--u));
+  border: var(--u) solid var(--cream);
+  outline: var(--u) solid var(--ink);
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-pixel);
+  font-size: 24px;
+  line-height: 1.5;
+  -webkit-font-smoothing: none;
+}
+
+.home-says li:nth-child(2n) {
+  justify-self: end;
+}
+
+.home-says cite {
+  position: absolute;
+  top: calc(-5 * var(--u));
+  left: calc(3 * var(--u));
+  padding: 0 calc(2 * var(--u));
+  border: var(--u) solid var(--ink);
+  background: var(--mustard);
+  color: var(--ink);
+  font-style: normal;
+  line-height: 1.25;
+}
+
+.home-queue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding-top: 1rem;
+  color: var(--color-fd-muted-foreground);
+  font-weight: 500;
+}
+
+.home-queue ul {
+  display: flex;
+  gap: var(--u);
+}
+
+.home-queue li {
+  border: var(--u) solid var(--ink);
+}
+
+.home-queue strong {
+  margin-inline: 0.25em;
+  color: var(--color-fd-foreground);
+  font-weight: 700;
+}
+
+.home-closing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-block: 9rem 7rem;
+}
+
+.home-closing .home-yee {
+  animation: px-bob 1.2s steps(1) infinite;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(3 * var(--u));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-menu a:hover strong {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .home-btn:hover {
+    background: #fff8e3;
+  }
+
+  .home-btn[data-kind="primary"]:hover {
+    background: #96dd88;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-title {
+    font-size: 36px;
+  }
+
+  .home-heading,
+  .home-says li {
+    font-size: 24px;
+  }
+
+  .home-says li {
+    font-size: 12px;
+    line-height: 2;
+  }
+
+  .home-section {
+    margin-top: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-closing .home-yee {
+    animation: none;
+  }
+}

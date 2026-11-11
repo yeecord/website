@@ -3,6 +3,7 @@ import Footer from "~/components/Footer";
 import { footer } from "~/config";
 import { Community } from "~/home/Community";
 import { DemoServer } from "~/home/DemoServer";
+import { Features } from "~/home/Features";
 import { Hero } from "~/home/Hero";
 import { Trust } from "~/home/Trust";
 import type { Locale } from "~/i18n";
@@ -17,16 +18,17 @@ export function HomePage({ locale }: { locale: Locale }) {
       <LocalizedMeta
         title={t("Yeecord - 萬中選一的 Discord 機器人")}
         description={t(
-          "YEE 式機器龍用全中文介面提供抽獎、身分組、動態語音和找吃的小遊戲，已有 35 萬個伺服器安裝",
+          "YEE 式機器龍用全中文介面提供抽獎、身分組和動態語音，已有 35 萬個伺服器安裝",
         )}
       />
-      <main className="overflow-x-clip">
-        <Hero locale={locale} />
+      <main className="home overflow-x-clip" data-locale={locale}>
         <div className="mx-auto flex max-w-[1100px] flex-col px-3 md:px-6">
+          <Hero locale={locale} />
           <DemoServer locale={locale} />
+          <Features locale={locale} />
           <Trust locale={locale} />
+          <Community locale={locale} />
         </div>
-        <Community locale={locale} />
       </main>
       <Footer categories={footer(locale)} brand={t("YEE 式機器龍")} />
     </HomeLayout>
