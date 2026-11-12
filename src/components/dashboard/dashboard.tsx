@@ -35,6 +35,7 @@ type View =
       guild: Guild | undefined;
       panel: Panel;
       logoutFailed?: boolean;
+      linkConflict?: boolean;
     };
 
 const featureLabels: Record<GuildFeature["type"], Phrase> = {
@@ -96,7 +97,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
     try {
       const token = new URLSearchParams(window.location.hash.slice(1)).get("token");
 
-      let linkExpired = false;
+      let refusal: ErrorCode | null = null;
 
       if (token) {
         // The link from Discord works once, so it leaves the address bar and history at once.
@@ -105,7 +106,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
           "",
           `${window.location.pathname}${window.location.search}`,
         );
-        linkExpired = !(await exchange(token));
+        refusal = await exchange(token);
       }
 
       const listed = await get<List<Guild>>("/v1/guilds");
@@ -117,7 +118,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
       if (!listed.ok || !Array.isArray(listed.body.data)) {
         setView(
           !listed.ok && listed.code === "session_missing"
-            ? { state: "signed-out", linkExpired }
+            ? { state: "signed-out", linkExpired: refusal !== null }
             : { state: "unreachable" },
         );
         return;
@@ -142,7 +143,9 @@ export function Dashboard({ locale }: { locale: Locale }) {
         return;
       }
 
-      setView({ state: "signed-in", guilds, guild, panel: { state: "loading" } });
+      const linkConflict = refusal === "session_conflict";
+
+      setView({ state: "signed-in", guilds, guild, panel: { state: "loading" }, linkConflict });
 
       const read = await get<List<GuildFeature>>(`/v1/guilds/${guild.id}/features`);
 
@@ -159,6 +162,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
         state: "signed-in",
         guilds,
         guild,
+        linkConflict,
         panel:
           read.ok && Array.isArray(read.body.data)
             ? { state: "ready", features: read.body.data.filter(isFeature) }
@@ -237,6 +241,11 @@ export function Dashboard({ locale }: { locale: Locale }) {
             logoutFailed={view.logoutFailed}
           />
           <section aria-live="polite" className="min-w-0">
+            {view.linkConflict && (
+              <p role="alert" className="mb-6 rounded-lg bg-destructive/10 px-4 py-3">
+                {t("這個連結屬於另一個 Discord 帳號，所以沒有打開。要用它的話，先登出再按一次連結。")}
+              </p>
+            )}
             {view.guild && <GuildHeading guild={view.guild} />}
             {view.panel.state === "loading" && <LedgerSkeleton />}
             {view.panel.state === "refused" && view.panel.code === "internal_error" && (

@@ -64,6 +64,9 @@ export type GuildFeature = FeatureBase &
 
 export type ErrorCode =
   | "session_missing"
+  | "token_invalid"
+  | "session_conflict"
+  | "origin_forbidden"
   | "resource_missing"
   | "missing_manage_guild"
   | "internal_error";
@@ -96,15 +99,21 @@ export async function get<T>(path: string): Promise<Outcome<T>> {
   return { ok: false, code: body?.error.code ?? "internal_error" };
 }
 
-/** Trades the one-time token of a link from Discord for a session cookie. */
-export async function exchange(token: string) {
+/** Trades the one-time token of a link from Discord for a session cookie, or names why not. */
+export async function exchange(token: string): Promise<ErrorCode | null> {
   const response = await fetch(`${dashboardApi}/auth/exchange`, {
     method: "POST",
     credentials: "include",
     body: new URLSearchParams({ token }),
   });
 
-  return response.ok;
+  if (response.ok) {
+    return null;
+  }
+
+  const body: ApiError | null = await response.json().catch(() => null);
+
+  return body?.error.code ?? "internal_error";
 }
 
 /** Whether an item has the fields the page reads, since types do not check a response. */

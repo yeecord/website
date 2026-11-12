@@ -208,4 +208,5 @@ export const en = {
   "這個連結已經失效": "This link has expired",
   "連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。": "A link works once, within 5 minutes. Type /settings in Discord and press “Open on the web” again.",
   "在 Discord 打 /settings，按「在網頁開啟」就會直接打開那個伺服器。也可以用 Discord 登入，看你管理的所有伺服器。": "Type /settings in Discord and press “Open on the web” to open that server here. Or log in with Discord to see every server you manage.",
+  "這個連結屬於另一個 Discord 帳號，所以沒有打開。要用它的話，先登出再按一次連結。": "This link belongs to another Discord account, so it didn't open. Log out first, then open the link again.",
 } satisfies Record<keyof typeof zhCn, string>;
