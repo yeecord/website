@@ -96,6 +96,35 @@ export async function get<T>(path: string): Promise<Outcome<T>> {
   return { ok: false, code: body?.error.code ?? "internal_error" };
 }
 
+/** Trades the one-time token of a link from Discord for a session cookie. */
+export async function exchange(token: string) {
+  const response = await fetch(`${dashboardApi}/auth/exchange`, {
+    method: "POST",
+    credentials: "include",
+    body: new URLSearchParams({ token }),
+  });
+
+  return response.ok;
+}
+
+/** Whether an item has the fields the page reads, since types do not check a response. */
+export function isFeature(value: unknown): value is GuildFeature {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const feature: Record<string, unknown> = { ...value };
+  const type = feature.type;
+
+  return (
+    typeof type === "string" &&
+    typeof feature.status === "string" &&
+    typeof feature.command === "string" &&
+    typeof feature[type] === "object" &&
+    feature[type] !== null
+  );
+}
+
 export function logout() {
   return fetch(`${dashboardApi}/auth/logout`, {
     method: "POST",

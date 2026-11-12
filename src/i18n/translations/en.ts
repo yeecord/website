@@ -204,4 +204,8 @@ export const en = {
   "陷阱頻道": "Trap channel",
   "詐騙過濾": "Scam filter",
   "抽獎": "Giveaways",
+  "登出沒有成功，再試一次。": "Logging out didn't go through. Try again.",
+  "這個連結已經失效": "This link has expired",
+  "連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。": "A link works once, within 5 minutes. Type /settings in Discord and press “Open on the web” again.",
+  "在 Discord 打 /settings，按「在網頁開啟」就會直接打開那個伺服器。也可以用 Discord 登入，看你管理的所有伺服器。": "Type /settings in Discord and press “Open on the web” to open that server here. Or log in with Discord to see every server you manage.",
 } satisfies Record<keyof typeof zhCn, string>;

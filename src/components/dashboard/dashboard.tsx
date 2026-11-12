@@ -1,7 +1,7 @@
 "use client";
 
 import { CircleAlert, CircleCheck, CircleDashed, LogOut, RotateCw } from "lucide-react";
-import { type ReactNode, useCallback, useEffect, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { type Locale, staticPath } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
 import {
@@ -10,7 +10,9 @@ import {
   type FeatureStatus,
   type Guild,
   type GuildFeature,
+  exchange,
   get,
+  isFeature,
   type List,
   loginUrl,
   logout as endSession,
@@ -24,10 +26,16 @@ type Panel =
 
 type View =
   | { state: "loading" }
-  | { state: "signed-out" }
+  | { state: "signed-out"; linkExpired?: boolean }
   | { state: "unreachable" }
   | { state: "empty" }
-  | { state: "signed-in"; guilds: Guild[]; guild: Guild; panel: Panel };
+  | {
+      state: "signed-in";
+      guilds: Guild[];
+      guild: Guild | undefined;
+      panel: Panel;
+      logoutFailed?: boolean;
+    };
 
 const featureLabels: Record<GuildFeature["type"], Phrase> = {
   member_notification: "加入通知",
@@ -78,29 +86,69 @@ export function Dashboard({ locale }: { locale: Locale }) {
   const t = translator(locale);
   const [view, setView] = useState<View>({ state: "loading" });
 
+  // Each load takes a number; a reply that comes back after a newer load or a logout is dropped.
+  const latest = useRef(0);
+
   const load = useCallback(async () => {
+    const run = ++latest.current;
+    const current = () => run === latest.current;
+
     try {
+      const token = new URLSearchParams(window.location.hash.slice(1)).get("token");
+
+      let linkExpired = false;
+
+      if (token) {
+        // The link from Discord works once, so it leaves the address bar and history at once.
+        window.history.replaceState(
+          null,
+          "",
+          `${window.location.pathname}${window.location.search}`,
+        );
+        linkExpired = !(await exchange(token));
+      }
+
       const listed = await get<List<Guild>>("/v1/guilds");
 
-      if (!listed.ok) {
-        setView({
-          state: listed.code === "session_missing" ? "signed-out" : "unreachable",
-        });
+      if (!current()) {
+        return;
+      }
+
+      if (!listed.ok || !Array.isArray(listed.body.data)) {
+        setView(
+          !listed.ok && listed.code === "session_missing"
+            ? { state: "signed-out", linkExpired }
+            : { state: "unreachable" },
+        );
         return;
       }
 
       const guilds = listed.body.data;
       const id = selectedGuild();
-      const guild = guilds.find((guild) => guild.id === id) ?? guilds[0];
+      const guild = id ? guilds.find((guild) => guild.id === id) : guilds[0];
+
+      if (guilds.length === 0) {
+        setView({ state: "empty" });
+        return;
+      }
 
       if (!guild) {
-        setView({ state: "empty" });
+        setView({
+          state: "signed-in",
+          guilds,
+          guild,
+          panel: { state: "refused", code: "resource_missing" },
+        });
         return;
       }
 
       setView({ state: "signed-in", guilds, guild, panel: { state: "loading" } });
 
       const read = await get<List<GuildFeature>>(`/v1/guilds/${guild.id}/features`);
+
+      if (!current()) {
+        return;
+      }
 
       if (!read.ok && read.code === "session_missing") {
         setView({ state: "signed-out" });
@@ -111,12 +159,15 @@ export function Dashboard({ locale }: { locale: Locale }) {
         state: "signed-in",
         guilds,
         guild,
-        panel: read.ok
-          ? { state: "ready", features: read.body.data }
-          : { state: "refused", code: read.code },
+        panel:
+          read.ok && Array.isArray(read.body.data)
+            ? { state: "ready", features: read.body.data.filter(isFeature) }
+            : { state: "refused", code: read.ok ? "internal_error" : read.code },
       });
     } catch {
-      setView({ state: "unreachable" });
+      if (current()) {
+        setView({ state: "unreachable" });
+      }
     }
   }, []);
 
@@ -136,7 +187,16 @@ export function Dashboard({ locale }: { locale: Locale }) {
   };
 
   const logout = async () => {
-    await endSession();
+    const ended = await endSession().catch(() => undefined);
+
+    if (!ended?.ok) {
+      setView((view) =>
+        view.state === "signed-in" ? { ...view, logoutFailed: true } : view,
+      );
+      return;
+    }
+
+    latest.current++;
     setView({ state: "signed-out" });
   };
 
@@ -153,7 +213,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
         </Notice>
       );
     case "signed-out":
-      return <SignIn t={t} />;
+      return <SignIn t={t} linkExpired={view.linkExpired} />;
     case "empty":
       return (
         <Notice
@@ -174,12 +234,18 @@ export function Dashboard({ locale }: { locale: Locale }) {
             current={view.guild}
             onOpen={open}
             onLogout={logout}
+            logoutFailed={view.logoutFailed}
           />
           <section aria-live="polite" className="min-w-0">
-            <GuildHeading guild={view.guild} />
+            {view.guild && <GuildHeading guild={view.guild} />}
             {view.panel.state === "loading" && <LedgerSkeleton />}
             {view.panel.state === "refused" && view.panel.code === "internal_error" && (
-              <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")} />
+              <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")}>
+                <button type="button" onClick={load} className={quiet}>
+                  <RotateCw className="size-4" aria-hidden />
+                  {t("再試一次")}
+                </button>
+              </Notice>
             )}
             {view.panel.state === "refused" && view.panel.code !== "internal_error" && (
               <Notice
@@ -207,13 +273,17 @@ const focus =
 const primary = `inline-flex h-10 items-center gap-2 rounded-lg bg-discord-blurple px-4 font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97] motion-reduce:transition-none ${focus}`;
 const quiet = `inline-flex h-10 items-center gap-2 rounded-lg px-3 text-fd-muted-foreground transition-colors duration-150 hover:bg-fd-accent hover:text-fd-accent-foreground ${focus}`;
 
-function SignIn({ t }: { t: Translate }) {
+function SignIn({ t, linkExpired }: { t: Translate; linkExpired?: boolean }) {
   const login = loginUrl(`${window.location.pathname}${window.location.search}`);
 
   return (
     <Notice
-      title={t("看看機器龍在你的伺服器做了什麼")}
-      body={t("登入後可以看每個伺服器開了哪些功能、哪些出了問題。")}
+      title={linkExpired ? t("這個連結已經失效") : t("看看機器龍在你的伺服器做了什麼")}
+      body={
+        linkExpired
+          ? t("連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。")
+          : t("在 Discord 打 /settings，按「在網頁開啟」就會直接打開那個伺服器。也可以用 Discord 登入，看你管理的所有伺服器。")
+      }
       note={t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}
     >
       <a href={login} className={primary}>
@@ -229,18 +299,20 @@ function GuildRail({
   current,
   onOpen,
   onLogout,
+  logoutFailed,
 }: {
   t: Translate;
   guilds: Guild[];
-  current: Guild;
+  current: Guild | undefined;
   onOpen: (guild: Guild) => void;
   onLogout: () => void;
+  logoutFailed?: boolean;
 }) {
   return (
     <nav aria-label={t("所有伺服器")} className="flex min-w-0 flex-col gap-3">
       <ul className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 md:flex-col md:overflow-visible">
         {guilds.map((guild) => {
-          const selected = guild.id === current.id;
+          const selected = guild.id === current?.id;
 
           return (
             <li key={guild.id} className="shrink-0">
@@ -265,6 +337,11 @@ function GuildRail({
         <LogOut className="size-4" aria-hidden />
         {t("登出")}
       </button>
+      {logoutFailed && (
+        <p role="alert" className="text-destructive text-sm">
+          {t("登出沒有成功，再試一次。")}
+        </p>
+      )}
     </nav>
   );
 }
@@ -366,7 +443,7 @@ function Ledger({
         });
       case "auto_channels":
         return fill(t("動態語音頻道，大廳是 {channels}"), {
-          channels: feature.auto_channels.lobbies.map((lobby) => channel(lobby)),
+          channels: (feature.auto_channels.lobbies ?? []).map((lobby) => channel(lobby)),
         });
       case "trap_channel":
         return fill(t("機器人防禦，陷阱頻道是 {channel}"), {
@@ -446,15 +523,22 @@ function Ledger({
     }
   };
 
-  const rows: Row[] = features.map((feature) => {
-    if (feature.status === "failing" && feature.last_failure) {
-      return failing(feature, feature.last_failure);
-    }
-
-    return feature.status === "enabled"
-      ? { status: "enabled", title: enabled(feature) }
-      : { status: "not_configured", title: label(feature), command: feature.command };
-  });
+  const order: FeatureStatus[] = ["failing", "enabled", "not_configured"];
+  const rows: Row[] = features
+    .map((feature): Row => {
+      switch (feature.status) {
+        case "failing":
+          return feature.last_failure
+            ? failing(feature, feature.last_failure)
+            : { status: "failing", title: label(feature), command: feature.command };
+        case "enabled":
+          return { status: "enabled", title: enabled(feature) };
+        default:
+          return { status: "not_configured", title: label(feature), command: feature.command };
+      }
+    })
+    // Stable, so each status keeps the order the API gave.
+    .sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
   const counts: [FeatureStatus, Phrase][] = [
     ["failing", "要處理"],
     ["enabled", "運作中"],
