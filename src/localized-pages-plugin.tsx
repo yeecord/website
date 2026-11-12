@@ -1,5 +1,6 @@
 import type { WakuAppShape, WakuPlugin } from "fumapress";
 import type { FC } from "react";
+import { DashboardPage } from "~/dashboard/page";
 import { HomePage } from "~/home/page";
 import { type Locale, localeCodes } from "~/i18n";
 import { InstallPage } from "~/install/page";
@@ -8,6 +9,7 @@ import { InstallPage } from "~/install/page";
 const pages = [
   { path: "/", component: HomePage },
   { path: "/install", component: InstallPage },
+  { path: "/dashboard", component: DashboardPage },
 ] as const satisfies readonly {
   path: string;
   component: FC<{ locale: Locale }>;
