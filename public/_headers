@@ -8,6 +8,6 @@
 /assets/*
     Cache-Control: public, max-age=31536000, immutable
 
-# preview 站不進搜尋索引；master 轉正到 yeecord.com 後這條自動不匹配
-https://next.yeecord.com/*
+# staging 站不進搜尋索引，正式站 yeecord.com 不受影響
+https://staging.yeecord.com/*
     X-Robots-Tag: noindex
