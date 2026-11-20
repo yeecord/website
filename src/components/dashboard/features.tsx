@@ -13,6 +13,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { Badge } from "~/components/ui/badge";
 import type { Locale } from "~/i18n";
 import type { Phrase, Translate } from "~/i18n/translate";
 import type { Failure, FeatureStatus, GuildFeature, Named } from "./api";
@@ -318,20 +319,15 @@ export const statusLabels: Record<FeatureStatus, Phrase> = {
   not_configured: "還沒設定",
 };
 
-export function StatusLine({ t, status }: { t: Translate; status: FeatureStatus }) {
+export function StatusBadge({ t, status }: { t: Translate; status: FeatureStatus }) {
+  const variant =
+    status === "failing" ? "destructive" : status === "enabled" ? "secondary" : "outline";
+
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-sm ${
-        status === "failing"
-          ? "text-destructive"
-          : status === "enabled"
-            ? "text-fd-foreground"
-            : "text-fd-muted-foreground"
-      }`}
-    >
+    <Badge variant={variant}>
       <StatusIcon status={status} t={t} decorative />
       {t(statusLabels[status])}
-    </span>
+    </Badge>
   );
 }
 

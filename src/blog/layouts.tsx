@@ -74,7 +74,7 @@ export function BlogIndex({
         <div className="flex flex-row justify-center gap-2.5 max-sm:flex-col max-sm:items-stretch">
           <Link
             href={contentPath(locale, "/blog/tags")}
-            className={cn(buttonVariants({ color: "primary" }))}
+            className={cn(buttonVariants())}
           >
             <EyeIcon className="size-4" />
             {t("查看所有標籤")}
@@ -83,7 +83,7 @@ export function BlogIndex({
             href="https://github.com/yeecord/website"
             target="_blank"
             rel="noreferrer noopener"
-            className={cn(buttonVariants({ color: "secondary" }))}
+            className={cn(buttonVariants({ variant: "secondary" }))}
           >
             {t("加入我們")}
           </a>
@@ -105,7 +105,7 @@ export function BlogIndex({
           href="/rss.xml"
           target="_blank"
           className={cn(
-            buttonVariants({ color: "primary", className: "ml-auto" }),
+            buttonVariants({ className: "ml-auto" }),
           )}
           rel="noreferrer"
         >
@@ -327,7 +327,7 @@ export function BlogTags({
         <h1 className="mb-4 font-bold text-5xl">{t("所有標籤")}</h1>
         <Link
           href={contentPath(locale, "/blog")}
-          className={cn(buttonVariants({ color: "primary" }))}
+          className={cn(buttonVariants())}
         >
           {t("查看文章")}
         </Link>
@@ -369,7 +369,7 @@ export function BlogTagPage({
 
         <Link
           href={contentPath(locale, "/blog/tags")}
-          className={cn(buttonVariants({ color: "primary" }))}
+          className={cn(buttonVariants())}
         >
           {t("所有標籤")}
         </Link>

@@ -30,6 +30,14 @@
   --color-ring: var(--color-fd-ring);
   --color-destructive: oklch(0.577 0.245 27.325);
   --color-destructive-foreground: oklch(0.985 0 0);
+  --color-sidebar: var(--color-fd-card);
+  --color-sidebar-foreground: var(--color-fd-foreground);
+  --color-sidebar-primary: var(--color-fd-primary);
+  --color-sidebar-primary-foreground: var(--color-fd-primary-foreground);
+  --color-sidebar-accent: var(--color-fd-accent);
+  --color-sidebar-accent-foreground: var(--color-fd-accent-foreground);
+  --color-sidebar-border: var(--color-fd-border);
+  --color-sidebar-ring: var(--color-fd-ring);
 }
 
 /* Yeecord Sans 是調過字重與字距的 Hanken Grotesk（SIL OFL 1.1），寬度對齊 gg sans，

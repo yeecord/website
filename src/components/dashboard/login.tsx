@@ -6,7 +6,7 @@ import { type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { discordIcon } from "~/layout-config";
 import { loginUrl } from "./api";
-import { Command, featurePages, fill, groups, StatusIcon, StatusLine } from "./features";
+import { Command, featurePages, fill, groups, StatusBadge, StatusIcon } from "./features";
 
 /** The login page's address, carrying the page to come back to and whether a link from Discord was spent. */
 export function loginPage(locale: Locale, back: string, expired: boolean) {
@@ -40,8 +40,8 @@ export function LoginPanel({ locale }: { locale: Locale }) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3">
-        <h1 className="font-bold text-3xl tracking-tight [overflow-wrap:break-word]">
-          {expired ? t("這個連結已經失效") : t("看看機器龍在你的伺服器做了什麼")}
+        <h1 className="text-balance font-bold text-3xl tracking-tight [overflow-wrap:break-word]">
+          {expired ? t("這個連結已經失效") : t("機器龍在你的伺服器做了什麼")}
         </h1>
         <p className="text-fd-muted-foreground leading-relaxed">
           {expired
@@ -81,7 +81,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
   const status = (index: number) => statuses[index] ?? "enabled";
 
   return (
-    <div className="flex min-h-[48rem] w-[52rem] overflow-hidden rounded-tl-3xl border-t border-l bg-fd-background shadow-2xl">
+    <div className="flex w-[52rem] overflow-hidden rounded-tl-3xl border-t border-l bg-fd-background shadow-2xl">
       <div className="flex w-56 shrink-0 flex-col gap-4 border-r bg-fd-card p-4">
         <div className="flex items-center gap-2.5 rounded-xl border p-2">
           <span className="flex size-7 items-center justify-center rounded-full bg-fd-secondary font-semibold text-sm">
@@ -133,7 +133,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
                   <Icon className="size-4 text-fd-muted-foreground" aria-hidden />
                   {t(page.label)}
                 </span>
-                <StatusLine t={t} status={status(index)} />
+                <StatusBadge t={t} status={status(index)} />
               </div>
             );
           })}

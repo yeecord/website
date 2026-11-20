@@ -22,7 +22,7 @@ export function LoginPage({ locale }: { locale: Locale }) {
           <span className="font-semibold text-fd-foreground text-lg">Yeecord</span>
         </a>
         <div className="flex flex-1 items-center py-16">
-          <div className="mx-auto w-full max-w-sm">
+          <div className="mx-auto w-full max-w-md">
             <LoginPanel locale={locale} />
           </div>
         </div>
@@ -44,14 +44,7 @@ export function LoginPage({ locale }: { locale: Locale }) {
         inert
         className="relative overflow-hidden border-l bg-[color-mix(in_oklab,var(--color-fd-primary)_10%,var(--color-fd-background))] max-lg:hidden"
       >
-        <img
-          src="/img/logo.svg"
-          alt=""
-          width={60}
-          height={80}
-          className="absolute top-12 left-12"
-        />
-        <div className="absolute top-40 left-24 select-none">
+        <div className="absolute top-[12%] bottom-0 left-[10%] flex select-none">
           <LoginPreview locale={locale} />
         </div>
       </div>

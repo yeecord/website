@@ -1,16 +1,14 @@
 "use client";
 
-import { Menu } from "@base-ui/react/menu";
 import {
   ArrowLeft,
-  Check,
   ChevronsUpDown,
   CircleAlert,
-  CircleCheck,
-  CircleDashed,
   LayoutGrid,
   LogOut,
   RotateCw,
+  ServerOff,
+  ShieldOff,
 } from "lucide-react";
 import {
   type MouseEvent,
@@ -22,6 +20,62 @@ import {
 } from "react";
 import { type Locale, staticPath } from "~/i18n";
 import { type Translate, translator } from "~/i18n/translate";
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "~/components/ui/breadcrumb";
+import { Button, buttonVariants } from "~/components/ui/button";
+import { Card, CardContent } from "~/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "~/components/ui/empty";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "~/components/ui/item";
+import { Separator } from "~/components/ui/separator";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from "~/components/ui/sidebar";
+import { Skeleton } from "~/components/ui/skeleton";
 import {
   type ErrorCode,
   type Guild,
@@ -40,8 +94,8 @@ import {
   fill,
   groups,
   type PageState,
+  StatusBadge,
   StatusIcon,
-  StatusLine,
   stateOf,
 } from "./features";
 import { loginPage } from "./login";
@@ -245,36 +299,36 @@ export function Dashboard({ locale }: { locale: Locale }) {
     setView({ state: "signed-out" });
   };
 
-  const home = (
-    <a href={staticPath(locale, "/")} className={`${quiet} w-full`}>
-      <ArrowLeft className="size-4" aria-hidden />
-      {t("回到官網")}
-    </a>
-  );
+  const home = staticPath(locale, "/");
 
   switch (view.state) {
     case "loading":
     case "signed-out":
-      return <Skeleton t={t} locale={locale} />;
+      return <Shell t={t} home={home} title={null} loading />;
     case "unreachable":
       return (
-        <Shell locale={locale} footer={home}>
-          <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")}>
-            <button type="button" onClick={load} className={quiet}>
-              <RotateCw className="size-4" aria-hidden />
+        <Shell t={t} home={home} title={null}>
+          <Notice
+            icon={<ServerOff />}
+            title={t("暫時連不上機器龍")}
+            body={t("稍後再重新整理一次。")}
+          >
+            <Button variant="outline" onClick={load}>
+              <RotateCw />
               {t("再試一次")}
-            </button>
+            </Button>
           </Notice>
         </Shell>
       );
     case "empty":
       return (
-        <Shell locale={locale} footer={home}>
+        <Shell t={t} home={home} title={null}>
           <Notice
+            icon={<ServerOff />}
             title={t("沒有可以管理的伺服器")}
             body={t("這裡只列出你能管理、而且機器龍也在的伺服器。")}
           >
-            <a href={staticPath(locale, "/install")} className={primary}>
+            <a href={staticPath(locale, "/install")} className={buttonVariants()}>
               {t("安裝機器人")}
             </a>
           </Notice>
@@ -284,72 +338,66 @@ export function Dashboard({ locale }: { locale: Locale }) {
       const features = view.panel.state === "ready" ? view.panel.features : [];
       const states = featurePages.map((page) => stateOf(page, features));
       const page = featurePages.find((page) => page.slug === slug);
+      const pageState = page && stateOf(page, features);
 
       return (
         <Shell
-          locale={locale}
-          side={
-            <>
-              <GuildSwitcher t={t} guilds={view.guilds} current={view.guild} onOpen={open} />
-              {view.panel.state === "ready" && (
-                <Sidebar t={t} states={states} current={page} go={go} />
-              )}
-            </>
+          t={t}
+          home={home}
+          onLogout={logout}
+          logoutFailed={view.logoutFailed}
+          switcher={
+            <GuildSwitcher t={t} guilds={view.guilds} current={view.guild} onOpen={open} />
           }
-          footer={
-            <>
-              {home}
-              <button type="button" onClick={logout} className={`${quiet} w-full`}>
-                <LogOut className="size-4" aria-hidden />
-                {t("登出")}
-              </button>
-              {view.logoutFailed && (
-                <p role="alert" className="px-3 text-destructive text-sm">
-                  {t("登出沒有成功，再試一次。")}
-                </p>
-              )}
-            </>
+          nav={
+            view.panel.state === "ready" ? (
+              <PageNav t={t} states={states} current={page} go={go} />
+            ) : undefined
+          }
+          loading={view.panel.state === "loading"}
+          title={
+            view.panel.state === "ready" ? (
+              <PageTitle t={t} page={page} go={go} status={pageState?.status} />
+            ) : null
           }
         >
-          <section aria-live="polite" className="min-w-0">
-            {view.linkConflict && (
-              <p role="alert" className="mb-6 rounded-lg bg-destructive/10 px-4 py-3">
+          {view.linkConflict && (
+            <Alert variant="destructive">
+              <CircleAlert />
+              <AlertDescription>
                 {t("這個連結屬於另一個 Discord 帳號，所以沒有打開。要用它的話，先登出再按一次連結。")}
-              </p>
-            )}
-            {view.panel.state === "loading" && <PanelSkeleton />}
-            {view.panel.state === "refused" && view.panel.code === "internal_error" && (
-              <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")}>
-                <button type="button" onClick={load} className={quiet}>
-                  <RotateCw className="size-4" aria-hidden />
-                  {t("再試一次")}
-                </button>
-              </Notice>
-            )}
-            {view.panel.state === "refused" && view.panel.code !== "internal_error" && (
-              <Notice
-                title={
-                  view.panel.code === "missing_manage_guild"
-                    ? t("你已經不能管理這個伺服器")
-                    : t("清單裡沒有這個伺服器")
-                }
-                body={t(
-                  "清單只列出你能管理、而且機器龍也在的伺服器。重新登入會更新清單。",
-                )}
-              />
-            )}
-            {view.panel.state === "ready" &&
-              (page ? (
-                <FeatureView
-                  t={t}
-                  locale={locale}
-                  state={stateOf(page, features)}
-                  go={go}
-                />
-              ) : (
-                <Overview t={t} locale={locale} states={states} go={go} />
-              ))}
-          </section>
+              </AlertDescription>
+            </Alert>
+          )}
+          {view.panel.state === "refused" && view.panel.code === "internal_error" && (
+            <Notice
+              icon={<ServerOff />}
+              title={t("暫時連不上機器龍")}
+              body={t("稍後再重新整理一次。")}
+            >
+              <Button variant="outline" onClick={load}>
+                <RotateCw />
+                {t("再試一次")}
+              </Button>
+            </Notice>
+          )}
+          {view.panel.state === "refused" && view.panel.code !== "internal_error" && (
+            <Notice
+              icon={<ShieldOff />}
+              title={
+                view.panel.code === "missing_manage_guild"
+                  ? t("你已經不能管理這個伺服器")
+                  : t("清單裡沒有這個伺服器")
+              }
+              body={t("清單只列出你能管理、而且機器龍也在的伺服器。重新登入會更新清單。")}
+            />
+          )}
+          {view.panel.state === "ready" &&
+            (pageState ? (
+              <FeatureView t={t} locale={locale} state={pageState} />
+            ) : (
+              <Overview t={t} locale={locale} states={states} go={go} />
+            ))}
         </Shell>
       );
     }
@@ -358,47 +406,132 @@ export function Dashboard({ locale }: { locale: Locale }) {
 
 type Go = (target: string | null) => (event: MouseEvent<HTMLElement>) => void;
 
-const focus =
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fd-ring";
-const primary = `inline-flex h-10 items-center gap-2 rounded-lg bg-discord-blurple px-4 font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97] motion-reduce:transition-none ${focus}`;
-const quiet = `inline-flex h-10 items-center gap-2 rounded-lg px-3 text-fd-muted-foreground transition-colors duration-150 hover:bg-fd-accent hover:text-fd-accent-foreground ${focus}`;
-const navItem = `flex h-9 items-center gap-2.5 rounded-lg px-2.5 transition-colors duration-150 ${focus}`;
-const popup =
-  "max-h-[min(24rem,var(--available-height))] w-72 max-w-[var(--available-width)] overflow-y-auto rounded-xl border bg-fd-popover p-1 text-fd-popover-foreground shadow-lg motion-safe:transition-[opacity,translate] motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[open]:duration-100 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-safe:data-[ending-style]:-translate-y-1 motion-safe:data-[starting-style]:-translate-y-1";
-const menuItem =
-  "flex h-10 cursor-default items-center gap-3 rounded-lg px-2 outline-none data-[highlighted]:bg-fd-accent data-[highlighted]:text-fd-accent-foreground";
-
-/** The dashboard's frame: a full-height sidebar beside the page, stacked above it on narrow screens. */
+/** The dashboard's frame: shadcn's sidebar beside the page, a drawer on narrow screens. */
 function Shell({
-  locale,
-  side,
-  footer,
+  t,
+  home,
+  title,
+  switcher,
+  nav,
+  loading,
+  onLogout,
+  logoutFailed,
   children,
 }: {
-  locale: Locale;
-  side?: ReactNode;
-  footer?: ReactNode;
-  children: ReactNode;
+  t: Translate;
+  home: string;
+  title: ReactNode;
+  switcher?: ReactNode;
+  nav?: ReactNode;
+  loading?: boolean;
+  onLogout?: () => void;
+  logoutFailed?: boolean;
+  children?: ReactNode;
 }) {
   return (
-    <div className="grid min-h-svh lg:grid-cols-[17rem_minmax(0,1fr)]">
-      <aside className="flex min-w-0 flex-col gap-5 bg-fd-card px-4 py-5 lg:sticky lg:top-0 lg:h-svh lg:overflow-y-auto">
-        <a
-          href={staticPath(locale, "/")}
-          className={`flex items-center gap-2.5 self-start rounded-md px-1 ${focus}`}
-        >
-          <img src="/img/logo.svg" alt="" width={18} height={24} />
-          <span className="font-semibold text-lg">Yeecord</span>
-        </a>
-        {side}
-        {footer && <div className="flex flex-col gap-0.5 max-lg:hidden lg:mt-auto">{footer}</div>}
-      </aside>
-      <div className="min-w-0 px-5 py-8 sm:px-10 lg:py-12">
-        <div className="mx-auto flex max-w-4xl flex-col gap-10">
-          {children}
-          {footer && <div className="flex flex-col gap-0.5 lg:hidden">{footer}</div>}
-        </div>
-      </div>
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>
+          <a href={home} className="flex items-center gap-2.5 rounded-md px-2 py-1.5">
+            <img src="/img/logo.svg" alt="" width={18} height={24} />
+            <span className="font-semibold text-lg">Yeecord</span>
+          </a>
+          {switcher ?? <SidebarMenuSkeleton showIcon />}
+        </SidebarHeader>
+        <SidebarContent>
+          {nav ??
+            (loading && (
+              <SidebarGroup>
+                <SidebarMenu>
+                  {[0, 1, 2, 3, 4, 5].map((key) => (
+                    <SidebarMenuItem key={key}>
+                      <SidebarMenuSkeleton showIcon />
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroup>
+            ))}
+        </SidebarContent>
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton render={<a href={home} />}>
+                <ArrowLeft />
+                <span>{t("回到官網")}</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            {onLogout && (
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={onLogout}>
+                  <LogOut />
+                  <span>{t("登出")}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
+          </SidebarMenu>
+          {logoutFailed && (
+            <p role="alert" className="px-2 text-destructive text-sm">
+              {t("登出沒有成功，再試一次。")}
+            </p>
+          )}
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
+        <header className="flex h-14 shrink-0 items-center gap-2 px-4 lg:px-8">
+          <SidebarTrigger className="-ml-1 md:hidden" aria-label={t("所有功能")} />
+          <Separator orientation="vertical" className="mr-1 h-4 md:hidden" />
+          {title}
+        </header>
+        <section aria-live="polite" className="flex flex-1 flex-col gap-8 px-4 pt-4 pb-16 lg:px-8">
+          <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
+            {loading ? <PanelSkeleton /> : children}
+          </div>
+        </section>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
+
+function PageTitle({
+  t,
+  page,
+  go,
+  status,
+}: {
+  t: Translate;
+  page: FeaturePage | undefined;
+  go: Go;
+  status: PageState["status"] | undefined;
+}) {
+  return (
+    <div className="flex min-w-0 flex-1 items-center gap-3">
+      <h2 className="sr-only">{t(page?.label ?? "總覽")}</h2>
+      <Breadcrumb>
+        <BreadcrumbList>
+          {page ? (
+            <>
+              <BreadcrumbItem className="max-sm:hidden">
+                <BreadcrumbLink render={<a href={pageHref(null)} onClick={go(null)} />}>
+                  {t("總覽")}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="max-sm:hidden" />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="font-semibold">
+                  {t(page.label)}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </>
+          ) : (
+            <BreadcrumbItem>
+              <BreadcrumbPage className="font-semibold">
+                {t("總覽")}
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          )}
+        </BreadcrumbList>
+      </Breadcrumb>
+      {status && <StatusBadge t={t} status={status} />}
     </div>
   );
 }
@@ -414,45 +547,57 @@ function GuildSwitcher({
   current: Guild | undefined;
   onOpen: (guild: Guild) => void;
 }) {
-  return (
-    <Menu.Root>
-      <Menu.Trigger
-        aria-label={t("切換伺服器")}
-        className={`flex min-w-0 items-center gap-3 rounded-xl border bg-fd-card p-2 pr-3 text-left transition-[background-color,transform] duration-150 ease-out hover:bg-fd-accent active:scale-[0.98] data-[popup-open]:bg-fd-accent motion-reduce:transition-none ${focus}`}
-      >
-        {current && <GuildIcon guild={current} />}
-        <span className="min-w-0 flex-1 truncate font-semibold">
-          {current?.name ?? t("所有伺服器")}
-        </span>
-        <ChevronsUpDown className="size-4 shrink-0 text-fd-muted-foreground" aria-hidden />
-      </Menu.Trigger>
-      <Menu.Portal>
-        <Menu.Positioner sideOffset={8} align="start" className="z-50">
-          <Menu.Popup className={popup}>
-            <Menu.RadioGroup
-              value={current?.id}
-              onValueChange={(id) => {
-                const guild = guilds.find((guild) => guild.id === id);
+  const { isMobile } = useSidebar();
 
-                if (guild) {
-                  onOpen(guild);
-                }
-              }}
-            >
-              {guilds.map((guild) => (
-                <Menu.RadioItem key={guild.id} value={guild.id} closeOnClick className={menuItem}>
-                  <GuildIcon guild={guild} />
-                  <span className="min-w-0 flex-1 truncate">{guild.name}</span>
-                  <Menu.RadioItemIndicator>
-                    <Check className="size-4 text-fd-primary" aria-hidden />
-                  </Menu.RadioItemIndicator>
-                </Menu.RadioItem>
-              ))}
-            </Menu.RadioGroup>
-          </Menu.Popup>
-        </Menu.Positioner>
-      </Menu.Portal>
-    </Menu.Root>
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <SidebarMenuButton
+                size="lg"
+                aria-label={t("切換伺服器")}
+                className="data-popup-open:bg-sidebar-accent data-popup-open:text-sidebar-accent-foreground"
+              />
+            }
+          >
+            {current && <GuildIcon guild={current} />}
+            <span className="min-w-0 flex-1 truncate font-semibold">
+              {current?.name ?? t("所有伺服器")}
+            </span>
+            <ChevronsUpDown className="ml-auto" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="min-w-56"
+            side={isMobile ? "bottom" : "right"}
+            align="start"
+            sideOffset={4}
+          >
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>{t("所有伺服器")}</DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={current?.id}
+                onValueChange={(id) => {
+                  const guild = guilds.find((guild) => guild.id === id);
+
+                  if (guild) {
+                    onOpen(guild);
+                  }
+                }}
+              >
+                {guilds.map((guild) => (
+                  <DropdownMenuRadioItem key={guild.id} value={guild.id} closeOnClick>
+                    <GuildIcon guild={guild} />
+                    <span className="truncate">{guild.name}</span>
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
   );
 }
 
@@ -461,7 +606,7 @@ function GuildIcon({ guild }: { guild: Guild }) {
     return (
       <span
         aria-hidden
-        className="flex size-8 shrink-0 items-center justify-center rounded-full bg-fd-secondary font-semibold text-fd-secondary-foreground text-sm"
+        className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary font-semibold text-sidebar-primary-foreground text-sm"
       >
         {guild.name.slice(0, 1)}
       </span>
@@ -472,12 +617,12 @@ function GuildIcon({ guild }: { guild: Guild }) {
     <img
       src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp?size=64`}
       alt=""
-      className="size-8 shrink-0 rounded-full"
+      className="size-8 shrink-0 rounded-lg"
     />
   );
 }
 
-function Sidebar({
+function PageNav({
   t,
   states,
   current,
@@ -489,129 +634,59 @@ function Sidebar({
   go: Go;
 }) {
   const failing = states.filter((state) => state.status === "failing").length;
-  const stateFor = (page: FeaturePage) => states.find((state) => state.page === page);
+  const { setOpenMobile } = useSidebar();
+  const visit = (target: string | null) => (event: MouseEvent<HTMLElement>) => {
+    go(target)(event);
+    setOpenMobile(false);
+  };
 
   return (
-    <>
-      <nav aria-label={t("所有功能")} className="flex flex-col gap-4 max-lg:hidden">
-        <a
-          href={pageHref(null)}
-          onClick={go(null)}
-          aria-current={current ? undefined : "page"}
-          className={`${navItem} ${current ? idle : selected}`}
-        >
-          <LayoutGrid className="size-4 shrink-0" aria-hidden />
-          <span className="flex-1">{t("總覽")}</span>
-          {failing > 0 && <FailingCount t={t} count={failing} />}
-        </a>
-        {groups.map((group) => (
-          <div key={group.label} className="flex flex-col gap-0.5">
-            <p className="px-2.5 pb-1 text-fd-muted-foreground text-sm">{t(group.label)}</p>
+    <nav aria-label={t("所有功能")}>
+      <SidebarGroup>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              isActive={!current}
+              render={<a href={pageHref(null)} onClick={visit(null)} />}
+            >
+              <LayoutGrid />
+              <span>{t("總覽")}</span>
+            </SidebarMenuButton>
+            {failing > 0 && (
+              <SidebarMenuBadge className="bg-destructive text-white">{failing}</SidebarMenuBadge>
+            )}
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
+      {groups.map((group) => (
+        <SidebarGroup key={group.label}>
+          <SidebarGroupLabel>{t(group.label)}</SidebarGroupLabel>
+          <SidebarMenu>
             {group.pages.map((page) => {
               const Icon = page.icon;
+              const state = states.find((state) => state.page === page);
 
               return (
-                <a
-                  key={page.slug}
-                  href={pageHref(page.slug)}
-                  onClick={go(page.slug)}
-                  aria-current={page === current ? "page" : undefined}
-                  className={`${navItem} ${page === current ? selected : idle}`}
-                >
-                  <Icon className="size-4 shrink-0" aria-hidden />
-                  <span className="flex-1 truncate">{t(page.label)}</span>
-                  {stateFor(page)?.status === "failing" && (
-                    <CircleAlert className="size-4 shrink-0 text-destructive" aria-label={t("要處理")} />
+                <SidebarMenuItem key={page.slug}>
+                  <SidebarMenuButton
+                    isActive={page === current}
+                    render={<a href={pageHref(page.slug)} onClick={visit(page.slug)} />}
+                  >
+                    <Icon />
+                    <span>{t(page.label)}</span>
+                  </SidebarMenuButton>
+                  {state?.status === "failing" && (
+                    <SidebarMenuBadge>
+                      <CircleAlert className="size-4 text-destructive" aria-label={t("要處理")} />
+                    </SidebarMenuBadge>
                   )}
-                </a>
+                </SidebarMenuItem>
               );
             })}
-          </div>
-        ))}
-      </nav>
-      <PageMenu t={t} states={states} current={current} go={go} />
-    </>
-  );
-}
-
-const selected = "bg-fd-accent font-medium text-fd-accent-foreground";
-const idle = "text-fd-muted-foreground hover:bg-fd-accent/60 hover:text-fd-foreground";
-
-function FailingCount({ t, count }: { t: Translate; count: number }) {
-  return (
-    <span
-      className="min-w-5 rounded-full bg-destructive px-1.5 text-center font-medium text-white text-xs tabular-nums leading-5"
-      aria-label={`${t("要處理")} ${count}`}
-    >
-      {count}
-    </span>
-  );
-}
-
-/** The sidebar's pages as one menu, for screens too narrow for the sidebar. */
-function PageMenu({
-  t,
-  states,
-  current,
-  go,
-}: {
-  t: Translate;
-  states: PageState[];
-  current: FeaturePage | undefined;
-  go: Go;
-}) {
-  const Icon = current?.icon ?? LayoutGrid;
-
-  return (
-    <Menu.Root>
-      <Menu.Trigger
-        aria-label={t("所有功能")}
-        className={`flex h-11 items-center gap-2.5 rounded-xl border px-3 text-left lg:hidden ${focus}`}
-      >
-        <Icon className="size-4 shrink-0 text-fd-muted-foreground" aria-hidden />
-        <span className="flex-1 truncate">{t(current?.label ?? "總覽")}</span>
-        <ChevronsUpDown className="size-4 shrink-0 text-fd-muted-foreground" aria-hidden />
-      </Menu.Trigger>
-      <Menu.Portal>
-        <Menu.Positioner sideOffset={8} align="start" className="z-50">
-          <Menu.Popup className={popup}>
-            <Menu.LinkItem href={pageHref(null)} onClick={go(null)} closeOnClick className={menuItem}>
-              <LayoutGrid className="size-4" aria-hidden />
-              {t("總覽")}
-            </Menu.LinkItem>
-            {groups.map((group) => (
-              <Menu.Group key={group.label}>
-                <Menu.GroupLabel className="px-2 pt-2 pb-1 text-fd-muted-foreground text-sm">
-                  {t(group.label)}
-                </Menu.GroupLabel>
-                {group.pages.map((page) => {
-                  const PageIcon = page.icon;
-                  const failing = states.some(
-                    (state) => state.page === page && state.status === "failing",
-                  );
-
-                  return (
-                    <Menu.LinkItem
-                      key={page.slug}
-                      href={pageHref(page.slug)}
-                      onClick={go(page.slug)}
-                      closeOnClick
-                      className={menuItem}
-                    >
-                      <PageIcon className="size-4" aria-hidden />
-                      <span className="flex-1">{t(page.label)}</span>
-                      {failing && (
-                        <CircleAlert className="size-4 text-destructive" aria-label={t("要處理")} />
-                      )}
-                    </Menu.LinkItem>
-                  );
-                })}
-              </Menu.Group>
-            ))}
-          </Menu.Popup>
-        </Menu.Positioner>
-      </Menu.Portal>
-    </Menu.Root>
+          </SidebarMenu>
+        </SidebarGroup>
+      ))}
+    </nav>
   );
 }
 
@@ -630,73 +705,79 @@ function Overview({
   const failing = states.filter((state) => state.status === "failing");
 
   return (
-    <div className="flex flex-col gap-10">
-      <h2 className="font-semibold text-2xl">{t("總覽")}</h2>
+    <>
       {failing.length > 0 && (
-        <section aria-labelledby="overview-failing">
+        <section aria-labelledby="overview-failing" className="flex flex-col gap-3">
           <GroupHeading id="overview-failing" label={t("要處理")} count={failing.length} />
-          <ul className="flex flex-col gap-3">
+          <ItemGroup className="gap-3">
             {failing.map((state) => {
               const told = state.feature?.last_failure
                 ? describe.failure(state.feature, state.feature.last_failure)
                 : { title: t(state.page.label) };
 
               return (
-                <li key={state.page.slug}>
-                  <a
-                    href={pageHref(state.page.slug)}
-                    onClick={go(state.page.slug)}
-                    className={`flex gap-3 rounded-xl border border-destructive/30 bg-destructive/[0.06] p-4 transition-colors duration-150 hover:bg-destructive/[0.1] ${focus}`}
-                  >
+                <Item
+                  key={state.page.slug}
+                  variant="outline"
+                  className="border-destructive/30 bg-destructive/5 hover:bg-destructive/10"
+                  render={<a href={pageHref(state.page.slug)} onClick={go(state.page.slug)} />}
+                >
+                  <ItemMedia>
                     <StatusIcon status="failing" t={t} />
-                    <div className="min-w-0 flex-1 leading-relaxed">
-                      <p className="font-medium">{told.title}</p>
-                      {told.detail && <p className="mt-1 text-fd-muted-foreground">{told.detail}</p>}
-                    </div>
-                  </a>
-                </li>
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>
+                      <span>{told.title}</span>
+                    </ItemTitle>
+                    {told.detail && (
+                      <ItemDescription className="line-clamp-none leading-relaxed">
+                        {told.detail}
+                      </ItemDescription>
+                    )}
+                  </ItemContent>
+                </Item>
               );
             })}
-          </ul>
+          </ItemGroup>
         </section>
       )}
       <section aria-labelledby="overview-all" className="flex flex-col gap-6">
         <GroupHeading id="overview-all" label={t("所有功能")} />
         {groups.map((group) => (
-          <div key={group.label}>
-            <h4 className="mb-2 text-fd-muted-foreground text-sm">{t(group.label)}</h4>
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div key={group.label} className="flex flex-col gap-3">
+            <h4 className="text-muted-foreground text-sm">{t(group.label)}</h4>
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {group.pages.map((page) => {
-                const state = states.find((state) => state.page === page);
-                const status = state?.status ?? "not_configured";
+                const status = states.find((state) => state.page === page)?.status ?? "not_configured";
                 const Icon = page.icon;
 
                 return (
-                  <li key={page.slug}>
-                    <a
-                      href={pageHref(page.slug)}
-                      onClick={go(page.slug)}
-                      className={`flex h-full flex-col gap-3 rounded-xl border bg-fd-card p-4 transition-colors duration-150 hover:bg-fd-accent ${
-                        status === "not_configured" ? "border-dashed bg-transparent" : ""
-                      } ${focus}`}
-                    >
-                      <span className="flex items-center gap-2.5 font-medium">
-                        <Icon className="size-4 shrink-0 text-fd-muted-foreground" aria-hidden />
-                        {t(page.label)}
-                      </span>
-                      <StatusLine t={t} status={status} />
-                    </a>
-                  </li>
+                  <Item
+                    key={page.slug}
+                    variant={status === "not_configured" ? "muted" : "outline"}
+                    className="hover:bg-accent"
+                    render={<a href={pageHref(page.slug)} onClick={go(page.slug)} />}
+                  >
+                    <ItemMedia variant="icon">
+                      <Icon />
+                    </ItemMedia>
+                    <ItemContent>
+                      <ItemTitle>{t(page.label)}</ItemTitle>
+                    </ItemContent>
+                    <ItemActions>
+                      <StatusBadge t={t} status={status} />
+                    </ItemActions>
+                  </Item>
                 );
               })}
-            </ul>
+            </div>
           </div>
         ))}
       </section>
-      <p className="text-fd-muted-foreground text-sm">
+      <p className="text-muted-foreground text-sm">
         {t("這裡只能看。要改設定，在 Discord 裡用對應的斜線指令。")}
       </p>
-    </div>
+    </>
   );
 }
 
@@ -704,12 +785,10 @@ function FeatureView({
   t,
   locale,
   state,
-  go,
 }: {
   t: Translate;
   locale: Locale;
   state: PageState;
-  go: Go;
 }) {
   const describe = describer(t, locale);
   const { feature, status, command, page } = state;
@@ -717,106 +796,77 @@ function FeatureView({
   const told = feature?.last_failure ? describe.failure(feature, feature.last_failure) : undefined;
   const settings = feature && status !== "not_configured" ? describe.settings(feature) : [];
 
-  return (
-    <div className="flex flex-col gap-6">
-      <a
-        href={pageHref(null)}
-        onClick={go(null)}
-        className={`-ml-1 inline-flex items-center gap-1.5 self-start rounded-md px-1 text-fd-muted-foreground text-sm hover:text-fd-foreground ${focus}`}
-      >
-        <ArrowLeft className="size-4" aria-hidden />
-        {t("總覽")}
-      </a>
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <h2 className="flex items-center gap-3 font-semibold text-2xl">
-          <Icon className="size-6 text-fd-muted-foreground" aria-hidden />
-          {t(page.label)}
-        </h2>
-        <StatusLine t={t} status={status} />
-      </div>
-      {status === "failing" && told && (
-        <div className="flex gap-3 rounded-xl border border-destructive/30 bg-destructive/[0.06] p-4">
-          <StatusIcon status="failing" t={t} />
-          <div className="min-w-0 flex-1 leading-relaxed">
-            <p className="font-medium">{told.title}</p>
-            {told.detail && <p className="mt-1 text-fd-muted-foreground">{told.detail}</p>}
-          </div>
-        </div>
-      )}
-      {status === "not_configured" ? (
-        <div className="flex flex-col gap-3 rounded-xl border border-dashed p-6">
-          <h3 className="font-semibold text-lg">{t("這個功能還沒設定")}</h3>
-          <p className="text-fd-muted-foreground leading-relaxed">
+  if (status === "not_configured") {
+    return (
+      <Empty className="border border-dashed">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Icon />
+          </EmptyMedia>
+          <EmptyTitle>{t("這個功能還沒設定")}</EmptyTitle>
+          <EmptyDescription>
             {fill(t("在 Discord 用 {command} 開始設定"), { command: <Command name={command} /> })}
-          </p>
-        </div>
-      ) : (
-        <>
-          {feature && (
-            <div className="rounded-xl border bg-fd-card p-5">
-              {settings.length > 0 ? (
-                <dl className="grid gap-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
-                  {settings.map(([label, value]) => (
-                    <div key={label} className="contents">
-                      <dt className="text-fd-muted-foreground">{t(label)}</dt>
-                      <dd className="leading-relaxed">{value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              ) : (
-                <p className="leading-relaxed">{describe.summary(feature)}</p>
-              )}
-            </div>
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
+    );
+  }
+
+  return (
+    <>
+      {status === "failing" && told && (
+        <Alert variant="destructive">
+          <CircleAlert />
+          <AlertTitle>{told.title}</AlertTitle>
+          {told.detail && (
+            <AlertDescription className="leading-relaxed">{told.detail}</AlertDescription>
           )}
-          <p className="text-fd-muted-foreground leading-relaxed">
-            {fill(t("在 Discord 用 {command} 修改設定"), { command: <Command name={command} /> })}
-          </p>
-        </>
+        </Alert>
       )}
-    </div>
+      {feature && (
+        <Card>
+          <CardContent>
+            {settings.length > 0 ? (
+              <dl className="grid gap-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
+                {settings.map(([label, value]) => (
+                  <div key={label} className="contents">
+                    <dt className="text-muted-foreground">{t(label)}</dt>
+                    <dd className="leading-relaxed">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : (
+              <p className="leading-relaxed">{describe.summary(feature)}</p>
+            )}
+          </CardContent>
+        </Card>
+      )}
+      <p className="text-muted-foreground leading-relaxed">
+        {fill(t("在 Discord 用 {command} 修改設定"), { command: <Command name={command} /> })}
+      </p>
+    </>
   );
 }
 
 function GroupHeading({ id, label, count }: { id: string; label: string; count?: number }) {
   return (
-    <h3 id={id} className="mb-3 flex items-baseline gap-2 font-semibold text-lg">
+    <h3 id={id} className="flex items-baseline gap-2 font-semibold text-lg">
       {label}
       {count !== undefined && (
-        <span className="font-normal text-fd-muted-foreground tabular-nums">{count}</span>
+        <span className="font-normal text-muted-foreground tabular-nums">{count}</span>
       )}
     </h3>
   );
 }
 
-function Skeleton({ t, locale }: { t: Translate; locale: Locale }) {
-  return (
-    <Shell
-      locale={locale}
-      side={
-        <div className="flex flex-col gap-2 animate-pulse motion-reduce:animate-none" aria-hidden>
-          <div className="h-12 rounded-xl bg-fd-secondary/60" />
-          {[0, 1, 2, 3, 4].map((key) => (
-            <div key={key} className="h-9 rounded-lg bg-fd-secondary/40 max-lg:hidden" />
-          ))}
-        </div>
-      }
-    >
-      <div aria-busy>
-        <span className="sr-only">{t("載入中…")}</span>
-        <PanelSkeleton />
-      </div>
-    </Shell>
-  );
-}
-
 function PanelSkeleton() {
   return (
-    <div className="flex flex-col gap-3 animate-pulse motion-reduce:animate-none" aria-hidden>
-      <div className="mb-4 h-8 w-32 rounded-lg bg-fd-secondary/60" />
-      <div className="h-24 rounded-xl border bg-fd-card" />
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="flex flex-col gap-3" aria-busy>
+      <Skeleton className="mb-2 h-6 w-28" />
+      <Skeleton className="h-20 rounded-xl" />
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {[0, 1, 2].map((key) => (
-          <div key={key} className="h-24 rounded-xl border bg-fd-card" />
+          <Skeleton key={key} className="h-16 rounded-xl" />
         ))}
       </div>
     </div>
@@ -824,22 +874,24 @@ function PanelSkeleton() {
 }
 
 function Notice({
+  icon,
   title,
   body,
-  note,
   children,
 }: {
+  icon: ReactNode;
   title: ReactNode;
   body: ReactNode;
-  note?: ReactNode;
   children?: ReactNode;
 }) {
   return (
-    <div className="max-w-xl rounded-xl border bg-fd-card p-6 sm:p-8">
-      <h2 className="font-semibold text-xl">{title}</h2>
-      <p className="mt-2 text-fd-muted-foreground">{body}</p>
-      {children && <div className="mt-6 flex flex-wrap gap-3">{children}</div>}
-      {note && <p className="mt-4 text-fd-muted-foreground text-sm">{note}</p>}
-    </div>
+    <Empty className="border border-dashed">
+      <EmptyHeader>
+        <EmptyMedia variant="icon">{icon}</EmptyMedia>
+        <EmptyTitle>{title}</EmptyTitle>
+        <EmptyDescription>{body}</EmptyDescription>
+      </EmptyHeader>
+      {children && <EmptyContent>{children}</EmptyContent>}
+    </Empty>
   );
 }

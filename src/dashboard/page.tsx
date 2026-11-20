@@ -7,7 +7,7 @@ export function DashboardPage({ locale }: { locale: Locale }) {
   const t = translator(locale);
 
   return (
-    <main>
+    <>
       <LocalizedMeta
         title={t("伺服器設定")}
         description={t("登入後可以看每個伺服器開了哪些功能、哪些出了問題。")}
@@ -15,6 +15,6 @@ export function DashboardPage({ locale }: { locale: Locale }) {
       <meta name="robots" content="noindex" />
       <h1 className="sr-only">{t("伺服器設定")}</h1>
       <Dashboard locale={locale} />
-    </main>
+    </>
   );
 }
