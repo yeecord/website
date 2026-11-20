@@ -7,7 +7,7 @@ import { translator } from "~/i18n/translate";
 export const domain = "https://next.yeecord.com";
 
 // 機器龍 http role 的網址，dashboard 的登入和資料都從這裡來（yeecord/yeecord#384）。
-// 網域還沒定，定了再改。本機開發用 VITE_DASHBOARD_API 指到自己跑的機器龍
+// 本機開發用 VITE_DASHBOARD_API 指到自己跑的機器龍，staging 是 https://api-staging.yeecord.com
 export const dashboardApi: string =
   import.meta.env.VITE_DASHBOARD_API ?? "https://api.yeecord.com";
 
