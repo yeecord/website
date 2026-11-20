@@ -1,7 +1,7 @@
-import { ArrowLeft, Languages } from "lucide-react";
-import { LanguageSelect } from "fumadocs-ui/layouts/shared/slots/language-select";
-import { ThemeSwitch } from "fumadocs-ui/layouts/shared/slots/theme-switch";
+import { ArrowLeft, SunMoon } from "lucide-react";
 import { LoginPanel, LoginPreview } from "~/components/dashboard/login";
+import { PreferencesMenu } from "~/components/dashboard/preferences";
+import { Button } from "~/components/ui/button";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { LocalizedMeta } from "~/localized-page";
@@ -24,12 +24,15 @@ export function LoginPage({ locale }: { locale: Locale }) {
             <img src="/img/logo.svg" alt="" width={21} height={28} />
             <span className="font-semibold text-fd-foreground text-lg">Yeecord</span>
           </a>
-          <div className="flex items-center gap-2">
-            <LanguageSelect variant="ghost" aria-label={t("語言")}>
-              <Languages className="size-4.5" />
-            </LanguageSelect>
-            <ThemeSwitch />
-          </div>
+          <PreferencesMenu
+            locale={locale}
+            side="bottom"
+            trigger={
+              <Button variant="ghost" size="icon" aria-label={t("顯示與語言")}>
+                <SunMoon />
+              </Button>
+            }
+          />
         </div>
         <div className="flex flex-1 items-center py-16">
           <div className="mx-auto w-full max-w-md">
