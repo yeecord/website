@@ -1,5 +1,8 @@
 import {
   AudioLines,
+  CircleAlert,
+  CircleCheck,
+  CircleDashed,
   Crosshair,
   Gift,
   type LucideIcon,
@@ -307,4 +310,59 @@ export function Command({ name }: { name: string }) {
       /{name}
     </code>
   );
+}
+
+export const statusLabels: Record<FeatureStatus, Phrase> = {
+  failing: "要處理",
+  enabled: "運作中",
+  not_configured: "還沒設定",
+};
+
+export function StatusLine({ t, status }: { t: Translate; status: FeatureStatus }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 text-sm ${
+        status === "failing"
+          ? "text-destructive"
+          : status === "enabled"
+            ? "text-fd-foreground"
+            : "text-fd-muted-foreground"
+      }`}
+    >
+      <StatusIcon status={status} t={t} decorative />
+      {t(statusLabels[status])}
+    </span>
+  );
+}
+
+export function StatusIcon({
+  status,
+  t,
+  decorative,
+}: {
+  status: FeatureStatus;
+  t: Translate;
+  decorative?: boolean;
+}) {
+  const className = decorative ? "size-4 shrink-0" : "mt-0.5 size-5 shrink-0";
+  const label = decorative ? undefined : t(statusLabels[status]);
+
+  switch (status) {
+    case "failing":
+      return (
+        <CircleAlert className={`${className} text-destructive`} aria-label={label} aria-hidden={decorative} />
+      );
+    case "enabled":
+      return (
+        <CircleCheck className={`${className} text-fd-primary`} aria-label={label} aria-hidden={decorative} />
+      );
+    default:
+      return (
+        <CircleDashed
+          className={`${className} text-fd-muted-foreground`}
+          aria-label={label}
+          aria-hidden={decorative}
+        />
+      );
+  }
 }

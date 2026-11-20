@@ -499,7 +499,8 @@ button.discord-button:active:not([aria-disabled="true"]),
 
 /* Duolingo 式玩具按鈕：實色硬陰影，按下時往下沉 */
 .btn-chunky,
-.btn-chunky-secondary {
+.btn-chunky-secondary,
+.btn-chunky-discord {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -516,6 +517,12 @@ button.discord-button:active:not([aria-disabled="true"]),
   box-shadow: 0 4px 0 color-mix(in oklab, var(--color-fd-primary) 55%, black);
 }
 
+.btn-chunky-discord {
+  background-color: var(--color-discord-blurple);
+  color: white;
+  box-shadow: 0 4px 0 color-mix(in oklab, var(--color-discord-blurple) 55%, black);
+}
+
 /* fd-secondary 在深色下幾乎等於背景色，連硬陰影都看不見，改成從前景色調出來的實色 */
 .btn-chunky-secondary {
   background-color: color-mix(
@@ -529,13 +536,15 @@ button.discord-button:active:not([aria-disabled="true"]),
 }
 
 .btn-chunky:focus-visible,
-.btn-chunky-secondary:focus-visible {
+.btn-chunky-secondary:focus-visible,
+.btn-chunky-discord:focus-visible {
   outline: 2px solid var(--color-fd-primary);
   outline-offset: 2px;
 }
 
 .btn-chunky:active,
-.btn-chunky-secondary:active {
+.btn-chunky-secondary:active,
+.btn-chunky-discord:active {
   transform: translateY(4px);
   box-shadow: 0 0 0 transparent;
 }
