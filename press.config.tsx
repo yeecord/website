@@ -33,6 +33,7 @@ import { baseOptions } from "./src/layout-config";
 import { LegalPage } from "./src/legal-layout";
 import { staticPageLinks } from "./src/localized-page";
 import { localizedPagesPlugin } from "./src/localized-pages-plugin";
+import { blogPostHead } from "./src/blog/head";
 import { BlogOgImage, OgImage, ogFonts } from "./src/og-image";
 import { ogPlugin } from "./src/og-plugin";
 import { searchPlugin } from "./src/search-plugin";
@@ -181,6 +182,7 @@ export default app.config({
       return [
         { tag: "title", children: title },
         { tag: "meta", attrs: { property: "og:title", content: title } },
+        ...(page.type === "blog" ? blogPostHead(page.url, page.data) : []),
       ];
     }
 

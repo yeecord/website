@@ -152,9 +152,9 @@ export function BlogPostPage({
 
         <p className="text-muted-foreground text-sm">
           <span className="mr-1">•</span>
-          <span itemProp="datePublished">
+          <time itemProp="datePublished" dateTime={page.data.date.toISOString()}>
             {page.data.date.toLocaleDateString(locale, { dateStyle: "long" })}
-          </span>
+          </time>
         </p>
       </div>
       <DocsBody>{body}</DocsBody>
