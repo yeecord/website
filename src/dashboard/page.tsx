@@ -15,6 +15,7 @@ export function DashboardPage({ locale }: { locale: Locale }) {
         title={t("伺服器設定")}
         description={t("登入後可以看每個伺服器開了哪些功能、哪些出了問題。")}
       />
+      <meta name="robots" content="noindex" />
       <main className="mx-auto w-full max-w-5xl px-4 pt-12 pb-24">
         <h1 className="mb-8 font-bold text-3xl tracking-tight">{t("伺服器設定")}</h1>
         <Dashboard locale={locale} />
