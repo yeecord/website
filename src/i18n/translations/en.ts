@@ -183,6 +183,7 @@ export const en = {
   "大廳": "Lobbies",
   "總覽": "Overview",
   "所有功能": "All features",
+  "再見": "goodbye",
   "這個功能還沒設定": "This feature isn't set up yet",
   "在 Discord 用 {command} 開始設定": "Use {command} in Discord to set it up",
   "在 Discord 用 {command} 修改設定": "Use {command} in Discord to change it",

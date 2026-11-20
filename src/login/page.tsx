@@ -51,14 +51,8 @@ export function LoginPage({ locale }: { locale: Locale }) {
           </a>
         </nav>
       </div>
-      <div
-        aria-hidden
-        inert
-        className="relative overflow-hidden bg-sidebar max-lg:hidden"
-      >
-        <div className="absolute top-[12%] bottom-0 left-[10%] flex select-none">
-          <LoginPreview locale={locale} />
-        </div>
+      <div aria-hidden inert className="flex items-center justify-center bg-sidebar p-12 max-lg:hidden">
+        <LoginPreview locale={locale} />
       </div>
     </main>
   );

@@ -1,12 +1,13 @@
 "use client";
 
-import { LayoutGrid, ShieldCheck } from "lucide-react";
+import { ChevronsUpDown, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { discordIcon } from "~/layout-config";
-import { loginUrl } from "./api";
-import { Command, featurePages, fill, groups, StatusBadge, StatusIcon } from "./features";
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "~/components/ui/item";
+import { type FeatureStatus, type GuildFeature, loginUrl } from "./api";
+import { Command, describer, type FeaturePage, featurePages, fill, StatusBadge, StatusIcon } from "./features";
 
 /** The login page's address, carrying the page to come back to and whether a link from Discord was spent. */
 export function loginPage(locale: Locale, back: string, expired: boolean) {
@@ -41,7 +42,7 @@ export function LoginPanel({ locale }: { locale: Locale }) {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-3">
-        <h1 className="font-bold text-2xl tracking-tight [overflow-wrap:break-word] sm:text-3xl">
+        <h1 className="text-balance font-bold text-2xl tracking-tight [overflow-wrap:break-word] sm:text-3xl">
           {expired ? t("這個連結已經失效") : t("機器龍在你的伺服器做了什麼")}
         </h1>
         <p className="text-pretty text-muted-foreground leading-relaxed">
@@ -81,73 +82,87 @@ export function LoginPanel({ locale }: { locale: Locale }) {
       )}
       <p className="flex gap-2 text-muted-foreground text-sm leading-relaxed">
         <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden />
-        {t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}
+        <span className="text-pretty">{t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}</span>
       </p>
     </div>
   );
 }
 
-/** A still of the dashboard beside the login, so a visitor sees what logging in shows. Not live data. */
+/** A still of the dashboard's overview beside the login, so a visitor sees what logging in shows. Not live data. */
 export function LoginPreview({ locale }: { locale: Locale }) {
   const t = translator(locale);
-  const statuses = ["enabled", "failing", "enabled", "enabled", "not_configured", "failing", "enabled", "enabled"] as const;
-  const status = (index: number) => statuses[index] ?? "enabled";
+  const describe = describer(t, locale);
+  // Relative to whenever it renders, so the static HTML and the browser both read "3 hours ago".
+  const failedAt = Math.floor(Date.now() / 1000) - 3 * 3600;
+  const failing: GuildFeature[] = [
+    {
+      object: "guild_feature",
+      type: "member_notification",
+      status: "failing",
+      command: "member-notification",
+      member_notification: { event: "leave", channel: { object: "channel", id: "1", name: t("再見") } },
+      last_failure: {
+        code: "channel_forbidden",
+        failed_at: failedAt,
+        channel: { object: "channel", id: "1", name: t("再見") },
+      },
+    },
+    {
+      object: "guild_feature",
+      type: "auto_channels",
+      status: "failing",
+      command: "auto-channels",
+      auto_channels: { lobbies: [] },
+      last_failure: { code: "missing_permissions", failed_at: failedAt, missing_permissions: ["move_members"] },
+    },
+  ];
+  const status = (page: FeaturePage): FeatureStatus =>
+    failing.some(page.matches) ? "failing" : page.slug === "afk-channel" ? "not_configured" : "enabled";
 
   return (
-    <div className="flex w-[52rem] overflow-hidden rounded-tl-3xl border-t border-l bg-fd-background shadow-2xl">
-      <div className="flex w-56 shrink-0 flex-col gap-4 border-r bg-fd-card p-4">
-        <div className="flex items-center gap-2.5 rounded-xl border p-2">
-          <span className="flex size-7 items-center justify-center rounded-full bg-fd-secondary font-semibold text-sm">
-            Y
-          </span>
-          <span className="truncate font-semibold text-sm">Yeecord</span>
-        </div>
-        <span className="flex h-8 items-center gap-2 rounded-lg bg-fd-accent px-2 font-medium text-sm">
-          <LayoutGrid className="size-4" aria-hidden />
-          <span className="flex-1">{t("總覽")}</span>
-          <span className="min-w-5 text-center text-destructive text-xs leading-5">2</span>
+    <div className="flex w-full max-w-md select-none flex-col gap-6">
+      <div className="flex items-center gap-2.5 rounded-xl border bg-background p-2">
+        <span className="flex size-8 items-center justify-center rounded-lg bg-secondary font-semibold text-sm">
+          Y
         </span>
-        {groups.map((group) => (
-          <div key={group.label} className="flex flex-col gap-0.5">
-            <span className="px-2 pb-0.5 text-fd-muted-foreground text-xs">{t(group.label)}</span>
-            {group.pages.map((page) => {
-              const Icon = page.icon;
-              const failing = status(featurePages.indexOf(page)) === "failing";
-
-              return (
-                <span key={page.slug} className="flex h-7 items-center gap-2 px-2 text-fd-muted-foreground text-sm">
-                  <Icon className="size-3.5" aria-hidden />
-                  <span className="flex-1 truncate">{t(page.label)}</span>
-                  {failing && <StatusIcon status="failing" t={t} decorative />}
-                </span>
-              );
-            })}
-          </div>
-        ))}
+        <span className="flex-1 truncate font-semibold">Yeecord</span>
+        <ChevronsUpDown className="size-4 text-muted-foreground" aria-hidden />
       </div>
-      <div className="flex min-w-0 flex-1 flex-col gap-5 p-6">
-        <span className="font-semibold text-xl">{t("總覽")}</span>
-        <div className="flex gap-3 rounded-xl border bg-fd-card p-4">
-          <StatusIcon status="failing" t={t} decorative />
-          <span className="font-medium">{fill(t("{type}已自動停用"), { type: t("離開通知") })}</span>
-        </div>
-        <div className="grid grid-cols-3 gap-3">
-          {featurePages.map((page, index) => {
+      <div className="flex flex-col gap-3">
+        <span className="flex items-baseline gap-2 font-semibold">
+          {t("要處理")}
+          <span className="font-normal text-muted-foreground tabular-nums">{failing.length}</span>
+        </span>
+        {failing.map((feature) => {
+          const told = feature.last_failure ? describe.failure(feature, feature.last_failure) : null;
+
+          return (
+            <Item key={feature.type} variant="outline" size="sm" className="bg-background">
+              <ItemMedia>
+                <StatusIcon status="failing" t={t} decorative />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>
+                  <span>{told?.title}</span>
+                </ItemTitle>
+                <ItemDescription className="line-clamp-none leading-relaxed">{told?.detail}</ItemDescription>
+              </ItemContent>
+            </Item>
+          );
+        })}
+      </div>
+      <div className="flex flex-col gap-3">
+        <span className="font-semibold">{t("所有功能")}</span>
+        <div className="flex flex-col rounded-xl border bg-background p-1.5">
+          {featurePages.map((page) => {
             const Icon = page.icon;
 
             return (
-              <div
-                key={page.slug}
-                className={`flex flex-col gap-2.5 rounded-xl border bg-fd-card p-3.5 ${
-                  status(index) === "not_configured" ? "border-dashed bg-transparent" : ""
-                }`}
-              >
-                <span className="flex items-center gap-2 font-medium text-sm">
-                  <Icon className="size-4 text-fd-muted-foreground" aria-hidden />
-                  {t(page.label)}
-                </span>
-                <StatusBadge t={t} status={status(index)} />
-              </div>
+              <span key={page.slug} className="flex h-9 items-center gap-2.5 px-2.5 text-sm">
+                <Icon className="size-4 text-muted-foreground" aria-hidden />
+                <span className="flex-1 truncate">{t(page.label)}</span>
+                <StatusBadge t={t} status={status(page)} />
+              </span>
             );
           })}
         </div>
