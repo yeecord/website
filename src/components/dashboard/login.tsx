@@ -40,7 +40,7 @@ export function LoginPanel({ locale }: { locale: Locale }) {
   }, [dashboard]);
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="motion-stagger flex flex-col gap-10">
       <div className="flex flex-col gap-3">
         <h1 className="text-balance font-bold text-2xl tracking-tight [overflow-wrap:break-word] sm:text-3xl">
           {expired ? t("這個連結已經失效") : t("機器龍在你的伺服器做了什麼")}
@@ -120,7 +120,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
     failing.some(page.matches) ? "failing" : page.slug === "afk-channel" ? "not_configured" : "enabled";
 
   return (
-    <div className="flex w-full max-w-md select-none flex-col gap-6">
+    <div className="motion-enter flex w-full max-w-md select-none flex-col gap-6 [animation-delay:200ms]">
       <div className="flex items-center gap-2.5 rounded-xl border bg-background p-2">
         <span className="flex size-8 items-center justify-center rounded-lg bg-secondary font-semibold text-sm">
           Y

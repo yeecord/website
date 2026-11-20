@@ -397,9 +397,14 @@ export function Dashboard({ locale }: { locale: Locale }) {
           )}
           {view.panel.state === "ready" &&
             (pageState ? (
-              <FeatureView t={t} locale={locale} state={pageState} />
+              <FeatureView
+                key={`${view.guild?.id}/${pageState.page.slug}`}
+                t={t}
+                locale={locale}
+                state={pageState}
+              />
             ) : (
-              <Overview t={t} locale={locale} states={states} go={go} />
+              <Overview key={view.guild?.id} t={t} locale={locale} states={states} go={go} />
             ))}
         </Shell>
       );
@@ -500,7 +505,7 @@ function Shell({
           {title}
         </header>
         <section aria-live="polite" className="flex flex-1 flex-col gap-8 px-4 pt-4 pb-16 lg:px-8">
-          <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
+          <div className="motion-stagger mx-auto flex w-full max-w-5xl flex-col gap-8">
             {loading ? <PanelSkeleton /> : children}
           </div>
         </section>

@@ -6,6 +6,11 @@
 
 @theme {
   --color-discord-blurple: #5865f2;
+  /* Tailwind 內建的 ease-out、ease-in-out 太軟，換成比較有力的曲線，全站的 ease-out 都跟著用 */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* 抽屜進出場，取自 Ionic 的 iOS 曲線 */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 /* shadcn (base-nova) 的 token 全部對映到 fumadocs 的 fd 變數，
@@ -555,4 +560,46 @@ button.discord-button:active:not([aria-disabled="true"]),
 
 #nd-home-layout li > a {
   @apply mx-0;
+}
+
+/* 內容出現時從下方 6px 淡入。用 animation 而不是 transition，才不會跟元素自己的 hover transition 互相覆蓋；
+   backwards 讓延遲期間先停在起點，結束後不留 transform */
+@layer components {
+  .motion-enter,
+  .motion-stagger > * {
+    animation: motion-enter 280ms var(--ease-out) backwards;
+  }
+
+  .motion-stagger > :nth-child(2) {
+    animation-delay: 40ms;
+  }
+  .motion-stagger > :nth-child(3) {
+    animation-delay: 80ms;
+  }
+  .motion-stagger > :nth-child(4) {
+    animation-delay: 120ms;
+  }
+  .motion-stagger > :nth-child(n + 5) {
+    animation-delay: 160ms;
+  }
+
+  @keyframes motion-enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  @keyframes motion-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-enter,
+    .motion-stagger > * {
+      animation-name: motion-fade;
+    }
+  }
 }
