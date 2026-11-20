@@ -164,6 +164,7 @@ export const zhCn = {
   "大廳": "大厅",
   "總覽": "总览",
   "所有功能": "所有功能",
+  "再見": "再见",
   "這個功能還沒設定": "这个功能还没设置",
   "在 Discord 用 {command} 開始設定": "在 Discord 用 {command} 开始设置",
   "在 Discord 用 {command} 修改設定": "在 Discord 用 {command} 修改设置",
