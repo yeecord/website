@@ -162,6 +162,7 @@ export const en = {
   "這裡只列出你能管理、而且機器龍也在的伺服器。": "Only servers you can manage and that Yeecord is in are listed.",
   "沒有可以管理的伺服器": "No servers to manage",
   "所有伺服器": "All servers",
+  "切換伺服器": "Switch server",
   "你已經不能管理這個伺服器": "You can no longer manage this server",
   "清單裡沒有這個伺服器": "This server isn't on your list",
   "清單只列出你能管理、而且機器龍也在的伺服器。重新登入會更新清單。": "The list only has servers you can manage and that Yeecord is in. Logging in again refreshes it.",

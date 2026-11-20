@@ -1,6 +1,15 @@
 "use client";
 
-import { CircleAlert, CircleCheck, CircleDashed, LogOut, RotateCw } from "lucide-react";
+import { Menu } from "@base-ui/react/menu";
+import {
+  Check,
+  ChevronsUpDown,
+  CircleAlert,
+  CircleCheck,
+  CircleDashed,
+  LogOut,
+  RotateCw,
+} from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { type Locale, staticPath } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
@@ -231,8 +240,8 @@ export function Dashboard({ locale }: { locale: Locale }) {
       );
     case "signed-in":
       return (
-        <div className="grid gap-8 md:grid-cols-[15rem_minmax(0,1fr)]">
-          <GuildRail
+        <div className="flex flex-col gap-8">
+          <GuildBar
             t={t}
             guilds={view.guilds}
             current={view.guild}
@@ -246,7 +255,6 @@ export function Dashboard({ locale }: { locale: Locale }) {
                 {t("這個連結屬於另一個 Discord 帳號，所以沒有打開。要用它的話，先登出再按一次連結。")}
               </p>
             )}
-            {view.guild && <GuildHeading guild={view.guild} />}
             {view.panel.state === "loading" && <LedgerSkeleton />}
             {view.panel.state === "refused" && view.panel.code === "internal_error" && (
               <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")}>
@@ -302,7 +310,7 @@ function SignIn({ t, linkExpired }: { t: Translate; linkExpired?: boolean }) {
   );
 }
 
-function GuildRail({
+function GuildBar({
   t,
   guilds,
   current,
@@ -318,34 +326,56 @@ function GuildRail({
   logoutFailed?: boolean;
 }) {
   return (
-    <nav aria-label={t("所有伺服器")} className="flex min-w-0 flex-col gap-3">
-      <ul className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 md:flex-col md:overflow-visible">
-        {guilds.map((guild) => {
-          const selected = guild.id === current?.id;
+    <nav aria-label={t("所有伺服器")} className="flex min-w-0 flex-col gap-2">
+      <div className="flex min-w-0 items-center gap-3">
+        <Menu.Root>
+          <Menu.Trigger
+            aria-label={t("切換伺服器")}
+            className={`-ml-2 flex min-w-0 items-center gap-3 rounded-xl py-1.5 pr-3 pl-2 text-left transition-[background-color,transform] duration-150 ease-out hover:bg-fd-accent active:scale-[0.98] data-[popup-open]:bg-fd-accent motion-reduce:transition-none ${focus}`}
+          >
+            {current && <GuildIcon guild={current} size="large" />}
+            <span className="min-w-0 truncate font-semibold text-2xl">
+              {current?.name ?? t("所有伺服器")}
+            </span>
+            <ChevronsUpDown className="size-5 shrink-0 text-fd-muted-foreground" aria-hidden />
+          </Menu.Trigger>
+          <Menu.Portal>
+            <Menu.Positioner sideOffset={8} align="start" className="z-50">
+              <Menu.Popup className="max-h-[min(24rem,var(--available-height))] w-72 max-w-[var(--available-width)] origin-[var(--transform-origin)] overflow-y-auto rounded-xl border bg-fd-popover p-1 text-fd-popover-foreground shadow-lg transition-[opacity,transform] duration-150 ease-out data-[ending-style]:scale-95 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none">
+                <Menu.RadioGroup
+                  value={current?.id}
+                  onValueChange={(id) => {
+                    const guild = guilds.find((guild) => guild.id === id);
 
-          return (
-            <li key={guild.id} className="shrink-0">
-              <button
-                type="button"
-                onClick={() => onOpen(guild)}
-                aria-current={selected ? "page" : undefined}
-                className={`flex h-12 w-full items-center gap-3 rounded-lg px-2 text-left transition-[background-color,color,transform] duration-150 active:scale-[0.98] motion-reduce:transition-none max-md:max-w-56 ${
-                  selected
-                    ? "bg-fd-accent text-fd-accent-foreground"
-                    : "text-fd-muted-foreground hover:bg-fd-accent/60 hover:text-fd-foreground"
-                } ${focus}`}
-              >
-                <GuildIcon guild={guild} size="small" />
-                <span className="min-w-0 truncate">{guild.name}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      <button type="button" onClick={onLogout} className={`${quiet} self-start`}>
-        <LogOut className="size-4" aria-hidden />
-        {t("登出")}
-      </button>
+                    if (guild) {
+                      onOpen(guild);
+                    }
+                  }}
+                >
+                  {guilds.map((guild) => (
+                    <Menu.RadioItem
+                      key={guild.id}
+                      value={guild.id}
+                      closeOnClick
+                      className="flex h-11 cursor-default items-center gap-3 rounded-lg px-2 outline-none data-[highlighted]:bg-fd-accent data-[highlighted]:text-fd-accent-foreground"
+                    >
+                      <GuildIcon guild={guild} size="small" />
+                      <span className="min-w-0 flex-1 truncate">{guild.name}</span>
+                      <Menu.RadioItemIndicator>
+                        <Check className="size-4 text-fd-primary" aria-hidden />
+                      </Menu.RadioItemIndicator>
+                    </Menu.RadioItem>
+                  ))}
+                </Menu.RadioGroup>
+              </Menu.Popup>
+            </Menu.Positioner>
+          </Menu.Portal>
+        </Menu.Root>
+        <button type="button" onClick={onLogout} className={`${quiet} ml-auto shrink-0`}>
+          <LogOut className="size-4" aria-hidden />
+          <span className="max-sm:sr-only">{t("登出")}</span>
+        </button>
+      </div>
       {logoutFailed && (
         <p role="alert" className="text-destructive text-sm">
           {t("登出沒有成功，再試一次。")}
@@ -356,7 +386,7 @@ function GuildRail({
 }
 
 function GuildIcon({ guild, size }: { guild: Guild; size: "small" | "large" }) {
-  const box = size === "small" ? "size-8 text-sm" : "size-14 text-xl";
+  const box = size === "small" ? "size-8 text-sm" : "size-12 text-lg";
 
   if (!guild.icon) {
     return (
@@ -375,17 +405,6 @@ function GuildIcon({ guild, size }: { guild: Guild; size: "small" | "large" }) {
       alt=""
       className={`shrink-0 rounded-full ${box}`}
     />
-  );
-}
-
-function GuildHeading({ guild }: { guild: Guild }) {
-  return (
-    <div className="mb-6 flex min-w-0 items-center gap-4">
-      <GuildIcon guild={guild} size="large" />
-      <h2 className="min-w-0 font-semibold text-2xl [overflow-wrap:break-word]">
-        {guild.name}
-      </h2>
-    </div>
   );
 }
 
@@ -548,56 +567,64 @@ function Ledger({
     })
     // Stable, so each status keeps the order the API gave.
     .sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
-  const counts: [FeatureStatus, Phrase][] = [
+  const groups: [FeatureStatus, Phrase][] = [
     ["failing", "要處理"],
     ["enabled", "運作中"],
     ["not_configured", "還沒設定"],
   ];
-  const failingCount = rows.filter((row) => row.status === "failing").length;
 
   return (
-    <>
-      <dl className="mb-6 grid grid-cols-3 gap-3">
-        {counts.map(([status, title]) => (
-          <div key={status} className="rounded-lg bg-fd-secondary/60 px-4 py-3">
-            <dt className="text-fd-muted-foreground text-sm">{t(title)}</dt>
-            <dd
-              className={`font-semibold text-2xl tabular-nums ${
-                status === "failing" && failingCount > 0 ? "text-destructive" : ""
-              }`}
+    <div className="flex flex-col gap-10">
+      {groups.map(([status, heading]) => {
+        const members = rows.filter((row) => row.status === status);
+
+        if (members.length === 0) {
+          return null;
+        }
+
+        return (
+          <section key={status} aria-labelledby={`group-${status}`}>
+            <h3 id={`group-${status}`} className="mb-3 flex items-baseline gap-2 font-semibold text-lg">
+              {t(heading)}
+              <span className="font-normal text-fd-muted-foreground tabular-nums">
+                {members.length}
+              </span>
+            </h3>
+            <ul
+              className={
+                status === "failing" ? "flex flex-col gap-3" : "grid gap-3 sm:grid-cols-2"
+              }
             >
-              {rows.filter((row) => row.status === status).length}
-            </dd>
-          </div>
-        ))}
-      </dl>
-      {rows.length > 0 && (
-        <ul className="overflow-hidden rounded-xl border bg-fd-card">
-          {rows.map((row, index) => (
-            <li
-              key={index}
-              className={`flex gap-3 px-4 py-3.5 ${
-                row.status === "failing" ? "bg-destructive/[0.06]" : ""
-              } ${index > 0 ? "border-t border-fd-border/60" : ""}`}
-            >
-              <StatusIcon status={row.status} t={t} />
-              <div className="min-w-0 flex-1 leading-relaxed">
-                <p className={row.status === "not_configured" ? "text-fd-muted-foreground" : ""}>
-                  {row.title}
-                </p>
-                {row.detail && <p className="mt-1 text-fd-muted-foreground">{row.detail}</p>}
-              </div>
-              {row.command && <Command name={row.command} />}
-            </li>
-          ))}
-        </ul>
-      )}
-      <p className="mt-6 text-fd-muted-foreground text-sm">
+              {members.map((row, index) => (
+                <li key={index} className={surfaces[status]}>
+                  <StatusIcon status={row.status} t={t} />
+                  <div className="min-w-0 flex-1 leading-relaxed">
+                    <p className={status === "failing" ? "font-medium" : ""}>{row.title}</p>
+                    {row.detail && <p className="mt-1 text-fd-muted-foreground">{row.detail}</p>}
+                    {row.command && (
+                      <p className="mt-3">
+                        <Command name={row.command} />
+                      </p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+      <p className="text-fd-muted-foreground text-sm">
         {t("這裡只能看。要改設定，在 Discord 裡用對應的斜線指令。")}
       </p>
-    </>
+    </div>
   );
 }
+
+const surfaces: Record<FeatureStatus, string> = {
+  failing: "flex gap-3 rounded-xl border border-destructive/30 bg-destructive/[0.06] p-4",
+  enabled: "flex gap-3 rounded-xl border bg-fd-card p-4",
+  not_configured: "flex gap-3 rounded-xl border border-dashed p-4",
+};
 
 function StatusIcon({ status, t }: { status: Row["status"]; t: Translate }) {
   const className = "mt-0.5 size-5 shrink-0";
@@ -619,12 +646,11 @@ function StatusIcon({ status, t }: { status: Row["status"]; t: Translate }) {
 
 function Skeleton({ t }: { t: Translate }) {
   return (
-    <div className="grid gap-8 md:grid-cols-[15rem_minmax(0,1fr)]" aria-busy>
+    <div className="flex flex-col gap-8" aria-busy>
       <span className="sr-only">{t("載入中…")}</span>
-      <div className="flex gap-1 md:flex-col">
-        {[0, 1, 2].map((key) => (
-          <div key={key} className="h-12 w-40 rounded-lg bg-fd-secondary/60 md:w-full" />
-        ))}
+      <div className="flex items-center gap-3 animate-pulse motion-reduce:animate-none" aria-hidden>
+        <div className="size-12 rounded-full bg-fd-secondary/60" />
+        <div className="h-7 w-56 rounded-lg bg-fd-secondary/60" />
       </div>
       <LedgerSkeleton />
     </div>
@@ -633,13 +659,13 @@ function Skeleton({ t }: { t: Translate }) {
 
 function LedgerSkeleton() {
   return (
-    <div className="animate-pulse motion-reduce:animate-none" aria-hidden>
-      <div className="mb-6 grid grid-cols-3 gap-3">
-        {[0, 1, 2].map((key) => (
-          <div key={key} className="h-[4.5rem] rounded-lg bg-fd-secondary/60" />
-        ))}
+    <div className="flex flex-col gap-3 animate-pulse motion-reduce:animate-none" aria-hidden>
+      <div className="mb-1 h-6 w-24 rounded-lg bg-fd-secondary/60" />
+      <div className="h-24 rounded-xl border bg-fd-card" />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="h-16 rounded-xl border bg-fd-card" />
+        <div className="h-16 rounded-xl border bg-fd-card" />
       </div>
-      <div className="h-64 rounded-xl border bg-fd-card" />
     </div>
   );
 }
