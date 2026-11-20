@@ -245,30 +245,40 @@ export function Dashboard({ locale }: { locale: Locale }) {
     setView({ state: "signed-out" });
   };
 
+  const home = (
+    <a href={staticPath(locale, "/")} className={`${quiet} w-full`}>
+      <ArrowLeft className="size-4" aria-hidden />
+      {t("回到官網")}
+    </a>
+  );
+
   switch (view.state) {
     case "loading":
-      return <Skeleton t={t} />;
+    case "signed-out":
+      return <Skeleton t={t} locale={locale} />;
     case "unreachable":
       return (
-        <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")}>
-          <button type="button" onClick={load} className={quiet}>
-            <RotateCw className="size-4" aria-hidden />
-            {t("再試一次")}
-          </button>
-        </Notice>
+        <Shell locale={locale} footer={home}>
+          <Notice title={t("暫時連不上機器龍")} body={t("稍後再重新整理一次。")}>
+            <button type="button" onClick={load} className={quiet}>
+              <RotateCw className="size-4" aria-hidden />
+              {t("再試一次")}
+            </button>
+          </Notice>
+        </Shell>
       );
-    case "signed-out":
-      return <Skeleton t={t} />;
     case "empty":
       return (
-        <Notice
-          title={t("沒有可以管理的伺服器")}
-          body={t("這裡只列出你能管理、而且機器龍也在的伺服器。")}
-        >
-          <a href={staticPath(locale, "/install")} className={primary}>
-            {t("安裝機器人")}
-          </a>
-        </Notice>
+        <Shell locale={locale} footer={home}>
+          <Notice
+            title={t("沒有可以管理的伺服器")}
+            body={t("這裡只列出你能管理、而且機器龍也在的伺服器。")}
+          >
+            <a href={staticPath(locale, "/install")} className={primary}>
+              {t("安裝機器人")}
+            </a>
+          </Notice>
+        </Shell>
       );
     case "signed-in": {
       const features = view.panel.state === "ready" ? view.panel.features : [];
@@ -276,22 +286,31 @@ export function Dashboard({ locale }: { locale: Locale }) {
       const page = featurePages.find((page) => page.slug === slug);
 
       return (
-        <div className="grid gap-8 md:grid-cols-[15rem_minmax(0,1fr)]">
-          <aside className="flex min-w-0 flex-col gap-4 md:sticky md:top-20 md:self-start">
-            <GuildSwitcher t={t} guilds={view.guilds} current={view.guild} onOpen={open} />
-            {view.panel.state === "ready" && (
-              <Sidebar t={t} states={states} current={page} go={go} />
-            )}
-            <button type="button" onClick={logout} className={`${quiet} self-start`}>
-              <LogOut className="size-4" aria-hidden />
-              {t("登出")}
-            </button>
-            {view.logoutFailed && (
-              <p role="alert" className="text-destructive text-sm">
-                {t("登出沒有成功，再試一次。")}
-              </p>
-            )}
-          </aside>
+        <Shell
+          locale={locale}
+          side={
+            <>
+              <GuildSwitcher t={t} guilds={view.guilds} current={view.guild} onOpen={open} />
+              {view.panel.state === "ready" && (
+                <Sidebar t={t} states={states} current={page} go={go} />
+              )}
+            </>
+          }
+          footer={
+            <>
+              {home}
+              <button type="button" onClick={logout} className={`${quiet} w-full`}>
+                <LogOut className="size-4" aria-hidden />
+                {t("登出")}
+              </button>
+              {view.logoutFailed && (
+                <p role="alert" className="px-3 text-destructive text-sm">
+                  {t("登出沒有成功，再試一次。")}
+                </p>
+              )}
+            </>
+          }
+        >
           <section aria-live="polite" className="min-w-0">
             {view.linkConflict && (
               <p role="alert" className="mb-6 rounded-lg bg-destructive/10 px-4 py-3">
@@ -331,7 +350,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
                 <Overview t={t} locale={locale} states={states} go={go} />
               ))}
           </section>
-        </div>
+        </Shell>
       );
     }
   }
@@ -348,6 +367,41 @@ const popup =
   "max-h-[min(24rem,var(--available-height))] w-72 max-w-[var(--available-width)] overflow-y-auto rounded-xl border bg-fd-popover p-1 text-fd-popover-foreground shadow-lg motion-safe:transition-[opacity,translate] motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[open]:duration-100 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-safe:data-[ending-style]:-translate-y-1 motion-safe:data-[starting-style]:-translate-y-1";
 const menuItem =
   "flex h-10 cursor-default items-center gap-3 rounded-lg px-2 outline-none data-[highlighted]:bg-fd-accent data-[highlighted]:text-fd-accent-foreground";
+
+/** The dashboard's frame: a full-height sidebar beside the page, stacked above it on narrow screens. */
+function Shell({
+  locale,
+  side,
+  footer,
+  children,
+}: {
+  locale: Locale;
+  side?: ReactNode;
+  footer?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <div className="grid min-h-svh lg:grid-cols-[17rem_minmax(0,1fr)]">
+      <aside className="flex min-w-0 flex-col gap-5 bg-fd-card px-4 py-5 lg:sticky lg:top-0 lg:h-svh lg:overflow-y-auto">
+        <a
+          href={staticPath(locale, "/")}
+          className={`flex items-center gap-2.5 self-start rounded-md px-1 ${focus}`}
+        >
+          <img src="/img/logo.svg" alt="" width={18} height={24} />
+          <span className="font-semibold text-lg">Yeecord</span>
+        </a>
+        {side}
+        {footer && <div className="flex flex-col gap-0.5 max-lg:hidden lg:mt-auto">{footer}</div>}
+      </aside>
+      <div className="min-w-0 px-5 py-8 sm:px-10 lg:py-12">
+        <div className="mx-auto flex max-w-4xl flex-col gap-10">
+          {children}
+          {footer && <div className="flex flex-col gap-0.5 lg:hidden">{footer}</div>}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function GuildSwitcher({
   t,
@@ -439,7 +493,7 @@ function Sidebar({
 
   return (
     <>
-      <nav aria-label={t("所有功能")} className="flex flex-col gap-4 max-md:hidden">
+      <nav aria-label={t("所有功能")} className="flex flex-col gap-4 max-lg:hidden">
         <a
           href={pageHref(null)}
           onClick={go(null)}
@@ -512,7 +566,7 @@ function PageMenu({
     <Menu.Root>
       <Menu.Trigger
         aria-label={t("所有功能")}
-        className={`flex h-11 items-center gap-2.5 rounded-xl border px-3 text-left md:hidden ${focus}`}
+        className={`flex h-11 items-center gap-2.5 rounded-xl border px-3 text-left lg:hidden ${focus}`}
       >
         <Icon className="size-4 shrink-0 text-fd-muted-foreground" aria-hidden />
         <span className="flex-1 truncate">{t(current?.label ?? "總覽")}</span>
@@ -734,18 +788,24 @@ function GroupHeading({ id, label, count }: { id: string; label: string; count?:
   );
 }
 
-function Skeleton({ t }: { t: Translate }) {
+function Skeleton({ t, locale }: { t: Translate; locale: Locale }) {
   return (
-    <div className="grid gap-8 md:grid-cols-[15rem_minmax(0,1fr)]" aria-busy>
-      <span className="sr-only">{t("載入中…")}</span>
-      <div className="flex flex-col gap-2 animate-pulse motion-reduce:animate-none" aria-hidden>
-        <div className="h-12 rounded-xl bg-fd-secondary/60" />
-        {[0, 1, 2, 3].map((key) => (
-          <div key={key} className="h-9 rounded-lg bg-fd-secondary/40 max-md:hidden" />
-        ))}
+    <Shell
+      locale={locale}
+      side={
+        <div className="flex flex-col gap-2 animate-pulse motion-reduce:animate-none" aria-hidden>
+          <div className="h-12 rounded-xl bg-fd-secondary/60" />
+          {[0, 1, 2, 3, 4].map((key) => (
+            <div key={key} className="h-9 rounded-lg bg-fd-secondary/40 max-lg:hidden" />
+          ))}
+        </div>
+      }
+    >
+      <div aria-busy>
+        <span className="sr-only">{t("載入中…")}</span>
+        <PanelSkeleton />
       </div>
-      <PanelSkeleton />
-    </div>
+    </Shell>
   );
 }
 
