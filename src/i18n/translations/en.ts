@@ -163,6 +163,7 @@ export const en = {
   "沒有可以管理的伺服器": "No servers to manage",
   "所有伺服器": "All servers",
   "切換伺服器": "Switch server",
+  "語言": "Language",
   "機器龍在你的伺服器做了什麼": "What Yeecord is doing in your servers",
   "回到官網": "Back to the site",
   "或是從 Discord 打開": "Or open it from Discord",

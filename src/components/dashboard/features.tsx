@@ -320,11 +320,8 @@ export const statusLabels: Record<FeatureStatus, Phrase> = {
 };
 
 export function StatusBadge({ t, status }: { t: Translate; status: FeatureStatus }) {
-  const variant =
-    status === "failing" ? "destructive" : status === "enabled" ? "secondary" : "outline";
-
   return (
-    <Badge variant={variant}>
+    <Badge variant="outline" className="text-muted-foreground">
       <StatusIcon status={status} t={t} decorative />
       {t(statusLabels[status])}
     </Badge>

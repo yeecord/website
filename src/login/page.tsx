@@ -1,4 +1,6 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Languages } from "lucide-react";
+import { LanguageSelect } from "fumadocs-ui/layouts/shared/slots/language-select";
+import { ThemeSwitch } from "fumadocs-ui/layouts/shared/slots/theme-switch";
 import { LoginPanel, LoginPreview } from "~/components/dashboard/login";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
@@ -17,10 +19,18 @@ export function LoginPage({ locale }: { locale: Locale }) {
       />
       <meta name="robots" content="noindex" />
       <div className="flex flex-col px-6 py-8 sm:px-12">
-        <a href={staticPath(locale)} className={`flex items-center gap-2.5 self-start ${link}`}>
-          <img src="/img/logo.svg" alt="" width={21} height={28} />
-          <span className="font-semibold text-fd-foreground text-lg">Yeecord</span>
-        </a>
+        <div className="flex items-center justify-between gap-4">
+          <a href={staticPath(locale)} className={`flex items-center gap-2.5 ${link}`}>
+            <img src="/img/logo.svg" alt="" width={21} height={28} />
+            <span className="font-semibold text-fd-foreground text-lg">Yeecord</span>
+          </a>
+          <div className="flex items-center gap-2">
+            <LanguageSelect variant="ghost" aria-label={t("語言")}>
+              <Languages className="size-4.5" />
+            </LanguageSelect>
+            <ThemeSwitch />
+          </div>
+        </div>
         <div className="flex flex-1 items-center py-16">
           <div className="mx-auto w-full max-w-md">
             <LoginPanel locale={locale} />
@@ -42,7 +52,7 @@ export function LoginPage({ locale }: { locale: Locale }) {
       <div
         aria-hidden
         inert
-        className="relative overflow-hidden border-l bg-[color-mix(in_oklab,var(--color-fd-primary)_10%,var(--color-fd-background))] max-lg:hidden"
+        className="relative overflow-hidden bg-sidebar max-lg:hidden"
       >
         <div className="absolute top-[12%] bottom-0 left-[10%] flex select-none">
           <LoginPreview locale={locale} />

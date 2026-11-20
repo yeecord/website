@@ -50,7 +50,7 @@ export function LoginPanel({ locale }: { locale: Locale }) {
         </p>
       </div>
       <div className="flex flex-col gap-3">
-        <a href={loginUrl(back)} className="btn-chunky-discord w-full">
+        <a href={loginUrl(back)} className="btn-chunky w-full">
           <span className="size-5" aria-hidden>
             {discordIcon}
           </span>
@@ -92,7 +92,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
         <span className="flex h-8 items-center gap-2 rounded-lg bg-fd-accent px-2 font-medium text-sm">
           <LayoutGrid className="size-4" aria-hidden />
           <span className="flex-1">{t("總覽")}</span>
-          <span className="min-w-5 rounded-full bg-destructive px-1.5 text-center text-white text-xs leading-5">2</span>
+          <span className="min-w-5 text-center text-destructive text-xs leading-5">2</span>
         </span>
         {groups.map((group) => (
           <div key={group.label} className="flex flex-col gap-0.5">
@@ -114,7 +114,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-5 p-6">
         <span className="font-semibold text-xl">{t("總覽")}</span>
-        <div className="flex gap-3 rounded-xl border border-destructive/30 bg-destructive/[0.06] p-4">
+        <div className="flex gap-3 rounded-xl border bg-fd-card p-4">
           <StatusIcon status="failing" t={t} decorative />
           <span className="font-medium">{fill(t("{type}已自動停用"), { type: t("離開通知") })}</span>
         </div>

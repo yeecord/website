@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ChevronsUpDown,
   CircleAlert,
+  Languages,
   LayoutGrid,
   LogOut,
   RotateCw,
@@ -76,6 +77,8 @@ import {
   useSidebar,
 } from "~/components/ui/sidebar";
 import { Skeleton } from "~/components/ui/skeleton";
+import { LanguageSelect } from "fumadocs-ui/layouts/shared/slots/language-select";
+import { ThemeSwitch } from "fumadocs-ui/layouts/shared/slots/theme-switch";
 import {
   type ErrorCode,
   type Guild,
@@ -362,8 +365,8 @@ export function Dashboard({ locale }: { locale: Locale }) {
           }
         >
           {view.linkConflict && (
-            <Alert variant="destructive">
-              <CircleAlert />
+            <Alert>
+              <CircleAlert className="text-destructive" />
               <AlertDescription>
                 {t("這個連結屬於另一個 Discord 帳號，所以沒有打開。要用它的話，先登出再按一次連結。")}
               </AlertDescription>
@@ -453,6 +456,12 @@ function Shell({
             ))}
         </SidebarContent>
         <SidebarFooter>
+          <div className="flex items-center justify-between gap-2 px-2 pb-1">
+            <ThemeSwitch />
+            <LanguageSelect variant="ghost" aria-label={t("語言")}>
+              <Languages className="size-4.5" />
+            </LanguageSelect>
+          </div>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton render={<a href={home} />}>
@@ -653,7 +662,7 @@ function PageNav({
               <span>{t("總覽")}</span>
             </SidebarMenuButton>
             {failing > 0 && (
-              <SidebarMenuBadge className="bg-destructive text-white">{failing}</SidebarMenuBadge>
+              <SidebarMenuBadge className="text-destructive">{failing}</SidebarMenuBadge>
             )}
           </SidebarMenuItem>
         </SidebarMenu>
@@ -719,7 +728,7 @@ function Overview({
                 <Item
                   key={state.page.slug}
                   variant="outline"
-                  className="border-destructive/30 bg-destructive/5 hover:bg-destructive/10"
+                  className="bg-card hover:bg-accent"
                   render={<a href={pageHref(state.page.slug)} onClick={go(state.page.slug)} />}
                 >
                   <ItemMedia>
@@ -754,8 +763,8 @@ function Overview({
                 return (
                   <Item
                     key={page.slug}
-                    variant={status === "not_configured" ? "muted" : "outline"}
-                    className="hover:bg-accent"
+                    variant="outline"
+                    className="bg-card hover:bg-accent"
                     render={<a href={pageHref(page.slug)} onClick={go(page.slug)} />}
                   >
                     <ItemMedia variant="icon">
@@ -815,8 +824,8 @@ function FeatureView({
   return (
     <>
       {status === "failing" && told && (
-        <Alert variant="destructive">
-          <CircleAlert />
+        <Alert>
+          <CircleAlert className="text-destructive" />
           <AlertTitle>{told.title}</AlertTitle>
           {told.detail && (
             <AlertDescription className="leading-relaxed">{told.detail}</AlertDescription>
