@@ -95,6 +95,8 @@ export function Dashboard({ locale }: { locale: Locale }) {
   // Each load takes a number; a reply that comes back after a newer load or a logout is dropped.
   const latest = useRef(0);
   const loadedGuild = useRef<string | null>(null);
+  // The link's token is traded once per page, and every later load reads what that trade said.
+  const handoff = useRef<Promise<ErrorCode | null>>(Promise.resolve(null));
 
   const load = useCallback(async () => {
     const run = ++latest.current;
@@ -105,8 +107,6 @@ export function Dashboard({ locale }: { locale: Locale }) {
     try {
       const token = new URLSearchParams(window.location.hash.slice(1)).get("token");
 
-      let refusal: ErrorCode | null = null;
-
       if (token) {
         // The link from Discord works once, so it leaves the address bar and history at once.
         window.history.replaceState(
@@ -114,8 +114,10 @@ export function Dashboard({ locale }: { locale: Locale }) {
           "",
           `${window.location.pathname}${window.location.search}`,
         );
-        refusal = await exchange(token);
+        handoff.current = exchange(token);
       }
+
+      const refusal = await handoff.current;
 
       const listed = await get<List<Guild>>("/v1/guilds");
 
@@ -344,19 +346,85 @@ function SignIn({ t, linkExpired }: { t: Translate; linkExpired?: boolean }) {
   const login = loginUrl(`${window.location.pathname}${window.location.search}`);
 
   return (
-    <Notice
-      title={linkExpired ? t("這個連結已經失效") : t("看看機器龍在你的伺服器做了什麼")}
-      body={
-        linkExpired
-          ? t("連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。")
-          : t("在 Discord 打 /settings，按「在網頁開啟」就會直接打開那個伺服器。也可以用 Discord 登入，看你管理的所有伺服器。")
-      }
-      note={t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}
+    <div className="grid overflow-hidden rounded-2xl border bg-fd-card md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+      <div className="flex flex-col gap-8 p-6 sm:p-10">
+        <div className="flex flex-col gap-3">
+          <h2 className="font-semibold text-2xl [overflow-wrap:break-word]">
+            {linkExpired ? t("這個連結已經失效") : t("看看機器龍在你的伺服器做了什麼")}
+          </h2>
+          <p className="text-fd-muted-foreground leading-relaxed">
+            {linkExpired
+              ? t("連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。")
+              : t("登入後可以看每個伺服器開了哪些功能、哪些出了問題。")}
+          </p>
+        </div>
+        <div className="flex flex-col gap-3">
+          <a href={login} className={`${primary} self-start`}>
+            {t("用 Discord 登入")}
+          </a>
+          <p className="text-fd-muted-foreground text-sm">
+            {t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}
+          </p>
+        </div>
+        {!linkExpired && (
+          <div className="flex flex-col gap-2 rounded-xl bg-fd-secondary/50 p-4">
+            <h3 className="font-medium">{t("或是從 Discord 打開")}</h3>
+            <p className="text-fd-muted-foreground leading-relaxed">
+              {fill(t("在 Discord 打 {command}，按「在網頁開啟」就會直接打開那個伺服器。"), {
+                command: <Command name="settings" />,
+              })}
+            </p>
+          </div>
+        )}
+      </div>
+      <Preview t={t} />
+    </div>
+  );
+}
+
+/** A still of the overview, so a visitor sees what logging in shows. Not live data. */
+function Preview({ t }: { t: Translate }) {
+  const cards: [FeaturePage, FeatureStatus][] = [
+    [featurePages[0], "enabled"],
+    [featurePages[1], "failing"],
+    [featurePages[3], "enabled"],
+    [featurePages[4], "not_configured"],
+  ];
+
+  return (
+    <div
+      aria-hidden
+      inert
+      className="relative flex flex-col gap-4 border-t bg-fd-secondary/40 p-6 select-none max-md:hidden md:border-t-0 md:border-l sm:p-10"
     >
-      <a href={login} className={primary}>
-        {t("用 Discord 登入")}
-      </a>
-    </Notice>
+      <span className="self-start rounded-full border bg-fd-background px-2.5 text-fd-muted-foreground text-sm leading-6">
+        {t("範例")}
+      </span>
+      <div className="flex gap-3 rounded-xl border border-destructive/30 bg-destructive/[0.06] p-4">
+        <StatusIcon status="failing" t={t} decorative />
+        <p className="font-medium">{fill(t("{type}已自動停用"), { type: t("離開通知") })}</p>
+      </div>
+      <ul className="grid grid-cols-2 gap-3">
+        {cards.map(([page, status]) => {
+          const Icon = page.icon;
+
+          return (
+            <li
+              key={page.slug}
+              className={`flex flex-col gap-3 rounded-xl border bg-fd-card p-4 ${
+                status === "not_configured" ? "border-dashed bg-transparent" : ""
+              }`}
+            >
+              <span className="flex items-center gap-2 font-medium">
+                <Icon className="size-4 shrink-0 text-fd-muted-foreground" aria-hidden />
+                {t(page.label)}
+              </span>
+              <StatusLine t={t} status={status} />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
