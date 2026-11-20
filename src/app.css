@@ -28,8 +28,16 @@
   --color-border: var(--color-fd-border);
   --color-input: var(--color-fd-border);
   --color-ring: var(--color-fd-ring);
-  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive: var(--color-fd-destructive);
   --color-destructive-foreground: oklch(0.985 0 0);
+  --color-sidebar: var(--color-fd-card);
+  --color-sidebar-foreground: var(--color-fd-foreground);
+  --color-sidebar-primary: var(--color-fd-primary);
+  --color-sidebar-primary-foreground: var(--color-fd-primary-foreground);
+  --color-sidebar-accent: var(--color-fd-accent);
+  --color-sidebar-accent-foreground: var(--color-fd-accent-foreground);
+  --color-sidebar-border: var(--color-fd-border);
+  --color-sidebar-ring: var(--color-fd-ring);
 }
 
 /* Yeecord Sans 是調過字重與字距的 Hanken Grotesk（SIL OFL 1.1），寬度對齊 gg sans，
@@ -400,12 +408,16 @@ button.discord-button:active:not([aria-disabled="true"]),
   --color-fd-primary: oklch(0.701 0.128 143.5);
   --color-fd-primary-foreground: oklch(0.985 0 0);
   --color-fd-ring: oklch(0.701 0.128 143.5);
+
+  /* 跟主題綠同一個彩度帶，紅色才不會比綠色搶眼 */
+  --color-fd-destructive: oklch(0.62 0.17 25);
 }
 
 .dark {
   --color-fd-primary: oklch(0.8 0.13 143.5);
   --color-fd-primary-foreground: oklch(0.27 0.05 143.5);
   --color-fd-ring: oklch(0.8 0.13 143.5);
+  --color-fd-destructive: oklch(0.75 0.14 25);
 }
 
 @theme {
@@ -499,8 +511,7 @@ button.discord-button:active:not([aria-disabled="true"]),
 
 /* Duolingo 式玩具按鈕：實色硬陰影，按下時往下沉 */
 .btn-chunky,
-.btn-chunky-secondary,
-.btn-chunky-discord {
+.btn-chunky-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -517,12 +528,6 @@ button.discord-button:active:not([aria-disabled="true"]),
   box-shadow: 0 4px 0 color-mix(in oklab, var(--color-fd-primary) 55%, black);
 }
 
-.btn-chunky-discord {
-  background-color: var(--color-discord-blurple);
-  color: white;
-  box-shadow: 0 4px 0 color-mix(in oklab, var(--color-discord-blurple) 55%, black);
-}
-
 /* fd-secondary 在深色下幾乎等於背景色，連硬陰影都看不見，改成從前景色調出來的實色 */
 .btn-chunky-secondary {
   background-color: color-mix(
@@ -536,15 +541,13 @@ button.discord-button:active:not([aria-disabled="true"]),
 }
 
 .btn-chunky:focus-visible,
-.btn-chunky-secondary:focus-visible,
-.btn-chunky-discord:focus-visible {
+.btn-chunky-secondary:focus-visible {
   outline: 2px solid var(--color-fd-primary);
   outline-offset: 2px;
 }
 
 .btn-chunky:active,
-.btn-chunky-secondary:active,
-.btn-chunky-discord:active {
+.btn-chunky-secondary:active {
   transform: translateY(4px);
   box-shadow: 0 0 0 transparent;
 }

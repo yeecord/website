@@ -23,7 +23,11 @@ export function LinkButton({
         variant === "chunky"
           ? "btn-chunky not-prose"
           : [
-              buttonVariants({ color: variant, className: "not-prose" }),
+              buttonVariants({
+                variant: variant === "primary" ? "default" : "secondary",
+                size: "lg",
+                className: "not-prose",
+              }),
               icon != null ? "px-6" : "pr-5 pl-7",
             ],
         props.className,

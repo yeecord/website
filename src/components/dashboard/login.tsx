@@ -1,12 +1,12 @@
 "use client";
 
-import { LayoutGrid } from "lucide-react";
+import { LayoutGrid, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { discordIcon } from "~/layout-config";
 import { loginUrl } from "./api";
-import { Command, featurePages, fill, groups, StatusIcon, StatusLine } from "./features";
+import { Command, featurePages, fill, groups, StatusBadge, StatusIcon } from "./features";
 
 /** The login page's address, carrying the page to come back to and whether a link from Discord was spent. */
 export function loginPage(locale: Locale, back: string, expired: boolean) {
@@ -38,38 +38,50 @@ export function LoginPanel({ locale }: { locale: Locale }) {
   }, [dashboard]);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-3">
-        <h1 className="font-bold text-3xl tracking-tight [overflow-wrap:break-word]">
-          {expired ? t("這個連結已經失效") : t("看看機器龍在你的伺服器做了什麼")}
+        <h1 className="font-bold text-2xl tracking-tight [overflow-wrap:break-word] sm:text-3xl">
+          {expired ? t("這個連結已經失效") : t("機器龍在你的伺服器做了什麼")}
         </h1>
-        <p className="text-fd-muted-foreground leading-relaxed">
+        <p className="text-pretty text-muted-foreground leading-relaxed">
           {expired
             ? t("連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。")
-            : t("登入後可以看每個伺服器開了哪些功能、哪些出了問題。")}
+            : t("登入後可以看每個伺服器的功能狀態和問題。")}
         </p>
       </div>
-      <div className="flex flex-col gap-3">
-        <a href={loginUrl(back)} className="btn-chunky-discord w-full">
-          <span className="size-5" aria-hidden>
-            {discordIcon}
-          </span>
-          {t("用 Discord 登入")}
-        </a>
-        <p className="text-center text-fd-muted-foreground text-sm">
-          {t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}
-        </p>
-      </div>
+      <a href={loginUrl(back)} className="btn-chunky w-full">
+        <span className="size-5" aria-hidden>
+          {discordIcon}
+        </span>
+        {t("用 Discord 登入")}
+      </a>
       {!expired && (
-        <div className="flex flex-col gap-1.5 rounded-2xl border p-5">
-          <h2 className="font-semibold">{t("或是從 Discord 打開")}</h2>
-          <p className="text-fd-muted-foreground leading-relaxed">
-            {fill(t("在 Discord 打 {command}，按「在網頁開啟」就會直接打開那個伺服器。"), {
-              command: <Command name="settings" />,
-            })}
-          </p>
-        </div>
+        <section aria-labelledby="login-from-discord" className="flex flex-col gap-4">
+          <h2 id="login-from-discord" className="text-muted-foreground text-sm">
+            {t("或是從 Discord 打開")}
+          </h2>
+          <ol className="flex flex-col gap-3">
+            {[
+              fill(t("在伺服器打 {command}"), { command: <Command name="settings" /> }),
+              t("按「在網頁開啟」，就會打開那個伺服器"),
+            ].map((step, index) => (
+              <li key={index} className="flex items-baseline gap-3 leading-relaxed">
+                <span
+                  aria-hidden
+                  className="flex size-6 shrink-0 translate-y-0.5 items-center justify-center self-start rounded-full bg-secondary font-medium text-secondary-foreground text-xs tabular-nums"
+                >
+                  {index + 1}
+                </span>
+                <span className="text-pretty">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
       )}
+      <p className="flex gap-2 text-muted-foreground text-sm leading-relaxed">
+        <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden />
+        {t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}
+      </p>
     </div>
   );
 }
@@ -81,7 +93,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
   const status = (index: number) => statuses[index] ?? "enabled";
 
   return (
-    <div className="flex min-h-[48rem] w-[52rem] overflow-hidden rounded-tl-3xl border-t border-l bg-fd-background shadow-2xl">
+    <div className="flex w-[52rem] overflow-hidden rounded-tl-3xl border-t border-l bg-fd-background shadow-2xl">
       <div className="flex w-56 shrink-0 flex-col gap-4 border-r bg-fd-card p-4">
         <div className="flex items-center gap-2.5 rounded-xl border p-2">
           <span className="flex size-7 items-center justify-center rounded-full bg-fd-secondary font-semibold text-sm">
@@ -92,7 +104,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
         <span className="flex h-8 items-center gap-2 rounded-lg bg-fd-accent px-2 font-medium text-sm">
           <LayoutGrid className="size-4" aria-hidden />
           <span className="flex-1">{t("總覽")}</span>
-          <span className="min-w-5 rounded-full bg-destructive px-1.5 text-center text-white text-xs leading-5">2</span>
+          <span className="min-w-5 text-center text-destructive text-xs leading-5">2</span>
         </span>
         {groups.map((group) => (
           <div key={group.label} className="flex flex-col gap-0.5">
@@ -114,7 +126,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-5 p-6">
         <span className="font-semibold text-xl">{t("總覽")}</span>
-        <div className="flex gap-3 rounded-xl border border-destructive/30 bg-destructive/[0.06] p-4">
+        <div className="flex gap-3 rounded-xl border bg-fd-card p-4">
           <StatusIcon status="failing" t={t} decorative />
           <span className="font-medium">{fill(t("{type}已自動停用"), { type: t("離開通知") })}</span>
         </div>
@@ -133,7 +145,7 @@ export function LoginPreview({ locale }: { locale: Locale }) {
                   <Icon className="size-4 text-fd-muted-foreground" aria-hidden />
                   {t(page.label)}
                 </span>
-                <StatusLine t={t} status={status(index)} />
+                <StatusBadge t={t} status={status(index)} />
               </div>
             );
           })}
