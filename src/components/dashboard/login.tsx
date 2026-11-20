@@ -27,13 +27,14 @@ function returnable(back: string | null) {
 export function LoginPanel({ locale }: { locale: Locale }) {
   const t = translator(locale);
   const dashboard = staticPath(locale, "/dashboard");
-  const [back, setBack] = useState(dashboard);
+  // Built in the browser: the static HTML cannot know which API the visitor's host answers to.
+  const [login, setLogin] = useState<string>();
   const [expired, setExpired] = useState(false);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
 
-    setBack(returnable(query.get("back")) ?? dashboard);
+    setLogin(loginUrl(returnable(query.get("back")) ?? dashboard));
     setExpired(query.get("expired") === "1");
   }, [dashboard]);
 
@@ -49,7 +50,7 @@ export function LoginPanel({ locale }: { locale: Locale }) {
             : t("登入後可以看每個伺服器的功能狀態和問題。")}
         </p>
       </div>
-      <a href={loginUrl(back)} className="btn-chunky w-full">
+      <a href={login} aria-disabled={!login} className="btn-chunky w-full aria-disabled:pointer-events-none aria-disabled:opacity-60">
         <span className="size-5" aria-hidden>
           {discordIcon}
         </span>

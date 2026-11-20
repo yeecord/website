@@ -4,12 +4,12 @@ import {
   ArrowLeft,
   ChevronsUpDown,
   CircleAlert,
-  Languages,
   LayoutGrid,
   LogOut,
   RotateCw,
   ServerOff,
   ShieldOff,
+  SunMoon,
 } from "lucide-react";
 import {
   type MouseEvent,
@@ -77,8 +77,6 @@ import {
   useSidebar,
 } from "~/components/ui/sidebar";
 import { Skeleton } from "~/components/ui/skeleton";
-import { LanguageSelect } from "fumadocs-ui/layouts/shared/slots/language-select";
-import { ThemeSwitch } from "fumadocs-ui/layouts/shared/slots/theme-switch";
 import {
   type ErrorCode,
   type Guild,
@@ -102,6 +100,7 @@ import {
   stateOf,
 } from "./features";
 import { loginPage } from "./login";
+import { PreferencesMenu } from "./preferences";
 
 type Panel =
   | { state: "loading" }
@@ -307,10 +306,10 @@ export function Dashboard({ locale }: { locale: Locale }) {
   switch (view.state) {
     case "loading":
     case "signed-out":
-      return <Shell t={t} home={home} title={null} loading />;
+      return <Shell t={t} locale={locale} home={home} title={null} loading />;
     case "unreachable":
       return (
-        <Shell t={t} home={home} title={null}>
+        <Shell t={t} locale={locale} home={home} title={null}>
           <Notice
             icon={<ServerOff />}
             title={t("暫時連不上機器龍")}
@@ -325,7 +324,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
       );
     case "empty":
       return (
-        <Shell t={t} home={home} title={null}>
+        <Shell t={t} locale={locale} home={home} title={null}>
           <Notice
             icon={<ServerOff />}
             title={t("沒有可以管理的伺服器")}
@@ -346,6 +345,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
       return (
         <Shell
           t={t}
+          locale={locale}
           home={home}
           onLogout={logout}
           logoutFailed={view.logoutFailed}
@@ -412,6 +412,7 @@ type Go = (target: string | null) => (event: MouseEvent<HTMLElement>) => void;
 /** The dashboard's frame: shadcn's sidebar beside the page, a drawer on narrow screens. */
 function Shell({
   t,
+  locale,
   home,
   title,
   switcher,
@@ -422,6 +423,7 @@ function Shell({
   children,
 }: {
   t: Translate;
+  locale: Locale;
   home: string;
   title: ReactNode;
   switcher?: ReactNode;
@@ -456,13 +458,19 @@ function Shell({
             ))}
         </SidebarContent>
         <SidebarFooter>
-          <div className="flex items-center justify-between gap-2 px-2 pb-1">
-            <ThemeSwitch />
-            <LanguageSelect variant="ghost" aria-label={t("語言")}>
-              <Languages className="size-4.5" />
-            </LanguageSelect>
-          </div>
           <SidebarMenu>
+            <SidebarMenuItem>
+              <PreferencesMenu
+                locale={locale}
+                side="top"
+                trigger={
+                  <SidebarMenuButton>
+                    <SunMoon />
+                    <span>{t("顯示與語言")}</span>
+                  </SidebarMenuButton>
+                }
+              />
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton render={<a href={home} />}>
                 <ArrowLeft />
