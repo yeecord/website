@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "yeecord",
   "compatibility_date": "2025-11-17",
-  "routes": [{ "pattern": "next.yeecord.com", "custom_domain": true }],
+  "routes": [{ "pattern": "staging.yeecord.com", "custom_domain": true }],
   "assets": {
     "directory": "./dist/public",
     "html_handling": "drop-trailing-slash",

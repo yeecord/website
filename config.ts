@@ -2,9 +2,16 @@ import type { FooterCategory, FooterItem } from "~/components/Footer";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
-// master 目前部署在 next.yeecord.com（legacy branch 佔著 yeecord.com），
-// 正式切換主站時把這裡改回 https://yeecord.com
-export const domain = "https://next.yeecord.com";
+// canonical 和 OG 一律指向正式站，staging.yeecord.com 只是切換前的預覽
+export const domain = "https://yeecord.com";
+
+// 機器龍 http role 的網址，dashboard 的登入和資料都從這裡來（yeecord/yeecord#384）。
+// staging 站打 staging 的機器龍，本機開發用 VITE_DASHBOARD_API 指到自己跑的機器龍
+export const dashboardApi: string =
+  import.meta.env.VITE_DASHBOARD_API ??
+  (globalThis.location?.hostname === "staging.yeecord.com"
+    ? "https://api-staging.yeecord.com"
+    : "https://api.yeecord.com");
 
 // Workers static assets 設 drop-trailing-slash，帶斜線網址一律 308 到無斜線，
 // canonical 必須指向最終網址
