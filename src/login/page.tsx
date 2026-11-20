@@ -17,7 +17,6 @@ export function LoginPage({ locale }: { locale: Locale }) {
         title={t("伺服器設定")}
         description={t("登入後可以看每個伺服器開了哪些功能、哪些出了問題。")}
       />
-      <meta name="robots" content="noindex" />
       <div className="flex flex-col px-6 py-8 sm:px-12">
         <div className="flex items-center justify-between gap-4">
           <a href={staticPath(locale)} className={`flex items-center gap-2.5 ${link}`}>
