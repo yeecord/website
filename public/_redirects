@@ -32,8 +32,18 @@
 /docs/commands/music /zh-tw/docs 301
 /docs/music /zh-tw/docs 301
 /docs/commands/list /zh-tw/docs/commands 301
-/docs/rpg /zh-tw/docs/find-food 301
+/docs/rpg /zh-tw/docs/whats-new 301
 /docs /zh-tw/docs 301
+# 舊站的文件網址也帶結尾斜線
+/docs/commands/chat/ /zh-tw/docs 301
+/docs/commands/dvc/ /zh-tw/docs/commands/auto-channels 301
+/docs/commands/join-message/ /zh-tw/docs/commands/member-notification 301
+/docs/commands/list/ /zh-tw/docs/commands 301
+/docs/commands/reference/ /zh-tw/docs/commands 301
+/docs/commands/role/ /zh-tw/docs/commands/role-menu 301
+/docs/commands/ticket/ /zh-tw/docs/commands 301
+/docs/contribute/ https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
+/docs/rpg/ /zh-tw/docs/whats-new 301
 /zh-tw/docs/contribute https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
 /zh-tw/docs/contribute/* https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
 /zh-cn/docs/contribute https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
@@ -66,13 +76,21 @@
 /blog/welcome-to-v2 /zh-tw/blog/welcome-to-v2 301
 /blog/welcome-to-v3 /zh-tw/blog/welcome-to-v3 301
 /blog/why-not-discordjs /zh-tw/blog/why-not-discordjs 301
+/blog/yeecord-music-lag-blog-ep1 /zh-tw/blog/yeecord-music-lag-blog-ep1 301
+/blog/tags /zh-tw/blog/tags 301
 /blog /zh-tw/blog 301
+/docs/commands/reference /zh-tw/docs/commands 301
+/docs/contribute https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
 
 /zh-tw / 301
 /zh-tw/install /install 301
 /index / 301
 
 # splat 規則放最後，靜態規則才能走快速路徑
+/docs/contribute/* https://github.com/yeecord/website/blob/next/CONTRIBUTING.md 301
+/blog/tags/* /zh-tw/blog/tags/:splat 301
+# 舊站的文章網址帶結尾斜線。頭像檔沒有斜線，不會被這條接走
+/blog/:slug/ /zh-tw/blog/:slug 301
 /docs/commands/reference/* /zh-tw/docs/commands 301
-/docs/rpg/* /zh-tw/docs/find-food 301
+/docs/rpg/* /zh-tw/docs/whats-new 301
 /docs/* /zh-tw/docs/:splat 301
