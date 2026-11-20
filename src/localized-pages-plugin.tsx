@@ -4,12 +4,14 @@ import { DashboardPage } from "~/dashboard/page";
 import { HomePage } from "~/home/page";
 import { type Locale, localeCodes } from "~/i18n";
 import { InstallPage } from "~/install/page";
+import { LoginPage } from "~/login/page";
 
 /** Static pages that exist in every language. The default language is served from src/pages, the rest are generated here. */
 const pages = [
   { path: "/", component: HomePage },
   { path: "/install", component: InstallPage },
   { path: "/dashboard", component: DashboardPage },
+  { path: "/login", component: LoginPage },
 ] as const satisfies readonly {
   path: string;
   component: FC<{ locale: Locale }>;

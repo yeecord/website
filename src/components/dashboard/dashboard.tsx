@@ -21,17 +21,15 @@ import {
   useState,
 } from "react";
 import { type Locale, staticPath } from "~/i18n";
-import { type Phrase, type Translate, translator } from "~/i18n/translate";
+import { type Translate, translator } from "~/i18n/translate";
 import {
   type ErrorCode,
-  type FeatureStatus,
   type Guild,
   type GuildFeature,
   exchange,
   get,
   isFeature,
   type List,
-  loginUrl,
   logout as endSession,
 } from "./api";
 import {
@@ -42,8 +40,11 @@ import {
   fill,
   groups,
   type PageState,
+  StatusIcon,
+  StatusLine,
   stateOf,
 } from "./features";
+import { loginPage } from "./login";
 
 type Panel =
   | { state: "loading" }
@@ -81,12 +82,6 @@ function pageHref(slug: string | null) {
   return `${url.pathname}${url.search}`;
 }
 
-const statusLabels: Record<FeatureStatus, Phrase> = {
-  failing: "要處理",
-  enabled: "運作中",
-  not_configured: "還沒設定",
-};
-
 export function Dashboard({ locale }: { locale: Locale }) {
   const t = translator(locale);
   const [view, setView] = useState<View>({ state: "loading" });
@@ -95,6 +90,8 @@ export function Dashboard({ locale }: { locale: Locale }) {
   // Each load takes a number; a reply that comes back after a newer load or a logout is dropped.
   const latest = useRef(0);
   const loadedGuild = useRef<string | null>(null);
+  // The link's token is traded once per page, and every later load reads what that trade said.
+  const handoff = useRef<Promise<ErrorCode | null>>(Promise.resolve(null));
 
   const load = useCallback(async () => {
     const run = ++latest.current;
@@ -105,8 +102,6 @@ export function Dashboard({ locale }: { locale: Locale }) {
     try {
       const token = new URLSearchParams(window.location.hash.slice(1)).get("token");
 
-      let refusal: ErrorCode | null = null;
-
       if (token) {
         // The link from Discord works once, so it leaves the address bar and history at once.
         window.history.replaceState(
@@ -114,8 +109,10 @@ export function Dashboard({ locale }: { locale: Locale }) {
           "",
           `${window.location.pathname}${window.location.search}`,
         );
-        refusal = await exchange(token);
+        handoff.current = exchange(token);
       }
+
+      const refusal = await handoff.current;
 
       const listed = await get<List<Guild>>("/v1/guilds");
 
@@ -203,6 +200,18 @@ export function Dashboard({ locale }: { locale: Locale }) {
     return () => window.removeEventListener("popstate", travel);
   }, [load]);
 
+  useEffect(() => {
+    if (view.state === "signed-out") {
+      window.location.replace(
+        loginPage(
+          locale,
+          `${window.location.pathname}${window.location.search}`,
+          view.linkExpired === true,
+        ),
+      );
+    }
+  }, [view, locale]);
+
   const open = (guild: Guild) => {
     const url = new URL(window.location.href);
 
@@ -249,7 +258,7 @@ export function Dashboard({ locale }: { locale: Locale }) {
         </Notice>
       );
     case "signed-out":
-      return <SignIn t={t} linkExpired={view.linkExpired} />;
+      return <Skeleton t={t} />;
     case "empty":
       return (
         <Notice
@@ -339,26 +348,6 @@ const popup =
   "max-h-[min(24rem,var(--available-height))] w-72 max-w-[var(--available-width)] overflow-y-auto rounded-xl border bg-fd-popover p-1 text-fd-popover-foreground shadow-lg motion-safe:transition-[opacity,translate] motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[open]:duration-100 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-safe:data-[ending-style]:-translate-y-1 motion-safe:data-[starting-style]:-translate-y-1";
 const menuItem =
   "flex h-10 cursor-default items-center gap-3 rounded-lg px-2 outline-none data-[highlighted]:bg-fd-accent data-[highlighted]:text-fd-accent-foreground";
-
-function SignIn({ t, linkExpired }: { t: Translate; linkExpired?: boolean }) {
-  const login = loginUrl(`${window.location.pathname}${window.location.search}`);
-
-  return (
-    <Notice
-      title={linkExpired ? t("這個連結已經失效") : t("看看機器龍在你的伺服器做了什麼")}
-      body={
-        linkExpired
-          ? t("連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。")
-          : t("在 Discord 打 /settings，按「在網頁開啟」就會直接打開那個伺服器。也可以用 Discord 登入，看你管理的所有伺服器。")
-      }
-      note={t("只會讀你的 Discord 名稱和伺服器清單，不會拿到你的訊息。")}
-    >
-      <a href={login} className={primary}>
-        {t("用 Discord 登入")}
-      </a>
-    </Notice>
-  );
-}
 
 function GuildSwitcher({
   t,
@@ -743,55 +732,6 @@ function GroupHeading({ id, label, count }: { id: string; label: string; count?:
       )}
     </h3>
   );
-}
-
-function StatusLine({ t, status }: { t: Translate; status: FeatureStatus }) {
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-sm ${
-        status === "failing"
-          ? "text-destructive"
-          : status === "enabled"
-            ? "text-fd-foreground"
-            : "text-fd-muted-foreground"
-      }`}
-    >
-      <StatusIcon status={status} t={t} decorative />
-      {t(statusLabels[status])}
-    </span>
-  );
-}
-
-function StatusIcon({
-  status,
-  t,
-  decorative,
-}: {
-  status: FeatureStatus;
-  t: Translate;
-  decorative?: boolean;
-}) {
-  const className = decorative ? "size-4 shrink-0" : "mt-0.5 size-5 shrink-0";
-  const label = decorative ? undefined : t(statusLabels[status]);
-
-  switch (status) {
-    case "failing":
-      return (
-        <CircleAlert className={`${className} text-destructive`} aria-label={label} aria-hidden={decorative} />
-      );
-    case "enabled":
-      return (
-        <CircleCheck className={`${className} text-fd-primary`} aria-label={label} aria-hidden={decorative} />
-      );
-    default:
-      return (
-        <CircleDashed
-          className={`${className} text-fd-muted-foreground`}
-          aria-label={label}
-          aria-hidden={decorative}
-        />
-      );
-  }
 }
 
 function Skeleton({ t }: { t: Translate }) {

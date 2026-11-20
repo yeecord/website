@@ -163,6 +163,9 @@ export const en = {
   "沒有可以管理的伺服器": "No servers to manage",
   "所有伺服器": "All servers",
   "切換伺服器": "Switch server",
+  "回到官網": "Back to the site",
+  "或是從 Discord 打開": "Or open it from Discord",
+  "在 Discord 打 {command}，按「在網頁開啟」就會直接打開那個伺服器。": "Type {command} in Discord and press “Open on the web” to open that server here.",
   "成員": "Members",
   "語音": "Voice",
   "防護": "Protection",
@@ -219,6 +222,5 @@ export const en = {
   "登出沒有成功，再試一次。": "Logging out didn't go through. Try again.",
   "這個連結已經失效": "This link has expired",
   "連結只能用一次，5 分鐘內有效。在 Discord 打 /settings，再按一次「在網頁開啟」。": "A link works once, within 5 minutes. Type /settings in Discord and press “Open on the web” again.",
-  "在 Discord 打 /settings，按「在網頁開啟」就會直接打開那個伺服器。也可以用 Discord 登入，看你管理的所有伺服器。": "Type /settings in Discord and press “Open on the web” to open that server here. Or log in with Discord to see every server you manage.",
   "這個連結屬於另一個 Discord 帳號，所以沒有打開。要用它的話，先登出再按一次連結。": "This link belongs to another Discord account, so it didn't open. Log out first, then open the link again.",
 } satisfies Record<keyof typeof zhCn, string>;
