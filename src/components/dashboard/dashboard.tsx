@@ -341,7 +341,7 @@ function GuildBar({
           </Menu.Trigger>
           <Menu.Portal>
             <Menu.Positioner sideOffset={8} align="start" className="z-50">
-              <Menu.Popup className="max-h-[min(24rem,var(--available-height))] w-72 max-w-[var(--available-width)] origin-[var(--transform-origin)] overflow-y-auto rounded-xl border bg-fd-popover p-1 text-fd-popover-foreground shadow-lg transition-[opacity,transform] duration-150 ease-out data-[ending-style]:scale-95 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-reduce:transition-none">
+              <Menu.Popup className="max-h-[min(24rem,var(--available-height))] w-72 max-w-[var(--available-width)] overflow-y-auto rounded-xl border bg-fd-popover p-1 text-fd-popover-foreground shadow-lg motion-safe:transition-[opacity,translate] motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[open]:duration-100 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 motion-safe:data-[ending-style]:-translate-y-1 motion-safe:data-[starting-style]:-translate-y-1">
                 <Menu.RadioGroup
                   value={current?.id}
                   onValueChange={(id) => {
