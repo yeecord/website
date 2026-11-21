@@ -5,12 +5,12 @@ import type { Locale } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
 import { DinoMascot } from "./DinoMascot";
-import { plantDim } from "./scene";
+import { type PlantKind, plantDim, plantWidth } from "./scene";
 
-const SPRITES = [
-  { src: "bush1", height: 40, ratio: 1.4 },
-  { src: "bush2", height: 44, ratio: 1.2 },
-  { src: "treeSmall_green1", height: 56, ratio: 0.9 },
+const SPRITES: { kind: PlantKind; height: number }[] = [
+  { kind: "bush", height: 40 },
+  { kind: "flowers", height: 44 },
+  { kind: "sapling", height: 56 },
 ];
 
 const GRAVITY = 2000;
@@ -149,8 +149,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     let gone = false;
 
     for (const item of current.items) {
-      const { height, ratio } = SPRITES[item.sprite];
-      const width = height * ratio;
+      const { kind, height } = SPRITES[item.sprite];
+      const width = plantWidth(kind, height);
 
       item.x += current.speed * dt;
 
@@ -174,9 +174,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       const alive = new Set(
         current.items
           .filter((item) => {
-            const { height, ratio } = SPRITES[item.sprite];
+            const { kind, height } = SPRITES[item.sprite];
 
-            return item.x <= current.fieldWidth + height * ratio;
+            return item.x <= current.fieldWidth + plantWidth(kind, height);
           })
           .map((item) => item.id),
       );
@@ -266,7 +266,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     <>
       <div
         ref={fieldRef}
-        className="pointer-events-none absolute inset-x-0 bottom-10 z-1 sm:bottom-12"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-1"
       >
         {obstacles.map((obstacle) => {
           const sprite = SPRITES[obstacle.sprite];
@@ -278,10 +278,10 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
                 if (el) obstacleEls.current.set(obstacle.id, el);
                 else obstacleEls.current.delete(obstacle.id);
               }}
-              src={`/home/scene/${sprite.src}.png`}
+              src={`/home/scene/${sprite.kind}.svg`}
               alt=""
               draggable={false}
-              style={{ height: sprite.height, left: -sprite.height * sprite.ratio }}
+              style={{ height: sprite.height, left: -plantWidth(sprite.kind, sprite.height) }}
               className={cn(
                 "absolute bottom-0 select-none transition-opacity duration-200 will-change-transform",
                 plantDim,
