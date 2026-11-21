@@ -19,7 +19,7 @@ export function baseOptions(locale: Locale) {
       url: "/",
       title: (
         <>
-          <img src="/img/logo.svg" alt="Yeecord" width={18} height={24} />
+          <img src="/img/logo.svg" alt="Yeecord" width={24} height={24} />
           <span className="font-semibold text-lg">Yeecord</span>
         </>
       ),

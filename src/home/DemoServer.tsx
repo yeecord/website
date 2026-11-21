@@ -451,7 +451,7 @@ function Sidebar({
         <img
           src="/img/logo.svg"
           alt=""
-          className="size-8 rounded-full bg-discord-avatar p-0.5"
+          className="size-8 rounded-full"
         />
         <div className="min-w-0 leading-tight">
           <p className="truncate font-medium text-sm text-white">
