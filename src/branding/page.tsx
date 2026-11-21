@@ -115,7 +115,7 @@ const environments: {
     name: "測試環境",
     id: "staging",
     app: "YEE 式機器龍 Staging",
-    body: "上線前的最後一關。紫色背景，戴安全帽。",
+    body: "上線前的最後一關。紫色背景，戴一個三角錐。",
     greeting: "這是測試環境的機器龍，跟正式的放在一起也分得出來。",
     suffix: "-staging",
   },
@@ -123,7 +123,7 @@ const environments: {
     name: "開發環境",
     id: "development",
     app: "YEE 式機器龍 Dev",
-    body: "本機和開發用的應用程式。橘色背景，戴安全帽。",
+    body: "本機和開發用的應用程式。橘色背景，頭上坐一隻小黃鴨。",
     greeting: "開發中的版本，橘色背景一眼就認得出來。",
     suffix: "-dev",
   },
@@ -133,7 +133,7 @@ const colors: { name: Phrase; hex: string; use: Phrase }[] = [
   { name: "天空藍", hex: "#326ED0", use: "頭像和分享圖的背景" },
   { name: "恐龍綠", hex: "#32D34C", use: "角色本體" },
   { name: "陰影綠", hex: "#24A63F", use: "角色的陰影" },
-  { name: "皇冠金", hex: "#F7C157", use: "皇冠和安全帽" },
+  { name: "皇冠金", hex: "#F7C157", use: "皇冠" },
   { name: "墨色", hex: "#362F36", use: "眼睛和嘴巴" },
   { name: "深海藍", hex: "#17233B", use: "字標" },
   { name: "測試紫", hex: "#7C4DDB", use: "測試環境的背景" },
@@ -153,7 +153,7 @@ const misuses: { label: Phrase; art: ReactNode }[] = [
       </span>
     ),
   },
-  { label: "正式環境戴安全帽", art: <Avatar src="wrong-hardhat-production.svg" /> },
+  { label: "正式環境換掉皇冠", art: <Avatar src="wrong-topper-production.svg" /> },
 ];
 
 function Avatar({ className, src = "avatar.svg" }: { className?: string; src?: string }) {
@@ -279,7 +279,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
         <Section
           title={t("各環境的版本")}
           lead={t(
-            "正式環境戴皇冠，測試和開發環境戴安全帽，再用背景色分出是哪一個。縮到 16 px 時主要靠背景色辨認，同一個伺服器裡有好幾隻機器龍也不會認錯。",
+            "每個環境的頭飾和背景色都不一樣。正式環境戴皇冠，測試環境戴三角錐，開發環境頭上坐一隻小黃鴨。縮到 16 px 時主要靠背景色辨認，同一個伺服器裡有好幾隻機器龍也不會認錯。",
           )}
         >
           <div className="grid gap-4 md:grid-cols-3">
