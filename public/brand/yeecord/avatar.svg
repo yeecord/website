@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">YEE 式機器龍</title>
+  <defs>
+    <!-- The body runs past the bottom and left edges so its lighting never outlines the frame. -->
+    <path id="body" d="M232.8 84.9C183.4 86.7 143.3 109.8 120.5 149.5C114.8 159.5 108.6 175.7 106.3 186.9C101.8 208.9 101.6 227.1 105.4 254.6C106.2 260.8 106.7 263.3 108.8 274.8C111 286.9 112.5 296.3 113.3 302.3C116.9 331.6 116.6 359.5 112.4 382.8C108.6 403.9 100.3 419.4 86.9 430.7C79.9 436.5 74.7 439.2 60.2 444.5C33.2 454.3 14.3 464.3 1.4 475.4C0.1 476.5 0.1 476.5-24.9 476.5L-50 476.5L-50 519.3L-50 562L116.6 562L283.3 562L283.3 536.8C283.3 515.9 283.3 511.4 283.6 510.3C285.2 504 287.4 492.2 288.9 482.1C289.4 478.7 290 474.4 290.3 472.6C291.7 463.1 292.7 453.3 293.5 441.5C293.6 439.4 293.9 435.1 294.1 432C294.8 421.6 295 413.2 295 393.8C295 376.5 295.1 374.6 295.4 374.4C295.6 374.3 298.7 374.3 302.2 374.3C323.8 374.3 356.3 369.3 375.4 363.1C430.7 345 460.2 309 457.3 263.1C455.3 231.8 441 211.1 413 199.4C388.4 189.1 373.8 177.6 361 158.5C341.1 128.8 325.9 113.3 305.7 102C284.7 90.3 257.6 84 232.8 84.9Z"/>
+    <path id="accessory-shape" d="M201.3 44.1C199.5 45.1 198.5 46.6 196.9 50.7C196.2 52.6 195.3 54.6 195.1 55.1C194.8 55.7 194.2 57.1 193.8 58.4C191.8 63.7 189.8 66.8 188.4 66.4C187.8 66.3 183.2 63 179 59.9C177.7 58.9 175.2 57.1 173.5 56C171.8 54.9 169.4 53.3 168.3 52.4C161.6 47.6 156.5 49.7 155.7 57.7C155.6 59 155.3 61.4 155.1 62.9C154.4 68.3 154.3 69.4 153.7 75.5C153 83.7 152.8 84 149.1 82.9C145.9 81.9 140.2 80.1 134.6 78.1C127.8 75.8 124.9 76.4 123.8 80.4C123.4 81.9 125.5 88.2 128.2 93.7C128.6 94.5 129.3 96 129.7 97C130.2 98.1 131.1 99.9 131.8 101.1C132.6 102.4 133.6 104.2 134.1 105.3C140 116.7 144.8 122.6 148.9 123.5C155.2 124.8 173.5 120.2 188.6 113.5C210.6 103.8 222 94.5 222 86.3C222 81.7 215.7 62.1 210.7 51.4C208.5 46.8 208.2 46.3 206.9 45.1C205.3 43.4 203.4 43.1 201.3 44.1Z"/>
+    <clipPath id="clip-frame"><rect x="0" y="0" width="512" height="512"/></clipPath>
+    <clipPath id="clip-body"><use href="#body"/></clipPath>
+    <clipPath id="clip-accessory"><use href="#accessory-shape"/></clipPath>
+    <filter id="soft" filterUnits="userSpaceOnUse" x="-64" y="-64" width="640" height="640"><feGaussianBlur stdDeviation="7.5"/></filter>
+    <filter id="softer" filterUnits="userSpaceOnUse" x="-64" y="-64" width="640" height="640"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="edge" filterUnits="userSpaceOnUse" x="-64" y="-64" width="640" height="640"><feGaussianBlur stdDeviation="2"/></filter>
+    <mask id="mask-jaw"><path d="M176 316.3C195.6 365.6 242.8 400.7 294 412L480 412L480 0L150 0L150 316.3Z" fill="#fff" filter="url(#edge)"/></mask>
+    <!-- Light from the upper left: a band where a shape is not covered by itself shifted down-right, and the reverse for shade. -->
+    <mask id="body-light"><g filter="url(#soft)"><use href="#body" fill="#fff"/><use href="#body" x="12.5" y="12.5" fill="#000"/></g></mask>
+    <mask id="body-shade"><g filter="url(#soft)"><use href="#body" fill="#fff"/><use href="#body" x="-15" y="-12.5" fill="#000"/></g></mask>
+    <mask id="accessory-light"><g filter="url(#softer)"><use href="#accessory-shape" fill="#fff"/><use href="#accessory-shape" x="10" y="10" fill="#000"/></g></mask>
+    <mask id="accessory-shade"><g filter="url(#softer)"><use href="#accessory-shape" fill="#fff"/><use href="#accessory-shape" x="-9" y="-9" fill="#000"/></g></mask>
+  </defs>
+
+  <g clip-path="url(#clip-frame)">
+    <rect x="0" y="0" width="512" height="512" fill="#326ED0"/>
+
+    <g id="dino">
+      <use href="#body" fill="#32D34C"/>
+      <g clip-path="url(#clip-body)">
+        <rect width="512" height="512" fill="#7CE68A" opacity="0.4" mask="url(#body-light)"/>
+        <rect width="512" height="512" fill="#24A63F" opacity="0.3" mask="url(#body-shade)"/>
+        <g mask="url(#mask-jaw)"><path d="M438.3 306.5C437.5 306.9 436.7 307.4 436.5 307.6C436.3 307.8 436 308 435.9 308C435.6 308 431.6 310.4 430.1 311.5C429.6 311.9 427.2 313.3 424.9 314.6C422.6 315.9 420.1 317.5 419.5 318C418.9 318.6 416.8 320.2 414.9 321.6C410.7 324.7 407.8 327.2 404.4 330.3C402.6 331.9 401.4 332.7 400 333.4C397.4 334.6 395.9 335.4 394.4 336.4C393.7 336.8 392 337.6 390.6 338.1C389.1 338.6 387.2 339.4 386.3 339.8C385.4 340.2 383.2 341.1 381.5 341.8C377.2 343.5 375.4 344.4 373.4 345.6C370.9 347.2 366.2 349.1 363.9 349.6C359.9 350.4 356.1 351.5 349.4 353.8C347 354.6 335.9 357 334.6 357C333.9 357 326.1 359 323.3 359.9C321.4 360.5 318.7 360.9 313 361.5C311.7 361.7 308.1 362.1 304.9 362.4C298.1 363.2 279.6 363.4 278.5 362.6C278.4 362.6 276.9 362.5 275.1 362.4C273.3 362.3 270.5 362.1 268.9 361.9C267.2 361.7 264.4 361.3 262.6 361.1C260.9 360.9 258.8 360.6 258.1 360.4C256.8 359.9 254.3 359.6 250.3 359.3C248.8 359.1 246.9 358.8 246.1 358.6C245.3 358.3 243.4 357.9 242.1 357.8C240.8 357.6 238.9 357.2 238.1 356.9C233.1 354.9 227.2 353.5 222.9 353.3C220.2 353.1 219.7 352.9 217.9 352.1C216.4 351.4 215.4 351.2 214.1 351.1C213.2 351 211.9 350.9 211.4 350.7C207 349.6 195 340.2 188.4 332.8C182.9 326.6 182 325.8 182 327C182 328.4 184.7 333.8 188.7 340.1C209.3 373.2 246.8 399.7 288.3 410.4C295.9 412.4 295.6 409.9 293.3 443.5C292.6 453.5 291.6 462.8 290.6 470.2C290.1 473.5 290.1 473.9 291.4 474.9C292.8 475.9 473.2 475.3 474.3 474.3C475.8 472.8 475.8 340 474.3 338.5C473.3 337.5 473.3 337.5 450.6 337.5C425.6 337.5 426.8 337.6 426.8 336.1C426.8 335.5 427.2 334.9 429.1 333.3C436.6 326.3 445.4 314.8 445.9 311.4C446.1 310.1 446 310.1 445 309.2C444.4 308.6 443.9 307.9 443.8 307.6C443.1 306 440.3 305.4 438.3 306.5Z" fill="#37A049" filter="url(#soft)"/></g>
+        <use href="#accessory-shape" x="2" y="6" fill="#24A63F" opacity="0.35" filter="url(#softer)"/>
+      </g>
+    </g>
+
+    <g id="face" fill="#362F36">
+      <circle cx="262.5" cy="194.3" r="14.1"/>
+      <circle cx="344" cy="188.5" r="14.1"/>
+      <path d="M223 283.6C239.2 302.7 266.3 310.7 289 297.8" fill="none" stroke="#362F36" stroke-width="10.9" stroke-linecap="round"/>
+    </g>
+
+    <g id="accessory">
+      <use href="#accessory-shape" fill="#F7C157"/>
+      <g clip-path="url(#clip-accessory)">
+        <rect width="512" height="512" fill="#FAD58F" opacity="0.8" mask="url(#accessory-light)"/>
+        <rect width="512" height="512" fill="#DCA842" opacity="0.8" mask="url(#accessory-shade)"/>
+      </g>
+    </g>
+  </g>
+</svg>
