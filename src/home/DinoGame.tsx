@@ -623,11 +623,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               bottom: obstacle.altitude,
               left: -obstacle.height * OBSTACLES[obstacle.kind].ratio * obstacle.size,
             }}
-            className={cn(
-              "absolute flex select-none drop-shadow-[0_3px_2px_rgb(0_0_0/0.25)] transition-opacity duration-200 will-change-transform",
-              plantDim,
-              mode === "over" && "opacity-60",
-            )}
+            className={cn("absolute flex select-none drop-shadow-[0_3px_2px_rgb(0_0_0/0.25)] will-change-transform", plantDim)}
           >
             {Array.from({ length: obstacle.size }, (_, i) => (
               <img
