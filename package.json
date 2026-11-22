@@ -14,6 +14,7 @@
     "@fumadocs/language": "^0.2.19",
     "@fumapress/blog": "^0.1.0",
     "@fumapress/language": "^1.1.4",
+    "@number-flow/react": "^0.6.2",
     "@orama/tokenizers": "^3.1.18",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

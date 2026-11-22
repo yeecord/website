@@ -12,7 +12,7 @@ const RATIO = {
   flowers: 566 / 448,
   pine: 590 / 838,
   sapling: 301 / 452,
-  tree: 574 / 802,
+  tree: 612 / 730,
   "cloud-wide": 704 / 342,
   "cloud-small": 659 / 400,
 };

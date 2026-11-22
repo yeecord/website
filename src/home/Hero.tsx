@@ -44,7 +44,7 @@ export function Hero({ locale }: { locale: Locale }) {
           />
           <div
             data-hero-copy
-            className="relative flex flex-col items-center gap-6 transition-[opacity,transform] duration-300 ease-out group-data-game/hero:pointer-events-none group-data-game/hero:-translate-y-4 group-data-game/hero:opacity-0 motion-reduce:transition-none sm:gap-7"
+            className="relative flex flex-col items-center gap-6 transition-[opacity,transform] duration-320 ease-[cubic-bezier(0.23,1,0.32,1)] group-data-game/hero:pointer-events-none group-data-game/hero:-translate-y-4 group-data-game/hero:opacity-0 group-data-game/hero:duration-180 motion-reduce:transition-none sm:gap-7"
           >
             <h1 className="text-balance font-bold text-[2.6rem] leading-[1.15] tracking-tight sm:text-6xl xl:text-7xl">
               {t("一隻恐龍")}
@@ -112,7 +112,7 @@ function ServerProof({ t }: { t: Translate }) {
   return (
     <div
       data-hero-copy
-      className="flex flex-col items-center justify-center gap-3 px-4 pt-8 pb-6 transition-opacity duration-300 ease-out group-data-game/hero:pointer-events-none group-data-game/hero:opacity-0 motion-reduce:transition-none sm:flex-row sm:gap-5"
+      className="flex flex-col items-center justify-center gap-3 px-4 pt-8 pb-6 transition-opacity duration-320 ease-[cubic-bezier(0.23,1,0.32,1)] group-data-game/hero:pointer-events-none group-data-game/hero:opacity-0 group-data-game/hero:duration-180 motion-reduce:transition-none sm:flex-row sm:gap-5"
     >
       <div className="-space-x-3 flex shrink-0 items-center">
         {SERVERS.map((server) => (

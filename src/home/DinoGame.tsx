@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import NumberFlow from "@number-flow/react";
+import { type Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
 import type { Locale } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
@@ -37,6 +38,7 @@ type Sim = {
   spawnIn: number;
   speed: number;
   score: number;
+  shown: number;
 };
 
 export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
@@ -48,7 +50,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
   const fieldRef = useRef<HTMLDivElement>(null);
   const dinoRef = useRef<HTMLDivElement>(null);
-  const scoreRef = useRef<HTMLSpanElement>(null);
+  const scoreRef = useRef<ScoreHandle>(null);
   const obstacleEls = useRef(new Map<number, HTMLImageElement>());
   const sim = useRef<Sim | null>(null);
 
@@ -186,8 +188,13 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       setObstacles((list) => list.filter((o) => alive.has(o.id)));
     }
 
-    if (scoreRef.current)
-      scoreRef.current.textContent = String(Math.floor(current.score));
+    const shown = Math.floor(current.score);
+
+    if (shown !== current.shown) {
+      current.shown = shown;
+      scoreRef.current?.set(shown);
+    }
+
     current.raf = requestAnimationFrame(frame);
   }
 
@@ -214,6 +221,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       spawnIn: 1.4,
       speed: 250,
       score: 0,
+      shown: 0,
     };
     setObstacles([]);
     setMode("playing");
@@ -288,12 +296,10 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
         <div className="pointer-events-none absolute inset-x-0 top-16 z-1 flex flex-col items-center gap-2 sm:top-20 md:top-28">
           {mode === "playing" ? (
             <>
-              <span
+              <LiveScore
                 ref={scoreRef}
-                className="animate-in fade-in slide-in-from-bottom-2 font-bold text-7xl tabular-nums duration-300 ease-out motion-reduce:animate-none sm:text-8xl"
-              >
-                0
-              </span>
+                className={cn(ENTER, "font-bold text-7xl sm:text-8xl")}
+              />
               {best > 0 && bestScore}
               <span className="animate-[hint-fade_3s_ease_forwards] text-muted-foreground text-sm">
                 {t("空白鍵或點擊跳躍")}
@@ -302,11 +308,12 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
           ) : (
             <>
               <span className="text-muted-foreground">{t("得分")}</span>
-              <span className="font-bold text-7xl tabular-nums sm:text-8xl">
-                {finalScore}
-              </span>
-              {bestScore}
-              <div className="pointer-events-auto mt-4 flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out motion-reduce:animate-none">
+              <CountUp
+                value={finalScore}
+                className="font-bold text-7xl sm:text-8xl"
+              />
+              <div className={cn(ENTER, "delay-300")}>{bestScore}</div>
+              <div className={cn(ENTER, "pointer-events-auto mt-4 flex gap-3 delay-500")}>
                 <button type="button" onClick={start} className="btn-chunky">
                   {t("再來一次")}
                 </button>
@@ -380,5 +387,38 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
         />
       )}
     </>
+  );
+}
+
+type ScoreHandle = { set: (value: number) => void };
+
+const SPIN = { duration: 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" };
+
+const ENTER =
+  "animate-in fade-in slide-in-from-bottom-2 fill-mode-both duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:animate-none";
+
+/* 分數一秒變十次，自己持有 state，才不會每次都重新渲染整個遊戲 */
+function LiveScore({ ref, className }: { ref: Ref<ScoreHandle>; className: string }) {
+  const [value, setValue] = useState(0);
+
+  useImperativeHandle(ref, () => ({ set: setValue }), []);
+
+  return (
+    <NumberFlow value={value} className={className} transformTiming={SPIN} spinTiming={SPIN} />
+  );
+}
+
+/* 結束時從 0 滾到最終分數 */
+function CountUp({ value, className }: { value: number; className: string }) {
+  const [shown, setShown] = useState(0);
+
+  useEffect(() => setShown(value), [value]);
+
+  return (
+    <NumberFlow
+      value={shown}
+      className={className}
+      spinTiming={{ ...SPIN, duration: 900 }}
+    />
   );
 }
