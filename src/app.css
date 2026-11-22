@@ -539,6 +539,7 @@ button.discord-button:active:not([aria-disabled="true"]),
   border-radius: var(--radius-2xl);
   padding: --spacing(3) --spacing(6);
   font-weight: var(--font-weight-bold);
+  cursor: pointer;
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
 }
 

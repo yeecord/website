@@ -271,7 +271,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     const hero = fieldRef.current?.closest("[data-hero]");
 
     hero?.toggleAttribute("data-game", inGame);
-    hero?.querySelector("[data-hero-copy]")?.toggleAttribute("inert", inGame);
+    for (const copy of hero?.querySelectorAll("[data-hero-copy]") ?? []) {
+      copy.toggleAttribute("inert", inGame);
+    }
   }, [inGame]);
 
   const bestScore = (
@@ -362,6 +364,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               label={t("來玩一場")}
               playing={inGame}
               dead={mode === "over"}
+              running={mode === "playing"}
               onPress={start}
             />
           </div>

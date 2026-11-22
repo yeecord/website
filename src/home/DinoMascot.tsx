@@ -13,7 +13,8 @@ export function DinoMascot({
   label,
   className,
   playing,
-  dead,
+  dead = false,
+  running = false,
   onPress,
 }: {
   alt: string;
@@ -21,6 +22,7 @@ export function DinoMascot({
   className?: string;
   playing?: boolean;
   dead?: boolean;
+  running?: boolean;
   onPress: () => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -69,10 +71,13 @@ export function DinoMascot({
     playerRef.current?.setFace(dead ? "dead" : "normal");
   }, [dead]);
 
+  useEffect(() => {
+    playerRef.current?.setRunning(running);
+  }, [running]);
+
   function yell() {
     const id = Date.now();
 
-    playerRef.current?.fire("stretch");
     onPress();
     setYells((prev) => [...prev.slice(-3), id]);
     setTimeout(() => {

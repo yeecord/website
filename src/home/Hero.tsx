@@ -110,7 +110,10 @@ function Forest() {
 
 function ServerProof({ t }: { t: Translate }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 px-4 pt-8 pb-6 sm:flex-row sm:gap-5">
+    <div
+      data-hero-copy
+      className="flex flex-col items-center justify-center gap-3 px-4 pt-8 pb-6 transition-opacity duration-300 ease-out group-data-game/hero:pointer-events-none group-data-game/hero:opacity-0 motion-reduce:transition-none sm:flex-row sm:gap-5"
+    >
       <div className="-space-x-3 flex shrink-0 items-center">
         {SERVERS.map((server) => (
           <img

@@ -162,6 +162,7 @@ export class MascotPlayer {
   private readonly blink: Layer;
   private readonly triggers = new Set<Trigger>();
   private face: Face = "normal";
+  private running = false;
   private bodyPath: Path2D | undefined;
   private hovering = false;
   private frameId = 0;
@@ -214,6 +215,10 @@ export class MascotPlayer {
       this.frameId = requestAnimationFrame(tick);
     };
     this.frameId = requestAnimationFrame(tick);
+  }
+
+  setRunning(running: boolean) {
+    this.running = running;
   }
 
   setFace(face: Face) {
@@ -272,12 +277,18 @@ export class MascotPlayer {
     const at = body.current.timeline;
 
     if (!body.blending) {
-      if (at !== timelines.Stretch && this.triggers.has("stretch")) {
-        body.go(this.play("Stretch"), 120);
-      } else if (at === timelines.Idle && this.triggers.has("happy")) {
-        body.go(this.play("Happy"), 120);
-      } else if (at !== timelines.Idle && at.done(body.current.frame)) {
-        body.go(this.idle, 200);
+      const running = at === timelines.Run;
+
+      if (this.running !== running) {
+        body.go(this.running ? this.play("Run") : this.idle, 150);
+      } else if (!running) {
+        if (at !== timelines.Stretch && this.triggers.has("stretch")) {
+          body.go(this.play("Stretch"), 120);
+        } else if (at === timelines.Idle && this.triggers.has("happy")) {
+          body.go(this.play("Happy"), 120);
+        } else if (at !== timelines.Idle && at.done(body.current.frame)) {
+          body.go(this.idle, 200);
+        }
       }
     }
 

@@ -88,8 +88,20 @@ export function Sky({ children }: { children: React.ReactNode }) {
 function SkyLights() {
   return (
     <div aria-hidden className={clsx("pointer-events-none absolute inset-0 overflow-hidden", dimmed)}>
-      <div className="absolute top-[7%] right-[17%] size-24 animate-[glow_7s_ease-in-out_infinite] rounded-full bg-[#FFE6A1] shadow-[0_0_0_18px_rgb(255_238_186/0.45),0_0_0_42px_rgb(255_244_214/0.3)] motion-reduce:animate-none max-sm:size-16 dark:hidden" />
-      <div className="absolute top-[8%] right-[18%] hidden size-16 rounded-full bg-[#E4EAF4] shadow-[0_0_0_14px_rgb(228_234_244/0.06),0_0_0_32px_rgb(228_234_244/0.03)] dark:block" />
+      <img
+        src="/home/scene/sun.svg"
+        alt=""
+        width={150}
+        height={150}
+        className="absolute top-[4%] right-[15%] animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-sm:w-20 dark:hidden"
+      />
+      <img
+        src="/home/scene/moon.svg"
+        alt=""
+        width={92}
+        height={96}
+        className="absolute top-[6%] right-[18%] hidden max-sm:w-14 dark:block"
+      />
       {STARS.map(([left, top, delay]) => (
         <span
           key={`${left}-${top}`}
