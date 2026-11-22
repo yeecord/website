@@ -163,6 +163,7 @@ export class MascotPlayer {
   private readonly triggers = new Set<Trigger>();
   private face: Face = "normal";
   private running = false;
+  private airborne = false;
   private bodyPath: Path2D | undefined;
   private hovering = false;
   private frameId = 0;
@@ -221,6 +222,10 @@ export class MascotPlayer {
     this.running = running;
   }
 
+  setAirborne(airborne: boolean) {
+    this.airborne = airborne;
+  }
+
   setFace(face: Face) {
     this.face = face;
 
@@ -277,11 +282,14 @@ export class MascotPlayer {
     const at = body.current.timeline;
 
     if (!body.blending) {
-      const running = at === timelines.Run;
+      const moving = at === timelines.Run || at === timelines.Jump;
+      const pose = this.running ? (this.airborne ? "Jump" : "Run") : undefined;
 
-      if (this.running !== running) {
-        body.go(this.running ? this.play("Run") : this.idle, 150);
-      } else if (!running) {
+      if (pose && at !== timelines[pose]) {
+        body.go(this.play(pose), pose === "Jump" ? 80 : 100);
+      } else if (!pose && moving) {
+        body.go(this.idle, 150);
+      } else if (!moving) {
         if (at !== timelines.Stretch && this.triggers.has("stretch")) {
           body.go(this.play("Stretch"), 120);
         } else if (at === timelines.Idle && this.triggers.has("happy")) {

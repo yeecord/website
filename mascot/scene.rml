@@ -63,6 +63,7 @@
             <StateMachineTrigger name="happy" id="3:1"/>
             <StateMachineTrigger name="stretch" id="3:2"/>
             <StateMachineBool name="running" id="3:3"/>
+            <StateMachineBool name="airborne" id="3:4"/>
 
             <!-- Body: idle until poked. Hover hops, a press stretches the neck; both settle back to idle. Running trots in place until it stops. -->
             <StateMachineLayer name="Body" id="3:10">
@@ -85,6 +86,11 @@
                 </AnimationState>
                 <AnimationState x="200" y="150" animationId="4:6" id="3:14">
                     <StateTransition stateToId="3:11" duration="150"><TransitionBoolCondition inputId="3:3" opValue="notEqual"/></StateTransition>
+                    <StateTransition stateToId="3:15" duration="80"><TransitionBoolCondition inputId="3:4" opValue="equal"/></StateTransition>
+                </AnimationState>
+                <AnimationState x="400" y="150" animationId="4:7" id="3:15">
+                    <StateTransition stateToId="3:11" duration="150"><TransitionBoolCondition inputId="3:3" opValue="notEqual"/></StateTransition>
+                    <StateTransition stateToId="3:14" duration="100"><TransitionBoolCondition inputId="3:4" opValue="notEqual"/></StateTransition>
                 </AnimationState>
             </StateMachineLayer>
 
@@ -359,6 +365,25 @@
                     <KeyFrameDouble value="2.90" frame="24"/>
                 </KeyedProperty>
             </KeyedObject>
+        </LinearAnimation>
+
+        <!-- Jump: held while off the ground. Front legs reach forward, back legs push back, the tail lifts. -->
+        <LinearAnimation loopValue="loop" duration="12" name="Jump" id="4:7">
+            <KeyedObject objectId="1:10">
+                <KeyedProperty property="y"><KeyFrameDouble value="462" frame="0"/></KeyedProperty>
+                <KeyedProperty property="scaleX"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
+                <KeyedProperty property="scaleY"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:5"><KeyedProperty property="rotation"><KeyFrameDouble value="2.05" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:6"><KeyedProperty property="rotation"><KeyFrameDouble value="1.95" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:7"><KeyedProperty property="rotation"><KeyFrameDouble value="1.15" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:8"><KeyedProperty property="rotation"><KeyFrameDouble value="1.05" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:2">
+                <KeyedProperty property="length"><KeyFrameDouble value="68" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="-1.50" frame="0"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.30" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:4"><KeyedProperty property="rotation"><KeyFrameDouble value="3.25" frame="0"/></KeyedProperty></KeyedObject>
         </LinearAnimation>
 
         <!-- Blinks squash the eyes' own bone, so they close in place whatever the head is doing. -->

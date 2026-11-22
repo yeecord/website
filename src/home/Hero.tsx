@@ -2,6 +2,7 @@ import Link from "fumadocs-core/link";
 import { contentPath, type Locale, staticPath } from "~/i18n";
 import { type Translate, translator } from "~/i18n/translate";
 import { DinoGame } from "./DinoGame";
+import { ServerCount } from "./ServerCount";
 import { Cloud, GroundBand, HillsLayer, Plant, Sky } from "./scene";
 
 const SERVERS = [
@@ -129,7 +130,7 @@ function ServerProof({ t }: { t: Translate }) {
       </div>
       <p className="text-balance text-center font-medium leading-snug max-sm:text-sm">
         {t("APEX Taiwan、VALORANT Taiwan 等")}
-        <span className="mx-1 font-bold text-[#17713A] dark:text-primary">350,000+</span>
+        <ServerCount value={350000} className="mx-1 font-bold text-[#17713A] dark:text-primary" />
         {t("個伺服器都在用")}
       </p>
     </div>

@@ -517,6 +517,12 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
+  @keyframes flap {
+    to {
+      transform: translateY(-4px);
+    }
+  }
+
   @keyframes twinkle {
     50% {
       opacity: 0.25;

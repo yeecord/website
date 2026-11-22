@@ -16,6 +16,7 @@ export function DinoMascot({
   dead = false,
   running = false,
   onPress,
+  onPlayer,
 }: {
   alt: string;
   label: string;
@@ -24,6 +25,7 @@ export function DinoMascot({
   dead?: boolean;
   running?: boolean;
   onPress: () => void;
+  onPlayer?: (player: MascotPlayer | null) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const playerRef = useRef<MascotPlayer>(null);
@@ -41,6 +43,7 @@ export function DinoMascot({
     let visible = false;
 
     playerRef.current = player;
+    onPlayer?.(player);
 
     const update = () => {
       if (visible && !reduced.matches) {
@@ -64,6 +67,7 @@ export function DinoMascot({
       reduced.removeEventListener("change", update);
       player.destroy();
       playerRef.current = null;
+      onPlayer?.(null);
     };
   }, []);
 
