@@ -34,46 +34,59 @@ const lockups = [
 const marks: {
   title: Phrase;
   art: ReactNode;
+  panel: string;
   downloads: Download[];
-  className?: string;
+  className: string;
 }[] = [
   {
     title: "頭像",
-    art: <img src={`${base}avatar.svg`} alt="" width={224} height={224} className="size-40 rounded-full" />,
+    art: <img src={`${base}avatar.svg`} alt="" width={176} height={176} className="size-44 rounded-full shadow-lg" />,
+    panel: "bg-yee-grass",
     downloads: [
       { label: "SVG", file: "avatar.svg" },
       { label: "PNG", file: "avatar-1024.png" },
     ],
-    className: "sm:col-span-2",
+    className: "lg:col-span-7",
   },
   {
     title: "角色",
-    art: <img src={`${base}character.svg`} alt="" width={112} height={112} className="size-28" />,
+    art: <img src={`${base}character.svg`} alt="" width={144} height={144} className="size-36" />,
+    panel: "bg-yee-sky",
     downloads: [
       { label: "SVG", file: "character.svg" },
       { label: "PNG", file: "character-1024.png" },
       { label: "貼圖", file: "sticker-320.png" },
     ],
+    className: "lg:col-span-5",
   },
   {
     title: "單色",
     art: (
       <span
         aria-hidden
-        className="size-28 bg-fd-foreground [mask:url(/brand/yeecord/silhouette.svg)_center/contain_no-repeat]"
+        className="block size-36 bg-fd-foreground [mask:url(/brand/yeecord/silhouette.svg)_center/contain_no-repeat]"
       />
     ),
+    panel: "bg-fd-muted bg-[radial-gradient(var(--color-fd-border)_1px,transparent_1px)] bg-size-[14px_14px]",
     downloads: [{ label: "SVG", file: "silhouette.svg" }],
+    className: "lg:col-span-5",
   },
   {
     title: "網站圖示",
-    art: <img src={`${base}favicon.svg`} alt="" width={112} height={112} className="size-28 rounded-3xl" />,
+    art: (
+      <span className="flex items-end gap-5">
+        {[16, 32, 48, 64, 96].map((size) => (
+          <img key={size} src={`${base}favicon.svg`} alt="" width={size} height={size} style={{ width: size, height: size }} className="rounded-[22%]" />
+        ))}
+      </span>
+    ),
+    panel: "bg-yee-navy",
     downloads: [
       { label: "SVG", file: "favicon.svg" },
       { label: "ICO", file: "favicon.ico" },
       { label: "Apple 圖示", file: "apple-touch-icon.png" },
     ],
-    className: "sm:col-span-2 lg:col-span-1",
+    className: "lg:col-span-7",
   },
 ];
 
@@ -348,18 +361,26 @@ export function BrandingPage({ locale }: { locale: Locale }) {
               </div>
             ))}
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {marks.map(({ title, art, downloads, className }) => (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12">
+            {marks.map(({ title, art, panel, downloads, className }) => (
               <article
                 key={title}
-                className={cn(
-                  "row-span-3 grid grid-rows-subgrid gap-y-3 rounded-[2rem] border bg-fd-card p-6",
-                  className,
-                )}
+                className={cn("group row-span-3 grid grid-rows-subgrid gap-y-3 rounded-[2rem] border bg-fd-card p-3 pb-6", className)}
               >
-                <div className="mb-3 flex min-h-36 items-center justify-center">{art}</div>
-                <h3 className="font-bold text-xl">{t(title)}</h3>
-                <Downloads items={downloads} t={t} />
+                <div
+                  className={cn(
+                    "mb-3 flex min-h-56 items-center justify-center overflow-hidden rounded-[1.5rem] shadow-[inset_0_1px_0_rgb(255_255_255/0.35)]",
+                    panel,
+                  )}
+                >
+                  <div className="transition-transform duration-300 ease-[cubic-bezier(0.34,1.4,0.64,1)] group-hover:-translate-y-1.5 group-hover:-rotate-2 motion-reduce:transition-none">
+                    {art}
+                  </div>
+                </div>
+                <h3 className="px-3 font-bold text-xl">{t(title)}</h3>
+                <div className="px-3">
+                  <Downloads items={downloads} t={t} />
+                </div>
               </article>
             ))}
           </div>
