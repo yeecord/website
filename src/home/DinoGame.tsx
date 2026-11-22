@@ -38,7 +38,7 @@ type ObstacleKind =
 
 /* 尺寸照 Chrome（offline_sprite_definitions.ts）：height 是 Chrome 像素，小仙人掌高 35、大仙人掌高 50、翼龍高 40；
    ratio 是素材的寬高比。group 是一排的總寬上限，Chrome 是 3 × 17 和 3 × 25，這裡的素材比較胖，放寬 30%，放不下就少放幾個。
-   walk 是自己往恐龍走的速度，單位同 Chrome 的速度 */
+   walk 的障礙物會原地踏步；所有障礙物都和地面同速，不像 Chrome 的翼龍有快慢差 */
 const SMALL_GROUP = 17 * 3 * 1.3;
 const LARGE_GROUP = 25 * 3 * 1.3;
 const OBSTACLES: Record<
@@ -51,7 +51,7 @@ const OBSTACLES: Record<
     minGap: number;
     minSpeed: number;
     flying?: boolean;
-    walk?: number;
+    walk?: boolean;
   }
 > = {
   rock: { height: 26, ratio: 856 / 546, group: SMALL_GROUP, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
@@ -60,7 +60,7 @@ const OBSTACLES: Record<
   cactus: { height: 48, ratio: 609 / 751, group: LARGE_GROUP, multipleSpeed: 7, minGap: 120, minSpeed: 0 },
   crate: { height: 40, ratio: 857 / 855, group: LARGE_GROUP, multipleSpeed: 7, minGap: 120, minSpeed: 0 },
   log: { height: 22, ratio: 713 / 436, group: 0, multipleSpeed: 999, minGap: 120, minSpeed: 0 },
-  hedgehog: { height: 24, ratio: 631 / 501, group: 0, multipleSpeed: 999, minGap: 140, minSpeed: 6.5, walk: 1.2 },
+  hedgehog: { height: 24, ratio: 631 / 501, group: 0, multipleSpeed: 999, minGap: 140, minSpeed: 6.5, walk: true },
   bird: { height: 32, ratio: 571 / 506, group: 0, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
   plane: { height: 24, ratio: 579 / 367, group: 0, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
   bee: { height: 28, ratio: 824 / 808, group: 0, multipleSpeed: 999, minGap: 150, minSpeed: 7.5, flying: true },
@@ -68,7 +68,7 @@ const OBSTACLES: Record<
 
 /* 星星：偶爾三顆排成弧形懸在地面障礙物正上方，跳過障礙物時順手吃到。
    恐龍脖子長，所以放在頭頂以上（恐龍畫布高度的比例），站著吃不到 */
-const STAR = { chance: 0.35, size: 0.13, spread: 1.5, altitudes: [1.0, 1.14, 1.0], bonus: 10 };
+const STAR = { chance: 0.35, size: 0.18, spread: 1.3, altitudes: [0.98, 1.12, 0.98], bonus: 10 };
 /* Chrome 每 100 分閃一次分數，每 700 分日夜交替 */
 const MILESTONE = 100;
 const NIGHT_EVERY = 700;
@@ -105,7 +105,7 @@ const BEST_KEY = "dino-best";
 
 type Mode = "idle" | "playing" | "over";
 type Obstacle = { id: number; kind: ObstacleKind; size: number; height: number; altitude: number };
-type Item = Obstacle & { x: number; width: number; gap: number; speedOffset: number };
+type Item = Obstacle & { x: number; width: number; gap: number };
 type Star = { id: number; x: number; size: number; altitude: number };
 type Pop = { id: number; x: number; bottom: number };
 
@@ -126,6 +126,8 @@ type Sim = {
   speed: number;
   score: number;
   shown: number;
+  distance: number;
+  layers: { el: HTMLElement; factor: number; period: number }[];
 };
 
 /* 水平是畫面座標，垂直是離地高度 */
@@ -172,6 +174,10 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     fieldRef.current?.closest("[data-hero]")?.toggleAttribute("data-night", night && !dark);
   }
 
+  function resetLayers() {
+    for (const layer of sim.current?.layers ?? []) layer.el.style.transform = "";
+  }
+
   function stopLoop() {
     if (sim.current) cancelAnimationFrame(sim.current.raf);
     if (dinoRef.current) dinoRef.current.style.transform = "";
@@ -179,6 +185,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
   function quit() {
     stopLoop();
+    resetLayers();
     setObstacles([]);
     setStars([]);
     setNight(false);
@@ -255,7 +262,6 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       x: 0,
       width,
       gap: random(minGap, Math.round(minGap * CHROME.maxGapCoefficient)),
-      speedOffset: type.walk ?? (type.flying ? (Math.random() > 0.5 ? 0.8 : -0.8) : 0),
     };
 
     current.items.push(item);
@@ -295,6 +301,12 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     current.elapsed += dt;
     current.speed = Math.min(CHROME.maxSpeed, current.speed + CHROME.acceleration * frames);
     current.score += current.speed * frames * CHROME.scoreCoefficient;
+    current.distance += current.speed * frames * unit;
+
+    /* 背景跟著跑步往後捲，越遠越慢 */
+    for (const layer of current.layers) {
+      layer.el.style.transform = `translate3d(${(current.distance * layer.factor) % layer.period}px, 0, 0)`;
+    }
     /* Chrome 的 updateJump：y 是離地高度、vy 往上為正，都用 Chrome 像素 */
     if (current.jumping) {
       current.y += current.vy * (current.speedDrop ? TREX.speedDropCoefficient : 1) * frames;
@@ -344,7 +356,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     let gone = false;
 
     for (const item of current.items) {
-      item.x += (current.speed + item.speedOffset) * frames * unit;
+      item.x += current.speed * frames * unit;
 
       const el = obstacleEls.current.get(item.id);
 
@@ -423,6 +435,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
     if (!field || !dino) return;
 
+    resetLayers();
     sim.current = {
       raf: 0,
       last: performance.now(),
@@ -440,6 +453,14 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       speed: CHROME.speed,
       score: 0,
       shown: 0,
+      distance: 0,
+      layers: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? []
+        : [...(field.closest("[data-hero]")?.querySelectorAll<HTMLElement>("[data-parallax]") ?? [])].map((el) => ({
+            el,
+            factor: Number(el.dataset.parallax),
+            period: Number(el.dataset.period) * el.clientWidth,
+          })),
     };
     setObstacles([]);
     setStars([]);
@@ -573,7 +594,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               src="/home/scene/star.svg"
               alt=""
               draggable={false}
-              className="size-full animate-[shine_.9s_ease-in-out_infinite_alternate] select-none drop-shadow-[0_0_6px_rgb(255_196_61/0.9)] motion-reduce:animate-none"
+              className="size-full animate-[shine_.9s_ease-in-out_infinite_alternate] select-none drop-shadow-[0_0_10px_rgb(255_196_61/0.95)] motion-reduce:animate-none"
             />
           </div>
         ))}

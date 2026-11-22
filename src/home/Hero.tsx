@@ -3,7 +3,7 @@ import { contentPath, type Locale, staticPath } from "~/i18n";
 import { type Translate, translator } from "~/i18n/translate";
 import { DinoGame } from "./DinoGame";
 import { ServerCount } from "./ServerCount";
-import { Cloud, GroundBand, HillsLayer, Plant, Rabbit, Sky, Village } from "./scene";
+import { Cloud, GroundBand, HillsLayer, Plant, Rabbit, Scroller, Sky, Village } from "./scene";
 
 const SERVERS = [
   { img: "/home/customers/apex-tw.png", name: "APEX Taiwan" },
@@ -23,26 +23,28 @@ export function Hero({ locale }: { locale: Locale }) {
       <Sky>
         <div className="relative flex flex-col items-center px-4 pt-16 pb-52 text-center sm:pt-20 sm:pb-72 md:pt-28"
         >
-          <Cloud
-            kind="wide"
-            width={200}
-            className="top-[5%] left-[6%] [--drift:80px] [animation-duration:48s] max-lg:w-36 max-sm:w-24"
-          />
-          <Cloud
-            kind="small"
-            width={110}
-            className="top-[36%] left-[18%] opacity-80 [--drift:-56px] [animation-duration:32s] max-lg:hidden"
-          />
-          <Cloud
-            kind="wide"
-            width={240}
-            className="top-[9%] right-[7%] [--drift:-90px] [animation-duration:56s] max-lg:top-[3%] max-lg:right-[10%] max-lg:w-28 max-sm:top-[3%] max-sm:w-24"
-          />
-          <Cloud
-            kind="small"
-            width={90}
-            className="top-[40%] right-[24%] opacity-70 [--drift:48px] [animation-duration:26s] max-lg:hidden"
-          />
+          <Scroller factor={0.08}>
+            <Cloud
+              kind="wide"
+              width={200}
+              className="top-[5%] left-[6%] [--drift:80px] [animation-duration:48s] max-lg:w-36 max-sm:w-24"
+            />
+            <Cloud
+              kind="small"
+              width={110}
+              className="top-[36%] left-[18%] opacity-80 [--drift:-56px] [animation-duration:32s] max-lg:hidden"
+            />
+            <Cloud
+              kind="wide"
+              width={240}
+              className="top-[9%] right-[7%] [--drift:-90px] [animation-duration:56s] max-lg:top-[3%] max-lg:right-[10%] max-lg:w-28 max-sm:top-[3%] max-sm:w-24"
+            />
+            <Cloud
+              kind="small"
+              width={90}
+              className="top-[40%] right-[24%] opacity-70 [--drift:48px] [animation-duration:26s] max-lg:hidden"
+            />
+          </Scroller>
           <div
             data-hero-copy
             className="relative flex flex-col items-center gap-6 transition-[opacity,transform] duration-320 ease-[cubic-bezier(0.23,1,0.32,1)] group-data-game/hero:pointer-events-none group-data-game/hero:-translate-y-4 group-data-game/hero:opacity-0 group-data-game/hero:duration-180 motion-reduce:transition-none sm:gap-7"
@@ -74,7 +76,9 @@ export function Hero({ locale }: { locale: Locale }) {
         </div>
       </Sky>
       <GroundBand>
-        <Forest />
+        <Scroller factor={1}>
+          <Forest />
+        </Scroller>
         <ServerProof t={t} />
       </GroundBand>
     </div>
