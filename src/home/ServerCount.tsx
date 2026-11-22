@@ -4,7 +4,15 @@ import NumberFlow from "@number-flow/react";
 import { useEffect, useRef, useState } from "react";
 
 /* 伺服器端照常輸出完整數字；只有在瀏覽器裡第一次捲進畫面時，才從 0 滾上去 */
-export function ServerCount({ value, className }: { value: number; className?: string }) {
+export function ServerCount({
+  value,
+  suffix,
+  className,
+}: {
+  value: number;
+  suffix?: string;
+  className?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const [shown, setShown] = useState(value);
   const [animated, setAnimated] = useState(false);
@@ -42,7 +50,7 @@ export function ServerCount({ value, className }: { value: number; className?: s
       <NumberFlow
         value={shown}
         animated={animated}
-        suffix="+"
+        suffix={suffix}
         locales="en-US"
         spinTiming={{ duration: 1400, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }}
       />
