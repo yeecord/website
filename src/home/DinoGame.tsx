@@ -9,7 +9,8 @@ import type { MascotPlayer } from "./mascot/player";
 import { plantDim } from "./scene";
 
 /* 參考 Chrome 小恐龍（components/neterror/resources/dino_game）：速度、加速度、間距公式、群組與重複上限都照它，
-   長度單位換成恐龍高度：Chrome 的暴龍高 47 px，對應整隻恐龍（含脖子）的畫布高度，障礙物和恐龍的比例因此跟 Chrome 一樣 */
+   長度單位換成恐龍高度：Chrome 的暴龍高 47 px，對應恐龍的身體和腿（畫布高度的一半），長脖子是多出來的，
+   所以仙人掌對恐龍身體的比例跟 Chrome 一樣；恐龍維持待機的大小，桌機上障礙物橫越全寬約 1.7 秒，也和 Chrome 相同 */
 const CHROME = {
   speed: 6,
   maxSpeed: 13,
@@ -22,7 +23,7 @@ const CHROME = {
   clearTime: 1,
   scoreCoefficient: 0.025,
 };
-const UNIT = 1 / 47;
+const UNIT = 1 / 94;
 
 type ObstacleKind =
   | "rock"
@@ -68,7 +69,7 @@ const OBSTACLES: Record<
 
 /* 星星：偶爾三顆排成弧形懸在地面障礙物正上方，跳過障礙物時順手吃到。
    恐龍脖子長，所以放在頭頂以上（恐龍畫布高度的比例），站著吃不到 */
-const STAR = { chance: 0.35, size: 0.32, spread: 1.2, altitudes: [1.0, 1.2, 1.0], bonus: 10 };
+const STAR = { chance: 0.35, size: 0.13, spread: 1.4, altitudes: [1.0, 1.14, 1.0], bonus: 10 };
 /* Chrome 每 100 分閃一次分數，每 700 分日夜交替 */
 const MILESTONE = 100;
 const NIGHT_EVERY = 700;
@@ -578,8 +579,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       )}
       <div
         ref={fieldRef}
-        /* 場地像 Chrome 的畫布一樣置中，障礙物在左右邊緣淡入淡出 */
-        className="pointer-events-none absolute inset-y-0 left-1/2 z-1 w-full max-w-7xl -translate-x-1/2 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+        /* 障礙物在左右邊緣淡入淡出 */
+        className="pointer-events-none absolute inset-0 z-1 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]"
       >
         {stars.map((star) => (
           <div

@@ -3,7 +3,7 @@ import clsx from "clsx";
 /* 素材由 Gemini 照機器龍的畫風生成，描成 SVG；深色模式整體壓暗 */
 /* 遊戲裡入夜時壓暗 */
 const night = "group-data-night/hero:brightness-[.45]";
-/* 玩遊戲時背景變簡單、而且不做半透明：山丘和裝飾物整個淡出，綠色恐龍背後只剩天空；雲和地面維持原樣 */
+/* 玩遊戲時，跟障礙物同一層、會被誤認成障礙物的樹叢和兔子整個淡出，不做半透明；遠景照樣顯示並捲動 */
 const gameHidden = `[transition:opacity_.3s_ease-out,filter_1s_ease] group-data-game/hero:opacity-0 ${night}`;
 const nightOnly = `[transition:filter_1s_ease] ${night}`;
 
@@ -107,7 +107,7 @@ function SkyLights() {
           className="animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-lg:w-20 max-sm:w-14"
         />
       </div>
-      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] transition-opacity duration-300 [--drift:38vw] motion-reduce:animate-none max-lg:hidden group-data-game/hero:opacity-0">
+      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] [--drift:38vw] motion-reduce:animate-none max-lg:hidden">
         <img
           src="/home/scene/balloon.svg"
           alt=""
@@ -158,7 +158,7 @@ export function Scroller({ factor, children }: { factor: number; children: React
 /* 遠方山丘上的小村莊：房子是一個個伺服器社群，煙囪冒煙、風車在轉 */
 export function Village({ className }: { className?: string }) {
   return (
-    <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", gameHidden, className)}>
+    <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", nightOnly, className)}>
       <Scroller factor={0.25}>
         <Cottage className="bottom-[46%] left-[24%] w-12 sm:w-16" smokeDelay={0} />
         <Cottage className="bottom-[58%] left-[31%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
@@ -219,7 +219,7 @@ export function Rabbit({ className }: { className?: string }) {
 
 export function HillsLayer({ className }: { className?: string }) {
   return (
-    <div aria-hidden className={clsx("absolute inset-x-0 bottom-0 overflow-hidden", gameHidden, className)}>
+    <div aria-hidden className={clsx("absolute inset-x-0 bottom-0 overflow-hidden", nightOnly, className)}>
       <img
         src="/home/scene/hills.svg"
         alt=""
