@@ -281,7 +281,7 @@ export class MascotPlayer {
     this.render(pose, rig);
   }
 
-  /** Mirrors the Dino state machine in scene.rml, plus the Dead slump that goes with the knocked-out face drawn here. */
+  /** Mirrors the Dino state machine in scene.rml, plus the Dead slump that goes with the knocked-out face drawn here and a blink when ducking or stretching. */
   private transitions() {
     const { body, blink, timelines } = this;
     const at = body.current.timeline;
@@ -293,11 +293,16 @@ export class MascotPlayer {
 
       if (pose && at !== timelines[pose]) {
         body.go(this.play(pose), pose === "Run" ? 100 : 80);
+
+        if (pose === "Duck") {
+          this.blinkNow();
+        }
       } else if (!pose && moving) {
         body.go(this.idle, 150);
       } else if (!moving) {
         if (at !== timelines.Stretch && this.triggers.has("stretch")) {
           body.go(this.play("Stretch"), 120);
+          this.blinkNow();
         } else if (at === timelines.Idle && this.triggers.has("happy")) {
           body.go(this.play("Happy"), 120);
         } else if (at !== timelines.Idle && at.done(body.current.frame)) {
@@ -309,6 +314,15 @@ export class MascotPlayer {
     if (blink.current.timeline.done(blink.current.frame)) {
       const after = blink.current.timeline;
       blink.go(this.play(after === timelines.Blink ? this.pick() : after === timelines["Blink twice"] ? "Wait 4s" : "Blink"), 0);
+    }
+  }
+
+  /** Blinks on a big head move, as animators do to mark it; a blink already under way is left to finish. */
+  private blinkNow() {
+    const { blink, timelines } = this;
+
+    if (blink.current.timeline !== timelines.Blink && blink.current.timeline !== timelines["Blink twice"]) {
+      blink.go(this.play("Blink"), 0);
     }
   }
 

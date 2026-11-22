@@ -3,6 +3,9 @@ import { rig } from "../src/home/mascot/rig";
 
 const head = rig.bones.findIndex(({ name }) => name === "Head");
 const eyes = rig.bones.findIndex(({ name }) => name === "Eyes");
+const mouth = rig.bones.findIndex(({ name }) => name === "Mouth");
+/** Face parts ride their own children of Head, so a blink or a mouth shape squashes them without bending the head. */
+const faceBone: Record<string, number> = { Eyes: eyes, Mouth: mouth, Tongue: mouth };
 const neck = new Set(rig.bones.flatMap(({ name }, index) => /^Neck[123]$/.test(name) ? [index] : []));
 const rigScales = new Set(["scaleX", "scaleY"]);
 
@@ -32,8 +35,7 @@ for (const { name, paths } of rig.shapes) {
           assert(second && after > 0 && ((first.attachment ?? first.parent) === b || (second.attachment ?? second.parent) === a), `${at} blends non-adjacent bones`);
         }
         if (inHead) {
-          // The eyes ride their own child of Head, so a blink can squash them without bending the head.
-          assert(count === 1 && a === (name === "Eyes" ? eyes : head) && before === 1, `${at} is in the head and must be rigid`);
+          assert(count === 1 && a === (faceBone[name] ?? head) && before === 1, `${at} is in the head and must be rigid`);
           headPoints++;
         }
 
@@ -48,7 +50,7 @@ let minNeckLength = Infinity;
 
 for (const [name, { tracks }] of Object.entries(rig.animations)) {
   for (const { object, property, keys } of tracks) {
-    if (rigScales.has(property) && object !== eyes) {
+    if (rigScales.has(property) && object !== eyes && object !== mouth) {
       assert(keys.every(([, v]) => v === 1), `${name} scales the rig or a bone`);
     }
     if (property !== "length" || !neck.has(object)) {

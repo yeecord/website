@@ -28,6 +28,7 @@ const LEGS: P[] = [[-83.1, -51], [-33.2, -51], [26.9, -51], [77, -51]];
 const LEG_SPANS: [number, number][] = [[-106, -60], [-56, -10], [5, 50], [55, 100]];
 
 const eyeLoops = await loops("eyes");
+const mouthLoops = await loops("mouth");
 
 /** The chain's bones, nested, with `tip` hung off the last one. */
 function chainBones({ name, ids, at, rotation, length }: Chain, tip: BoneSpec[] = []): BoneSpec {
@@ -43,15 +44,17 @@ function chainBones({ name, ids, at, rotation, length }: Chain, tip: BoneSpec[] 
   return build(0);
 }
 
-/** The head's rest direction, and the eyes' centre in the head's own frame, so a blink squashes them about their middle. */
+/** The head's rest direction. */
 const HEAD_ROTATION = -0.7144;
-const EYES_CENTRE = (() => {
-  const points = eyeLoops.flat().map((seg) => seg.from);
+
+/** The centre of some face parts in the head's own frame, where a face bone sits so squashing it keeps the parts in place. */
+function inHead(parts: Seg[][]): P {
+  const points = parts.flat().map((seg) => seg.from);
   const [cx, cy] = points.reduce(([x, y], [px, py]) => [x + px / points.length, y + py / points.length], [0, 0]);
   const [dx, dy] = [cx - HEAD_PIVOT[0], cy - HEAD_PIVOT[1]];
 
-  return [dx * Math.cos(-HEAD_ROTATION) - dy * Math.sin(-HEAD_ROTATION), dx * Math.sin(-HEAD_ROTATION) + dy * Math.cos(-HEAD_ROTATION)] as P;
-})();
+  return [dx * Math.cos(-HEAD_ROTATION) - dy * Math.sin(-HEAD_ROTATION), dx * Math.sin(-HEAD_ROTATION) + dy * Math.cos(-HEAD_ROTATION)];
+}
 
 const branches: BoneSpec[] = [
   chainBones(NECK, [
@@ -60,7 +63,10 @@ const branches: BoneSpec[] = [
       id: "1:3",
       length: 90.6,
       rotation: HEAD_ROTATION - NECK.rotation,
-      children: [{ name: "Eyes", id: "1:9", at: EYES_CENTRE, length: 12, rotation: -HEAD_ROTATION }],
+      children: [
+        { name: "Eyes", id: "1:9", at: inHead(eyeLoops), length: 12, rotation: -HEAD_ROTATION },
+        { name: "Mouth", id: "1:15", at: inHead(mouthLoops), length: 10, rotation: -HEAD_ROTATION },
+      ],
     },
   ]),
   chainBones(TAIL),
@@ -160,9 +166,14 @@ function bodyWeights(p: P): Influence[] {
 
   const gap = ([a, b]: [number, number]) => (x < a ? a - x : x > b ? x - b : 0);
   const leg = LEG_SPANS.reduce((best, span, i) => (gap(span) < gap(LEG_SPANS[best] ?? span) ? i : best), 0);
+  const [a, b] = LEG_SPANS[leg] ?? [0, 0];
+  const neighbour = LEG_SPANS[x < a ? leg - 1 : leg + 1];
+  // Between two legs the weight fades to Body at the midline, so the outline never jumps from one leg to the next.
+  const half = neighbour ? (x < a ? a - neighbour[1] : neighbour[0] - b) / 2 : 8;
+  const fade = 1 - smooth(0, half, gap([a, b]));
 
   // Legs swing from the hip: the blend sits around the top of the leg, so the whole leg turns as one piece.
-  return handover("Body", `Leg${leg}`, smooth(-62, -40, y));
+  return handover("Body", `Leg${leg}`, smooth(-50, -30, y) * fade);
 }
 
 /** Quantizes the weights to Rive bytes that sum to 255. */
@@ -229,7 +240,7 @@ function split({ from, c1, c2, to }: Seg, t: number): [Seg, Seg] {
 /** Splits every cubic into equal pieces no longer than `step`, so the outline has vertices to bend with and keeps its rest shape. */
 const densify = (segs: Seg[]) =>
   segs.flatMap((seg): Seg[] => {
-    const step = seg.from[0] > -40 && seg.from[1] < -88 && seg.from[1] > -306 ? 2 : 4;
+    const step = seg.from[0] > -40 && seg.from[1] < -88 && seg.from[1] > -306 ? 4 : 4;
     const pieces = Math.max(1, Math.ceil((dist(seg.from, seg.c1) + dist(seg.c1, seg.c2) + dist(seg.c2, seg.to)) / step));
     const out: Seg[] = [];
     let rest = seg;
@@ -259,11 +270,14 @@ const tendons = placed
 function pointsPath(name: string, segs: Seg[], weigh: (p: P) => Influence[]) {
   const vertices = segs.map((seg, n) => {
     const prev = segs[(n - 1 + segs.length) % segs.length] ?? seg;
-    // A shared transform preserves tangent alignment after weight quantization.
-    const w = pack(weigh(seg.from));
+    // Each handle follows the deformation where it sits, so a stretched stretch of outline keeps its curve.
+    const influences = weigh(seg.from);
+    // A vertex on the rigid head keeps its handles on the head too, even where a handle pokes past its edge.
+    const rigid = influences.filter(([, v]) => v > 0).length === 1;
+    const [w, wi, wo] = [pack(influences), pack(rigid ? influences : weigh(prev.c2)), pack(rigid ? influences : weigh(seg.c1))];
     const p = seg.from;
 
-    return `<CubicDetachedVertex x="${r(p[0])}" y="${r(p[1])}" inRotation="${angle(p, prev.c2).toFixed(6)}" inDistance="${r(dist(p, prev.c2))}" outRotation="${angle(p, seg.c1).toFixed(6)}" outDistance="${r(dist(p, seg.c1))}"><CubicWeight values="${w.values}" indices="${w.indices}" inValues="${w.values}" inIndices="${w.indices}" outValues="${w.values}" outIndices="${w.indices}"/></CubicDetachedVertex>`;
+    return `<CubicDetachedVertex x="${r(p[0])}" y="${r(p[1])}" inRotation="${angle(p, prev.c2).toFixed(6)}" inDistance="${r(dist(p, prev.c2))}" outRotation="${angle(p, seg.c1).toFixed(6)}" outDistance="${r(dist(p, seg.c1))}"><CubicWeight values="${w.values}" indices="${w.indices}" inValues="${wi.values}" inIndices="${wi.indices}" outValues="${wo.values}" outIndices="${wo.indices}"/></CubicDetachedVertex>`;
   });
 
   return `<PointsPath isClosed="true" name="${name}">${vertices.join("")}<Skin tx="${GROUND[0]}" ty="${GROUND[1]}" name="Skin">${tendons}</Skin></PointsPath>`;
@@ -294,8 +308,8 @@ function farLegPath(outline: Seg[], [start, end]: [P, P]) {
 const shapes: Record<string, string[]> = {
   Crown: (await loops("crown")).map((l, i) => pointsPath(`Crown ${i}`, l, only("Head"))),
   Eyes: eyeLoops.map((l, i) => pointsPath(`Eye ${i}`, l, only("Eyes"))),
-  Tongue: (await loops("tongue")).map((l, i) => pointsPath(`Tongue ${i}`, l, only("Head"))),
-  Mouth: (await loops("mouth")).map((l, i) => pointsPath(`Mouth ${i}`, l, only("Head"))),
+  Tongue: (await loops("tongue")).map((l, i) => pointsPath(`Tongue ${i}`, l, only("Mouth"))),
+  Mouth: mouthLoops.map((l, i) => pointsPath(`Mouth ${i}`, l, only("Mouth"))),
   "Far legs": farLegEdges.map((edge, i) => pointsPath(`Far leg ${i}`, farLegPath(body[0] ?? [], edge), bodyWeights)),
   Body: body.map((outline, i) => pointsPath(`Outline ${i}`, outline, bodyWeights)),
 };
