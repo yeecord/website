@@ -13,12 +13,14 @@ export function DinoMascot({
   label,
   className,
   playing,
+  dead,
   onPress,
 }: {
   alt: string;
   label: string;
   className?: string;
   playing?: boolean;
+  dead?: boolean;
   onPress: () => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -63,6 +65,10 @@ export function DinoMascot({
     };
   }, []);
 
+  useEffect(() => {
+    playerRef.current?.setFace(dead ? "dead" : "normal");
+  }, [dead]);
+
   function yell() {
     const id = Date.now();
 
@@ -95,6 +101,7 @@ export function DinoMascot({
           type="button"
           aria-label={label}
           onClick={yell}
+          disabled={playing}
           className={playing ? "pointer-events-none block" : "block cursor-pointer"}
         >
           {/* 角色畫成面向右，翻過來迎向從左邊來的植物 */}

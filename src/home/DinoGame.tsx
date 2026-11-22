@@ -193,6 +193,10 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
   function start() {
     const field = fieldRef.current;
+
+    /* 點恐龍或按鈕開始後焦點會留在按鈕上，空白鍵跳躍時會冒出外框，還會再按一次它 */
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+
     const dino = dinoRef.current;
 
     if (!field || !dino) return;
@@ -357,6 +361,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               alt={alt}
               label={t("來玩一場")}
               playing={inGame}
+              dead={mode === "over"}
               onPress={start}
             />
           </div>

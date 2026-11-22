@@ -148,6 +148,8 @@ class Layer {
 }
 
 export type Trigger = "happy" | "stretch";
+export type Face = "normal" | "dead";
+const FACE_PARTS = new Set(["Eyes", "Mouth", "Tongue"]);
 /** The part of the 512 × 512 artboard to show. */
 export type View = { x: number; y: number; width: number; height: number };
 
@@ -159,6 +161,7 @@ export class MascotPlayer {
   private readonly body: Layer;
   private readonly blink: Layer;
   private readonly triggers = new Set<Trigger>();
+  private face: Face = "normal";
   private bodyPath: Path2D | undefined;
   private hovering = false;
   private frameId = 0;
@@ -211,6 +214,14 @@ export class MascotPlayer {
       this.frameId = requestAnimationFrame(tick);
     };
     this.frameId = requestAnimationFrame(tick);
+  }
+
+  setFace(face: Face) {
+    this.face = face;
+
+    if (!this.frameId) {
+      this.still();
+    }
   }
 
   stop() {
@@ -324,9 +335,11 @@ export class MascotPlayer {
 
     for (const shape of [...data.shapes].reverse()) {
       const path = new Path2D();
+      const centres = shape.paths.map(({ points, weights }) => this.trace(path, points, weights, skins));
 
-      for (const { points, weights } of shape.paths) {
-        this.trace(path, points, weights, skins);
+      if (this.face === "dead" && FACE_PARTS.has(shape.name)) {
+        this.drawDead(shape, centres);
+        continue;
       }
 
       if (shape.name === "Body") {
@@ -339,8 +352,8 @@ export class MascotPlayer {
     }
   }
 
-  /** Skins every control point, then draws the closed cubic outline through them. */
-  private trace(path: Path2D, points: number[], weights: number[][], skins: Mat[]) {
+  /** Skins every control point, draws the closed cubic outline through them, and returns the outline's centre. */
+  private trace(path: Path2D, points: number[], weights: number[][], skins: Mat[]): [number, number] {
     const out: number[] = [];
 
     for (let i = 0; i < points.length; i += 2) {
@@ -366,6 +379,44 @@ export class MascotPlayer {
     }
 
     path.closePath();
+
+    let cx = 0, cy = 0;
+
+    for (let v = 0; v < n; v++) {
+      cx += p(v, 2) / n;
+      cy += p(v, 3) / n;
+    }
+
+    return [cx, cy];
+  }
+
+  /** The knocked-out face: a cross over each eye and a small round mouth, in the face's own ink. */
+  private drawDead(shape: Shape, centres: [number, number][]) {
+    const { ctx } = this;
+    const ink = rgba(shape.fills[0]?.color ?? [54, 47, 54, 1]);
+
+    if (shape.name === "Eyes") {
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 6;
+      ctx.lineCap = "round";
+
+      for (const [x, y] of centres) {
+        ctx.beginPath();
+        ctx.moveTo(x - 8, y - 8);
+        ctx.lineTo(x + 8, y + 8);
+        ctx.moveTo(x + 8, y - 8);
+        ctx.lineTo(x - 8, y + 8);
+        ctx.stroke();
+      }
+    } else if (shape.name === "Mouth") {
+      ctx.fillStyle = ink;
+
+      for (const [x, y] of centres) {
+        ctx.beginPath();
+        ctx.ellipse(x, y - 2, 10, 8, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
   }
 
   private paint(path: Path2D, { color, feather, gradient }: Fill, rigWorld: Mat) {
