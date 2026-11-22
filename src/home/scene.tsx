@@ -107,7 +107,7 @@ function SkyLights() {
           className="animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-lg:w-20 max-sm:w-14"
         />
       </div>
-      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] [--drift:38vw] motion-reduce:animate-none max-lg:hidden">
+      <div className="absolute top-[34%] right-[11%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] [--drift:-12vw] motion-reduce:animate-none max-lg:hidden">
         <img
           src="/home/scene/balloon.svg"
           alt=""
