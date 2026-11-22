@@ -12,7 +12,6 @@ type Transform = Record<Property, number>;
 /** Rive's Mat2D order: x axis (a, b), y axis (c, d), translation (e, f). */
 type Mat = [number, number, number, number, number, number];
 
-const FAR = 4096;
 
 const multiply = ([a, b, c, d, e, f]: Mat, [g, h, i, j, k, l]: Mat): Mat => [a * g + c * h, b * g + d * h, a * i + c * j, b * i + d * j, a * k + c * l + e, b * k + d * l + f];
 const compose = (x: number, y: number, rotation: number, sx: number, sy: number): Mat => {
@@ -204,6 +203,7 @@ export class MascotPlayer {
   private airborne = false;
   private ducking = false;
   private bodyPath: Path2D | undefined;
+  private maskContext: CanvasRenderingContext2D | null = null;
   private hovering = false;
   private frameId = 0;
   private last = 0;
@@ -521,19 +521,48 @@ export class MascotPlayer {
     }
 
     // An inner feather: clip to the shape, then cast a blurred shadow of everything outside it, shifted by the offset.
-    const outside = new Path2D();
-    outside.rect(-FAR, -FAR, FAR * 2, FAR * 2);
-    outside.addPath(path);
+    // The outside is a mask with the whole shape cut out under the nonzero rule, so overlapping parts count as inside.
+    const { canvas } = this;
+    const margin = Math.ceil((feather.strength * 3 + Math.max(Math.abs(feather.x), Math.abs(feather.y))) * scale);
+    const mask = this.mask(canvas.width + margin * 2, canvas.height + margin * 2);
+    const transform = ctx.getTransform();
+
+    mask.setTransform(1, 0, 0, 1, 0, 0);
+    mask.globalCompositeOperation = "source-over";
+    mask.fillStyle = "#000";
+    mask.fillRect(0, 0, mask.canvas.width, mask.canvas.height);
+    mask.setTransform(transform.a, transform.b, transform.c, transform.d, transform.e + margin, transform.f + margin);
+    mask.globalCompositeOperation = "destination-out";
+    mask.fill(path);
+
     ctx.save();
     ctx.clip(path);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.shadowColor = rgba(color);
     ctx.shadowBlur = feather.strength * scale;
-    ctx.shadowOffsetX = (feather.x + FAR * 2) * scale;
+    // Draw the mask a canvas-width off to the left and throw its shadow back, so only the shadow lands.
+    ctx.shadowOffsetX = feather.x * scale + mask.canvas.width;
     ctx.shadowOffsetY = feather.y * scale;
-    ctx.translate(-FAR * 2, 0);
-    ctx.fillStyle = "#000";
-    ctx.fill(outside, "evenodd");
+    ctx.drawImage(mask.canvas, -margin - mask.canvas.width, -margin);
     ctx.restore();
+  }
+
+  /** A scratch canvas for feather masks, grown to the size asked for. */
+  private mask(width: number, height: number) {
+    this.maskContext ??= document.createElement("canvas").getContext("2d");
+
+    if (!this.maskContext) {
+      throw new Error("no 2d context");
+    }
+
+    const { canvas } = this.maskContext;
+
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    return this.maskContext;
   }
 
   private hit(e: PointerEvent) {

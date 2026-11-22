@@ -17,9 +17,9 @@ for (const { name, paths } of rig.shapes) {
   for (const { points, weights } of paths) {
     for (let i = 0; i < weights.length; i += 3) {
       const [x, y] = points.slice(2 * i + 2, 2 * i + 4);
-      // The occiput and underside of the jaw mark the edge of the drawn head.
+      // Everything above the jaw joint is head.
       const inHead = name === "Body"
-        ? y - 156.1 <= 0.732 * (x - 296.5) && y < 217
+        ? y < 218
         : name !== "Far legs";
 
       for (const w of weights.slice(i, i + 3)) {

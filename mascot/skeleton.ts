@@ -13,9 +13,10 @@ type BoneSpec = { name: string; id: string; length: number; rotation: number; at
 /** A straight run of equal bones named `${name}1`, `${name}2`… from `at`, pointing along `rotation`. */
 type Chain = { name: string; ids: string[]; at: P; rotation: number; length: number };
 
-/** The neck pivots high and back, at the withers like a grazing animal's, and ends where the head turns. */
-const NECK_BASE: P = [85.5, -194];
-const HEAD_PIVOT: P = [100, -245.5];
+/** The neck runs straight between the shoulders and the jaw; the jaw joint gets a disc of the neck's half-width. */
+const NECK_BASE: P = [81.6, -200];
+const HEAD_PIVOT: P = [84.5, -244];
+const JAW_RADIUS = 37.3;
 const NECK: Chain = {
   name: "Neck",
   ids: ["1:2", "1:11", "1:12"],
@@ -112,33 +113,32 @@ function handover(from: string, to: string, weight: number): Influence[] {
   return [[from, 1 - weight], [to, weight]];
 }
 
+/** A hard cut straight across the neck at the jaw keeps the head rigid, and the jaw disc covers it as the head turns. */
 function neckWeights([x, y]: P): Influence[] {
-  const throat = smooth(44, 122, x);
-  const station = (back: number, front: number) => back + (front - back) * throat;
-  // The occiput and jaw delimit the rigid head in the artwork.
-  const headEdge = -305.9 + 0.732 * (x - 40.5);
-  const depth = y - headEdge + Math.max(0, 40 - x) * 0.95;
-  const head = station(33, 25);
-  const upper = station(51, 42);
-  const lower = station(74, 59);
-  const base = station(221, 189); // The outside blends farther into the back than the throat does into the chest.
-
-  if (depth <= head) {
-    return handover("Head", "Neck3", smooth(0, head, depth));
+  if (y < HEAD_PIVOT[1]) {
+    return [["Head", 1]];
   }
 
-  if (depth <= upper) {
-    return handover("Neck3", "Neck2", ramp(head, upper, depth));
+  const s = ((NECK_BASE[1] - y) / (NECK_BASE[1] - HEAD_PIVOT[1])) * 3;
+
+  if (s <= 0.5) {
+    // The back hands over far down the withers so it stretches into one arc as the head drops; the throat hands over
+    // within a few units of the shoulder cut, so it folds cleanly instead of being scooped out.
+    const back = smooth(-150, -215, y) * smooth(-10, 40, x);
+    const throat = smooth(NECK_BASE[1] + 4, NECK_BASE[1] - 4, y);
+
+    return handover("Body", "Neck1", back + (throat - back) * smooth(70, 100, x));
   }
 
-  if (depth <= lower) {
-    return handover("Neck2", "Neck1", ramp(upper, lower, depth));
+  if (s <= 1.5) {
+    return handover("Neck1", "Neck2", s - 0.5);
   }
 
-  const neck = smooth(lower, base, depth);
-  const chest = smooth(-102, -88, y);
+  if (s <= 2.5) {
+    return handover("Neck2", "Neck3", s - 1.5);
+  }
 
-  return handover("Body", "Neck1", (1 - neck) * (1 - chest));
+  return [["Neck3", 1]];
 }
 
 /** Each branch hands off to its neighbour before the next handover begins. */
@@ -285,6 +285,19 @@ function pointsPath(name: string, segs: Seg[], weigh: (p: P) => Influence[]) {
 
 const only = (bone: string) => (): Influence[] => [[bone, 1]];
 
+/** A clockwise circle, the same winding as the outline, so the two fill as one shape. */
+function disc([cx, cy]: P, r: number): Seg[] {
+  const k = 0.5523 * r;
+  const at = (a: number): P => [cx + Math.cos(a) * r, cy + Math.sin(a) * r];
+
+  return [0, 1, 2, 3].map((q) => {
+    const a = (q * Math.PI) / 2, b = a + Math.PI / 2;
+    const [from, to] = [at(a), at(b)];
+
+    return { from, c1: [from[0] - Math.sin(a) * k, from[1] + Math.cos(a) * k], c2: [to[0] + Math.sin(b) * k, to[1] - Math.cos(b) * k], to };
+  });
+}
+
 const body = (await loops("body")).map(densify);
 const farLegEdges: [start: P, end: P][] = [
   [[242.74, 420.09], [202, 420.44]],
@@ -313,7 +326,10 @@ const shapes: Record<string, string[]> = {
   Tongue: (await loops("tongue")).map((l, i) => pointsPath(`Tongue ${i}`, l, only("Mouth"))),
   Mouth: mouthLoops.map((l, i) => pointsPath(`Mouth ${i}`, l, only("Mouth"))),
   "Far legs": farLegEdges.map((edge, i) => pointsPath(`Far leg ${i}`, farLegPath(body[0] ?? [], edge), bodyWeights)),
-  Body: body.map((outline, i) => pointsPath(`Outline ${i}`, outline, bodyWeights)),
+  Body: [
+    ...body.map((outline, i) => pointsPath(`Outline ${i}`, outline, bodyWeights)),
+    pointsPath("Jaw joint", disc(HEAD_PIVOT, JAW_RADIUS), only("Head")),
+  ],
 };
 
 function boneXml(spec: BoneSpec, depth: number): string {
