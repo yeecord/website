@@ -577,6 +577,15 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
+  @keyframes shine {
+    from {
+      transform: scale(0.88) rotate(-10deg);
+    }
+    to {
+      transform: scale(1.08) rotate(10deg);
+    }
+  }
+
   @keyframes twinkle {
     50% {
       opacity: 0.25;

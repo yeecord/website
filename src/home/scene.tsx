@@ -96,16 +96,16 @@ function SkyLights() {
       aria-hidden
       className="pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-300 group-data-game/hero:opacity-40"
     >
-      <div className="absolute top-[4%] right-[15%] transition-opacity duration-1000 dark:hidden group-data-night/hero:opacity-0">
+      <div className="absolute top-[4%] right-[15%] transition-opacity duration-1000 max-lg:top-0 max-lg:right-[3%] dark:hidden group-data-night/hero:opacity-0">
         <img
           src="/home/scene/sun.svg"
           alt=""
           width={150}
           height={150}
-          className="animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-sm:w-20"
+          className="animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-lg:w-20 max-sm:w-14"
         />
       </div>
-      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] [--drift:38vw] motion-reduce:animate-none max-sm:hidden">
+      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] [--drift:38vw] motion-reduce:animate-none max-lg:hidden">
         <img
           src="/home/scene/balloon.svg"
           alt=""
@@ -119,7 +119,7 @@ function SkyLights() {
         alt=""
         width={92}
         height={96}
-        className="absolute top-[6%] right-[18%] opacity-0 transition-opacity duration-1000 max-sm:w-14 dark:opacity-100 group-data-night/hero:opacity-100"
+        className="absolute top-[6%] right-[18%] opacity-0 transition-opacity duration-1000 max-lg:top-[1%] max-lg:right-[4%] max-lg:w-14 max-sm:w-11 dark:opacity-100 group-data-night/hero:opacity-100"
       />
       <div className="absolute inset-0 opacity-0 transition-opacity duration-1000 dark:opacity-100 group-data-night/hero:opacity-100">
         {STARS.map(([left, top, delay]) => (
@@ -144,9 +144,9 @@ export function Village({ className }: { className?: string }) {
   return (
     <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", dimmed, className)}>
       <Cottage className="bottom-[46%] left-[24%] w-12 sm:w-16" smokeDelay={0} />
-      <Cottage className="bottom-[58%] left-[31%] w-8 sm:w-11" smokeDelay={-1.3} />
-      <Windmill className="bottom-[40%] left-[46%] w-10 sm:w-14" />
-      <Cottage className="bottom-[50%] left-[38%] w-9 sm:w-12 max-md:hidden" smokeDelay={-2.1} />
+      <Cottage className="bottom-[58%] left-[31%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
+      <Windmill className="bottom-[40%] left-[46%] w-10 sm:w-14 max-sm:hidden" />
+      <Cottage className="bottom-[50%] left-[38%] w-9 sm:w-12 max-xl:hidden" smokeDelay={-2.1} />
     </div>
   );
 }

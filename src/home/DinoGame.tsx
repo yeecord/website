@@ -18,7 +18,8 @@ const CHROME = {
   maxGapCoefficient: 1.5,
   maxObstacleLength: 3,
   maxObstacleDuplication: 2,
-  clearTime: 3,
+  /* Chrome 是 3 秒，但它的畫面只有 600 px 寬；這裡的場地是整個視窗，障礙物光是跑到恐龍面前就要兩秒多 */
+  clearTime: 1,
   scoreCoefficient: 0.025,
 };
 const UNIT = 1 / 94;
@@ -35,12 +36,17 @@ type ObstacleKind =
   | "plane"
   | "bee";
 
-/* height 是恐龍畫布高度的比例；ratio 是素材的寬高比；walk 是自己往恐龍走的速度，單位同 Chrome 的速度 */
+/* 尺寸照 Chrome（offline_sprite_definitions.ts）：height 是 Chrome 像素，小仙人掌高 35、大仙人掌高 50、翼龍高 40；
+   ratio 是素材的寬高比。group 是一排的總寬上限，Chrome 是 3 × 17 和 3 × 25，這裡的素材比較胖，放寬 30%，放不下就少放幾個。
+   walk 是自己往恐龍走的速度，單位同 Chrome 的速度 */
+const SMALL_GROUP = 17 * 3 * 1.3;
+const LARGE_GROUP = 25 * 3 * 1.3;
 const OBSTACLES: Record<
   ObstacleKind,
   {
     height: number;
     ratio: number;
+    group: number;
     multipleSpeed: number;
     minGap: number;
     minSpeed: number;
@@ -48,20 +54,21 @@ const OBSTACLES: Record<
     walk?: number;
   }
 > = {
-  rock: { height: 0.3, ratio: 856 / 546, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
-  mushroom: { height: 0.34, ratio: 751 / 820, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
-  cone: { height: 0.42, ratio: 607 / 708, multipleSpeed: 7, minGap: 120, minSpeed: 0 },
-  crate: { height: 0.44, ratio: 857 / 855, multipleSpeed: 7, minGap: 120, minSpeed: 0 },
-  bird: { height: 0.26, ratio: 571 / 506, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
-  plane: { height: 0.2, ratio: 579 / 367, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
-  cactus: { height: 0.46, ratio: 609 / 751, multipleSpeed: 5, minGap: 120, minSpeed: 0 },
-  log: { height: 0.24, ratio: 713 / 436, multipleSpeed: 999, minGap: 120, minSpeed: 0 },
-  hedgehog: { height: 0.26, ratio: 631 / 501, multipleSpeed: 999, minGap: 140, minSpeed: 6.5, walk: 1.2 },
-  bee: { height: 0.2, ratio: 824 / 808, multipleSpeed: 999, minGap: 150, minSpeed: 7.5, flying: true },
+  rock: { height: 26, ratio: 856 / 546, group: SMALL_GROUP, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
+  mushroom: { height: 34, ratio: 751 / 820, group: SMALL_GROUP, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
+  cone: { height: 34, ratio: 607 / 708, group: SMALL_GROUP, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
+  cactus: { height: 48, ratio: 609 / 751, group: LARGE_GROUP, multipleSpeed: 7, minGap: 120, minSpeed: 0 },
+  crate: { height: 40, ratio: 857 / 855, group: LARGE_GROUP, multipleSpeed: 7, minGap: 120, minSpeed: 0 },
+  log: { height: 22, ratio: 713 / 436, group: 0, multipleSpeed: 999, minGap: 120, minSpeed: 0 },
+  hedgehog: { height: 24, ratio: 631 / 501, group: 0, multipleSpeed: 999, minGap: 140, minSpeed: 6.5, walk: 1.2 },
+  bird: { height: 32, ratio: 571 / 506, group: 0, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
+  plane: { height: 24, ratio: 579 / 367, group: 0, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
+  bee: { height: 28, ratio: 824 / 808, group: 0, multipleSpeed: 999, minGap: 150, minSpeed: 7.5, flying: true },
 };
 
-/* 星星：偶爾在障礙物後面的空檔飄著，跳起來吃到加分 */
-const STAR = { chance: 0.3, height: 0.2, altitude: 0.7, bonus: 25 };
+/* 星星：偶爾三顆排成弧形懸在地面障礙物正上方，跳過障礙物時順手吃到。
+   恐龍脖子長，所以放在頭頂以上（恐龍畫布高度的比例），站著吃不到 */
+const STAR = { chance: 0.35, size: 0.13, spread: 1.5, altitudes: [1.0, 1.14, 1.0], bonus: 10 };
 /* Chrome 每 100 分閃一次分數，每 700 分日夜交替 */
 const MILESTONE = 100;
 const NIGHT_EVERY = 700;
@@ -233,8 +240,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     const allowed = KINDS.filter((kind) => speed >= OBSTACLES[kind].minSpeed && !repeated(kind));
     const kind = allowed[random(0, allowed.length - 1)] ?? "rock";
     const type = OBSTACLES[kind];
-    const size = speed > type.multipleSpeed ? random(1, CHROME.maxObstacleLength) : 1;
-    const h = type.height * height;
+    const fits = Math.floor(type.group / (type.height * type.ratio));
+    const size = speed > type.multipleSpeed ? random(1, Math.max(1, Math.min(CHROME.maxObstacleLength, fits))) : 1;
+    const h = type.height * unit;
     const width = h * type.ratio * size;
     const minGap = Math.round(width * speed + type.minGap * CHROME.gapCoefficient * unit);
     const altitude = type.flying ? (FLIGHT_ALTITUDES[random(0, FLIGHT_ALTITUDES.length - 1)] ?? 0) * height : 0;
@@ -252,11 +260,17 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
     current.items.push(item);
 
-    if (Math.random() < STAR.chance) {
-      const star = { id: current.nextId++, x: -width - item.gap / 2, size: STAR.height * height, altitude: STAR.altitude * height };
+    if (!type.flying && Math.random() < STAR.chance) {
+      const size = STAR.size * height;
+      const arc = STAR.altitudes.map((altitude, i) => ({
+        id: current.nextId++,
+        x: -width / 2 + size / 2 + (i - 1) * size * STAR.spread,
+        size,
+        altitude: altitude * height,
+      }));
 
-      current.stars.push(star);
-      setStars((list) => [...list, star]);
+      current.stars.push(...arc);
+      setStars((list) => [...list, ...arc]);
     }
 
     current.history = [kind, ...current.history].slice(0, CHROME.maxObstacleDuplication);
@@ -559,7 +573,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               src="/home/scene/star.svg"
               alt=""
               draggable={false}
-              className="size-full animate-[float_1.2s_ease-in-out_infinite_alternate] select-none drop-shadow-[0_2px_2px_rgb(0_0_0/0.2)] motion-reduce:animate-none"
+              className="size-full animate-[shine_.9s_ease-in-out_infinite_alternate] select-none drop-shadow-[0_0_6px_rgb(255_196_61/0.9)] motion-reduce:animate-none"
             />
           </div>
         ))}
@@ -635,7 +649,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
           aria-label={t("跳")}
           onPointerDown={jump}
           onPointerUp={endJump}
-          className="fixed inset-0 z-40 cursor-pointer"
+          className="fixed inset-0 z-40 cursor-none"
         />
       )}
     </>

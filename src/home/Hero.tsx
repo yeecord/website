@@ -26,22 +26,22 @@ export function Hero({ locale }: { locale: Locale }) {
           <Cloud
             kind="wide"
             width={200}
-            className="top-[5%] left-[6%] [--drift:80px] [animation-duration:48s] max-sm:w-24"
+            className="top-[5%] left-[6%] [--drift:80px] [animation-duration:48s] max-lg:w-36 max-sm:w-24"
           />
           <Cloud
             kind="small"
             width={110}
-            className="top-[36%] left-[18%] opacity-80 [--drift:-56px] [animation-duration:32s] max-sm:hidden"
+            className="top-[36%] left-[18%] opacity-80 [--drift:-56px] [animation-duration:32s] max-lg:hidden"
           />
           <Cloud
             kind="wide"
             width={240}
-            className="top-[9%] right-[7%] [--drift:-90px] [animation-duration:56s] max-sm:top-[3%] max-sm:w-28"
+            className="top-[9%] right-[7%] [--drift:-90px] [animation-duration:56s] max-lg:top-[3%] max-lg:right-[10%] max-lg:w-28 max-sm:top-[3%] max-sm:w-24"
           />
           <Cloud
             kind="small"
             width={90}
-            className="top-[40%] right-[24%] opacity-70 [--drift:48px] [animation-duration:26s] max-sm:hidden"
+            className="top-[40%] right-[24%] opacity-70 [--drift:48px] [animation-duration:26s] max-lg:hidden"
           />
           <div
             data-hero-copy
@@ -84,7 +84,7 @@ export function Hero({ locale }: { locale: Locale }) {
 function Forest() {
   return (
     <div className="absolute inset-x-0 top-0">
-      <Plant kind="pine" height={150} className="bottom-full left-[4%]" />
+      <Plant kind="pine" height={150} className="bottom-full left-[4%] max-sm:h-24 max-sm:w-auto" />
       <Plant kind="bush" height={46} className="bottom-full left-[10%] [animation-delay:-1.5s]" />
       <Rabbit className="bottom-full left-[13.5%] max-sm:hidden" />
       <Plant
