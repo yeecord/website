@@ -10,7 +10,7 @@ export type Rig = { rig: { x: number; y: number }; bones: Bone[]; shapes: Shape[
 type Property = "x" | "y" | "rotation" | "scaleX" | "scaleY" | "length";
 type Transform = Record<Property, number>;
 /** Rive's Mat2D order: x axis (a, b), y axis (c, d), translation (e, f). */
-export type Mat = [number, number, number, number, number, number];
+type Mat = [number, number, number, number, number, number];
 
 const FAR = 4096;
 
@@ -172,10 +172,6 @@ export class MascotPlayer {
   private scale = 1;
   private readonly onMove = (e: PointerEvent) => this.setHovering(this.hit(e));
   private readonly onLeave = () => this.setHovering(false);
-  private pinned: string | undefined;
-  timeScale = 1;
-  /** Called after every drawn frame with each bone's world matrix and skinning matrix, in artboard space. */
-  onFrame: ((frame: { worlds: Mat[]; skins: Mat[] }) => void) | undefined;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -216,7 +212,7 @@ export class MascotPlayer {
     this.last = performance.now();
 
     const tick = (now: number) => {
-      this.step(Math.min(0.1, (now - this.last) / 1000) * this.timeScale);
+      this.step(Math.min(0.1, (now - this.last) / 1000));
       this.last = now;
       this.frameId = requestAnimationFrame(tick);
     };
@@ -240,15 +236,6 @@ export class MascotPlayer {
 
     if (!this.frameId) {
       this.still();
-    }
-  }
-
-  /** Plays one animation on the body layer and keeps replaying it, in place of the state machine; `undefined` hands control back. */
-  pin(name: string | undefined) {
-    this.pinned = name;
-
-    if (name) {
-      this.body.go(this.play(name), 150);
     }
   }
 
@@ -299,11 +286,7 @@ export class MascotPlayer {
     const { body, blink, timelines } = this;
     const at = body.current.timeline;
 
-    if (this.pinned) {
-      if (body.current.timeline.done(body.current.frame)) {
-        body.go(this.play(this.pinned), 150);
-      }
-    } else if (!body.blending) {
+    if (!body.blending) {
       const moving = at === timelines.Run || at === timelines.Jump || at === timelines.Duck || at === timelines.Dead;
       const pose =
         this.face === "dead" ? "Dead" : this.running ? (this.airborne ? "Jump" : this.ducking ? "Duck" : "Run") : undefined;
@@ -370,8 +353,6 @@ export class MascotPlayer {
     });
 
     const skins = worlds.map((w, i) => multiply(w, this.binds[i] ?? w));
-
-    this.onFrame?.({ worlds, skins });
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
