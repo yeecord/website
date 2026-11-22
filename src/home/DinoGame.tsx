@@ -304,9 +304,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     current.score += current.speed * frames * CHROME.scoreCoefficient;
     current.distance += current.speed * frames * unit;
 
-    /* 背景跟著跑步往後捲，越遠越慢 */
+    /* 背景跟著跑步往後（往左）捲，越遠越慢 */
     for (const layer of current.layers) {
-      layer.el.style.transform = `translate3d(${(current.distance * layer.factor) % layer.period}px, 0, 0)`;
+      layer.el.style.transform = `translate3d(${-((current.distance * layer.factor) % layer.period)}px, 0, 0)`;
     }
     /* Chrome 的 updateJump：y 是離地高度、vy 往上為正，都用 Chrome 像素 */
     if (current.jumping) {
@@ -343,9 +343,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       }
     }
 
-    /* 畫布有 CSS 鏡像，用量到的外框換算；translateY 不影響 left 和 width，跳躍中量也安全 */
-    const dinoLeft = dinoRect.left - fieldRect.left;
-    /* 畫布是鏡像的：artboard 右邊在畫面左邊 */
+    /* 場地整個水平鏡像，所以在場地座標裡從右緣量；translateY 不影響寬度，跳躍中量也安全 */
+    const dinoLeft = fieldRect.right - dinoRect.right;
+    /* 恐龍在場地座標裡是鏡像的：artboard 右邊在場地左邊 */
     const scale = height / VIEW.height;
     const viewRight = VIEW.x + VIEW.width;
     const hitboxes = (current.ducking ? DUCKING_BOXES : STANDING_BOXES).map(([left, right, bottom, top]): Box => ({
@@ -579,8 +579,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       )}
       <div
         ref={fieldRef}
-        /* 障礙物在左右邊緣淡入淡出 */
-        className="pointer-events-none absolute inset-0 z-1 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]"
+        /* 遊戲邏輯裡障礙物從左往右跑；整個場地水平鏡像後，恐龍在左邊面向右，障礙物從右邊來，跟 Chrome 一樣。
+           障礙物在左右邊緣淡入淡出 */
+        className="-scale-x-100 pointer-events-none absolute inset-0 z-1 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]"
       >
         {stars.map((star) => (
           <div
@@ -604,7 +605,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
           <span
             key={pop.id}
             style={{ left: pop.x, bottom: pop.bottom }}
-            className="absolute animate-[pop_.7s_cubic-bezier(0.23,1,0.32,1)_forwards] font-bold text-amber-500 text-lg tabular-nums motion-reduce:animate-none"
+            /* scale 跟動畫用的 transform 是分開的屬性，把鏡像的字翻回來 */
+            className="-scale-x-100 absolute animate-[pop_.7s_cubic-bezier(0.23,1,0.32,1)_forwards] font-bold text-amber-500 text-lg tabular-nums motion-reduce:animate-none"
           >
             +{STAR.bonus}
           </span>
@@ -647,8 +649,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
         <div className="pointer-events-auto absolute right-[5%] bottom-0 sm:right-[12%]">
           <div
             ref={dinoRef}
+            /* 角色畫成面向右，在鏡像的場地裡再翻一次才會面向右 */
             className={cn(
-              "will-change-transform",
+              "-scale-x-100 will-change-transform",
               mode === "over" && "animate-[dino-hit_.45s_ease]",
             )}
           >

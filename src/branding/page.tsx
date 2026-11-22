@@ -379,7 +379,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
                   width={1000}
                   height={868}
                   loading="lazy"
-                  className="-scale-x-100 aspect-[1000/868] w-full"
+                  className="aspect-[1000/868] w-full"
                 />
                 <figcaption className="font-bold">{t(name)}</figcaption>
                 <CornerDownload href={`${base}poses/${file}.png`} label={`${t(name)} PNG`} className="size-9 bottom-3 right-3 bg-fd-foreground/8 hover:bg-fd-foreground/14" />
@@ -589,7 +589,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
             width={1000}
             height={868}
             loading="lazy"
-            className="-scale-x-100 w-56 justify-self-center sm:w-72"
+            className="w-56 justify-self-center sm:w-72"
           />
         </section>
       </main>

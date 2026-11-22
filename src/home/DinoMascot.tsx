@@ -113,14 +113,13 @@ export function DinoMascot({
           disabled={playing}
           className={playing ? "pointer-events-none block" : "block cursor-pointer"}
         >
-          {/* 角色畫成面向右，翻過來迎向從左邊來的植物 */}
           <canvas
             ref={canvasRef}
             role="img"
             aria-label={alt}
             width={VIEW.width}
             height={VIEW.height}
-            className="-scale-x-100 h-36 w-auto drop-shadow-lg sm:h-60 lg:h-72"
+            className="h-36 w-auto drop-shadow-lg sm:h-60 lg:h-72"
           />
         </button>
       </div>

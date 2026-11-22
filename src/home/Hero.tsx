@@ -88,28 +88,28 @@ export function Hero({ locale }: { locale: Locale }) {
 function Forest() {
   return (
     <div className="absolute inset-x-0 top-0">
-      <Plant kind="pine" height={150} className="bottom-full left-[4%] max-sm:h-24 max-sm:w-auto" />
-      <Plant kind="bush" height={46} className="bottom-full left-[10%] [animation-delay:-1.5s]" />
-      <Rabbit className="bottom-full left-[13.5%] max-sm:hidden" />
+      <Plant kind="pine" height={150} className="bottom-full right-[4%] max-sm:h-24 max-sm:w-auto" />
+      <Plant kind="bush" height={46} className="bottom-full right-[10%] [animation-delay:-1.5s]" />
+      <Rabbit className="bottom-full right-[13.5%] max-sm:hidden" />
       <Plant
         kind="flowers"
         height={36}
-        className="bottom-full left-[16%] [animation-delay:-3s] max-sm:hidden"
+        className="bottom-full right-[16%] [animation-delay:-3s] max-sm:hidden"
       />
       <Plant
         kind="tree"
         height={120}
-        className="bottom-full right-[33%] [animation-delay:-2s] max-lg:hidden"
+        className="bottom-full left-[33%] [animation-delay:-2s] max-lg:hidden"
       />
       <Plant
         kind="flowers"
         height={30}
-        className="bottom-full right-[8%] [animation-delay:-4s] max-sm:hidden"
+        className="bottom-full left-[8%] [animation-delay:-4s] max-sm:hidden"
       />
       <Plant
         kind="bush"
         height={40}
-        className="bottom-full right-[3%] [animation-delay:-2.6s]"
+        className="bottom-full left-[3%] [animation-delay:-2.6s]"
       />
     </div>
   );

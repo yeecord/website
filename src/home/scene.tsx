@@ -142,11 +142,11 @@ const STARS = [
 ];
 
 /* 玩遊戲時跟著跑步往後捲的一層（DinoGame 依 data-parallax 的倍率移動它）。
-   內容在左邊再複製一份接起來，捲過一整個寬度就接回原位 */
+   內容在右邊再複製一份接起來，往左捲過一整個寬度就接回原位 */
 export function Scroller({ factor, children }: { factor: number; children: React.ReactNode }) {
   return (
     <div aria-hidden data-parallax={factor} className="absolute inset-0">
-      {[-1, 0].map((k) => (
+      {[0, 1].map((k) => (
         <div key={k} style={{ transform: `translateX(${k * 100}%)` }} className="absolute inset-0">
           {children}
         </div>
@@ -160,10 +160,10 @@ export function Village({ className }: { className?: string }) {
   return (
     <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", nightOnly, className)}>
       <Scroller factor={0.25}>
-        <Cottage className="bottom-[46%] left-[24%] w-12 sm:w-16" smokeDelay={0} />
-        <Cottage className="bottom-[58%] left-[31%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
-        <Windmill className="bottom-[40%] left-[46%] w-10 sm:w-14 max-sm:hidden" />
-        <Cottage className="bottom-[50%] left-[38%] w-9 sm:w-12 max-xl:hidden" smokeDelay={-2.1} />
+        <Cottage className="right-[24%] bottom-[46%] w-12 sm:w-16" smokeDelay={0} />
+        <Cottage className="right-[31%] bottom-[58%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
+        <Windmill className="right-[46%] bottom-[40%] w-10 sm:w-14 max-sm:hidden" />
+        <Cottage className="right-[38%] bottom-[50%] w-9 sm:w-12 max-xl:hidden" smokeDelay={-2.1} />
       </Scroller>
     </div>
   );
