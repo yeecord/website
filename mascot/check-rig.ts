@@ -19,7 +19,7 @@ for (const { name, paths } of rig.shapes) {
       const [x, y] = points.slice(2 * i + 2, 2 * i + 4);
       // Everything above the jaw joint is head.
       const inHead = name === "Body"
-        ? y < 218
+        ? y < 188
         : name !== "Far legs";
 
       for (const w of weights.slice(i, i + 3)) {

@@ -15,8 +15,8 @@ type Chain = { name: string; ids: string[]; at: P; rotation: number; length: num
 
 /** The neck runs straight between the shoulders and the jaw; the jaw joint gets a disc of the neck's half-width. */
 const NECK_BASE: P = [81.6, -200];
-const HEAD_PIVOT: P = [84.5, -244];
-const JAW_RADIUS = 37.3;
+const HEAD_PIVOT: P = [85.6, -274];
+const JAW_RADIUS = 30.9;
 const NECK: Chain = {
   name: "Neck",
   ids: ["1:2", "1:11", "1:12"],
@@ -113,9 +113,10 @@ function handover(from: string, to: string, weight: number): Influence[] {
   return [[from, 1 - weight], [to, weight]];
 }
 
-/** A hard cut straight across the neck at the jaw keeps the head rigid, and the jaw disc covers it as the head turns. */
+/** A hard cut across the neck at the jaw keeps the head rigid, and the jaw disc covers it as the head turns. */
 function neckWeights([x, y]: P): Influence[] {
-  if (y < HEAD_PIVOT[1]) {
+  // On the throat side the cut drops below the jaw corner, so the whole corner turns with the head.
+  if (y < HEAD_PIVOT[1] + 20 * smooth(HEAD_PIVOT[0] + 10, HEAD_PIVOT[0] + 25, x)) {
     return [["Head", 1]];
   }
 
