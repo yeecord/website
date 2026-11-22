@@ -13,8 +13,8 @@ type BoneSpec = { name: string; id: string; length: number; rotation: number; at
 /** A straight run of equal bones named `${name}1`, `${name}2`… from `at`, pointing along `rotation`. */
 type Chain = { name: string; ids: string[]; at: P; rotation: number; length: number };
 
-/** The neck pivots inside the shoulders and ends where the head turns. */
-const NECK_BASE: P = [78, -165];
+/** The neck pivots high and back, at the withers like a grazing animal's, and ends where the head turns. */
+const NECK_BASE: P = [52, -172];
 const HEAD_PIVOT: P = [84, -245.95];
 const NECK: Chain = {
   name: "Neck",
@@ -78,6 +78,9 @@ const smooth = (a: number, b: number, v: number) => {
 /** How far along the chain's direction a point lies, from the chain's start. */
 const reach = ({ at, rotation }: Chain, [x, y]: P) => (x - at[0]) * Math.cos(rotation) + (y - at[1]) * Math.sin(rotation);
 
+/** How far a point lies to the right of the chain's direction: for the neck, positive is the throat side. */
+const side = ({ at, rotation }: Chain, [x, y]: P) => (y - at[1]) * Math.cos(rotation) - (x - at[0]) * Math.sin(rotation);
+
 /** Splits a weight along a chain: full weight on a bone at its midpoint, handed over linearly to the next bone's midpoint. */
 function along(chain: Chain, p: P, weight: number): Influence[] {
   const count = chain.ids.length;
@@ -100,7 +103,10 @@ const nearestLeg = (score: (span: [number, number]) => number) =>
 function bodyWeights(p: P): Influence[] {
   const [x, y] = p;
   const up = reach(NECK, p);
-  const toNeck = smooth(-45, 20, up) * smooth(0, 50, x);
+  // The back of the neck hands over to Body far down the withers, so it stretches into one arc; the throat hands over
+  // above the chest, measured by height because the tilted neck axis would reach down into the chest.
+  const throat = smooth(-10, 40, side(NECK, p));
+  const toNeck = (smooth(-60, 15, up) * (1 - throat) + smooth(-150, -190, y) * throat) * smooth(-20, 40, x);
   const toHead = smooth(NECK.length - 35, NECK.length + 10, up);
   const toTail = smooth(-81, -146, x) * smooth(-150, -120, y);
   const gap = ([a, b]: [number, number]) => (x < a ? a - x : x > b ? x - b : 0);
