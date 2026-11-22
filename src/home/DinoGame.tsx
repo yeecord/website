@@ -17,6 +17,7 @@ const GRAVITY = 2000;
 const JUMP_VELOCITY = 620;
 /* 提早放開時把上升速度砍到這個值：仍足以越過最高的障礙物 (56px) */
 const SHORT_JUMP_VELOCITY = 490;
+const MAX_SPEED = 520;
 const JUMP_BUFFER = 0.12;
 const BEST_KEY = "dino-best";
 
@@ -110,7 +111,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     const dt = Math.min((now - current.last) / 1000, 0.04);
 
     current.last = now;
-    current.speed += dt * 7;
+    current.speed = Math.min(MAX_SPEED, current.speed + dt * 5);
     current.score += dt * 10;
     current.buffered -= dt;
 
@@ -133,8 +134,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
        translateY 不影響 left/width,跳躍中量也安全 */
     const fieldLeft = field.getBoundingClientRect().left;
     const dinoRect = dino.getBoundingClientRect();
-    const hitboxLeft = dinoRect.left - fieldLeft + dinoRect.width * 0.35;
-    const hitboxRight = dinoRect.left - fieldLeft + dinoRect.width * 0.75;
+    const hitboxLeft = dinoRect.left - fieldLeft + dinoRect.width * 0.4;
+    const hitboxRight = dinoRect.left - fieldLeft + dinoRect.width * 0.72;
 
     current.spawnIn -= dt;
     if (current.spawnIn <= 0) {
@@ -142,7 +143,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       const sprite = Math.floor(Math.random() * SPRITES.length);
 
       current.items.push({ id, sprite, x: 0 });
-      current.spawnIn = 1.0 + Math.random() * 1.15;
+      current.spawnIn = 1.3 + Math.random() * 1.1;
       setObstacles((list) => [...list, { id, sprite }]);
     }
 
@@ -161,7 +162,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       const hit =
         item.x - width * 0.25 > hitboxLeft &&
         item.x - width * 0.75 < hitboxRight &&
-        current.y < height - 10;
+        current.y < height - 18;
 
       if (hit) {
         die();
@@ -207,7 +208,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       items: [],
       nextId: 1,
       spawnIn: 1.4,
-      speed: 300,
+      speed: 250,
       score: 0,
     };
     setObstacles([]);
@@ -259,11 +260,62 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
   useEffect(() => stopLoop, []);
 
-  const scorePill =
-    "flex items-baseline gap-2 rounded-full border bg-fd-background/80 px-3 py-1 font-bold font-mono text-sm shadow-sm backdrop-blur animate-in fade-in slide-in-from-bottom-1 duration-200 ease-out motion-reduce:animate-none";
+  const inGame = mode !== "idle";
+
+  /* hero 是伺服器元件，遊戲開始時從這裡把它的文案收起來 */
+  useEffect(() => {
+    const hero = fieldRef.current?.closest("[data-hero]");
+
+    hero?.toggleAttribute("data-game", inGame);
+    hero?.querySelector("[data-hero-copy]")?.toggleAttribute("inert", inGame);
+  }, [inGame]);
+
+  const bestScore = (
+    <span className="text-muted-foreground tabular-nums">
+      {t("最高分")} {best}
+    </span>
+  );
 
   return (
     <>
+      {inGame && (
+        <div className="pointer-events-none absolute inset-x-0 top-16 z-1 flex flex-col items-center gap-2 sm:top-20 md:top-28">
+          {mode === "playing" ? (
+            <>
+              <span
+                ref={scoreRef}
+                className="animate-in fade-in slide-in-from-bottom-2 font-bold text-7xl tabular-nums duration-300 ease-out motion-reduce:animate-none sm:text-8xl"
+              >
+                0
+              </span>
+              {best > 0 && bestScore}
+              <span className="animate-[hint-fade_3s_ease_forwards] text-muted-foreground text-sm">
+                {t("空白鍵或點擊跳躍")}
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="text-muted-foreground">{t("得分")}</span>
+              <span className="font-bold text-7xl tabular-nums sm:text-8xl">
+                {finalScore}
+              </span>
+              {bestScore}
+              <div className="pointer-events-auto mt-4 flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out motion-reduce:animate-none">
+                <button type="button" onClick={start} className="btn-chunky">
+                  {t("再來一次")}
+                </button>
+                <button
+                  type="button"
+                  onClick={quit}
+                  className="btn-chunky-secondary"
+                >
+                  {t("離開")}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
       <div
         ref={fieldRef}
         className="pointer-events-none absolute inset-x-0 bottom-0 z-1"
@@ -281,9 +333,12 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               src={`/home/scene/${sprite.kind}.svg`}
               alt=""
               draggable={false}
-              style={{ height: sprite.height, left: -plantWidth(sprite.kind, sprite.height) }}
+              style={{
+                height: sprite.height,
+                left: -plantWidth(sprite.kind, sprite.height),
+              }}
               className={cn(
-                "absolute bottom-0 select-none transition-opacity duration-200 will-change-transform",
+                "absolute bottom-0 select-none drop-shadow-[0_3px_2px_rgb(0_0_0/0.25)] transition-opacity duration-200 will-change-transform",
                 plantDim,
                 mode === "over" && "opacity-60",
               )}
@@ -298,44 +353,12 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               mode === "over" && "animate-[dino-hit_.45s_ease]",
             )}
           >
-            <DinoMascot alt={alt} playing={mode === "playing"} />
-          </div>
-          <div className="-translate-x-1/2 absolute bottom-full left-1/2 mb-2 flex flex-col items-center gap-1.5 whitespace-nowrap">
-            {mode === "playing" ? (
-              <>
-                <span className={scorePill}>
-                  <span ref={scoreRef}>0</span>
-                  {best > 0 && (
-                    <span className="font-medium text-muted-foreground text-xs">
-                      HI {best}
-                    </span>
-                  )}
-                </span>
-                <span className="animate-[hint-fade_3s_ease_forwards] text-muted-foreground text-xs">
-                  {t("空白鍵或點擊跳躍")}
-                </span>
-              </>
-            ) : (
-              <>
-                {mode === "over" && (
-                  <span className={scorePill}>
-                    <span>
-                      {t("得分")} {finalScore}
-                    </span>
-                    <span className="font-medium text-muted-foreground text-xs">
-                      HI {best}
-                    </span>
-                  </span>
-                )}
-                <button
-                  type="button"
-                  onClick={start}
-                  className="animate-in fade-in slide-in-from-bottom-1 rounded-full border bg-fd-background/80 px-3 py-1 font-medium text-sm shadow-sm backdrop-blur transition-[background-color,transform] duration-150 ease-out hover:bg-fd-background active:scale-[.97] motion-reduce:animate-none"
-                >
-                  {mode === "idle" ? t("來玩一場") : t("再來一次")}
-                </button>
-              </>
-            )}
+            <DinoMascot
+              alt={alt}
+              label={t("來玩一場")}
+              playing={inGame}
+              onPress={start}
+            />
           </div>
         </div>
       </div>

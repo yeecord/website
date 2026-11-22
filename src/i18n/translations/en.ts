@@ -129,6 +129,8 @@ export const en = {
   再來一次: "Play again",
   空白鍵或點擊跳躍: "Space or tap to jump",
   跳: "Jump",
+  離開: "Leave",
+  最高分: "Best",
   把機器龍帶回家: "Take the dinosaur home",
   "安裝免費，設定時遇到問題，到 Discord 社群問":
     "Installation is free. If setup gets stuck, ask in the Discord community.",

@@ -10,12 +10,16 @@ const VIEW: View = { x: 48, y: 30, width: 452, height: 434 };
 
 export function DinoMascot({
   alt,
+  label,
   className,
   playing,
+  onPress,
 }: {
   alt: string;
+  label: string;
   className?: string;
   playing?: boolean;
+  onPress: () => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const playerRef = useRef<MascotPlayer>(null);
@@ -63,6 +67,7 @@ export function DinoMascot({
     const id = Date.now();
 
     playerRef.current?.fire("stretch");
+    onPress();
     setYells((prev) => [...prev.slice(-3), id]);
     setTimeout(() => {
       setYells((prev) => prev.filter((y) => y !== id));
@@ -88,7 +93,7 @@ export function DinoMascot({
         </AnimatePresence>
         <button
           type="button"
-          aria-label="Yee!"
+          aria-label={label}
           onClick={yell}
           className={playing ? "pointer-events-none block" : "block cursor-pointer"}
         >
@@ -101,7 +106,7 @@ export function DinoMascot({
             height={VIEW.height}
             className={
               playing
-                ? "-scale-x-100 h-20 w-auto drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:transition-none sm:h-28 lg:h-32"
+                ? "-scale-x-100 h-24 w-auto drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:transition-none sm:h-32 lg:h-40"
                 : "-scale-x-100 h-36 w-auto drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:transition-none sm:h-60 lg:h-72"
             }
           />

@@ -452,16 +452,6 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
-  @keyframes drift {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(26px);
-    }
-  }
-
   @keyframes sway {
     0%,
     100% {
@@ -505,6 +495,31 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
     100% {
       opacity: 0;
+    }
+  }
+
+  @keyframes cloud-drift {
+    to {
+      transform: translateX(var(--drift, 64px));
+    }
+  }
+
+  @keyframes hill-drift {
+    to {
+      transform: translateX(var(--drift, 36px));
+    }
+  }
+
+  @keyframes glow {
+    50% {
+      opacity: 0.75;
+      transform: scale(1.06);
+    }
+  }
+
+  @keyframes twinkle {
+    50% {
+      opacity: 0.25;
     }
   }
 
