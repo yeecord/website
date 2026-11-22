@@ -27,6 +27,44 @@ const invert = ([a, b, c, d, e, f]: Mat): Mat => {
 };
 const rgba = ([r, g, b, a]: number[]) => `rgba(${r},${g},${b},${a})`;
 
+/**
+ * Dual complex number skinning, the 2D form of dual quaternion skinning (Kavan et al. 2008): each bone's rigid transform
+ * becomes a half-angle rotation r and a dual part t·conj(r)/2, the parts are blended and the rotation renormalised, so a
+ * blended point keeps its distance from the joint instead of collapsing toward it as linear blending does. Bones are
+ * assumed rigid where points blend; scaled face bones only ever carry single-bone points.
+ */
+function blend(skins: Mat[], w: number[], x: number, y: number): [number, number] {
+  let rr = 0, ri = 0, dr = 0, di = 0, ar = 0, ai = 0;
+
+  for (let j = 0; j < w.length; j += 2) {
+    const [a, b, , , e, f] = skins[w[j] ?? 0] ?? [1, 0, 0, 1, 0, 0];
+    const weight = w[j + 1] ?? 0;
+    const half = Math.atan2(b, a) / 2;
+    let qr = Math.cos(half), qi = Math.sin(half);
+
+    if (j === 0) {
+      ar = qr;
+      ai = qi;
+    } else if (qr * ar + qi * ai < 0) {
+      qr = -qr;
+      qi = -qi;
+    }
+
+    rr += qr * weight;
+    ri += qi * weight;
+    // (e + i f) / 2 · conj(qr + i qi)
+    dr += ((e * qr + f * qi) / 2) * weight;
+    di += ((f * qr - e * qi) / 2) * weight;
+  }
+
+  const n = Math.hypot(rr, ri) || 1;
+  const [qr, qi, pr, pi] = [rr / n, ri / n, dr / n, di / n];
+  // x' = q² x + 2 qε q
+  const [cr, ci] = [qr * qr - qi * qi, 2 * qr * qi];
+
+  return [cr * x - ci * y + 2 * (pr * qr - pi * qi), ci * x + cr * y + 2 * (pr * qi + pi * qr)];
+}
+
 /** cubic-bezier easing, solved for x by bisection. */
 function bezier(x1: number, y1: number, x2: number, y2: number) {
   const curve = (t: number, p1: number, p2: number) => 3 * (1 - t) * (1 - t) * t * p1 + 3 * (1 - t) * t * t * p2 + t * t * t;
@@ -399,16 +437,15 @@ export class MascotPlayer {
 
     for (let i = 0; i < points.length; i += 2) {
       const x = points[i] ?? 0, y = points[i + 1] ?? 0, w = weights[i / 2] ?? [];
-      let px = 0, py = 0;
 
-      for (let j = 0; j < w.length; j += 2) {
-        const [a, b, c, d, e, f] = skins[w[j] ?? 0] ?? [1, 0, 0, 1, 0, 0];
-        const weight = w[j + 1] ?? 0;
-        px += (a * x + c * y + e) * weight;
-        py += (b * x + d * y + f) * weight;
+      if (w.length <= 2) {
+        const [a, b, c, d, e, f] = skins[w[0] ?? 0] ?? [1, 0, 0, 1, 0, 0];
+
+        out.push(a * x + c * y + e, b * x + d * y + f);
+        continue;
       }
 
-      out.push(px, py);
+      out.push(...blend(skins, w, x, y));
     }
 
     const n = out.length / 6;

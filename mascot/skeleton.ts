@@ -128,11 +128,11 @@ function neckWeights([x, y]: P): Influence[] {
   }
 
   if (depth <= upper) {
-    return handover("Neck3", "Neck2", smooth(head, upper, depth));
+    return handover("Neck3", "Neck2", ramp(head, upper, depth));
   }
 
   if (depth <= lower) {
-    return handover("Neck2", "Neck1", smooth(upper, lower, depth));
+    return handover("Neck2", "Neck1", ramp(upper, lower, depth));
   }
 
   const neck = smooth(lower, base, depth);
@@ -293,7 +293,9 @@ const farLegEdges: [start: P, end: P][] = [
 
 /** The shaded legs share the silhouette's exact cubics and weights along the exposed edges. */
 function farLegPath(outline: Seg[], [start, end]: [P, P]) {
-  const find = ([x, y]: P) => outline.findIndex(({ from }) => from[0] === x - GROUND[0] && from[1] === y - GROUND[1]);
+  // The vertex of the outline nearest each end of the exposed edge.
+  const find = ([x, y]: P) =>
+    outline.reduce((best, { from }, i) => (dist(from, [x - GROUND[0], y - GROUND[1]]) < dist(outline[best]?.from ?? from, [x - GROUND[0], y - GROUND[1]]) ? i : best), 0);
   const first = find(start), last = find(end);
 
   if (first < 0 || last <= first) {
