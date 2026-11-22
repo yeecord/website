@@ -122,7 +122,7 @@ export function DinoMascot({
             height={VIEW.height}
             className={
               playing
-                ? "-scale-x-100 h-14 w-auto drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:transition-none sm:h-16 lg:h-20"
+                ? "-scale-x-100 h-16 w-auto drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:transition-none sm:h-24 lg:h-28"
                 : "-scale-x-100 h-36 w-auto drop-shadow-lg transition-[height] duration-300 ease-out motion-reduce:transition-none sm:h-60 lg:h-72"
             }
           />

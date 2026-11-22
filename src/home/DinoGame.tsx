@@ -579,7 +579,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       <div
         ref={fieldRef}
         /* 場地像 Chrome 的畫布一樣置中，障礙物在左右邊緣淡入淡出 */
-        className="pointer-events-none absolute inset-y-0 left-1/2 z-1 w-full max-w-5xl -translate-x-1/2 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+        className="pointer-events-none absolute inset-y-0 left-1/2 z-1 w-full max-w-7xl -translate-x-1/2 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
       >
         {stars.map((star) => (
           <div

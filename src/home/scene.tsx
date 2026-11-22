@@ -3,7 +3,7 @@ import clsx from "clsx";
 /* 素材由 Gemini 照機器龍的畫風生成，描成 SVG；深色模式整體壓暗 */
 /* 遊戲裡入夜時壓暗 */
 const night = "group-data-night/hero:brightness-[.45]";
-/* 玩遊戲時背景變簡單、而且不做半透明：裝飾物整個淡出，雲、山丘和地面維持原樣 */
+/* 玩遊戲時背景變簡單、而且不做半透明：山丘和裝飾物整個淡出，綠色恐龍背後只剩天空；雲和地面維持原樣 */
 const gameHidden = `[transition:opacity_.3s_ease-out,filter_1s_ease] group-data-game/hero:opacity-0 ${night}`;
 const nightOnly = `[transition:filter_1s_ease] ${night}`;
 
@@ -219,7 +219,7 @@ export function Rabbit({ className }: { className?: string }) {
 
 export function HillsLayer({ className }: { className?: string }) {
   return (
-    <div aria-hidden className={clsx("absolute inset-x-0 bottom-0 overflow-hidden", nightOnly, className)}>
+    <div aria-hidden className={clsx("absolute inset-x-0 bottom-0 overflow-hidden", gameHidden, className)}>
       <img
         src="/home/scene/hills.svg"
         alt=""
