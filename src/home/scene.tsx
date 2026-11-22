@@ -155,15 +155,27 @@ export function Scroller({ factor, children }: { factor: number; children: React
   );
 }
 
-/* 遠方山丘上的小村莊：房子是一個個伺服器社群，煙囪冒煙、風車在轉 */
+/* 遠方山丘和山上的小村莊捲在同一層，房子才會一直站在山上。
+   一格是山丘接上自己的鏡像，左右兩端等高，捲動時接縫看不出來 */
 export function Village({ className }: { className?: string }) {
   return (
-    <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", nightOnly, className)}>
+    <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0 overflow-x-clip", nightOnly, className)}>
       <Scroller factor={0.25}>
-        <Cottage className="right-[24%] bottom-[46%] w-12 sm:w-16" smokeDelay={0} />
-        <Cottage className="right-[31%] bottom-[58%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
-        <Windmill className="right-[46%] bottom-[40%] w-10 sm:w-14 max-sm:hidden" />
-        <Cottage className="right-[38%] bottom-[50%] w-9 sm:w-12 max-xl:hidden" smokeDelay={-2.1} />
+        <div className="absolute inset-0 flex">
+          {["", "-scale-x-100"].map((flip) => (
+            <img
+              key={flip}
+              src="/home/scene/hills.svg"
+              alt=""
+              draggable={false}
+              className={clsx("h-full w-1/2 select-none dark:brightness-[.34] dark:saturate-[1.6]", flip)}
+            />
+          ))}
+        </div>
+        <Windmill className="bottom-[76%] left-[55%] w-10 sm:w-14 max-sm:hidden" />
+        <Cottage className="bottom-[72%] left-[66%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
+        <Cottage className="bottom-[90%] left-[71%] w-12 sm:w-16" smokeDelay={0} />
+        <Cottage className="bottom-[77%] left-[84%] w-9 sm:w-12 max-xl:hidden" smokeDelay={-2.1} />
       </Scroller>
     </div>
   );
@@ -172,7 +184,7 @@ export function Village({ className }: { className?: string }) {
 /* 煙囪在素材寬 76%、頂端的位置 */
 function Cottage({ className, smokeDelay }: { className: string; smokeDelay: number }) {
   return (
-    <div className={clsx("absolute", className)}>
+    <div className={clsx("-translate-x-1/2 absolute", className)}>
       {[0, 1, 2].map((i) => (
         <span
           key={i}
@@ -188,7 +200,7 @@ function Cottage({ className, smokeDelay }: { className: string; smokeDelay: num
 /* 扇葉的軸心在塔身寬 51%、高 24% 的位置 */
 function Windmill({ className }: { className: string }) {
   return (
-    <div className={clsx("absolute", className)}>
+    <div className={clsx("-translate-x-1/2 absolute", className)}>
       <img src="/home/scene/windmill.svg" alt="" draggable={false} className="w-full select-none dark:brightness-[.6]" />
       <img
         src="/home/scene/sails.svg"
@@ -214,19 +226,6 @@ export function Rabbit({ className }: { className?: string }) {
         className,
       )}
     />
-  );
-}
-
-export function HillsLayer({ className }: { className?: string }) {
-  return (
-    <div aria-hidden className={clsx("absolute inset-x-0 bottom-0 overflow-hidden", nightOnly, className)}>
-      <img
-        src="/home/scene/hills.svg"
-        alt=""
-        draggable={false}
-        className="absolute bottom-0 left-[-4%] h-full w-[108%] max-w-none animate-[hill-drift_40s_ease-in-out_infinite_alternate] select-none [--drift:3%] motion-reduce:animate-none dark:brightness-[.34] dark:saturate-[1.6]"
-      />
-    </div>
   );
 }
 
