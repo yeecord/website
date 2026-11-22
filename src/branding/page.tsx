@@ -33,14 +33,12 @@ const lockups = [
 
 const marks: {
   title: Phrase;
-  body: Phrase;
   art: ReactNode;
   downloads: Download[];
   className?: string;
 }[] = [
   {
     title: "頭像",
-    body: "Discord 頭像和社群帳號用這個。上傳整張方形圖，平台會自己裁成圓形。",
     art: <img src={`${base}avatar.svg`} alt="" width={224} height={224} className="size-40 rounded-full" />,
     downloads: [
       { label: "SVG", file: "avatar.svg" },
@@ -50,7 +48,6 @@ const marks: {
   },
   {
     title: "角色",
-    body: "透明背景，放進插畫、貼圖和分享圖。",
     art: <img src={`${base}character.svg`} alt="" width={112} height={112} className="size-28" />,
     downloads: [
       { label: "SVG", file: "character.svg" },
@@ -60,7 +57,6 @@ const marks: {
   },
   {
     title: "單色",
-    body: "只能用一種顏色時用，例如印刷或系統圖示。顏色會跟著周圍的文字顏色。",
     art: (
       <span
         aria-hidden
@@ -71,7 +67,6 @@ const marks: {
   },
   {
     title: "網站圖示",
-    body: "只取頭部，把五官放大，縮到 16 px 還認得出來。",
     art: <img src={`${base}favicon.svg`} alt="" width={112} height={112} className="size-28 rounded-3xl" />,
     downloads: [
       { label: "SVG", file: "favicon.svg" },
@@ -120,7 +115,6 @@ const environments: {
   name: Phrase;
   id: string;
   app: string;
-  body: Phrase;
   greeting: Phrase;
   suffix: string;
   surface: string;
@@ -129,7 +123,6 @@ const environments: {
     name: "正式環境",
     id: "production",
     app: "YEE 式機器龍",
-    body: "使用者看到的機器龍。藍色背景，戴皇冠。",
     greeting: "歡迎加入伺服器！先到 #規則 看一下，再來打聲招呼吧。",
     suffix: "",
     surface: "bg-yee-sky",
@@ -138,7 +131,6 @@ const environments: {
     name: "測試環境",
     id: "staging",
     app: "YEE 式機器龍 Staging",
-    body: "上線前的最後一關。紫色背景，戴一個三角錐。",
     greeting: "這是測試環境的機器龍，跟正式的放在一起也分得出來。",
     suffix: "-staging",
     surface: "bg-yee-staging",
@@ -147,22 +139,21 @@ const environments: {
     name: "開發環境",
     id: "development",
     app: "YEE 式機器龍 Dev",
-    body: "本機和開發用的應用程式。橘色背景，頭上坐一隻小黃鴨。",
     greeting: "開發中的版本，橘色背景一眼就認得出來。",
     suffix: "-dev",
     surface: "bg-yee-dev",
   },
 ];
 
-const colors: { name: Phrase; hex: string; use: Phrase; swatch: string }[] = [
-  { name: "天空藍", hex: "#326ED0", use: "頭像和分享圖的背景", swatch: "bg-yee-sky text-white md:col-span-2 md:h-64" },
-  { name: "恐龍綠", hex: "#32D34C", use: "角色本體", swatch: "bg-yee-green text-yee-ink md:col-span-2 md:h-64" },
-  { name: "陰影綠", hex: "#24A63F", use: "角色的陰影", swatch: "bg-yee-shade text-yee-ink" },
-  { name: "皇冠金", hex: "#F7C157", use: "皇冠", swatch: "bg-yee-crown text-yee-ink" },
-  { name: "墨色", hex: "#362F36", use: "眼睛和嘴巴", swatch: "bg-yee-ink text-white" },
-  { name: "深海藍", hex: "#17233B", use: "字標", swatch: "bg-yee-navy text-white" },
-  { name: "測試紫", hex: "#7C4DDB", use: "測試環境的背景", swatch: "bg-yee-staging text-white md:col-span-2" },
-  { name: "開發橘", hex: "#E0603A", use: "開發環境的背景", swatch: "bg-yee-dev text-white md:col-span-2" },
+const colors: { name: Phrase; hex: string; swatch: string }[] = [
+  { name: "天空藍", hex: "#326ED0", swatch: "bg-yee-sky text-white md:col-span-2 md:h-64" },
+  { name: "恐龍綠", hex: "#32D34C", swatch: "bg-yee-green text-yee-ink md:col-span-2 md:h-64" },
+  { name: "陰影綠", hex: "#24A63F", swatch: "bg-yee-shade text-yee-ink" },
+  { name: "皇冠金", hex: "#F7C157", swatch: "bg-yee-crown text-yee-ink" },
+  { name: "墨色", hex: "#362F36", swatch: "bg-yee-ink text-white" },
+  { name: "深海藍", hex: "#17233B", swatch: "bg-yee-navy text-white" },
+  { name: "測試紫", hex: "#7C4DDB", swatch: "bg-yee-staging text-white md:col-span-2" },
+  { name: "開發橘", hex: "#E0603A", swatch: "bg-yee-dev text-white md:col-span-2" },
 ];
 
 const misuses: { label: Phrase; art: ReactNode }[] = [
@@ -244,15 +235,12 @@ function Downloads({ items, t, onColor = false }: { items: Download[]; t: Transl
   );
 }
 
-function Section({ id, title, lead, children }: { id: string; title: string; lead?: string; children: ReactNode }) {
+function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
     <section aria-labelledby={id} className="grid gap-8">
-      <div className="grid max-w-2xl gap-3">
-        <h2 id={id} className="text-balance font-bold text-4xl tracking-tight sm:text-5xl">
-          {title}
-        </h2>
-        {lead && <p className="text-fd-muted-foreground text-lg">{lead}</p>}
-      </div>
+      <h2 id={id} className="text-balance font-bold text-4xl tracking-tight sm:text-5xl">
+        {title}
+      </h2>
       {children}
     </section>
   );
@@ -288,9 +276,6 @@ function Hero({ t }: { t: Translate }) {
           <h1 className="min-w-0 text-balance font-bold text-5xl leading-[1.1] tracking-tight [overflow-wrap:break-word] lg:text-6xl">
             {t("YEE 式機器龍品牌素材")}
           </h1>
-          <p className="max-w-lg text-lg text-white/90">
-            {t("頭像、字標和角色圖都能直接下載。使用前看一下配色和規範，機器龍在每個地方才會長得一樣。")}
-          </p>
           <div>
             <a
               href={`${base}yeecord-brand-kit.zip`}
@@ -343,7 +328,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
       <main className="mx-auto grid w-full max-w-6xl gap-28 px-4 pt-6 pb-24">
         <Hero t={t} />
 
-        <Section id="logos" title={t("標誌")} lead={t("依照要放的位置，挑一個版本。")}>
+        <Section id="logos" title={t("標誌")}>
           <div className="grid gap-4 md:grid-cols-3">
             {lockups.map(({ surface, file, label }) => (
               <div
@@ -363,21 +348,17 @@ export function BrandingPage({ locale }: { locale: Locale }) {
               </div>
             ))}
           </div>
-          <p className="max-w-2xl text-fd-muted-foreground">
-            {t("網站頁首、合作頁和簡報用這個。淺色背景用深色字，深色背景用白字。")}
-          </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {marks.map(({ title, body, art, downloads, className }) => (
+            {marks.map(({ title, art, downloads, className }) => (
               <article
                 key={title}
                 className={cn(
-                  "row-span-4 grid grid-rows-subgrid gap-y-3 rounded-[2rem] border bg-fd-card p-6",
+                  "row-span-3 grid grid-rows-subgrid gap-y-3 rounded-[2rem] border bg-fd-card p-6",
                   className,
                 )}
               >
                 <div className="mb-3 flex min-h-36 items-center justify-center">{art}</div>
                 <h3 className="font-bold text-xl">{t(title)}</h3>
-                <p className="text-fd-muted-foreground text-sm">{t(body)}</p>
                 <Downloads items={downloads} t={t} />
               </article>
             ))}
@@ -387,7 +368,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
         <Section
           id="poses"
           title={t("姿勢")}
-          lead={t("機器龍的幾個招牌動作，透明背景的 PNG，做貼圖或插畫時直接拿去用。")}
+         
         >
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {poses.map(({ name, file }) => (
@@ -410,7 +391,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
         <Section
           id="illustrations"
           title={t("場景插圖")}
-          lead={t("首頁的村莊和小遊戲用到的插圖，都是 SVG，點一下就能下載。")}
+         
         >
           <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
             {illustrations.map((name) => (
@@ -441,13 +422,10 @@ export function BrandingPage({ locale }: { locale: Locale }) {
         <Section
           id="environments"
           title={t("各環境的版本")}
-          lead={t(
-            "每個環境的頭飾和背景色都不一樣。正式環境戴皇冠，測試環境戴三角錐，開發環境頭上坐一隻小黃鴨。縮到 16 px 時主要靠背景色辨認，同一個伺服器裡有好幾隻機器龍也不會認錯。",
-          )}
         >
           <div className="grid gap-4 md:grid-cols-3">
-            {environments.map(({ name, id, app, body, suffix, surface }) => (
-              <article key={id} className={cn("row-span-5 grid grid-rows-subgrid gap-y-5 rounded-[2rem] p-6 text-white", surface)}>
+            {environments.map(({ name, id, app, suffix, surface }) => (
+              <article key={id} className={cn("row-span-4 grid grid-rows-subgrid gap-y-5 rounded-[2rem] p-6 text-white", surface)}>
                 <img
                   src={`${base}avatar${suffix}.svg`}
                   alt=""
@@ -459,7 +437,6 @@ export function BrandingPage({ locale }: { locale: Locale }) {
                   <h3 className="font-bold text-2xl">{t(name)}</h3>
                   <p className="font-mono text-sm text-white/80">{id}</p>
                 </div>
-                <p className="text-white/90">{t(body)}</p>
                 <div className="flex items-center gap-2 self-start rounded-xl bg-discord-bg px-3 py-2 text-discord-text text-xs">
                   <img src={`${base}favicon${suffix}.svg`} alt="" width={16} height={16} className="size-4 rounded-sm" />
                   <span className="truncate">{app}</span>
@@ -476,23 +453,14 @@ export function BrandingPage({ locale }: { locale: Locale }) {
               </article>
             ))}
           </div>
-          <div className="grid max-w-2xl gap-2">
-            <p>{t("換成環境版本時，這些地方也要一起改：")}</p>
-            <ul className="grid list-disc gap-1 pl-5 text-fd-muted-foreground">
-              <li>{t("Discord 應用程式的名稱後面加上環境，例如「YEE 式機器龍 Staging」。")}</li>
-              <li>{t("網站的 favicon 和頁面標題跟著換，在分頁列上一眼就分得出來。")}</li>
-              <li>{t("皇冠只給正式環境戴。")}</li>
-            </ul>
-          </div>
         </Section>
 
         <Section id="colors" title={t("顏色")}>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {colors.map(({ name, hex, use, swatch }) => (
+            {colors.map(({ name, hex, swatch }) => (
               <div key={hex} className={cn("grid h-44 content-start gap-1 rounded-[2rem] p-6", swatch)}>
                 <span className="font-bold text-xl">{t(name)}</span>
                 <code className="font-mono">{hex}</code>
-                <span className="text-sm opacity-80">{t(use)}</span>
               </div>
             ))}
           </div>
@@ -501,7 +469,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
         <Section
           id="small"
           title={t("縮小後的樣子")}
-          lead={t("頭像在 Discord 裡常常只有 16 到 40 px，深色和淺色主題都要看得出來。")}
+         
         >
           <div className="grid gap-4 md:grid-cols-2">
             {["bg-discord-bg text-discord-text", "border bg-white text-discord-bg"].map((surface) => (
@@ -583,7 +551,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
               ))}
             </div>
             <ProfileCard t={t} />
-            <figure className="grid gap-3 md:col-span-2">
+            <figure className="md:col-span-2">
               <img
                 src={`${base}social-1200x630.png`}
                 alt={t("連結分享時顯示的預覽圖")}
@@ -592,9 +560,6 @@ export function BrandingPage({ locale }: { locale: Locale }) {
                 loading="lazy"
                 className="rounded-[2rem] border"
               />
-              <figcaption className="text-fd-muted-foreground text-sm">
-                {t("分享連結時的預覽圖，1200 × 630 px。")}
-              </figcaption>
             </figure>
           </div>
         </Section>
@@ -607,7 +572,6 @@ export function BrandingPage({ locale }: { locale: Locale }) {
             <h2 id="download-all" className="font-bold text-4xl tracking-tight sm:text-5xl">
               {t("下載全部素材")}
             </h2>
-            <p className="max-w-md text-lg text-white/90">{t("頭像、字標、角色、姿勢和場景插圖，全部打包成一個 zip。")}</p>
             <div>
               <a
                 href={`${base}yeecord-brand-kit.zip`}
