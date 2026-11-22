@@ -23,12 +23,30 @@ const CHROME = {
 };
 const UNIT = 1 / 94;
 
-type ObstacleKind = "rock" | "mushroom" | "cone" | "crate" | "bird" | "plane";
+type ObstacleKind =
+  | "rock"
+  | "mushroom"
+  | "cone"
+  | "crate"
+  | "cactus"
+  | "log"
+  | "hedgehog"
+  | "bird"
+  | "plane"
+  | "bee";
 
-/* height 是恐龍畫布高度的比例；ratio 是素材的寬高比 */
+/* height 是恐龍畫布高度的比例；ratio 是素材的寬高比；walk 是自己往恐龍走的速度，單位同 Chrome 的速度 */
 const OBSTACLES: Record<
   ObstacleKind,
-  { height: number; ratio: number; multipleSpeed: number; minGap: number; minSpeed: number; flying?: boolean }
+  {
+    height: number;
+    ratio: number;
+    multipleSpeed: number;
+    minGap: number;
+    minSpeed: number;
+    flying?: boolean;
+    walk?: number;
+  }
 > = {
   rock: { height: 0.3, ratio: 856 / 546, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
   mushroom: { height: 0.34, ratio: 751 / 820, multipleSpeed: 4, minGap: 120, minSpeed: 0 },
@@ -36,7 +54,17 @@ const OBSTACLES: Record<
   crate: { height: 0.44, ratio: 857 / 855, multipleSpeed: 7, minGap: 120, minSpeed: 0 },
   bird: { height: 0.26, ratio: 571 / 506, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
   plane: { height: 0.2, ratio: 579 / 367, multipleSpeed: 999, minGap: 150, minSpeed: 8.5, flying: true },
+  cactus: { height: 0.46, ratio: 609 / 751, multipleSpeed: 5, minGap: 120, minSpeed: 0 },
+  log: { height: 0.24, ratio: 713 / 436, multipleSpeed: 999, minGap: 120, minSpeed: 0 },
+  hedgehog: { height: 0.26, ratio: 631 / 501, multipleSpeed: 999, minGap: 140, minSpeed: 6.5, walk: 1.2 },
+  bee: { height: 0.2, ratio: 824 / 808, multipleSpeed: 999, minGap: 150, minSpeed: 7.5, flying: true },
 };
+
+/* 星星：偶爾在障礙物後面的空檔飄著，跳起來吃到加分 */
+const STAR = { chance: 0.3, height: 0.2, altitude: 0.7, bonus: 25 };
+/* Chrome 每 100 分閃一次分數，每 700 分日夜交替 */
+const MILESTONE = 100;
+const NIGHT_EVERY = 700;
 const KINDS = Object.keys(OBSTACLES) as ObstacleKind[];
 
 /* 飛行障礙物的離地高度：低的要跳過，高的飛在頭頂上方，跳起來反而會撞到 */
@@ -60,6 +88,8 @@ const BEST_KEY = "dino-best";
 type Mode = "idle" | "playing" | "over";
 type Obstacle = { id: number; kind: ObstacleKind; size: number; height: number; altitude: number };
 type Item = Obstacle & { x: number; width: number; gap: number; speedOffset: number };
+type Star = { id: number; x: number; size: number; altitude: number };
+type Pop = { id: number; x: number; bottom: number };
 
 type Sim = {
   raf: number;
@@ -69,6 +99,7 @@ type Sim = {
   vy: number;
   buffered: number;
   items: Item[];
+  stars: Star[];
   history: ObstacleKind[];
   nextId: number;
   speed: number;
@@ -82,10 +113,19 @@ type Box = { left: number; right: number; bottom: number; top: number };
 const overlaps = (a: Box, b: Box) => a.left < b.right && a.right > b.left && a.bottom < b.top && a.top > b.bottom;
 const random = (min: number, max: number) => min + Math.floor(Math.random() * (max - min + 1));
 
+/* Chrome 過里程碑時讓分數閃三下 */
+function blink(el: HTMLElement) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  el.animate([{ opacity: 1 }, { opacity: 0 }, { opacity: 1 }], { duration: 250, iterations: 3 });
+}
+
 export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   const t = translator(locale);
   const [mode, setMode] = useState<Mode>("idle");
   const [obstacles, setObstacles] = useState<Obstacle[]>([]);
+  const [stars, setStars] = useState<Star[]>([]);
+  const [pops, setPops] = useState<Pop[]>([]);
   const [finalScore, setFinalScore] = useState(0);
   const [best, setBest] = useState(0);
 
@@ -93,12 +133,20 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   const dinoRef = useRef<HTMLDivElement>(null);
   const scoreRef = useRef<HTMLSpanElement>(null);
   const obstacleEls = useRef(new Map<number, HTMLDivElement>());
+  const starEls = useRef(new Map<number, HTMLDivElement>());
   const playerRef = useRef<MascotPlayer | null>(null);
   const sim = useRef<Sim | null>(null);
 
   useEffect(() => {
     setBest(Number(localStorage.getItem(BEST_KEY)) || 0);
   }, []);
+
+  function setNight(night: boolean) {
+    /* 深色模式本來就是夜晚，不用交替 */
+    const dark = document.documentElement.classList.contains("dark");
+
+    fieldRef.current?.closest("[data-hero]")?.toggleAttribute("data-night", night && !dark);
+  }
 
   function stopLoop() {
     if (sim.current) cancelAnimationFrame(sim.current.raf);
@@ -108,6 +156,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   function quit() {
     stopLoop();
     setObstacles([]);
+    setStars([]);
+    setNight(false);
     setMode("idle");
   }
 
@@ -167,10 +217,18 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       x: 0,
       width,
       gap: random(minGap, Math.round(minGap * CHROME.maxGapCoefficient)),
-      speedOffset: type.flying ? (Math.random() > 0.5 ? 0.8 : -0.8) : 0,
+      speedOffset: type.walk ?? (type.flying ? (Math.random() > 0.5 ? 0.8 : -0.8) : 0),
     };
 
     current.items.push(item);
+
+    if (Math.random() < STAR.chance) {
+      const star = { id: current.nextId++, x: -width - item.gap / 2, size: STAR.height * height, altitude: STAR.altitude * height };
+
+      current.stars.push(star);
+      setStars((list) => [...list, star]);
+    }
+
     current.history = [kind, ...current.history].slice(0, CHROME.maxObstacleDuplication);
     setObstacles((list) => [...list, item]);
   }
@@ -260,9 +318,39 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       setObstacles((list) => list.filter((o) => alive.has(o.id)));
     }
 
+    for (const star of current.stars) {
+      star.x += current.speed * frames * unit;
+
+      const el = starEls.current.get(star.id);
+
+      if (el) el.style.transform = `translateX(${star.x}px)`;
+
+      const box = { left: star.x - star.size, right: star.x, bottom: star.altitude, top: star.altitude + star.size };
+
+      if (hitboxes.some((dinoBox) => overlaps(dinoBox, box))) {
+        current.score += STAR.bonus;
+        star.x = Number.POSITIVE_INFINITY;
+        setPops((list) => [...list, { id: star.id, x: box.left, bottom: box.top }]);
+        setTimeout(() => setPops((list) => list.filter((pop) => pop.id !== star.id)), 700);
+      }
+    }
+
+    if (current.stars.some((star) => star.x - star.size > fieldRect.width)) {
+      current.stars = current.stars.filter((star) => star.x - star.size <= fieldRect.width);
+
+      const alive = new Set(current.stars.map((star) => star.id));
+
+      setStars((list) => list.filter((star) => alive.has(star.id)));
+    }
+
     const shown = Math.floor(current.score);
 
     if (shown !== current.shown && scoreRef.current) {
+      if (Math.floor(shown / MILESTONE) > Math.floor(current.shown / MILESTONE)) {
+        blink(scoreRef.current);
+      }
+
+      setNight(Math.floor(shown / NIGHT_EVERY) % 2 === 1);
       current.shown = shown;
       scoreRef.current.textContent = String(shown);
     }
@@ -288,6 +376,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       vy: 0,
       buffered: 0,
       items: [],
+      stars: [],
       history: [],
       nextId: 1,
       speed: CHROME.speed,
@@ -295,6 +384,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       shown: 0,
     };
     setObstacles([]);
+    setStars([]);
+    setNight(false);
     setMode("playing");
     sim.current.raf = requestAnimationFrame(frame);
   }
@@ -356,7 +447,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   }, [inGame]);
 
   const bestScore = (
-    <span className="text-muted-foreground tabular-nums">
+    <span className="text-muted-foreground group-data-night/hero:text-white/70 tabular-nums">
       {t("最高分")} {best}
     </span>
   );
@@ -364,7 +455,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   return (
     <>
       {inGame && (
-        <div className="pointer-events-none absolute inset-x-0 top-16 z-1 flex flex-col items-center gap-2 sm:top-20 md:top-28">
+        <div className="pointer-events-none absolute inset-x-0 top-16 z-1 flex flex-col items-center gap-2 transition-colors duration-1000 group-data-night/hero:text-white sm:top-20 md:top-28">
           {mode === "playing" ? (
             <>
               <span
@@ -374,13 +465,13 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
                 0
               </span>
               {best > 0 && bestScore}
-              <span className="animate-[hint-fade_3s_ease_forwards] text-muted-foreground text-sm">
+              <span className="animate-[hint-fade_3s_ease_forwards] text-muted-foreground group-data-night/hero:text-white/70 text-sm">
                 {t("空白鍵或點擊跳躍")}
               </span>
             </>
           ) : (
             <>
-              <span className="text-muted-foreground">{t("得分")}</span>
+              <span className="text-muted-foreground group-data-night/hero:text-white/70">{t("得分")}</span>
               <span className="font-bold text-7xl tabular-nums sm:text-8xl">
                 {finalScore}
               </span>
@@ -405,6 +496,33 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
         ref={fieldRef}
         className="pointer-events-none absolute inset-x-0 bottom-0 z-1"
       >
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            ref={(el) => {
+              if (el) starEls.current.set(star.id, el);
+              else starEls.current.delete(star.id);
+            }}
+            style={{ width: star.size, height: star.size, left: -star.size, bottom: star.altitude }}
+            className="absolute will-change-transform"
+          >
+            <img
+              src="/home/scene/star.svg"
+              alt=""
+              draggable={false}
+              className="size-full animate-[float_1.2s_ease-in-out_infinite_alternate] select-none drop-shadow-[0_2px_2px_rgb(0_0_0/0.2)] motion-reduce:animate-none"
+            />
+          </div>
+        ))}
+        {pops.map((pop) => (
+          <span
+            key={pop.id}
+            style={{ left: pop.x, bottom: pop.bottom }}
+            className="absolute animate-[pop_.7s_cubic-bezier(0.23,1,0.32,1)_forwards] font-bold text-amber-500 text-lg tabular-nums motion-reduce:animate-none"
+          >
+            +{STAR.bonus}
+          </span>
+        ))}
         {obstacles.map((obstacle) => (
           <div
             key={obstacle.id}
@@ -433,6 +551,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
                   "h-full w-auto",
                   OBSTACLES[obstacle.kind].flying &&
                     "animate-[flap_.35s_ease-in-out_infinite_alternate] motion-reduce:animate-none",
+                  OBSTACLES[obstacle.kind].walk &&
+                    "origin-bottom animate-[waddle_.25s_ease-in-out_infinite_alternate] motion-reduce:animate-none",
                 )}
               />
             ))}

@@ -523,6 +523,32 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
+  @keyframes waddle {
+    from {
+      transform: rotate(-5deg);
+    }
+    to {
+      transform: rotate(5deg);
+    }
+  }
+
+  @keyframes float {
+    to {
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(0.9);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-28px) scale(1);
+    }
+  }
+
   @keyframes twinkle {
     50% {
       opacity: 0.25;

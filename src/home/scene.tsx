@@ -1,8 +1,9 @@
 import clsx from "clsx";
 
 /* 素材由 Gemini 照機器龍的畫風生成，描成 SVG；深色模式整體壓暗 */
-/* 玩遊戲時背景淡下去，讓迎面來的植物看得清楚 */
-const dimmed = "transition-opacity duration-300 group-data-game/hero:opacity-40";
+/* 玩遊戲時背景淡下去，讓迎面來的障礙物看得清楚；遊戲裡入夜時再壓暗 */
+const night = "group-data-night/hero:brightness-[.45]";
+const dimmed = `[transition:opacity_.3s_ease-out,filter_1s_ease] group-data-game/hero:opacity-40 ${night}`;
 
 export const plantDim = "dark:brightness-[.6] dark:saturate-[.75]";
 
@@ -78,6 +79,10 @@ export function Plant({
 export function Sky({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative bg-linear-to-b from-[#D9E8FF] via-[#E8F1FF] to-[#F2F8FF] dark:from-[#0D1524] dark:via-[#101A26] dark:to-[#13201A]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#0D1524] via-[#101A26] to-[#1A2A22] opacity-0 transition-opacity duration-1000 group-data-night/hero:opacity-100"
+      />
       <SkyLights />
       {children}
     </div>
@@ -87,28 +92,35 @@ export function Sky({ children }: { children: React.ReactNode }) {
 /* 淺色模式一顆慢慢呼吸的太陽，深色模式換成月亮和會閃的星星 */
 function SkyLights() {
   return (
-    <div aria-hidden className={clsx("pointer-events-none absolute inset-0 overflow-hidden", dimmed)}>
-      <img
-        src="/home/scene/sun.svg"
-        alt=""
-        width={150}
-        height={150}
-        className="absolute top-[4%] right-[15%] animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-sm:w-20 dark:hidden"
-      />
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-300 group-data-game/hero:opacity-40"
+    >
+      <div className="absolute top-[4%] right-[15%] transition-opacity duration-1000 dark:hidden group-data-night/hero:opacity-0">
+        <img
+          src="/home/scene/sun.svg"
+          alt=""
+          width={150}
+          height={150}
+          className="animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-sm:w-20"
+        />
+      </div>
       <img
         src="/home/scene/moon.svg"
         alt=""
         width={92}
         height={96}
-        className="absolute top-[6%] right-[18%] hidden max-sm:w-14 dark:block"
+        className="absolute top-[6%] right-[18%] opacity-0 transition-opacity duration-1000 max-sm:w-14 dark:opacity-100 group-data-night/hero:opacity-100"
       />
-      {STARS.map(([left, top, delay]) => (
-        <span
-          key={`${left}-${top}`}
-          style={{ left: `${left}%`, top: `${top}%`, animationDelay: `${delay}s` }}
-          className="absolute hidden size-1 animate-[twinkle_4s_ease-in-out_infinite] rounded-full bg-white/80 motion-reduce:animate-none dark:block"
-        />
-      ))}
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-1000 dark:opacity-100 group-data-night/hero:opacity-100">
+        {STARS.map(([left, top, delay]) => (
+          <span
+            key={`${left}-${top}`}
+            style={{ left: `${left}%`, top: `${top}%`, animationDelay: `${delay}s` }}
+            className="absolute size-1 animate-[twinkle_4s_ease-in-out_infinite] rounded-full bg-white/80 motion-reduce:animate-none"
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -139,7 +151,7 @@ export function GroundBand({
   className?: string;
 }) {
   return (
-    <div className={clsx("relative bg-[#A8E2B3] dark:bg-[#16291D]", className)}>
+    <div className={clsx("relative bg-[#A8E2B3] [transition:filter_1s_ease] dark:bg-[#16291D]", night, className)}>
       <svg
         aria-hidden
         viewBox="0 0 1440 16"
