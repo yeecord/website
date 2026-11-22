@@ -14,8 +14,8 @@ type BoneSpec = { name: string; id: string; length: number; rotation: number; at
 type Chain = { name: string; ids: string[]; at: P; rotation: number; length: number };
 
 /** The neck pivots high and back, at the withers like a grazing animal's, and ends where the head turns. */
-const NECK_BASE: P = [52, -172];
-const HEAD_PIVOT: P = [84, -245.95];
+const NECK_BASE: P = [85.5, -194];
+const HEAD_PIVOT: P = [100, -245.5];
 const NECK: Chain = {
   name: "Neck",
   ids: ["1:2", "1:11", "1:12"],
@@ -26,6 +26,8 @@ const NECK: Chain = {
 const TAIL: Chain = { name: "Tail", ids: ["1:4", "1:13", "1:14"], at: [-101, -78], rotation: 3.0239, length: 93.6 };
 const LEGS: P[] = [[-83.1, -51], [-33.2, -51], [26.9, -51], [77, -51]];
 const LEG_SPANS: [number, number][] = [[-106, -60], [-56, -10], [5, 50], [55, 100]];
+
+const eyeLoops = await loops("eyes");
 
 /** The chain's bones, nested, with `tip` hung off the last one. */
 function chainBones({ name, ids, at, rotation, length }: Chain, tip: BoneSpec[] = []): BoneSpec {
@@ -41,28 +43,53 @@ function chainBones({ name, ids, at, rotation, length }: Chain, tip: BoneSpec[] 
   return build(0);
 }
 
-const SKELETON: BoneSpec[] = [
-  { name: "Body", id: "1:1", at: [0, 0], rotation: -Math.PI / 2, length: 20 },
-  chainBones(NECK, [{ name: "Head", id: "1:3", length: 90.6, rotation: 0.448, children: [{ name: "Eyes", id: "1:9", length: 12, rotation: 1.086 }] }]),
+/** The head's rest direction, and the eyes' centre in the head's own frame, so a blink squashes them about their middle. */
+const HEAD_ROTATION = -0.7144;
+const EYES_CENTRE = (() => {
+  const points = eyeLoops.flat().map((seg) => seg.from);
+  const [cx, cy] = points.reduce(([x, y], [px, py]) => [x + px / points.length, y + py / points.length], [0, 0]);
+  const [dx, dy] = [cx - HEAD_PIVOT[0], cy - HEAD_PIVOT[1]];
+
+  return [dx * Math.cos(-HEAD_ROTATION) - dy * Math.sin(-HEAD_ROTATION), dx * Math.sin(-HEAD_ROTATION) + dy * Math.cos(-HEAD_ROTATION)] as P;
+})();
+
+const branches: BoneSpec[] = [
+  chainBones(NECK, [
+    {
+      name: "Head",
+      id: "1:3",
+      length: 90.6,
+      rotation: HEAD_ROTATION - NECK.rotation,
+      children: [{ name: "Eyes", id: "1:9", at: EYES_CENTRE, length: 12, rotation: -HEAD_ROTATION }],
+    },
+  ]),
   chainBones(TAIL),
   ...LEGS.map((at, i): BoneSpec => ({ name: `Leg${i}`, id: `1:${5 + i}`, at, rotation: Math.PI / 2, length: 51 })),
 ];
+const SKELETON: BoneSpec[] = [{ name: "Body", id: "1:1", at: [0, 0], rotation: 0, length: 20, children: branches }];
 
 /** Rest-pose world placement of every bone, in rig space, in hierarchy order. */
 type Placed = { spec: BoneSpec; start: P; rotation: number };
 const placed: Placed[] = [];
 
-function place(specs: BoneSpec[], start: P | undefined, rotation: number) {
+function place(specs: BoneSpec[], parent?: Placed) {
   for (const spec of specs) {
-    const origin = spec.at ?? start ?? [0, 0];
-    const world = (spec.at ? 0 : rotation) + spec.rotation;
+    const [x, y] = spec.at ?? [parent?.spec.length ?? 0, 0];
+    const [px, py] = parent?.start ?? [0, 0];
+    const rotation = parent?.rotation ?? 0;
+    const cos = Math.cos(rotation), sin = Math.sin(rotation);
+    const bone: Placed = {
+      spec,
+      start: [px + x * cos - y * sin, py + x * sin + y * cos],
+      rotation: rotation + spec.rotation,
+    };
 
-    placed.push({ spec, start: origin, rotation: world });
-    place(spec.children ?? [], [origin[0] + Math.cos(world) * spec.length, origin[1] + Math.sin(world) * spec.length], world);
+    placed.push(bone);
+    place(spec.children ?? [], bone);
   }
 }
 
-place(SKELETON, undefined, 0);
+place(SKELETON);
 const index = new Map(placed.map((b, i) => [b.spec.name, i]));
 
 // ---- weights ----
@@ -75,57 +102,72 @@ const smooth = (a: number, b: number, v: number) => {
   return t * t * (3 - 2 * t);
 };
 
-/** How far along the chain's direction a point lies, from the chain's start. */
-const reach = ({ at, rotation }: Chain, [x, y]: P) => (x - at[0]) * Math.cos(rotation) + (y - at[1]) * Math.sin(rotation);
-
-/** How far a point lies to the right of the chain's direction: for the neck, positive is the throat side. */
-const side = ({ at, rotation }: Chain, [x, y]: P) => (y - at[1]) * Math.cos(rotation) - (x - at[0]) * Math.sin(rotation);
-
-/** Splits a weight along a chain: full weight on a bone at its midpoint, handed over linearly to the next bone's midpoint. */
-function along(chain: Chain, p: P, weight: number): Influence[] {
-  const count = chain.ids.length;
-  const s = reach(chain, p);
-  const mid = (n: number) => ((n + 0.5) * chain.length) / count;
-
-  return chain.ids.map((_, n): Influence => {
-    const rise = n === 0 ? 1 : ramp(mid(n - 1), mid(n), s);
-    const fall = n === count - 1 ? 1 : 1 - ramp(mid(n), mid(n + 1), s);
-
-    return [`${chain.name}${n + 1}`, weight * rise * fall];
-  });
+function handover(from: string, to: string, weight: number): Influence[] {
+  return [[from, 1 - weight], [to, weight]];
 }
 
-/** The leg whose span scores lowest for `x`. */
-const nearestLeg = (score: (span: [number, number]) => number) =>
-  LEG_SPANS.reduce((best, span, i) => (score(span) < score(LEG_SPANS[best] ?? span) ? i : best), 0);
+function neckWeights([x, y]: P): Influence[] {
+  const throat = smooth(44, 122, x);
+  const station = (back: number, front: number) => back + (front - back) * throat;
+  // The occiput and jaw delimit the rigid head in the artwork.
+  const headEdge = -305.9 + 0.732 * (x - 40.5);
+  const depth = y - headEdge + Math.max(0, 40 - x) * 0.95;
+  const head = station(33, 25);
+  const upper = station(51, 42);
+  const lower = station(74, 59);
+  const base = station(221, 189); // The outside blends farther into the back than the throat does into the chest.
 
-/** The body outline: the trunk on Body, blending into the neck chain, the head, the tail chain and each leg. */
+  if (depth <= head) {
+    return handover("Head", "Neck3", smooth(0, head, depth));
+  }
+
+  if (depth <= upper) {
+    return handover("Neck3", "Neck2", smooth(head, upper, depth));
+  }
+
+  if (depth <= lower) {
+    return handover("Neck2", "Neck1", smooth(upper, lower, depth));
+  }
+
+  const neck = smooth(lower, base, depth);
+  const chest = smooth(-102, -88, y);
+
+  return handover("Body", "Neck1", (1 - neck) * (1 - chest));
+}
+
+/** Each branch hands off to its neighbour before the next handover begins. */
 function bodyWeights(p: P): Influence[] {
   const [x, y] = p;
-  const up = reach(NECK, p);
-  // The back of the neck hands over to Body far down the withers, so it stretches into one arc; the throat hands over
-  // above the chest, measured by height because the tilted neck axis would reach down into the chest.
-  const throat = smooth(-10, 40, side(NECK, p));
-  const toNeck = (smooth(-60, 15, up) * (1 - throat) + smooth(-150, -190, y) * throat) * smooth(-20, 40, x);
-  const toHead = smooth(NECK.length - 35, NECK.length + 10, up);
-  const toTail = smooth(-81, -146, x) * smooth(-150, -120, y);
-  const gap = ([a, b]: [number, number]) => (x < a ? a - x : x > b ? x - b : 0);
-  const leg = nearestLeg(gap);
-  const toLeg = smooth(-58, -25, y) * (1 - smooth(0, 8, gap(LEG_SPANS[leg] ?? [0, 0])));
-  const trunk = (1 - toNeck) * (1 - toTail) * (1 - toLeg);
 
-  return [
-    ["Body", trunk],
-    ...along(NECK, p, toNeck * (1 - toHead)),
-    ["Head", toNeck * toHead],
-    ...along(TAIL, p, (1 - toNeck) * toTail),
-    [`Leg${leg}`, (1 - toNeck) * (1 - toTail) * toLeg],
-  ];
+  if (x > -40 && y < -88) {
+    return neckWeights(p);
+  }
+
+  if (x < -81 && y > -150 && (y < -43 || x < -105)) {
+    const tail = smooth(-150, -120, y) * Math.max(smooth(-105, -124, x), smooth(-43, -67, y));
+    const t = smooth(-81, -134, x) * tail;
+
+    if (t < 1) {
+      return handover("Body", "Tail1", t);
+    }
+
+    if (x > -163) {
+      return handover("Tail1", "Tail2", smooth(-134, -163, x));
+    }
+
+    return handover("Tail2", "Tail3", smooth(-163, -188, x));
+  }
+
+  const gap = ([a, b]: [number, number]) => (x < a ? a - x : x > b ? x - b : 0);
+  const leg = LEG_SPANS.reduce((best, span, i) => (gap(span) < gap(LEG_SPANS[best] ?? span) ? i : best), 0);
+
+  // Legs swing from the hip: the blend sits around the top of the leg, so the whole leg turns as one piece.
+  return handover("Body", `Leg${leg}`, smooth(-62, -40, y));
 }
 
-/** Packs up to four influences into Rive's byte slots: specks dropped, the rest normalised to exactly 255. */
+/** Quantizes the weights to Rive bytes that sum to 255. */
 function pack(influences: Influence[]) {
-  const kept = influences.filter(([, w]) => w > 0.01).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  const kept = influences.filter(([, w]) => Math.round(w * 255) > 0);
   const total = kept.reduce((sum, [, w]) => sum + w, 0);
   const bytes = kept.map(([name, w]) => [index.get(name) ?? 0, Math.round((w / total) * 255)] as const);
   const drift = 255 - bytes.reduce((sum, [, v]) => sum + v, 0);
@@ -185,8 +227,9 @@ function split({ from, c1, c2, to }: Seg, t: number): [Seg, Seg] {
 }
 
 /** Splits every cubic into equal pieces no longer than `step`, so the outline has vertices to bend with and keeps its rest shape. */
-const densify = (segs: Seg[], step: number) =>
+const densify = (segs: Seg[]) =>
   segs.flatMap((seg): Seg[] => {
+    const step = seg.from[0] > -40 && seg.from[1] < -88 && seg.from[1] > -306 ? 2 : 4;
     const pieces = Math.max(1, Math.ceil((dist(seg.from, seg.c1) + dist(seg.c1, seg.c2) + dist(seg.c2, seg.to)) / step));
     const out: Seg[] = [];
     let rest = seg;
@@ -216,10 +259,11 @@ const tendons = placed
 function pointsPath(name: string, segs: Seg[], weigh: (p: P) => Influence[]) {
   const vertices = segs.map((seg, n) => {
     const prev = segs[(n - 1 + segs.length) % segs.length] ?? seg;
-    const [w, wi, wo] = [pack(weigh(seg.from)), pack(weigh(prev.c2)), pack(weigh(seg.c1))];
+    // A shared transform preserves tangent alignment after weight quantization.
+    const w = pack(weigh(seg.from));
     const p = seg.from;
 
-    return `<CubicDetachedVertex x="${r(p[0])}" y="${r(p[1])}" inRotation="${r(angle(p, prev.c2))}" inDistance="${r(dist(p, prev.c2))}" outRotation="${r(angle(p, seg.c1))}" outDistance="${r(dist(p, seg.c1))}"><CubicWeight values="${w.values}" indices="${w.indices}" inValues="${wi.values}" inIndices="${wi.indices}" outValues="${wo.values}" outIndices="${wo.indices}"/></CubicDetachedVertex>`;
+    return `<CubicDetachedVertex x="${r(p[0])}" y="${r(p[1])}" inRotation="${angle(p, prev.c2).toFixed(6)}" inDistance="${r(dist(p, prev.c2))}" outRotation="${angle(p, seg.c1).toFixed(6)}" outDistance="${r(dist(p, seg.c1))}"><CubicWeight values="${w.values}" indices="${w.indices}" inValues="${w.values}" inIndices="${w.indices}" outValues="${w.values}" outIndices="${w.indices}"/></CubicDetachedVertex>`;
   });
 
   return `<PointsPath isClosed="true" name="${name}">${vertices.join("")}<Skin tx="${GROUND[0]}" ty="${GROUND[1]}" name="Skin">${tendons}</Skin></PointsPath>`;
@@ -227,20 +271,33 @@ function pointsPath(name: string, segs: Seg[], weigh: (p: P) => Influence[]) {
 
 const only = (bone: string) => (): Influence[] => [[bone, 1]];
 
-/** The far leg under the loop's centre. */
-const farLeg = (segs: Seg[]) => {
-  const x = segs.reduce((sum, s) => sum + s.from[0], 0) / segs.length;
+const body = (await loops("body")).map(densify);
+const farLegEdges: [start: P, end: P][] = [
+  [[242.74, 420.09], [202, 420.44]],
+  [[353.92, 399.75], [311.6, 412.53]],
+];
 
-  return only(`Leg${nearestLeg(([a, b]) => Math.abs((a + b) / 2 - x))}`);
-};
+/** The shaded legs share the silhouette's exact cubics and weights along the exposed edges. */
+function farLegPath(outline: Seg[], [start, end]: [P, P]) {
+  const find = ([x, y]: P) => outline.findIndex(({ from }) => from[0] === x - GROUND[0] && from[1] === y - GROUND[1]);
+  const first = find(start), last = find(end);
+
+  if (first < 0 || last <= first) {
+    throw new Error("far leg endpoints must be vertices on the body outline");
+  }
+
+  const from = outline[last].from, to = outline[first].from;
+
+  return [...outline.slice(first, last), { from, c1: lerp(from, to, 1 / 3), c2: lerp(from, to, 2 / 3), to }];
+}
 
 const shapes: Record<string, string[]> = {
   Crown: (await loops("crown")).map((l, i) => pointsPath(`Crown ${i}`, l, only("Head"))),
-  Eyes: (await loops("eyes")).map((l, i) => pointsPath(`Eye ${i}`, l, only("Eyes"))),
+  Eyes: eyeLoops.map((l, i) => pointsPath(`Eye ${i}`, l, only("Eyes"))),
   Tongue: (await loops("tongue")).map((l, i) => pointsPath(`Tongue ${i}`, l, only("Head"))),
   Mouth: (await loops("mouth")).map((l, i) => pointsPath(`Mouth ${i}`, l, only("Head"))),
-  "Far legs": (await loops("far-legs")).map((l, i) => pointsPath(`Far leg ${i}`, l, farLeg(l))),
-  Body: (await loops("body")).map((l, i) => pointsPath(`Outline ${i}`, densify(l, 5), bodyWeights)),
+  "Far legs": farLegEdges.map((edge, i) => pointsPath(`Far leg ${i}`, farLegPath(body[0] ?? [], edge), bodyWeights)),
+  Body: body.map((outline, i) => pointsPath(`Outline ${i}`, outline, bodyWeights)),
 };
 
 function boneXml(spec: BoneSpec, depth: number): string {

@@ -98,9 +98,9 @@ const STANDING_BOXES = [
   [300, 445, 260, 385],
 ] as const;
 const DUCKING_BOXES = [
-  [150, 385, 6, 150],
-  [330, 420, 140, 205],
-  [420, 545, 105, 228],
+  [150, 340, 6, 195],
+  [340, 420, 95, 232],
+  [420, 515, 100, 232],
 ] as const;
 const BEST_KEY = "dino-best";
 

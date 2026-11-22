@@ -4,7 +4,7 @@ type Track = { object: number; property: Property; keys: Key[] };
 type Anim = { duration: number; loop: boolean; tracks: Track[] };
 type Fill = { color: number[]; feather?: { strength: number; x: number; y: number }; gradient?: { from: number[]; to: number[]; stops: number[][] } };
 type Shape = { name: string; paths: { points: number[]; weights: number[][] }[]; fills: Fill[] };
-type Bone = { name: string; parent: number; x: number; y: number; length: number; rotation: number; bind: Mat };
+type Bone = { name: string; parent: number; attachment?: number; x: number; y: number; length: number; rotation: number; bind: Mat };
 export type Rig = { rig: { x: number; y: number }; bones: Bone[]; shapes: Shape[]; animations: Record<string, Anim> };
 
 type Property = "x" | "y" | "rotation" | "scaleX" | "scaleY" | "length";
@@ -345,9 +345,11 @@ export class MascotPlayer {
     const worlds: Mat[] = [];
 
     pose.forEach((t, i) => {
-      const parentIndex = data.bones[i]?.parent ?? -1;
-      const parent = worlds[parentIndex];
-      const local = parent ? compose(pose[parentIndex]?.length ?? 0, 0, t.rotation, t.scaleX, t.scaleY) : compose(t.x, t.y, t.rotation, t.scaleX, t.scaleY);
+      const bone = data.bones[i];
+      const parentIndex = bone?.parent ?? -1;
+      const parent = worlds[bone?.attachment ?? parentIndex];
+      const x = parentIndex >= 0 ? (pose[parentIndex]?.length ?? 0) : t.x;
+      const local = compose(x, parentIndex >= 0 ? 0 : t.y, t.rotation, t.scaleX, t.scaleY);
 
       worlds.push(multiply(parent ?? rigWorld, local));
     });

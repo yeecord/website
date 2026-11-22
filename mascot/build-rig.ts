@@ -40,7 +40,7 @@ if (!rig) {
   throw new Error("scene has no Rig node");
 }
 
-type Bone = { id: string; name: string; parent: number; x: number; y: number; length: number; rotation: number; bind: number[] };
+type Bone = { id: string; name: string; parent: number; attachment?: number; x: number; y: number; length: number; rotation: number; bind: number[] };
 const bones: Bone[] = [];
 
 function addBones(el: El, parent: number) {
@@ -49,7 +49,11 @@ function addBones(el: El, parent: number) {
       continue;
     }
 
-    bones.push({ id: c.attrs.id ?? "", name: c.attrs.name ?? "", parent, x: num(c, "x"), y: num(c, "y"), length: num(c, "length"), rotation: num(c, "rotation"), bind: [] });
+    // Offset roots inherit a transform but do not sit at the parent's tip.
+    const offset = c.tag === "RootBone";
+    const attachment = offset && parent >= 0 ? { attachment: parent } : {};
+
+    bones.push({ id: c.attrs.id ?? "", name: c.attrs.name ?? "", parent: offset ? -1 : parent, ...attachment, x: num(c, "x"), y: num(c, "y"), length: num(c, "length"), rotation: num(c, "rotation"), bind: [] });
     addBones(c, bones.length - 1);
   }
 }
