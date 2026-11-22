@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { BookIcon, DownloadIcon, LayoutListIcon, SlidersHorizontalIcon } from "lucide-react";
+import { BookIcon, DownloadIcon, LayoutListIcon, PaletteIcon, SlidersHorizontalIcon } from "lucide-react";
 import { contentPath, staticPath, type Locale } from "~/i18n";
 import { translator } from "~/i18n/translate";
 
@@ -47,6 +47,12 @@ export function baseOptions(locale: Locale) {
         url: staticPath(locale, "/dashboard"),
         icon: <SlidersHorizontalIcon />,
         text: t("伺服器設定"),
+        active: "url",
+      },
+      {
+        url: staticPath(locale, "/branding"),
+        icon: <PaletteIcon />,
+        text: t("品牌素材"),
         active: "url",
       },
       {

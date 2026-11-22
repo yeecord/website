@@ -20,9 +20,9 @@ export function InstallPage({ locale }: { locale: Locale }) {
       />
       <main className="overflow-x-clip">
         <div className="relative mx-auto w-full max-w-4xl px-4 pt-12 pb-24">
-          <Cloud n={1} width={150} className="top-6 left-[1%] max-sm:w-20" />
+          <Cloud kind="wide" width={150} className="top-6 left-[1%] max-sm:w-20" />
           <Cloud
-            n={3}
+            kind="wide"
             width={190}
             className="top-2 right-[1%] [animation-delay:-9s] max-sm:w-24"
           />
@@ -60,12 +60,12 @@ export function InstallPage({ locale }: { locale: Locale }) {
         </div>
         <GroundBand className="h-28">
           <Plant
-            src="treeSmall_green2"
+            kind="sapling"
             height={48}
             className="top-6 left-[10%]"
           />
           <Plant
-            src="bush1"
+            kind="bush"
             height={38}
             className="top-9 right-[13%] [animation-delay:-2.4s]"
           />

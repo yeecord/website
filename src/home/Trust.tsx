@@ -1,11 +1,10 @@
 "use client";
 
-import { type MotionValue, motion, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { DiscordChat, DiscordMessage } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
 import { type Phrase, translator } from "~/i18n/translate";
-import formatter from "~/utils/formatter";
-import { useAnimatedCounter } from "./utils/use-animated-counter";
+import { ServerCount } from "./ServerCount";
 
 const quotes: { author: string; color: string; text: Phrase }[] = [
   {
@@ -27,16 +26,9 @@ const quotes: { author: string; color: string; text: Phrase }[] = [
 
 export function Trust({ locale }: { locale: Locale }) {
   const t = translator(locale);
-  const { count, start } = useAnimatedCounter(
-    350_000,
-    Math.max(350_000 - 10000, 0),
-    1,
-  );
-
   return (
     <motion.div
       whileInView="show"
-      onViewportEnter={() => start()}
       initial="hidden"
       viewport={{ once: true }}
       variants={{
@@ -48,7 +40,7 @@ export function Trust({ locale }: { locale: Locale }) {
     >
       <h2 className="text-balance font-bold text-3xl tracking-tight sm:text-5xl">
         <span className="text-primary">
-          <ServerCount count={count} />
+          <ServerCount value={350_000} />
         </span>
         {t("個伺服器的日常")}
       </h2>
@@ -71,12 +63,4 @@ export function Trust({ locale }: { locale: Locale }) {
       </div>
     </motion.div>
   );
-}
-
-function ServerCount({ count }: { count: MotionValue<number> }) {
-  const rounded = useTransform(count, (v: number) =>
-    formatter.format(Math.floor(v)),
-  );
-
-  return <motion.span>{rounded}</motion.span>;
 }

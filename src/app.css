@@ -6,6 +6,16 @@
 
 @theme {
   --color-discord-blurple: #5865f2;
+  /* 機器龍的品牌色，數值跟 branding 頁列出的色票一致 */
+  --color-yee-sky: #326ed0;
+  --color-yee-green: #32d34c;
+  --color-yee-shade: #24a63f;
+  --color-yee-crown: #f7c157;
+  --color-yee-ink: #362f36;
+  --color-yee-navy: #17233b;
+  --color-yee-staging: #7c4ddb;
+  --color-yee-dev: #e0603a;
+  --color-yee-grass: #a8e2b3;
   /* Tailwind 內建的 ease-out、ease-in-out 太軟，換成比較有力的曲線，全站的 ease-out 都跟著用 */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -452,16 +462,6 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
-  @keyframes drift {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(26px);
-    }
-  }
-
   @keyframes sway {
     0%,
     100% {
@@ -508,6 +508,100 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
+  @keyframes cloud-drift {
+    to {
+      transform: translateX(var(--drift, 64px));
+    }
+  }
+
+  @keyframes hill-drift {
+    to {
+      transform: translateX(var(--drift, 36px));
+    }
+  }
+
+  @keyframes glow {
+    50% {
+      opacity: 0.75;
+      transform: scale(1.06);
+    }
+  }
+
+  @keyframes flap {
+    to {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes waddle {
+    from {
+      transform: rotate(-5deg);
+    }
+    to {
+      transform: rotate(5deg);
+    }
+  }
+
+  @keyframes float {
+    to {
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(0.9);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-28px) scale(1);
+    }
+  }
+
+  @keyframes smoke {
+    from {
+      opacity: 0.8;
+      transform: translate(0, 0) scale(0.6);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-8px, -30px) scale(1.5);
+    }
+  }
+
+  @keyframes hop {
+    0%,
+    76%,
+    100% {
+      transform: translateY(0);
+    }
+    82% {
+      transform: translateY(-9px);
+    }
+    88% {
+      transform: translateY(0);
+    }
+    93% {
+      transform: translateY(-5px);
+    }
+  }
+
+  @keyframes shine {
+    from {
+      transform: scale(0.88) rotate(-10deg);
+    }
+    to {
+      transform: scale(1.08) rotate(10deg);
+    }
+  }
+
+  @keyframes twinkle {
+    50% {
+      opacity: 0.25;
+    }
+  }
+
 }
 
 .prose {
@@ -524,6 +618,7 @@ button.discord-button:active:not([aria-disabled="true"]),
   border-radius: var(--radius-2xl);
   padding: --spacing(3) --spacing(6);
   font-weight: var(--font-weight-bold);
+  cursor: pointer;
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
 }
 

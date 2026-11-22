@@ -9,9 +9,9 @@ export function Community({ locale }: { locale: Locale }) {
   return (
     <div className="relative z-2 mt-24 sm:mt-40">
       <div className="relative flex flex-col items-center gap-6 px-4 pt-16 text-center">
-        <Cloud n={2} width={140} className="top-[6%] left-[14%]" />
+        <Cloud kind="small" width={140} className="top-[6%] left-[14%]" />
         <Cloud
-          n={3}
+          kind="wide"
           width={180}
           className="top-[22%] right-[9%] opacity-80 [animation-delay:-8s]"
         />
@@ -49,9 +49,9 @@ export function Community({ locale }: { locale: Locale }) {
         </div>
       </div>
       <GroundBand className="h-28">
-        <Plant src="treeSmall_green1" height={48} className="top-6 left-[12%]" />
+        <Plant kind="sapling" height={48} className="top-6 left-[12%]" />
         <Plant
-          src="bush2"
+          kind="bush"
           height={38}
           className="top-9 right-[15%] [animation-delay:-2.4s]"
         />
