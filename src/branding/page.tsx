@@ -41,12 +41,12 @@ const marks: {
   {
     title: "頭像",
     body: "Discord 頭像和社群帳號用這個。上傳整張方形圖，平台會自己裁成圓形。",
-    art: <img src={`${base}avatar.svg`} alt="" width={224} height={224} className="size-40 rounded-full md:size-56" />,
+    art: <img src={`${base}avatar.svg`} alt="" width={224} height={224} className="size-40 rounded-full" />,
     downloads: [
       { label: "SVG", file: "avatar.svg" },
       { label: "PNG", file: "avatar-1024.png" },
     ],
-    className: "md:col-span-2 md:row-span-2",
+    className: "sm:col-span-2",
   },
   {
     title: "角色",
@@ -78,7 +78,6 @@ const marks: {
       { label: "ICO", file: "favicon.ico" },
       { label: "Apple 圖示", file: "apple-touch-icon.png" },
     ],
-    className: "md:col-span-2",
   },
 ];
 
@@ -223,7 +222,7 @@ function CornerDownload({ href, label, className }: { href: string; label: strin
 /** Download chips. `onColor` is for chips sitting on a brand-coloured tile. */
 function Downloads({ items, t, onColor = false }: { items: Download[]; t: Translate; onColor?: boolean }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap content-start gap-2">
       {items.map(({ label, file }) => (
         <a
           key={file}
@@ -366,18 +365,19 @@ export function BrandingPage({ locale }: { locale: Locale }) {
           <p className="max-w-2xl text-fd-muted-foreground">
             {t("網站頁首、合作頁和簡報用這個。淺色背景用深色字，深色背景用白字。")}
           </p>
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {marks.map(({ title, body, art, downloads, className }) => (
               <article
                 key={title}
-                className={cn("grid grid-rows-[1fr_auto] gap-6 rounded-[2rem] border bg-fd-card p-6", className)}
+                className={cn(
+                  "row-span-4 grid grid-rows-subgrid gap-y-3 rounded-[2rem] border bg-fd-card p-6",
+                  className,
+                )}
               >
-                <div className="flex min-h-36 items-center justify-center">{art}</div>
-                <div className="grid content-start gap-3">
-                  <h3 className="font-bold text-xl">{t(title)}</h3>
-                  <p className="text-fd-muted-foreground text-sm">{t(body)}</p>
-                  <Downloads items={downloads} t={t} />
-                </div>
+                <div className="mb-3 flex min-h-36 items-center justify-center">{art}</div>
+                <h3 className="font-bold text-xl">{t(title)}</h3>
+                <p className="text-fd-muted-foreground text-sm">{t(body)}</p>
+                <Downloads items={downloads} t={t} />
               </article>
             ))}
           </div>
@@ -390,7 +390,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
         >
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {poses.map(({ name, file }) => (
-              <figure key={file} className="relative grid gap-2 rounded-[2rem] border bg-fd-card p-4 pb-5">
+              <figure key={file} className="relative row-span-2 grid grid-rows-subgrid gap-y-2 rounded-[2rem] border bg-fd-card p-4 pb-5">
                 <img
                   src={`${base}poses/${file}.png`}
                   alt=""
@@ -446,7 +446,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
         >
           <div className="grid gap-4 md:grid-cols-3">
             {environments.map(({ name, id, app, body, suffix, surface }) => (
-              <article key={id} className={cn("grid content-start gap-5 rounded-[2rem] p-6 text-white", surface)}>
+              <article key={id} className={cn("row-span-5 grid grid-rows-subgrid gap-y-5 rounded-[2rem] p-6 text-white", surface)}>
                 <img
                   src={`${base}avatar${suffix}.svg`}
                   alt=""
@@ -459,7 +459,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
                   <p className="font-mono text-sm text-white/80">{id}</p>
                 </div>
                 <p className="text-white/90">{t(body)}</p>
-                <div className="flex items-center gap-2 rounded-xl bg-discord-bg px-3 py-2 text-discord-text text-xs">
+                <div className="flex items-center gap-2 self-start rounded-xl bg-discord-bg px-3 py-2 text-discord-text text-xs">
                   <img src={`${base}favicon${suffix}.svg`} alt="" width={16} height={16} className="size-4 rounded-sm" />
                   <span className="truncate">{app}</span>
                 </div>
@@ -518,7 +518,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
 
         <Section id="usage" title={t("使用規範")}>
           <div className="grid gap-4 md:grid-cols-2">
-            <article className="grid content-start gap-4 rounded-[2rem] border bg-fd-card p-6">
+            <article className="row-span-3 grid grid-rows-subgrid gap-y-4 rounded-[2rem] border bg-fd-card p-6">
               <div className="flex min-h-40 items-center justify-center rounded-3xl bg-fd-muted p-4">
                 <span className="rounded-xl border-2 border-fd-primary border-dashed p-6">
                   <Lockup className="h-12" />
@@ -529,7 +529,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
                 {t("字標組合四周至少留出頭像一半寬的空白，不要讓文字或其他標誌貼上來。")}
               </p>
             </article>
-            <article className="grid content-start gap-4 rounded-[2rem] border bg-fd-card p-6">
+            <article className="row-span-3 grid grid-rows-subgrid gap-y-4 rounded-[2rem] border bg-fd-card p-6">
               <div className="flex min-h-40 items-center justify-center gap-6 rounded-3xl bg-fd-muted p-4">
                 <img src={`${base}favicon.svg`} alt="" width={16} height={16} className="size-4" />
                 <Lockup className="h-6" />
@@ -545,7 +545,7 @@ export function BrandingPage({ locale }: { locale: Locale }) {
             {misuses.map(({ label, art }) => (
               <figure
                 key={label}
-                className="relative grid justify-items-center gap-3 rounded-[2rem] border bg-fd-card p-5"
+                className="relative row-span-2 grid grid-rows-subgrid justify-items-center gap-y-3 rounded-[2rem] border bg-fd-card p-5"
               >
                 <span className="absolute top-3 right-3 flex size-6 items-center justify-center rounded-full bg-yee-dev text-white">
                   <XIcon className="size-4" strokeWidth={3} />
