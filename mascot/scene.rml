@@ -305,7 +305,8 @@
         </LinearAnimation>
 
         <!-- Run, 0.4 s loop: a trot in place. Diagonal legs swing together (Leg0 with Leg3, Leg1 with Leg2), the body bobs once
-             per step, the neck leans forward and the tail swings against the stride. -->
+             per step, and the neck leans forward like a running giraffe's, pumping at each footfall while the head counter-rotates
+             to keep the face level. The tail swings against the stride. -->
         <LinearAnimation loopValue="loop" duration="24" name="Run" id="4:6">
             <KeyedObject objectId="1:10">
                 <KeyedProperty property="y">
@@ -349,20 +350,20 @@
             <KeyedObject objectId="1:2">
                 <KeyedProperty property="length"><KeyFrameDouble value="68" frame="0"/></KeyedProperty>
                 <KeyedProperty property="rotation">
-                    <KeyFrameDouble value="-1.44" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="-1.41" frame="6" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="-1.44" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="-1.41" frame="18" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="-1.44" frame="24"/>
+                    <KeyFrameDouble value="-1.1" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="-1.2" frame="6" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="-1.1" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="-1.2" frame="18" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="-1.1" frame="24"/>
                 </KeyedProperty>
             </KeyedObject>
             <KeyedObject objectId="1:3">
                 <KeyedProperty property="rotation">
-                    <KeyFrameDouble value="0.36" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="0.40" frame="6" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="0.36" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="0.40" frame="18" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
-                    <KeyFrameDouble value="0.36" frame="24"/>
+                    <KeyFrameDouble value="0.02" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="0.12" frame="6" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="0.02" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="0.12" frame="18" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="0.02" frame="24"/>
                 </KeyedProperty>
             </KeyedObject>
             <KeyedObject objectId="1:4">
@@ -374,7 +375,8 @@
             </KeyedObject>
         </LinearAnimation>
 
-        <!-- Duck, 0.4 s loop: the trot with the neck stretched forward and low, so the head passes under mid-height flyers. -->
+        <!-- Duck, 0.4 s loop: the trot with the neck stretched forward from the shoulders, like a galloping horse's, and the head
+             tipped nose-down as a horse charges, so the head passes under mid-height flyers. -->
         <LinearAnimation loopValue="loop" duration="24" name="Duck" id="4:8">
             <KeyedObject objectId="1:10">
                 <KeyedProperty property="y">
@@ -416,10 +418,10 @@
                 </KeyedProperty>
             </KeyedObject>
             <KeyedObject objectId="1:2">
-                <KeyedProperty property="length"><KeyFrameDouble value="68" frame="0"/></KeyedProperty>
-                <KeyedProperty property="rotation"><KeyFrameDouble value="-0.2" frame="0"/></KeyedProperty>
+                <KeyedProperty property="length"><KeyFrameDouble value="85" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="0.40" frame="0"/></KeyedProperty>
             </KeyedObject>
-            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.45" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="-0.62" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:4">
                 <KeyedProperty property="rotation">
                     <KeyFrameDouble value="2.90" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
@@ -429,23 +431,42 @@
             </KeyedObject>
         </LinearAnimation>
 
-        <!-- Jump: held while off the ground. Front legs reach forward, back legs push back, the tail lifts. -->
+        <!-- Jump: held while off the ground. As a horse over a fence, the neck stretches forward, the front legs reach, the back legs trail and the tail lifts. -->
         <LinearAnimation loopValue="loop" duration="12" name="Jump" id="4:7">
             <KeyedObject objectId="1:10">
                 <KeyedProperty property="y"><KeyFrameDouble value="462" frame="0"/></KeyedProperty>
                 <KeyedProperty property="scaleX"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
                 <KeyedProperty property="scaleY"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
             </KeyedObject>
-            <KeyedObject objectId="1:5"><KeyedProperty property="rotation"><KeyFrameDouble value="2.05" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:6"><KeyedProperty property="rotation"><KeyFrameDouble value="1.95" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:7"><KeyedProperty property="rotation"><KeyFrameDouble value="1.15" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:8"><KeyedProperty property="rotation"><KeyFrameDouble value="1.05" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:5"><KeyedProperty property="rotation"><KeyFrameDouble value="2.25" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:6"><KeyedProperty property="rotation"><KeyFrameDouble value="2.15" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:7"><KeyedProperty property="rotation"><KeyFrameDouble value="0.95" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:8"><KeyedProperty property="rotation"><KeyFrameDouble value="0.85" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:2">
                 <KeyedProperty property="length"><KeyFrameDouble value="68" frame="0"/></KeyedProperty>
-                <KeyedProperty property="rotation"><KeyFrameDouble value="-1.50" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="-1.20" frame="0"/></KeyedProperty>
             </KeyedObject>
-            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.30" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.10" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:4"><KeyedProperty property="rotation"><KeyFrameDouble value="3.25" frame="0"/></KeyedProperty></KeyedObject>
+        </LinearAnimation>
+
+        <!-- Dead: the knocked-out slump. The neck drops forward from the shoulders, the head hangs, the tail droops and the body sags. -->
+        <LinearAnimation loopValue="loop" duration="12" name="Dead" id="4:9">
+            <KeyedObject objectId="1:10">
+                <KeyedProperty property="y"><KeyFrameDouble value="462" frame="0"/></KeyedProperty>
+                <KeyedProperty property="scaleX"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
+                <KeyedProperty property="scaleY"><KeyFrameDouble value="0.97" frame="0"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:5"><KeyedProperty property="rotation"><KeyFrameDouble value="1.5707964" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:6"><KeyedProperty property="rotation"><KeyFrameDouble value="1.5707964" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:7"><KeyedProperty property="rotation"><KeyFrameDouble value="1.5707964" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:8"><KeyedProperty property="rotation"><KeyFrameDouble value="1.5707964" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:2">
+                <KeyedProperty property="length"><KeyFrameDouble value="68" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="-0.95" frame="0"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.85" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:4"><KeyedProperty property="rotation"><KeyFrameDouble value="2.75" frame="0"/></KeyedProperty></KeyedObject>
         </LinearAnimation>
 
         <!-- Blinks squash the eyes' own bone, so they close in place whatever the head is doing. -->

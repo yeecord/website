@@ -281,14 +281,15 @@ export class MascotPlayer {
     this.render(pose, rig);
   }
 
-  /** Mirrors the Dino state machine in scene.rml. */
+  /** Mirrors the Dino state machine in scene.rml, plus the Dead slump that goes with the knocked-out face drawn here. */
   private transitions() {
     const { body, blink, timelines } = this;
     const at = body.current.timeline;
 
     if (!body.blending) {
-      const moving = at === timelines.Run || at === timelines.Jump || at === timelines.Duck;
-      const pose = this.running ? (this.airborne ? "Jump" : this.ducking ? "Duck" : "Run") : undefined;
+      const moving = at === timelines.Run || at === timelines.Jump || at === timelines.Duck || at === timelines.Dead;
+      const pose =
+        this.face === "dead" ? "Dead" : this.running ? (this.airborne ? "Jump" : this.ducking ? "Duck" : "Run") : undefined;
 
       if (pose && at !== timelines[pose]) {
         body.go(this.play(pose), pose === "Run" ? 100 : 80);
