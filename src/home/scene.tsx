@@ -1,9 +1,11 @@
 import clsx from "clsx";
 
 /* 素材由 Gemini 照機器龍的畫風生成，描成 SVG；深色模式整體壓暗 */
-/* 玩遊戲時背景淡下去，讓迎面來的障礙物看得清楚；遊戲裡入夜時再壓暗 */
+/* 遊戲裡入夜時壓暗 */
 const night = "group-data-night/hero:brightness-[.45]";
-const dimmed = `[transition:opacity_.3s_ease-out,filter_1s_ease] group-data-game/hero:opacity-40 ${night}`;
+/* 玩遊戲時背景變簡單、而且不做半透明：裝飾物整個淡出，雲、山丘和地面維持原樣 */
+const gameHidden = `[transition:opacity_.3s_ease-out,filter_1s_ease] group-data-game/hero:opacity-0 ${night}`;
+const nightOnly = `[transition:filter_1s_ease] ${night}`;
 
 export const plantDim = "dark:brightness-[.6] dark:saturate-[.75]";
 
@@ -41,8 +43,8 @@ export function Cloud({
       height={Math.round(width / RATIO[`cloud-${kind}`])}
       draggable={false}
       className={clsx(
-        "absolute animate-[cloud-drift_40s_ease-in-out_infinite_alternate] select-none motion-reduce:animate-none dark:opacity-15 dark:group-data-game/hero:opacity-[.06]",
-        dimmed,
+        "absolute animate-[cloud-drift_40s_ease-in-out_infinite_alternate] select-none motion-reduce:animate-none dark:opacity-15",
+        nightOnly,
         className,
       )}
     />
@@ -67,7 +69,7 @@ export function Plant({
       draggable={false}
       className={clsx(
         "absolute origin-bottom animate-[sway_5.5s_ease-in-out_infinite] select-none motion-reduce:animate-none",
-        dimmed,
+        gameHidden,
         plantDim,
         className,
       )}
@@ -94,7 +96,7 @@ function SkyLights() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-300 group-data-game/hero:opacity-40"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
     >
       <div className="absolute top-[4%] right-[15%] transition-opacity duration-1000 max-lg:top-0 max-lg:right-[3%] dark:hidden group-data-night/hero:opacity-0">
         <img
@@ -105,12 +107,12 @@ function SkyLights() {
           className="animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-lg:w-20 max-sm:w-14"
         />
       </div>
-      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] [--drift:38vw] motion-reduce:animate-none max-lg:hidden">
+      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] transition-opacity duration-300 [--drift:38vw] motion-reduce:animate-none max-lg:hidden group-data-game/hero:opacity-0">
         <img
           src="/home/scene/balloon.svg"
           alt=""
-          width={56}
-          height={80}
+          width={88}
+          height={126}
           className="animate-[float_3s_ease-in-out_infinite_alternate] motion-reduce:animate-none dark:brightness-[.5]"
         />
       </div>
@@ -140,27 +142,12 @@ const STARS = [
 ];
 
 /* 玩遊戲時跟著跑步往後捲的一層（DinoGame 依 data-parallax 的倍率移動它）。
-   內容在左右各複製幾份接起來，捲過一個週期就接回原位；mirror 時隔一份鏡像，給左右邊緣接不起來的山丘用 */
-export function Scroller({
-  factor,
-  mirror = false,
-  children,
-}: {
-  factor: number;
-  mirror?: boolean;
-  children: React.ReactNode;
-}) {
-  const offsets = mirror ? [-2, -1, 0, 1] : [-1, 0];
-
+   內容在左邊再複製一份接起來，捲過一整個寬度就接回原位 */
+export function Scroller({ factor, children }: { factor: number; children: React.ReactNode }) {
   return (
-    <div aria-hidden data-parallax={factor} data-period={mirror ? 2 : 1} className="absolute inset-0">
-      {offsets.map((k) => (
-        <div
-          key={k}
-          /* 相鄰的複本重疊 1 px，蓋掉接縫的次像素空隙 */
-          style={{ transform: `translateX(calc(${k * 100}% - ${k}px))${mirror && k % 2 !== 0 ? " scaleX(-1)" : ""}` }}
-          className="absolute inset-0"
-        >
+    <div aria-hidden data-parallax={factor} className="absolute inset-0">
+      {[-1, 0].map((k) => (
+        <div key={k} style={{ transform: `translateX(${k * 100}%)` }} className="absolute inset-0">
           {children}
         </div>
       ))}
@@ -171,7 +158,7 @@ export function Scroller({
 /* 遠方山丘上的小村莊：房子是一個個伺服器社群，煙囪冒煙、風車在轉 */
 export function Village({ className }: { className?: string }) {
   return (
-    <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", dimmed, className)}>
+    <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", gameHidden, className)}>
       <Scroller factor={0.25}>
         <Cottage className="bottom-[46%] left-[24%] w-12 sm:w-16" smokeDelay={0} />
         <Cottage className="bottom-[58%] left-[31%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
@@ -222,7 +209,7 @@ export function Rabbit({ className }: { className?: string }) {
       draggable={false}
       className={clsx(
         "absolute h-7 w-auto animate-[hop_5s_ease-out_infinite] select-none motion-reduce:animate-none sm:h-9",
-        dimmed,
+        gameHidden,
         plantDim,
         className,
       )}
@@ -232,17 +219,13 @@ export function Rabbit({ className }: { className?: string }) {
 
 export function HillsLayer({ className }: { className?: string }) {
   return (
-    <div aria-hidden className={clsx("absolute inset-x-0 bottom-0 overflow-hidden", dimmed, className)}>
-      <div className="absolute inset-0 animate-[hill-drift_40s_ease-in-out_infinite_alternate] [--drift:3%] motion-reduce:animate-none">
-        <Scroller factor={0.25} mirror>
-          <img
-            src="/home/scene/hills.svg"
-            alt=""
-            draggable={false}
-            className="size-full select-none dark:brightness-[.34] dark:saturate-[1.6]"
-          />
-        </Scroller>
-      </div>
+    <div aria-hidden className={clsx("absolute inset-x-0 bottom-0 overflow-hidden", nightOnly, className)}>
+      <img
+        src="/home/scene/hills.svg"
+        alt=""
+        draggable={false}
+        className="absolute bottom-0 left-[-4%] h-full w-[108%] max-w-none animate-[hill-drift_40s_ease-in-out_infinite_alternate] select-none [--drift:3%] motion-reduce:animate-none dark:brightness-[.34] dark:saturate-[1.6]"
+      />
     </div>
   );
 }
