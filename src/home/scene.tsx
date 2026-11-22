@@ -125,7 +125,7 @@ export function HillsLayer({ className }: { className?: string }) {
         src="/home/scene/hills.svg"
         alt=""
         draggable={false}
-        className="absolute bottom-0 left-[-4%] h-full w-[108%] max-w-none animate-[hill-drift_40s_ease-in-out_infinite_alternate] select-none [--drift:3%] motion-reduce:animate-none dark:brightness-[.32] dark:saturate-[.8]"
+        className="absolute bottom-0 left-[-4%] h-full w-[108%] max-w-none animate-[hill-drift_40s_ease-in-out_infinite_alternate] select-none [--drift:3%] motion-reduce:animate-none dark:brightness-[.34] dark:saturate-[1.6]"
       />
     </div>
   );
