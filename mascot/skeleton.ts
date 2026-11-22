@@ -67,8 +67,10 @@ const index = new Map(placed.map((b, i) => [b.spec.name, i]));
 
 // ---- weights ----
 
+const ramp = (a: number, b: number, v: number) => Math.min(1, Math.max(0, (v - a) / (b - a)));
+
 const smooth = (a: number, b: number, v: number) => {
-  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
+  const t = ramp(a, b, v);
 
   return t * t * (3 - 2 * t);
 };
@@ -76,15 +78,15 @@ const smooth = (a: number, b: number, v: number) => {
 /** How far along the chain's direction a point lies, from the chain's start. */
 const reach = ({ at, rotation }: Chain, [x, y]: P) => (x - at[0]) * Math.cos(rotation) + (y - at[1]) * Math.sin(rotation);
 
-/** Splits a weight along a chain: full weight on a bone up to its midpoint, then a smooth hand-over to the next. */
+/** Splits a weight along a chain: full weight on a bone at its midpoint, handed over linearly to the next bone's midpoint. */
 function along(chain: Chain, p: P, weight: number): Influence[] {
   const count = chain.ids.length;
   const s = reach(chain, p);
   const mid = (n: number) => ((n + 0.5) * chain.length) / count;
 
   return chain.ids.map((_, n): Influence => {
-    const rise = n === 0 ? 1 : smooth(mid(n - 1), mid(n), s);
-    const fall = n === count - 1 ? 1 : 1 - smooth(mid(n), mid(n + 1), s);
+    const rise = n === 0 ? 1 : ramp(mid(n - 1), mid(n), s);
+    const fall = n === count - 1 ? 1 : 1 - ramp(mid(n), mid(n + 1), s);
 
     return [`${chain.name}${n + 1}`, weight * rise * fall];
   });
@@ -98,30 +100,21 @@ const nearestLeg = (score: (span: [number, number]) => number) =>
 function bodyWeights(p: P): Influence[] {
   const [x, y] = p;
   const up = reach(NECK, p);
-
-  if (x > 32 && up > -45) {
-    const toNeck = smooth(-45, 20, up);
-    const toHead = smooth(NECK.length - 25, NECK.length + 7, up);
-
-    return [["Body", 1 - toNeck], ...along(NECK, p, toNeck * (1 - toHead)), ["Head", toNeck * toHead]];
-  }
-
-  if (y > -133 && x < -81) {
-    const toTail = smooth(-81, -146, x);
-
-    return [["Body", 1 - toTail], ...along(TAIL, p, toTail)];
-  }
-
+  const toNeck = smooth(-45, 20, up) * smooth(0, 50, x);
+  const toHead = smooth(NECK.length - 35, NECK.length + 10, up);
+  const toTail = smooth(-81, -146, x) * smooth(-150, -120, y);
   const gap = ([a, b]: [number, number]) => (x < a ? a - x : x > b ? x - b : 0);
   const leg = nearestLeg(gap);
+  const toLeg = smooth(-58, -25, y) * (1 - smooth(0, 8, gap(LEG_SPANS[leg] ?? [0, 0])));
+  const trunk = (1 - toNeck) * (1 - toTail) * (1 - toLeg);
 
-  if (y > -61 && gap(LEG_SPANS[leg] ?? [0, 0]) <= 3) {
-    const toLeg = smooth(-59, -40.8, y);
-
-    return [["Body", 1 - toLeg], [`Leg${leg}`, toLeg]];
-  }
-
-  return [["Body", 1]];
+  return [
+    ["Body", trunk],
+    ...along(NECK, p, toNeck * (1 - toHead)),
+    ["Head", toNeck * toHead],
+    ...along(TAIL, p, (1 - toNeck) * toTail),
+    [`Leg${leg}`, (1 - toNeck) * (1 - toTail) * toLeg],
+  ];
 }
 
 /** Packs up to four influences into Rive's byte slots: specks dropped, the rest normalised to exactly 255. */
@@ -174,20 +167,36 @@ async function loops(file: string): Promise<Seg[][]> {
   });
 }
 
+const dist = ([ax, ay]: P, [bx, by]: P) => Math.hypot(bx - ax, by - ay);
 const lerp = (a: P, b: P, t: number): P => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
 
-/** Splits every cubic in two (de Casteljau), so the outline has more vertices to bend with and the same rest shape. */
-const halve = (segs: Seg[]) =>
-  segs.flatMap(({ from, c1, c2, to }): Seg[] => {
-    const ab = lerp(from, c1, 0.5), bc = lerp(c1, c2, 0.5), cd = lerp(c2, to, 0.5);
-    const abc = lerp(ab, bc, 0.5), bcd = lerp(bc, cd, 0.5), mid = lerp(abc, bcd, 0.5);
+/** Splits a cubic at `t` (de Casteljau) into two with the same shape. */
+function split({ from, c1, c2, to }: Seg, t: number): [Seg, Seg] {
+  const ab = lerp(from, c1, t), bc = lerp(c1, c2, t), cd = lerp(c2, to, t);
+  const abc = lerp(ab, bc, t), bcd = lerp(bc, cd, t), mid = lerp(abc, bcd, t);
 
-    return [{ from, c1: ab, c2: abc, to: mid }, { from: mid, c1: bcd, c2: cd, to }];
+  return [{ from, c1: ab, c2: abc, to: mid }, { from: mid, c1: bcd, c2: cd, to }];
+}
+
+/** Splits every cubic into equal pieces no longer than `step`, so the outline has vertices to bend with and keeps its rest shape. */
+const densify = (segs: Seg[], step: number) =>
+  segs.flatMap((seg): Seg[] => {
+    const pieces = Math.max(1, Math.ceil((dist(seg.from, seg.c1) + dist(seg.c1, seg.c2) + dist(seg.c2, seg.to)) / step));
+    const out: Seg[] = [];
+    let rest = seg;
+
+    for (let n = pieces; n > 1; n--) {
+      const [head, tail] = split(rest, 1 / n);
+
+      out.push(head);
+      rest = tail;
+    }
+
+    return [...out, rest];
   });
 
 const r = (v: number) => +v.toFixed(2);
 const angle = ([ax, ay]: P, [bx, by]: P) => Math.atan2(by - ay, bx - ax);
-const dist = ([ax, ay]: P, [bx, by]: P) => Math.hypot(bx - ax, by - ay);
 
 /** Every bone's rest world transform in artboard space, as Rive's skin binds it. */
 const tendons = placed
@@ -225,7 +234,7 @@ const shapes: Record<string, string[]> = {
   Tongue: (await loops("tongue")).map((l, i) => pointsPath(`Tongue ${i}`, l, only("Head"))),
   Mouth: (await loops("mouth")).map((l, i) => pointsPath(`Mouth ${i}`, l, only("Head"))),
   "Far legs": (await loops("far-legs")).map((l, i) => pointsPath(`Far leg ${i}`, l, farLeg(l))),
-  Body: (await loops("body")).map((l, i) => pointsPath(`Outline ${i}`, halve(l), bodyWeights)),
+  Body: (await loops("body")).map((l, i) => pointsPath(`Outline ${i}`, densify(l, 5), bodyWeights)),
 };
 
 function boneXml(spec: BoneSpec, depth: number): string {

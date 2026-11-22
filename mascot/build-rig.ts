@@ -75,7 +75,8 @@ function influences(values: number, indices: number, tendons: number[]): number[
       throw new Error("a weight points at the identity slot or a missing tendon");
     }
 
-    out.push(bone, round(value / 255));
+    // Four places: weights multiply artboard coordinates in the hundreds, so a sum off by 0.01 moves a point by pixels.
+    out.push(bone, Math.round((value / 255) * 10000) / 10000);
   }
 
   return out;
