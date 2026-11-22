@@ -287,4 +287,5 @@ export const en = {
   "蹲下": "Ducking",
   "昏倒": "Knocked out",
   "場景插圖": "Scene illustrations",
+  "品牌素材": "Brand",
 } satisfies Record<keyof typeof zhCn, string>;
