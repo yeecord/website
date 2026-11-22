@@ -24,7 +24,7 @@ export function DinoMascot({
   playing?: boolean;
   dead?: boolean;
   running?: boolean;
-  onPress: () => void;
+  onPress?: () => void;
   onPlayer?: (player: MascotPlayer | null) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -82,7 +82,7 @@ export function DinoMascot({
   function yell() {
     const id = Date.now();
 
-    onPress();
+    onPress?.();
     setYells((prev) => [...prev.slice(-3), id]);
     setTimeout(() => {
       setYells((prev) => prev.filter((y) => y !== id));
