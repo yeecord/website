@@ -156,22 +156,17 @@ export function Scroller({ factor, children }: { factor: number; children: React
 }
 
 /* 遠方山丘和山上的小村莊捲在同一層，房子才會一直站在山上。
-   一格是山丘接上自己的鏡像，左右兩端等高，捲動時接縫看不出來 */
+   hills-tile.svg 是山丘接上自己的鏡像，左右兩端等高，捲動時接得起來 */
 export function Village({ className }: { className?: string }) {
   return (
     <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0 overflow-x-clip", nightOnly, className)}>
       <Scroller factor={0.25}>
-        <div className="absolute inset-0 flex">
-          {["", "-scale-x-100"].map((flip) => (
-            <img
-              key={flip}
-              src="/home/scene/hills.svg"
-              alt=""
-              draggable={false}
-              className={clsx("h-full w-1/2 select-none dark:brightness-[.34] dark:saturate-[1.6]", flip)}
-            />
-          ))}
-        </div>
+        <img
+          src="/home/scene/hills-tile.svg"
+          alt=""
+          draggable={false}
+          className="size-full select-none dark:brightness-[.34] dark:saturate-[1.6]"
+        />
         <Windmill className="bottom-[76%] left-[55%] w-10 sm:w-14 max-sm:hidden" />
         <Cottage className="bottom-[72%] left-[66%] w-8 sm:w-11 max-lg:hidden" smokeDelay={-1.3} />
         <Cottage className="bottom-[90%] left-[71%] w-12 sm:w-16" smokeDelay={0} />
