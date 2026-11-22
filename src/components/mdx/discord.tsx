@@ -118,7 +118,7 @@ export function BotAvatar({ className }: { className?: string }) {
     <img
       src="/img/logo.svg"
       alt=""
-      className={cn("shrink-0 rounded-full bg-discord-avatar p-0.5", className)}
+      className={cn("shrink-0 rounded-full", className)}
     />
   );
 }

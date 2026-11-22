@@ -28,7 +28,7 @@ const GREEN = "#6bb369";
 const BLURPLE = "#5865f2";
 
 function Logo({ size }: { size: number }) {
-  return <img src={logoSvg} width={size * (1580 / 2083)} height={size} />;
+  return <img src={logoSvg} width={size} height={size} />;
 }
 
 type Pill = { w: number; bg: string; avatar?: string };

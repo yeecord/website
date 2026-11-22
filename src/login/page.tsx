@@ -20,7 +20,7 @@ export function LoginPage({ locale }: { locale: Locale }) {
       <div className="flex flex-col px-6 py-8 sm:px-12">
         <div className="flex items-center justify-between gap-4">
           <a href={staticPath(locale)} className={`flex items-center gap-2.5 ${link}`}>
-            <img src="/img/logo.svg" alt="" width={21} height={28} />
+            <img src="/img/logo.svg" alt="" width={28} height={28} />
             <span className="font-semibold text-fd-foreground text-lg">Yeecord</span>
           </a>
           <PreferencesMenu
