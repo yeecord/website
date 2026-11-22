@@ -105,6 +105,15 @@ function SkyLights() {
           className="animate-[glow_7s_ease-in-out_infinite] motion-reduce:animate-none max-sm:w-20"
         />
       </div>
+      <div className="absolute top-[22%] left-[9%] animate-[cloud-drift_80s_ease-in-out_infinite_alternate] [--drift:38vw] motion-reduce:animate-none max-sm:hidden">
+        <img
+          src="/home/scene/balloon.svg"
+          alt=""
+          width={56}
+          height={80}
+          className="animate-[float_3s_ease-in-out_infinite_alternate] motion-reduce:animate-none dark:brightness-[.5]"
+        />
+      </div>
       <img
         src="/home/scene/moon.svg"
         alt=""
@@ -129,6 +138,66 @@ const STARS = [
   [8, 12, 0], [15, 30, -1.2], [24, 8, -2.4], [33, 22, -0.6], [42, 6, -3.1], [58, 10, -1.8],
   [66, 26, -2.9], [74, 6, -0.3], [86, 30, -2.2], [92, 14, -1.1], [50, 40, -3.4], [12, 46, -1.6],
 ];
+
+/* 遠方山丘上的小村莊：房子是一個個伺服器社群，煙囪冒煙、風車在轉 */
+export function Village({ className }: { className?: string }) {
+  return (
+    <div aria-hidden className={clsx("pointer-events-none absolute inset-x-0 bottom-0", dimmed, className)}>
+      <Cottage className="bottom-[46%] left-[24%] w-12 sm:w-16" smokeDelay={0} />
+      <Cottage className="bottom-[58%] left-[31%] w-8 sm:w-11" smokeDelay={-1.3} />
+      <Windmill className="bottom-[40%] left-[46%] w-10 sm:w-14" />
+      <Cottage className="bottom-[50%] left-[38%] w-9 sm:w-12 max-md:hidden" smokeDelay={-2.1} />
+    </div>
+  );
+}
+
+/* 煙囪在素材寬 76%、頂端的位置 */
+function Cottage({ className, smokeDelay }: { className: string; smokeDelay: number }) {
+  return (
+    <div className={clsx("absolute", className)}>
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          style={{ animationDelay: `${smokeDelay - i * 1.1}s` }}
+          className="absolute top-0 left-[72%] size-2.5 animate-[smoke_3.3s_ease-out_infinite] rounded-full bg-white/80 motion-reduce:hidden dark:bg-white/25 sm:size-3"
+        />
+      ))}
+      <img src="/home/scene/cottage.svg" alt="" draggable={false} className="relative w-full select-none dark:brightness-[.6]" />
+    </div>
+  );
+}
+
+/* 扇葉的軸心在塔身寬 51%、高 24% 的位置 */
+function Windmill({ className }: { className: string }) {
+  return (
+    <div className={clsx("absolute", className)}>
+      <img src="/home/scene/windmill.svg" alt="" draggable={false} className="w-full select-none dark:brightness-[.6]" />
+      <img
+        src="/home/scene/sails.svg"
+        alt=""
+        draggable={false}
+        className="-translate-x-1/2 -translate-y-1/2 absolute top-[24%] left-[51%] w-[150%] max-w-none animate-[spin_12s_linear_infinite] select-none motion-reduce:animate-none dark:brightness-[.6]"
+      />
+    </div>
+  );
+}
+
+/* 坐在樹叢旁的兔子，隔幾秒跳兩下 */
+export function Rabbit({ className }: { className?: string }) {
+  return (
+    <img
+      src="/home/scene/rabbit.svg"
+      alt=""
+      draggable={false}
+      className={clsx(
+        "absolute h-7 w-auto animate-[hop_5s_ease-out_infinite] select-none motion-reduce:animate-none sm:h-9",
+        dimmed,
+        plantDim,
+        className,
+      )}
+    />
+  );
+}
 
 export function HillsLayer({ className }: { className?: string }) {
   return (

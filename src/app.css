@@ -549,6 +549,34 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
+  @keyframes smoke {
+    from {
+      opacity: 0.8;
+      transform: translate(0, 0) scale(0.6);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-8px, -30px) scale(1.5);
+    }
+  }
+
+  @keyframes hop {
+    0%,
+    76%,
+    100% {
+      transform: translateY(0);
+    }
+    82% {
+      transform: translateY(-9px);
+    }
+    88% {
+      transform: translateY(0);
+    }
+    93% {
+      transform: translateY(-5px);
+    }
+  }
+
   @keyframes twinkle {
     50% {
       opacity: 0.25;

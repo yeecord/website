@@ -3,7 +3,7 @@ import { contentPath, type Locale, staticPath } from "~/i18n";
 import { type Translate, translator } from "~/i18n/translate";
 import { DinoGame } from "./DinoGame";
 import { ServerCount } from "./ServerCount";
-import { Cloud, GroundBand, HillsLayer, Plant, Sky } from "./scene";
+import { Cloud, GroundBand, HillsLayer, Plant, Rabbit, Sky, Village } from "./scene";
 
 const SERVERS = [
   { img: "/home/customers/apex-tw.png", name: "APEX Taiwan" },
@@ -69,6 +69,7 @@ export function Hero({ locale }: { locale: Locale }) {
             </div>
           </div>
           <HillsLayer className="h-32 sm:h-44" />
+          <Village className="h-32 sm:h-44" />
           <DinoGame locale={locale} alt={t("YEE 式機器龍")} />
         </div>
       </Sky>
@@ -85,6 +86,7 @@ function Forest() {
     <div className="absolute inset-x-0 top-0">
       <Plant kind="pine" height={150} className="bottom-full left-[4%]" />
       <Plant kind="bush" height={46} className="bottom-full left-[10%] [animation-delay:-1.5s]" />
+      <Rabbit className="bottom-full left-[13.5%] max-sm:hidden" />
       <Plant
         kind="flowers"
         height={36}
