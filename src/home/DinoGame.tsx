@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Locale } from "~/i18n";
 import { translator } from "~/i18n/translate";
 import { cn } from "~/utils/cn";
-import { DinoMascot } from "./DinoMascot";
+import { DinoMascot, VIEW } from "./DinoMascot";
 import type { MascotPlayer } from "./mascot/player";
 import { plantDim } from "./scene";
 
@@ -67,22 +67,33 @@ const MILESTONE = 100;
 const NIGHT_EVERY = 700;
 const KINDS = Object.keys(OBSTACLES) as ObstacleKind[];
 
-/* 飛行障礙物的離地高度：低的要跳過，高的飛在頭頂上方，跳起來反而會撞到 */
-const FLIGHT_ALTITUDES = [0.06, 1.04];
+/* 飛行障礙物的離地高度（恐龍畫布高度的比例），對應 Chrome 翼龍的三種高度：
+   低的要跳過，中間的要蹲下或跳高，高的飛在頭頂上方，跳起來反而會撞到 */
+const FLIGHT_ALTITUDES = [0.06, 0.58, 1.04];
 
-/* 恐龍面向左，框以恐龍畫布的寬高比例表示：[左, 右, 下, 上]，下和上是離地高度 */
-const DINO_BOXES = [
-  [0.32, 0.88, 0.04, 0.48],
-  [0.24, 0.44, 0.4, 0.62],
-  [0.03, 0.38, 0.6, 0.96],
+/* Chrome 暴龍的跳躍（trex.ts 的 normalJumpConfig），單位是 Chrome 像素和每格：
+   按住越久跳越高，升過 minJumpHeight 後放開就把上升速度壓到 dropVelocity，到 maxJumpHeight 一定會壓 */
+const TREX = {
+  gravity: 0.6,
+  initialJumpVelocity: 10,
+  minJumpHeight: 30,
+  maxJumpHeight: 63,
+  dropVelocity: 5,
+  speedDropCoefficient: 3,
+  gameoverClearTime: 1200,
+};
+
+/* 恐龍的碰撞框，用 artboard 座標寫：[左, 右, 下, 上]，左右是 x，下和上是離地高度 */
+const STANDING_BOXES = [
+  [150, 385, 6, 165],
+  [290, 385, 150, 270],
+  [300, 445, 260, 385],
 ] as const;
-
-/* 跳躍在恐龍高 128 px 時調好，其他尺寸等比縮放，滯空時間不變 */
-const GRAVITY = 2000 / 128;
-const JUMP_VELOCITY = 620 / 128;
-/* 提早放開時把上升速度砍到這個值，仍足以越過最高的地面障礙物 */
-const SHORT_JUMP_VELOCITY = 480 / 128;
-const JUMP_BUFFER = 0.12;
+const DUCKING_BOXES = [
+  [150, 385, 6, 150],
+  [330, 420, 140, 205],
+  [420, 545, 105, 228],
+] as const;
 const BEST_KEY = "dino-best";
 
 type Mode = "idle" | "playing" | "over";
@@ -97,7 +108,10 @@ type Sim = {
   elapsed: number;
   y: number;
   vy: number;
-  buffered: number;
+  jumping: boolean;
+  reachedMinHeight: boolean;
+  speedDrop: boolean;
+  ducking: boolean;
   items: Item[];
   stars: Star[];
   history: ObstacleKind[];
@@ -112,6 +126,8 @@ type Box = { left: number; right: number; bottom: number; top: number };
 
 const overlaps = (a: Box, b: Box) => a.left < b.right && a.right > b.left && a.bottom < b.top && a.top > b.bottom;
 const random = (min: number, max: number) => min + Math.floor(Math.random() * (max - min + 1));
+/* Chrome 把分數補到五位數 */
+const pad = (score: number) => String(score).padStart(5, "0");
 
 /* Chrome 過里程碑時讓分數閃三下 */
 function blink(el: HTMLElement) {
@@ -136,6 +152,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
   const starEls = useRef(new Map<number, HTMLDivElement>());
   const playerRef = useRef<MascotPlayer | null>(null);
   const sim = useRef<Sim | null>(null);
+  const diedAt = useRef(0);
 
   useEffect(() => {
     setBest(Number(localStorage.getItem(BEST_KEY)) || 0);
@@ -165,6 +182,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     const score = Math.floor(sim.current?.score ?? 0);
 
     stopLoop();
+    diedAt.current = performance.now();
     setFinalScore(score);
     if (score > best) {
       setBest(score);
@@ -173,26 +191,38 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     setMode("over");
   }
 
+  /* 以下照 Chrome 的 Trex：startJump、endJump、setSpeedDrop、setDuck */
   function jump() {
     const current = sim.current;
 
-    if (!current) return;
-    if (current.y === 0) {
-      current.vy = JUMP_VELOCITY * dinoHeight();
-    } else {
-      current.buffered = JUMP_BUFFER;
-    }
+    if (!current || current.jumping || current.ducking) return;
+
+    current.vy = TREX.initialJumpVelocity + current.speed / 10;
+    current.jumping = true;
+    current.reachedMinHeight = false;
+    current.speedDrop = false;
   }
 
   function endJump() {
     const current = sim.current;
-    const short = SHORT_JUMP_VELOCITY * dinoHeight();
 
-    if (current && current.vy > short) current.vy = short;
+    if (current?.reachedMinHeight && current.vy > TREX.dropVelocity) current.vy = TREX.dropVelocity;
   }
 
-  function dinoHeight() {
-    return dinoRef.current?.getBoundingClientRect().height || 128;
+  function duck(down: boolean) {
+    const current = sim.current;
+
+    if (!current) return;
+
+    if (!down) {
+      current.speedDrop = false;
+      current.ducking = false;
+    } else if (current.jumping) {
+      current.speedDrop = true;
+      current.vy = -1;
+    } else {
+      current.ducking = true;
+    }
   }
 
   /* Chrome 的 addNewObstacle：隨機挑一種，連續太多次或速度不夠就重挑 */
@@ -251,24 +281,32 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     current.elapsed += dt;
     current.speed = Math.min(CHROME.maxSpeed, current.speed + CHROME.acceleration * frames);
     current.score += current.speed * frames * CHROME.scoreCoefficient;
-    current.buffered -= dt;
+    /* Chrome 的 updateJump：y 是離地高度、vy 往上為正，都用 Chrome 像素 */
+    if (current.jumping) {
+      current.y += current.vy * (current.speedDrop ? TREX.speedDropCoefficient : 1) * frames;
+      current.vy -= TREX.gravity * frames;
 
-    if (current.y > 0 || current.vy > 0) {
-      current.vy -= GRAVITY * height * dt;
-      current.y = Math.max(0, current.y + current.vy * dt);
+      if (current.y > TREX.minJumpHeight || current.speedDrop) current.reachedMinHeight = true;
+      if (current.y > TREX.maxJumpHeight || current.speedDrop) endJump();
 
-      if (current.y === 0) {
+      if (current.y <= 0) {
+        current.y = 0;
         current.vy = 0;
+        current.jumping = false;
 
-        if (current.buffered > 0) {
-          current.vy = JUMP_VELOCITY * height;
-          current.buffered = 0;
+        /* 空中按住下鍵落地後直接蹲著 */
+        if (current.speedDrop) {
+          current.speedDrop = false;
+          current.ducking = true;
         }
       }
     }
 
-    dino.style.transform = `translateY(${-current.y}px)`;
-    playerRef.current?.setAirborne(current.y > 0);
+    const lift = current.y * unit;
+
+    dino.style.transform = `translateY(${-lift}px)`;
+    playerRef.current?.setAirborne(current.jumping);
+    playerRef.current?.setDucking(current.ducking);
 
     if (current.elapsed > CHROME.clearTime) {
       const last = current.items.at(-1);
@@ -280,11 +318,14 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
     /* 畫布有 CSS 鏡像，用量到的外框換算；translateY 不影響 left 和 width，跳躍中量也安全 */
     const dinoLeft = dinoRect.left - fieldRect.left;
-    const hitboxes = DINO_BOXES.map(([left, right, bottom, top]): Box => ({
-      left: dinoLeft + left * dinoRect.width,
-      right: dinoLeft + right * dinoRect.width,
-      bottom: current.y + bottom * height,
-      top: current.y + top * height,
+    /* 畫布是鏡像的：artboard 右邊在畫面左邊 */
+    const scale = height / VIEW.height;
+    const viewRight = VIEW.x + VIEW.width;
+    const hitboxes = (current.ducking ? DUCKING_BOXES : STANDING_BOXES).map(([left, right, bottom, top]): Box => ({
+      left: dinoLeft + (viewRight - right) * scale,
+      right: dinoLeft + (viewRight - left) * scale,
+      bottom: lift + bottom * scale,
+      top: lift + top * scale,
     }));
     let gone = false;
 
@@ -352,7 +393,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
       setNight(Math.floor(shown / NIGHT_EVERY) % 2 === 1);
       current.shown = shown;
-      scoreRef.current.textContent = String(shown);
+      scoreRef.current.textContent = pad(shown);
     }
 
     current.raf = requestAnimationFrame(frame);
@@ -374,7 +415,10 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       elapsed: 0,
       y: 0,
       vy: 0,
-      buffered: 0,
+      jumping: false,
+      reachedMinHeight: false,
+      speedDrop: false,
+      ducking: false,
       items: [],
       stars: [],
       history: [],
@@ -398,7 +442,11 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
         event.preventDefault();
         if (event.repeat) return;
         if (mode === "playing") jump();
-        else start();
+        /* Chrome 的 gameoverClearTime：剛撞到時連按不會馬上重開 */
+        else if (performance.now() - diedAt.current > TREX.gameoverClearTime) start();
+      } else if (event.code === "ArrowDown") {
+        event.preventDefault();
+        if (mode === "playing") duck(true);
       } else if (event.key === "Escape") {
         quit();
       }
@@ -406,6 +454,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
     function onKeyUp(event: KeyboardEvent) {
       if (event.code === "Space" || event.code === "ArrowUp") endJump();
+      else if (event.code === "ArrowDown") duck(false);
     }
 
     window.addEventListener("keydown", onKeyDown);
@@ -448,7 +497,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
   const bestScore = (
     <span className="text-muted-foreground group-data-night/hero:text-white/70 tabular-nums">
-      {t("最高分")} {best}
+      {t("最高分")} {pad(best)}
     </span>
   );
 
@@ -460,9 +509,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
             <>
               <span
                 ref={scoreRef}
-                className={cn(ENTER, "font-bold text-7xl tabular-nums sm:text-8xl")}
+                className={cn(ENTER, "font-bold font-mono text-4xl tabular-nums tracking-wider sm:text-5xl")}
               >
-                0
+                00000
               </span>
               {best > 0 && bestScore}
               <span className="animate-[hint-fade_3s_ease_forwards] text-muted-foreground group-data-night/hero:text-white/70 text-sm">
@@ -472,8 +521,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
           ) : (
             <>
               <span className="text-muted-foreground group-data-night/hero:text-white/70">{t("得分")}</span>
-              <span className="font-bold text-7xl tabular-nums sm:text-8xl">
-                {finalScore}
+              <span className="font-bold font-mono text-5xl tabular-nums tracking-wider sm:text-6xl">
+                {pad(finalScore)}
               </span>
               <div className={cn(ENTER, "delay-300")}>{bestScore}</div>
               <div className={cn(ENTER, "pointer-events-auto mt-4 flex gap-3 delay-500")}>

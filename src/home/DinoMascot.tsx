@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { MascotPlayer, type View } from "./mascot/player";
 import { rig } from "./mascot/rig";
 
-/* 留出跳起來和伸長脖子的空間，腳踩在畫布底邊 */
-const VIEW: View = { x: 48, y: 30, width: 452, height: 434 };
+/* 留出跳起來、伸長脖子和蹲下往前伸頭的空間，腳踩在畫布底邊 */
+export const VIEW: View = { x: 48, y: 30, width: 500, height: 434 };
 
 export function DinoMascot({
   alt,

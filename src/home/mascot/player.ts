@@ -164,6 +164,7 @@ export class MascotPlayer {
   private face: Face = "normal";
   private running = false;
   private airborne = false;
+  private ducking = false;
   private bodyPath: Path2D | undefined;
   private hovering = false;
   private frameId = 0;
@@ -226,6 +227,10 @@ export class MascotPlayer {
     this.airborne = airborne;
   }
 
+  setDucking(ducking: boolean) {
+    this.ducking = ducking;
+  }
+
   setFace(face: Face) {
     this.face = face;
 
@@ -282,11 +287,11 @@ export class MascotPlayer {
     const at = body.current.timeline;
 
     if (!body.blending) {
-      const moving = at === timelines.Run || at === timelines.Jump;
-      const pose = this.running ? (this.airborne ? "Jump" : "Run") : undefined;
+      const moving = at === timelines.Run || at === timelines.Jump || at === timelines.Duck;
+      const pose = this.running ? (this.airborne ? "Jump" : this.ducking ? "Duck" : "Run") : undefined;
 
       if (pose && at !== timelines[pose]) {
-        body.go(this.play(pose), pose === "Jump" ? 80 : 100);
+        body.go(this.play(pose), pose === "Run" ? 100 : 80);
       } else if (!pose && moving) {
         body.go(this.idle, 150);
       } else if (!moving) {

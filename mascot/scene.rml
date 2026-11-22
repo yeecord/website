@@ -64,6 +64,7 @@
             <StateMachineTrigger name="stretch" id="3:2"/>
             <StateMachineBool name="running" id="3:3"/>
             <StateMachineBool name="airborne" id="3:4"/>
+            <StateMachineBool name="ducking" id="3:5"/>
 
             <!-- Body: idle until poked. Hover hops, a press stretches the neck; both settle back to idle. Running trots in place until it stops. -->
             <StateMachineLayer name="Body" id="3:10">
@@ -87,6 +88,12 @@
                 <AnimationState x="200" y="150" animationId="4:6" id="3:14">
                     <StateTransition stateToId="3:11" duration="150"><TransitionBoolCondition inputId="3:3" opValue="notEqual"/></StateTransition>
                     <StateTransition stateToId="3:15" duration="80"><TransitionBoolCondition inputId="3:4" opValue="equal"/></StateTransition>
+                    <StateTransition stateToId="3:16" duration="80"><TransitionBoolCondition inputId="3:5" opValue="equal"/></StateTransition>
+                </AnimationState>
+                <AnimationState x="200" y="270" animationId="4:8" id="3:16">
+                    <StateTransition stateToId="3:11" duration="150"><TransitionBoolCondition inputId="3:3" opValue="notEqual"/></StateTransition>
+                    <StateTransition stateToId="3:15" duration="80"><TransitionBoolCondition inputId="3:4" opValue="equal"/></StateTransition>
+                    <StateTransition stateToId="3:14" duration="100"><TransitionBoolCondition inputId="3:5" opValue="notEqual"/></StateTransition>
                 </AnimationState>
                 <AnimationState x="400" y="150" animationId="4:7" id="3:15">
                     <StateTransition stateToId="3:11" duration="150"><TransitionBoolCondition inputId="3:3" opValue="notEqual"/></StateTransition>
@@ -358,6 +365,61 @@
                     <KeyFrameDouble value="0.36" frame="24"/>
                 </KeyedProperty>
             </KeyedObject>
+            <KeyedObject objectId="1:4">
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble value="2.90" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="3.15" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="2.90" frame="24"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <!-- Duck, 0.4 s loop: the trot with the neck stretched forward and low, so the head passes under mid-height flyers. -->
+        <LinearAnimation loopValue="loop" duration="24" name="Duck" id="4:8">
+            <KeyedObject objectId="1:10">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble value="462" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="459" frame="6" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="462" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="459" frame="18" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.7" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="462" frame="24"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleX"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
+                <KeyedProperty property="scaleY"><KeyFrameDouble value="0.94" frame="0"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:5">
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble value="1.15" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.99" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.15" frame="24"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:8">
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble value="1.15" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.99" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.15" frame="24"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:6">
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble value="1.99" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.15" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.99" frame="24"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:7">
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble value="1.99" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.15" frame="12" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble value="1.99" frame="24"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:2">
+                <KeyedProperty property="length"><KeyFrameDouble value="68" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="-0.2" frame="0"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.45" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:4">
                 <KeyedProperty property="rotation">
                     <KeyFrameDouble value="2.90" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
