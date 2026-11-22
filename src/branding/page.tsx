@@ -78,6 +78,7 @@ const marks: {
       { label: "ICO", file: "favicon.ico" },
       { label: "Apple 圖示", file: "apple-touch-icon.png" },
     ],
+    className: "sm:col-span-2 lg:col-span-1",
   },
 ];
 
@@ -265,14 +266,14 @@ function Hero({ t }: { t: Translate }) {
         alt=""
         width={220}
         height={90}
-        className="-z-1 absolute top-10 right-10 w-44 opacity-90 max-sm:w-28"
+        className="-z-1 absolute top-10 right-10 w-44 opacity-90 max-lg:hidden"
       />
       <img
         src={`${scene}cloud-small.svg`}
         alt=""
         width={120}
         height={60}
-        className="-z-1 absolute top-[42%] right-[34%] w-24 opacity-80 max-lg:hidden"
+        className="-z-1 absolute top-5 right-5 w-16 opacity-80 lg:top-[42%] lg:right-[34%] lg:w-24"
       />
       <img
         src={`${scene}hills.svg`}
