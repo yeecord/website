@@ -514,12 +514,6 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
   }
 
-  @keyframes hill-drift {
-    to {
-      transform: translateX(var(--drift, 36px));
-    }
-  }
-
   @keyframes glow {
     50% {
       opacity: 0.75;

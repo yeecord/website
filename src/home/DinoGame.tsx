@@ -78,9 +78,9 @@ const MILESTONE = 100;
 const NIGHT_EVERY = 700;
 const KINDS = Object.keys(OBSTACLES) as ObstacleKind[];
 
-/* 飛行障礙物的離地高度（恐龍畫布高度的比例），對應 Chrome 翼龍的三種高度：
-   低的要跳過，中間的要蹲下或跳高，高的飛在頭頂上方，跳起來反而會撞到 */
-const FLIGHT_ALTITUDES = [0.06, 0.58, 1.04];
+/* 飛行障礙物的離地高度（恐龍畫布高度的比例）：低的貼地要跳過，中間的對準頭要蹲下。
+   Chrome 還有一種飛在頭頂上的翼龍，這裡的蜜蜂比例大，飛在那裡分不出要不要跳，所以不用 */
+const FLIGHT_ALTITUDES = [0.06, 0.58];
 
 /* Chrome 暴龍的跳躍（trex.ts 的 normalJumpConfig），單位是 Chrome 像素和每格：
    按住越久跳越高，升過 minJumpHeight 後放開就把上升速度壓到 dropVelocity，到 maxJumpHeight 一定會壓 */
@@ -628,11 +628,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               bottom: obstacle.altitude,
               left: -obstacle.height * OBSTACLES[obstacle.kind].ratio * obstacle.size,
             }}
-            className={cn(
-              "absolute flex select-none drop-shadow-[0_3px_2px_rgb(0_0_0/0.25)] transition-opacity duration-200 will-change-transform",
-              plantDim,
-              mode === "over" && "opacity-60",
-            )}
+            className={cn("absolute flex select-none drop-shadow-[0_3px_2px_rgb(0_0_0/0.25)] will-change-transform", plantDim)}
           >
             {Array.from({ length: obstacle.size }, (_, i) => (
               <img
