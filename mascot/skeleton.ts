@@ -124,7 +124,7 @@ function neckWeights([x, y]: P): Influence[] {
   if (s <= 0.5) {
     // The back hands over far down the withers so it stretches into one arc as the head drops; the throat hands over
     // within a few units of the shoulder cut, so it folds cleanly instead of being scooped out.
-    const back = smooth(-150, -215, y) * smooth(-90, 40, x);
+    const back = smooth(-150, -215, y) * smooth(-60, 40, x);
     const throat = smooth(NECK_BASE[1] + 4, NECK_BASE[1] - 4, y);
 
     return handover("Body", "Neck1", back + (throat - back) * smooth(70, 100, x));

@@ -64,6 +64,133 @@ function blend(skins: Mat[], w: number[], x: number, y: number): [number, number
   return [cr * x - ci * y + 2 * (pr * qr - pi * qi), ci * x + cr * y + 2 * (pr * qi + pi * qr)];
 }
 
+type Vec = [number, number];
+
+const NECK_SAMPLES = 24;
+/** The share of the neck, from its base, over which points fade from their bone weights onto the curve. */
+const NECK_FADE = 0.5;
+
+/**
+ * A bendy neck after Blender's B-Bones and Spine's path constraint: points weighted to the neck chain lie on one cubic Bézier
+ * from the base of `Neck1` to the jaw joint, at the share of the neck and the offset from its axis they had at rest. The
+ * curve leaves along `Neck1` and arrives along the head, turned back by the head's rest angle, so the neck bends as one arc and
+ * meets the head without a crease. Points are placed by arc length, so the neck keeps its length only as far as the curve
+ * does. Only this player draws it; a Rive runtime skins the same points with their bone weights.
+ */
+class NeckCurve {
+  private readonly origin: Vec;
+  private readonly axis: Vec;
+  private readonly length: number;
+  private readonly headAngle: number;
+  private readonly points: Vec[] = [];
+  private readonly arcs: number[] = [];
+  private readonly controls: Vec[] = [];
+
+  private constructor(
+    private readonly chain: number[],
+    private readonly head: number,
+    binds: Mat[],
+  ) {
+    const [, , , , x0, y0] = binds[chain[0] ?? 0] ?? [1, 0, 0, 1, 0, 0];
+    const [ha, hb, , , x1, y1] = binds[head] ?? [1, 0, 0, 1, 0, 0];
+
+    this.length = Math.hypot(x1 - x0, y1 - y0);
+    this.origin = [x0, y0];
+    this.axis = [(x1 - x0) / this.length, (y1 - y0) / this.length];
+    this.headAngle = Math.atan2(hb, ha) - Math.atan2(this.axis[1], this.axis[0]);
+  }
+
+  /** The curve for a rig with bones named `Neck1`… and `Head`, or none. */
+  static of(bones: Bone[]): NeckCurve | undefined {
+    const chain = bones.flatMap(({ name }, i) => (/^Neck\d+$/.test(name) ? [i] : []));
+    const head = bones.findIndex(({ name }) => name === "Head");
+
+    return chain.length && head >= 0 ? new NeckCurve(chain, head, bones.map((b) => b.bind)) : undefined;
+  }
+
+  /** Lays the curve between the posed base and jaw joint. */
+  pose(worlds: Mat[], pose: Transform[]) {
+    const [ba, bb, , , x0, y0] = worlds[this.chain[0] ?? 0] ?? [1, 0, 0, 1, 0, 0];
+    const [ha, hb, , , x3, y3] = worlds[this.head] ?? [1, 0, 0, 1, 0, 0];
+    const reach = this.chain.reduce((sum, i) => sum + (pose[i]?.length ?? 0), 0) / 3;
+    const start = Math.atan2(bb, ba);
+    const end = Math.atan2(hb, ha) - this.headAngle;
+
+    this.controls.splice(
+      0,
+      4,
+      [x0, y0],
+      [x0 + Math.cos(start) * reach, y0 + Math.sin(start) * reach],
+      [x3 - Math.cos(end) * reach, y3 - Math.sin(end) * reach],
+      [x3, y3],
+    );
+    this.points.length = 0;
+    this.arcs.length = 0;
+
+    for (let i = 0; i <= NECK_SAMPLES; i++) {
+      const point = this.at(i / NECK_SAMPLES);
+      const last = this.points.at(-1);
+
+      this.arcs.push((this.arcs.at(-1) ?? 0) + (last ? Math.hypot(point[0] - last[0], point[1] - last[1]) : 0));
+      this.points.push(point);
+    }
+  }
+
+  /** Moves a skinned point onto the curve, or leaves it where its weights put it when it lies off the neck. */
+  place(w: number[], x: number, y: number, skinned: Vec): Vec {
+    if (!w.some((value, j) => j % 2 === 0 && this.chain.includes(value))) {
+      return skinned;
+    }
+
+    const [dx, dy] = [x - this.origin[0], y - this.origin[1]];
+    const [ux, uy] = this.axis;
+    const share = (dx * ux + dy * uy) / this.length;
+
+    if (share <= 0 || share > 1) {
+      return skinned;
+    }
+
+    const offset = dx * -uy + dy * ux;
+    const t = this.param(share);
+    const [px, py] = this.at(t);
+    const [tx, ty] = this.tangent(t);
+    const fade = Math.min(1, share / NECK_FADE);
+    const mix = fade * fade * (3 - 2 * fade);
+    const [cx, cy] = [px - ty * offset, py + tx * offset];
+
+    return [skinned[0] + (cx - skinned[0]) * mix, skinned[1] + (cy - skinned[1]) * mix];
+  }
+
+  /** The Bézier parameter at a share of the curve's arc length. */
+  private param(share: number): number {
+    const target = share * (this.arcs.at(-1) ?? 0);
+    const i = Math.max(1, this.arcs.findIndex((arc) => arc >= target));
+    const a = this.arcs[i - 1] ?? 0;
+    const b = this.arcs[i] ?? 0;
+
+    return (i - 1 + (b > a ? (target - a) / (b - a) : 0)) / NECK_SAMPLES;
+  }
+
+  private at(t: number): Vec {
+    const [p0 = [0, 0], p1 = [0, 0], p2 = [0, 0], p3 = [0, 0]] = this.controls;
+    const s = 1 - t;
+    const [k0, k1, k2, k3] = [s * s * s, 3 * s * s * t, 3 * s * t * t, t * t * t];
+
+    return [k0 * p0[0] + k1 * p1[0] + k2 * p2[0] + k3 * p3[0], k0 * p0[1] + k1 * p1[1] + k2 * p2[1] + k3 * p3[1]];
+  }
+
+  private tangent(t: number): Vec {
+    const [p0 = [0, 0], p1 = [0, 0], p2 = [0, 0], p3 = [0, 0]] = this.controls;
+    const s = 1 - t;
+    const [k0, k1, k2] = [3 * s * s, 6 * s * t, 3 * t * t];
+    const x = k0 * (p1[0] - p0[0]) + k1 * (p2[0] - p1[0]) + k2 * (p3[0] - p2[0]);
+    const y = k0 * (p1[1] - p0[1]) + k1 * (p2[1] - p1[1]) + k2 * (p3[1] - p2[1]);
+    const n = Math.hypot(x, y) || 1;
+
+    return [x / n, y / n];
+  }
+}
+
 /** cubic-bezier easing, solved for x by bisection. */
 function bezier(x1: number, y1: number, x2: number, y2: number) {
   const curve = (t: number, p1: number, p2: number) => 3 * (1 - t) * (1 - t) * t * p1 + 3 * (1 - t) * t * t * p2 + t * t * t;
@@ -194,6 +321,7 @@ export class MascotPlayer {
   private readonly ctx: CanvasRenderingContext2D;
   private readonly timelines: Record<string, Timeline>;
   private readonly binds: Mat[];
+  private readonly neck: NeckCurve | undefined;
   private readonly idle: Playing;
   private readonly body: Layer;
   private readonly blink: Layer;
@@ -225,6 +353,7 @@ export class MascotPlayer {
     this.ctx = ctx;
     this.timelines = Object.fromEntries(Object.entries(data.animations).map(([name, anim]) => [name, new Timeline(anim)]));
     this.binds = data.bones.map((b) => invert(b.bind));
+    this.neck = NeckCurve.of(data.bones);
     this.idle = this.play("Idle");
     this.body = new Layer(this.idle);
     this.blink = new Layer(this.play("Wait 4s"));
@@ -408,6 +537,8 @@ export class MascotPlayer {
 
     const skins = worlds.map((w, i) => multiply(w, this.binds[i] ?? w));
 
+    this.neck?.pose(worlds, pose);
+
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(this.scale, 0, 0, this.scale, -view.x * this.scale, -view.y * this.scale);
@@ -438,14 +569,10 @@ export class MascotPlayer {
     for (let i = 0; i < points.length; i += 2) {
       const x = points[i] ?? 0, y = points[i + 1] ?? 0, w = weights[i / 2] ?? [];
 
-      if (w.length <= 2) {
-        const [a, b, c, d, e, f] = skins[w[0] ?? 0] ?? [1, 0, 0, 1, 0, 0];
+      const [a, b, c, d, e, f] = skins[w[0] ?? 0] ?? [1, 0, 0, 1, 0, 0];
+      const skinned: Vec = w.length <= 2 ? [a * x + c * y + e, b * x + d * y + f] : blend(skins, w, x, y);
 
-        out.push(a * x + c * y + e, b * x + d * y + f);
-        continue;
-      }
-
-      out.push(...blend(skins, w, x, y));
+      out.push(...(this.neck?.place(w, x, y, skinned) ?? skinned));
     }
 
     const n = out.length / 6;
