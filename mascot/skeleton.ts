@@ -33,6 +33,10 @@ const LOIN: P = [-2, -110];
 /** The knee sits halfway down each leg. */
 const THIGH = 26;
 const KNEE_Y = -51 + THIGH;
+/** Above this height, behind the back legs, the outline belongs to the tail. */
+const TAIL_Y = -43;
+/** The top of the gaps between the legs. */
+const CROTCH_Y = -46;
 const LEG_SPANS: [number, number][] = [[-106, -60], [-56, -10], [5, 50], [55, 100]];
 
 const eyeLoops = await loops("eyes");
@@ -190,7 +194,7 @@ function bodyWeights(p: P): Influence[] {
     return neckWeights(p);
   }
 
-  if (x < -81 && y > -150 && (y < -43 || x < -105)) {
+  if (x < -81 && y > -150 && (y < TAIL_Y || x < -105)) {
     const tail = smooth(-150, -120, y) * Math.max(smooth(-105, -124, x), smooth(-43, -67, y));
     const t = smooth(-81, -134, x) * tail;
 
@@ -209,15 +213,23 @@ function bodyWeights(p: P): Influence[] {
   const leg = LEG_SPANS.reduce((best, span, i) => (gap(span) < gap(LEG_SPANS[best] ?? span) ? i : best), 0);
   const [a, b] = LEG_SPANS[leg] ?? [0, 0];
   const neighbour = LEG_SPANS[x < a ? leg - 1 : leg + 1];
-  // Between two legs the weight fades to Body at the midline, so the outline never jumps from one leg to the next.
+  // Between two legs the weight fades to the torso at the midline, so the outline never jumps from one leg to the next.
+  // Below the crotch every point is on a leg, so a foot that flares past its span still turns with its leg.
   const half = neighbour ? (x < a ? a - neighbour[1] : neighbour[0] - b) / 2 : 8;
-  const fade = 1 - smooth(0, half, gap([a, b]));
+  const fade = Math.max(1 - smooth(0, half, gap([a, b])), smooth(CROTCH_Y, CROTCH_Y + 8, y));
 
-  // Legs swing from the hip: the blend sits around the top of the leg, so the whole leg turns as one piece. The knee
-  // blends over a few units, so a bent leg keeps a round joint.
+  // The knee blends over a few units, so a bent leg keeps a round joint.
   const limb = handover(`Leg${leg}`, `Shin${leg}`, smooth(KNEE_Y - 5, KNEE_Y + 5, y));
 
-  return onto(torso(x), limb, smooth(-50, -30, y) * fade);
+  // The leg hands over just below the crotch, so the crotch arcs stay on the torso and the visible leg turns as one piece.
+  // The outer edges of the end legs run straight on from the chest and under the tail, so they hand over along a longer
+  // stretch: the chest's from high up, the rump's from where the tail lets go.
+  const mid = (a + b) / 2;
+  const crotch = smooth(CROTCH_Y - 2, CROTCH_Y + 8, y);
+  const outer = leg === 0 ? smooth(mid, a, x) : leg === LEG_SPANS.length - 1 ? smooth(mid, b, x) : 0;
+  const hip = crotch + ((leg === 0 ? smooth(TAIL_Y, -24, y) : smooth(-70, -36, y)) - crotch) * outer;
+
+  return onto(torso(x), limb, hip * fade);
 }
 
 /** Quantizes the weights to Rive bytes that sum to 255. */
