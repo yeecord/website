@@ -26,7 +26,8 @@ const NECK: Chain = {
 };
 const TAIL: Chain = { name: "Tail", ids: ["1:4", "1:13", "1:14"], at: [-101, -78], rotation: 3.0239, length: 93.6 };
 const LEGS: P[] = [[-83.1, -51], [-33.2, -51], [26.9, -51], [77, -51]];
-/** The spine bends at the loin, between the back and front legs: the hips carry the tail and back legs, the chest the rest. */
+/** The spine bends at the loin, between the back and front legs. The hips carry the tail and all four legs, so the chest can
+ * sag or lift the shoulders, neck and head while every foot stays planted. */
 const HIPS: P = [-60, -110];
 const LOIN: P = [-2, -110];
 /** The knee sits halfway down each leg. */
@@ -93,8 +94,6 @@ const chest: BoneSpec = {
       ],
     },
   ]), at: at(NECK_BASE, LOIN) },
-    leg(2, LOIN),
-    leg(3, LOIN),
   ],
 };
 const hips: BoneSpec = {
@@ -103,7 +102,7 @@ const hips: BoneSpec = {
   at: HIPS,
   length: LOIN[0] - HIPS[0],
   rotation: 0,
-  children: [{ ...chainBones(TAIL), at: at(TAIL.at, HIPS) }, leg(0, HIPS), leg(1, HIPS), chest],
+  children: [{ ...chainBones(TAIL), at: at(TAIL.at, HIPS) }, ...LEGS.map((_, i) => leg(i, HIPS)), chest],
 };
 const SKELETON: BoneSpec[] = [{ name: "Body", id: "1:1", at: [0, 0], rotation: 0, length: 20, children: [hips] }];
 
