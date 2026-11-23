@@ -22,6 +22,9 @@ const CHROME = {
   /* Chrome 是 3 秒，但它的畫面只有 600 px 寬；這裡的場地是整個視窗，障礙物光是跑到恐龍面前就要兩秒多 */
   clearTime: 1,
   scoreCoefficient: 0.025,
+  /* Chrome 的障礙物從 600 寬的畫面右緣出現，跑 506 才碰到暴龍；手機上的前方比這短，就把橫向速度放慢，最多慢到 minPace */
+  approach: 506,
+  minPace: 0.8,
 };
 const UNIT = 1 / 94;
 
@@ -297,12 +300,15 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     const dinoRect = dino.getBoundingClientRect();
     const height = dinoRect.height || 128;
     const unit = height * UNIT;
+    /* 場地整個水平鏡像，所以在場地座標裡從右緣量；translateY 不影響寬度，跳躍中量也安全 */
+    const dinoLeft = fieldRect.right - dinoRect.right;
+    const pace = Math.min(1, Math.max(CHROME.minPace, dinoLeft / unit / CHROME.approach));
 
     current.last = now;
     current.elapsed += dt;
     current.speed = Math.min(CHROME.maxSpeed, current.speed + CHROME.acceleration * frames);
     current.score += current.speed * frames * CHROME.scoreCoefficient;
-    current.distance += current.speed * frames * unit;
+    current.distance += current.speed * frames * unit * pace;
 
     /* 背景跟著跑步往後（往左）捲，越遠越慢 */
     for (const layer of current.layers) {
@@ -331,7 +337,8 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
 
     const lift = current.y * unit;
 
-    dino.style.transform = `translateY(${-lift}px)`;
+    /* 手機上恐龍外層縮小了，位移寫在縮放裡面，要換回縮放前的像素 */
+    dino.style.transform = `translateY(${(-lift * dino.offsetHeight) / height}px)`;
     playerRef.current?.setAirborne(current.jumping);
     playerRef.current?.setDucking(current.ducking);
 
@@ -343,8 +350,6 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
       }
     }
 
-    /* 場地整個水平鏡像，所以在場地座標裡從右緣量；translateY 不影響寬度，跳躍中量也安全 */
-    const dinoLeft = fieldRect.right - dinoRect.right;
     /* 恐龍在場地座標裡是鏡像的：artboard 右邊在場地左邊 */
     const scale = height / VIEW.height;
     const viewRight = VIEW.x + VIEW.width;
@@ -357,7 +362,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     let gone = false;
 
     for (const item of current.items) {
-      item.x += current.speed * frames * unit;
+      item.x += current.speed * frames * unit * pace;
 
       const el = obstacleEls.current.get(item.id);
 
@@ -387,7 +392,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
     }
 
     for (const star of current.stars) {
-      star.x += current.speed * frames * unit;
+      star.x += current.speed * frames * unit * pace;
 
       const el = starEls.current.get(star.id);
 
@@ -646,7 +651,13 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
             ))}
           </div>
         ))}
-        <div className="pointer-events-auto absolute right-[5%] bottom-0 sm:right-[12%]">
+        {/* 手機畫面窄，遊戲中把恐龍縮小，前方看得到更遠 */}
+        <div
+          className={cn(
+            "pointer-events-auto absolute right-[5%] bottom-0 origin-bottom-right transition-[scale] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none sm:right-[12%]",
+            inGame && "max-sm:scale-60",
+          )}
+        >
           <div
             ref={dinoRef}
             /* 角色畫成面向右，在鏡像的場地裡再翻一次才會面向右 */
@@ -675,7 +686,9 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
           aria-label={t("跳")}
           onPointerDown={jump}
           onPointerUp={endJump}
-          className="fixed inset-0 z-40 cursor-none"
+          onPointerCancel={endJump}
+          onContextMenu={(event) => event.preventDefault()}
+          className="fixed inset-0 z-40 cursor-none touch-none select-none [-webkit-touch-callout:none]"
         />
       )}
     </>
