@@ -68,7 +68,7 @@ type Vec = [number, number];
 
 const NECK_SAMPLES = 24;
 /** The share of the neck, from its base, over which points fade from their bone weights onto the curve. */
-const NECK_FADE = 0.5;
+const NECK_FADE = 1;
 
 /**
  * A bendy neck after Blender's B-Bones and Spine's path constraint: points weighted to the neck chain lie on one cubic Bézier

@@ -589,17 +589,17 @@
             </KeyedObject>
             <KeyedObject objectId="1:2">
                 <KeyedProperty property="length"><KeyFrameDouble value="24.69" frame="0"/></KeyedProperty>
-                <KeyedProperty property="rotation"><KeyFrameDouble value="-0.6" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="-0.45" frame="0"/></KeyedProperty>
             </KeyedObject>
             <KeyedObject objectId="1:11">
                 <KeyedProperty property="length"><KeyFrameDouble value="24.69" frame="0"/></KeyedProperty>
-                <KeyedProperty property="rotation"><KeyFrameDouble value="0.4" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="0.55" frame="0"/></KeyedProperty>
             </KeyedObject>
             <KeyedObject objectId="1:12">
                 <KeyedProperty property="length"><KeyFrameDouble value="24.69" frame="0"/></KeyedProperty>
-                <KeyedProperty property="rotation"><KeyFrameDouble value="0.4" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="0.55" frame="0"/></KeyedProperty>
             </KeyedObject>
-            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="1.1" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.65" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:4">
                 <KeyedProperty property="rotation">
                     <KeyFrameDouble value="2.9929" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="0.6" y2="1"/></KeyFrameDouble>
@@ -678,7 +678,7 @@
             <KeyedObject objectId="1:8"><KeyedProperty property="rotation"><KeyFrameDouble value="1.5707964" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:2">
                 <KeyedProperty property="length"><KeyFrameDouble value="24.69" frame="0"/></KeyedProperty>
-                <KeyedProperty property="rotation"><KeyFrameDouble value="-0.6" frame="0"/></KeyedProperty>
+                <KeyedProperty property="rotation"><KeyFrameDouble value="-0.4" frame="0"/></KeyedProperty>
             </KeyedObject>
             <KeyedObject objectId="1:11">
                 <KeyedProperty property="length"><KeyFrameDouble value="24.69" frame="0"/></KeyedProperty>
@@ -688,7 +688,7 @@
                 <KeyedProperty property="length"><KeyFrameDouble value="24.69" frame="0"/></KeyedProperty>
                 <KeyedProperty property="rotation"><KeyFrameDouble value="0.5" frame="0"/></KeyedProperty>
             </KeyedObject>
-            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="1.2" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:3"><KeyedProperty property="rotation"><KeyFrameDouble value="0.75" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:4"><KeyedProperty property="rotation"><KeyFrameDouble value="2.9554" frame="0"/></KeyedProperty>
             </KeyedObject>
             <KeyedObject objectId="1:13"><KeyedProperty property="rotation"><KeyFrameDouble value="-0.0959" frame="0"/></KeyedProperty>
