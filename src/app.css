@@ -622,6 +622,15 @@ button.discord-button:active:not([aria-disabled="true"]),
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
 }
 
+@media (width < 40rem) {
+  .btn-chunky,
+  .btn-chunky-secondary {
+    padding: --spacing(2.5) --spacing(5);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+}
+
 .btn-chunky {
   background-color: var(--color-fd-primary);
   color: var(--color-fd-primary-foreground);
