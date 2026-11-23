@@ -34,7 +34,7 @@ const LOIN: P = [-2, -110];
 const THIGH = 26;
 const KNEE_Y = -51 + THIGH;
 /** Above this height, behind the back legs, the outline belongs to the tail. */
-const TAIL_Y = -43;
+const TAIL_Y = -60;
 /** The top of the gaps between the legs. */
 const CROTCH_Y = -46;
 const LEG_SPANS: [number, number][] = [[-106, -60], [-56, -10], [5, 50], [55, 100]];
@@ -153,9 +153,10 @@ function onto(from: Influence[], to: Influence[], weight: number): Influence[] {
   return [...from.map(([bone, w]): Influence => [bone, w * (1 - weight)]), ...to.map(([bone, w]): Influence => [bone, w * weight])];
 }
 
-/** The torso bends at the loin: hips behind it, chest in front. */
-function torso(x: number): Influence[] {
-  return handover("Hips", "Chest", smooth(LOIN[0] - 18, LOIN[0] + 18, x));
+/** The torso bends at the loin: hips behind it, chest in front. The belly over the legs stays on the hips with them, so a
+ * sagging chest presses down from the back instead of folding the crotches. */
+function torso([x, y]: P): Influence[] {
+  return handover("Hips", "Chest", smooth(LOIN[0] - 18, LOIN[0] + 18, x) * smooth(CROTCH_Y - 4, -120, y));
 }
 
 /** A hard cut straight across the neck at the jaw keeps the head rigid, and the jaw disc covers it as the head turns. */
@@ -172,7 +173,7 @@ function neckWeights([x, y]: P): Influence[] {
     const back = smooth(-150, -215, y) * smooth(-60, 40, x);
     const throat = smooth(NECK_BASE[1] + 4, NECK_BASE[1] - 4, y);
 
-    return onto(torso(x), [["Neck1", 1]], back + (throat - back) * smooth(70, 100, x));
+    return onto(torso([x, y]), [["Neck1", 1]], back + (throat - back) * smooth(70, 100, x));
   }
 
   if (s <= 1.5) {
@@ -195,11 +196,11 @@ function bodyWeights(p: P): Influence[] {
   }
 
   if (x < -81 && y > -150 && (y < TAIL_Y || x < -105)) {
-    const tail = smooth(-150, -120, y) * Math.max(smooth(-105, -124, x), smooth(-43, -67, y));
+    const tail = smooth(-150, -120, y) * Math.max(smooth(-105, -124, x), smooth(TAIL_Y, TAIL_Y - 24, y));
     const t = smooth(-81, -134, x) * tail;
 
     if (t < 1) {
-      return onto(torso(x), [["Tail1", 1]], t);
+      return onto(torso([x, y]), [["Tail1", 1]], t);
     }
 
     if (x > -163) {
@@ -227,9 +228,9 @@ function bodyWeights(p: P): Influence[] {
   const mid = (a + b) / 2;
   const crotch = smooth(CROTCH_Y - 2, CROTCH_Y + 8, y);
   const outer = leg === 0 ? smooth(mid, a, x) : leg === LEG_SPANS.length - 1 ? smooth(mid, b, x) : 0;
-  const hip = crotch + ((leg === 0 ? smooth(TAIL_Y, -24, y) : smooth(-70, -36, y)) - crotch) * outer;
+  const hip = crotch + ((leg === 0 ? smooth(TAIL_Y, -34, y) : smooth(-70, -36, y)) - crotch) * outer;
 
-  return onto(torso(x), limb, hip * fade);
+  return onto(torso([x, y]), limb, hip * fade);
 }
 
 /** Quantizes the weights to Rive bytes that sum to 255. */
