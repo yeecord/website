@@ -376,10 +376,10 @@ export function BrandingPage({ locale }: { locale: Locale }) {
                 <img
                   src={`${base}poses/${file}.png`}
                   alt=""
-                  width={1000}
-                  height={868}
+                  width={1024}
+                  height={920}
                   loading="lazy"
-                  className="aspect-[1000/868] w-full"
+                  className="aspect-[1024/920] w-full"
                 />
                 <figcaption className="font-bold">{t(name)}</figcaption>
                 <CornerDownload href={`${base}poses/${file}.png`} label={`${t(name)} PNG`} className="size-9 bottom-3 right-3 bg-fd-foreground/8 hover:bg-fd-foreground/14" />
@@ -586,8 +586,8 @@ export function BrandingPage({ locale }: { locale: Locale }) {
           <img
             src={`${base}poses/happy.png`}
             alt=""
-            width={1000}
-            height={868}
+            width={1024}
+            height={920}
             loading="lazy"
             className="w-56 justify-self-center sm:w-72"
           />

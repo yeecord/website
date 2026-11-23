@@ -40,7 +40,7 @@ if (!rig) {
   throw new Error("scene has no Rig node");
 }
 
-type Bone = { id: string; name: string; parent: number; x: number; y: number; length: number; rotation: number; bind: number[] };
+type Bone = { id: string; name: string; parent: number; attachment?: number; x: number; y: number; length: number; rotation: number; bind: number[] };
 const bones: Bone[] = [];
 
 function addBones(el: El, parent: number) {
@@ -49,7 +49,11 @@ function addBones(el: El, parent: number) {
       continue;
     }
 
-    bones.push({ id: c.attrs.id ?? "", name: c.attrs.name ?? "", parent, x: num(c, "x"), y: num(c, "y"), length: num(c, "length"), rotation: num(c, "rotation"), bind: [] });
+    // Offset roots inherit a transform but do not sit at the parent's tip.
+    const offset = c.tag === "RootBone";
+    const attachment = offset && parent >= 0 ? { attachment: parent } : {};
+
+    bones.push({ id: c.attrs.id ?? "", name: c.attrs.name ?? "", parent: offset ? -1 : parent, ...attachment, x: num(c, "x"), y: num(c, "y"), length: num(c, "length"), rotation: num(c, "rotation"), bind: [] });
     addBones(c, bones.length - 1);
   }
 }
@@ -75,8 +79,14 @@ function influences(values: number, indices: number, tendons: number[]): number[
       throw new Error("a weight points at the identity slot or a missing tendon");
     }
 
-    out.push(bone, round(value / 255));
+    // Four places: weights multiply artboard coordinates in the hundreds, so a sum off by 0.01 moves a point by pixels.
+    out.push(bone, Math.round((value / 255) * 10000) / 10000);
   }
+
+  // The last weight takes the rounding remainder, so every point's weights sum to exactly one.
+  const rest = out.reduce((sum, v, i) => (i % 2 === 1 && i < out.length - 1 ? sum - v : sum), 1);
+
+  out[out.length - 1] = Math.round(rest * 10000) / 10000;
 
   return out;
 }
