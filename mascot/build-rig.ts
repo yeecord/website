@@ -83,6 +83,11 @@ function influences(values: number, indices: number, tendons: number[]): number[
     out.push(bone, Math.round((value / 255) * 10000) / 10000);
   }
 
+  // The last weight takes the rounding remainder, so every point's weights sum to exactly one.
+  const rest = out.reduce((sum, v, i) => (i % 2 === 1 && i < out.length - 1 ? sum - v : sum), 1);
+
+  out[out.length - 1] = Math.round(rest * 10000) / 10000;
+
   return out;
 }
 

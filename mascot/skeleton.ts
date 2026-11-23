@@ -26,6 +26,12 @@ const NECK: Chain = {
 };
 const TAIL: Chain = { name: "Tail", ids: ["1:4", "1:13", "1:14"], at: [-101, -78], rotation: 3.0239, length: 93.6 };
 const LEGS: P[] = [[-83.1, -51], [-33.2, -51], [26.9, -51], [77, -51]];
+/** The spine bends at the loin, between the back and front legs: the hips carry the tail and back legs, the chest the rest. */
+const HIPS: P = [-60, -110];
+const LOIN: P = [-2, -110];
+/** The knee sits halfway down each leg. */
+const THIGH = 26;
+const KNEE_Y = -51 + THIGH;
 const LEG_SPANS: [number, number][] = [[-106, -60], [-56, -10], [5, 50], [55, 100]];
 
 const eyeLoops = await loops("eyes");
@@ -57,8 +63,25 @@ function inHead(parts: Seg[][]): P {
   return [dx * Math.cos(-HEAD_ROTATION) - dy * Math.sin(-HEAD_ROTATION), dx * Math.sin(-HEAD_ROTATION) + dy * Math.cos(-HEAD_ROTATION)];
 }
 
-const branches: BoneSpec[] = [
-  chainBones(NECK, [
+/** A root placed at a rig-space point, under a parent that starts at `from` and is level at rest. */
+const at = ([x, y]: P, [fx, fy]: P): P => [+(x - fx).toFixed(2), +(y - fy).toFixed(2)];
+
+const leg = (i: number, from: P): BoneSpec => ({
+  name: `Leg${i}`,
+  id: `1:${5 + i}`,
+  at: at(LEGS[i] ?? [0, 0], from),
+  rotation: Math.PI / 2,
+  length: THIGH,
+  children: [{ name: `Shin${i}`, id: `1:${16 + i}`, length: 51 - THIGH, rotation: 0 }],
+});
+
+const chest: BoneSpec = {
+  name: "Chest",
+  id: "1:21",
+  length: 80,
+  rotation: 0,
+  children: [
+    { ...chainBones(NECK, [
     {
       name: "Head",
       id: "1:3",
@@ -69,11 +92,20 @@ const branches: BoneSpec[] = [
         { name: "Mouth", id: "1:15", at: inHead(mouthLoops), length: 10, rotation: -HEAD_ROTATION },
       ],
     },
-  ]),
-  chainBones(TAIL),
-  ...LEGS.map((at, i): BoneSpec => ({ name: `Leg${i}`, id: `1:${5 + i}`, at, rotation: Math.PI / 2, length: 51 })),
-];
-const SKELETON: BoneSpec[] = [{ name: "Body", id: "1:1", at: [0, 0], rotation: 0, length: 20, children: branches }];
+  ]), at: at(NECK_BASE, LOIN) },
+    leg(2, LOIN),
+    leg(3, LOIN),
+  ],
+};
+const hips: BoneSpec = {
+  name: "Hips",
+  id: "1:20",
+  at: HIPS,
+  length: LOIN[0] - HIPS[0],
+  rotation: 0,
+  children: [{ ...chainBones(TAIL), at: at(TAIL.at, HIPS) }, leg(0, HIPS), leg(1, HIPS), chest],
+};
+const SKELETON: BoneSpec[] = [{ name: "Body", id: "1:1", at: [0, 0], rotation: 0, length: 20, children: [hips] }];
 
 /** Rest-pose world placement of every bone, in rig space, in hierarchy order. */
 type Placed = { spec: BoneSpec; start: P; rotation: number };
@@ -113,6 +145,16 @@ function handover(from: string, to: string, weight: number): Influence[] {
   return [[from, 1 - weight], [to, weight]];
 }
 
+/** Hands `from`, itself possibly a blend, over to `to`. */
+function onto(from: Influence[], to: Influence[], weight: number): Influence[] {
+  return [...from.map(([bone, w]): Influence => [bone, w * (1 - weight)]), ...to.map(([bone, w]): Influence => [bone, w * weight])];
+}
+
+/** The torso bends at the loin: hips behind it, chest in front. */
+function torso(x: number): Influence[] {
+  return handover("Hips", "Chest", smooth(LOIN[0] - 18, LOIN[0] + 18, x));
+}
+
 /** A hard cut straight across the neck at the jaw keeps the head rigid, and the jaw disc covers it as the head turns. */
 function neckWeights([x, y]: P): Influence[] {
   if (y < HEAD_PIVOT[1]) {
@@ -127,7 +169,7 @@ function neckWeights([x, y]: P): Influence[] {
     const back = smooth(-150, -215, y) * smooth(-60, 40, x);
     const throat = smooth(NECK_BASE[1] + 4, NECK_BASE[1] - 4, y);
 
-    return handover("Body", "Neck1", back + (throat - back) * smooth(70, 100, x));
+    return onto(torso(x), [["Neck1", 1]], back + (throat - back) * smooth(70, 100, x));
   }
 
   if (s <= 1.5) {
@@ -154,7 +196,7 @@ function bodyWeights(p: P): Influence[] {
     const t = smooth(-81, -134, x) * tail;
 
     if (t < 1) {
-      return handover("Body", "Tail1", t);
+      return onto(torso(x), [["Tail1", 1]], t);
     }
 
     if (x > -163) {
@@ -172,8 +214,11 @@ function bodyWeights(p: P): Influence[] {
   const half = neighbour ? (x < a ? a - neighbour[1] : neighbour[0] - b) / 2 : 8;
   const fade = 1 - smooth(0, half, gap([a, b]));
 
-  // Legs swing from the hip: the blend sits around the top of the leg, so the whole leg turns as one piece.
-  return handover("Body", `Leg${leg}`, smooth(-50, -30, y) * fade);
+  // Legs swing from the hip: the blend sits around the top of the leg, so the whole leg turns as one piece. The knee
+  // blends over a few units, so a bent leg keeps a round joint.
+  const limb = handover(`Leg${leg}`, `Shin${leg}`, smooth(KNEE_Y - 5, KNEE_Y + 5, y));
+
+  return onto(torso(x), limb, smooth(-50, -30, y) * fade);
 }
 
 /** Quantizes the weights to Rive bytes that sum to 255. */
