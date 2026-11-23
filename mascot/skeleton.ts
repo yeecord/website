@@ -360,15 +360,18 @@ const farLegEdges: [start: P, end: P][] = [
   [[353.92, 399.75], [311.6, 412.53]],
 ];
 
-/** The shaded legs share the silhouette's exact cubics and weights along the exposed edges. */
-function farLegPath(outline: Seg[], [start, end]: [P, P]) {
-  // The vertex of the outline nearest each end of the exposed edge.
+/** The jaw's underside, from the bottom of the snout back to the throat, where the chin shade lies. */
+const chinEdge: [start: P, end: P] = [[445.4, 150.4], [370.6, 185.8]];
+
+/** A patch on the silhouette: its exact cubics between two outline vertices, shut by a straight line. */
+function edgePath(outline: Seg[], [start, end]: [P, P]) {
+  // The vertex of the outline nearest each end of the edge.
   const find = ([x, y]: P) =>
     outline.reduce((best, { from }, i) => (dist(from, [x - GROUND[0], y - GROUND[1]]) < dist(outline[best]?.from ?? from, [x - GROUND[0], y - GROUND[1]]) ? i : best), 0);
   const first = find(start), last = find(end);
 
   if (first < 0 || last <= first) {
-    throw new Error("far leg endpoints must be vertices on the body outline");
+    throw new Error("edge endpoints must be vertices on the body outline, in outline order");
   }
 
   const from = outline[last].from, to = outline[first].from;
@@ -381,7 +384,8 @@ const shapes: Record<string, string[]> = {
   Eyes: eyeLoops.map((l, i) => pointsPath(`Eye ${i}`, l, only("Eyes"))),
   Tongue: (await loops("tongue")).map((l, i) => pointsPath(`Tongue ${i}`, l, only("Mouth"))),
   Mouth: mouthLoops.map((l, i) => pointsPath(`Mouth ${i}`, l, only("Mouth"))),
-  "Far legs": farLegEdges.map((edge, i) => pointsPath(`Far leg ${i}`, farLegPath(body[0] ?? [], edge), bodyWeights)),
+  "Far legs": farLegEdges.map((edge, i) => pointsPath(`Far leg ${i}`, edgePath(body[0] ?? [], edge), bodyWeights)),
+  Chin: [pointsPath("Chin", edgePath(body[0] ?? [], chinEdge), only("Head"))],
   Body: [
     ...body.map((outline, i) => pointsPath(`Outline ${i}`, outline, bodyWeights)),
     pointsPath("Jaw joint", disc(HEAD_PIVOT, JAW_RADIUS), only("Head")),

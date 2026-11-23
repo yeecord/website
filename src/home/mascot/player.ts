@@ -322,6 +322,8 @@ export class MascotPlayer {
   private readonly timelines: Record<string, Timeline>;
   private readonly binds: Mat[];
   private readonly neck: NeckCurve | undefined;
+  /** Per shape, the bone every point is rigid to, whose frame its gradients turn with, or -1. */
+  private readonly rigidBones: number[];
   private readonly idle: Playing;
   private readonly body: Layer;
   private readonly blink: Layer;
@@ -354,6 +356,11 @@ export class MascotPlayer {
     this.timelines = Object.fromEntries(Object.entries(data.animations).map(([name, anim]) => [name, new Timeline(anim)]));
     this.binds = data.bones.map((b) => invert(b.bind));
     this.neck = NeckCurve.of(data.bones);
+    this.rigidBones = data.shapes.map(({ paths }) => {
+      const bones = new Set(paths.flatMap(({ weights }) => weights.map((w) => (w.length === 2 ? (w[0] ?? -1) : -1))));
+
+      return bones.size === 1 ? ([...bones][0] ?? -1) : -1;
+    });
     this.idle = this.play("Idle");
     this.body = new Layer(this.idle);
     this.blink = new Layer(this.play("Wait 4s"));
@@ -543,7 +550,10 @@ export class MascotPlayer {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(this.scale, 0, 0, this.scale, -view.x * this.scale, -view.y * this.scale);
 
-    for (const shape of [...data.shapes].reverse()) {
+    // Skins map rest artboard points; a gradient is written in rest rig space, so it goes through the rest rig first.
+    const restRig = compose(data.rig.x, data.rig.y, 0, 1, 1);
+
+    for (const [index, shape] of [...data.shapes.entries()].reverse()) {
       const path = new Path2D();
       const centres = shape.paths.map(({ points, weights }) => this.trace(path, points, weights, skins));
 
@@ -556,8 +566,11 @@ export class MascotPlayer {
         this.bodyPath = path;
       }
 
+      const bone = skins[this.rigidBones[index] ?? -1];
+      const space = bone ? multiply(bone, restRig) : rigWorld;
+
       for (const fill of shape.fills) {
-        this.paint(path, fill, rigWorld);
+        this.paint(path, fill, space);
       }
     }
   }
@@ -624,11 +637,12 @@ export class MascotPlayer {
     }
   }
 
-  private paint(path: Path2D, { color, feather, gradient }: Fill, rigWorld: Mat) {
+  /** Paints one fill; `space` places its gradient: the rig, or the bone the whole shape is rigid to. */
+  private paint(path: Path2D, { color, feather, gradient }: Fill, space: Mat) {
     const { ctx, scale } = this;
 
     if (gradient) {
-      const [a, b, c, d, e, f] = rigWorld;
+      const [a, b, c, d, e, f] = space;
       const [x0 = 0, y0 = 0] = gradient.from, [x1 = 0, y1 = 0] = gradient.to;
       const fill = ctx.createLinearGradient(a * x0 + c * y0 + e, b * x0 + d * y0 + f, a * x1 + c * y1 + e, b * x1 + d * y1 + f);
 
