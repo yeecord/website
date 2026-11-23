@@ -713,7 +713,7 @@
             <KeyedObject objectId="1:19"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0"/></KeyedProperty></KeyedObject>
         </LinearAnimation>
 
-        <!-- Dead: the knocked-out slump. The legs give way and splay, the body sinks with the chest pitched down, the neck drops
+        <!-- Dead: the knocked-out slump. The knees give way and bow out, the body sinks with the chest pitched down, the neck drops
              forward from the shoulders, the head hangs, and the tail droops. -->
         <LinearAnimation loopValue="loop" duration="12" name="Dead" id="4:9">
             <KeyedObject objectId="1:10">
@@ -721,10 +721,10 @@
                 <KeyedProperty property="scaleX"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
                 <KeyedProperty property="scaleY"><KeyFrameDouble value="1" frame="0"/></KeyedProperty>
             </KeyedObject>
-            <KeyedObject objectId="1:5"><KeyedProperty property="rotation"><KeyFrameDouble value="2.321" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:6"><KeyedProperty property="rotation"><KeyFrameDouble value="2.2753" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:7"><KeyedProperty property="rotation"><KeyFrameDouble value="0.7964" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:8"><KeyedProperty property="rotation"><KeyFrameDouble value="0.6961" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:5"><KeyedProperty property="rotation"><KeyFrameDouble value="2.4418" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:6"><KeyedProperty property="rotation"><KeyFrameDouble value="2.3617" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:7"><KeyedProperty property="rotation"><KeyFrameDouble value="0.6874" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:8"><KeyedProperty property="rotation"><KeyFrameDouble value="0.5151" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:2">
                 <KeyedProperty property="length"><KeyFrameDouble value="24.69" frame="0"/></KeyedProperty>
                 <KeyedProperty property="rotation"><KeyFrameDouble value="-0.45" frame="0"/></KeyedProperty>
@@ -746,10 +746,10 @@
             </KeyedObject>
             <KeyedObject objectId="1:20"><KeyedProperty property="rotation"><KeyFrameDouble value="-0.03" frame="0"/></KeyedProperty></KeyedObject>
             <KeyedObject objectId="1:21"><KeyedProperty property="rotation"><KeyFrameDouble value="0.1" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:16"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:17"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:18"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0"/></KeyedProperty></KeyedObject>
-            <KeyedObject objectId="1:19"><KeyedProperty property="rotation"><KeyFrameDouble value="0" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:16"><KeyedProperty property="rotation"><KeyFrameDouble value="-0.8411" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:17"><KeyedProperty property="rotation"><KeyFrameDouble value="-0.7609" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:18"><KeyedProperty property="rotation"><KeyFrameDouble value="0.8134" frame="0"/></KeyedProperty></KeyedObject>
+            <KeyedObject objectId="1:19"><KeyedProperty property="rotation"><KeyFrameDouble value="0.9857" frame="0"/></KeyedProperty></KeyedObject>
         </LinearAnimation>
 
         <!-- Blinks animate eye opacity so the eye outlines stay bound to Head. -->
