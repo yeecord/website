@@ -1,16 +1,9 @@
 import type { ReactNode } from "react";
 import { googleFonts } from "takumi-js/helpers";
-import cloud1 from "../public/home/scene/cloud1.png?inline";
-import cloud2 from "../public/home/scene/cloud2.png?inline";
-import cloud3 from "../public/home/scene/cloud3.png?inline";
-import logoSvg from "../public/img/logo.svg?raw";
-
-// 跟首頁同一批 Kenney 雲，比例取自原始檔尺寸
-const clouds = [
-  { src: cloud1, ratio: 242 / 406 },
-  { src: cloud2, ratio: 312 / 392 },
-  { src: cloud3, ratio: 278 / 432 },
-];
+import lockup from "../public/brand/yeecord/lockup-white.png?inline";
+import dino from "../public/brand/yeecord/poses/happy.png?inline";
+import hills from "../public/home/scene/hills-tile.svg?inline";
+import moon from "../public/home/scene/moon.svg?inline";
 
 // One request for the whole build instead of one per og image: takumi's helper
 // re-downloads every subset on each call and gives up after 5s, which is what
@@ -24,130 +17,34 @@ export const ogFonts = googleFonts({
   timeout: 30_000,
 });
 
-const GREEN = "#6bb369";
-const BLURPLE = "#5865f2";
+const PRIMARY = "#86d17f";
+const MUTED = "#9aa7b8";
 
-function Logo({ size }: { size: number }) {
-  return <img src={logoSvg} width={size} height={size} />;
-}
-
-type Pill = { w: number; bg: string; avatar?: string };
-
-const gradient = (from: string, to: string) =>
-  `linear-gradient(120deg, ${from}, ${to})`;
-
-const DEEP = gradient("#33562d", "#26401f");
-const DIM = gradient("#4c854a", "#3a663a");
-const BRIGHT = gradient("#82c980", "#57a355");
-const PURPLE = gradient("#6b78ff", "#4d58d8");
-
-const CHAT_ROWS: Pill[][] = [
-  [
-    { w: 210, bg: DEEP, avatar: GREEN },
-    { w: 120, bg: DIM },
-    { w: 320, bg: DEEP },
-    { w: 90, bg: PURPLE, avatar: "#a3abff" },
-    { w: 260, bg: DIM },
-    { w: 180, bg: DEEP },
-  ],
-  [
-    { w: 150, bg: DIM },
-    { w: 340, bg: BRIGHT, avatar: "#e3f2e2" },
-    { w: 110, bg: DEEP },
-    { w: 230, bg: DIM },
-    { w: 80, bg: DEEP },
-    { w: 300, bg: PURPLE },
-  ],
+// 首頁 dark mode 星星的位置，拿掉會落在文字上的幾顆，單位是畫面寬高的百分比
+const STARS = [
+  [8, 12],
+  [24, 8],
+  [33, 22],
+  [42, 6],
+  [58, 10],
+  [66, 26],
+  [74, 6],
+  [86, 30],
+  [92, 14],
 ];
 
-function ChatStrip() {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "18px",
-        marginTop: "auto",
-      }}
-    >
-      {CHAT_ROWS.map((row, i) => (
-        <div
-          key={i}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "16px",
-            marginLeft: i === 1 ? "-60px" : "0",
-          }}
-        >
-          {row.map((pill, j) => (
-            <div
-              key={j}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: "12px",
-                width: `${pill.w}px`,
-                height: "34px",
-                flexShrink: 0,
-                borderRadius: "17px",
-                backgroundImage: pill.bg,
-                paddingLeft: pill.avatar ? "6px" : "0",
-              }}
-            >
-              {pill.avatar && (
-                <div
-                  style={{
-                    display: "flex",
-                    width: "22px",
-                    height: "22px",
-                    borderRadius: "11px",
-                    backgroundColor: pill.avatar,
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
+const DINO_RATIO = 920 / 1024;
+const HILLS_RATIO = 273 / 1998;
+const HILLS_WIDTH = 1000;
 
-function Cloud({
-  n,
-  top,
-  left,
-  width,
-  opacity = 0.25,
+/** 首頁 dark mode 的夜景：星星、月亮、遠山和站在右下角的機器龍，內容疊在左半邊 */
+function Scene({
+  dinoWidth,
+  children,
 }: {
-  n: 1 | 2 | 3;
-  top: number;
-  left: number;
-  width: number;
-  opacity?: number;
+  dinoWidth: number;
+  children: ReactNode;
 }) {
-  const cloud = clouds[n - 1];
-
-  return (
-    <img
-      src={cloud.src}
-      width={width}
-      height={width * cloud.ratio}
-      style={{
-        position: "absolute",
-        top: `${top}px`,
-        left: `${left}px`,
-        opacity,
-      }}
-    />
-  );
-}
-
-/** 首頁 hero 的夜空：雲和貼著下緣的大恐龍，內容疊在左半邊 */
-function Scene({ children }: { children: ReactNode }) {
   return (
     <div
       style={{
@@ -155,71 +52,112 @@ function Scene({ children }: { children: ReactNode }) {
         flexDirection: "column",
         width: "100%",
         height: "100%",
-        backgroundColor: "#0e120e",
+        backgroundImage: "linear-gradient(180deg, #0d1524, #101a26 60%, #13201a)",
         color: "white",
         overflow: "hidden",
         position: "relative",
         fontFamily: "Geist, 'Noto Sans TC', 'Noto Sans SC'",
       }}
     >
-      <Cloud n={1} top={64} left={560} width={130} opacity={0.16} />
-      <Cloud n={3} top={40} left={860} width={230} />
-      <Cloud n={2} top={200} left={1010} width={120} opacity={0.18} />
+      {STARS.map(([left, top]) => (
+        <div
+          key={`${left}-${top}`}
+          style={{
+            position: "absolute",
+            left: `${left}%`,
+            top: `${top}%`,
+            width: "5px",
+            height: "5px",
+            borderRadius: "3px",
+            backgroundColor: "rgba(255, 255, 255, 0.7)",
+          }}
+        />
+      ))}
 
+      <img
+        src={moon}
+        width={88}
+        height={92}
+        style={{ position: "absolute", top: "48px", right: "120px" }}
+      />
+
+      {[-240, 760].map((left) => (
+        <img
+          key={left}
+          src={hills}
+          width={HILLS_WIDTH}
+          height={HILLS_WIDTH * HILLS_RATIO}
+          style={{
+            position: "absolute",
+            left: `${left}px`,
+            bottom: "28px",
+            opacity: 0.6,
+            filter: "brightness(0.34) saturate(1.6)",
+          }}
+        />
+      ))}
       <div
         style={{
-          display: "flex",
           position: "absolute",
-          right: "84px",
-          bottom: "-26px",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: "40px",
+          backgroundColor: "#16291d",
         }}
-      >
-        <Logo size={300} />
-      </div>
+      />
+
+      <img
+        src={dino}
+        width={dinoWidth}
+        height={dinoWidth * DINO_RATIO}
+        style={{
+          position: "absolute",
+          right: `${72 - dinoWidth * 0.25}px`,
+          bottom: `${30 - dinoWidth * DINO_RATIO * 0.065}px`,
+        }}
+      />
 
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           flexGrow: 1,
-          padding: "52px 72px",
+          padding: "56px 72px 150px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "18px",
-          }}
-        >
-          <Logo size={48} />
-          <p style={{ fontSize: "34px", fontWeight: 800, margin: 0 }}>
-            Yeecord
-          </p>
-        </div>
+        <img src={lockup} width={176} height={44} />
         {children}
       </div>
     </div>
   );
 }
 
-/** 站台總 banner：取代以前的靜態 branding 圖 */
+const muted = (fontSize: number) => ({
+  fontSize: `${fontSize}px`,
+  fontWeight: 500,
+  lineHeight: 1.5,
+  color: MUTED,
+  margin: 0,
+});
+
+/** 站台總 banner：跟首頁 hero 同一句標語 */
 export function SiteBanner() {
   return (
-    <Scene>
+    <Scene dinoWidth={500}>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          marginTop: "64px",
+          marginTop: "auto",
+          marginBottom: "auto",
         }}
       >
         <p
           style={{
-            fontSize: "88px",
+            fontSize: "92px",
             fontWeight: 800,
-            lineHeight: 1.22,
+            lineHeight: 1.2,
             letterSpacing: "-2px",
             margin: 0,
           }}
@@ -228,32 +166,24 @@ export function SiteBanner() {
         </p>
         <p
           style={{
-            fontSize: "88px",
+            fontSize: "92px",
             fontWeight: 800,
-            lineHeight: 1.22,
+            lineHeight: 1.2,
             letterSpacing: "-2px",
             margin: 0,
           }}
         >
-          搞定整個<span style={{ color: "#82c980" }}>伺服器</span>
+          搞定整個<span style={{ color: PRIMARY }}>伺服器</span>
         </p>
-        <p
-          style={{
-            fontSize: "32px",
-            fontWeight: 500,
-            color: "#96a398",
-            margin: 0,
-            marginTop: "28px",
-          }}
-        >
-          350,000+ 個伺服器都在用
+        <p style={{ ...muted(32), marginTop: "28px" }}>
+          抽獎、身分組、動態語音，介面全中文
         </p>
       </div>
     </Scene>
   );
 }
 
-/** blog 文章專用：跟站台 banner 同一張夜景，標題換文章、副標換作者和日期 */
+/** blog 文章：標題換文章，副標換作者和日期 */
 export function BlogOgImage({
   title,
   date,
@@ -264,47 +194,16 @@ export function BlogOgImage({
   authors: string[];
 }) {
   return (
-    <Scene>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginTop: "auto",
-          marginBottom: "auto",
-          paddingBottom: "40px",
-          paddingRight: "330px",
-        }}
-      >
-        <p
-          style={{
-            fontSize: "60px",
-            fontWeight: 800,
-            lineHeight: 1.32,
-            letterSpacing: "-1.5px",
-            margin: 0,
-            lineClamp: 3,
-            textOverflow: "ellipsis",
-          }}
-        >
-          {title}
-        </p>
-        <p
-          style={{
-            fontSize: "30px",
-            fontWeight: 500,
-            color: "#96a398",
-            margin: 0,
-            marginTop: "26px",
-          }}
-        >
-          {[
-            authors.join("、"),
-            date.toLocaleDateString("zh-TW", { dateStyle: "long" }),
-          ]
-            .filter(Boolean)
-            .join(" · ")}
-        </p>
-      </div>
+    <Scene dinoWidth={360}>
+      <PageText
+        title={title}
+        description={[
+          authors.join("、"),
+          date.toLocaleDateString("zh-TW", { dateStyle: "long" }),
+        ]
+          .filter(Boolean)
+          .join("，")}
+      />
     </Scene>
   );
 }
@@ -317,93 +216,54 @@ export function OgImage({
   description?: string;
 }) {
   return (
+    <Scene dinoWidth={360}>
+      <PageText title={title} description={description} />
+    </Scene>
+  );
+}
+
+function PageText({
+  title,
+  description,
+}: {
+  title: string;
+  description?: string;
+}) {
+  return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#0e120e",
-        color: "white",
-        overflow: "hidden",
-        position: "relative",
-        fontFamily: "Geist, 'Noto Sans TC', 'Noto Sans SC'",
+        marginTop: "auto",
+        marginBottom: "auto",
+        paddingRight: "300px",
       }}
     >
-      <div
+      <p
         style={{
-          display: "flex",
-          flexDirection: "column",
-          flexGrow: 1,
-          padding: "56px 72px 0",
+          fontSize: "64px",
+          fontWeight: 800,
+          lineHeight: 1.28,
+          letterSpacing: "-1.5px",
+          margin: 0,
+          lineClamp: 3,
+          textOverflow: "ellipsis",
         }}
       >
-        <div
+        {title}
+      </p>
+      {description && (
+        <p
           style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "18px",
+            ...muted(32),
+            marginTop: "24px",
+            lineClamp: 2,
+            textOverflow: "ellipsis",
           }}
         >
-          <Logo size={48} />
-          <p style={{ fontSize: "34px", fontWeight: 800, margin: 0 }}>
-            Yeecord
-          </p>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "auto",
-            marginBottom: "auto",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "68px",
-              fontWeight: 800,
-              lineHeight: 1.25,
-              letterSpacing: "-1.5px",
-              margin: 0,
-              lineClamp: 2,
-              textOverflow: "ellipsis",
-            }}
-          >
-            {title}
-          </p>
-          {description && (
-            <p
-              style={{
-                fontSize: "38px",
-                fontWeight: 500,
-                lineHeight: 1.6,
-                color: "#96a398",
-                margin: 0,
-                marginTop: "24px",
-                lineClamp: 2,
-                textOverflow: "ellipsis",
-              }}
-            >
-              {description}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "150px",
-          flexShrink: 0,
-          justifyContent: "flex-end",
-          paddingBottom: "44px",
-        }}
-      >
-        <ChatStrip />
-      </div>
+          {description}
+        </p>
+      )}
     </div>
   );
 }
