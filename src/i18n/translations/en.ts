@@ -244,7 +244,7 @@ export const en = {
   "各環境的版本": "One for each environment",
   "單色": "Single color",
   "墨色": "Ink",
-  "天空藍": "Sky blue",
+  "夜空藍": "Night-sky blue",
   "字標組合": "Lockup",
   "字標組合四周至少留出頭像一半寬的空白，不要讓文字或其他標誌貼上來。": "Keep clear space of at least half the avatar's width around the lockup, so no text or other logo crowds it.",
   "實際用起來": "In use",

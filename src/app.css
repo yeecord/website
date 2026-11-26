@@ -7,14 +7,14 @@
 @theme {
   --color-discord-blurple: #5865f2;
   /* 機器龍的品牌色，數值跟 branding 頁列出的色票一致 */
-  --color-yee-sky: #326ed0;
+  --color-yee-sky: #24375c;
   --color-yee-green: #32d34c;
   --color-yee-shade: #24a63f;
   --color-yee-crown: #f7c157;
   --color-yee-ink: #362f36;
   --color-yee-navy: #17233b;
-  --color-yee-staging: #7c4ddb;
-  --color-yee-dev: #e0603a;
+  --color-yee-staging: #5e38a8;
+  --color-yee-dev: #ba4e25;
   --color-yee-grass: #a8e2b3;
   /* Tailwind 內建的 ease-out、ease-in-out 太軟，換成比較有力的曲線，全站的 ease-out 都跟著用 */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);

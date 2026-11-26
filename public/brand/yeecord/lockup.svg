@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 802 200" role="img" aria-labelledby="title">
   <title id="title">Yeecord</title>
-  <defs><clipPath id="avatar-circle"><circle cx="100" cy="100" r="100"/></clipPath></defs>
-  <g clip-path="url(#avatar-circle)">
+
+  <g>
     <svg width="200" height="200" viewBox="0 0 512 512">
   
   <defs>
@@ -24,7 +24,6 @@
   </defs>
 
   <g clip-path="url(#avatar-clip-frame)">
-    <rect x="0" y="0" width="512" height="512" fill="#326ED0"/>
 
     <g id="avatar-dino">
       <use href="#avatar-body" fill="#32D34C"/>
