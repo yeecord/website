@@ -5,11 +5,14 @@ import { translator } from "~/i18n/translate";
 // canonical 和 OG 一律指向正式站，staging.yeecord.com 只是切換前的預覽
 export const domain = "https://yeecord.com";
 
+// staging 和正式站是同一份 build，只能在瀏覽器看網域分辨
+export const stagingHost = "staging.yeecord.com";
+
 // 機器龍 http role 的網址，dashboard 的登入和資料都從這裡來（yeecord/yeecord#384）。
 // staging 站打 staging 的機器龍，本機開發用 VITE_DASHBOARD_API 指到自己跑的機器龍
 export const dashboardApi: string =
   import.meta.env.VITE_DASHBOARD_API ??
-  (globalThis.location?.hostname === "staging.yeecord.com"
+  (globalThis.location?.hostname === stagingHost
     ? "https://api-staging.yeecord.com"
     : "https://api.yeecord.com");
 

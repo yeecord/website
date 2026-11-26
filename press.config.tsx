@@ -9,7 +9,7 @@ import {
   selectTreeRoot,
 } from "fumapress";
 import wasmModule from "takumi-js/wasm";
-import { blogAuthors, canonicalUrl, domain } from "~/config";
+import { blogAuthors, canonicalUrl, domain, stagingHost } from "~/config";
 import { blog, docs, legal } from "./.source/server";
 import {
   BlogIndex,
@@ -45,7 +45,20 @@ const siteHead: HeadTag[] = [
     attrs: { name: "twitter:card", content: "summary_large_image" },
   },
   { tag: "meta", attrs: { property: "og:site_name", content: "Yeecord" } },
-  { tag: "link", attrs: { rel: "icon", href: "/favicon.ico", sizes: "any" } },
+  {
+    tag: "link",
+    attrs: {
+      rel: "icon",
+      href: import.meta.env.DEV
+        ? "/brand/yeecord/favicon-dev.ico"
+        : "/favicon.ico",
+      sizes: "any",
+    },
+  },
+  {
+    tag: "script",
+    children: `if (location.hostname === ${JSON.stringify(stagingHost)}) document.querySelector('link[rel="icon"]').href = "/brand/yeecord/favicon-staging.ico";`,
+  },
   { tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-icon.png" } },
   {
     tag: "link",
