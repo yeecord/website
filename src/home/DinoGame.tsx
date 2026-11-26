@@ -602,7 +602,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               src="/home/scene/star.svg"
               alt=""
               draggable={false}
-              className="size-full animate-[shine_.9s_ease-in-out_infinite_alternate] select-none drop-shadow-[0_0_10px_rgb(255_196_61/0.95)] motion-reduce:animate-none"
+              className="size-full animate-[shine_.9s_ease-in-out_infinite_alternate] select-none drop-shadow-[0_0_10px_var(--color-scene-star-glow)] motion-reduce:animate-none"
             />
           </div>
         ))}
@@ -628,7 +628,7 @@ export function DinoGame({ locale, alt }: { locale: Locale; alt: string }) {
               bottom: obstacle.altitude,
               left: -obstacle.height * OBSTACLES[obstacle.kind].ratio * obstacle.size,
             }}
-            className={cn("absolute flex select-none drop-shadow-[0_3px_2px_rgb(0_0_0/0.25)] will-change-transform", plantDim)}
+            className={cn("absolute flex select-none drop-shadow-[0_3px_2px_var(--color-scene-shadow)] will-change-transform", plantDim)}
           >
             {Array.from({ length: obstacle.size }, (_, i) => (
               <img

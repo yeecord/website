@@ -1,3 +1,7 @@
+/* Hallmark · redesign: full (/) · genre: playful · theme: brand (Yeecord) · signature: the dinosaur's day, scrolled from morning to night through live Discord demos */
+/* critique: the old page fell from the hero's sky into a flat grey and stacked three centred boxes; now one sky runs the length of the page and each hour shows a feature you can press */
+/* Hallmark · dropped the hand-built demo server and the owners' quotes · each hour now shows the docs' own demo of one feature, which tracks the bot's real replies */
+/* waive 48, 7a, 22, 24b in the .discord-* rules · they copy Discord's own colours and spacing so the demos read as Discord */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "fumadocs-ui/css/neutral.css";
@@ -16,6 +20,36 @@
   --color-yee-staging: #7c4ddb;
   --color-yee-dev: #e0603a;
   --color-yee-grass: #a8e2b3;
+  /* 首頁「機器龍的一天」每個時段的天色，上緣到下緣 */
+  --color-day-morning-top: #ffe2b8;
+  --color-day-morning-bottom: #fff6e6;
+  --color-day-noon-top: #b9dcff;
+  --color-day-noon-bottom: #eaf5ff;
+  --color-day-dusk-top: #2c2a52;
+  --color-day-dusk-bottom: #d0704c;
+  --color-day-night-top: #0d1524;
+  --color-day-night-bottom: #13201a;
+  --color-day-dim-morning-top: #1a2438;
+  --color-day-dim-morning-bottom: #2b2a33;
+  --color-day-dim-noon-top: #15233b;
+  --color-day-dim-noon-bottom: #1c2c44;
+  --color-day-dim-dusk-top: #1f1b36;
+  --color-day-dim-dusk-bottom: #4a2d2a;
+  --color-day-ink: #17233b;
+  /* 首頁 hero 的天空，跟「機器龍的一天」的早晨接在一起 */
+  --color-scene-sky-top: #d9e8ff;
+  --color-scene-sky-mid: #e8f1ff;
+  --color-scene-sky-bottom: #f2f8ff;
+  --color-scene-dim-mid: #101a26;
+  --color-scene-dim-bottom: #13201a;
+  --color-scene-night-bottom: #1a2a22;
+  --color-scene-forest: #17713a;
+  --color-scene-star-glow: rgb(255 196 61 / 0.95);
+  --color-scene-shadow: rgb(0 0 0 / 0.25);
+  --color-day-grass-dim: #16291d;
+  /* 時刻數字用實色，太陽經過時躲在數字後面，不會透出來 */
+  --color-day-time-light: #c9cdd6;
+  --color-day-time-dark: #3f4656;
   /* Tailwind 內建的 ease-out、ease-in-out 太軟，換成比較有力的曲線，全站的 ease-out 都跟著用 */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -459,6 +493,18 @@ button.discord-button:active:not([aria-disabled="true"]),
     }
     to {
       background-position-x: 200%;
+    }
+  }
+
+  @keyframes talk {
+    50% {
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes trot {
+    50% {
+      transform: translateY(-6%);
     }
   }
 
