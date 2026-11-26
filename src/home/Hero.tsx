@@ -135,7 +135,7 @@ function ServerProof({ t }: { t: Translate }) {
       </div>
       <p className="text-balance text-center font-medium leading-snug max-sm:text-sm">
         {t("APEX Taiwan、VALORANT Taiwan 等")}
-        <ServerCount value={350000} suffix="+" className="mx-1 font-bold text-[#17713A] dark:text-primary" />
+        <ServerCount value={350000} suffix="+" className="mx-1 font-bold text-scene-forest dark:text-primary" />
         {t("個伺服器都在用")}
       </p>
     </div>

@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "motion/react";
 import { DiscordChat, DiscordMessage } from "~/components/mdx/discord";
 import type { Locale } from "~/i18n";
 import { type Phrase, translator } from "~/i18n/translate";
+import { Station } from "./DayJourney";
 import { ServerCount } from "./ServerCount";
 
 const quotes: { author: string; color: string; text: Phrase }[] = [
@@ -26,41 +26,34 @@ const quotes: { author: string; color: string; text: Phrase }[] = [
 
 export function Trust({ locale }: { locale: Locale }) {
   const t = translator(locale);
+
   return (
-    <motion.div
-      whileInView="show"
-      initial="hidden"
-      viewport={{ once: true }}
-      variants={{
-        show: { y: 0, opacity: 1 },
-        hidden: { y: 20, opacity: 0 },
-      }}
-      transition={{ duration: 0.5 }}
-      className="z-[2] mt-24 flex flex-col items-center gap-6 text-center sm:mt-40"
+    <Station
+      time="22:00"
+      tone="dark"
+      side="left"
+      title={
+        <>
+          <span className="text-yee-green">
+            <ServerCount value={350_000} />
+          </span>
+          {t("個伺服器的日常")}
+        </>
+      }
+      sentence={t("群主們怎麼說機器龍")}
     >
-      <h2 className="text-balance font-bold text-3xl tracking-tight sm:text-5xl">
-        <span className="text-primary">
-          <ServerCount value={350_000} />
-        </span>
-        {t("個伺服器的日常")}
-      </h2>
-      <p className="text-lg text-muted-foreground sm:text-xl">
-        {t("群主們怎麼說機器龍")}
-      </p>
-      <div className="mx-auto w-full max-w-[44rem] text-start">
-        <DiscordChat>
-          {quotes.map((quote) => (
-            <DiscordMessage
-              key={quote.author}
-              author={quote.author}
-              bot={false}
-              color={quote.color}
-            >
-              <p>{t(quote.text)}</p>
-            </DiscordMessage>
-          ))}
-        </DiscordChat>
-      </div>
-    </motion.div>
+      <DiscordChat>
+        {quotes.map((quote) => (
+          <DiscordMessage
+            key={quote.author}
+            author={quote.author}
+            bot={false}
+            color={quote.color}
+          >
+            <p>{t(quote.text)}</p>
+          </DiscordMessage>
+        ))}
+      </DiscordChat>
+    </Station>
   );
 }

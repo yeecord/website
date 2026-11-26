@@ -288,4 +288,11 @@ export const en = {
   "昏倒": "Knocked out",
   "場景插圖": "Scene illustrations",
   "品牌素材": "Brand",
+  "動態語音": "Dynamic voice",
+  "進語音就開一間新的，人走光了自動收掉": "Join and a new room opens. It closes itself once everyone leaves.",
+  "你的頻道": "Your channel",
+  "你": "You",
+  "離開語音": "Leave voice",
+  "人走光了，頻道自動收掉": "Everyone left, so the channel closed itself.",
+  "機器龍的一天": "A day with the dinosaur",
 } satisfies Record<keyof typeof zhCn, string>;

@@ -1,14 +1,14 @@
 "use client";
 
 import clsx from "clsx";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowRightIcon,
   HashIcon,
   PlusCircleIcon,
   Volume2Icon,
 } from "lucide-react";
-import { createContext, type ReactNode, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext, useRef, useState } from "react";
 import {
   DiscordButton,
   DiscordContainer,
@@ -24,15 +24,8 @@ import { commandName } from "~/components/mdx/command-name";
 import { EASE_OUT, MessageEnter } from "~/components/mdx/flow";
 import { defaultLocale, type Locale } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
-
-type ChannelId = "welcome" | "lottery";
-
-const channels: Record<ChannelId, { name: Phrase; topic: Phrase }> = {
-  welcome: { name: "新人報到", topic: "機器龍自動接待新成員" },
-  lottery: { name: "抽獎區", topic: "辦抽獎，一條指令的事" },
-};
-
-const CHANNEL_IDS: ChannelId[] = ["welcome", "lottery"];
+import { burst } from "./burst";
+import { type ChannelId, channels } from "./channels";
 
 const BOT_NAME: Phrase = "YEE式機器龍";
 
@@ -45,64 +38,32 @@ function useT() {
   return useContext(LocaleContext).t;
 }
 
-export function DemoServer({ locale }: { locale: Locale }) {
+/** One channel of the demo server in its own Discord window, with buttons that answer. */
+export function DemoChannel({ locale, id }: { locale: Locale; id: ChannelId }) {
   const t = translator(locale);
-  const [active, setActive] = useState<ChannelId>("welcome");
-  const [seen, setSeen] = useState<ChannelId[]>(["welcome"]);
-  const channel = channels[active];
-
-  function open(id: ChannelId) {
-    setActive(id);
-    setSeen((prev) => (prev.includes(id) ? prev : [...prev, id]));
-  }
 
   return (
     <LocaleContext.Provider value={{ locale, t }}>
-      <div className="z-[2] mt-24 flex flex-col gap-8">
-        <div className="flex flex-col gap-2">
-          <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
-            {t("進來參觀一下")}
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            {t("點左邊的頻道逛逛，按鈕都是真的能按。")}
-          </p>
-        </div>
-        <motion.div
-          whileInView={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 24 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.4, ease: EASE_OUT }}
-          className="grid overflow-hidden rounded-xl border bg-discord-bg font-discord shadow-xl md:grid-cols-[15rem_1fr]"
-        >
-          <Sidebar active={active} seen={seen} onOpen={open} />
-          <div className="flex min-w-0 flex-col">
-            <div className="flex items-center gap-2 border-white/8 border-b px-4 py-3 text-discord-text">
-              <HashIcon className="size-5 text-discord-muted" />
-              <span className="font-semibold text-white">
-                {t(channel.name)}
-              </span>
-              <span className="text-discord-muted text-sm max-sm:hidden">
-                {t(channel.topic)}
-              </span>
-            </div>
-            <ChannelTabs active={active} onOpen={open} />
-            <div className="flex min-h-[21rem] flex-col gap-4 p-4 text-discord-text text-sm">
-              <div key={active} className="flex flex-col gap-4">
-                {active === "welcome" && <WelcomeScene />}
-                {active === "lottery" && <LotteryScene />}
-              </div>
-              <div className="mt-auto flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 pt-2.5 text-discord-placeholder">
-                <PlusCircleIcon className="size-5 shrink-0" />
-                {t("跟大家說點什麼…")}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-        <p className="text-muted-foreground">
-          {t(
-            "用指令打開歡迎訊息、身分組或抽獎的設定卡，再選項目、填資料，不用記一串參數",
+      <div className="flex min-w-0 flex-col overflow-hidden rounded-2xl bg-discord-bg font-discord shadow-2xl shadow-black/30">
+        <div className="flex items-center gap-2 border-white/8 border-b px-4 py-3 text-discord-text">
+          {id === "voice" ? (
+            <Volume2Icon aria-hidden className="size-5 text-discord-muted" />
+          ) : (
+            <HashIcon aria-hidden className="size-5 text-discord-muted" />
           )}
-        </p>
+          <span className="font-semibold text-white">{t(channels[id].name)}</span>
+        </div>
+        <div className="flex min-h-[22rem] flex-col gap-4 p-4 text-discord-text text-sm">
+          {id === "welcome" && <WelcomeScene />}
+          {id === "lottery" && <LotteryScene />}
+          {id === "voice" && <VoiceScene />}
+          {id === "voice" ? null : (
+            <div className="mt-auto flex items-center gap-3 rounded-lg bg-discord-input px-4 py-2.5 text-discord-placeholder">
+              <PlusCircleIcon aria-hidden className="size-5 shrink-0" />
+              {t("跟大家說點什麼…")}
+            </div>
+          )}
+        </div>
       </div>
     </LocaleContext.Provider>
   );
@@ -239,16 +200,34 @@ function WelcomeScene() {
 
 const TITLE: Phrase = "Nitro 一個月";
 
+const CONFETTI = [
+  { kind: "paper", color: "var(--color-yee-green)" },
+  { kind: "paper", color: "var(--color-yee-crown)" },
+  { kind: "paper", color: "var(--color-discord-text)" },
+  { kind: "paper", color: "var(--color-discord-blurple)" },
+] as const;
+
 function LotteryScene() {
   const t = useT();
   const chrome = useChrome();
   const [joined, setJoined] = useState(false);
   const [reply, setReply] = useState<"joined" | "already" | "left">();
+  const scene = useRef<HTMLDivElement>(null);
+  const pointer = useRef<{ x: number; y: number }>(undefined);
   const count = joined ? 43 : 42;
   const channel = <Mention>#{t("抽獎區")}</Mention>;
   const inSevenDays = <Timestamp>{t("7 天後")}</Timestamp>;
 
   function join() {
+    const box = scene.current?.getBoundingClientRect();
+    const from = pointer.current ?? (box && { x: box.left + box.width / 2, y: box.top + box.height / 3 });
+
+    pointer.current = undefined;
+
+    if (!joined && from) {
+      burst(from.x, from.y, CONFETTI);
+    }
+
     setReply(joined ? "already" : "joined");
     setJoined(true);
   }
@@ -280,7 +259,13 @@ function LotteryScene() {
   >;
 
   return (
-    <>
+    <div
+      ref={scene}
+      className="flex flex-col gap-4"
+      onPointerDownCapture={(event) => {
+        pointer.current = { x: event.clientX, y: event.clientY };
+      }}
+    >
       <Msg delay={0}>
         <DiscordMessage
           author={t(BOT_NAME)}
@@ -359,109 +344,91 @@ function LotteryScene() {
           </DiscordMessage>
         </MessageEnter>
       ) : null}
-    </>
-  );
-}
-
-function ChannelTabs({
-  active,
-  onOpen,
-}: {
-  active: ChannelId;
-  onOpen: (id: ChannelId) => void;
-}) {
-  const t = useT();
-
-  return (
-    <div className="flex gap-1.5 border-white/8 border-b px-4 py-2 md:hidden">
-      {CHANNEL_IDS.map((id) => (
-        <button
-          key={id}
-          type="button"
-          onClick={() => onOpen(id)}
-          className={clsx(
-            "rounded-full px-3 py-1 text-sm transition-colors",
-            id === active
-              ? "bg-white/15 font-medium text-white"
-              : "text-discord-muted",
-          )}
-        >
-          #{t(channels[id].name)}
-        </button>
-      ))}
     </div>
   );
 }
 
-function Sidebar({
-  active,
-  seen,
-  onOpen,
-}: {
-  active: ChannelId;
-  seen: ChannelId[];
-  onOpen: (id: ChannelId) => void;
-}) {
+const voiceMembers: { name: Phrase; avatar: string }[] = [
+  { name: "你", avatar: "bg-discord-blurple" },
+  { name: "阿龍", avatar: "bg-yee-green" },
+  { name: "阿龍的粉絲", avatar: "bg-yee-crown" },
+];
+
+function VoiceScene() {
   const t = useT();
+  const [open, setOpen] = useState(false);
+  const [closed, setClosed] = useState(false);
+
+  function join() {
+    setOpen(true);
+    setClosed(false);
+  }
+
+  function leave() {
+    setOpen(false);
+    setClosed(true);
+  }
 
   return (
-    <div className="flex flex-col border-white/8 border-r bg-discord-embed p-3 text-discord-text max-md:hidden">
-      <p className="border-white/8 border-b px-2 pb-3 font-semibold text-white">
-        {t("Yeecord 示範伺服器")}
-      </p>
-      <p className="mt-2 mb-1 px-2 font-semibold text-discord-muted text-xs uppercase">
-        {t("文字頻道")}
-      </p>
-      <div className="flex flex-col gap-0.5">
-        {CHANNEL_IDS.map((id) => (
-          <button
-            key={id}
-            type="button"
-            onClick={() => onOpen(id)}
-            className={clsx(
-              "group relative flex cursor-pointer items-center gap-1.5 rounded px-2 py-1.5 text-start transition-colors",
-              id === active
-                ? "bg-white/10 font-medium text-white"
-                : "text-discord-muted hover:bg-white/5 hover:text-discord-text",
-            )}
-          >
-            {!seen.includes(id) && (
-              <span className="-left-2 absolute h-2 w-1 rounded-r-full bg-white" />
-            )}
-            <HashIcon className="size-4 shrink-0" />
-            <span className="truncate">{t(channels[id].name)}</span>
-            {!seen.includes(id) && (
-              <span className="ms-auto size-2 rounded-full bg-discord-danger" />
-            )}
-          </button>
-        ))}
-      </div>
-      <p className="mt-4 mb-1 px-2 font-semibold text-discord-muted text-xs uppercase">
-        {t("語音頻道")}
-      </p>
-      <div className="flex items-center gap-1.5 px-2 py-1 text-discord-muted">
-        <Volume2Icon className="size-4 shrink-0" />
+    <div className="flex flex-col gap-1 rounded-lg bg-discord-embed p-2">
+      <button
+        type="button"
+        onClick={join}
+        disabled={open}
+        className="flex cursor-pointer items-center gap-1.5 rounded px-2 py-1.5 text-start text-discord-muted transition-colors hover:bg-white/5 hover:text-discord-text active:bg-white/10 focus-visible:outline-2 focus-visible:outline-discord-blurple disabled:cursor-default disabled:hover:bg-transparent"
+      >
+        <PlusCircleIcon aria-hidden className="size-4 shrink-0" />
         {t("建立語音頻道")}
-      </div>
-      <div className="flex items-center gap-2 px-2 py-1 pl-7 text-discord-muted text-sm">
-        <span className="size-2 rounded-full bg-discord-green" />
+      </button>
+      <div className="flex items-center gap-1.5 px-2 py-1.5 text-discord-muted">
+        <Volume2Icon aria-hidden className="size-4 shrink-0" />
         {t("阿龍的頻道 · 3 人在聊")}
       </div>
-      <div className="mt-auto flex items-center gap-2.5 rounded-lg bg-black/25 p-2">
-        <img
-          src="/img/logo.svg"
-          alt=""
-          className="size-8 rounded-full"
-        />
-        <div className="min-w-0 leading-tight">
-          <p className="truncate font-medium text-sm text-white">
-            {t(BOT_NAME)}
-          </p>
-          <p className="text-discord-muted text-xs">
-            {t("陪 350,000 個伺服器玩耍中")}
-          </p>
-        </div>
-      </div>
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            key="room"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6, transition: { delay: 0.5, duration: 0.2 } }}
+            transition={{ duration: 0.24, ease: EASE_OUT }}
+            className="flex flex-col gap-1"
+          >
+            <div className="flex items-center gap-1.5 rounded bg-white/10 px-2 py-1.5 font-medium text-white">
+              <Volume2Icon aria-hidden className="size-4 shrink-0" />
+              {t("你的頻道")}
+            </div>
+            <ul className="flex flex-col gap-1 ps-7">
+              {voiceMembers.map(({ name, avatar }, i) => (
+                <motion.li
+                  key={name}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0, transition: { delay: 0.3 + i * 0.4, duration: 0.24, ease: EASE_OUT } }}
+                  exit={{ opacity: 0, x: -8, transition: { delay: (voiceMembers.length - 1 - i) * 0.15, duration: 0.18 } }}
+                  className="flex items-center gap-2 py-0.5 text-discord-text"
+                >
+                  <span className={clsx("relative size-6 rounded-full", avatar)}>
+                    {i === 1 ? (
+                      <span className="-inset-1 absolute animate-[talk_1.6s_ease-in-out_infinite] rounded-full border-2 border-discord-green motion-reduce:animate-none" />
+                    ) : null}
+                  </span>
+                  {t(name)}
+                </motion.li>
+              ))}
+            </ul>
+            <div className="ps-7 pt-2">
+              <DiscordButton variant="danger" onClick={leave}>
+                {t("離開語音")}
+              </DiscordButton>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+      {closed ? (
+        <MessageEnter delay={0.8}>
+          <p className="px-2 py-1.5 text-discord-muted">{t("人走光了，頻道自動收掉")}</p>
+        </MessageEnter>
+      ) : null}
     </div>
   );
 }
