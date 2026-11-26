@@ -1,21 +1,35 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
+import type { ComponentType } from "react";
 import Footer from "~/components/Footer";
+import {
+  AutoChannelsDemo,
+  GiveawayFlowDemo,
+  PollFlowDemo,
+  RoleMenuDemo,
+} from "~/components/mdx/feature-flows";
+import { FormFlowDemo } from "~/components/mdx/form-flow";
 import { footer } from "~/config";
-import { channels } from "~/home/channels";
 import { Community } from "~/home/Community";
 import { DayJourney, Station } from "~/home/DayJourney";
-import { DemoChannel } from "~/home/DemoServer";
 import { Hero } from "~/home/Hero";
-import { Trust } from "~/home/Trust";
 import type { Locale } from "~/i18n";
-import { translator } from "~/i18n/translate";
+import { type Phrase, translator } from "~/i18n/translate";
 import { localizedLayout, LocalizedMeta } from "~/localized-page";
 
-const hours = [
-  { id: "welcome", time: "07:00", tone: "light", side: "right" },
-  { id: "lottery", time: "12:00", tone: "light", side: "left" },
-  { id: "voice", time: "18:00", tone: "dark", side: "right" },
-] as const;
+/* 每個時段一個功能，示範直接用說明文件裡的同一套，跟機器龍真正的回覆一致 */
+const hours: {
+  time: string;
+  title: Phrase;
+  sentence: Phrase;
+  tone: "light" | "dark";
+  Demo: ComponentType<{ locale?: Locale }>;
+}[] = [
+  { time: "07:00", title: "身分組", sentence: "新成員進來自動發，或讓成員自己按按鈕領。", tone: "light", Demo: RoleMenuDemo },
+  { time: "10:00", title: "表單", sentence: "成員按一顆按鈕，就能私下找管理員，結案後自動封存。", tone: "light", Demo: FormFlowDemo },
+  { time: "12:00", title: "抽獎", sentence: "辦抽獎，一條指令的事", tone: "light", Demo: GiveawayFlowDemo },
+  { time: "15:00", title: "投票", sentence: "最多 18 個選項，可以匿名，結果能匯出", tone: "light", Demo: PollFlowDemo },
+  { time: "18:00", title: "動態語音頻道", sentence: "有人進語音就開一間專屬房間，人走了自動收。", tone: "dark", Demo: AutoChannelsDemo },
+];
 
 export function HomePage({ locale }: { locale: Locale }) {
   const t = translator(locale);
@@ -41,19 +55,18 @@ export function HomePage({ locale }: { locale: Locale }) {
               )}
             </p>
           </div>
-          {hours.map(({ id, time, tone, side }) => (
+          {hours.map(({ time, title, sentence, tone, Demo }, i) => (
             <Station
-              key={id}
+              key={time}
               time={time}
               tone={tone}
-              side={side}
-              title={t(channels[id].name)}
-              sentence={t(channels[id].topic)}
+              side={i % 2 ? "left" : "right"}
+              title={t(title)}
+              sentence={t(sentence)}
             >
-              <DemoChannel locale={locale} id={id} />
+              <Demo locale={locale} />
             </Station>
           ))}
-          <Trust locale={locale} />
           <Community locale={locale} />
         </DayJourney>
       </main>

@@ -24,17 +24,17 @@ export function DayJourney({ label, children }: { label: string; children: React
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress: day } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const noon = useTransform(day, [0.12, 0.3], [0, 1]);
-  const dusk = useTransform(day, [0.38, 0.55], [0, 1]);
-  const night = useTransform(day, [0.58, 0.72], [0, 1]);
-  const shade = useTransform(day, [0.4, 0.72], [0, 0.6]);
-  const sunX = useTransform(day, [0, 0.62], reduce ? ["70vw", "70vw"] : ["-6vw", "92vw"]);
+  const noon = useTransform(day, [0.2, 0.38], [0, 1]);
+  const dusk = useTransform(day, [0.62, 0.74], [0, 1]);
+  const night = useTransform(day, [0.8, 0.9], [0, 1]);
+  const shade = useTransform(day, [0.62, 0.9], [0, 0.6]);
+  const sunX = useTransform(day, [0, 0.76], reduce ? ["70vw", "70vw"] : ["-6vw", "92vw"]);
   const sunY = useTransform(day, (v) => {
-    const t = Math.min(v / 0.62, 1) * 2 - 1;
+    const t = Math.min(v / 0.76, 1) * 2 - 1;
 
     return reduce ? "0vh" : `${(t * t - 1) * 5}vh`;
   });
-  const sunOpacity = useTransform(day, [0.5, 0.62], [1, 0]);
+  const sunOpacity = useTransform(day, [0.64, 0.76], [1, 0]);
   const hillsX = useTransform(day, [0, 1], reduce ? ["0%", "0%"] : ["0%", "-33%"]);
   const dinoX = useTransform(day, [0, 1], reduce ? ["12vw", "12vw"] : ["-14vw", "96vw"]);
 
@@ -134,7 +134,7 @@ export function Station({
   const look = tones[tone];
 
   return (
-    <div className="mx-auto grid min-h-svh w-full max-w-[1100px] items-center gap-10 px-4 pt-24 pb-56 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14 md:px-6">
+    <div className="mx-auto grid min-h-[90svh] w-full max-w-[1100px] items-center gap-10 px-4 pt-24 pb-48 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14 md:px-6">
       <div className={clsx("flex min-w-0 flex-col gap-4", side === "left" && "md:order-2")}>
         <p className={clsx("font-bold text-6xl tabular-nums tracking-tight sm:text-8xl", look.time)}>{time}</p>
         <h2 className={clsx("text-balance font-bold text-3xl tracking-tight [overflow-wrap:break-word] sm:text-5xl", look.heading)}>
@@ -142,7 +142,7 @@ export function Station({
         </h2>
         <p className={clsx("max-w-md text-pretty text-lg sm:text-xl", look.body)}>{sentence}</p>
       </div>
-      <motion.div ref={ref} style={{ y, rotate, scale }} className="min-w-0">
+      <motion.div ref={ref} style={{ y, rotate, scale }} className="min-w-0 rounded-xl shadow-2xl shadow-black/30 [&>*]:my-0">
         {children}
       </motion.div>
     </div>

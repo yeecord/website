@@ -1,6 +1,6 @@
 /* Hallmark · redesign: full (/) · genre: playful · theme: brand (Yeecord) · signature: the dinosaur's day, scrolled from morning to night through live Discord demos */
 /* critique: the old page fell from the hero's sky into a flat grey and stacked three centred boxes; now one sky runs the length of the page and each hour shows a feature you can press */
-/* Hallmark · dropped the demo server's channel sidebar and its onOpen handlers · each channel now has its own hour, so scrolling is the navigation */
+/* Hallmark · dropped the hand-built demo server and the owners' quotes · each hour now shows the docs' own demo of one feature, which tracks the bot's real replies */
 /* waive 48, 7a, 22, 24b in the .discord-* rules · they copy Discord's own colours and spacing so the demos read as Discord */
 @import "tailwindcss";
 @import "tw-animate-css";
