@@ -159,14 +159,14 @@ const environments: {
 ];
 
 const colors: { name: Phrase; hex: string; swatch: string }[] = [
-  { name: "天空藍", hex: "#326ED0", swatch: "bg-yee-sky text-white md:col-span-2 md:h-64" },
+  { name: "夜空藍", hex: "#24375C", swatch: "bg-yee-sky text-white md:col-span-2 md:h-64" },
   { name: "恐龍綠", hex: "#32D34C", swatch: "bg-yee-green text-yee-ink md:col-span-2 md:h-64" },
   { name: "陰影綠", hex: "#24A63F", swatch: "bg-yee-shade text-yee-ink" },
   { name: "皇冠金", hex: "#F7C157", swatch: "bg-yee-crown text-yee-ink" },
   { name: "墨色", hex: "#362F36", swatch: "bg-yee-ink text-white" },
   { name: "深海藍", hex: "#17233B", swatch: "bg-yee-navy text-white" },
-  { name: "測試紫", hex: "#7C4DDB", swatch: "bg-yee-staging text-white md:col-span-2" },
-  { name: "開發橘", hex: "#E0603A", swatch: "bg-yee-dev text-white md:col-span-2" },
+  { name: "測試紫", hex: "#5E38A8", swatch: "bg-yee-staging text-white md:col-span-2" },
+  { name: "開發橘", hex: "#BA4E25", swatch: "bg-yee-dev text-white md:col-span-2" },
 ];
 
 const misuses: { label: Phrase; art: ReactNode }[] = [

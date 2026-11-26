@@ -20,7 +20,7 @@
   </defs>
 
   <g clip-path="url(#clip-frame)">
-    <rect x="50" y="16" width="450" height="450" fill="#E0603A"/>
+    <rect x="50" y="16" width="450" height="450" fill="#BA4E25"/>
 
     <g id="dino">
       <use href="#body" fill="#32D34C"/>

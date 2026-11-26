@@ -23,7 +23,7 @@
   </defs>
 
   <g clip-path="url(#avatar-clip-frame)">
-    <rect x="0" y="0" width="512" height="512" fill="#326ED0"/>
+    <rect x="0" y="0" width="512" height="512" fill="#24375C"/>
 
     <g id="avatar-dino">
       <use href="#avatar-body" fill="#32D34C"/>
