@@ -28,7 +28,7 @@ const focusRing =
 const lockups = [
   { surface: "bg-white", file: "lockup.svg", label: "深色字" },
   { surface: "bg-yee-navy", file: "lockup-white.svg", label: "白字" },
-  { surface: "bg-yee-sky", file: "lockup-white.svg", label: "白字" },
+  { surface: "bg-discord-bg", file: "lockup-white.svg", label: "白字" },
 ] satisfies { surface: string; file: string; label: Phrase }[];
 
 const marks: {
