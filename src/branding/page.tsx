@@ -8,6 +8,7 @@ import type { Locale } from "~/i18n";
 import { type Phrase, type Translate, translator } from "~/i18n/translate";
 import { localizedLayout, LocalizedMeta } from "~/localized-page";
 import { cn } from "~/utils/cn";
+import silhouette from "../../public/brand/yeecord/silhouette.svg?raw";
 
 const base = "/brand/yeecord/";
 const scene = "/home/scene/";
@@ -62,9 +63,11 @@ const marks: {
   {
     title: "單色",
     art: (
+      // inline, since WebKit rasterises an SVG mask at 1x and blurs it on Retina screens
       <span
         aria-hidden
-        className="block size-36 bg-fd-foreground [mask:url(/brand/yeecord/silhouette.svg)_center/contain_no-repeat]"
+        className="block size-36 text-fd-foreground [&>svg]:size-full"
+        dangerouslySetInnerHTML={{ __html: silhouette }}
       />
     ),
     panel: "bg-fd-muted bg-[radial-gradient(var(--color-fd-border)_1px,transparent_1px)] bg-size-[14px_14px]",
