@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 802 200" role="img" aria-labelledby="title">
   <title id="title">Yeecord</title>
+  <defs><clipPath id="mark-corner"><rect width="200" height="200" rx="28"/></clipPath></defs>
 
-  <g>
+  <g clip-path="url(#mark-corner)">
     <svg width="200" height="200" viewBox="0 0 512 512">
   
   <defs>
