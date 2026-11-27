@@ -126,7 +126,7 @@ function Scene({
           padding: "56px 72px 150px",
         }}
       >
-        <img src={lockup} width={176} height={44} />
+        <img src={lockup} width={183} height={44} />
         {children}
       </div>
     </div>
